@@ -1,0 +1,135 @@
+<?php
+
+namespace App\Http\Controllers\Admin;
+
+use App\Http\Controllers\Controller;
+use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
+
+class EmployeeController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     */
+    public function index()
+    {
+        $users = User::all();
+        return view('admin.employees.index', compact('users'));
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        return view('admin.employees.create');
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
+    {
+        $request->validate([
+            'team_key' => 'nullable|max:255',
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255|unique:users,email',
+            'designation' => 'nullable|string|max:255',
+            'gender' => 'nullable|string|max:10',
+            'phone_number' => 'nullable|string|max:15',
+            'address' => 'nullable|string|max:255',
+            'city' => 'nullable|string|max:255',
+            'country' => 'nullable|string|max:255',
+            'postal_code' => 'nullable|string|max:10',
+            'dob' => 'nullable|date',
+            'about' => 'nullable|string',
+            'status' => 'required|in:0,1',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        $user = new User($request->only([
+            'team_key', 'name', 'email', 'designation', 'gender',
+            'phone_number', 'address', 'city', 'country',
+            'postal_code', 'dob', 'about', 'status'
+        ]));
+
+        if ($request->hasFile('image')) {
+            $originalFileName = time() . '_' . $request->file('image')->getClientOriginalName();
+            $publicPath = public_path('assets/images/employees');
+            $request->file('image')->move($publicPath, $originalFileName);
+            $user->image = $originalFileName;
+        }
+
+        $user->password = Hash::make(12345678);
+        $user->save();
+
+        return redirect()->route('admin.employee.index')->with('success', 'Employee created successfully.');
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(User $user)
+    {
+        return view('admin.employees.show', compact('user'));
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(User $user)
+    {
+        return view('admin.employees.edit', compact('user'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, User $user)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255|unique:users,email,' . $user->id,
+            'designation' => 'nullable|string|max:255',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'status' => 'required|in:0,1',
+        ]);
+
+        $user->fill($request->only([
+            'team_key', 'name', 'email', 'designation', 'gender',
+            'phone_number', 'address', 'city', 'country',
+            'postal_code', 'dob', 'about', 'status'
+        ]));
+
+        if ($request->hasFile('image')) {
+//            if ($user->image) {
+//                Storage::disk('public')->delete('assets/images/employees/' . $user->image);
+//            }
+            $originalFileName = time() . '_' . $request->file('image')->getClientOriginalName();
+            $publicPath = public_path('assets/images/employees');
+            $request->file('image')->move($publicPath, $originalFileName);
+            $user->image = $originalFileName;
+        }
+
+        $user->save();
+
+        return redirect()->route('admin.employee.index')->with('success', 'Employee updated successfully.');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(User $user)
+    {
+        // Remove image if exists
+//        if ($user->image) {
+//            Storage::disk('public')->delete('assets/images/employees/' . $user->image);
+//        }
+
+        $user->delete();
+
+        return redirect()->route('admin.employee.index')->with('success', 'Employee deleted successfully.');
+    }
+}
