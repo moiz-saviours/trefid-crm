@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Brand;
 use App\Models\Payment;
+use App\Models\Team;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class PaymentController extends Controller
@@ -13,7 +16,8 @@ class PaymentController extends Controller
      */
     public function index()
     {
-        //
+        $payments = Payment::with(['brand', 'team', 'agent'])->get();
+        return view('admin.payments.index', compact('payments'));
     }
 
     /**
@@ -21,7 +25,11 @@ class PaymentController extends Controller
      */
     public function create()
     {
-        //
+        $brands = Brand::all();
+        $teams = Team::all();
+        $agents = User::all();
+
+        return view('admin.payments.create', compact('brands', 'teams', 'agents'));
     }
 
     /**

@@ -7,7 +7,8 @@ use App\Http\Controllers\Admin\{
     TeamController as AdminTeamController,
     InvoiceController as AdminInvoiceController,
     ClientController as AdminClientController,
-    LeadController as AdminLeadController
+    LeadController as AdminLeadController,
+    PaymentController as AdminPaymentController
 };
 use App\Http\Controllers\User\{
     ProfileController
@@ -89,6 +90,15 @@ Route::middleware(['auth:admin'])->prefix('admin')->name('admin.')->group(functi
         Route::post('/store', [AdminLeadController::class, 'store'])->name('store');
         Route::post('/edit', [AdminLeadController::class, 'edit'])->name('edit');
         Route::post('/update', [AdminLeadController::class, 'update'])->name('update');
+    });
+
+    /** Payment Routes */
+    Route::prefix('payment')->name('payment.')->group(function () {
+        Route::get('/', [AdminPaymentController::class, 'index'])->name('index');
+        Route::get('/create', [AdminPaymentController::class, 'create'])->name('create');
+        Route::post('/store', [AdminPaymentController::class, 'store'])->name('store');
+        Route::post('/edit', [AdminPaymentController::class, 'edit'])->name('edit');
+        Route::post('/update', [AdminPaymentController::class, 'update'])->name('update');
     });
 });
 
