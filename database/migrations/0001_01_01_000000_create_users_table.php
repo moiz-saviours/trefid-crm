@@ -35,6 +35,9 @@ return new class extends Migration
             $table->timestamp('last_seen')->nullable();
             $table->softDeletes();
             $table->timestamps();
+
+
+            $table->index('id');
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {

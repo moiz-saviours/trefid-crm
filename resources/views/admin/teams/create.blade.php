@@ -13,14 +13,6 @@
                         <form action="{{ route('admin.team.store') }}" method="POST">
                             @csrf
                             <div class="mb-3">
-                                <label for="team_key" class="form-label">Team Key (Optional)</label>
-                                <input type="text" class="form-control" id="team_key" name="team_key">
-                                @error('team_key')
-                                <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </div>
-
-                            <div class="mb-3">
                                 <label for="name" class="form-label">Team Name</label>
                                 <input type="text" class="form-control" id="name" name="name" required>
                                 @error('name')

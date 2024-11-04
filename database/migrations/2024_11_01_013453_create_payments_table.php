@@ -15,14 +15,29 @@ return new class extends Migration
         if (!Schema::hasTable('payments')) {
             Schema::create('payments', function (Blueprint $table) {
                 $table->id();
-                $table->unsignedBigInteger('column')->nullable()->default(null);
-                $table->string('column')->nullable()->default(null);
-                $table->decimal('column', 8, 2)->nullable()->default(null);
+                $table->unsignedBigInteger('invoice_key')->nullable()->default(null);
+                $table->unsignedBigInteger('brand_key')->nullable()->default(null);
+                $table->unsignedBigInteger('team_key')->nullable()->default(null);
+                $table->unsignedBigInteger('client_key')->nullable()->default(null);
+                $table->unsignedBigInteger('agent_id')->nullable()->default(null);
+
+                $table->unsignedBigInteger('merchant_id')->nullable()->default(null);
+                $table->string('merchant_name')->nullable()->default(null);
+
+                $table->string('transaction_id')->nullable()->default(null);
+                $table->longText('response')->nullable()->default(null);
+                $table->longText('transaction_response')->nullable()->default(null);
+
+                $table->decimal('amount', 16, 2)->nullable()->default(0.00);
                 $table->integer('status')->nullable()->default(1)->comment('0 = inactive, 1 = active');
                 $table->softDeletes();
                 $table->timestamps();
 
-                $table->foreign('foreign_id')->references('id')->on('foreign_table')->onDelete('NO ACTION');
+                $table->foreign('invoice_key')->references('invoice_key')->on('invoices')->onDelete('NO ACTION');
+                $table->foreign('brand_key')->references('brand_key')->on('brands')->onDelete('NO ACTION');
+                $table->foreign('team_key')->references('team_key')->on('teams')->onDelete('NO ACTION');
+                $table->foreign('client_key')->references('client_key')->on('clients')->onDelete('NO ACTION');
+                $table->foreign('agent_id')->references('id')->on('users')->onDelete('NO ACTION');
 
             });
         }

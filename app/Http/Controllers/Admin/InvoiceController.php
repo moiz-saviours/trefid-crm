@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Brand;
 use App\Models\Invoice;
+use App\Models\Team;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class InvoiceController extends Controller
@@ -22,7 +25,10 @@ class InvoiceController extends Controller
      */
     public function create()
     {
-        return view('admin.invoices.create');
+        $brands = Brand::all();
+        $teams = Team::all();
+        $users = User::all();
+        return view('admin.invoices.create', compact('brands', 'teams', 'users'));
     }
 
     /**
@@ -31,17 +37,31 @@ class InvoiceController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'brand_key' => 'nullable|integer',
-            'team_key' => 'nullable|integer',
-            'agent_id' => 'nullable|integer',
-            'invoice_key' => 'nullable|integer',
-            'invoice_number' => 'required|string|unique:invoices|max:255',
-            'description' => 'nullable|string',
-            'amount' => 'required|numeric',
-            'status' => 'nullable|integer|in:0,1',
+            'brand_key' => 'required|integer',
+            'team_key' => 'required|integer',
+            'agent_id' => 'required|integer',
+            'description' => 'nullable|string|max:500',
+            'amount' => 'required|numeric|min:1|max:' . config('invoice.max_amount'),
+        ], [
+            'brand_key.required' => 'The brand field is required.',
+            'brand_key.integer' => 'The brand must be a valid integer.',
+            'team_key.required' => 'The team field is required.',
+            'team_key.integer' => 'The team must be a valid integer.',
+            'agent_id.required' => 'The agent field is required.',
+            'agent_id.integer' => 'The agent must be a valid integer.',
+            'description.string' => 'The description must be a string.',
+            'description.max' => 'The description may not be greater than 500 characters.',
+            'amount.required' => 'The amount field is required.',
+            'amount.numeric' => 'The amount must be a number.',
+            'amount.min' => 'The amount must be at least 1.00',
+            'amount.max' => 'The amount may not be greater than ' . config('invoice.max_amount') . '.',
         ]);
 
-        Invoice::create($request->only(['brand_key', 'team_key', 'agent_id', 'invoice_key', 'invoice_number', 'description', 'amount', 'status']));
+        Invoice::create($request->only(['brand_key', 'team_key', 'agent_id', 'invoice_key', 'invoice_number',
+                'description', 'amount']) + [
+                'invoice_key' => Invoice::generateInvoiceKey(),
+                'invoice_number' => Invoice::generateInvoiceNumber(),
+            ]);
 
         return redirect()->route('admin.invoice.index')->with('success', 'Invoice created successfully.');
     }

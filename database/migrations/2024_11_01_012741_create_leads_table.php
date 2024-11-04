@@ -17,7 +17,7 @@ return new class extends Migration
                 $table->id();
                 $table->unsignedBigInteger('brand_key')->nullable()->default(null);
                 $table->unsignedBigInteger('team_key')->nullable()->default(null);
-                $table->unsignedBigInteger('client_id')->nullable()->default(null);
+                $table->unsignedBigInteger('client_key')->nullable()->default(null);
                 $table->string('name')->nullable()->default(null);
                 $table->string('email')->unique();
                 $table->string('phone')->nullable()->default(null);
@@ -31,7 +31,10 @@ return new class extends Migration
                 $table->softDeletes();
                 $table->timestamps();
 
-//                $table->foreign('foreign_id')->references('id')->on('foreign_table')->onDelete('NO ACTION');
+
+                $table->foreign('brand_key')->references('brand_key')->on('brands')->onDelete('NO ACTION');
+                $table->foreign('team_key')->references('team_key')->on('teams')->onDelete('NO ACTION');
+                $table->foreign('client_key')->references('client_key')->on('clients')->onDelete('NO ACTION');
 
             });
         }

@@ -33,7 +33,6 @@ class ClientController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'client_key' => 'nullable|integer',
             'brand_key' => 'nullable|integer',
             'team_key' => 'nullable|integer',
             'name' => 'required|string|max:255',
@@ -44,18 +43,18 @@ class ClientController extends Controller
             'state' => 'nullable|string|max:255',
             'country' => 'nullable|string|max:255',
             'zipcode' => 'nullable|string|max:10',
-            'ip_address' => 'nullable|string|max:45', // IPv4/IPv6
+            'ip_address' => 'nullable|string|max:45',
             'loggable' => 'nullable|string|max:255',
             'loggable_id' => 'nullable|integer',
             'status' => 'required|in:0,1',
         ]);
 
         $client = new Client($request->only([
-            'client_key', 'brand_key', 'team_key', 'name',
+            'brand_key', 'team_key', 'name',
             'email', 'phone', 'address', 'city', 'state',
             'country', 'zipcode', 'ip_address', 'loggable',
             'loggable_id', 'status',
-        ]));
+        ])+ ['client_key' => Client::generateClientKey()]);
 
         $client->save();
 

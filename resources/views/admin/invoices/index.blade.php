@@ -20,24 +20,24 @@
                             <table id="invoicesTable" class="table table-striped" style="width: 100%">
                                 <thead>
                                 <tr>
-                                    <th class="align-middle text-center text-nowrap">Id</th>
-                                    <th class="align-middle text-center text-nowrap">Invoice Number</th>
+                                    <th class="align-middle text-center text-nowrap">Id #</th>
                                     <th class="align-middle text-center text-nowrap">Brand Key</th>
                                     <th class="align-middle text-center text-nowrap">Team Key</th>
                                     <th class="align-middle text-center text-nowrap">Agent ID</th>
                                     <th class="align-middle text-center text-nowrap">Amount</th>
                                     <th class="align-middle text-center text-nowrap">Status</th>
-                                    <th class=""></th>
+                                    <th class="">Action</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 @foreach($invoices as $invoice)
                                     <tr>
-                                        <td class="align-middle text-center text-nowrap">{{ $invoice->id }}</td>
-                                        <td class="align-middle text-center text-nowrap">{{ $invoice->invoice_number }}</td>
-                                        <td class="align-middle text-center text-nowrap">{{ $invoice->brand_key }}</td>
-                                        <td class="align-middle text-center text-nowrap">{{ $invoice->team_key }}</td>
-                                        <td class="align-middle text-center text-nowrap">{{ $invoice->agent_id }}</td>
+                                        <td class="align-middle text-center text-nowrap text-sm">
+                                            {{ $invoice->invoice_number }} <br> {{ $invoice->invoice_key }}
+                                        </td>
+                                        <td class="align-middle text-center text-nowrap">{{ optional($invoice->brand)->name }}</td>
+                                        <td class="align-middle text-center text-nowrap">{{ optional($invoice->team)->name }}</td>
+                                        <td class="align-middle text-center text-nowrap">{{ optional($invoice->agent)->name }}</td>
                                         <td class="align-middle text-center text-nowrap">{{ number_format($invoice->amount, 2) }}</td>
                                         <td class="align-middle text-center text-nowrap">
                                             <span class="badge badge-sm bg-gradient-{{ $invoice->status == 1 ? 'success' : 'primary' }}">

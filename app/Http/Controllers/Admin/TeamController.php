@@ -31,15 +31,16 @@ class TeamController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'team_key' => 'nullable|integer',
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
             'status' => 'required|integer|in:0,1',
         ]);
+        $team = new Team($request->only(['name', 'description', 'status']));
+        $team->save();
+        Team::create();
+        $team->update(['team_key' => $team->generateTeamKey($team->id)]);
 
-        Team::create($request->only(['team_key', 'name', 'description', 'status']));
-
-        return redirect()->route('admin.teams.index')->with('success', 'Team created successfully.');
+        return redirect()->route('admin.team.index')->with('success', 'Team created successfully.');
     }
 
     /**
@@ -72,7 +73,7 @@ class TeamController extends Controller
 
         $team->update($request->only(['team_key', 'name', 'description', 'status']));
 
-        return redirect()->route('admin.teams.index')->with('success', 'Team updated successfully.');
+        return redirect()->route('admin.team.index')->with('success', 'Team updated successfully.');
     }
 
     /**
@@ -82,6 +83,6 @@ class TeamController extends Controller
     {
         $team->delete();
 
-        return redirect()->route('admin.teams.index')->with('success', 'Team deleted successfully.');
+        return redirect()->route('admin.team.index')->with('success', 'Team deleted successfully.');
     }
 }
