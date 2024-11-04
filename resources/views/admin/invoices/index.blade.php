@@ -1,9 +1,9 @@
 @extends('admin.layouts.app')
 @section('title', 'Invoices')
 @section('content')
-    @push('css')
+    @push('style')
         <!-- DataTables CSS -->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
+{{--        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">--}}
         <link rel="stylesheet" href="https://cdn.datatables.net/2.1.8/css/dataTables.bootstrap5.css">
     @endpush
 
@@ -17,7 +17,7 @@
                     </div>
                     <div class="card-body px-0 pt-0 pb-2">
                         <div class="table table-responsive p-0">
-                            <table id="invoicesTable" class="table table-striped" style="width: 100%">
+                            <table id="invoicesTable" class="table table-striped dataTable-213" style="width: 100%">
                                 <thead>
                                 <tr>
                                     <th class="align-middle text-center text-nowrap">Id #</th>

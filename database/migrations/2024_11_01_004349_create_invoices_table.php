@@ -22,7 +22,7 @@ return new class extends Migration {
                 $table->string('invoice_number')->nullable()->default(null);
                 $table->longText('description')->nullable()->default(null);
                 $table->decimal('amount', 16, 2)->nullable()->default(0.00);
-                $table->integer('status')->nullable()->default(1)->comment('0 = due, 1 = paid');
+                $table->integer('status')->nullable()->default(0)->comment('0 = due, 1 = paid');
                 $table->softDeletes();
                 $table->timestamps();
 
