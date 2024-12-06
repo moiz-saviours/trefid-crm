@@ -1,22 +1,26 @@
 @extends('admin.layouts.app')
-@section('title', 'Employees')
+@section('title','Employees')
+@section('datatable', true)
+@push('breadcrumb')
+    <li class="breadcrumb-item text-sm active" aria-current="page"><a
+            href="{{route('admin.employee.index')}}">Employee</a>
+    </li>
+@endpush
 @section('content')
-    @push('css')
-        <!-- DataTables CSS -->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
-        <link rel="stylesheet" href="https://cdn.datatables.net/2.1.8/css/dataTables.bootstrap5.css">
+    @push('style')
+        @include('admin.employees.style')
     @endpush
-
     <div class="container-fluid py-4">
         <div class="row">
             <div class="col-12">
                 <div class="card mb-4">
                     <div class="card-header pb-0">
                         <h3 class="text-center">Employee Table</h3>
-                        <a href="{{ route('admin.employee.create') }}" class="btn btn-primary float-end"><i class="fas fa-plus"></i></a>
+                        <a href="{{ route('admin.employee.create') }}" class="btn btn-secondary float-end rounded-pill"><i
+                                class="fas fa-plus"></i></a>
                     </div>
                     <div class="card-body px-0 pt-0 pb-2">
-                        <div class="table table-responsive p-0">
+                        <div class="table table-responsive p-3">
                             <table id="employeesTable" class="table table-striped" style="width: 100%">
                                 <thead>
                                 <tr>
@@ -25,28 +29,43 @@
                                     <th class="align-middle text-center text-nowrap">Name</th>
                                     <th class="align-middle text-center text-nowrap">Designation</th>
                                     <th class="align-middle text-center text-nowrap">Status</th>
-                                    <th class=""></th>
+                                    <th class="align-middle text-center text-nowrap">Action</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 @foreach($users as $user)
-                                    <tr>
+                                    <tr id="tr-{{$user->id}}">
                                         <td class="align-middle text-center text-nowrap">{{ $user->id }}</td>
                                         <td class="align-middle text-center text-nowrap">
-                                            <img src="{{ filter_var($user->image, FILTER_VALIDATE_URL) ? $user->image : asset('assets/images/employees/' . $user->image) }}"
-                                                 class="avatar avatar-sm me-3"
-                                                 alt="{{ $user->name }}" title="{{ $user->name }}">
+                                            @php
+                                                $imageUrl = filter_var($user->image, FILTER_VALIDATE_URL) ? $user->image : asset('assets/images/employees/' . $user->image);
+                                            @endphp
+                                            <object
+                                                data="{{ $imageUrl }}"
+                                                class="avatar avatar-sm me-3"
+                                                title="{{ $user->name }}"
+                                            >
+                                                <img
+                                                    src="{{ $imageUrl }}"
+                                                    alt="{{ $user->name }}"
+                                                    class="avatar avatar-sm me-3"
+                                                    title="{{ $user->name }}">
+                                            </object>
                                         </td>
                                         <td class="align-middle text-center text-nowrap">{{ $user->name }}</td>
                                         <td class="align-middle text-center text-nowrap">{{ $user->designation }}</td>
                                         <td class="align-middle text-center text-nowrap">
-                                                <span class="badge badge-sm bg-gradient-{{ $user->status == 1 ? 'success' : 'primary' }}">
-                                                    {{ $user->status == 1 ? 'Active' : 'Inactive' }}
-                                                </span>
+                                            <input type="checkbox" class="status-toggle change-status" data-id="{{ $user->id }}"
+                                                   {{ $user->status == 1 ? 'checked' : '' }} data-bs-toggle="toggle">
                                         </td>
-                                        <td class="align-middle text-center">
-                                            <a href="{{ route('admin.employee.edit', $user->id) }}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                                                Edit
+                                        <td class="align-middle text-center table-actions">
+                                            <a href="{{ route('admin.employee.edit', [$user->id]) }}"
+                                               class="text-secondary" title="Edit Employee">
+                                                <i class="fas fa-edit"></i>
+                                            </a>
+                                            <a href="javascript:void(0)" class="text-secondary deleteBtn"
+                                               data-id="{{ $user->id }}" title="Delete Employee">
+                                                <i class="fas fa-trash"></i>
                                             </a>
                                         </td>
                                     </tr>
@@ -59,16 +78,7 @@
             </div>
         </div>
     </div>
-
     @push('script')
-        <!-- DataTables JS -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
-        <script src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
-        <script src="https://cdn.datatables.net/2.1.8/js/dataTables.bootstrap5.js"></script>
-        <script>
-            $(document).ready(function () {
-                // $('#employeesTable').DataTable(); // Initialize DataTable
-            });
-        </script>
+        @include('admin.employees.script')
     @endpush
 @endsection

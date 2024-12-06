@@ -23,7 +23,7 @@ return new class extends Migration {
                 $table->string('email')->nullable()->default(null);
                 $table->text('description')->nullable()->default(null);
 
-                $table->integer('status')->nullable()->default(1)->comment('0 = inactive, 1 = active');
+                $table->tinyInteger('status')->nullable()->default(1)->comment('0 = inactive, 1 = active');
                 $table->softDeletes();
                 $table->timestamps();
 

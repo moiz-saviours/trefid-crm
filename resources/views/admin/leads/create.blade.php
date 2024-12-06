@@ -1,7 +1,17 @@
 @extends('admin.layouts.app')
-@section('title', 'Create Lead')
+@section('title', 'Lead / Create')
+@push('breadcrumb')
+    <li class="breadcrumb-item text-sm" aria-current="page">
+        <a href="{{ route('admin.lead.index') }}">Leads</a>
+    </li>
+    <li class="breadcrumb-item text-sm active" aria-current="page">
+        <a href="{{ route('admin.lead.create') }}">Create</a>
+    </li>
+@endpush
 @section('content')
-
+    @push('style')
+        @include('admin.leads.style')
+    @endpush
     <div class="container-fluid py-4">
         <div class="row">
             <div class="col-12">
@@ -12,68 +22,129 @@
                     <div class="card-body">
                         <form action="{{ route('admin.lead.store') }}" method="POST">
                             @csrf
-                            <div class="mb-3">
-                                <label for="name" class="form-label">Name</label>
-                                <input type="text" class="form-control" id="name" name="name" required>
-                                @error('name')
-                                <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </div>
+                            <div class="row">
+                                <!-- Brand Dropdown -->
+                                <div class="col-md-4 mb-3">
+                                    <label for="brand_key" class="form-label">Brand</label>
+                                    <select class="form-control searchable" id="brand_key" name="brand_key"
+                                            title="Please select a brand" required>
+                                        <option value="" disabled>Please select brand</option>
+                                        @foreach($brands as $brand)
+                                            <option
+                                                value="{{ $brand->brand_key }}" {{ old('brand_key') == $brand->brand_key ? 'selected' : '' }}>{{ $brand->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('brand_key')
+                                    <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                <!-- Team Dropdown -->
+                                <div class="col-md-4 mb-3">
+                                    <label for="team_key" class="form-label">Team</label>
+                                    <select class="form-control searchable" id="team_key" name="team_key"
+                                            title="Please select team">
+                                        <option value="" disabled>Please select team</option>
+                                        @foreach($teams as $team)
+                                            <option
+                                                value="{{ $team->team_key }}" {{ old('team_key') == $team->team_key ? 'selected' : '' }}>
+                                                {{ $team->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    @error('team_key')
+                                    <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
 
-                            <div class="mb-3">
-                                <label for="email" class="form-label">Email</label>
-                                <input type="email" class="form-control" id="email" name="email" required>
-                                @error('email')
-                                <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </div>
+                                <!-- Client Type Selection (New or Existing) -->
+                                <div class="col-md-4 mb-3">
+                                    <label for="type" class="form-label">Client Type</label>
+                                    <select class="form-control" id="type" name="type" required>
+                                        <option value="0" {{ old('type') == 0 ? 'selected' : '' }}>New</option>
+                                        @if($clients->count() > 0)
+                                            <option value="1" {{ old('type') == 1 ? 'selected' : '' }}>Existing</option>
+                                        @endif
+                                    </select>
+                                    @error('type')
+                                    <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
 
-                            <div class="mb-3">
-                                <label for="phone" class="form-label">Phone (Optional)</label>
-                                <input type="text" class="form-control" id="phone" name="phone">
-                                @error('phone')
-                                <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </div>
+                                <!-- Fresh Client Fields (Only show for "New" clients) -->
+                                <div id="fresh-client-fields" class="col-md-12 mb-3 d-none">
+                                    <div class="row">
+                                        <div class="col-md-4 mb-3">
+                                            <label for="client_name" class="form-label">Client Name</label>
+                                            <input type="text" class="form-control" id="client_name" name="client_name"
+                                                   value="{{ old('client_name') }}">
+                                            @error('client_name')
+                                            <span class="text-danger">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+                                        <div class="col-md-4 mb-3">
+                                            <label for="client_email" class="form-label">Client Email</label>
+                                            <input type="email" class="form-control" id="client_email"
+                                                   name="client_email" value="{{ old('client_email') }}">
+                                            @error('client_email')
+                                            <span class="text-danger">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+                                        <div class="col-md-4 mb-3">
+                                            <label for="client_phone" class="form-label">Client Phone</label>
+                                            <input type="text" class="form-control" id="client_phone"
+                                                   name="client_phone" value="{{ old('client_phone') }}">
+                                            @error('client_phone')
+                                            <span class="text-danger">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                </div>
 
-                            <div class="mb-3">
-                                <label for="brand_key" class="form-label">Brand Key (Optional)</label>
-                                <input type="text" class="form-control" id="brand_key" name="brand_key">
-                                @error('brand_key')
-                                <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </div>
+                                <!-- Upsale Client Fields (Only show for "Existing" clients) -->
+                                <div id="upsale-client-fields" class="col-md-4 mb-3 d-none">
+                                    <label for="client_key" class="form-label">Select Existing Client</label>
+                                    <select class="form-control searchable" id="client_key" name="client_key">
+                                        <option value="">Select Client</option>
+                                        @foreach($clients as $client)
+                                            <option
+                                                value="{{ $client->client_key }}" {{ old('client_key') == $client->client_key ? 'selected' : '' }}>
+                                                {{ $client->name }} ({{ $client->email }})
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    @error('client_key')
+                                    <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
 
-                            <div class="mb-3">
-                                <label for="team_key" class="form-label">Team Key (Optional)</label>
-                                <input type="text" class="form-control" id="team_key" name="team_key">
-                                @error('team_key')
-                                <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </div>
+                                <!-- Lead Status Dropdown -->
+                                <div class="col-md-4 mb-3">
+                                    <label for="lead_status_id" class="form-label">Lead Type</label>
+                                    <select class="form-control searchable" id="lead_status_id" name="lead_status_id"
+                                            required>
+                                        <option value="" disabled>Please select lead status</option>
+                                        @foreach($leadStatuses as $lead_status)
+                                            <option
+                                                value="{{ $lead_status->id }}" {{ old('lead_status_id') == $lead_status->id ? 'selected' : '' }}>
+                                                {{ $lead_status->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    @error('lead_status_id')
+                                    <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
 
-                            <div class="mb-3">
-                                <label for="client_id" class="form-label">Client ID (Optional)</label>
-                                <input type="text" class="form-control" id="client_id" name="client_id">
-                                @error('client_id')
-                                <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="note" class="form-label">Note (Optional)</label>
-                                <textarea class="form-control" id="note" name="note" rows="3"></textarea>
-                                @error('note')
-                                <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="status" class="form-label">Status</label>
-                                <select class="form-control" id="status" name="status">
-                                    <option value="1">Active</option>
-                                    <option value="0">Inactive</option>
-                                </select>
+                                <!-- Note -->
+                                <div class="col-md-12 mb-3">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="note" class="form-label">Note</label>
+                                        <textarea class="form-control" rows="6" id="note" name="note">{{ old('note') }}</textarea>
+                                        @error('note')
+                                        <span class="text-danger">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+                                </div>
                             </div>
 
                             <button type="submit" class="btn btn-primary">Submit</button>
@@ -85,4 +156,18 @@
         </div>
     </div>
 
+    @push('script')
+        @include('admin.leads.script')
+        <script>
+            $(document).ready(function () {
+                $('#type').on('change', function () {
+                    const type = $(this).val();
+                    $('#fresh-client-fields').toggleClass('d-none', type != 0);
+                    $('#client_name, #client_email, #client_phone').prop('required', type == 0);
+                    $('#upsale-client-fields').toggleClass('d-none', type != 1);
+                    $('#client_key').prop('required', type == 1);
+                }).trigger('change');
+            });
+        </script>
+    @endpush
 @endsection

@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Cache;
 
 class Brand extends Model
 {
@@ -35,5 +36,26 @@ class Brand extends Model
         $shuffledBrandKey = implode('', $brandKeyArray);
         return str_pad($shuffledBrandKey, 6, '0', STR_PAD_LEFT);
     }
+    protected static function boot()
+    {
+        parent::boot();
 
+        static::created(function ($brand) {
+            Cache::forget('brands_list');
+            Cache::remember('brands_list', config('cache.durations.short_lived'), function () {
+                return Brand::all();
+            });
+        });
+
+        static::updated(function ($brand) {
+            Cache::forget('brands_list');
+            Cache::remember('brands_list', config('cache.durations.short_lived'), function () {
+                return Brand::all();
+            });
+        });
+
+        static::deleted(function ($brand) {
+            Cache::forget('brands_list');
+        });
+    }
 }

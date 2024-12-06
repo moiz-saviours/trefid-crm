@@ -9,7 +9,10 @@ use Illuminate\Notifications\Notifiable;
 class Invoice extends Model
 {
     use Notifiable, SoftDeletes;
-
+//    public function getRouteKeyName()
+//    {
+//        return 'invoice_key';
+//    }
     protected $table = 'invoices';
     protected $primaryKey = 'id';
 
@@ -23,6 +26,9 @@ class Invoice extends Model
         'team_key',
         'client_key',
         'agent_id',
+        'agent_type',
+        'creator_id',
+        'creator_type',
         'invoice_key',
         'invoice_number',
         'description',

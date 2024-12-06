@@ -1,7 +1,17 @@
 @extends('admin.layouts.app')
 @section('title', 'Employee / Create')
+@push('breadcrumb')
+    <li class="breadcrumb-item text-sm " aria-current="page"><a
+            href="{{route('admin.employee.index')}}">Employee</a>
+    </li>
+    <li class="breadcrumb-item text-sm  active" aria-current="page"><a
+            href="{{route('admin.employee.edit')}}">Create</a>
+    </li>
+@endpush
 @section('content')
-
+    @push('style')
+        @include('admin.employees.style')
+    @endpush
     <div class="container-fluid py-4">
         <div class="row">
             <div class="col-12">
@@ -22,7 +32,8 @@
 
                             <div class="mb-3">
                                 <label for="email" class="form-label">Email</label>
-                                <input type="email" class="form-control" id="email" name="email" placeholder="example@domain.com" required>
+                                <input type="email" class="form-control" id="email" name="email"
+                                       placeholder="example@domain.com" required>
                                 @error('email')
                                 <span class="text-danger">{{ $message }}</span>
                                 @enderror
@@ -30,7 +41,8 @@
 
                             <div class="mb-3">
                                 <label for="designation" class="form-label">Designation</label>
-                                <input type="text" class="form-control" id="designation" name="designation" placeholder="e.g. Software Engineer">
+                                <input type="text" class="form-control" id="designation" name="designation"
+                                       placeholder="e.g. Software Engineer">
                                 @error('designation')
                                 <span class="text-danger">{{ $message }}</span>
                                 @enderror
@@ -47,7 +59,8 @@
 
                             <div class="mb-3">
                                 <label for="phone_number" class="form-label">Phone Number</label>
-                                <input type="text" class="form-control" id="phone_number" name="phone_number" placeholder="e.g. +1234567890">
+                                <input type="text" class="form-control" id="phone_number" name="phone_number"
+                                       placeholder="e.g. +1234567890">
                                 @error('phone_number')
                                 <span class="text-danger">{{ $message }}</span>
                                 @enderror
@@ -65,9 +78,11 @@
                                 <label for="image" class="form-label">Profile Image (Optional)</label>
                                 <div class="input-group">
                                     <input type="file" class="form-control" id="image" name="image" accept="image/*">
-                                    <input type="url" class="form-control" id="image_url" name="image_url" placeholder="https://example.com/image.png">
+                                    <input type="url" class="form-control" id="image_url" name="image_url"
+                                           placeholder="https://example.com/image.png">
                                 </div>
-                                <small class="form-text text-muted">You can either upload an image or provide a valid image URL.</small>
+                                <small class="form-text text-muted">You can either upload an image or provide a valid
+                                    image URL.</small>
                                 @error('image')
                                 <span class="text-danger">{{ $message }}</span>
                                 @enderror

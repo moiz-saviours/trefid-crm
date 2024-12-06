@@ -105,4 +105,9 @@ return [
 
     'prefix' => env('CACHE_PREFIX', Str::slug(env('APP_NAME', 'laravel'), '_').'_cache_'),
 
+    'durations' => [
+        'short_lived' => env('CACHE_SHORT_LIVED_DURATION', 60),
+        'medium_lived' => env('CACHE_MEDIUM_LIVED_DURATION', 3600),
+        'long_lived' => env('CACHE_LONG_LIVED_DURATION', 86400 * 7),
+    ],
 ];

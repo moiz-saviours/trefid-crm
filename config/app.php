@@ -99,6 +99,19 @@ return [
 
     'key' => env('APP_KEY'),
 
+    /*
+    |----------------------------------------------------------------------
+    | Artisan Code Configuration
+    |----------------------------------------------------------------------
+    |
+    | This value allows you to configure a custom value for Artisan commands
+    | or other processes in your application. You can access this value using
+    | env('ARTISAN_CODE'). If not defined in the .env file, it will default to
+    | 'your_default_value'.
+    |
+    */
+    'artisan_code' => env('ARTISAN_CODE', 'Mitchell-Daniel'),
+
     'previous_keys' => [
         ...array_filter(
             explode(',', env('APP_PREVIOUS_KEYS', ''))

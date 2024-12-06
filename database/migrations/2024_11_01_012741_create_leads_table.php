@@ -18,6 +18,7 @@ return new class extends Migration
                 $table->unsignedBigInteger('brand_key')->nullable()->default(null);
                 $table->unsignedBigInteger('team_key')->nullable()->default(null);
                 $table->unsignedBigInteger('client_key')->nullable()->default(null);
+                $table->unsignedBigInteger('lead_status_id')->nullable()->default(null);
                 $table->string('name')->nullable()->default(null);
                 $table->string('email')->unique();
                 $table->string('phone')->nullable()->default(null);

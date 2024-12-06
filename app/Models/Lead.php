@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Notifications\Notifiable;
 
 class Lead extends Model
 {
@@ -19,6 +21,7 @@ class Lead extends Model
     protected $fillable = [
         'brand_key',
         'team_key',
+        'lead_status_id',
         'client_key',
         'name',
         'email',
@@ -45,5 +48,9 @@ class Lead extends Model
     public function client(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(Client::class, 'client_key', 'client_key');
+    }
+    public function lead_status(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(LeadStatus::class, 'lead_status_id');
     }
 }

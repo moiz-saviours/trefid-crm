@@ -40,7 +40,7 @@ return new class extends Migration {
             });
         }
 
-        if (Schema::hasTable('invoices') && Schema::hasColumn('invoices', 'client_key')) {
+        if (Schema::hasColumn('invoices', 'client_key')) {
             Schema::table('invoices', function (Blueprint $table) {
                 $table->foreign('client_key')->references('client_key')->on('clients')->onDelete('NO ACTION');
             });

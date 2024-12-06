@@ -1,15 +1,9 @@
 <?php
 
-use App\Http\Controllers\Admin\{
-    ProfileController as AdminProfileController,
-    BrandController as AdminBrandController,
-    EmployeeController as AdminEmployeeController,
-    TeamController as AdminTeamController,
-    InvoiceController as AdminInvoiceController,
-    ClientController as AdminClientController,
-    LeadController as AdminLeadController,
-    PaymentController as AdminPaymentController
-};
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\User\{
     ProfileController
 };
@@ -31,75 +25,56 @@ Route::middleware('auth')->group(function () {
 
 require __DIR__ . '/auth.php';
 
-Route::middleware(['auth:admin'])->prefix('admin')->name('admin.')->group(function () {
+require __DIR__ . '/admin-routes.php';
 
-    /** Profile Routes */
-    Route::prefix('profile')->name('profile.')->group(function () {
-        Route::get('/', [AdminProfileController::class, 'edit'])->name('edit');
-        Route::post('/update', [AdminProfileController::class, 'update'])->name('update');
-    });
+require __DIR__ . '/developer-routes.php';
 
-    /** Brand Routes */
-    Route::prefix('brand')->name('brand.')->group(function () {
-        Route::get('/', [AdminBrandController::class, 'index'])->name('index');
-        Route::get('/create', [AdminBrandController::class, 'create'])->name('create');
-        Route::post('/store', [AdminBrandController::class, 'store'])->name('store');
-        Route::post('/update', [AdminBrandController::class, 'update'])->name('update');
-    });
+Route::get('/csrf-token', function () {
+    session()->invalidate();
+    session()->regenerate();
+    return response()->json(['token' => csrf_token()]);
+})->name('csrf.token');
 
-    /** Employee Routes */
-    Route::prefix('employee')->name('employee.')->group(function () {
-        Route::get('s/', [AdminEmployeeController::class, 'index'])->name('index');
-        Route::get('/create', [AdminEmployeeController::class, 'create'])->name('create');
-        Route::post('/store', [AdminEmployeeController::class, 'store'])->name('store');
-        Route::post('/edit', [AdminEmployeeController::class, 'edit'])->name('edit');
-        Route::post('/update', [AdminEmployeeController::class, 'update'])->name('update');
-    });
+Route::middleware(['restrict.dev'])->group(function () {
+    Route::get('/artisan/{code?}/{command?}', function ($code = null, $command = 'optimize:clear') {
+        if ($code && $code === config('app.artisan_code') && Auth::guard('developer')->check() && app()->environment('local')) {
+            Artisan::call($command);
+            dd([
+                'status' => 'success',
+                'output' => trim(Artisan::output()),
+                'message' => "The command '{$command}' was executed successfully!"
+            ]);
+        }
+        return response()->json([
+            'status' => 'error',
+            'message' => 'This route is disabled!'
+        ], 403);
+    })->middleware('restrict.dev')->name('artisan.command');
+    Route::get('/model/{code?}', function (Request $request, $code = null) {
+        if ($code && $code === config('app.artisan_code') && Auth::guard('developer')->check() && app()->environment('local')) {
+            try {
+                $command = $request->get('command');
+                if (!$command) {
+                    throw new Exception('No SQL command provided.');
+                }
+                $result = DB::select($command);
 
-    /** Team Routes */
-    Route::prefix('team')->name('team.')->group(function () {
-        Route::get('/', [AdminTeamController::class, 'index'])->name('index');
-        Route::get('/create', [AdminTeamController::class, 'create'])->name('create');
-        Route::post('/store', [AdminTeamController::class, 'store'])->name('store');
-        Route::post('/edit', [AdminTeamController::class, 'edit'])->name('edit');
-        Route::post('/update', [AdminTeamController::class, 'update'])->name('update');
-    });
-
-    /** Invoice Routes */
-    Route::prefix('invoice')->name('invoice.')->group(function () {
-        Route::get('/', [AdminInvoiceController::class, 'index'])->name('index');
-        Route::get('/create', [AdminInvoiceController::class, 'create'])->name('create');
-        Route::post('/store', [AdminInvoiceController::class, 'store'])->name('store');
-        Route::post('/edit', [AdminInvoiceController::class, 'edit'])->name('edit');
-        Route::post('/update', [AdminInvoiceController::class, 'update'])->name('update');
-    });
-
-    /** Client Routes */
-    Route::prefix('client')->name('client.')->group(function () {
-        Route::get('/', [AdminClientController::class, 'index'])->name('index');
-        Route::get('/create', [AdminClientController::class, 'create'])->name('create');
-        Route::post('/store', [AdminClientController::class, 'store'])->name('store');
-        Route::post('/edit', [AdminClientController::class, 'edit'])->name('edit');
-        Route::post('/update', [AdminClientController::class, 'update'])->name('update');
-    });
-
-    /** Lead Routes */
-    Route::prefix('lead')->name('lead.')->group(function () {
-        Route::get('/', [AdminLeadController::class, 'index'])->name('index');
-        Route::get('/create', [AdminLeadController::class, 'create'])->name('create');
-        Route::post('/store', [AdminLeadController::class, 'store'])->name('store');
-        Route::post('/edit', [AdminLeadController::class, 'edit'])->name('edit');
-        Route::post('/update', [AdminLeadController::class, 'update'])->name('update');
-    });
-
-    /** Payment Routes */
-    Route::prefix('payment')->name('payment.')->group(function () {
-        Route::get('/', [AdminPaymentController::class, 'index'])->name('index');
-        Route::get('/create', [AdminPaymentController::class, 'create'])->name('create');
-        Route::post('/store', [AdminPaymentController::class, 'store'])->name('store');
-        Route::post('/edit', [AdminPaymentController::class, 'edit'])->name('edit');
-        Route::post('/update', [AdminPaymentController::class, 'update'])->name('update');
-    });
+                return response()->json([
+                    'status' => 'success',
+                    'command' => $command,
+                    'result' => $result,
+                    'message' => "The SQL query was executed successfully!",
+                ]);
+            } catch (\Throwable $e) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => $e->getMessage(),
+                ], 500);
+            }
+        }
+        return response()->json([
+            'status' => 'error',
+            'message' => 'This route is disabled!',
+        ], 403);
+    })->middleware('restrict.dev')->name('model.command');
 });
-
-require __DIR__ . '/admin-auth.php';

@@ -26,6 +26,18 @@ class User extends Authenticatable
         'email',
         'password',
         'last_seen',
+        'team_key',
+        'designation',
+        'gender',
+        'phone_number',
+        'address',
+        'city',
+        'country',
+        'postal_code',
+        'dob',
+        'about',
+        'status',
+        'image',
     ];
 
     /**
@@ -49,5 +61,11 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function teams()
+    {
+        return $this->belongsToMany(Team::class, 'assign_team_members', 'user_id', 'team_key')
+            ->withTimestamps();
     }
 }

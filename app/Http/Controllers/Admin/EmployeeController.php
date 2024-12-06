@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 
@@ -104,9 +105,15 @@ class EmployeeController extends Controller
         ]));
 
         if ($request->hasFile('image')) {
-//            if ($user->image) {
-//                Storage::disk('public')->delete('assets/images/employees/' . $user->image);
-//            }
+
+            if ($user->image) {
+                if (!filter_var($user->image, FILTER_VALIDATE_URL)) {
+                    $path = public_path('assets/images/employees/' . $user->image);
+                    if (File::exists($path)) {
+//                        File::delete($path);
+                    }
+                }
+            }
             $originalFileName = time() . '_' . $request->file('image')->getClientOriginalName();
             $publicPath = public_path('assets/images/employees');
             $request->file('image')->move($publicPath, $originalFileName);
@@ -121,15 +128,41 @@ class EmployeeController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(User $user)
+    public function delete(User $user)
     {
-        // Remove image if exists
-//        if ($user->image) {
-//            Storage::disk('public')->delete('assets/images/employees/' . $user->image);
-//        }
+        try {
+            if ($user->image) {
+                if (!filter_var($user->image, FILTER_VALIDATE_URL)) {
+                    $path = public_path('assets/images/employees/' . $user->image);
+                    if (File::exists($path)) {
+//                        File::delete($path);
+                    }
+                }
+            }
+            if ($user->delete()) {
+                return response()->json(['success' => 'The record has been deleted successfully.']);
+            }
+            return response()->json(['error' => 'An error occurred while deleting the record.']);
 
-        $user->delete();
+        } catch (\Exception $e) {
+            return response()->json(['error' => ' Internal Server Error', 'message' => $e->getMessage(), 'line' => $e->getLine()], 500);
+        }
+    }
 
-        return redirect()->route('admin.employee.index')->with('success', 'Employee deleted successfully.');
+    /**
+     * Change the specified resource status from storage.
+     */
+    public function change_status(Request $request, User $user)
+    {
+        try {
+            if (!$user->id) {
+                return response()->json(['error' => 'Record not found. Please try again later.'], 404);
+            }
+            $user->status = $request->query('status');
+            $user->save();
+            return response()->json(['message' => 'Status updated successfully']);
+        } catch (\Exception $e) {
+            return response()->json(['error' => ' Internal Server Error', 'message' => $e->getMessage(), 'line' => $e->getLine()], 500);
+        }
     }
 }

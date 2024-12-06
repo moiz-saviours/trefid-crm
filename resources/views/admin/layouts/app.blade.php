@@ -12,57 +12,63 @@
 </head>
 
 <body class="g-sidenav-show   bg-gray-100">
-
+<div id="loader">
+    <div class="spinner"></div>
+</div>
 @if(view()->getSection('bg') == true)
     <div class="position-absolute w-100 min-height-300 top-0"
          style="background-image: url('{{asset('assets/img/profile-layout-header.jpg')}}'); background-position-y: 50%;">
-        <span class="mask bg-primary opacity-6"></span>
+        <span class="mask opacity-6"></span>
     </div>
 @else
-    <div class="min-height-300 bg-dark position-absolute w-100"></div>
+    {{--    <div class="min-height-300 bg-dark position-absolute w-100"></div>--}}
+    <div class="position-absolute w-100 min-height-300 top-0"
+         style="background-image: url('{{asset('assets/img/profile-layout-header.jpg')}}'); background-position-y: 50%;">
+        <span class="mask opacity-6"></span>
+    </div>
 @endif
 @include('admin.layouts.navigation')
 
-<main class="main-content position-relative max-height-vh-100 h-100 ">
+<main class="main-content position-relative max-height-vh-100 h-100 " style="margin-top: 17px;">
     @include('admin.layouts.navbar')
     @yield('content')
 
-    <footer class="footer pt-3  ">
-        <div class="container-fluid">
-            <div class="row align-items-center justify-content-lg-between">
-                <div class="col-lg-6 mb-lg-0 mb-4">
-                    <div class="copyright text-center text-sm text-muted text-lg-start">
-                        ©
-                        <script>
-                            document.write(new Date().getFullYear())
-                        </script>
-                        ,
-                        made with <i class="fa fa-heart"></i>
-                        <a href="https://www.creative-tim.com" class="font-weight-bold" target="_blank"></a>
-                        for a better web.
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <ul class="nav nav-footer justify-content-center justify-content-lg-end">
-                        <li class="nav-item">
-                            <a href="https://www.creative-tim.com" class="nav-link text-muted" target="_blank"></a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="https://www.creative-tim.com/presentation" class="nav-link text-muted"
-                               target="_blank">About Us</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="https://www.creative-tim.com/blog" class="nav-link text-muted" target="_blank">Blog</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="https://www.creative-tim.com/license" class="nav-link pe-0 text-muted"
-                               target="_blank">License</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </footer>
+    {{--    <footer class="footer pt-3  ">--}}
+    {{--        <div class="container-fluid">--}}
+    {{--            <div class="row align-items-center justify-content-lg-between">--}}
+    {{--                <div class="col-lg-6 mb-lg-0 mb-4">--}}
+    {{--                    <div class="copyright text-center text-sm text-muted text-lg-start">--}}
+    {{--                        ©--}}
+    {{--                        <script>--}}
+    {{--                            document.write(new Date().getFullYear())--}}
+    {{--                        </script>--}}
+    {{--                        ,--}}
+    {{--                        made with <i class="fa fa-heart"></i>--}}
+    {{--                        <a href="https://www.creative-tim.com" class="font-weight-bold" target="_blank"></a>--}}
+    {{--                        for a better web.--}}
+    {{--                    </div>--}}
+    {{--                </div>--}}
+    {{--                <div class="col-lg-6">--}}
+    {{--                    <ul class="nav nav-footer justify-content-center justify-content-lg-end">--}}
+    {{--                        <li class="nav-item">--}}
+    {{--                            <a href="https://www.creative-tim.com" class="nav-link text-muted" target="_blank"></a>--}}
+    {{--                        </li>--}}
+    {{--                        <li class="nav-item">--}}
+    {{--                            <a href="https://www.creative-tim.com/presentation" class="nav-link text-muted"--}}
+    {{--                               target="_blank">About Us</a>--}}
+    {{--                        </li>--}}
+    {{--                        <li class="nav-item">--}}
+    {{--                            <a href="https://www.creative-tim.com/blog" class="nav-link text-muted" target="_blank">Blog</a>--}}
+    {{--                        </li>--}}
+    {{--                        <li class="nav-item">--}}
+    {{--                            <a href="https://www.creative-tim.com/license" class="nav-link pe-0 text-muted"--}}
+    {{--                               target="_blank">License</a>--}}
+    {{--                        </li>--}}
+    {{--                    </ul>--}}
+    {{--                </div>--}}
+    {{--            </div>--}}
+    {{--        </div>--}}
+    {{--    </footer>--}}
 </main>
 <div class="fixed-plugin">
     <a class="fixed-plugin-button text-dark position-fixed px-3 py-2">
@@ -71,8 +77,7 @@
     <div class="card shadow-lg">
         <div class="card-header pb-0 pt-3 ">
             <div class="float-start">
-                <h5 class="mt-3 mb-0">Argon Configurator</h5>
-                <p>See our dashboard options.</p>
+                <h5 class="mt-3 mb-0">Configurations</h5>
             </div>
             <div class="float-end mt-4">
                 <button class="btn btn-link text-dark p-0 fixed-plugin-close-button">
@@ -130,24 +135,6 @@
                     <input class="form-check-input mt-1 ms-auto" type="checkbox" id="dark-version"
                            onclick="darkMode(this)">
                 </div>
-            </div>
-            <a class="btn bg-gradient-dark w-100" href="#product/dashboard">Free
-                Download</a>
-            <a class="btn btn-outline-dark w-100"
-               href="#">View documentation</a>
-            <div class="w-100 text-center">
-                <a class="github-button" href="#"
-                   data-icon="octicon-star" data-size="large" data-show-count="true"
-                   aria-label="Star dashboard on GitHub">Star</a>
-                <h6 class="mt-3">Thank you for sharing!</h6>
-                <a href="#"
-                   class="btn btn-dark mb-0 me-2" target="_blank">
-                    <i class="fab fa-twitter me-1" aria-hidden="true"></i> Tweet
-                </a>
-                <a href="#"
-                   class="btn btn-dark mb-0 me-2" target="_blank">
-                    <i class="fab fa-facebook-square me-1" aria-hidden="true"></i> Share
-                </a>
             </div>
         </div>
     </div>

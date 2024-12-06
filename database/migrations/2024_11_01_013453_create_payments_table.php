@@ -29,7 +29,8 @@ return new class extends Migration
                 $table->longText('transaction_response')->nullable()->default(null);
 
                 $table->decimal('amount', 16, 2)->nullable()->default(0.00);
-                $table->integer('status')->nullable()->default(1)->comment('0 = inactive, 1 = active');
+                $table->tinyInteger('payment_type')->nullable()->default(0)->comment('0 = fresh, 1 = upsale');
+                $table->tinyInteger('status')->nullable()->default(1)->comment('0 = due, 1 = paid , 2 = refund');
                 $table->softDeletes();
                 $table->timestamps();
 

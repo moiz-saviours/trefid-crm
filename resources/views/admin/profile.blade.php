@@ -2,16 +2,62 @@
 @section('title','Profile')
 @section('bg',true)
 @section('content')
+    @push('style')
+        <style>
+            .image-container {
+                position: relative;
+                width: 200px;
+                height: 200px;
+            }
+
+            .profile-page-image {
+                width: 100%;
+                height: 100%;
+                border-radius: 10px;
+            }
+
+            .overlay-text {
+                display: none;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                font-size: 12px;
+                background-color: rgba(0, 0, 0, 0.5);
+                padding: 8px;
+                border-radius: 10px;
+            }
+
+            .image-container:hover .overlay-text {
+                display: block;
+            }
+
+            #imageUpload {
+                display: none;
+            }
+
+            p.text-white {
+                font-size: 11px;
+                width: 58px;
+                height: 57px;
+            }
+        </style>
+    @endpush
     <div class="card shadow-lg mx-4 card-profile-bottom">
         <div class="card-body p-3">
             <div class="row gx-4">
                 <div class="col-auto">
-                    <div class="avatar avatar-xl position-relative">
+                    <div class="avatar avatar-xl position-relative image-container">
                         <img
-                            src="{{$user->image && file_exists(public_path('assets/images/profile/'.$user->image)) ? asset('assets/images/profile/'.$user->image) : asset('assets/img/team-1.jpg')}}"
-                            alt="{{$user->image}}"
-                            class="w-100 border-radius-lg shadow-sm">
+                            src="{{$user->image && file_exists(public_path('assets/images/admins/'.$user->image)) ? asset('assets/images/admins/'.$user->image) : asset('assets/img/team-1.jpg')}}"
+                            alt="{{$user->name}}" title="change image"
+                            class="w-100 border-radius-lg shadow-sm profile-page-image profile-image">
+                        <div class="overlay-text position-absolute top-50 start-50 translate-middle">
+                            <p class="text-white mb-0">Click to update image</p>
+                        </div>
+
                     </div>
+                    <input type="file" id="imageUpload" class="d-none" accept="image/*">
                 </div>
                 <div class="col-auto my-auto">
                     <div class="h-100">
@@ -253,7 +299,7 @@
                                 <i class="ni location_pin mr-2"></i>Bucharest, Romania
                             </div>
                             <div class="h6 mt-4">
-                                <i class="ni business_briefcase-24 mr-2"></i>Solution Manager -  Officer
+                                <i class="ni business_briefcase-24 mr-2"></i>Solution Manager - Officer
                             </div>
                             <div>
                                 <i class="ni education_hat mr-2"></i>University of Computer Science
@@ -298,3 +344,35 @@
         </footer>
     </div>
 @endsection
+@push('script')
+    <script>
+        $(document).ready(function () {
+            $('.image-container').click(function () {
+                $('#imageUpload').trigger('click');
+            });
+
+            $('#imageUpload').change(function (event) {
+                var file = event.target.files[0];
+                if (file) {
+
+                    var formData = new FormData();
+                    formData.append('image', file);
+
+                    AjaxPostRequestPromise(`{{route('admin.profile.image.update')}}`, formData)
+                        .then(function (response) {
+                            $('.profile-image').attr('src', response.imageUrl);
+                        })
+                        .catch(function (error) {
+                        });
+                    // var reader = new FileReader();
+                    // reader.onload = function (e) {
+                    //     $('.profile-image').attr('src', e.target.result);
+                    // };
+                    // reader.readAsDataURL(file);
+                }
+            });
+
+        });
+
+    </script>
+@endpush

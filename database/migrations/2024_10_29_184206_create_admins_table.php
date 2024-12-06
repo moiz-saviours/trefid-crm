@@ -27,7 +27,7 @@ return new class extends Migration {
             $table->string('about')->nullable()->default(null);
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->enum('type', ['super-admin', 'admin', 'developer', 'editor', 'viewer'])->nullable()->default('admin');
+            $table->enum('type', ['super-admin', 'admin', 'editor', 'viewer'])->nullable()->default('admin');
             $table->rememberToken();
             $table->integer('status')->nullable()->default(1)->comment('0 = inactive, 1 = active');
             $table->softDeletes();

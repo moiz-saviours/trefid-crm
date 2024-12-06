@@ -38,6 +38,36 @@ class ProfileController extends Controller
         return Redirect::route('admin.profile.edit')->with('success', 'Profile successfully updated.');
     }
 
+
+        /**
+         * Update the user's profile image.
+         */
+        public function image_update(Request $request)
+        {
+            $request->validate([
+                'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            ]);
+
+            if ($request->hasFile('image')) {
+                $originalFileName = time() . '_' . $request->file('image')->getClientOriginalName();
+                $publicPath = public_path('assets/images/admins');
+                $request->file('image')->move($publicPath, $originalFileName);
+                auth()->user()->image = $originalFileName;
+                auth()->user()->save();
+
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Profile image successfully uploaded',
+                    'imageUrl' => asset('assets/images/admins/' . $originalFileName),
+                ]);
+            }
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to upload the profile image.'
+            ]);
+        }
+
     /**
      * Delete the user's account.
      */

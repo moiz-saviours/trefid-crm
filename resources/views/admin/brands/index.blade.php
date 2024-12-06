@@ -1,58 +1,77 @@
 @extends('admin.layouts.app')
 @section('title','Brands')
+@section('datatable', true)
+@push('breadcrumb')
+    <li class="breadcrumb-item text-sm active" aria-current="page"><a href="{{route('admin.brand.index')}}">Brand</a>
+    </li>
+@endpush
 @section('content')
-    @push('css')
-        <!-- DataTables CSS -->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
-        <link rel="stylesheet" href="https://cdn.datatables.net/2.1.8/css/dataTables.bootstrap5.css">
-
+    @push('style')
+        @include('admin.brands.style')
     @endpush
     <div class="container-fluid py-4">
         <div class="row">
             <div class="col-12">
                 <div class="card mb-4">
-                    <div class="card-header pb-0">
-                        <h3 class="text-center">Brand Table</h3>
-                        <a href="{{ route('admin.brand.create') }}" class="btn btn-primary float-end"><i
-                                class="fas fa-plus"></i></a>
-
+                    <div class="card-header pb-0 d-flex justify-content-between align-items-center">
+                        <h6 class="text-center">Brand Table</h6>
+                        <button type="button" class="btn btn-secondary float-end rounded-pill" data-bs-toggle="modal"
+                                id="create-modal-btn" data-bs-target="#create-modal">
+                            <i class="fas fa-plus"></i>
+                        </button>
                     </div>
                     <div class="card-body px-0 pt-0 pb-2">
-                        <div class="table table-responsive p-0">
-                            <table id="brandsTable" class="table table-striped" style="width: 100%">
+                        <div class="table table-responsive p-3">
+                            <table id="brandsTable" class="table table-striped datatable-exportable"
+                                   style="width: 100%">
                                 <thead>
                                 <tr>
-                                    <th class="align-middle text-center text-nowrap" >Id</th>
-                                    <th class="align-middle text-center text-nowrap" >Logo</th>
-                                    <th class="align-middle text-center text-nowrap" >Brand Key</th>
-                                    <th class="align-middle text-center text-nowrap" >Name</th>
-                                    <th class="align-middle text-center text-nowrap" >Url</th>
-                                    <th class="align-middle text-center text-nowrap" >Status</th>
-                                    <th class=""></th>
+                                    <th class="align-middle text-center text-nowrap">Id</th>
+                                    <th class="align-middle text-center text-nowrap">Logo</th>
+                                    <th class="align-middle text-center text-nowrap">Brand Key</th>
+                                    <th class="align-middle text-center text-nowrap">Name</th>
+                                    <th class="align-middle text-center text-nowrap">Url</th>
+                                    <th class="align-middle text-center text-nowrap">Status</th>
+                                    <th class="">Action</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 @foreach($brands as $key => $brand)
-                                    <tr>
-                                        <td class="align-middle text-center text-nowrap" >{{$brand->id}}</td>
-                                        <td class="align-middle text-center text-nowrap" ><img
-                                                src="{{ filter_var($brand->logo, FILTER_VALIDATE_URL) ? $brand->logo : asset('assets/images/brand-logos/'.$brand->logo) }}"
+                                    <tr id="tr-{{$brand->id}}">
+                                        <td class="align-middle text-center text-nowrap">{{$brand->id}}</td>
+                                        <td class="align-middle text-center text-nowrap">
+                                            @php
+                                                $logoUrl = filter_var($brand->logo, FILTER_VALIDATE_URL) ? $brand->logo : asset('assets/images/brand-logos/'.$brand->logo);
+                                            @endphp
+                                            <object
+                                                data="{{ $logoUrl }}"
                                                 class="avatar avatar-sm me-3"
-                                                alt="{{$brand->name}}" title="{{$brand->name}}">
+                                                title="{{ $brand->name }}"
+                                            >
+                                                <img
+                                                    src="{{ $logoUrl }}"
+                                                    alt="{{ $brand->name }}"
+                                                    class="avatar avatar-sm me-3"
+                                                    title="{{ $brand->name }}">
+                                            </object>
                                         </td>
-                                        <td class="align-middle text-center text-nowrap" >{{$brand->brand_key}}
+                                        <td class="align-middle text-center text-nowrap">{{$brand->brand_key}}</td>
+                                        <td class="align-middle text-center text-nowrap">{{$brand->name}}
                                         </td>
-                                        <td class="align-middle text-center text-nowrap" >{{$brand->name}}
+                                        <td class="align-middle text-center text-nowrap">{{$brand->url}}
                                         </td>
-                                        <td class="align-middle text-center text-nowrap" >{{$brand->url}}
+                                        <td class="align-middle text-center text-nowrap">
+                                            <input type="checkbox" class="status-toggle change-status" data-id="{{ $brand->id }}"
+                                                   {{ $brand->status == 1 ? 'checked' : '' }} data-bs-toggle="toggle">
                                         </td>
-                                        <td class="align-middle text-center text-nowrap" ><span
-                                                class="badge badge-sm bg-gradient-{{$brand->status == 1 ? "success" : "primary"}}">{{$brand->status == 1 ? "Active" : "Inactive"}}</span>
-                                        </td>
-                                        <td class="align-middle text-center">
-                                            <a href="javascript:;" class="text-secondary font-weight-bold text-xs"
-                                               data-toggle="tooltip" data-original-title="Edit user">
-                                                Edit
+                                        <td class="align-middle text-center table-actions">
+                                            <a href="javascript:void(0)" data-id="{{ $brand->id }}"
+                                               class="text-secondary editBtn" title="Edit Brand">
+                                                <i class="fas fa-edit"></i>
+                                            </a>
+                                            <a href="javascript:void(0)" class="text-secondary deleteBtn"
+                                               data-id="{{ $brand->id }}" title="Delete Brand">
+                                                <i class="fas fa-trash"></i>
                                             </a>
                                         </td>
                                     </tr>
@@ -65,15 +84,12 @@
             </div>
         </div>
     </div>
-    @push('script')
-        <!-- DataTables JS -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
-<script src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
-<script src="https://cdn.datatables.net/2.1.8/js/dataTables.bootstrap5.js"></script>
-        <script>
-            $(document).ready(function () {
-            });
-        </script>
 
+    <!-- Modal -->
+    @include('admin.brands.create-modal')
+    @include('admin.brands.edit-modal')
+
+    @push('script')
+        @include('admin.brands.script')
     @endpush
 @endsection

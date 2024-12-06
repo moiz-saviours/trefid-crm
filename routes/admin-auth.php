@@ -12,7 +12,6 @@ use App\Http\Controllers\Admin\Auth\{
     RegisteredAdminController as AdminRegisteredAdminController
 };
 use Illuminate\Support\Facades\Route;
-
 Route::prefix('admin')->name('admin.')->group(function () {
     Route::middleware('guest:admin')->group(function () {
         Route::get('register', [AdminRegisteredAdminController::class, 'create'])->name('register');
