@@ -173,10 +173,10 @@
                         <ul class="mininav-content nav collapse">
                             <li data-popper-arrow class="arrow"></li>
                             <li class="nav-item">
-                                <a href="../ui-elements/buttons/index.html" class="nav-link">Contacts</a>
+                                <a href="{{route('brand.index')}}" class="nav-link">Companies</a>
                             </li>
                             <li class="nav-item">
-                                <a href="../ui-elements/cards/index.html" class="nav-link">Companies</a>
+                                <a href="#" class="nav-link">Contacts</a>
                             </li>
                             <li class="nav-item">
                                 <a href="../ui-elements/dropdowns/index.html" class="nav-link">Deals</a>

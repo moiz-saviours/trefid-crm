@@ -1,5 +1,6 @@
 <style>
-    img#brand-logo {
-        width: 120px !important;
+    td object {
+        width: 48px;
+        height: 48px;
     }
 </style>
