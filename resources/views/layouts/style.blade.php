@@ -342,6 +342,13 @@ Detailed information and more samples can be found in the documentation.
 <link rel="stylesheet" href="{{asset('build/toaster/css/toastr.min.css')}}">
 
 <style>
+
+    .mainnav__top-content::-webkit-scrollbar {
+        display: none;
+    }
+    .root .mainnav__inner li.nav-item {
+        margin-top: 1px;
+    }
     .is-invalid {
         background-color: #f8d7da85;
     }

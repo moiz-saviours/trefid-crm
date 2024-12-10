@@ -4,7 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use App\Http\Controllers\User\{BrandController, ProfileController};
+use App\Http\Controllers\User\{BrandController, CompanyController, ProfileController};
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -23,9 +23,9 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
 
-    /** Companies / Brands Routes */
-    Route::prefix('companies')->name('brand.')->group(function () {
-        Route::get('/', [BrandController::class, 'index'])->name('index');
+    /** Companies Routes */
+    Route::prefix('companies')->name('company.')->group(function () {
+        Route::get('/', [CompanyController::class, 'index'])->name('index');
     });
 });
 

@@ -2,7 +2,7 @@
     <div class="mainnav__inner">
 
         <!-- Navigation menu -->
-        <div class="mainnav__top-content scrollable-content pb-5">
+        <div class="mainnav__top-content scrollable-content pb-5 pt-4">
 
 
             <!-- Profile Widget -->
@@ -63,7 +63,7 @@
 
 
             <!-- Navigation Category Dashboard -->
-            <div class="mainnav__categoriy py-3">
+            <div class="mainnav__categoriy py-1">
                 {{--                    <h6 class="mainnav__caption mt-0 fw-bold">Navigation</h6>--}}
                 <ul class="mainnav__menu nav flex-column">
                     <!-- Link with submenu -->
@@ -156,24 +156,24 @@
 
 
             <!-- Components Category Crm-->
-            <div class="mainnav__categoriy py-3">
-                <h6 class="mainnav__caption mt-0 fw-bold">Crm</h6>
+            <div class="mainnav__categoriy py-1">
+{{--                <h6 class="mainnav__caption mt-0 fw-bold">CRM</h6>--}}
                 <ul class="mainnav__menu nav flex-column">
 
                     <!-- Link with submenu -->
                     <li class="nav-item has-sub">
 
 
-                        <a href="#" class="mininav-toggle nav-link collapsed"><i
-                                class="demo-pli-boot-2 fs-5 me-2"></i>
-                            <span class="nav-label ms-1">Crm</span>
+                        <a href="#" class="mininav-toggle nav-link collapsed {{ request()->is('companies*') ? 'active' : '' }}"><i
+                                class="demo-pli-address-book fs-5 me-2"></i>
+                            <span class="nav-label ms-1">CRM</span>
                         </a>
 
                         <!-- Ui Elements submenu list -->
                         <ul class="mininav-content nav collapse">
                             <li data-popper-arrow class="arrow"></li>
                             <li class="nav-item">
-                                <a href="{{route('brand.index')}}" class="nav-link">Companies</a>
+                                <a href="{{route('company.index')}}" class="nav-link {{ request()->is('companies*') ? 'active' : '' }}">Companies</a>
                             </li>
                             <li class="nav-item">
                                 <a href="#" class="nav-link">Contacts</a>
@@ -405,7 +405,7 @@
             <!-- END : Components Category -->
 
             <!-- Components Category -->
-            <div class="mainnav__categoriy py-3">
+            <div class="mainnav__categoriy py-1">
                 <h6 class="mainnav__caption mt-0 fw-bold">Components</h6>
                 <ul class="mainnav__menu nav flex-column">
 
@@ -599,7 +599,7 @@
 
 
             <!-- More Category -->
-            <div class="mainnav__categoriy py-3">
+            <div class="mainnav__categoriy py-1">
                 <h6 class="mainnav__caption mt-0 fw-bold">More</h6>
                 <ul class="mainnav__menu nav flex-column">
 
@@ -864,7 +864,7 @@
 
 
             <!-- Extras Category -->
-            <div class="mainnav__categoriy py-3">
+            <div class="mainnav__categoriy py-1">
                 <h6 class="mainnav__caption mt-0 fw-bold">Extras</h6>
                 <ul class="mainnav__menu nav flex-column">
 
@@ -1028,7 +1028,8 @@
                 <li class="nav-item has-sub">
                     <button type="button" class="nav-link"
                             onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                        <i class="demo-pli-unlock fs-5 me-2"></i> Logout
+                        <i class="demo-pli-unlock fs-5 me-2"></i>
+                        <span class="nav-label ms-1">Logout</span>
                     </button>
                     <form method="POST" action="{{ route('logout') }}" id="logout-form"
                           class="d-none">

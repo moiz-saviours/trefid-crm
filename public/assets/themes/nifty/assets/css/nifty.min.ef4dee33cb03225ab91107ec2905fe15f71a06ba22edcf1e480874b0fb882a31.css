@@ -790,7 +790,7 @@ html[data-overlayscrollbars] > body::-webkit-scrollbar {
     display: flex
 }
 
-.mainnav__inner .mainnav__menu > .nav-item > .nav-link.active {
+.mainnav__inner .mainnav__menu > .nav-item > .nav-link.active ,.mainnav__inner .mainnav__menu > .nav-item > .nav-link:hover{
     background-color: var(--nf-mainnav-submenu-active-bg);
     border-radius: var(--nf-mainnav-submenu-border-radius);
     box-shadow: var(--nf-mainnav-submenu-active-shadow);
@@ -820,15 +820,23 @@ html[data-overlayscrollbars] > body::-webkit-scrollbar {
 .root .mainnav__inner .nav-link.disabled {
     opacity: .4
 }
-
-.root .mainnav__inner .nav-link:hover {
-    color: var(--nf-mainnav-link-hover)
+.parent:has(> ul > li:hover) {
+    background-color: #516f90;
+}
+.root .mainnav__inner .mainnav__menu > li.nav-item:has(.mininav-content > li .nav-link:hover ) > .nav-link ,.root .mainnav__inner .nav-link:hover {
+    color: var(--nf-mainnav-link-hover);
+    background-color: var(--nf-mainnav-submenu-active-bg);
+    border-radius: var(--nf-mainnav-submenu-border-radius);
+    box-shadow: var(--nf-mainnav-submenu-active-shadow);
+    font-weight: 400
 }
 
-.root .mainnav__inner .nav-link.active ~ .nav .active {
+.root .mainnav__inner .nav-link.active ~ .nav .active , .root .mainnav__inner .nav-link.active ~ .nav .nav-link:hover{
     color: var(--nf-mainnav-link-active);
-    text-decoration: var(--nf-mainnav-link-active-underline) var(--nf-mainnav-link-active-underline-color);
-    text-underline-offset: 5px
+    background-color: var(--nf-mainnav-submenu-active-bg);
+    border-radius: var(--nf-mainnav-submenu-border-radius);
+    box-shadow: var(--nf-mainnav-submenu-active-shadow);
+    font-weight: 400
 }
 
 .root .mainnav__inner .nav-link.active ~ .nav .active:hover {
@@ -862,7 +870,7 @@ html[data-overlayscrollbars] > body::-webkit-scrollbar {
     height: auto !important
 }
 
-.mainnav__menu .has-sub > .mininav-toggle:not(.has-badge):after {
+.mainnav__menu .has-sub > .mininav-toggle:not(.has-badge)::after {
     border-style: solid;
     border-width: .15em .15em 0 0;
     content: "";
@@ -871,8 +879,15 @@ html[data-overlayscrollbars] > body::-webkit-scrollbar {
     margin-left: auto;
     transform: rotate(135deg);
     transition: transform calc(var(--nf-mainnav-transition-duration) / 2);
-    width: .55em
+    width: .55em;
+    opacity: 0;
 }
+
+.mainnav__menu .has-sub:hover > .mininav-toggle:not(.has-badge)::after {
+    transform: rotate(45deg);
+    opacity: 1;
+}
+
 
 .mainnav__menu .has-sub > .mininav-toggle.collapsed:after {
     transform: rotate(45deg)
