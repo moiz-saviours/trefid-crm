@@ -15,6 +15,9 @@
 {{--        </div>--}}
 {{--    </div>--}}
 {{--</x-app-layout>--}}
+@extends('layouts.app')
+@section('title','Dashboard')
+@section('content')
 <section id="content" class="content">
     <div class="content__header content__boxed overlapping">
         <div class="content__wrap">
@@ -5829,3 +5832,4 @@
 
 
 </section>
+@endsection

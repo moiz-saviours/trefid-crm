@@ -11,7 +11,7 @@
                 <div class="col-12">
                     <div class="card mb-4">
                         <div class="card-header pb-0 d-flex justify-content-between align-items-center">
-                            <h6 class="text-center">Brand Table</h6>
+                            <h6 class="text-center">Company</h6>
                             <button type="button" class="btn btn-secondary float-end rounded-pill" data-bs-toggle="modal"
                                     id="create-modal-btn" data-bs-target="#create-modal">
                                 <i class="fas fa-plus"></i>

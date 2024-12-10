@@ -1,4 +1,6 @@
 <!-- Fonts [ OPTIONAL ] -->
+<!-- Font Awesome Icons -->
+<script src="{{asset('assets/fonts/fontawsome.js')}}"></script>
 <style type="text/css">
     @font-face {
         font-family: Poppins;
