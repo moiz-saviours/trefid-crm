@@ -37,7 +37,7 @@ return new class extends Migration {
     public function down(): void
     {
         Schema::table('leads', function (Blueprint $table) {
-            if ($this->foreignKeyExists('leads', 'lead_status_id')) {
+            if (Schema::hasColumn('leads', 'lead_status_id') && $this->foreignKeyExists('leads', 'lead_status_id')) {
                 $table->dropForeign(['lead_status_id']);
             }
         });

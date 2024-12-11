@@ -39,12 +39,14 @@
 
     randomLoader = randomLoaderFunction();
 
-    $(`#loader, .${randomLoader}`).show();
+    $(`#loader`).show();
+    $(`.${randomLoader}`).removeClass('load-spinner');
     $(document).ready(function () {
         if (@json(View::hasSection('datatable'))) {
-            setTimeout(() => $('#loader').hide(), 1000);
+            setTimeout(() => {$('#loader').hide();$(`.${randomLoader}`).toggleClass('load-spinner');}, 1000);
         } else {
-            $(`#loader, .${randomLoader}`).hide();
+            $(`#loader`).hide();
+            $(`.${randomLoader}`).toggleClass('load-spinner');
         }
 
         $('#testTable').DataTable();

@@ -416,63 +416,6 @@
                 </div>
             </div>
         </div>
-{{--        <div class="container-fluid py-4">--}}
-{{--            <div class="row">--}}
-{{--                <div class="col-12">--}}
-{{--                    <div class="card mb-4">--}}
-{{--                        <div class="card-header pb-0 d-flex justify-content-between align-items-center">--}}
-{{--                            <h6 class="text-center">Company</h6>--}}
-{{--                            <button type="button" class="btn btn-secondary float-end rounded-pill" data-bs-toggle="modal"--}}
-{{--                                    id="create-modal-btn" data-bs-target="#create-modal">--}}
-{{--                                <i class="fas fa-plus"></i>--}}
-{{--                            </button>--}}
-{{--                        </div>--}}
-{{--                        <div class="card-body px-0 pt-0 pb-2">--}}
-{{--                            <div class="table table-responsive p-3">--}}
-{{--                                <table id="companiesTable" class="table table-striped datatable-exportable"--}}
-{{--                                       style="width: 100%">--}}
-{{--                                    <thead>--}}
-{{--                                    <tr>--}}
-{{--                                        <th class="align-middle text-center text-nowrap">S.No#</th>--}}
-{{--                                        <th class="align-middle text-center text-nowrap">Logo</th>--}}
-{{--                                        <th class="align-middle text-center text-nowrap">Name</th>--}}
-{{--                                        <th class="align-middle text-center text-nowrap">Url</th>--}}
-{{--                                    </tr>--}}
-{{--                                    </thead>--}}
-{{--                                    <tbody>--}}
-{{--                                    @foreach($companies as $key => $company)--}}
-{{--                                        <tr id="tr-{{$company->id}}">--}}
-{{--                                            <td class="align-middle text-center text-nowrap">{{$key + 1}}--}}
-{{--                                            <td class="align-middle text-center text-nowrap">--}}
-{{--                                                @php--}}
-{{--                                                    $logoUrl = filter_var($company->logo, FILTER_VALIDATE_URL) ? $company->logo : asset('assets/images/company-logos/'.$company->logo);--}}
-{{--                                                @endphp--}}
-{{--                                                <object--}}
-{{--                                                    data="{{ $logoUrl }}"--}}
-{{--                                                    class="avatar avatar-sm me-3"--}}
-{{--                                                    title="{{ $company->name }}"--}}
-{{--                                                >--}}
-{{--                                                    <img--}}
-{{--                                                        src="{{ $logoUrl }}"--}}
-{{--                                                        alt="{{ $company->name }}"--}}
-{{--                                                        class="avatar avatar-sm me-3"--}}
-{{--                                                        title="{{ $company->name }}">--}}
-{{--                                                </object>--}}
-{{--                                            </td>--}}
-{{--                                            <td class="align-middle text-center text-nowrap">{{$company->name}}--}}
-{{--                                            </td>--}}
-{{--                                            <td class="align-middle text-center text-nowrap">{{$company->url}}--}}
-{{--                                            </td>--}}
-{{--                                        </tr>--}}
-{{--                                    @endforeach--}}
-{{--                                    </tbody>--}}
-{{--                                </table>--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--            </div>--}}
-{{--        </div>--}}
     </section>
     <!-- Modal -->
 
@@ -483,13 +426,11 @@
                 const overlay = $('#overlay');
                 const formContainer = $('#formContainer');
 
-                // Open form
                 $('.open-form-btn').click(function () {
                     formContainer.addClass('open');
                     overlay.addClass('active');
                 });
 
-                // Close form
                 $('.close-btn, #overlay').click(function () {
                     formContainer.removeClass('open');
                     overlay.removeClass('active');
@@ -503,11 +444,9 @@
 
                 tabs.forEach((tab) => {
                     tab.addEventListener("click", () => {
-                        // Remove active class from all tabs and panes
                         tabs.forEach((t) => t.classList.remove("active"));
                         panes.forEach((p) => p.classList.remove("active"));
 
-                        // Add active class to the clicked tab and corresponding pane
                         tab.classList.add("active");
                         document
                             .getElementById(tab.getAttribute("data-tab"))

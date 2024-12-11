@@ -2,7 +2,7 @@
     <div class="mainnav__inner">
 
         <!-- Navigation menu -->
-        <div class="mainnav__top-content scrollable-content pb-5 pt-4">
+        <div class="mainnav__top-content scrollable-content pb-5 pt-2">
 
 
             <!-- Profile Widget -->
@@ -63,12 +63,12 @@
 
 
             <!-- Navigation Category Dashboard -->
-            <div class="mainnav__categoriy py-1">
+            <div class="mainnav__categoriy pb-1 pt-3">
                 {{--                    <h6 class="mainnav__caption mt-0 fw-bold">Navigation</h6>--}}
                 <ul class="mainnav__menu nav flex-column">
                     <!-- Link with submenu -->
                     <li class="nav-item has-sub">
-                        <a href="#" class="mininav-toggle nav-link collapsed"><i
+                        <a href="{{route('dashboard')}}" class="mininav-toggle nav-link collapsed"><i
                                 class="demo-pli-home fs-5 me-2"></i>
                             <span class="nav-label ms-1">Dashboard</span>
                         </a>
@@ -76,13 +76,7 @@
                         <ul class="mininav-content nav collapse">
                             <li data-popper-arrow class="arrow"></li>
                             <li class="nav-item">
-                                <a href="index.html" class="nav-link">Dashboard 1</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="../dashboard-2/index.html" class="nav-link">Dashboard 2</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="../dashboard-3/index.html" class="nav-link">Dashboard 3</a>
+                                <a href="{{route('dashboard')}}" class="nav-link">Dashboard 1</a>
                             </li>
                         </ul>
                         <!-- END : Dashboard submenu list -->
@@ -157,249 +151,43 @@
 
             <!-- Components Category Crm-->
             <div class="mainnav__categoriy py-1">
-{{--                <h6 class="mainnav__caption mt-0 fw-bold">CRM</h6>--}}
-                <ul class="mainnav__menu nav flex-column">
 
+                <h6 class="mainnav__caption mt-0 fw-bold">CRM</h6>
+                <ul class="mainnav__menu nav flex-column">
                     <!-- Link with submenu -->
                     <li class="nav-item has-sub">
-
-
-                        <a href="#" class="mininav-toggle nav-link collapsed {{ request()->is('companies*') ? 'active' : '' }}"><i
+                        <a href="#"
+                           class="mininav-toggle nav-link collapsed {{ request()->is('companies*') ? 'active' : '' }}"><i
                                 class="demo-pli-address-book fs-5 me-2"></i>
-                            <span class="nav-label ms-1">CRM</span>
+                            <span class="nav-label ms-1">Companies</span>
                         </a>
-
                         <!-- Ui Elements submenu list -->
                         <ul class="mininav-content nav collapse">
                             <li data-popper-arrow class="arrow"></li>
                             <li class="nav-item">
-                                <a href="{{route('company.index')}}" class="nav-link {{ request()->is('companies*') ? 'active' : '' }}">Companies</a>
+                                <a href="{{route('company.index')}}"
+                                   class="nav-link {{ request()->is('companies*') ? 'active' : '' }}">Lists</a>
                             </li>
-                            <li class="nav-item">
-                                <a href="#" class="nav-link">Contacts</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="../ui-elements/dropdowns/index.html" class="nav-link">Deals</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="../ui-elements/components/index.html" class="nav-link">Components</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="../ui-elements/list-group/index.html" class="nav-link">List Group</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="../ui-elements/typography/index.html" class="nav-link">Typography</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="../ui-elements/modals/index.html" class="nav-link">Modals</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="../ui-elements/progress/index.html" class="nav-link">Progress</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="../ui-elements/placeholders/index.html"
-                                   class="nav-link d-flex align-items-center">Placeholders<span
-                                        class="badge bg-danger ms-auto">NEW</span></a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="../ui-elements/tabs-accordions/index.html" class="nav-link">Tabs &amp;
-                                    Accordions</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="../ui-elements/tooltips-popovers/index.html" class="nav-link">Tooltips
-                                    &amp; Popover</a>
-                            </li>
-
                         </ul>
                         <!-- END : Ui Elements submenu list -->
-
+                    </li>
+                    <li class="nav-item has-sub">
+                        <a href="#"
+                           class="mininav-toggle nav-link collapsed {{ request()->is('contacts*') ? 'active' : '' }}"><i
+                                class="demo-pli-address-book fs-5 me-2"></i>
+                            <span class="nav-label ms-1">Contacts</span>
+                        </a>
+                        <!-- Ui Elements submenu list -->
+                        <ul class="mininav-content nav collapse">
+                            <li data-popper-arrow class="arrow"></li>
+                            <li class="nav-item">
+                                <a href="{{route('contact.index')}}"
+                                   class="nav-link {{ request()->is('contacts*') ? 'active' : '' }}">Lists</a>
+                            </li>
+                        </ul>
+                        <!-- END : Ui Elements submenu list -->
                     </li>
                     <!-- END : Link with submenu -->
-
-{{--                    <!-- Link with submenu -->--}}
-{{--                    <li class="nav-item has-sub">--}}
-
-
-{{--                        <a href="#" class="mininav-toggle nav-link collapsed"><i--}}
-{{--                                class="demo-pli-boot-2 fs-5 me-2"></i>--}}
-{{--                            <span class="nav-label ms-1">Ui Elements</span>--}}
-{{--                        </a>--}}
-
-{{--                        <!-- Ui Elements submenu list -->--}}
-{{--                        <ul class="mininav-content nav collapse">--}}
-{{--                            <li data-popper-arrow class="arrow"></li>--}}
-{{--                            <li class="nav-item">--}}
-{{--                                <a href="../ui-elements/buttons/index.html" class="nav-link">Buttons</a>--}}
-{{--                            </li>--}}
-{{--                            <li class="nav-item">--}}
-{{--                                <a href="../ui-elements/cards/index.html" class="nav-link">Cards</a>--}}
-{{--                            </li>--}}
-{{--                            <li class="nav-item">--}}
-{{--                                <a href="../ui-elements/dropdowns/index.html" class="nav-link">Dropdowns</a>--}}
-{{--                            </li>--}}
-{{--                            <li class="nav-item">--}}
-{{--                                <a href="../ui-elements/components/index.html" class="nav-link">Components</a>--}}
-{{--                            </li>--}}
-{{--                            <li class="nav-item">--}}
-{{--                                <a href="../ui-elements/list-group/index.html" class="nav-link">List Group</a>--}}
-{{--                            </li>--}}
-{{--                            <li class="nav-item">--}}
-{{--                                <a href="../ui-elements/typography/index.html" class="nav-link">Typography</a>--}}
-{{--                            </li>--}}
-{{--                            <li class="nav-item">--}}
-{{--                                <a href="../ui-elements/modals/index.html" class="nav-link">Modals</a>--}}
-{{--                            </li>--}}
-{{--                            <li class="nav-item">--}}
-{{--                                <a href="../ui-elements/progress/index.html" class="nav-link">Progress</a>--}}
-{{--                            </li>--}}
-{{--                            <li class="nav-item">--}}
-{{--                                <a href="../ui-elements/placeholders/index.html"--}}
-{{--                                   class="nav-link d-flex align-items-center">Placeholders<span--}}
-{{--                                        class="badge bg-danger ms-auto">NEW</span></a>--}}
-{{--                            </li>--}}
-{{--                            <li class="nav-item">--}}
-{{--                                <a href="../ui-elements/tabs-accordions/index.html" class="nav-link">Tabs &amp;--}}
-{{--                                    Accordions</a>--}}
-{{--                            </li>--}}
-{{--                            <li class="nav-item">--}}
-{{--                                <a href="../ui-elements/tooltips-popovers/index.html" class="nav-link">Tooltips--}}
-{{--                                    &amp; Popover</a>--}}
-{{--                            </li>--}}
-
-{{--                        </ul>--}}
-{{--                        <!-- END : Ui Elements submenu list -->--}}
-
-{{--                    </li>--}}
-{{--                    <!-- END : Link with submenu -->--}}
-
-{{--                    <!-- Link with submenu -->--}}
-{{--                    <li class="nav-item has-sub">--}}
-
-
-{{--                        <a href="#" class="mininav-toggle nav-link collapsed"><i--}}
-{{--                                class="demo-pli-pen-5 fs-5 me-2"></i>--}}
-{{--                            <span class="nav-label ms-1">Forms</span>--}}
-{{--                        </a>--}}
-
-{{--                        <!-- Forms submenu list -->--}}
-{{--                        <ul class="mininav-content nav collapse">--}}
-{{--                            <li data-popper-arrow class="arrow"></li>--}}
-{{--                            <li class="nav-item">--}}
-{{--                                <a href="../forms/general/index.html" class="nav-link">General</a>--}}
-{{--                            </li>--}}
-{{--                            <li class="nav-item">--}}
-{{--                                <a href="../forms/tags/index.html" class="nav-link">Tags</a>--}}
-{{--                            </li>--}}
-{{--                            <li class="nav-item">--}}
-{{--                                <a href="../forms/date-time-picker/index.html" class="nav-link">Date Time Picker</a>--}}
-{{--                            </li>--}}
-{{--                            <li class="nav-item">--}}
-{{--                                <a href="../forms/validation/index.html" class="nav-link">Validation</a>--}}
-{{--                            </li>--}}
-{{--                            <li class="nav-item">--}}
-{{--                                <a href="../forms/wizard/index.html" class="nav-link">Wizard</a>--}}
-{{--                            </li>--}}
-{{--                            <li class="nav-item">--}}
-{{--                                <a href="../forms/file-uploads/index.html" class="nav-link">File Uploads</a>--}}
-{{--                            </li>--}}
-{{--                            <li class="nav-item">--}}
-{{--                                <a href="../forms/text-editor/index.html" class="nav-link">Text Editor</a>--}}
-{{--                            </li>--}}
-
-{{--                        </ul>--}}
-{{--                        <!-- END : Forms submenu list -->--}}
-
-{{--                    </li>--}}
-{{--                    <!-- END : Link with submenu -->--}}
-
-{{--                    <!-- Link with submenu -->--}}
-{{--                    <li class="nav-item has-sub">--}}
-
-
-{{--                        <a href="#" class="mininav-toggle nav-link collapsed"><i--}}
-{{--                                class="demo-pli-receipt-4 fs-5 me-2"></i>--}}
-{{--                            <span class="nav-label ms-1">Tables</span>--}}
-{{--                        </a>--}}
-
-{{--                        <!-- Tables submenu list -->--}}
-{{--                        <ul class="mininav-content nav collapse">--}}
-{{--                            <li data-popper-arrow class="arrow"></li>--}}
-{{--                            <li class="nav-item">--}}
-{{--                                <a href="../tables/static-tables/index.html" class="nav-link">Static Tables</a>--}}
-{{--                            </li>--}}
-{{--                            <li class="nav-item">--}}
-{{--                                <a href="../tables/gridjs/index.html" class="nav-link">Gridjs</a>--}}
-{{--                            </li>--}}
-{{--                            <li class="nav-item">--}}
-{{--                                <a href="../tables/tabulator/index.html" class="nav-link">Tabulator</a>--}}
-{{--                            </li>--}}
-
-{{--                        </ul>--}}
-{{--                        <!-- END : Tables submenu list -->--}}
-
-{{--                    </li>--}}
-{{--                    <!-- END : Link with submenu -->--}}
-
-{{--                    <!-- Link with submenu -->--}}
-{{--                    <li class="nav-item has-sub">--}}
-
-
-{{--                        <a href="#" class="mininav-toggle nav-link collapsed"><i--}}
-{{--                                class="demo-pli-bar-chart fs-5 me-2"></i>--}}
-{{--                            <span class="nav-label ms-1">Charts</span>--}}
-{{--                        </a>--}}
-
-{{--                        <!-- Charts submenu list -->--}}
-{{--                        <ul class="mininav-content nav collapse">--}}
-{{--                            <li data-popper-arrow class="arrow"></li>--}}
-{{--                            <li class="nav-item">--}}
-{{--                                <a href="../charts/chart.js/index.html" class="nav-link">ChartJS</a>--}}
-{{--                            </li>--}}
-{{--                            <li class="nav-item">--}}
-{{--                                <a href="../charts/charts.css/index.html" class="nav-link">ChartsCSS</a>--}}
-{{--                            </li>--}}
-{{--                            <li class="nav-item">--}}
-{{--                                <a href="../charts/sparklines/index.html" class="nav-link">Sparklines</a>--}}
-{{--                            </li>--}}
-
-{{--                        </ul>--}}
-{{--                        <!-- END : Charts submenu list -->--}}
-
-{{--                    </li>--}}
-{{--                    <!-- END : Link with submenu -->--}}
-
-{{--                    <!-- Link with submenu -->--}}
-{{--                    <li class="nav-item has-sub">--}}
-
-
-{{--                        <a href="#" class="mininav-toggle nav-link collapsed"><i--}}
-{{--                                class="demo-pli-repair fs-5 me-2"></i>--}}
-{{--                            <span class="nav-label ms-1">Miscellaneous</span>--}}
-{{--                        </a>--}}
-
-{{--                        <!-- Miscellaneous submenu list -->--}}
-{{--                        <ul class="mininav-content nav collapse">--}}
-{{--                            <li data-popper-arrow class="arrow"></li>--}}
-{{--                            <li class="nav-item">--}}
-{{--                                <a href="../miscellaneous/timeline/index.html" class="nav-link">Timeline</a>--}}
-{{--                            </li>--}}
-{{--                            <li class="nav-item">--}}
-{{--                                <a href="../miscellaneous/loader.css/index.html" class="nav-link">Loader.CSS</a>--}}
-{{--                            </li>--}}
-{{--                            <li class="nav-item">--}}
-{{--                                <a href="../miscellaneous/spinkit/index.html" class="nav-link">Spinkit</a>--}}
-{{--                            </li>--}}
-{{--                            <li class="nav-item">--}}
-{{--                                <a href="../miscellaneous/clipboard/index.html" class="nav-link">Clipboard</a>--}}
-{{--                            </li>--}}
-
-{{--                        </ul>--}}
-{{--                        <!-- END : Miscellaneous submenu list -->--}}
-
-{{--                    </li>--}}
-{{--                    <!-- END : Link with submenu -->--}}
-
-
                 </ul>
             </div>
             <!-- END : Components Category -->
