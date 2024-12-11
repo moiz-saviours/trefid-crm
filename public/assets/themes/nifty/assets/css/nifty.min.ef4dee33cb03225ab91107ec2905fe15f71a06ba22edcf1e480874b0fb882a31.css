@@ -103,7 +103,7 @@ html[data-overlayscrollbars] > body::-webkit-scrollbar {
 }
 
 .content {
-    background-color: var(--bs-body-bg);
+    background-color: var(--bs-white);
     color: var(--bs-body-color);
     display: flex;
     flex-direction: column;
