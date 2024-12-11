@@ -16,7 +16,7 @@ body {
 
 :root {
     --nf-backdrop-bg: rgba(26, 29, 33, 0.75);
-    --nf-content-title-size: 2.25rem;
+    --nf-content-title-size: 1.75rem;
     --nf-content-title-color: var(--bs-primary);
     --nf-content-title-weight: 500
 }
@@ -103,7 +103,7 @@ html[data-overlayscrollbars] > body::-webkit-scrollbar {
 }
 
 .content {
-    background-color: var(--bs-white);
+    background-color: var(--bs-body-bg);
     color: var(--bs-body-color);
     display: flex;
     flex-direction: column;

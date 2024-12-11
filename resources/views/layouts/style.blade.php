@@ -417,7 +417,7 @@ Detailed information and more samples can be found in the documentation.
     }
 
     .dt-buttons .btn.btn-secondary {
-        padding: 6px 9px;
+        /*padding: 6px 9px;*/
         background-color: #fff;
     }
 
@@ -432,7 +432,35 @@ Detailed information and more samples can be found in the documentation.
     .dt-buttons .btn.btn-secondary span:hover {
         color: #fff;
     }
+    span.dt-column-title {
+        color: var(--bs-primary);
+    }
 
+    ul.custm-filtr li {
+        color: var(--bs-primary);
+        margin-right:20px;
+        display:inline-block;
+    }
+    .table.dataTable.table.table-striped > tbody > tr:nth-of-type(2n+1).selected > *,
+    .table.dataTable.table > tbody > tr.selected > * {
+        box-shadow: inset 0 0 0 9999px var(--bs-primary);
+        color: var(--bs-primary-color);
+    }
+    .dt-search {
+        float: right;
+    }
+    .dt-paging ul.pagination {
+        float: right;
+    }
+    .dt-buttons button {
+        border: none;
+        padding: 0;
+        left: 150px;
+    }
+
+    .card-header:has(.fltr-sec) {
+        border-bottom: none;
+    }
     /** Status */
     .status-toggle {
         width: 40px;

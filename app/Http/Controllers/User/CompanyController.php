@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Models\Brand;
 use App\Models\Company;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
@@ -14,7 +15,8 @@ class CompanyController extends Controller
      */
     public function index()
     {
-        $companies = Cache::remember('companies',  config('cache.durations.short_lived'), fn() => Company::all());
+//        $companies = Cache::remember('companies',  config('cache.durations.short_lived'), fn() => Company::all());
+        $companies = Cache::remember('brands_list', config('cache.durations.short_lived'), fn() => Brand::all());
         return view('companies.index', compact('companies'));
     }
     /**

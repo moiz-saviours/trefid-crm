@@ -22,6 +22,17 @@
 
         const exportButtons = ['copy', 'excel', 'csv', 'pdf', 'print'].map(type => ({
             extend: type,
+            text: type == "copy"
+                ? '<i class="fas fa-copy"></i>'
+                : (type == "excel"
+                    ? '<i class="fas fa-file-excel"></i>'
+                    : (type == "csv"
+                        ? '<i class="fas fa-file-csv"></i>'
+                        : (type == "pdf"
+                            ? '<i class="fas fa-file-pdf"></i>'
+                            : (type == "print"
+                                ? '<i class="fas fa-print"></i>'
+                                : "")))),
             orientation: type === 'pdf' ? 'landscape' : undefined,
             exportOptions: {
                 columns: function (index, node, column) {
@@ -32,18 +43,53 @@
             }
         }));
         /** Initializing Datatable */
-        if ($('#companiesTable').length) {
-            var table = $('#companiesTable').DataTable({
-                dom:
-                    "<'row'<'col-sm-12 col-md-6'B><'col-sm-12 col-md-6'>>" +
-                    "<'row'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6'f>>" +
-                    "<'row'<'col-sm-12'tr>>" +
-                    "<'row'<'col-sm-12 col-md-6'i><'col-sm-12 col-md-6'p>>",
-                buttons: exportButtons,
-                order: [[0, 'asc']],
-                responsive: true,
-                scrollX: true,
-            });
+        // if ($('#companiesTable').length) {
+        //     var table = $('#companiesTable').DataTable({
+        //         dom:
+        //             "<'row'<'col-sm-12 col-md-6'B><'col-sm-12 col-md-6'>>" +
+        //             "<'row'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6'f>>" +
+        //             "<'row'<'col-sm-12'tr>>" +
+        //             "<'row'<'col-sm-12 col-md-6'i><'col-sm-12 col-md-6'p>>",
+        //         buttons: exportButtons,
+        //         order: [[0, 'asc']],
+        //         responsive: true,
+        //         scrollX: true,
+        //     });
+        // }
+        if ($('.initTable').length) {
+            $('.initTable').each(function (index) {
+                const dynamicId = `right-icon-${index}`;
+                var table = $(this).DataTable({
+                    dom:
+                        // "<'row'<'col-sm-12 col-md-6'B><'col-sm-12 col-md-6'>>" +
+                        "<'row'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6'f>>" +
+                        "<'row'<'col-sm-12'tr>>" +
+                        "<'row'<'col-sm-12 col-md-6'i><'col-sm-12 col-md-6'p>>",
+                    buttons: exportButtons,
+                    order: [[1, 'asc']],
+                    responsive: false,
+                    scrollX: true,
+                    scrollY: 300,
+                    scrollCollapse: true,
+                    paging: true,
+                    columnDefs: [
+                        {
+                            orderable: false,
+                            className: 'select-checkbox',
+                            targets: 0
+                        },
+                    ],
+                    select: {
+                        style: 'os',
+                        selector: 'td:first-child'
+                    },
+                    fixedColumns: {
+                        start: 2
+                    },
+                });
+                table.buttons().container().appendTo(`#${dynamicId}`);
+
+            })
         }
 
     {{--    /** Create Record */--}}

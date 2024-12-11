@@ -21,6 +21,17 @@
     src="https://cdn.datatables.net/v/bs4/jszip-3.10.1/dt-2.1.8/b-3.2.0/b-colvis-3.2.0/b-html5-3.2.0/b-print-3.2.0/datatables.min.js"></script>
 
 
+
+{{--<link href="https://cdn.datatables.net/2.1.8/css/dataTables.dataTables.css" rel="stylesheet">--}}
+<link href="https://cdn.datatables.net/fixedcolumns/5.0.4/css/fixedColumns.dataTables.css" rel="stylesheet">
+<link href="https://cdn.datatables.net/select/2.1.0/css/select.dataTables.css" rel="stylesheet">
+
+{{--<script src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>--}}
+<script src="https://cdn.datatables.net/fixedcolumns/5.0.4/js/dataTables.fixedColumns.js"></script>
+<script src="https://cdn.datatables.net/fixedcolumns/5.0.4/js/fixedColumns.dataTables.js"></script>
+<script src="https://cdn.datatables.net/select/2.1.0/js/dataTables.select.js"></script>
+<script src="https://cdn.datatables.net/select/2.1.0/js/select.dataTables.js"></script>
+
 <script>
 
     $(function () {
