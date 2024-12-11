@@ -1918,8 +1918,8 @@ body[style*=padding-right] .tm--expanded-hd .content__header + .content__boxed, 
 
 @media (min-width: 992px) {
     .mn--max.tm--tall-hd .header__brand, .mn--min.tm--tall-hd .header__brand, .tm--fair-hd.mn--max .header__brand, .tm--fair-hd.mn--min .header__brand {
-        background-color: var(--nf-mainnav-bg);
-        color: var(--nf-mainnav-link-active)
+        /*background-color: var(--nf-mainnav-bg);*/
+        /*color: var(--nf-mainnav-link-active)*/
     }
 }
 
