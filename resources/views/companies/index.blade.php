@@ -120,6 +120,12 @@
 
             }
 
+            .tab-item.active i {
+                float: right;
+                font-size: 14px;
+                margin: auto;
+            }
+
             .tab-content {
                 /*padding: 10px;*/
                 /*margin-top: 10px;*/
@@ -241,6 +247,12 @@
                 border-radius: 4px;
                 cursor: pointer;
             }
+            .close-icon {
+                display: none;
+            }
+            .tab-item.active .close-icon {
+                display: inline;
+            }
 
         </style>
     @endpush
@@ -275,8 +287,8 @@
                 <div class="container">
                     <div class="custom-tabs">
                         <ul class="tab-nav">
-                            <li class="tab-item active" data-tab="home">All Companies</li>
-                            <li class="tab-item" data-tab="menu1">My Companies</li>
+                            <li class="tab-item active" data-tab="home">All Companies <i class="fa fa-times close-icon" aria-hidden="true"></i></li>
+                            <li class="tab-item " data-tab="menu1">My Companies <i class="fa fa-times close-icon" aria-hidden="true"></i></li>
                         </ul>
                         <div class="tab-buttons" >
                             <button class="btn btn-primary"><i class="fa fa-add"></i> Views (2/5)</button>
@@ -522,22 +534,19 @@
             });
 
 
-            document.addEventListener("DOMContentLoaded", () => {
-                const tabs = document.querySelectorAll(".tab-item");
-                const panes = document.querySelectorAll(".tab-pane");
+            $(document).ready(function () {
+                $(".tab-item").on("click", function () {
+                    // Remove 'active' class from all tabs and panes
+                    $(".tab-item").removeClass("active");
+                    $(".tab-pane").removeClass("active");
 
-                tabs.forEach((tab) => {
-                    tab.addEventListener("click", () => {
-                        tabs.forEach((t) => t.classList.remove("active"));
-                        panes.forEach((p) => p.classList.remove("active"));
+                    $(this).addClass("active");
 
-                        tab.classList.add("active");
-                        document
-                            .getElementById(tab.getAttribute("data-tab"))
-                            .classList.add("active");
-                    });
+                    const targetPane = $(this).data("tab");
+                    $("#" + targetPane).addClass("active");
                 });
             });
+
         </script>
     @endpush
 @endsection
