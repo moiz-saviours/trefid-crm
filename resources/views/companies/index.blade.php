@@ -74,14 +74,6 @@
                 background-color: #f9f9f9;
             }
 
-            li {
-                list-style: none;
-            }
-
-            ul {
-                padding-left: 0px;
-            }
-
 
             .header .new_head h1 {
                 font-size: 20px;
@@ -94,9 +86,7 @@
                 padding: 0px 30px;
                 color: #ff5722;
                 margin: 0px 10px;
-
             }
-
 
             .custom-tabs {
                 margin: 10px 0px;
@@ -111,7 +101,7 @@
                 margin: 0;
                 width: 70%;
             }
-            .tab-buttons{
+            .tab-buttons {
                 margin-left: 100px;
             }
 
@@ -159,7 +149,6 @@
                 font-weight: 700;
             }
 
-
             .right-icon i {
                 float: right;
                 margin: 0px 4px;
@@ -188,8 +177,7 @@
                 opacity: 1;
             }
 
-
-            .form-container {
+            .custom-form .form-container {
                 position: fixed;
                 top: 0;
                 right: -100%;
@@ -202,11 +190,11 @@
                 z-index: 99;
             }
 
-            .form-container.open {
+            .custom-form .form-container.open {
                 right: 0;
             }
 
-            .form-header {
+            .custom-form .form-header {
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
@@ -217,7 +205,7 @@
                 font-weight: bold;
             }
 
-            .form-header .close-btn {
+            .custom-form .form-header .close-btn {
                 font-size: 20px;
                 font-weight: bold;
                 background: none;
@@ -226,21 +214,17 @@
                 cursor: pointer;
             }
 
-            .form-header .close-btn:hover {
-                color: #ddd;
-            }
-
-            .form-body {
+            .custom-form .form-body {
                 padding: 20px;
             }
 
-            .form-body label {
+            .custom-form .form-body label {
                 display: block;
                 margin-bottom: 5px;
                 font-weight: 500;
             }
 
-            .form-body input {
+            .custom-form .form-body input {
                 width: 100%;
                 padding: 8px;
                 margin-bottom: 15px;
@@ -248,7 +232,7 @@
                 border-radius: 4px;
             }
 
-            .form-body button {
+            .custom-form .form-body button {
                 width: 100%;
                 padding: 10px;
                 background: #52a0bf;
@@ -258,22 +242,6 @@
                 cursor: pointer;
             }
 
-            .form-body button:hover {
-                background: #52a0bf;
-            }
-
-            .open-form-btn {
-                padding: 10px 20px;
-                background: #52a0bf;
-                color: white;
-                border: none;
-                border-radius: 4px;
-                cursor: pointer;
-            }
-
-            .open-form-btn:hover {
-                background: #52a0bf;
-            }
         </style>
     @endpush
 
@@ -492,21 +460,26 @@
                                 </div>
                             </div>
                     <div class="overlay" id="overlay"></div>
-                    <div class="form-container" id="formContainer">
-                        <!-- Form Header -->
-                        <div class="form-header">
-                            Add Company
-                            <button class="close-btn">×</button>
-                        </div>
-                        <!-- Form Body -->
-                        <div class="form-body">
-                            <label for="name">Company Name</label>
-                            <input type="text" id="name" placeholder="Enter your name">
-                            <label for="email">Company Domain</label>
-                            <input type="email" id="email" placeholder="Enter your email">
-                            <button>Submit</button>
+                    <div class="custom-form">
+                        <div class="form-container" id="formContainer">
+                            <!-- Form Header -->
+                            <div class="form-header">
+                                Add Company
+                                <button class="close-btn">×</button>
+                            </div>
+                            <!-- Form Body -->
+                            <div class="form-body">
+                                <label for="name">Company Name</label>
+                                <input type="text" id="name" placeholder="Enter your name">
+                                <label for="email">Company Domain</label>
+                                <input type="email" id="email" placeholder="Enter your email">
+                                <button>Submit</button>
+                            </div>
                         </div>
                     </div>
+
+
+
                 </div>
             </div>
         </div>
