@@ -6,7 +6,12 @@
         }
 
         const formatBody = (type) => (data, row, column, node) => {
-            if (type !== 'print' && ($(node).find('object').length > 0 || $(node).find('img').length > 0)) {
+            if (type === 'print') {
+                if ($(node).find('img').length > 0) {
+                    const src = $(node).find('img').attr('src');
+                    return `<img src="${src}" style="max-width: 100px; max-height: 100px;" />`;
+                }
+            } else if (type !== 'print' && ($(node).find('object').length > 0 || $(node).find('img').length > 0)) {
                 return $(node).find('object').attr('data') || $(node).find('object img').attr('src') || $(node).find('img').attr('src') || '';
             }
             if ($(node).find('.status-toggle').length > 0) {
@@ -58,38 +63,39 @@
         // }
         if ($('.initTable').length) {
             $('.initTable').each(function (index) {
-                const dynamicId = `right-icon-${index}`;
-                var table = $(this).DataTable({
-                    dom:
-                        // "<'row'<'col-sm-12 col-md-6'B><'col-sm-12 col-md-6'>>" +
-                        "<'row'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6'f>>" +
-                        "<'row'<'col-sm-12'tr>>" +
-                        "<'row'<'col-sm-12 col-md-6'i><'col-sm-12 col-md-6'p>>",
-                    buttons: exportButtons,
-                    order: [[1, 'asc']],
-                    responsive: false,
-                    scrollX: true,
-                    scrollY: 300,
-                    scrollCollapse: true,
-                    paging: true,
-                    columnDefs: [
-                        {
-                            orderable: false,
-                            className: 'select-checkbox',
-                            targets: 0
-                        },
-                    ],
-                    select: {
-                        style: 'os',
-                        selector: 'td:first-child'
-                    },
-                    fixedColumns: {
-                        start: 2
-                    },
-                });
-                table.buttons().container().appendTo(`#${dynamicId}`);
-
+                initializeDatatable($(this),index)
             })
+        }
+        function initializeDatatable(table_div,index){
+            var table = table_div.DataTable({
+                dom:
+                // "<'row'<'col-sm-12 col-md-6'B><'col-sm-12 col-md-6'>>" +
+                    "<'row'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6'f>>" +
+                    "<'row'<'col-sm-12'tr>>" +
+                    "<'row'<'col-sm-12 col-md-6'i><'col-sm-12 col-md-6'p>>",
+                buttons: exportButtons,
+                order: [[1, 'asc']],
+                responsive: false,
+                scrollX: true,
+                scrollY: 300,
+                scrollCollapse: true,
+                paging: true,
+                columnDefs: [
+                    {
+                        orderable: false,
+                        className: 'select-checkbox',
+                        targets: 0
+                    },
+                ],
+                select: {
+                    style: 'os',
+                    selector: 'td:first-child'
+                },
+                fixedColumns: {
+                    start: 2
+                },
+            });
+            table.buttons().container().appendTo(`#right-icon-${index}`);
         }
 
     {{--    /** Create Record */--}}

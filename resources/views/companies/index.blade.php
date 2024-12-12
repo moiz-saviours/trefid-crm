@@ -411,21 +411,22 @@
                             initTable">
                                             <thead>
                                             <tr>
-                                                <th><input type="checkbox"></th>
-                                                <th>NAME</th>
-                                                <th>EMAIL</th>
+                                                <th class="align-middle text-center text-nowrap"><input type="checkbox"></th>
+                                                <th class="align-middle text-center text-nowrap">NAME</th>
+                                                <th class="align-middle text-center text-nowrap">EMAIL</th>
                                                 {{--                                    <th>PHONE NUMBER</th>--}}
-                                                <th>PHONE NUMBER</th>
-                                                <th>PHONE NUMBER</th>
-                                                <th>PHONE NUMBER</th>
-                                                <th>PHONE NUMBER</th>
-                                                <th>PHONE NUMBER</th>
-                                                <th>CONTACT OWNER</th>
+                                                <th class="align-middle text-center text-nowrap">PHONE NUMBER</th>
+                                                <th class="align-middle text-center text-nowrap">PHONE NUMBER</th>
+                                                <th class="align-middle text-center text-nowrap">Image</th>
+                                                <th class="align-middle text-center text-nowrap">PHONE NUMBER</th>
+                                                <th class="align-middle text-center text-nowrap">PHONE NUMBER</th>
+                                                <th class="align-middle text-center text-nowrap">PHONE NUMBER</th>
+                                                <th class="align-middle text-center text-nowrap">CONTACT OWNER</th>
                                             </tr>
                                             </thead>
                                             <tbody>
                                             @foreach($companies as $key => $company)
-                                                <tr id="tr-{{$company->id}}">
+                                                <tr id="myCompaniesTable-tr-{{$company->id}}">
                                                     <td></td>
                                                     <td class="align-middle text-center text-nowrap">Syed Moiz Athar</td>
                                                     <td class="align-middle text-center text-nowrap">syedmoizathar@gmail.com</td>
@@ -447,6 +448,22 @@
                                                     {{--                                        </td>--}}
                                                     <td class="align-middle text-center text-nowrap">{{$company->name}}</td>
                                                     <td class="align-middle text-center text-nowrap">{{$company->name}}</td>
+                                                    <td class="align-middle text-center text-nowrap">
+                                                        @php
+                                                            $logoUrl = filter_var($company->logo, FILTER_VALIDATE_URL) ? $company->logo : asset('assets/images/brand-logos/'.$company->logo);
+                                                        @endphp
+                                                        <object
+                                                            data="{{ $logoUrl }}"
+                                                            class="avatar avatar-sm me-3"
+                                                            title="{{ $company->name }}"
+                                                        >
+                                                            <img
+                                                                src="{{ $logoUrl }}"
+                                                                alt="{{ $company->name }}"
+                                                                class="avatar avatar-sm me-3"
+                                                                title="{{ $company->name }}">
+                                                        </object>
+                                                    </td>
                                                     <td class="align-middle text-center text-nowrap">{{$company->name}}</td>
                                                     <td class="align-middle text-center text-nowrap">{{$company->name}}</td>
                                                     <td class="align-middle text-center text-nowrap">{{$company->name}}</td>
