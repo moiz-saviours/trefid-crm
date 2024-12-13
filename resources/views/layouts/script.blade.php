@@ -32,6 +32,9 @@
 <script src="https://cdn.datatables.net/select/2.1.0/js/dataTables.select.js"></script>
 <script src="https://cdn.datatables.net/select/2.1.0/js/select.dataTables.js"></script>
 
+{{--Jquery UI --}}
+<script src="{{asset ('assets/themes/nifty/assets/js/jquery-ui.min.js')}}"></script>
+
 <script>
 
     $(function () {

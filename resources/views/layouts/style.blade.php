@@ -287,6 +287,9 @@
 <link rel="manifest" href="{{asset('assets/themes/nifty/site.webmanifest')}}">
 <!-- Spinkit [ OPTIONAL ] -->
 <link rel="stylesheet" href="{{asset('assets/themes/nifty/assets/pages/spinkit.css')}}">
+
+{{--Jquery UI--}}
+<link rel="stylesheet" href="{{asset ('assets/themes/nifty/assets/css/jquery-ui.css')}}">
 <style>
 
     /* Full-screen loader styles */
