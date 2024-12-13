@@ -5,7 +5,12 @@
         }
 
         const formatBody = (type) => (data, row, column, node) => {
-            if (type !== 'print' && ($(node).find('object').length > 0 || $(node).find('img').length > 0)) {
+            if (type === 'print') {
+                if ($(node).find('img').length > 0) {
+                    const src = $(node).find('img').attr('src');
+                    return `<img src="${src}" style="max-width: 100px; max-height: 100px;" />`;
+                }
+            } else if (type !== 'print' && ($(node).find('object').length > 0 || $(node).find('img').length > 0)) {
                 return $(node).find('object').attr('data') || $(node).find('object img').attr('src') || $(node).find('img').attr('src') || '';
             }
             if ($(node).find('.status-toggle').length > 0) {
