@@ -4,7 +4,17 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use App\Http\Controllers\User\{BrandController, CompanyController, ContactController, ProfileController};
+use App\Http\Controllers\User\{BrandController,
+    BrandsController,
+    CompanyController,
+    ContactController,
+    ContactsController,
+    InvoiceController,
+    LeadsController,
+    LeadStatusController,
+    PaymentController,
+    ProfileController,
+    TeamController};
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -31,6 +41,20 @@ Route::middleware('auth')->group(function () {
     Route::prefix('contacts')->name('contact.')->group(function () {
         Route::get('/', [ContactController::class, 'index'])->name('index');
     });
+
+    Route::get('/contacts', [ContactsController::class, 'index'])->name('contacts.index');
+    Route::get('/teams', [TeamController::class, 'index'])->name('teams.index');
+    Route::get('/brands', [BrandsController::class, 'index'])->name('brand.index');
+    Route::get('/leads', [LeadsController::class, 'index'])->name('leads.index');
+    Route::get('/lead-status', [LeadStatusController::class, 'index'])->name('lead-status.index');
+    Route::get('/invoice', [InvoiceController::class, 'index'])->name('invoice.index');
+    Route::get('/payment', [PaymentController::class, 'index'])->name('payment.index');
+
+
+
+
+
+
 });
 
 require __DIR__ . '/admin-routes.php';

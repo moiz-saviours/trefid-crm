@@ -6,6 +6,10 @@
         @include('companies.style')
         <style>
 
+            .void {
+                cursor: not-allowed;
+            }
+
             .custm_header {
                 padding: 10px 20px;
                 display: flex;
@@ -121,6 +125,12 @@
 
             }
 
+            .tab-item.active i {
+                float: right;
+                font-size: 14px;
+                margin: auto;
+            }
+
             .tab-content {
                 /*padding: 10px;*/
                 /*margin-top: 10px;*/
@@ -159,25 +169,6 @@
                 font-size: 12px;
             }
 
-            .overlay {
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background: rgba(0, 0, 0, 0.5);
-                backdrop-filter: blur(5px);
-                visibility: hidden;
-                opacity: 0;
-                transition: opacity 0.5s ease, visibility 0.5s ease;
-                z-index: 9;
-            }
-
-            .overlay.active {
-                visibility: visible;
-                opacity: 1;
-            }
-
             .custom-form .form-container {
                 position: fixed;
                 top: 0;
@@ -188,7 +179,7 @@
                 box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
                 transition: right 0.5s ease;
                 box-sizing: border-box;
-                z-index: 99;
+                z-index: 1001;
             }
 
             .custom-form .form-container.open {
@@ -243,6 +234,14 @@
                 cursor: pointer;
             }
 
+            .close-icon {
+                display: none;
+            }
+
+            .tab-item.active .close-icon {
+                display: inline;
+            }
+
         </style>
     @endpush
 
@@ -251,37 +250,36 @@
             <div class="content__wrap">
                 <header class="custm_header">
                     <div class="new_head">
-                        <h1 class="page-title mb-2">Companies <i class="fa fa-caret-down" aria-hidden="true"></i></h1>
+                        <h1 class="page-title mb-2">Payments <i class="fa fa-caret-down" aria-hidden="true"></i></h1>
                         <h2 id="record-count" class="h6"> records</h2>
                     </div>
-{{--                    <div class="filters">--}}
-{{--                        <div class="actions">--}}
-{{--                            <h1><i class="fa fa-lock" aria-hidden="true"></i> Data Quality</h1>--}}
-{{--                            <button class="header_btn">Actions <i class="fa fa-caret-down" aria-hidden="true"></i>--}}
-{{--                            </button>--}}
-{{--                            <button class="header_btn">Import</button>--}}
-{{--                            <button class="create-contact open-form-btn">Create Companies</button>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
+                    <div class="filters">
+                        <div class="actions">
+                            <h1><i class="fa fa-lock" aria-hidden="true"></i> Data Quality</h1>
+
+                            <button class="header_btn">Actions <i class="fa fa-caret-down" aria-hidden="true"></i>
+                            </button>
+                            <button class="header_btn">Import</button>
+                            <button class="create-contact open-form-btn void">Create New Payment</button>
+                        </div>
+                    </div>
                 </header>
-
             </div>
-
-
         </div>
         <div class="content__boxed">
             <div class="content__wrap">
-
                 <div class="container">
                     <div class="custom-tabs">
                         <ul class="tab-nav">
-                            <li class="tab-item active" data-tab="home">All Companies</li>
-                            <li class="tab-item" data-tab="menu1">My Companies</li>
+                            <li class="tab-item active" data-tab="home">Payments
+                                <i class="fa fa-times close-icon" aria-hidden="true"></i></li>
+{{--                            <li class="tab-item " data-tab="menu1">My Contacts <i class="fa fa-times close-icon"--}}
+{{--                                                                                   aria-hidden="true"></i></li>--}}
                         </ul>
-                        <div class="tab-buttons">
-                            <button class="btn btn-primary"><i class="fa fa-add"></i> Views (2/5)</button>
-                            <button class="btn btn-secondary">All Views</button>
-                        </div>
+                        {{--                        <div class="tab-buttons" >--}}
+                        {{--                            <button class="btn btn-primary"><i class="fa fa-add"></i> Views (2/5)</button>--}}
+                        {{--                            <button class="btn btn-secondary">All Views</button>--}}
+                        {{--                        </div>--}}
                     </div>
                     <div class="tab-content">
                         <div class="tab-pane active" id="home">
@@ -331,37 +329,37 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        @foreach($companies as $key => $company)
-                                            <tr id="tr-{{$company->id}}">
-                                                <td></td>
-                                                <td class="align-middle text-center text-nowrap">Syed Moiz Athar</td>
-                                                <td class="align-middle text-center text-nowrap">
-                                                    syedmoizathar@gmail.com
-                                                </td>
-                                                {{--                                        <td class="align-middle text-center text-nowrap">--}}
-                                                {{--                                            @php--}}
-                                                {{--                                                $logoUrl = filter_var($company->logo, FILTER_VALIDATE_URL) ? $company->logo : asset('assets/images/company-logos/'.$company->logo);--}}
-                                                {{--                                            @endphp--}}
-                                                {{--                                            <object--}}
-                                                {{--                                                data="{{ $logoUrl }}"--}}
-                                                {{--                                                class="avatar avatar-sm me-3"--}}
-                                                {{--                                                title="{{ $company->name }}"--}}
-                                                {{--                                            >--}}
-                                                {{--                                                <img--}}
-                                                {{--                                                    src="{{ $logoUrl }}"--}}
-                                                {{--                                                    alt="{{ $company->name }}"--}}
-                                                {{--                                                    class="avatar avatar-sm me-3"--}}
-                                                {{--                                                    title="{{ $company->name }}">--}}
-                                                {{--                                            </object>--}}
-                                                {{--                                        </td>--}}
-                                                <td class="align-middle text-center text-nowrap">{{$company->name}}</td>
-                                                <td class="align-middle text-center text-nowrap">{{$company->name}}</td>
-                                                <td class="align-middle text-center text-nowrap">{{$company->name}}</td>
-                                                <td class="align-middle text-center text-nowrap">{{$company->name}}</td>
-                                                <td class="align-middle text-center text-nowrap">{{$company->name}}</td>
-                                                <td class="align-middle text-center text-nowrap">{{$company->url}}</td>
-                                            </tr>
-                                        @endforeach
+{{--                                        @foreach($companies as $key => $company)--}}
+{{--                                            <tr id="tr-{{$company->id}}">--}}
+{{--                                                <td></td>--}}
+{{--                                                <td class="align-middle text-center text-nowrap">Syed Moiz Athar</td>--}}
+{{--                                                <td class="align-middle text-center text-nowrap">--}}
+{{--                                                    syedmoizathar@gmail.com--}}
+{{--                                                </td>--}}
+{{--                                                --}}{{--                                        <td class="align-middle text-center text-nowrap">--}}
+{{--                                                --}}{{--                                            @php--}}
+{{--                                                --}}{{--                                                $logoUrl = filter_var($company->logo, FILTER_VALIDATE_URL) ? $company->logo : asset('assets/images/company-logos/'.$company->logo);--}}
+{{--                                                --}}{{--                                            @endphp--}}
+{{--                                                --}}{{--                                            <object--}}
+{{--                                                --}}{{--                                                data="{{ $logoUrl }}"--}}
+{{--                                                --}}{{--                                                class="avatar avatar-sm me-3"--}}
+{{--                                                --}}{{--                                                title="{{ $company->name }}"--}}
+{{--                                                --}}{{--                                            >--}}
+{{--                                                --}}{{--                                                <img--}}
+{{--                                                --}}{{--                                                    src="{{ $logoUrl }}"--}}
+{{--                                                --}}{{--                                                    alt="{{ $company->name }}"--}}
+{{--                                                --}}{{--                                                    class="avatar avatar-sm me-3"--}}
+{{--                                                --}}{{--                                                    title="{{ $company->name }}">--}}
+{{--                                                --}}{{--                                            </object>--}}
+{{--                                                --}}{{--                                        </td>--}}
+{{--                                                <td class="align-middle text-center text-nowrap">{{$company->name}}</td>--}}
+{{--                                                <td class="align-middle text-center text-nowrap">{{$company->name}}</td>--}}
+{{--                                                <td class="align-middle text-center text-nowrap">{{$company->name}}</td>--}}
+{{--                                                <td class="align-middle text-center text-nowrap">{{$company->name}}</td>--}}
+{{--                                                <td class="align-middle text-center text-nowrap">{{$company->name}}</td>--}}
+{{--                                                <td class="align-middle text-center text-nowrap">{{$company->url}}</td>--}}
+{{--                                            </tr>--}}
+{{--                                        @endforeach--}}
                                         </tbody>
                                     </table>
                                 </div>
@@ -421,60 +419,59 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        @foreach($companies as $key => $company)
-                                            <tr id="myCompaniesTable-tr-{{$company->id}}">
-                                                <td></td>
-                                                <td class="align-middle text-center text-nowrap">Syed Moiz Athar</td>
-                                                <td class="align-middle text-center text-nowrap">
-                                                    syedmoizathar@gmail.com
-                                                </td>
-                                                {{--                                        <td class="align-middle text-center text-nowrap">--}}
-                                                {{--                                            @php--}}
-                                                {{--                                                $logoUrl = filter_var($company->logo, FILTER_VALIDATE_URL) ? $company->logo : asset('assets/images/company-logos/'.$company->logo);--}}
-                                                {{--                                            @endphp--}}
-                                                {{--                                            <object--}}
-                                                {{--                                                data="{{ $logoUrl }}"--}}
-                                                {{--                                                class="avatar avatar-sm me-3"--}}
-                                                {{--                                                title="{{ $company->name }}"--}}
-                                                {{--                                            >--}}
-                                                {{--                                                <img--}}
-                                                {{--                                                    src="{{ $logoUrl }}"--}}
-                                                {{--                                                    alt="{{ $company->name }}"--}}
-                                                {{--                                                    class="avatar avatar-sm me-3"--}}
-                                                {{--                                                    title="{{ $company->name }}">--}}
-                                                {{--                                            </object>--}}
-                                                {{--                                        </td>--}}
-                                                <td class="align-middle text-center text-nowrap">{{$company->name}}</td>
-                                                <td class="align-middle text-center text-nowrap">{{$company->name}}</td>
-                                                <td class="align-middle text-center text-nowrap">
-                                                    @php
-                                                        $logoUrl = filter_var($company->logo, FILTER_VALIDATE_URL) ? $company->logo : asset('assets/images/brand-logos/'.$company->logo);
-                                                    @endphp
-                                                    <object
-                                                        data="{{ $logoUrl }}"
-                                                        class="avatar avatar-sm me-3"
-                                                        title="{{ $company->name }}"
-                                                    >
-                                                        <img
-                                                            src="{{ $logoUrl }}"
-                                                            alt="{{ $company->name }}"
-                                                            class="avatar avatar-sm me-3"
-                                                            title="{{ $company->name }}">
-                                                    </object>
-                                                </td>
-                                                <td class="align-middle text-center text-nowrap">{{$company->name}}</td>
-                                                <td class="align-middle text-center text-nowrap">{{$company->name}}</td>
-                                                <td class="align-middle text-center text-nowrap">{{$company->name}}</td>
-                                                <td class="align-middle text-center text-nowrap">{{$company->url}}</td>
-                                            </tr>
-                                        @endforeach
+{{--                                        @foreach($companies as $key => $company)--}}
+{{--                                            <tr id="myCompaniesTable-tr-{{$company->id}}">--}}
+{{--                                                <td></td>--}}
+{{--                                                <td class="align-middle text-center text-nowrap">Syed Moiz Athar</td>--}}
+{{--                                                <td class="align-middle text-center text-nowrap">--}}
+{{--                                                    syedmoizathar@gmail.com--}}
+{{--                                                </td>--}}
+{{--                                                --}}{{--                                        <td class="align-middle text-center text-nowrap">--}}
+{{--                                                --}}{{--                                            @php--}}
+{{--                                                --}}{{--                                                $logoUrl = filter_var($company->logo, FILTER_VALIDATE_URL) ? $company->logo : asset('assets/images/company-logos/'.$company->logo);--}}
+{{--                                                --}}{{--                                            @endphp--}}
+{{--                                                --}}{{--                                            <object--}}
+{{--                                                --}}{{--                                                data="{{ $logoUrl }}"--}}
+{{--                                                --}}{{--                                                class="avatar avatar-sm me-3"--}}
+{{--                                                --}}{{--                                                title="{{ $company->name }}"--}}
+{{--                                                --}}{{--                                            >--}}
+{{--                                                --}}{{--                                                <img--}}
+{{--                                                --}}{{--                                                    src="{{ $logoUrl }}"--}}
+{{--                                                --}}{{--                                                    alt="{{ $company->name }}"--}}
+{{--                                                --}}{{--                                                    class="avatar avatar-sm me-3"--}}
+{{--                                                --}}{{--                                                    title="{{ $company->name }}">--}}
+{{--                                                --}}{{--                                            </object>--}}
+{{--                                                --}}{{--                                        </td>--}}
+{{--                                                <td class="align-middle text-center text-nowrap">{{$company->name}}</td>--}}
+{{--                                                <td class="align-middle text-center text-nowrap">{{$company->name}}</td>--}}
+{{--                                                <td class="align-middle text-center text-nowrap">--}}
+{{--                                                    @php--}}
+{{--                                                        $logoUrl = filter_var($company->logo, FILTER_VALIDATE_URL) ? $company->logo : asset('assets/images/brand-logos/'.$company->logo);--}}
+{{--                                                    @endphp--}}
+{{--                                                    <object--}}
+{{--                                                        data="{{ $logoUrl }}"--}}
+{{--                                                        class="avatar avatar-sm me-3"--}}
+{{--                                                        title="{{ $company->name }}"--}}
+{{--                                                    >--}}
+{{--                                                        <img--}}
+{{--                                                            src="{{ $logoUrl }}"--}}
+{{--                                                            alt="{{ $company->name }}"--}}
+{{--                                                            class="avatar avatar-sm me-3"--}}
+{{--                                                            title="{{ $company->name }}">--}}
+{{--                                                    </object>--}}
+{{--                                                </td>--}}
+{{--                                                <td class="align-middle text-center text-nowrap">{{$company->name}}</td>--}}
+{{--                                                <td class="align-middle text-center text-nowrap">{{$company->name}}</td>--}}
+{{--                                                <td class="align-middle text-center text-nowrap">{{$company->name}}</td>--}}
+{{--                                                <td class="align-middle text-center text-nowrap">{{$company->url}}</td>--}}
+{{--                                            </tr>--}}
+{{--                                        @endforeach--}}
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="overlay" id="overlay"></div>
                     <div class="custom-form">
                         <div class="form-container" id="formContainer">
                             <!-- Form Header -->
@@ -503,38 +500,29 @@
     @push('script')
         @include('companies.script')
         <script>
+
             $(document).ready(function () {
-                const overlay = $('#overlay');
                 const formContainer = $('#formContainer');
-
                 $('.open-form-btn').click(function () {
-                    formContainer.addClass('open');
-                    overlay.addClass('active');
+                    $(this).hasClass('void') ? $(this).attr('title', "You don't have access to create a company.").tooltip({placement: 'bottom'}).tooltip('show') : (formContainer.addClass('open'));
                 });
-
-                $('.close-btn, #overlay').click(function () {
-                    formContainer.removeClass('open');
-                    overlay.removeClass('active');
+                $(document).click(function (event) {
+                    if (!$(event.target).closest('#formContainer').length && !$(event.target).is('#formContainer') && !$(event.target).closest('.open-form-btn').length) {
+                        formContainer.removeClass('open')
+                    }
                 });
-            });
+                $(".tab-item").on("click", function () {
+                    // Remove 'active' class from all tabs and panes
+                    $(".tab-item").removeClass("active");
+                    $(".tab-pane").removeClass("active");
 
+                    $(this).addClass("active");
 
-            document.addEventListener("DOMContentLoaded", () => {
-                const tabs = document.querySelectorAll(".tab-item");
-                const panes = document.querySelectorAll(".tab-pane");
-
-                tabs.forEach((tab) => {
-                    tab.addEventListener("click", () => {
-                        tabs.forEach((t) => t.classList.remove("active"));
-                        panes.forEach((p) => p.classList.remove("active"));
-
-                        tab.classList.add("active");
-                        document
-                            .getElementById(tab.getAttribute("data-tab"))
-                            .classList.add("active");
-                    });
+                    const targetPane = $(this).data("tab");
+                    $("#" + targetPane).addClass("active");
                 });
             });
+
         </script>
     @endpush
 @endsection

@@ -317,15 +317,16 @@
                                         <thead>
                                         <tr>
                                             <th><input type="checkbox"></th>
-                                            <th>NAME</th>
-                                            <th>EMAIL</th>
-                                            {{--                                    <th>PHONE NUMBER</th>--}}
-                                            <th>PHONE NUMBER</th>
-                                            <th>PHONE NUMBER</th>
-                                            <th>PHONE NUMBER</th>
-                                            <th>PHONE NUMBER</th>
-                                            <th>PHONE NUMBER</th>
-                                            <th>CONTACT OWNER</th>
+                                            <th>ID</th>
+                                            <th>Brand</th>
+                                            <th>Team</th>
+                                            <th>Name</th>
+                                            <th>Email</th>
+                                            <th>Phone</th>
+                                            <th>Adress</th>
+                                            <th>City</th>
+                                            <th>State</th>
+                                            <th>Status</th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -406,16 +407,16 @@
                                         <tr>
                                             <th class="align-middle text-center text-nowrap"><input type="checkbox">
                                             </th>
-                                            <th class="align-middle text-center text-nowrap">NAME</th>
-                                            <th class="align-middle text-center text-nowrap">EMAIL</th>
-                                            {{--                                    <th>PHONE NUMBER</th>--}}
-                                            <th class="align-middle text-center text-nowrap">PHONE NUMBER</th>
-                                            <th class="align-middle text-center text-nowrap">PHONE NUMBER</th>
-                                            <th class="align-middle text-center text-nowrap">Image</th>
-                                            <th class="align-middle text-center text-nowrap">PHONE NUMBER</th>
-                                            <th class="align-middle text-center text-nowrap">PHONE NUMBER</th>
-                                            <th class="align-middle text-center text-nowrap">PHONE NUMBER</th>
-                                            <th class="align-middle text-center text-nowrap">CONTACT OWNER</th>
+                                            <th>ID</th>
+                                            <th>Brand</th>
+                                            <th>Team</th>
+                                            <th>Name</th>
+                                            <th>Email</th>
+                                            <th>Phone</th>
+                                            <th>Adress</th>
+                                            <th>City</th>
+                                            <th>State</th>
+                                            <th>Status</th>
                                         </tr>
                                         </thead>
                                         <tbody>

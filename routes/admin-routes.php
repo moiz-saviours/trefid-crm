@@ -90,8 +90,8 @@ Route::middleware(['auth:admin'])->prefix('admin')->name('admin.')->group(functi
 
     /** Client Routes */
     Route::name('client.')->group(function () {
-        Route::get('/clients', [AdminClientController::class, 'index'])->name('index');
-        Route::prefix('client')->group(function () {
+        Route::get('/contacts', [AdminClientController::class, 'index'])->name('index');
+        Route::prefix('contact')->group(function () {
             Route::get('/create', [AdminClientController::class, 'create'])->name('create');
             Route::post('/store', [AdminClientController::class, 'store'])->name('store');
             Route::get('/edit/{client?}', [AdminClientController::class, 'edit'])->name('edit');

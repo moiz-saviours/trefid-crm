@@ -1,5 +1,5 @@
 @extends('admin.layouts.app')
-@section('title','Clients')
+@section('title','Contacts')
 @section('datatable', true)
 @push('breadcrumb')
     <li class="breadcrumb-item text-sm text-white active" aria-current="page"><a
@@ -15,7 +15,7 @@
             <div class="col-12">
                 <div class="card mb-4">
                     <div class="card-header pb-0">
-                        <h3 class="text-center">Clients Table</h3>
+                        <h3 class="text-center">Contacts Table</h3>
                         <a href="{{ route('admin.client.create') }}"
                            class="btn btn-secondary float-end rounded-pill"><i class="fas fa-plus"></i></a>
                     </div>
