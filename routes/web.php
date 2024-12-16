@@ -14,7 +14,8 @@ use App\Http\Controllers\User\{BrandController,
     LeadStatusController,
     PaymentController,
     ProfileController,
-    TeamController};
+    TeamController,
+    TeamMemberController};
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -44,6 +45,16 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/contacts', [ContactsController::class, 'index'])->name('contacts.index');
     Route::get('/teams', [TeamController::class, 'index'])->name('teams.index');
+    /** Team Members Routes */
+    Route::prefix('team-members')->name('team-members.')->group(function () {
+        Route::get('/team-members', [TeamMemberController::class, 'index'])->name('index');
+    });
+    Route::name('team-member.')->group(function () {
+        Route::get('/team-members', [TeamMemberController::class, 'index'])->name('index');
+        Route::prefix('team-members')->group(function () {
+
+        });
+    });
     Route::get('/brands', [BrandsController::class, 'index'])->name('brand.index');
     Route::get('/leads', [LeadsController::class, 'index'])->name('leads.index');
     Route::get('/lead-status', [LeadStatusController::class, 'index'])->name('lead-status.index');

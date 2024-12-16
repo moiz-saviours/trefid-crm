@@ -189,7 +189,7 @@
                     </li>
                     <li class="nav-item has-sub">
                         <a href="#"
-                           class="mininav-toggle nav-link collapsed {{ request()->is('contacts*') ? 'active' : '' }}"><i
+                           class="mininav-toggle nav-link collapsed {{ request()->is('team-members*') ? 'active' : '' }}"><i
                                 class="demo-pli-address-book fs-5 me-2"></i>
                             <span class="nav-label ms-1">Team Members</span>
                         </a>
@@ -197,8 +197,8 @@
                         <ul class="mininav-content nav collapse">
                             <li data-popper-arrow class="arrow"></li>
                             <li class="nav-item">
-                                <a href="{{route('teams.index')}}"
-                                   class="nav-link {{ request()->is('team*') ? 'active' : '' }}">Lists</a>
+                                <a href="{{route('team-members.index')}}"
+                                   class="nav-link {{ request()->is('team-members*') ? 'active' : '' }}">Lists</a>
                             </li>
                         </ul>
                         <!-- END : Ui Elements submenu list -->

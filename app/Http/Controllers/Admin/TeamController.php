@@ -135,10 +135,10 @@ class TeamController extends Controller
             'brands.*' => 'exists:brands,brand_key',
         ]);
 
+        $employees = $request->input('employees', []);
         $team->update($request->only(['name', 'description', 'status', 'lead_id']));
         $team->save();
-        $employees = $request->input('employees', []);
-        if ($request->has('lead_id') && !in_array($request->lead_id, $employees)) {
+        if ($request->has('lead_id') && !empty($request->get('lead_id')) && !in_array($request->lead_id, $employees)) {
             $employees[] = $request->lead_id;
         }
         $team->users()->sync($employees);

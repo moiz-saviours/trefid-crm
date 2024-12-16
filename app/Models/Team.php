@@ -40,6 +40,10 @@ class Team extends Model
     {
         return $this->belongsToMany(User::class, AssignTeamMember::class, 'team_key', 'user_id', 'team_key', 'id');
     }
+    public function lead(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(User::class, 'lead_id');
+    }
 
     public function brands()
     {

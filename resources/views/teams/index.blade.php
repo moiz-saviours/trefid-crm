@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title','Companies')
+@section('title','Members')
 @section('datatable', true)
 @section('content')
     @push('style')
