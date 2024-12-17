@@ -10,7 +10,7 @@ use App\Http\Controllers\User\{BrandController,
     ContactController,
     ContactsController,
     InvoiceController,
-    LeadsController,
+    LeadController,
     LeadStatusController,
     PaymentController,
     ProfileController,
@@ -39,11 +39,12 @@ Route::middleware('auth')->group(function () {
         Route::get('/', [CompanyController::class, 'index'])->name('index');
     });
     /** Contacts Routes */
-    Route::prefix('contacts')->name('contact.')->group(function () {
-        Route::get('/', [ContactController::class, 'index'])->name('index');
-    });
+    Route::name('contact.')->group(function () {
+        Route::get('/contacts', [ContactController::class, 'index'])->name('index');
+        Route::prefix('contacts')->group(function () {
 
-    Route::get('/contacts', [ContactsController::class, 'index'])->name('contacts.index');
+        });
+    });
     Route::get('/teams', [TeamController::class, 'index'])->name('teams.index');
     /** Team Members Routes */
     Route::name('team-member.')->group(function () {
@@ -52,11 +53,25 @@ Route::middleware('auth')->group(function () {
 
         });
     });
-    Route::get('/brands', [BrandsController::class, 'index'])->name('user.brand.index');
-    Route::get('/leads', [LeadsController::class, 'index'])->name('user.leads.index');
-    Route::get('/lead-status', [LeadStatusController::class, 'index'])->name('user.lead-status.index');
-    Route::get('/invoice', [InvoiceController::class, 'index'])->name('user.invoice.index');
-    Route::get('/payment', [PaymentController::class, 'index'])->name('user.payment.index');
+
+    /** Team Brands Routes */
+    Route::name('brand.')->group(function () {
+        Route::get('/brands', [BrandController::class, 'index'])->name('index');
+        Route::prefix('brands')->group(function () {
+
+        });
+    });
+
+    /** Leads Routes */
+    Route::name('lead.')->group(function () {
+        Route::get('/leads', [LeadController::class, 'index'])->name('index');
+        Route::prefix('leads')->group(function () {
+            Route::post('/change-lead-status', [LeadController::class, 'change_lead_status'])->name('change.lead-status');
+        });
+    });
+    Route::get('/lead-status', [LeadStatusController::class, 'index'])->name('lead-status.index');
+    Route::get('/invoice', [InvoiceController::class, 'index'])->name('invoice.index');
+    Route::get('/payment', [PaymentController::class, 'index'])->name('payment.index');
 
 
 

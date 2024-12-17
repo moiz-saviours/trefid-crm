@@ -58,4 +58,10 @@ class Brand extends Model
             Cache::forget('brands_list');
         });
     }
+
+    public function contacts(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Client::class, 'brand_key');
+    }
 }
+

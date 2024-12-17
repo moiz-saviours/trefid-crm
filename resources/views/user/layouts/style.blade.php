@@ -1,3 +1,6 @@
+<!-- Toastr CSS -->
+<link rel="stylesheet" href="{{asset('build/toaster/css/toastr.min.css')}}">
+
 <!-- Fonts [ OPTIONAL ] -->
 <!-- Font Awesome Icons -->
 <script src="{{asset('assets/fonts/fontawsome.js')}}"></script>

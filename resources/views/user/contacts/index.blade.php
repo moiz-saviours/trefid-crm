@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('user.layouts.app')
 @section('title','Contacts')
 @section('datatable', true)
 @section('content')
@@ -274,7 +274,7 @@
                             <li class="tab-item active" data-tab="home">All Contacts
                                 <i class="fa fa-times close-icon" aria-hidden="true"></i></li>
                             <li class="tab-item " data-tab="menu1">My Contacts <i class="fa fa-times close-icon"
-                                                                                   aria-hidden="true"></i></li>
+                                                                                  aria-hidden="true"></i></li>
                         </ul>
                         {{--                        <div class="tab-buttons" >--}}
                         {{--                            <button class="btn btn-primary"><i class="fa fa-add"></i> Views (2/5)</button>--}}
@@ -310,56 +310,44 @@
                                     </div>
                                 </div>
                                 <div class="card-body">
-                                    <table id="allCompaniesTable" class="table table-striped datatable-exportable
+                                    <table id="allContactsTable" class="table table-striped datatable-exportable
                             stripe row-border order-column nowrap
                             initTable
                             ">
                                         <thead>
                                         <tr>
                                             <th><input type="checkbox"></th>
+                                            <th>ID</th>
                                             <th>NAME</th>
                                             <th>EMAIL</th>
-                                            {{--                                    <th>PHONE NUMBER</th>--}}
-                                            <th>PHONE NUMBER</th>
-                                            <th>PHONE NUMBER</th>
-                                            <th>PHONE NUMBER</th>
-                                            <th>PHONE NUMBER</th>
                                             <th>PHONE NUMBER</th>
                                             <th>CONTACT OWNER</th>
+                                            <th>PRIMARY COMPANY</th>
+                                            <th>CREATE DATE</th>
                                         </tr>
                                         </thead>
                                         <tbody>
-{{--                                        @foreach($companies as $key => $company)--}}
-{{--                                            <tr id="tr-{{$company->id}}">--}}
-{{--                                                <td></td>--}}
-{{--                                                <td class="align-middle text-center text-nowrap">Syed Moiz Athar</td>--}}
-{{--                                                <td class="align-middle text-center text-nowrap">--}}
-{{--                                                    syedmoizathar@gmail.com--}}
-{{--                                                </td>--}}
-{{--                                                --}}{{--                                        <td class="align-middle text-center text-nowrap">--}}
-{{--                                                --}}{{--                                            @php--}}
-{{--                                                --}}{{--                                                $logoUrl = filter_var($company->logo, FILTER_VALIDATE_URL) ? $company->logo : asset('assets/images/company-logos/'.$company->logo);--}}
-{{--                                                --}}{{--                                            @endphp--}}
-{{--                                                --}}{{--                                            <object--}}
-{{--                                                --}}{{--                                                data="{{ $logoUrl }}"--}}
-{{--                                                --}}{{--                                                class="avatar avatar-sm me-3"--}}
-{{--                                                --}}{{--                                                title="{{ $company->name }}"--}}
-{{--                                                --}}{{--                                            >--}}
-{{--                                                --}}{{--                                                <img--}}
-{{--                                                --}}{{--                                                    src="{{ $logoUrl }}"--}}
-{{--                                                --}}{{--                                                    alt="{{ $company->name }}"--}}
-{{--                                                --}}{{--                                                    class="avatar avatar-sm me-3"--}}
-{{--                                                --}}{{--                                                    title="{{ $company->name }}">--}}
-{{--                                                --}}{{--                                            </object>--}}
-{{--                                                --}}{{--                                        </td>--}}
-{{--                                                <td class="align-middle text-center text-nowrap">{{$company->name}}</td>--}}
-{{--                                                <td class="align-middle text-center text-nowrap">{{$company->name}}</td>--}}
-{{--                                                <td class="align-middle text-center text-nowrap">{{$company->name}}</td>--}}
-{{--                                                <td class="align-middle text-center text-nowrap">{{$company->name}}</td>--}}
-{{--                                                <td class="align-middle text-center text-nowrap">{{$company->name}}</td>--}}
-{{--                                                <td class="align-middle text-center text-nowrap">{{$company->url}}</td>--}}
-{{--                                            </tr>--}}
-{{--                                        @endforeach--}}
+                                        @foreach($all_contacts as $key => $contact)
+                                            <tr id="tr-{{$contact->id}}">
+                                                <td></td>
+                                                <td class="align-middle text-center text-nowrap">{{$loop->iteration}}</td>
+                                                <td class="align-middle text-center text-nowrap">{{$contact->name}}</td>
+                                                <td class="align-middle text-center text-nowrap">{{$contact->email}}</td>
+                                                <td class="align-middle text-center text-nowrap">{{$contact->phone}}</td>
+                                                <td class="align-middle text-center text-nowrap">{{optional($contact->loggable)->name ?? "---"}}</td>
+                                                <td class="align-middle text-center text-nowrap">{{optional($contact->company->first())->name ?? "---"}}</td>
+                                                <td class="align-middle text-center text-nowrap">
+                                                    @if ($contact->created_at->isToday())
+                                                        Today
+                                                        at {{ $contact->created_at->timezone('GMT+5')->format('g:i A') }}
+                                                        GMT+5
+                                                    @else
+                                                        {{ $contact->created_at->timezone('GMT+5')->format('M d, Y g:i A') }}
+                                                        GMT+5
+                                                    @endif
+                                                </td>
+                                            </tr>
+                                        @endforeach
                                         </tbody>
                                     </table>
                                 </div>
@@ -404,68 +392,38 @@
                             initTable">
                                         <thead>
                                         <tr>
-                                            <th class="align-middle text-center text-nowrap"><input type="checkbox">
-                                            </th>
-                                            <th class="align-middle text-center text-nowrap">NAME</th>
-                                            <th class="align-middle text-center text-nowrap">EMAIL</th>
-                                            {{--                                    <th>PHONE NUMBER</th>--}}
-                                            <th class="align-middle text-center text-nowrap">PHONE NUMBER</th>
-                                            <th class="align-middle text-center text-nowrap">PHONE NUMBER</th>
-                                            <th class="align-middle text-center text-nowrap">Image</th>
-                                            <th class="align-middle text-center text-nowrap">PHONE NUMBER</th>
-                                            <th class="align-middle text-center text-nowrap">PHONE NUMBER</th>
-                                            <th class="align-middle text-center text-nowrap">PHONE NUMBER</th>
-                                            <th class="align-middle text-center text-nowrap">CONTACT OWNER</th>
+                                            <th><input type="checkbox"></th>
+                                            <th>ID</th>
+                                            <th>NAME</th>
+                                            <th>EMAIL</th>
+                                            <th>PHONE NUMBER</th>
+                                            <th>CONTACT OWNER</th>
+                                            <th>PRIMARY COMPANY</th>
+                                            <th>CREATE DATE</th>
                                         </tr>
                                         </thead>
                                         <tbody>
-{{--                                        @foreach($companies as $key => $company)--}}
-{{--                                            <tr id="myCompaniesTable-tr-{{$company->id}}">--}}
-{{--                                                <td></td>--}}
-{{--                                                <td class="align-middle text-center text-nowrap">Syed Moiz Athar</td>--}}
-{{--                                                <td class="align-middle text-center text-nowrap">--}}
-{{--                                                    syedmoizathar@gmail.com--}}
-{{--                                                </td>--}}
-{{--                                                --}}{{--                                        <td class="align-middle text-center text-nowrap">--}}
-{{--                                                --}}{{--                                            @php--}}
-{{--                                                --}}{{--                                                $logoUrl = filter_var($company->logo, FILTER_VALIDATE_URL) ? $company->logo : asset('assets/images/company-logos/'.$company->logo);--}}
-{{--                                                --}}{{--                                            @endphp--}}
-{{--                                                --}}{{--                                            <object--}}
-{{--                                                --}}{{--                                                data="{{ $logoUrl }}"--}}
-{{--                                                --}}{{--                                                class="avatar avatar-sm me-3"--}}
-{{--                                                --}}{{--                                                title="{{ $company->name }}"--}}
-{{--                                                --}}{{--                                            >--}}
-{{--                                                --}}{{--                                                <img--}}
-{{--                                                --}}{{--                                                    src="{{ $logoUrl }}"--}}
-{{--                                                --}}{{--                                                    alt="{{ $company->name }}"--}}
-{{--                                                --}}{{--                                                    class="avatar avatar-sm me-3"--}}
-{{--                                                --}}{{--                                                    title="{{ $company->name }}">--}}
-{{--                                                --}}{{--                                            </object>--}}
-{{--                                                --}}{{--                                        </td>--}}
-{{--                                                <td class="align-middle text-center text-nowrap">{{$company->name}}</td>--}}
-{{--                                                <td class="align-middle text-center text-nowrap">{{$company->name}}</td>--}}
-{{--                                                <td class="align-middle text-center text-nowrap">--}}
-{{--                                                    @php--}}
-{{--                                                        $logoUrl = filter_var($company->logo, FILTER_VALIDATE_URL) ? $company->logo : asset('assets/images/brand-logos/'.$company->logo);--}}
-{{--                                                    @endphp--}}
-{{--                                                    <object--}}
-{{--                                                        data="{{ $logoUrl }}"--}}
-{{--                                                        class="avatar avatar-sm me-3"--}}
-{{--                                                        title="{{ $company->name }}"--}}
-{{--                                                    >--}}
-{{--                                                        <img--}}
-{{--                                                            src="{{ $logoUrl }}"--}}
-{{--                                                            alt="{{ $company->name }}"--}}
-{{--                                                            class="avatar avatar-sm me-3"--}}
-{{--                                                            title="{{ $company->name }}">--}}
-{{--                                                    </object>--}}
-{{--                                                </td>--}}
-{{--                                                <td class="align-middle text-center text-nowrap">{{$company->name}}</td>--}}
-{{--                                                <td class="align-middle text-center text-nowrap">{{$company->name}}</td>--}}
-{{--                                                <td class="align-middle text-center text-nowrap">{{$company->name}}</td>--}}
-{{--                                                <td class="align-middle text-center text-nowrap">{{$company->url}}</td>--}}
-{{--                                            </tr>--}}
-{{--                                        @endforeach--}}
+                                        @foreach($my_contacts as $key => $contact)
+                                            <tr id="tr-{{$contact->id}}">
+                                                <td></td>
+                                                <td class="align-middle text-center text-nowrap">{{$loop->iteration}}</td>
+                                                <td class="align-middle text-center text-nowrap">{{$contact->name}}</td>
+                                                <td class="align-middle text-center text-nowrap">{{$contact->email}}</td>
+                                                <td class="align-middle text-center text-nowrap">{{$contact->phone_number}}</td>
+                                                <td class="align-middle text-center text-nowrap">{{optional($contact->loggable)->name}}</td>
+                                                <td class="align-middle text-center text-nowrap">{{optional($contact->company->first())->name}}</td>
+                                                <td class="align-middle text-center text-nowrap">
+                                                    @if ($contact->created_at->isToday())
+                                                        Today
+                                                        at {{ $contact->created_at->timezone('GMT+5')->format('g:i A') }}
+                                                        GMT+5
+                                                    @else
+                                                        {{ $contact->created_at->timezone('GMT+5')->format('M d, Y g:i A') }}
+                                                        GMT+5
+                                                    @endif
+                                                </td>
+                                            </tr>
+                                        @endforeach
                                         </tbody>
                                     </table>
                                 </div>

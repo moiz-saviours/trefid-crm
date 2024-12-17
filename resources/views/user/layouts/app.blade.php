@@ -11,7 +11,7 @@
 
     <!-- STYLESHEETS -->
     <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-    @include('layouts.style')
+    @include('user.layouts.style')
     @stack('style')
     <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
 
@@ -605,7 +605,7 @@
 
     <!-- MAIN NAVIGATION -->
     <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-    @include('layouts.navigation')
+    @include('user.layouts.navigation')
     <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
     <!-- END - MAIN NAVIGATION -->
 
@@ -1696,7 +1696,7 @@
 
 <!-- JAVASCRIPTS -->
 <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-@include('layouts.script')
+@include('user.layouts.script')
 @stack('script')
 <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
 </body>

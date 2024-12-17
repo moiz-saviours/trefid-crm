@@ -49,7 +49,7 @@ class Lead extends Model
     {
         return $this->belongsTo(Client::class, 'client_key', 'client_key');
     }
-    public function lead_status(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function leadStatus(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(LeadStatus::class, 'lead_status_id');
     }

@@ -17,11 +17,66 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
 <script src="https://cdn.datatables.net/v/bs5/jszip-3.10.1/dt-2.1.8/b-3.2.0/b-colvis-3.2.0/b-html5-3.2.0/b-print-3.2.0/cr-2.0.4/date-1.5.4/fc-5.0.4/fh-4.0.1/sc-2.4.3/sp-2.3.3/sl-2.1.0/datatables.min.js"></script>
+
+<script type="text/javascript" charset="utf-8" src="https://cdn.datatables.net/1.10.25/extensions/Editor/js/dataTables.editor.min.js"></script>
+
 <!-- New -->
 
 <!-- Jquery UI -->
 <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
 <!-- End Jquery UI -->
+
+<!-- Toaster -->
+<script src="{{asset('build/toaster/js/toastr.min.js')}}"></script>
+
+<script>
+    // Toastr options
+    toastr.options = {
+        "closeButton": true,
+        "debug": false,
+        "newestOnTop": false,
+        "progressBar": true,
+        "positionClass": "toast-top-right",
+        "preventDuplicates": false,
+        "onclick": null,
+        "showDuration": "500",
+        "hideDuration": "1000",
+        "timeOut": "3000", // 5 seconds
+        "extendedTimeOut": "1000",
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut"
+    };
+
+    @if(session('success'))
+    setTimeout(function () {
+        toastr.success("{{ session('success') }}");
+    }, 1500);
+    @php session()->forget('success'); @endphp
+    @endif
+
+    // Display error messages (multiple)
+    @if(session('errors') && session('errors')->any())
+    let errorMessages = {!! json_encode(session('errors')->all()) !!};
+    let displayedCount = 0;
+
+    setTimeout(function () {
+        errorMessages.forEach((message, index) => {
+            if (displayedCount < 5) {
+                toastr.error(message);
+                displayedCount++;
+            } else {
+                setTimeout(() => toastr.error(message), index * 1000);
+            }
+        });
+    }, 1500);
+
+    @php session()->forget('errors'); @endphp
+    @endif
+</script>
+
+
 <script>
 
     $(function () {

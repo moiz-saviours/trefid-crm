@@ -181,7 +181,7 @@
                         <ul class="mininav-content nav collapse">
                             <li data-popper-arrow class="arrow"></li>
                             <li class="nav-item">
-                                <a href="{{route('contacts.index')}}"
+                                <a href="{{route('contact.index')}}"
                                        class="nav-link {{ request()->is('contacts*') ? 'active' : '' }}">Lists</a>
                             </li>
                         </ul>
@@ -213,7 +213,7 @@
                         <ul class="mininav-content nav collapse">
                             <li data-popper-arrow class="arrow"></li>
                             <li class="nav-item">
-                                <a href="{{route('user.brand.index')}}"
+                                <a href="{{route('brand.index')}}"
                                    class="nav-link {{ request()->is('brand*') ? 'active' : '' }}">Lists</a>
                             </li>
                         </ul>
@@ -230,7 +230,7 @@
                         <ul class="mininav-content nav collapse">
                             <li data-popper-arrow class="arrow"></li>
                             <li class="nav-item">
-                                <a href="{{route('user.leads.index')}}"
+                                <a href="{{route('lead.index')}}"
                                    class="nav-link {{ request()->is('leads*') ? 'active' : '' }}">Lists</a>
                             </li>
                         </ul>
@@ -246,7 +246,7 @@
                         <ul class="mininav-content nav collapse">
                             <li data-popper-arrow class="arrow"></li>
                             <li class="nav-item">
-                                <a href="{{route('user.lead-status.index')}}"
+                                <a href="{{route('lead-status.index')}}"
                                    class="nav-link {{ request()->is('lead-status*') ? 'active' : '' }}">Lists</a>
                             </li>
                         </ul>
@@ -262,7 +262,7 @@
                         <ul class="mininav-content nav collapse">
                             <li data-popper-arrow class="arrow"></li>
                             <li class="nav-item">
-                                <a href="{{route('user.invoice.index')}}"
+                                <a href="{{route('invoice.index')}}"
                                    class="nav-link {{ request()->is('invoice*') ? 'active' : '' }}">Lists</a>
                             </li>
                         </ul>
@@ -278,7 +278,7 @@
                         <ul class="mininav-content nav collapse">
                             <li data-popper-arrow class="arrow"></li>
                             <li class="nav-item">
-                                <a href="{{route('user.payment.index')}}"
+                                <a href="{{route('payment.index')}}"
                                    class="nav-link {{ request()->is('payment*') ? 'active' : '' }}">Lists</a>
                             </li>
                         </ul>

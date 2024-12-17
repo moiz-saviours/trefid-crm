@@ -100,4 +100,5 @@ class Company extends Model
             return self::all();
         });
     }
+
 }

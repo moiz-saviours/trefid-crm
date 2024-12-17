@@ -1,17 +1,11 @@
 @extends('user.layouts.app')
-@section('title','Leads')
+@section('title','Brands')
 @section('datatable', true)
 @section('content')
     @push('style')
-        @include('user.leads.style')
+        @include('user.brands.style')
         <style>
-            td.align-middle.text-center.text-nowrap.editable:hover select{
-                border: 1px solid #000;
-                border-radius: 5px;
-            }
-            td.align-middle.text-center.text-nowrap.editable[data] , td.align-middle.text-center.text-nowrap.editable{
-                cursor:pointer;
-            }
+
             .void {
                 cursor: not-allowed;
             }
@@ -256,7 +250,8 @@
             <div class="content__wrap">
                 <header class="custm_header">
                     <div class="new_head">
-                        <h1 class="page-title mb-2">Leads <i class="fa fa-caret-down" aria-hidden="true"></i></h1>
+                        <h1 class="page-title mb-2">Brands <i class="fa fa-caret-down" aria-hidden="true"></i>
+                        </h1>
                         <h2 id="record-count" class="h6"> records</h2>
                     </div>
                     <div class="filters">
@@ -266,7 +261,7 @@
                             <button class="header_btn">Actions <i class="fa fa-caret-down" aria-hidden="true"></i>
                             </button>
                             <button class="header_btn">Import</button>
-                            <button class="create-contact open-form-btn void">Create Lead</button>
+                            <button class="create-contact open-form-btn void">Create Brand</button>
                         </div>
                     </div>
                 </header>
@@ -277,97 +272,80 @@
                 <div class="container">
                     <div class="custom-tabs">
                         <ul class="tab-nav">
-                            <li class="tab-item active" data-tab="home">Leads
-                                <i class="fa fa-times close-icon" aria-hidden="true"></i></li>
+                            @foreach($teams as $team)
+                                <li class="tab-item {{$loop->first ? "active":""}}"
+                                    data-tab="tab-pane-{{$team->team_key}}">{{$team->name}}<i
+                                        class="fa fa-times close-icon"
+                                        aria-hidden="true"></i></li>
+                            @endforeach
                         </ul>
+                        {{--                        <div class="tab-buttons" >--}}
+                        {{--                            <button class="btn btn-primary"><i class="fa fa-add"></i> Views (2/5)</button>--}}
+                        {{--                            <button class="btn btn-secondary">All Views</button>--}}
+                        {{--                        </div>--}}
                     </div>
                     <div class="tab-content">
-                        <div class="tab-pane active" id="home">
-                            <div class="card">
-                                <div class="card-header">
-                                    <div class="container">
-                                        <div class="row fltr-sec">
-                                            <div class="col-md-8">
-                                                <ul class="custm-filtr">
-                                                    <div class="table-li">
-                                                        <li class="">Company Owner <i class="fa fa-caret-down"
-                                                                                      aria-hidden="true"></i></li>
-                                                        <li class="">Create date <i class="fa fa-caret-down"
-                                                                                    aria-hidden="true"></i></li>
-                                                        <li class="">Last activity date <i class="fa fa-caret-down"
-                                                                                           aria-hidden="true"></i>
-                                                        </li>
-                                                        <li class="">Lead status <i class="fa fa-caret-down"
-                                                                                    aria-hidden="true"></i></li>
-                                                        <li class=""><i class="fa fa-bars" aria-hidden="true"></i> All
-                                                            filters
-                                                        </li>
-                                                    </div>
-                                                </ul>
+                        @foreach($teams as $index => $team)
+                            <div class="tab-pane {{$loop->first ? "active":""}}" id="tab-pane-{{$team->team_key}}">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <div class="container">
+                                            <div class="row fltr-sec">
+                                                <div class="col-md-8">
+                                                    {{--                                                <ul class="custm-filtr">--}}
+                                                    {{--                                                    <div class="table-li">--}}
+                                                    {{--                                                        <li class="">Company Owner <i class="fa fa-caret-down"--}}
+                                                    {{--                                                                                      aria-hidden="true"></i></li>--}}
+                                                    {{--                                                        <li class="">Create date <i class="fa fa-caret-down"--}}
+                                                    {{--                                                                                    aria-hidden="true"></i></li>--}}
+                                                    {{--                                                        <li class="">Last activity date <i class="fa fa-caret-down"--}}
+                                                    {{--                                                                                           aria-hidden="true"></i>--}}
+                                                    {{--                                                        </li>--}}
+                                                    {{--                                                        <li class="">Lead status <i class="fa fa-caret-down"--}}
+                                                    {{--                                                                                    aria-hidden="true"></i></li>--}}
+                                                    {{--                                                        <li class=""><i class="fa fa-bars" aria-hidden="true"></i> All--}}
+                                                    {{--                                                            filters--}}
+                                                    {{--                                                        </li>--}}
+                                                    {{--                                                    </div>--}}
+                                                    {{--                                                </ul>--}}
+                                                </div>
+                                                <div class="col-md-4 right-icon" id="right-icon-{{ $index }}"></div>
                                             </div>
-                                            <div class="col-md-4 right-icon" id="right-icon-0"></div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="card-body">
-                                    <table id="allLeadsTable" class="table table-striped datatable-exportable
+                                    <div class="card-body">
+                                        <table id="{{$team->team_key}}-Table" class="table table-striped datatable-exportable
                             stripe row-border order-column nowrap
                             initTable
                             ">
-                                        <thead>
-                                        <tr>
-                                            <th><input type="checkbox"></th>
-                                            <th class="align-middle text-center text-nowrap">Id</th>
-                                            <th class="align-middle text-center text-nowrap">BRAND</th>
-                                            <th class="align-middle text-center text-nowrap">CLIENT</th>
-                                            <th class="align-middle text-center text-nowrap">NAME</th>
-                                            <th class="align-middle text-center text-nowrap">EMAIL</th>
-                                            <th class="align-middle text-center text-nowrap">PHONE NUMBER</th>
-                                            <th class="align-middle text-center text-nowrap">ADDRESS</th>
-                                            <th class="align-middle text-center text-nowrap">CITY</th>
-                                            <th class="align-middle text-center text-nowrap">STATE</th>
-                                            <th class="align-middle text-center text-nowrap">ZIPCODE</th>
-                                            <th class="align-middle text-center text-nowrap">COUNTRY</th>
-                                            <th class="align-middle text-center text-nowrap">LEAD STATUS</th>
-                                            <th class="align-middle text-center text-nowrap">NOTE</th>
-                                            <th class="align-middle text-center text-nowrap">CREATE DATE</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        @foreach($all_leads as $lead)
-                                            <tr id="tr-{{$lead->id}}">
-                                                <td class="align-middle text-center text-nowrap"></td>
-                                                <td class="align-middle text-center text-nowrap">{{$loop->iteration}}</td>
-                                                <td class="align-middle text-center text-nowrap">{{optional($lead->brand)->name ?? "---"}}</td>
-                                                <td class="align-middle text-center text-nowrap">{{optional($lead->client)->name ?? "---"}}</td>
-                                                <td class="align-middle text-center text-nowrap">{{$lead->name}}</td>
-                                                <td class="align-middle text-center text-nowrap">{{$lead->email}}</td>
-                                                <td class="align-middle text-center text-nowrap">{{$lead->phone}}</td>
-                                                <td class="align-middle text-center text-nowrap">{{$lead->address}}</td>
-                                                <td class="align-middle text-center text-nowrap">{{$lead->city}}</td>
-                                                <td class="align-middle text-center text-nowrap">{{$lead->state}}</td>
-                                                <td class="align-middle text-center text-nowrap">{{$lead->zipcode}}</td>
-                                                <td class="align-middle text-center text-nowrap">{{$lead->country}}</td>
-                                                <td class="align-middle text-center text-nowrap editable" data-id="{{ $lead->id }}" data-field="leadStatus">{{optional($lead->leadStatus)->name}}</td>
-                                                <td class="align-middle text-center text-nowrap">{{htmlspecialchars($lead->note)}}</td>
-                                                <td class="align-middle text-center text-nowrap">
-                                                    @if ($lead->created_at->isToday())
-                                                        Today
-                                                        at {{ $lead->created_at->timezone('GMT+5')->format('g:i A') }}
-                                                        GMT+5
-                                                    @else
-                                                        {{ $lead->created_at->timezone('GMT+5')->format('M d, Y g:i A') }}
-                                                        GMT+5
-                                                    @endif
-                                                </td>
+                                            <thead>
+                                            <tr>
+                                                <th class="align-middle text-center text-nowrap"><input type="checkbox"></th>
+                                                <th class="align-middle text-center text-nowrap">ID</th>
+                                                <th class="align-middle text-center text-nowrap">Logo</th>
+                                                <th class="align-middle text-center text-nowrap">Name</th>
+                                                <th class="align-middle text-center text-nowrap">Url</th>
                                             </tr>
-                                        @endforeach
-                                        </tbody>
-                                    </table>
+                                            </thead>
+                                            <tbody>
+                                            @foreach($team->brands as $brand)
+                                                <tr>
+                                                    <td class="align-middle text-center text-nowrap"></td>
+                                                    <td class="align-middle text-center text-nowrap">{{$loop->iteration}}</td>
+                                                    <td class="align-middle text-center text-nowrap"><img src="{{ asset('assets/images/brand-logos/'.$brand->logo)}}" width="50px" height="50px"></td>
+                                                    <td class="align-middle text-center text-nowrap">{{$brand->name}} <br> {{$brand->brand_key}} </td>
+                                                    <td class="align-middle text-center text-nowrap">{{$brand->url}}</td>
+                                                </tr>
+                                            @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        @endforeach
                     </div>
+
+
                     <div class="custom-form">
                         <div class="form-container" id="formContainer">
                             <!-- Form Header -->
@@ -394,7 +372,7 @@
     <!-- Modal -->
 
     @push('script')
-        @include('user.leads.script')
+        @include('user.brands.script')
         <script>
 
             $(document).ready(function () {
@@ -416,11 +394,6 @@
 
                     const targetPane = $(this).data("tab");
                     $("#" + targetPane).addClass("active");
-                });
-                $('td.align-middle.text-center.text-nowrap').each(function () {
-                    if (!$(this).hasClass('select-checkbox') && $(this).text().trim() === '') {
-                        $(this).text('---');
-                    }
                 });
             });
 

@@ -1,9 +1,9 @@
-@extends('layouts.app')
+@extends('user.layouts.app')
 @section('title','Members')
 @section('datatable', true)
 @section('content')
     @push('style')
-        @include('team-members.style')
+        @include('user.team-members.style')
         <style>
 
             .void {
@@ -330,7 +330,9 @@
                                             @foreach($team->users as $member)
                                                 <tr>
                                                     <td class="align-middle text-center text-nowrap"></td>
-                                                    <td class="align-middle text-center text-nowrap">{{$member->name}} @if($team->lead_id == $member->id)<i class="fa fa-solid fa-star"></i>@endif</td>
+                                                    <td class="align-middle text-center text-nowrap">{{$member->name}} @if($team->lead_id == $member->id)
+                                                            <i class="fa fa-solid fa-star"></i>
+                                                        @endif</td>
                                                     <td class="align-middle text-center text-nowrap">{{$member->email}}</td>
                                                 </tr>
                                             @endforeach
@@ -369,7 +371,7 @@
     <!-- Modal -->
 
     @push('script')
-        @include('team-members.script')
+        @include('user.team-members.script')
         <script>
 
             $(document).ready(function () {

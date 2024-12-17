@@ -83,4 +83,13 @@ class Client extends Model
     {
         return $this->belongsTo(Team::class, 'team_key', 'team_key');
     }
+
+    /**
+     * TODO NEED TO BE UPDATE : LOGGABLE WILL BE FOR WHO CREATED THIS RECORD
+     * Define a polymorphic relationship with logs.
+     */
+    public function company(): \Illuminate\Database\Eloquent\Relations\MorphMany
+    {
+        return $this->morphMany(company::class, 'loggable');
+    }
 }
