@@ -1,9 +1,9 @@
 @extends('layouts.app')
-@section('title','Companies')
+@section('title','Brands')
 @section('datatable', true)
 @section('content')
     @push('style')
-        @include('companies.style')
+        @include('user.brand.style')
         <style>
 
             .void {
@@ -250,7 +250,7 @@
             <div class="content__wrap">
                 <header class="custm_header">
                     <div class="new_head">
-                        <h1 class="page-title mb-2">Leads <i class="fa fa-caret-down" aria-hidden="true"></i></h1>
+                        <h1 class="page-title mb-2">Brands <i class="fa fa-caret-down" aria-hidden="true"></i></h1>
                         <h2 id="record-count" class="h6"> records</h2>
                     </div>
                     <div class="filters">
@@ -260,7 +260,7 @@
                             <button class="header_btn">Actions <i class="fa fa-caret-down" aria-hidden="true"></i>
                             </button>
                             <button class="header_btn">Import</button>
-                            <button class="create-contact open-form-btn void">Create Lead</button>
+                            <button class="create-contact open-form-btn void">Create Brand</button>
                         </div>
                     </div>
                 </header>
@@ -271,10 +271,10 @@
                 <div class="container">
                     <div class="custom-tabs">
                         <ul class="tab-nav">
-                            <li class="tab-item active" data-tab="home">Leads
+                            <li class="tab-item active" data-tab="home">All Brands
                                 <i class="fa fa-times close-icon" aria-hidden="true"></i></li>
-{{--                            <li class="tab-item " data-tab="menu1">My Contacts <i class="fa fa-times close-icon"--}}
-{{--                                                                                   aria-hidden="true"></i></li>--}}
+                            <li class="tab-item " data-tab="menu1">My Brand <i class="fa fa-times close-icon"
+                                                                                   aria-hidden="true"></i></li>
                         </ul>
                         {{--                        <div class="tab-buttons" >--}}
                         {{--                            <button class="btn btn-primary"><i class="fa fa-add"></i> Views (2/5)</button>--}}
@@ -317,15 +317,14 @@
                                         <thead>
                                         <tr>
                                             <th><input type="checkbox"></th>
-                                            <th>NAME</th>
-                                            <th>EMAIL</th>
-                                            {{--                                    <th>PHONE NUMBER</th>--}}
-                                            <th>PHONE NUMBER</th>
-                                            <th>PHONE NUMBER</th>
-                                            <th>PHONE NUMBER</th>
-                                            <th>PHONE NUMBER</th>
-                                            <th>PHONE NUMBER</th>
-                                            <th>CONTACT OWNER</th>
+                                            <th>ID</th>
+                                            <th>Logo</th>
+                                            <th>Brand Key</th>
+                                            <th>Name</th>
+                                            <th>Url</th>
+                                            <th>Status</th>
+                                            <th>Action</th>
+
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -404,18 +403,14 @@
                             initTable">
                                         <thead>
                                         <tr>
-                                            <th class="align-middle text-center text-nowrap"><input type="checkbox">
-                                            </th>
-                                            <th class="align-middle text-center text-nowrap">NAME</th>
-                                            <th class="align-middle text-center text-nowrap">EMAIL</th>
-                                            {{--                                    <th>PHONE NUMBER</th>--}}
-                                            <th class="align-middle text-center text-nowrap">PHONE NUMBER</th>
-                                            <th class="align-middle text-center text-nowrap">PHONE NUMBER</th>
-                                            <th class="align-middle text-center text-nowrap">Image</th>
-                                            <th class="align-middle text-center text-nowrap">PHONE NUMBER</th>
-                                            <th class="align-middle text-center text-nowrap">PHONE NUMBER</th>
-                                            <th class="align-middle text-center text-nowrap">PHONE NUMBER</th>
-                                            <th class="align-middle text-center text-nowrap">CONTACT OWNER</th>
+                                            <th><input type="checkbox"></th>
+                                            <th>ID</th>
+                                            <th>Logo</th>
+                                            <th>Brand Key</th>
+                                            <th>Name</th>
+                                            <th>Url</th>
+                                            <th>Status</th>
+                                            <th>Action</th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -489,8 +484,6 @@
                             </div>
                         </div>
                     </div>
-
-
                 </div>
             </div>
         </div>
@@ -498,7 +491,7 @@
     <!-- Modal -->
 
     @push('script')
-        @include('companies.script')
+        @include('user.brand.script')
         <script>
 
             $(document).ready(function () {

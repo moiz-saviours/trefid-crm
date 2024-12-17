@@ -6,7 +6,7 @@
             <div class="col-12">
                 <div class="card mb-4">
                     <div class="card-header pb-0">
-                        <h5>Create Payment Merchant</h5>
+                        <h5>Create Client</h5>
                     </div>
                     <div class="card-body">
                         @if($errors->any())
@@ -18,7 +18,7 @@
                                 </ul>
                             </div>
                         @endif
-                        <form action="{{ route('admin.payment.merchant.store') }}" method="POST">
+                        <form action="{{ route('admin.client.store') }}" method="POST">
                             @csrf
                             <div class="row">
                                 <div class="col-6">
@@ -41,7 +41,7 @@
 
                                 <div class="col-6">
                                     <div class="mb-3">
-                                        <label for="name" class="form-label">Merchant Name</label>
+                                        <label for="name" class="form-label">Client Name</label>
                                         <input type="text" class="form-control" id="name" name="name"
                                                value="{{ old('name') }}"
                                                required>

@@ -8,6 +8,6 @@ class LeadStatusController extends Controller
 {
     public function index()
     {
-        return view('lead-status.index');
+        return view('user.lead-status.index');
     }
 }

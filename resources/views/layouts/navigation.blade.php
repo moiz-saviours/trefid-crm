@@ -190,14 +190,14 @@
                     <li class="nav-item has-sub">
                         <a href="#"
                            class="mininav-toggle nav-link collapsed {{ request()->is('team-members*') ? 'active' : '' }}"><i
-                                class="demo-pli-address-book fs-5 me-2"></i>
+                                class="demo-pli-add-user fs-5 me-2"></i>
                             <span class="nav-label ms-1">Team Members</span>
                         </a>
                         <!-- Ui Elements submenu list -->
                         <ul class="mininav-content nav collapse">
                             <li data-popper-arrow class="arrow"></li>
                             <li class="nav-item">
-                                <a href="{{route('team-members.index')}}"
+                                <a href="{{route('team-member.index')}}"
                                    class="nav-link {{ request()->is('team-members*') ? 'active' : '' }}">Lists</a>
                             </li>
                         </ul>
@@ -205,15 +205,15 @@
                     </li>
                     <li class="nav-item has-sub">
                         <a href="#"
-                           class="mininav-toggle nav-link collapsed {{ request()->is('contacts*') ? 'active' : '' }}"><i
-                                class="demo-pli-address-book fs-5 me-2"></i>
+                           class="mininav-toggle nav-link collapsed {{ request()->is('brand*') ? 'active' : '' }}"><i
+                                class="demo-pli-tag fs-5 me-2"></i>
                             <span class="nav-label ms-1">Brands</span>
                         </a>
                         <!-- Ui Elements submenu list -->
                         <ul class="mininav-content nav collapse">
                             <li data-popper-arrow class="arrow"></li>
                             <li class="nav-item">
-                                <a href="{{route('brand.index')}}"
+                                <a href="{{route('user.brand.index')}}"
                                    class="nav-link {{ request()->is('brand*') ? 'active' : '' }}">Lists</a>
                             </li>
                         </ul>
@@ -222,15 +222,15 @@
 
                     <li class="nav-item has-sub">
                         <a href="#"
-                           class="mininav-toggle nav-link collapsed {{ request()->is('contacts*') ? 'active' : '' }}"><i
-                                class="demo-pli-address-book fs-5 me-2"></i>
+                           class="mininav-toggle nav-link collapsed {{ request()->is('leads*') ? 'active' : '' }}"><i
+                                class="demo-pli-mine fs-5 me-2"></i>
                             <span class="nav-label ms-1">Leads</span>
                         </a>
                         <!-- Ui Elements submenu list -->
                         <ul class="mininav-content nav collapse">
                             <li data-popper-arrow class="arrow"></li>
                             <li class="nav-item">
-                                <a href="{{route('leads.index')}}"
+                                <a href="{{route('user.leads.index')}}"
                                    class="nav-link {{ request()->is('leads*') ? 'active' : '' }}">Lists</a>
                             </li>
                         </ul>
@@ -239,14 +239,14 @@
                     <li class="nav-item has-sub">
                         <a href="#"
                            class="mininav-toggle nav-link collapsed {{ request()->is('contacts*') ? 'active' : '' }}"><i
-                                class="demo-pli-address-book fs-5 me-2"></i>
+                                class="demo-pli-gears fs-5 me-2"></i>
                             <span class="nav-label ms-1">Lead Status</span>
                         </a>
                         <!-- Ui Elements submenu list -->
                         <ul class="mininav-content nav collapse">
                             <li data-popper-arrow class="arrow"></li>
                             <li class="nav-item">
-                                <a href="{{route('lead-status.index')}}"
+                                <a href="{{route('user.lead-status.index')}}"
                                    class="nav-link {{ request()->is('lead-status*') ? 'active' : '' }}">Lists</a>
                             </li>
                         </ul>
@@ -255,14 +255,14 @@
                     <li class="nav-item has-sub">
                         <a href="#"
                            class="mininav-toggle nav-link collapsed {{ request()->is('contacts*') ? 'active' : '' }}"><i
-                                class="demo-pli-address-book fs-5 me-2"></i>
+                                class="demo-pli-file fs-5 me-2"></i>
                             <span class="nav-label ms-1">Invoices</span>
                         </a>
                         <!-- Ui Elements submenu list -->
                         <ul class="mininav-content nav collapse">
                             <li data-popper-arrow class="arrow"></li>
                             <li class="nav-item">
-                                <a href="{{route('invoice.index')}}"
+                                <a href="{{route('user.invoice.index')}}"
                                    class="nav-link {{ request()->is('invoice*') ? 'active' : '' }}">Lists</a>
                             </li>
                         </ul>
@@ -271,14 +271,14 @@
                     <li class="nav-item has-sub">
                         <a href="#"
                            class="mininav-toggle nav-link collapsed {{ request()->is('contacts*') ? 'active' : '' }}"><i
-                                class="demo-pli-address-book fs-5 me-2"></i>
+                                class="demo-pli-wallet-2 fs-5 me-2"></i>
                             <span class="nav-label ms-1">Payments</span>
                         </a>
                         <!-- Ui Elements submenu list -->
                         <ul class="mininav-content nav collapse">
                             <li data-popper-arrow class="arrow"></li>
                             <li class="nav-item">
-                                <a href="{{route('payment.index')}}"
+                                <a href="{{route('user.payment.index')}}"
                                    class="nav-link {{ request()->is('payment*') ? 'active' : '' }}">Lists</a>
                             </li>
                         </ul>

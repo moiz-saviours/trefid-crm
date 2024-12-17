@@ -1,9 +1,9 @@
 @extends('layouts.app')
-@section('title','Companies')
+@section('title','Payments')
 @section('datatable', true)
 @section('content')
     @push('style')
-        @include('companies.style')
+        @include('user.payment.style')
         <style>
 
             .void {
@@ -250,7 +250,7 @@
             <div class="content__wrap">
                 <header class="custm_header">
                     <div class="new_head">
-                        <h1 class="page-title mb-2">Invoices <i class="fa fa-caret-down" aria-hidden="true"></i></h1>
+                        <h1 class="page-title mb-2">Payments <i class="fa fa-caret-down" aria-hidden="true"></i></h1>
                         <h2 id="record-count" class="h6"> records</h2>
                     </div>
                     <div class="filters">
@@ -260,7 +260,7 @@
                             <button class="header_btn">Actions <i class="fa fa-caret-down" aria-hidden="true"></i>
                             </button>
                             <button class="header_btn">Import</button>
-                            <button class="create-contact open-form-btn void">Create New Invoice</button>
+                            <button class="create-contact open-form-btn void">Create New Payment</button>
                         </div>
                     </div>
                 </header>
@@ -271,9 +271,9 @@
                 <div class="container">
                     <div class="custom-tabs">
                         <ul class="tab-nav">
-                            <li class="tab-item active" data-tab="home">All Invoices
+                            <li class="tab-item active" data-tab="home">Payments
                                 <i class="fa fa-times close-icon" aria-hidden="true"></i></li>
-                            <li class="tab-item " data-tab="menu1">My Invoice <i class="fa fa-times close-icon"
+                            <li class="tab-item " data-tab="menu1">My Payments <i class="fa fa-times close-icon"
                                                                                    aria-hidden="true"></i></li>
                         </ul>
                         {{--                        <div class="tab-buttons" >--}}
@@ -317,15 +317,17 @@
                                         <thead>
                                         <tr>
                                             <th><input type="checkbox"></th>
-                                            <th>NAME</th>
-                                            <th>EMAIL</th>
-                                            {{--                                    <th>PHONE NUMBER</th>--}}
-                                            <th>PHONE NUMBER</th>
-                                            <th>PHONE NUMBER</th>
-                                            <th>PHONE NUMBER</th>
-                                            <th>PHONE NUMBER</th>
-                                            <th>PHONE NUMBER</th>
-                                            <th>CONTACT OWNER</th>
+                                            <th>Id</th>
+                                            <th>Payment Method</th>
+                                            <th>Invoice Number</th>
+                                            <th>Transaction Id</th>
+                                            <th>Brand</th>
+                                            <th>Team</th>
+                                            <th>Agent</th>
+                                            <th>Client Name</th>
+                                            <th>Amount</th>
+                                            <th>Date</th>
+                                            <th>Status</th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -404,18 +406,18 @@
                             initTable">
                                         <thead>
                                         <tr>
-                                            <th class="align-middle text-center text-nowrap"><input type="checkbox">
-                                            </th>
-                                            <th class="align-middle text-center text-nowrap">NAME</th>
-                                            <th class="align-middle text-center text-nowrap">EMAIL</th>
-                                            {{--                                    <th>PHONE NUMBER</th>--}}
-                                            <th class="align-middle text-center text-nowrap">PHONE NUMBER</th>
-                                            <th class="align-middle text-center text-nowrap">PHONE NUMBER</th>
-                                            <th class="align-middle text-center text-nowrap">Image</th>
-                                            <th class="align-middle text-center text-nowrap">PHONE NUMBER</th>
-                                            <th class="align-middle text-center text-nowrap">PHONE NUMBER</th>
-                                            <th class="align-middle text-center text-nowrap">PHONE NUMBER</th>
-                                            <th class="align-middle text-center text-nowrap">CONTACT OWNER</th>
+                                            <th><input type="checkbox"></th>
+                                            <th>Id</th>
+                                            <th>Payment Method</th>
+                                            <th>Invoice Number</th>
+                                            <th>Transaction Id</th>
+                                            <th>Brand</th>
+                                            <th>Team</th>
+                                            <th>Agent</th>
+                                            <th>Client Name</th>
+                                            <th>Amount</th>
+                                            <th>Date</th>
+                                            <th>Status</th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -498,7 +500,7 @@
     <!-- Modal -->
 
     @push('script')
-        @include('companies.script')
+        @include('user.payment.script')
         <script>
 
             $(document).ready(function () {

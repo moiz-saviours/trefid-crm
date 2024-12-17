@@ -1,9 +1,9 @@
 @extends('layouts.app')
-@section('title','Companies')
+@section('title','Contacts')
 @section('datatable', true)
 @section('content')
     @push('style')
-        @include('companies.style')
+        @include('user.contacts.style')
         <style>
 
             .void {
@@ -498,7 +498,7 @@
     <!-- Modal -->
 
     @push('script')
-        @include('companies.script')
+        @include('user.contacts.script')
         <script>
 
             $(document).ready(function () {

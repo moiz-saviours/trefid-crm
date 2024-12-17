@@ -4,10 +4,10 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 
-class PaymentController extends Controller
+class ClientController extends Controller
 {
     public function index()
     {
-        return view('user.payment.index');
+        return view('user.clients.index');
     }
 }

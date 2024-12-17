@@ -17,7 +17,7 @@ class CompanyController extends Controller
     {
 //        $companies = Cache::remember('companies',  config('cache.durations.short_lived'), fn() => Company::all());
         $companies = Cache::remember('brands_list', config('cache.durations.short_lived'), fn() => Brand::all());
-        return view('companies.index', compact('companies'));
+        return view('user.companies.index', compact('companies'));
     }
     /**
      * Show the form for creating a new resource.

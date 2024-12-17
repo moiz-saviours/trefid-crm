@@ -137,7 +137,7 @@ Route::middleware(['auth:admin'])->prefix('admin')->name('admin.')->group(functi
     });
 
     /** Payment Merchant Routes */
-    Route::prefix('payment-merchant')->name('payment.merchant.')->group(function () {
+    Route::prefix('clients')->name('client.')->group(function () {
         Route::get('/', [AdminPaymentMerchantController::class, 'index'])->name('index');
         Route::get('/create', [AdminPaymentMerchantController::class, 'create'])->name('create');
         Route::post('/store', [AdminPaymentMerchantController::class, 'store'])->name('store');

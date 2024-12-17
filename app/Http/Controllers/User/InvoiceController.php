@@ -8,6 +8,6 @@ class InvoiceController extends Controller
 {
     public function index()
     {
-        return view('invoice.index');
+        return view('user.invoice.index');
     }
 }

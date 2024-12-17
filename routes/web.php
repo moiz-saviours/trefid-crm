@@ -46,20 +46,17 @@ Route::middleware('auth')->group(function () {
     Route::get('/contacts', [ContactsController::class, 'index'])->name('contacts.index');
     Route::get('/teams', [TeamController::class, 'index'])->name('teams.index');
     /** Team Members Routes */
-    Route::prefix('team-members')->name('team-members.')->group(function () {
-        Route::get('/team-members', [TeamMemberController::class, 'index'])->name('index');
-    });
     Route::name('team-member.')->group(function () {
         Route::get('/team-members', [TeamMemberController::class, 'index'])->name('index');
         Route::prefix('team-members')->group(function () {
 
         });
     });
-    Route::get('/brands', [BrandsController::class, 'index'])->name('brand.index');
-    Route::get('/leads', [LeadsController::class, 'index'])->name('leads.index');
-    Route::get('/lead-status', [LeadStatusController::class, 'index'])->name('lead-status.index');
-    Route::get('/invoice', [InvoiceController::class, 'index'])->name('invoice.index');
-    Route::get('/payment', [PaymentController::class, 'index'])->name('payment.index');
+    Route::get('/brands', [BrandsController::class, 'index'])->name('user.brand.index');
+    Route::get('/leads', [LeadsController::class, 'index'])->name('user.leads.index');
+    Route::get('/lead-status', [LeadStatusController::class, 'index'])->name('user.lead-status.index');
+    Route::get('/invoice', [InvoiceController::class, 'index'])->name('user.invoice.index');
+    Route::get('/payment', [PaymentController::class, 'index'])->name('user.payment.index');
 
 
 

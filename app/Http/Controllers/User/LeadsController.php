@@ -8,6 +8,6 @@ class LeadsController extends Controller
 {
     public function index()
     {
-        return view('leads.index');
+        return view('user.leads.index');
     }
 }

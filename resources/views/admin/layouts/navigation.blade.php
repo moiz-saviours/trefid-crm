@@ -122,7 +122,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link {{ request()->is('admin/payment-merchants*') ? 'active' : '' }}" href="{{ route('admin.payment.merchant.index') }}">
+                <a class="nav-link {{ request()->is('admin/payment-merchants*') ? 'active' : '' }}" href="{{ route('admin.client.index') }}">
                     <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                         <i class="far fa-credit-card" aria-hidden="true"></i>
                     </div>

@@ -1,5 +1,5 @@
 @extends('admin.layouts.app')
-@section('title', 'Payment Merchants')
+@section('title', 'Clients')
 @section('content')
     @push('style')
         <!-- DataTables CSS -->
@@ -11,8 +11,8 @@
             <div class="col-12">
                 <div class="card mb-4">
                     <div class="card-header pb-0">
-                        <h3 class="text-center">Payment Merchants Table</h3>
-                        <a href="{{ route('admin.payment.merchant.create') }}" class="btn btn-primary float-end"><i class="fas fa-plus"></i></a>
+                        <h3 class="text-center">Clients Table</h3>
+                        <a href="{{ route('admin.client.create') }}" class="btn btn-primary float-end"><i class="fas fa-plus"></i></a>
                     </div>
                     <div class="card-body px-0 pt-0 pb-2">
                         <div class="table table-responsive p-0">
@@ -20,7 +20,7 @@
                                 <thead>
                                 <tr>
                                     <th class="align-middle text-center text-nowrap">ID #</th>
-                                    <th class="align-middle text-center text-nowrap">Brand Key</th>
+                                    <th class="align-middle text-center text-nowrap">Brand </th>
                                     <th class="align-middle text-center text-nowrap">Name</th>
                                     <th class="align-middle text-center text-nowrap">Vendor Name</th>
                                     <th class="align-middle text-center text-nowrap">Type</th>
@@ -44,7 +44,7 @@
                                             </span>
                                         </td>
                                         <td class="align-middle text-center">
-                                            <a href="{{ route('admin.payment.merchant.edit', $payment_merchant->id) }}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit payment merchant">
+                                            <a href="{{ route('admin.client.edit', $payment_merchant->id) }}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit payment merchant">
                                                 Edit
                                             </a>
                                         </td>
