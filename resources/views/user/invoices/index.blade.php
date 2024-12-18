@@ -1,9 +1,9 @@
-@extends('layouts.app')
+@extends('user.layouts.app')
 @section('title','Invoices')
 @section('datatable', true)
 @section('content')
     @push('style')
-        @include('user.invoice.style')
+        @include('user.invoices.style')
         <style>
 
             .void {
@@ -271,15 +271,9 @@
                 <div class="container">
                     <div class="custom-tabs">
                         <ul class="tab-nav">
-                            <li class="tab-item active" data-tab="home">All Invoices
+                            <li class="tab-item active" data-tab="home">Invoices
                                 <i class="fa fa-times close-icon" aria-hidden="true"></i></li>
-                            <li class="tab-item " data-tab="menu1">My Invoice <i class="fa fa-times close-icon"
-                                                                                   aria-hidden="true"></i></li>
                         </ul>
-                        {{--                        <div class="tab-buttons" >--}}
-                        {{--                            <button class="btn btn-primary"><i class="fa fa-add"></i> Views (2/5)</button>--}}
-                        {{--                            <button class="btn btn-secondary">All Views</button>--}}
-                        {{--                        </div>--}}
                     </div>
                     <div class="tab-content">
                         <div class="tab-pane active" id="home">
@@ -310,56 +304,56 @@
                                     </div>
                                 </div>
                                 <div class="card-body">
-                                    <table id="allCompaniesTable" class="table table-striped datatable-exportable
+                                    <table id="allInvoicesTable" class="table table-striped datatable-exportable
                             stripe row-border order-column nowrap
                             initTable
                             ">
                                         <thead>
                                         <tr>
                                             <th><input type="checkbox"></th>
-                                            <th>Id</th>
-                                            <th>Invoice Number</th>
-                                            <th>Brand</th>
-                                            <th>Team</th>
-                                            <th>Client</th>
-                                            <th>Agent</th>
-                                            <th>Amount</th>
-                                            <th>Status</th>
-                                            <th>Action</th>
+                                            <th class="align-middle text-center text-nowrap">ID</th>
+                                            <th class="align-middle text-center text-nowrap">INVOICE#</th>
+                                            <th class="align-middle text-center text-nowrap">BRAND</th>
+                                            <th class="align-middle text-center text-nowrap">CLIENT</th>
+                                            <th class="align-middle text-center text-nowrap">AGENT</th>
+                                            <th class="align-middle text-center text-nowrap">AMOUNT</th>
+                                            <th class="align-middle text-center text-nowrap">STATUS</th>
+                                            <th class="align-middle text-center text-nowrap">CREATE DATE</th>
                                         </tr>
                                         </thead>
                                         <tbody>
-{{--                                        @foreach($companies as $key => $company)--}}
-{{--                                            <tr id="tr-{{$company->id}}">--}}
-{{--                                                <td></td>--}}
-{{--                                                <td class="align-middle text-center text-nowrap">Syed Moiz Athar</td>--}}
-{{--                                                <td class="align-middle text-center text-nowrap">--}}
-{{--                                                    syedmoizathar@gmail.com--}}
-{{--                                                </td>--}}
-{{--                                                --}}{{--                                        <td class="align-middle text-center text-nowrap">--}}
-{{--                                                --}}{{--                                            @php--}}
-{{--                                                --}}{{--                                                $logoUrl = filter_var($company->logo, FILTER_VALIDATE_URL) ? $company->logo : asset('assets/images/company-logos/'.$company->logo);--}}
-{{--                                                --}}{{--                                            @endphp--}}
-{{--                                                --}}{{--                                            <object--}}
-{{--                                                --}}{{--                                                data="{{ $logoUrl }}"--}}
-{{--                                                --}}{{--                                                class="avatar avatar-sm me-3"--}}
-{{--                                                --}}{{--                                                title="{{ $company->name }}"--}}
-{{--                                                --}}{{--                                            >--}}
-{{--                                                --}}{{--                                                <img--}}
-{{--                                                --}}{{--                                                    src="{{ $logoUrl }}"--}}
-{{--                                                --}}{{--                                                    alt="{{ $company->name }}"--}}
-{{--                                                --}}{{--                                                    class="avatar avatar-sm me-3"--}}
-{{--                                                --}}{{--                                                    title="{{ $company->name }}">--}}
-{{--                                                --}}{{--                                            </object>--}}
-{{--                                                --}}{{--                                        </td>--}}
-{{--                                                <td class="align-middle text-center text-nowrap">{{$company->name}}</td>--}}
-{{--                                                <td class="align-middle text-center text-nowrap">{{$company->name}}</td>--}}
-{{--                                                <td class="align-middle text-center text-nowrap">{{$company->name}}</td>--}}
-{{--                                                <td class="align-middle text-center text-nowrap">{{$company->name}}</td>--}}
-{{--                                                <td class="align-middle text-center text-nowrap">{{$company->name}}</td>--}}
-{{--                                                <td class="align-middle text-center text-nowrap">{{$company->url}}</td>--}}
-{{--                                            </tr>--}}
-{{--                                        @endforeach--}}
+
+                                        @foreach($all_invoices as $invoice)
+                                            <tr id="tr-{{$invoice->id}}">
+                                                <td class="align-middle text-center text-nowrap"></td>
+                                                <td class="align-middle text-center text-nowrap">{{$loop->iteration}}</td>
+                                                <td class="align-middle text-center text-nowrap">
+                                                    <span class="invoice-number">{{ $invoice->invoice_number }}</span><br>
+                                                    <span class="invoice-key">{{ $invoice->invoice_key }}</span>
+                                                </td>
+                                                <td class="align-middle text-center text-nowrap">{{optional($invoice->brand)->name ?? "---"}}</td>
+                                                <td class="align-middle text-center text-nowrap">{{optional($invoice->client)->name ?? "---"}}</td>
+                                                <td class="align-middle text-center text-nowrap">{{optional($invoice->user)->name ?? "---"}}</td>
+                                                <td class="align-middle text-center text-nowrap">{{$invoice->amount}}</td>
+                                                <td class="align-middle text-center text-nowrap">
+                                                    @if($invoice->status == 0)
+                                                        <span class="badge bg-warning text-dark">Due</span>
+                                                    @elseif($invoice->status == 1 && $invoice->pid == 1)
+                                                        <span class="badge bg-success">Paid</span>
+                                                    @endif
+                                                </td>
+                                                <td class="align-middle text-center text-nowrap">
+                                                    @if ($invoice->created_at->isToday())
+                                                        Today
+                                                        at {{ $invoice->created_at->timezone('GMT+5')->format('g:i A') }}
+                                                        GMT+5
+                                                    @else
+                                                        {{ $invoice->created_at->timezone('GMT+5')->format('M d, Y g:i A') }}
+                                                        GMT+5
+                                                    @endif
+                                                </td>
+                                            </tr>
+                                        @endforeach
                                         </tbody>
                                     </table>
                                 </div>
@@ -417,53 +411,53 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-{{--                                        @foreach($companies as $key => $company)--}}
-{{--                                            <tr id="myCompaniesTable-tr-{{$company->id}}">--}}
-{{--                                                <td></td>--}}
-{{--                                                <td class="align-middle text-center text-nowrap">Syed Moiz Athar</td>--}}
-{{--                                                <td class="align-middle text-center text-nowrap">--}}
-{{--                                                    syedmoizathar@gmail.com--}}
-{{--                                                </td>--}}
-{{--                                                --}}{{--                                        <td class="align-middle text-center text-nowrap">--}}
-{{--                                                --}}{{--                                            @php--}}
-{{--                                                --}}{{--                                                $logoUrl = filter_var($company->logo, FILTER_VALIDATE_URL) ? $company->logo : asset('assets/images/company-logos/'.$company->logo);--}}
-{{--                                                --}}{{--                                            @endphp--}}
-{{--                                                --}}{{--                                            <object--}}
-{{--                                                --}}{{--                                                data="{{ $logoUrl }}"--}}
-{{--                                                --}}{{--                                                class="avatar avatar-sm me-3"--}}
-{{--                                                --}}{{--                                                title="{{ $company->name }}"--}}
-{{--                                                --}}{{--                                            >--}}
-{{--                                                --}}{{--                                                <img--}}
-{{--                                                --}}{{--                                                    src="{{ $logoUrl }}"--}}
-{{--                                                --}}{{--                                                    alt="{{ $company->name }}"--}}
-{{--                                                --}}{{--                                                    class="avatar avatar-sm me-3"--}}
-{{--                                                --}}{{--                                                    title="{{ $company->name }}">--}}
-{{--                                                --}}{{--                                            </object>--}}
-{{--                                                --}}{{--                                        </td>--}}
-{{--                                                <td class="align-middle text-center text-nowrap">{{$company->name}}</td>--}}
-{{--                                                <td class="align-middle text-center text-nowrap">{{$company->name}}</td>--}}
-{{--                                                <td class="align-middle text-center text-nowrap">--}}
-{{--                                                    @php--}}
-{{--                                                        $logoUrl = filter_var($company->logo, FILTER_VALIDATE_URL) ? $company->logo : asset('assets/images/brand-logos/'.$company->logo);--}}
-{{--                                                    @endphp--}}
-{{--                                                    <object--}}
-{{--                                                        data="{{ $logoUrl }}"--}}
-{{--                                                        class="avatar avatar-sm me-3"--}}
-{{--                                                        title="{{ $company->name }}"--}}
-{{--                                                    >--}}
-{{--                                                        <img--}}
-{{--                                                            src="{{ $logoUrl }}"--}}
-{{--                                                            alt="{{ $company->name }}"--}}
-{{--                                                            class="avatar avatar-sm me-3"--}}
-{{--                                                            title="{{ $company->name }}">--}}
-{{--                                                    </object>--}}
-{{--                                                </td>--}}
-{{--                                                <td class="align-middle text-center text-nowrap">{{$company->name}}</td>--}}
-{{--                                                <td class="align-middle text-center text-nowrap">{{$company->name}}</td>--}}
-{{--                                                <td class="align-middle text-center text-nowrap">{{$company->name}}</td>--}}
-{{--                                                <td class="align-middle text-center text-nowrap">{{$company->url}}</td>--}}
-{{--                                            </tr>--}}
-{{--                                        @endforeach--}}
+                                        {{--                                        @foreach($companies as $key => $company)--}}
+                                        {{--                                            <tr id="myCompaniesTable-tr-{{$company->id}}">--}}
+                                        {{--                                                <td></td>--}}
+                                        {{--                                                <td class="align-middle text-center text-nowrap">Syed Moiz Athar</td>--}}
+                                        {{--                                                <td class="align-middle text-center text-nowrap">--}}
+                                        {{--                                                    syedmoizathar@gmail.com--}}
+                                        {{--                                                </td>--}}
+                                        {{--                                                --}}{{--                                        <td class="align-middle text-center text-nowrap">--}}
+                                        {{--                                                --}}{{--                                            @php--}}
+                                        {{--                                                --}}{{--                                                $logoUrl = filter_var($company->logo, FILTER_VALIDATE_URL) ? $company->logo : asset('assets/images/company-logos/'.$company->logo);--}}
+                                        {{--                                                --}}{{--                                            @endphp--}}
+                                        {{--                                                --}}{{--                                            <object--}}
+                                        {{--                                                --}}{{--                                                data="{{ $logoUrl }}"--}}
+                                        {{--                                                --}}{{--                                                class="avatar avatar-sm me-3"--}}
+                                        {{--                                                --}}{{--                                                title="{{ $company->name }}"--}}
+                                        {{--                                                --}}{{--                                            >--}}
+                                        {{--                                                --}}{{--                                                <img--}}
+                                        {{--                                                --}}{{--                                                    src="{{ $logoUrl }}"--}}
+                                        {{--                                                --}}{{--                                                    alt="{{ $company->name }}"--}}
+                                        {{--                                                --}}{{--                                                    class="avatar avatar-sm me-3"--}}
+                                        {{--                                                --}}{{--                                                    title="{{ $company->name }}">--}}
+                                        {{--                                                --}}{{--                                            </object>--}}
+                                        {{--                                                --}}{{--                                        </td>--}}
+                                        {{--                                                <td class="align-middle text-center text-nowrap">{{$company->name}}</td>--}}
+                                        {{--                                                <td class="align-middle text-center text-nowrap">{{$company->name}}</td>--}}
+                                        {{--                                                <td class="align-middle text-center text-nowrap">--}}
+                                        {{--                                                    @php--}}
+                                        {{--                                                        $logoUrl = filter_var($company->logo, FILTER_VALIDATE_URL) ? $company->logo : asset('assets/images/brand-logos/'.$company->logo);--}}
+                                        {{--                                                    @endphp--}}
+                                        {{--                                                    <object--}}
+                                        {{--                                                        data="{{ $logoUrl }}"--}}
+                                        {{--                                                        class="avatar avatar-sm me-3"--}}
+                                        {{--                                                        title="{{ $company->name }}"--}}
+                                        {{--                                                    >--}}
+                                        {{--                                                        <img--}}
+                                        {{--                                                            src="{{ $logoUrl }}"--}}
+                                        {{--                                                            alt="{{ $company->name }}"--}}
+                                        {{--                                                            class="avatar avatar-sm me-3"--}}
+                                        {{--                                                            title="{{ $company->name }}">--}}
+                                        {{--                                                    </object>--}}
+                                        {{--                                                </td>--}}
+                                        {{--                                                <td class="align-middle text-center text-nowrap">{{$company->name}}</td>--}}
+                                        {{--                                                <td class="align-middle text-center text-nowrap">{{$company->name}}</td>--}}
+                                        {{--                                                <td class="align-middle text-center text-nowrap">{{$company->name}}</td>--}}
+                                        {{--                                                <td class="align-middle text-center text-nowrap">{{$company->url}}</td>--}}
+                                        {{--                                            </tr>--}}
+                                        {{--                                        @endforeach--}}
                                         </tbody>
                                     </table>
                                 </div>
@@ -496,7 +490,7 @@
     <!-- Modal -->
 
     @push('script')
-        @include('user.invoice.script')
+        @include('user.invoices.script')
         <script>
 
             $(document).ready(function () {

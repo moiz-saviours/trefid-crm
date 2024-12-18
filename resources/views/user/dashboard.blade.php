@@ -1,21 +1,4 @@
-{{--<x-app-layout>--}}
-{{--    <x-slot name="header">--}}
-{{--        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">--}}
-{{--            {{ __('Dashboard') }}--}}
-{{--        </h2>--}}
-{{--    </x-slot>--}}
-
-{{--    <div class="py-12">--}}
-{{--        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">--}}
-{{--            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">--}}
-{{--                <div class="p-6 text-gray-900 dark:text-gray-100">--}}
-{{--                    {{ __("You're logged in!") }}--}}
-{{--                </div>--}}
-{{--            </div>--}}
-{{--        </div>--}}
-{{--    </div>--}}
-{{--</x-app-layout>--}}
-@extends('layouts.app')
+@extends('user.layouts.app')
 @section('title','Dashboard')
 @section('content')
 <section id="content" class="content">
@@ -27,17 +10,12 @@
             <p>Scroll down to see quick links and overviews of your Server, To do list<br> Order status or get some
                 Help using Nifty.</p>
             <!-- END : Page title and information -->
-
         </div>
-
     </div>
-
-
     <div class="content__boxed">
         <div class="content__wrap">
             <div class="row">
                 <div class="col-xl-7 mb-3 mb-xl-0">
-
                     <div class="card h-100">
                         <div class="card-header d-flex align-items-center border-0">
                             <div class="me-auto">
@@ -84,13 +62,11 @@
                             </div>
                         </div>
 
-
                         <!-- Network - Area Chart -->
                         <div class="card-body py-0" style="height: 250px; max-height: 275px">
                             <canvas id="_dm-networkChart"></canvas>
                         </div>
                         <!-- END : Network - Area Chart -->
-
 
                         <div class="card-body mt-4">
                             <div class="row">
@@ -126,17 +102,14 @@
                                     </div>
                                     <!-- END : Today Tips -->
 
-
                                 </div>
                                 <div class="col-md-4">
-
 
                                     <!-- Bandwidth usage and progress bars -->
                                     <h4 class="h5 mb-3">Bandwidth Usage</h4>
                                     <div class="h2 fw-normal">
                                         754.9<span class="ms-2 fs-6 align-top">Mbps</span>
                                     </div>
-
 
                                     <div class="mt-4 mb-2 d-flex justify-content-between">
                                         <span class="">Income</span>
@@ -147,7 +120,6 @@
                                              aria-label="Incoming Progress" aria-valuenow="70" aria-valuemin="0"
                                              aria-valuemax="100"></div>
                                     </div>
-
 
                                     <div class="mt-4 mb-2 d-flex justify-content-between">
                                         <span class="">Outcome</span>
@@ -160,7 +132,6 @@
                                     </div>
                                     <!-- END : Bandwidth usage and progress bars -->
 
-
                                 </div>
                             </div>
                         </div>
@@ -169,8 +140,6 @@
                 <div class="col-xl-5">
                     <div class="row">
                         <div class="col-sm-6">
-
-
                             <!-- Tile - HDD Usage -->
                             <div class="card bg-success text-white overflow-hidden mb-3">
                                 <div class="p-3 pb-2">
@@ -188,21 +157,15 @@
                                         </li>
                                     </ul>
                                 </div>
-
                                 <!-- Area Chart -->
                                 <div class="py-0" style="height: 70px; margin: 0 -5px -5px;">
                                     <canvas id="_dm-hddChart"></canvas>
                                 </div>
                                 <!-- END : Area Chart -->
-
                             </div>
                             <!-- END : Tile - HDD Usage -->
-
-
                         </div>
                         <div class="col-sm-6">
-
-
                             <!-- Tile - Earnings -->
                             <div class="card bg-info text-white overflow-hidden mb-3">
                                 <div class="p-3 pb-2">
@@ -229,14 +192,10 @@
 
                             </div>
                             <!-- END : Tile - Earnings -->
-
-
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-sm-6">
-
-
                             <!-- Tile - Sales -->
                             <div class="card bg-purple text-white overflow-hidden mb-3">
                                 <div class="p-3 pb-2">
@@ -254,20 +213,15 @@
                                         </li>
                                     </ul>
                                 </div>
-
                                 <!-- Bar Chart -->
                                 <div class="py-0" style="height: 70px">
                                     <canvas id="_dm-salesChart"></canvas>
                                 </div>
                                 <!-- END : Bar Chart -->
-
                             </div>
                             <!-- END : Tile - Sales -->
-
-
                         </div>
                         <div class="col-sm-6">
-
                             <!-- Tile - Task Progress -->
                             <div class="card bg-warning text-white overflow-hidden mb-3">
                                 <div class="p-3 pb-2">
@@ -285,20 +239,15 @@
                                         </li>
                                     </ul>
                                 </div>
-
                                 <!-- Horizontal Bar Chart -->
                                 <div class="py-0 pb-2" style="height: 70px">
                                     <canvas id="_dm-taskChart"></canvas>
                                 </div>
                                 <!-- END : Horizontal Bar Chart -->
-
                             </div>
                             <!-- END : Tile - Task Progress -->
-
                         </div>
                     </div>
-
-
                     <!-- Simple state widget -->
                     <div class="card">
                         <div class="card-body text-center">
@@ -333,23 +282,15 @@
                         </div>
                     </div>
                     <!-- END : Simple state widget -->
-
-
                 </div>
             </div>
-
         </div>
     </div>
-
-
     <div class="bg-body-secondary bg-opacity-50 my-3 pt-3">
         <div class="content__boxed">
             <div class="content__wrap">
-
                 <div class="row gx-5 gy-5 gy-md-0">
                     <div class="col-md-4">
-
-
                         <!-- TODO List -->
                         <h4 class="mb-3">To-do list</h4>
                         <ul class="list-group list-group-borderless">
@@ -406,12 +347,8 @@
                             </button>
                         </div>
                         <!-- END : TODO List -->
-
-
                     </div>
                     <div class="col-md-4">
-
-
                         <!-- Service options -->
                         <h4 class="mb-3">Services</h4>
                         <div class="list-group list-group-borderless">
@@ -426,7 +363,6 @@
                                 </div>
                                 <span>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</span>
                             </div>
-
                             <div class="list-group-item px-0 mb-2">
                                 <div class="d-flex justify-content-between">
                                     <label class="form-check-label h5 mb-0" for="_dm-dbOfflineContact">Show offline
@@ -437,7 +373,6 @@
                                 </div>
                                 <span>Aenean commodo ligula eget dolor. Aenean massa.</span>
                             </div>
-
                             <div class="list-group-item px-0 mb-2">
                                 <div class="d-flex justify-content-between">
                                     <label class="form-check-label h5 mb-0" for="_dm-dbMuteNotifications">Mute
@@ -463,11 +398,8 @@
                             </div>
                         </div>
                         <!-- END : Service options -->
-
-
                     </div>
                     <div class="col-md-4">
-
                         <!-- User quote  -->
                         <div class="d-flex align-items-center position-relative hv-grow-parent hv-outline-parent">
                             <div class="flex-shrink-0">
@@ -482,14 +414,12 @@
                                 Project manager
                             </div>
                         </div>
-
                         <figure class="d-flex flex-column align-items-center justify-content-center my-4">
                             <blockquote class="blockquote mb-0">
                                 <p class="quote">Lorem ipsum dolor sit amet, consecte tuer adipiscing elit, sed diam
                                     nonummy nibh euismod tincidunt</p>
                             </blockquote>
                         </figure>
-
                         <div class="border-top pt-3">
                             <a href="#" class="btn btn-icon btn-link text-indigo" aria-label="Facebook button">
                                 <i class="demo-psi-facebook fs-4"></i>
@@ -505,27 +435,18 @@
                             </a>
                         </div>
                         <!-- END : User quote  -->
-
-
                     </div>
                 </div>
-
-
             </div>
         </div>
     </div>
-
-
     <div class="content__boxed">
         <div class="content__wrap">
-
-
             <!-- Table with toolbar -->
             <div class="card">
                 <div class="card-header">
                     <h5 class="card-title mb-3">Order Status</h5>
                     <div class="row">
-
                         <!-- Left toolbar -->
                         <div class="col-md-6 d-flex gap-1 align-items-center mb-3">
                             <button class="btn btn-primary hstack gap-2">
@@ -544,7 +465,6 @@
                             </div>
                         </div>
                         <!-- END : Left toolbar -->
-
                         <!-- Right Toolbar -->
                         <div class="col-md-6 d-flex gap-1 align-items-center justify-content-md-end mb-3">
                             <div class="form-group">
@@ -573,10 +493,8 @@
                             </div>
                         </div>
                         <!-- END : Right Toolbar -->
-
                     </div>
                 </div>
-
                 <div class="card-body">
                     <div class="table-responsive">
                         <table id="testTable" class="table table-striped">

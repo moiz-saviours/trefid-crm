@@ -317,7 +317,7 @@
                                         <thead>
                                         <tr>
                                             <th><input type="checkbox"></th>
-                                            <th class="align-middle text-center text-nowrap">Id</th>
+                                            <th class="align-middle text-center text-nowrap">ID</th>
                                             <th class="align-middle text-center text-nowrap">BRAND</th>
                                             <th class="align-middle text-center text-nowrap">CLIENT</th>
                                             <th class="align-middle text-center text-nowrap">NAME</th>

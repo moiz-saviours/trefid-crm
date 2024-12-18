@@ -1,4 +1,4 @@
-@extends('layouts.guest')
+@extends('user.layouts.guest')
 @section('content')
     <!-- Login -->
     <main class="main-content  mt-0">
