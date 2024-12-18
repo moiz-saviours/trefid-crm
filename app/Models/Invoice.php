@@ -81,6 +81,6 @@ class Invoice extends Model
 
     public function agent(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
-        return $this->belongsTo(User::class, 'agent_id', 'id');
+        return $this->morphTo();
     }
 }

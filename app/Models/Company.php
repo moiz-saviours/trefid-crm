@@ -22,6 +22,7 @@ class Company extends Model
      */
     protected $fillable = [
         'company_key',
+        'domain',
         'name',
         'email',
         'phone',
@@ -30,6 +31,7 @@ class Company extends Model
         'state',
         'country',
         'zipcode',
+        'response',
         'loggable_type',
         'loggable_id',
         'status',

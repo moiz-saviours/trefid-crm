@@ -59,7 +59,7 @@ class PaymentMerchantController extends Controller
             'status' => $request->status,
         ]);
 
-        return redirect()->route('admin.payment.merchant.index')
+        return redirect()->route('admin.client.index')
             ->with('success', 'Payment Merchant created successfully.');
     }
 
@@ -75,7 +75,7 @@ class PaymentMerchantController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(PaymentMerchant $paymentMerchant)
+    public function edit(PaymentMerchant $client)
     {
         //
     }
@@ -83,7 +83,7 @@ class PaymentMerchantController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, PaymentMerchant $paymentMerchant)
+    public function update(Request $request, PaymentMerchant $client)
     {
         //
     }
@@ -91,7 +91,7 @@ class PaymentMerchantController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(PaymentMerchant $paymentMerchant)
+    public function destroy(PaymentMerchant $client)
     {
         //
     }

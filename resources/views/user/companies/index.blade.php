@@ -271,15 +271,11 @@
                 <div class="container">
                     <div class="custom-tabs">
                         <ul class="tab-nav">
-                            <li class="tab-item active" data-tab="home">All Companies
+                            <li class="tab-item active" data-tab="home">Companies
                                 <i class="fa fa-times close-icon" aria-hidden="true"></i></li>
-                            <li class="tab-item " data-tab="menu1">My Companies <i class="fa fa-times close-icon"
-                                                                                   aria-hidden="true"></i></li>
+                            {{--                            <li class="tab-item " data-tab="menu1">My Companies <i class="fa fa-times close-icon"--}}
+                            {{--                                                                                   aria-hidden="true"></i></li>--}}
                         </ul>
-                        {{--                        <div class="tab-buttons" >--}}
-                        {{--                            <button class="btn btn-primary"><i class="fa fa-add"></i> Views (2/5)</button>--}}
-                        {{--                            <button class="btn btn-secondary">All Views</button>--}}
-                        {{--                        </div>--}}
                     </div>
                     <div class="tab-content">
                         <div class="tab-pane active" id="home">
@@ -317,154 +313,44 @@
                                         <thead>
                                         <tr>
                                             <th><input type="checkbox"></th>
-                                            <th>ID</th>
-                                            <th>Brand</th>
-                                            <th>Team</th>
-                                            <th>Name</th>
-                                            <th>Email</th>
-                                            <th>Phone</th>
-                                            <th>Adress</th>
-                                            <th>City</th>
-                                            <th>State</th>
-                                            <th>Status</th>
+                                            <th class="align-middle text-center text-nowrap">SNO.</th>
+                                            <th class="align-middle text-center text-nowrap">COMPANY DOMAIN</th>
+                                            <th class="align-middle text-center text-nowrap">COMPANY NAME</th>
+{{--                                            <th class="align-middle text-center text-nowrap">COMPANY OWNER</th>--}}
+                                            <th class="align-middle text-center text-nowrap">CREATE DATE (GMT+5)</th>
+                                            <th class="align-middle text-center text-nowrap">PHONE NUMBER</th>
+                                            <th class="align-middle text-center text-nowrap">ADDRESS</th>
+                                            <th class="align-middle text-center text-nowrap">CITY</th>
+                                            <th class="align-middle text-center text-nowrap">STATE</th>
+                                            <th class="align-middle text-center text-nowrap">COUNTRY</th>
+                                            <th class="align-middle text-center text-nowrap">POSTAL CODE</th>
+                                            <th class="align-middle text-center text-nowrap">INDUSTRY</th>
                                         </tr>
                                         </thead>
                                         <tbody>
                                         @foreach($companies as $key => $company)
                                             <tr id="tr-{{$company->id}}">
-                                                <td></td>
-                                                <td class="align-middle text-center text-nowrap">Syed Moiz Athar</td>
-                                                <td class="align-middle text-center text-nowrap">
-                                                    syedmoizathar@gmail.com
-                                                </td>
-                                                {{--                                        <td class="align-middle text-center text-nowrap">--}}
-                                                {{--                                            @php--}}
-                                                {{--                                                $logoUrl = filter_var($company->logo, FILTER_VALIDATE_URL) ? $company->logo : asset('assets/images/company-logos/'.$company->logo);--}}
-                                                {{--                                            @endphp--}}
-                                                {{--                                            <object--}}
-                                                {{--                                                data="{{ $logoUrl }}"--}}
-                                                {{--                                                class="avatar avatar-sm me-3"--}}
-                                                {{--                                                title="{{ $company->name }}"--}}
-                                                {{--                                            >--}}
-                                                {{--                                                <img--}}
-                                                {{--                                                    src="{{ $logoUrl }}"--}}
-                                                {{--                                                    alt="{{ $company->name }}"--}}
-                                                {{--                                                    class="avatar avatar-sm me-3"--}}
-                                                {{--                                                    title="{{ $company->name }}">--}}
-                                                {{--                                            </object>--}}
-                                                {{--                                        </td>--}}
-                                                <td class="align-middle text-center text-nowrap">{{$company->name}}</td>
-                                                <td class="align-middle text-center text-nowrap">{{$company->name}}</td>
-                                                <td class="align-middle text-center text-nowrap">{{$company->name}}</td>
-                                                <td class="align-middle text-center text-nowrap">{{$company->name}}</td>
-                                                <td class="align-middle text-center text-nowrap">{{$company->name}}</td>
-                                                <td class="align-middle text-center text-nowrap">{{$company->url}}</td>
-                                            </tr>
-                                        @endforeach
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="tab-pane" id="menu1">
-                            <div class="card">
-                                <div class="card-header">
-                                    <div class="container">
-                                        <div class="row fltr-sec">
-                                            <div class="col-md-8">
-                                                <ul class="custm-filtr">
-                                                    <div class="table-li">
-                                                        <li class="">Company Owner <i class="fa fa-caret-down"
-                                                                                      aria-hidden="true"></i></li>
-                                                        <li class="">Create date <i class="fa fa-caret-down"
-                                                                                    aria-hidden="true"></i></li>
-                                                        <li class="">Last activity date <i class="fa fa-caret-down"
-                                                                                           aria-hidden="true"></i>
-                                                        </li>
-                                                        <li class="">Lead status <i class="fa fa-caret-down"
-                                                                                    aria-hidden="true"></i></li>
-                                                        <li class=""><i class="fa fa-bars" aria-hidden="true"></i> All
-                                                            filters
-                                                        </li>
-                                                    </div>
-                                                </ul>
-                                            </div>
-                                            <div class="col-md-4 right-icon" id="right-icon-1">
-                                                {{--                                        <div class="right-icon">--}}
-                                                {{--                                            <i class="fa fa-reply" aria-hidden="true"></i>--}}
-                                                {{--                                            <i class="fa fa-clone" aria-hidden="true"></i>--}}
-                                                {{--                                            <i class="fa fa-file-pdf-o" aria-hidden="true"></i>--}}
-                                                {{--                                        </div>--}}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card-body">
-                                    <table id="myCompaniesTable" class="table table-striped datatable-exportable
-                            stripe row-border order-column nowrap
-                            initTable">
-                                        <thead>
-                                        <tr>
-                                            <th class="align-middle text-center text-nowrap"><input type="checkbox">
-                                            </th>
-                                            <th>ID</th>
-                                            <th>Brand</th>
-                                            <th>Team</th>
-                                            <th>Name</th>
-                                            <th>Email</th>
-                                            <th>Phone</th>
-                                            <th>Adress</th>
-                                            <th>City</th>
-                                            <th>State</th>
-                                            <th>Status</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        @foreach($companies as $key => $company)
-                                            <tr id="myCompaniesTable-tr-{{$company->id}}">
-                                                <td></td>
-                                                <td class="align-middle text-center text-nowrap">Syed Moiz Athar</td>
-                                                <td class="align-middle text-center text-nowrap">
-                                                    syedmoizathar@gmail.com
-                                                </td>
-                                                {{--                                        <td class="align-middle text-center text-nowrap">--}}
-                                                {{--                                            @php--}}
-                                                {{--                                                $logoUrl = filter_var($company->logo, FILTER_VALIDATE_URL) ? $company->logo : asset('assets/images/company-logos/'.$company->logo);--}}
-                                                {{--                                            @endphp--}}
-                                                {{--                                            <object--}}
-                                                {{--                                                data="{{ $logoUrl }}"--}}
-                                                {{--                                                class="avatar avatar-sm me-3"--}}
-                                                {{--                                                title="{{ $company->name }}"--}}
-                                                {{--                                            >--}}
-                                                {{--                                                <img--}}
-                                                {{--                                                    src="{{ $logoUrl }}"--}}
-                                                {{--                                                    alt="{{ $company->name }}"--}}
-                                                {{--                                                    class="avatar avatar-sm me-3"--}}
-                                                {{--                                                    title="{{ $company->name }}">--}}
-                                                {{--                                            </object>--}}
-                                                {{--                                        </td>--}}
-                                                <td class="align-middle text-center text-nowrap">{{$company->name}}</td>
+                                                <td class="align-middle text-center text-nowrap"></td>
+                                                <td class="align-middle text-center text-nowrap">{{$loop->iteration}}</td>
+                                                <td class="align-middle text-center text-nowrap">{{$company->domain}}</td>
                                                 <td class="align-middle text-center text-nowrap">{{$company->name}}</td>
                                                 <td class="align-middle text-center text-nowrap">
-                                                    @php
-                                                        $logoUrl = filter_var($company->logo, FILTER_VALIDATE_URL) ? $company->logo : asset('assets/images/brand-logos/'.$company->logo);
-                                                    @endphp
-                                                    <object
-                                                        data="{{ $logoUrl }}"
-                                                        class="avatar avatar-sm me-3"
-                                                        title="{{ $company->name }}"
-                                                    >
-                                                        <img
-                                                            src="{{ $logoUrl }}"
-                                                            alt="{{ $company->name }}"
-                                                            class="avatar avatar-sm me-3"
-                                                            title="{{ $company->name }}">
-                                                    </object>
+                                                    @if ($company->created_at->isToday())
+                                                        Today
+                                                        at {{ $company->created_at->timezone('GMT+5')->format('g:i A') }}
+                                                        GMT+5
+                                                    @else
+                                                        {{ $company->created_at->timezone('GMT+5')->format('M d, Y g:i A') }}
+                                                        GMT+5
+                                                    @endif
                                                 </td>
-                                                <td class="align-middle text-center text-nowrap">{{$company->name}}</td>
-                                                <td class="align-middle text-center text-nowrap">{{$company->name}}</td>
-                                                <td class="align-middle text-center text-nowrap">{{$company->name}}</td>
-                                                <td class="align-middle text-center text-nowrap">{{$company->url}}</td>
+                                                <td class="align-middle text-center text-nowrap">{{$company->phone}}</td>
+                                                <td class="align-middle text-center text-nowrap">{{$company->address}}</td>
+                                                <td class="align-middle text-center text-nowrap">{{$company->city}}</td>
+                                                <td class="align-middle text-center text-nowrap">{{$company->state}}</td>
+                                                <td class="align-middle text-center text-nowrap">{{$company->country}}</td>
+                                                <td class="align-middle text-center text-nowrap">{{$company->zipcode}}</td>
+                                                <td class="align-middle text-center text-nowrap">{{isset($company->response)? json_decode($company->response)->industry:"---"}}</td>
                                             </tr>
                                         @endforeach
                                         </tbody>

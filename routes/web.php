@@ -70,8 +70,8 @@ Route::middleware('auth')->group(function () {
         });
     });
     Route::get('/lead-status', [LeadStatusController::class, 'index'])->name('lead-status.index');
-    Route::get('/invoice', [InvoiceController::class, 'index'])->name('invoice.index');
-    Route::get('/payment', [PaymentController::class, 'index'])->name('payment.index');
+    Route::get('/invoices', [InvoiceController::class, 'index'])->name('invoice.index');
+    Route::get('/payments', [PaymentController::class, 'index'])->name('payment.index');
 
 
 

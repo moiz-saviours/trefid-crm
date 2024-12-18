@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('user.layouts.app')
 @section('title','Payments')
 @section('datatable', true)
 @section('content')
@@ -274,12 +274,8 @@
                             <li class="tab-item active" data-tab="home">Payments
                                 <i class="fa fa-times close-icon" aria-hidden="true"></i></li>
                             <li class="tab-item " data-tab="menu1">My Payments <i class="fa fa-times close-icon"
-                                                                                   aria-hidden="true"></i></li>
+                                                                                  aria-hidden="true"></i></li>
                         </ul>
-                        {{--                        <div class="tab-buttons" >--}}
-                        {{--                            <button class="btn btn-primary"><i class="fa fa-add"></i> Views (2/5)</button>--}}
-                        {{--                            <button class="btn btn-secondary">All Views</button>--}}
-                        {{--                        </div>--}}
                     </div>
                     <div class="tab-content">
                         <div class="tab-pane active" id="home">
@@ -310,58 +306,67 @@
                                     </div>
                                 </div>
                                 <div class="card-body">
-                                    <table id="allCompaniesTable" class="table table-striped datatable-exportable
+                                    <table id="allPaymentsTable" class="table table-striped datatable-exportable
                             stripe row-border order-column nowrap
                             initTable
                             ">
                                         <thead>
                                         <tr>
-                                            <th><input type="checkbox"></th>
-                                            <th>Id</th>
-                                            <th>Payment Method</th>
-                                            <th>Invoice Number</th>
-                                            <th>Transaction Id</th>
-                                            <th>Brand</th>
-                                            <th>Team</th>
-                                            <th>Agent</th>
-                                            <th>Client Name</th>
-                                            <th>Amount</th>
-                                            <th>Date</th>
-                                            <th>Status</th>
+                                            <th class="align-middle text-center text-nowrap"><input type="checkbox">
+                                            </th>
+                                            <th class="align-middle text-center text-nowrap">SNO.</th>
+                                            <th class="align-middle text-center text-nowrap">INVOICE#</th>
+                                            <th class="align-middle text-center text-nowrap">PAYMENT METHOD</th>
+                                            <th class="align-middle text-center text-nowrap">METHOD NAME</th>
+                                            <th class="align-middle text-center text-nowrap">TRANSACTION ID</th>
+                                            <th class="align-middle text-center text-nowrap">BRAND</th>
+                                            <th class="align-middle text-center text-nowrap">TEAM</th>
+                                            <th class="align-middle text-center text-nowrap">AGENT</th>
+                                            <th class="align-middle text-center text-nowrap">CUSTOMER</th>
+                                            <th class="align-middle text-center text-nowrap">AMOUNT</th>
+                                            <th class="align-middle text-center text-nowrap">STATUS</th>
+                                            <th class="align-middle text-center text-nowrap">CREATE DATE</th>
                                         </tr>
                                         </thead>
                                         <tbody>
-{{--                                        @foreach($companies as $key => $company)--}}
-{{--                                            <tr id="tr-{{$company->id}}">--}}
-{{--                                                <td></td>--}}
-{{--                                                <td class="align-middle text-center text-nowrap">Syed Moiz Athar</td>--}}
-{{--                                                <td class="align-middle text-center text-nowrap">--}}
-{{--                                                    syedmoizathar@gmail.com--}}
-{{--                                                </td>--}}
-{{--                                                --}}{{--                                        <td class="align-middle text-center text-nowrap">--}}
-{{--                                                --}}{{--                                            @php--}}
-{{--                                                --}}{{--                                                $logoUrl = filter_var($company->logo, FILTER_VALIDATE_URL) ? $company->logo : asset('assets/images/company-logos/'.$company->logo);--}}
-{{--                                                --}}{{--                                            @endphp--}}
-{{--                                                --}}{{--                                            <object--}}
-{{--                                                --}}{{--                                                data="{{ $logoUrl }}"--}}
-{{--                                                --}}{{--                                                class="avatar avatar-sm me-3"--}}
-{{--                                                --}}{{--                                                title="{{ $company->name }}"--}}
-{{--                                                --}}{{--                                            >--}}
-{{--                                                --}}{{--                                                <img--}}
-{{--                                                --}}{{--                                                    src="{{ $logoUrl }}"--}}
-{{--                                                --}}{{--                                                    alt="{{ $company->name }}"--}}
-{{--                                                --}}{{--                                                    class="avatar avatar-sm me-3"--}}
-{{--                                                --}}{{--                                                    title="{{ $company->name }}">--}}
-{{--                                                --}}{{--                                            </object>--}}
-{{--                                                --}}{{--                                        </td>--}}
-{{--                                                <td class="align-middle text-center text-nowrap">{{$company->name}}</td>--}}
-{{--                                                <td class="align-middle text-center text-nowrap">{{$company->name}}</td>--}}
-{{--                                                <td class="align-middle text-center text-nowrap">{{$company->name}}</td>--}}
-{{--                                                <td class="align-middle text-center text-nowrap">{{$company->name}}</td>--}}
-{{--                                                <td class="align-middle text-center text-nowrap">{{$company->name}}</td>--}}
-{{--                                                <td class="align-middle text-center text-nowrap">{{$company->url}}</td>--}}
-{{--                                            </tr>--}}
-{{--                                        @endforeach--}}
+                                        @foreach($all_payments as $payment)
+                                            <tr id="tr-{{$payment->id}}">
+                                                <td class="align-middle text-center text-nowrap"></td>
+                                                <td class="align-middle text-center text-nowrap">{{$loop->iteration}}</td>
+                                                <td class="align-middle text-center text-nowrap">
+                                                    <span class="invoice-number">{{ optional($payment->invoice)->invoice_number }}</span><br>
+                                                    <span class="invoice-key">{{ optional($payment->invoice)->invoice_key }}</span>
+                                                </td>
+                                                <td class="align-middle text-center text-nowrap">{{optional($payment->payment_gateway)->name}}</td>
+                                                <td class="align-middle text-center text-nowrap">{{optional($payment->payment_gateway)->descriptor}}</td>
+                                                <td class="align-middle text-center text-nowrap">{{$payment->transaction_id}}</td>
+                                                <td class="align-middle text-center text-nowrap">{{optional($payment->brand)->name ?? "---"}}</td>
+                                                <td class="align-middle text-center text-nowrap">{{optional($payment->team)->name ?? "---"}}</td>
+                                                <td class="align-middle text-center text-nowrap">{{optional($payment->agent)->name ?? "---"}}</td>
+                                                <td class="align-middle text-center text-nowrap">{{optional($payment->customer)->name ?? "---"}}</td>
+                                                <td class="align-middle text-center text-nowrap">${{$payment->amount}}</td>
+                                                <td class="align-middle text-center text-nowrap">
+                                                    @if($payment->status == 0)
+                                                        <span class="badge bg-warning text-dark">Due</span>
+                                                    @elseif($payment->status == 1)
+                                                        <span class="badge bg-success">Paid</span>
+                                                    @elseif($payment->status == 2)
+                                                        <span class="badge bg-danger">Refund</span>
+                                                    @endif
+                                                </td>
+                                                <td class="align-middle text-center text-nowrap">
+                                                    @if ($payment->created_at->isToday())
+                                                        Today
+                                                        at {{ $payment->created_at->timezone('GMT+5')->format('g:i A') }}
+                                                        GMT+5
+                                                    @else
+                                                        {{ $payment->created_at->timezone('GMT+5')->format('M d, Y g:i A') }}
+                                                        GMT+5
+                                                    @endif
+                                                </td>
+                                            </tr>
+
+                                        @endforeach
                                         </tbody>
                                     </table>
                                 </div>
@@ -390,84 +395,71 @@
                                                     </div>
                                                 </ul>
                                             </div>
-                                            <div class="col-md-4 right-icon" id="right-icon-1">
-                                                {{--                                        <div class="right-icon">--}}
-                                                {{--                                            <i class="fa fa-reply" aria-hidden="true"></i>--}}
-                                                {{--                                            <i class="fa fa-clone" aria-hidden="true"></i>--}}
-                                                {{--                                            <i class="fa fa-file-pdf-o" aria-hidden="true"></i>--}}
-                                                {{--                                        </div>--}}
-                                            </div>
+                                            <div class="col-md-4 right-icon" id="right-icon-1"></div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="card-body">
-                                    <table id="myCompaniesTable" class="table table-striped datatable-exportable
+                                    <table id="myPaymentsTable" class="table table-striped datatable-exportable
                             stripe row-border order-column nowrap
                             initTable">
                                         <thead>
                                         <tr>
-                                            <th><input type="checkbox"></th>
-                                            <th>Id</th>
-                                            <th>Payment Method</th>
-                                            <th>Invoice Number</th>
-                                            <th>Transaction Id</th>
-                                            <th>Brand</th>
-                                            <th>Team</th>
-                                            <th>Agent</th>
-                                            <th>Client Name</th>
-                                            <th>Amount</th>
-                                            <th>Date</th>
-                                            <th>Status</th>
+                                            <th class="align-middle text-center text-nowrap"><input type="checkbox">
+                                            </th>
+                                            <th class="align-middle text-center text-nowrap">SNO.</th>
+                                            <th class="align-middle text-center text-nowrap">INVOICE#</th>
+                                            <th class="align-middle text-center text-nowrap">PAYMENT METHOD</th>
+                                            <th class="align-middle text-center text-nowrap">METHOD NAME</th>
+                                            <th class="align-middle text-center text-nowrap">TRANSACTION ID</th>
+                                            <th class="align-middle text-center text-nowrap">BRAND</th>
+                                            <th class="align-middle text-center text-nowrap">TEAM</th>
+                                            <th class="align-middle text-center text-nowrap">AGENT</th>
+                                            <th class="align-middle text-center text-nowrap">CUSTOMER</th>
+                                            <th class="align-middle text-center text-nowrap">AMOUNT</th>
+                                            <th class="align-middle text-center text-nowrap">STATUS</th>
+                                            <th class="align-middle text-center text-nowrap">CREATE DATE</th>
                                         </tr>
                                         </thead>
                                         <tbody>
-{{--                                        @foreach($companies as $key => $company)--}}
-{{--                                            <tr id="myCompaniesTable-tr-{{$company->id}}">--}}
-{{--                                                <td></td>--}}
-{{--                                                <td class="align-middle text-center text-nowrap">Syed Moiz Athar</td>--}}
-{{--                                                <td class="align-middle text-center text-nowrap">--}}
-{{--                                                    syedmoizathar@gmail.com--}}
-{{--                                                </td>--}}
-{{--                                                --}}{{--                                        <td class="align-middle text-center text-nowrap">--}}
-{{--                                                --}}{{--                                            @php--}}
-{{--                                                --}}{{--                                                $logoUrl = filter_var($company->logo, FILTER_VALIDATE_URL) ? $company->logo : asset('assets/images/company-logos/'.$company->logo);--}}
-{{--                                                --}}{{--                                            @endphp--}}
-{{--                                                --}}{{--                                            <object--}}
-{{--                                                --}}{{--                                                data="{{ $logoUrl }}"--}}
-{{--                                                --}}{{--                                                class="avatar avatar-sm me-3"--}}
-{{--                                                --}}{{--                                                title="{{ $company->name }}"--}}
-{{--                                                --}}{{--                                            >--}}
-{{--                                                --}}{{--                                                <img--}}
-{{--                                                --}}{{--                                                    src="{{ $logoUrl }}"--}}
-{{--                                                --}}{{--                                                    alt="{{ $company->name }}"--}}
-{{--                                                --}}{{--                                                    class="avatar avatar-sm me-3"--}}
-{{--                                                --}}{{--                                                    title="{{ $company->name }}">--}}
-{{--                                                --}}{{--                                            </object>--}}
-{{--                                                --}}{{--                                        </td>--}}
-{{--                                                <td class="align-middle text-center text-nowrap">{{$company->name}}</td>--}}
-{{--                                                <td class="align-middle text-center text-nowrap">{{$company->name}}</td>--}}
-{{--                                                <td class="align-middle text-center text-nowrap">--}}
-{{--                                                    @php--}}
-{{--                                                        $logoUrl = filter_var($company->logo, FILTER_VALIDATE_URL) ? $company->logo : asset('assets/images/brand-logos/'.$company->logo);--}}
-{{--                                                    @endphp--}}
-{{--                                                    <object--}}
-{{--                                                        data="{{ $logoUrl }}"--}}
-{{--                                                        class="avatar avatar-sm me-3"--}}
-{{--                                                        title="{{ $company->name }}"--}}
-{{--                                                    >--}}
-{{--                                                        <img--}}
-{{--                                                            src="{{ $logoUrl }}"--}}
-{{--                                                            alt="{{ $company->name }}"--}}
-{{--                                                            class="avatar avatar-sm me-3"--}}
-{{--                                                            title="{{ $company->name }}">--}}
-{{--                                                    </object>--}}
-{{--                                                </td>--}}
-{{--                                                <td class="align-middle text-center text-nowrap">{{$company->name}}</td>--}}
-{{--                                                <td class="align-middle text-center text-nowrap">{{$company->name}}</td>--}}
-{{--                                                <td class="align-middle text-center text-nowrap">{{$company->name}}</td>--}}
-{{--                                                <td class="align-middle text-center text-nowrap">{{$company->url}}</td>--}}
-{{--                                            </tr>--}}
-{{--                                        @endforeach--}}
+                                        @foreach($my_payments as $payment)
+                                            <tr id="tr-{{$payment->id}}">
+                                                <td class="align-middle text-center text-nowrap"></td>
+                                                <td class="align-middle text-center text-nowrap">{{$loop->iteration}}</td>
+                                                <td class="align-middle text-center text-nowrap">
+                                                    <span class="invoice-number">{{ optional($payment->invoice)->invoice_number }}</span><br>
+                                                    <span class="invoice-key">{{ optional($payment->invoice)->invoice_key }}</span>
+                                                </td>
+                                                <td class="align-middle text-center text-nowrap">{{optional($payment->payment_gateway)->name}}</td>
+                                                <td class="align-middle text-center text-nowrap">{{optional($payment->payment_gateway)->descriptor}}</td>
+                                                <td class="align-middle text-center text-nowrap">{{$payment->transaction_id}}</td>
+                                                <td class="align-middle text-center text-nowrap">{{optional($payment->brand)->name ?? "---"}}</td>
+                                                <td class="align-middle text-center text-nowrap">{{optional($payment->team)->name ?? "---"}}</td>
+                                                <td class="align-middle text-center text-nowrap">{{optional($payment->agent)->name ?? "---"}}</td>
+                                                <td class="align-middle text-center text-nowrap">{{optional($payment->customer)->name ?? "---"}}</td>
+                                                <td class="align-middle text-center text-nowrap">${{$payment->amount}}</td>
+                                                <td class="align-middle text-center text-nowrap">
+                                                    @if($payment->status == 0)
+                                                        <span class="badge bg-warning text-dark">Due</span>
+                                                    @elseif($payment->status == 1)
+                                                        <span class="badge bg-success">Paid</span>
+                                                    @elseif($payment->status == 2)
+                                                        <span class="badge bg-danger">Refund</span>
+                                                    @endif
+                                                </td>
+                                                <td class="align-middle text-center text-nowrap">
+                                                    @if ($payment->created_at->isToday())
+                                                        Today
+                                                        at {{ $payment->created_at->timezone('GMT+5')->format('g:i A') }}
+                                                        GMT+5
+                                                    @else
+                                                        {{ $payment->created_at->timezone('GMT+5')->format('M d, Y g:i A') }}
+                                                        GMT+5
+                                                    @endif
+                                                </td>
+                                            </tr>
+
+                                        @endforeach
                                         </tbody>
                                     </table>
                                 </div>

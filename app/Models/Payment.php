@@ -48,7 +48,7 @@ class Payment extends Model
         return $this->belongsTo(Team::class, 'team_key', 'team_key');
     }
 
-    public function client(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function customer(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(Client::class, 'client_key', 'client_key');
     }
@@ -56,5 +56,10 @@ class Payment extends Model
     public function agent(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(User::class, 'agent_id', 'id');
+    }
+
+    public function payment_gateway(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(PaymentMerchant::class, 'merchant_id', 'id');
     }
 }

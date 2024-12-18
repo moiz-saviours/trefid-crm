@@ -137,11 +137,15 @@ Route::middleware(['auth:admin'])->prefix('admin')->name('admin.')->group(functi
     });
 
     /** Payment Merchant Routes */
-    Route::prefix('clients')->name('client.')->group(function () {
-        Route::get('/', [AdminPaymentMerchantController::class, 'index'])->name('index');
-        Route::get('/create', [AdminPaymentMerchantController::class, 'create'])->name('create');
-        Route::post('/store', [AdminPaymentMerchantController::class, 'store'])->name('store');
-        Route::post('/edit', [AdminPaymentMerchantController::class, 'edit'])->name('edit');
-        Route::post('/update', [AdminPaymentMerchantController::class, 'update'])->name('update');
+    Route::name('client.')->group(function () {
+        Route::get('/clients', [AdminPaymentMerchantController::class, 'index'])->name('index');
+        Route::prefix('client')->group(function () {
+            Route::get('/create', [AdminPaymentMerchantController::class, 'create'])->name('create');
+            Route::post('/store', [AdminPaymentMerchantController::class, 'store'])->name('store');
+            Route::get('/edit/{client?}', [AdminPaymentMerchantController::class, 'edit'])->name('edit');
+            Route::post('/update/{client?}', [AdminPaymentMerchantController::class, 'update'])->name('update');
+            Route::get('/change-status/{client?}', [AdminPaymentMerchantController::class, 'change_status'])->name('change.status');
+            Route::delete('/delete/{client?}', [AdminPaymentMerchantController::class, 'delete'])->name('delete');
+        });
     });
 });

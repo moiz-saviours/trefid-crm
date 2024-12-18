@@ -67,4 +67,8 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Team::class, AssignTeamMember::class,  'user_id', 'team_key', 'id', 'team_key');
     }
+    public function invoices()
+    {
+        return $this->morphMany(Invoice::class, 'agent');
+    }
 }

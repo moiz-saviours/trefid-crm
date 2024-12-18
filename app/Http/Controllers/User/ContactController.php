@@ -19,9 +19,8 @@ class ContactController extends Controller
     {
         $all_contacts = Client::whereIn('brand_key', Auth::user()->teams()->with('brands')->get()->pluck('brands.*.brand_key')->flatten())->get();
         $my_contacts = $all_contacts->filter(function ($contact) {
-            return $contact->where('loggable_type', 'App\Models\User')
-                ->where('loggable_id', Auth::id())
-                ->exists();
+            return $contact->loggable_type === get_class(Auth::user()) && $contact->loggable_id === Auth::id();
+
         });
         return view('user.contacts.index', compact('all_contacts', 'my_contacts'));
     }

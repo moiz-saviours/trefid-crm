@@ -94,8 +94,12 @@
                 fixedColumns: {
                     start: 2
                 },
-            });
+            })
             table.buttons().container().appendTo(`#right-icon-${index}`);
+            setTimeout(function () {
+                table.columns.adjust().draw();
+            }, 300);
+
         }
 
     {{--    /** Create Record */--}}
