@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('user.layouts.app')
 @section('title','Lead Status')
 @section('datatable', true)
 @section('content')
@@ -251,7 +251,7 @@
                 <header class="custm_header">
                     <div class="new_head">
                         <h1 class="page-title mb-2">Lead Status <i class="fa fa-caret-down" aria-hidden="true"></i></h1>
-                        <h2 id="record-count" class="h6"> records</h2>
+                        <h2 id="record-count" class="h6">{{count($leadStatuses)}} records</h2>
                     </div>
                     <div class="filters">
                         <div class="actions">
@@ -310,54 +310,32 @@
                                     </div>
                                 </div>
                                 <div class="card-body">
-                                    <table id="allCompaniesTable" class="table table-striped datatable-exportable
+                                    <table id="allLeadStatusesTable" class="table table-striped datatable-exportable
                             stripe row-border order-column nowrap
                             initTable
                             ">
                                         <thead>
                                         <tr>
-                                            <th><input type="checkbox"></th>
-                                            <th>Id</th>
-                                            <th>Name</th>
-                                            <th>Color</th>
-                                            <th>Description</th>
-                                            <th>Status</th>
-                                            <th>Actions</th>
-
+                                            <th class="align-middle text-center text-nowrap"><input type="checkbox"></th>
+                                            <th class="align-middle text-center text-nowrap">Id</th>
+                                            <th class="align-middle text-center text-nowrap">Name</th>
+                                            <th class="align-middle text-center text-nowrap">Color</th>
+                                            <th class="align-middle text-center text-nowrap">Description</th>
                                         </tr>
                                         </thead>
                                         <tbody>
-{{--                                        @foreach($companies as $key => $company)--}}
-{{--                                            <tr id="tr-{{$company->id}}">--}}
-{{--                                                <td></td>--}}
-{{--                                                <td class="align-middle text-center text-nowrap">Syed Moiz Athar</td>--}}
-{{--                                                <td class="align-middle text-center text-nowrap">--}}
-{{--                                                    syedmoizathar@gmail.com--}}
-{{--                                                </td>--}}
-{{--                                                --}}{{--                                        <td class="align-middle text-center text-nowrap">--}}
-{{--                                                --}}{{--                                            @php--}}
-{{--                                                --}}{{--                                                $logoUrl = filter_var($company->logo, FILTER_VALIDATE_URL) ? $company->logo : asset('assets/images/company-logos/'.$company->logo);--}}
-{{--                                                --}}{{--                                            @endphp--}}
-{{--                                                --}}{{--                                            <object--}}
-{{--                                                --}}{{--                                                data="{{ $logoUrl }}"--}}
-{{--                                                --}}{{--                                                class="avatar avatar-sm me-3"--}}
-{{--                                                --}}{{--                                                title="{{ $company->name }}"--}}
-{{--                                                --}}{{--                                            >--}}
-{{--                                                --}}{{--                                                <img--}}
-{{--                                                --}}{{--                                                    src="{{ $logoUrl }}"--}}
-{{--                                                --}}{{--                                                    alt="{{ $company->name }}"--}}
-{{--                                                --}}{{--                                                    class="avatar avatar-sm me-3"--}}
-{{--                                                --}}{{--                                                    title="{{ $company->name }}">--}}
-{{--                                                --}}{{--                                            </object>--}}
-{{--                                                --}}{{--                                        </td>--}}
-{{--                                                <td class="align-middle text-center text-nowrap">{{$company->name}}</td>--}}
-{{--                                                <td class="align-middle text-center text-nowrap">{{$company->name}}</td>--}}
-{{--                                                <td class="align-middle text-center text-nowrap">{{$company->name}}</td>--}}
-{{--                                                <td class="align-middle text-center text-nowrap">{{$company->name}}</td>--}}
-{{--                                                <td class="align-middle text-center text-nowrap">{{$company->name}}</td>--}}
-{{--                                                <td class="align-middle text-center text-nowrap">{{$company->url}}</td>--}}
-{{--                                            </tr>--}}
-{{--                                        @endforeach--}}
+                                        @foreach($leadStatuses as $leadstatus)
+                                            <tr id="tr-{{$leadstatus->id}}">
+
+                                                <td class="align-middle text-center text-nowrap"></td>
+                                                <td class="align-middle text-center text-nowrap">{{$loop->iteration}}</td>
+                                                <td class="align-middle text-center text-nowrap">{{$leadstatus->name}}</td>
+                                                <td class="align-middle text-center">
+                                                    <span class="status-color" style="background-color: {{ $leadstatus->color }};"></span>
+                                                </td>
+                                                <td class="align-middle text-center text-nowrap">{{$leadstatus->description}}</td>
+                                            </tr>
+                                        @endforeach
                                         </tbody>
                                     </table>
                                 </div>

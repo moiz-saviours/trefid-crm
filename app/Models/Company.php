@@ -30,7 +30,7 @@ class Company extends Model
         'state',
         'country',
         'zipcode',
-        'loggable',
+        'loggable_type',
         'loggable_id',
         'status',
     ];
@@ -61,7 +61,7 @@ class Company extends Model
         static::creating(function ($company) {
             $company->company_key = self::generateCompanyKey();
             if (auth()->check()) {
-                $company->loggable = get_class(auth()->user());
+                $company->loggable_type = get_class(auth()->user());
                 $company->loggable_id = auth()->user()->id;
             }
         });

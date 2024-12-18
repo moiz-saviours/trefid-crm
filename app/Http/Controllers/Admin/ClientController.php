@@ -49,7 +49,7 @@ class ClientController extends Controller
             'country' => 'nullable|string|max:255',
             'zipcode' => 'nullable|string|max:10',
             'ip_address' => 'nullable|string|max:45',
-            'loggable' => 'nullable|string|max:255',
+            'loggable_type' => 'nullable|string|max:255',
             'loggable_id' => 'nullable|integer',
             'status' => 'required|in:0,1',
         ],[
@@ -64,7 +64,7 @@ class ClientController extends Controller
         $client = new Client($request->only([
                 'brand_key', 'team_key', 'name',
                 'email', 'phone', 'address', 'city', 'state',
-                'country', 'zipcode', 'ip_address', 'loggable',
+                'country', 'zipcode', 'ip_address', 'loggable_type',
                 'loggable_id', 'status',
             ]) + ['client_key' => Client::generateClientKey()]);
 
@@ -112,7 +112,7 @@ class ClientController extends Controller
             'country' => 'nullable|string|max:255',
             'zipcode' => 'nullable|string|max:10',
             'ip_address' => 'nullable|string|max:45',
-            'loggable' => 'nullable|string|max:255',
+            'loggable_type' => 'nullable|string|max:255',
             'loggable_id' => 'nullable|integer',
             'status' => 'required|in:0,1',
         ], [
@@ -127,7 +127,7 @@ class ClientController extends Controller
         $client->fill($request->only([
             'client_key', 'brand_key', 'team_key', 'name',
             'email', 'phone', 'address', 'city', 'state',
-            'country', 'zipcode', 'ip_address', 'loggable',
+            'country', 'zipcode', 'ip_address', 'loggable_type',
             'loggable_id', 'status',
         ]));
 

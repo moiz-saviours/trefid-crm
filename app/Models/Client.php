@@ -32,7 +32,7 @@ class Client extends Model
         'country',
         'zipcode',
         'ip_address',
-        'loggable',
+        'loggable_type',
         'loggable_id',
         'status',
     ];
@@ -62,7 +62,7 @@ class Client extends Model
         static::creating(function ($client) {
             $client->client_key = self::generateClientKey();
             if (auth()->check()) {
-                $client->loggable = get_class(auth()->user());
+                $client->loggable_type = get_class(auth()->user());
                 $client->loggable_id = auth()->user()->id;
             }
         });
