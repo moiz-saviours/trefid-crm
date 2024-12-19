@@ -68,7 +68,7 @@
                 <ul class="mainnav__menu nav flex-column">
                     <!-- Link with submenu -->
                     <li class="nav-item has-sub">
-                        <a href="{{route('dashboard')}}" class="mininav-toggle nav-link collapsed"><i
+                        <a href="{{route('user.dashboard')}}" class="mininav-toggle nav-link collapsed"><i
                                 class="demo-pli-home fs-5 me-2"></i>
                             <span class="nav-label ms-1">Dashboard</span>
                         </a>
@@ -76,7 +76,7 @@
                         <ul class="mininav-content nav collapse">
                             <li data-popper-arrow class="arrow"></li>
                             <li class="nav-item">
-                                <a href="{{route('dashboard')}}" class="nav-link">Dashboard 1</a>
+                                <a href="{{route('user.dashboard')}}" class="nav-link">Dashboard 1</a>
                             </li>
                         </ul>
                         <!-- END : Dashboard submenu list -->
