@@ -108,3 +108,205 @@
         $('#testTable').DataTable();
     });
 </script>
+
+<script>
+    function refreshCsrfToken() {
+        return $.get('{{route('csrf.token')}}').then((response) => {
+            $('meta[name="csrf-token"]').attr('content', response.token);
+        });
+    }
+
+    function AjaxDeleteRequestPromise(url, data, method = 'DELETE', options = {}) {
+        method = method.toUpperCase();
+        options = {
+            useDeleteSwal: false, /* * Show SweetAlert confirmation for delete */
+            deleteSwalMessage: 'This action cannot be undone.',
+            ...options
+        };
+        if (options.useDeleteSwal && method === 'DELETE') {
+            return Swal.fire({
+                icon: 'warning',
+                title: 'Are you sure?',
+                text: options.deleteSwalMessage,
+                showCancelButton: true,
+                confirmButtonText: 'Yes, delete it!',
+                cancelButtonText: 'Cancel',
+                customClass: {
+                    cancelButton: 'swal2-left-button',
+                    confirmButton: 'swal2-right-button'
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    return AjaxRequestPromise(url, data, method, options).then(response => {
+                        return {isConfirmed: true, response: response};
+                    });
+                }
+                return Promise.reject({isConfirmed: false, message: 'Phew! The delete action was saved.'});
+            });
+        } else {
+            return AjaxRequestPromise(url, data, method, options);
+        }
+    }
+
+    function AjaxRequestPromise(url, data, method = 'GET', options = {}) {
+        method = method.toUpperCase();
+        options = {
+            useReload: false, /* * Reload the page after success */
+            useRedirect: false, /* * Redirect to another page after success */
+            redirectLocation: '', /* * Location to redirect to */
+            useSwal: false, /* * Show SweetAlert notification */
+            title: 'Success', /* * Title for SweetAlert */
+            showConfirmButton: true, /* * Display confirm button in SweetAlert */
+            confirmButtonText: 'OK', /* * Confirm button text in SweetAlert */
+            cancelButtonText: 'Reload', /* * Cancel button text in SweetAlert */
+            useSwalReload: false, /* * Reload the page if SweetAlert is confirmed */
+            icon: 'success', /* * SweetAlert & toastr icon: 'success', 'error', 'warning', 'info' */
+            useToastr: false, /* * Show toastr notification */
+            message: 'Request was successful.', /* * Message text for toastr & SweetAlert*/
+            useToastrReload: false, /* * Reload the page after toastr notification */
+            ...options /* * Use provided options if any */
+        };
+        if (method === 'GET' && data && Object.keys(data).length > 0) {
+            const queryString = $.param(data);
+            url = `${url}?${queryString}`;
+        }
+        return new Promise((resolve, reject) => {
+            $('form').find('.is-invalid').removeClass('is-invalid');
+            $('form').find('.text-danger').fadeOut();
+            $.ajax({
+                url: url,
+                type: method,
+                data: method === 'GET' ? null : data,
+                processData: method === 'GET',
+                contentType: method === 'GET' ? 'application/x-www-form-urlencoded' : false,
+                headers: method === 'GET' ? {} : {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                beforeSend: function () {
+                    // $('#loading').show();
+                },
+                success: function (response) {
+                    const message = response.message || response.success || options.message || 'Request was successful.';
+
+                    if (options.useSwal) {
+                        Swal.fire({
+                            icon: options.icon,
+                            title: options.title,
+                            text: message,
+                            confirmButtonText: options.showConfirmButton ? options.confirmButtonText : null,
+                            showConfirmButton: options.showConfirmButton,
+                            cancelButtonText: options.useSwalReload ? options.cancelButtonText : null,
+                            showCancelButton: options.useSwalReload,
+                            focusConfirm: false,
+                            customClass: {
+                                cancelButton: 'swal2-left-button',
+                                confirmButton: 'swal2-right-button'
+                            },
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                if (options.useRedirect && options.redirectLocation) {
+                                    window.location.href = options.redirectLocation;
+                                }
+                            } else if (result.dismiss === Swal.DismissReason.cancel) {
+                                if (options.useSwalReload) {
+                                    location.reload();
+                                }
+                            }
+                        });
+                    }
+
+                    /** Toastr notification */
+                    if (options.useToastr) {
+                        toastr[options.icon](message);
+                        if (options.useToastrReload) {
+                            setTimeout(() => location.reload(), 5000);
+                        } else if (options.useRedirect && options.redirectLocation) {
+                            setTimeout(() => window.location.href = options.redirectLocation, 5000);
+                        }
+                    }
+
+                    /** Handle redirection or page reload */
+                    if (!options.useSwal && !options.useToastr) {
+                        if (options.useReload) {
+                            location.reload();
+                        } else if (options.useRedirect && options.redirectLocation) {
+                            window.location.href = options.redirectLocation;
+                        }
+                    }
+                    resolve(response);
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    const response = jqXHR.responseJSON;
+                    const message = response?.message || response?.error || errorThrown || 'Something went wrong. Please try again.';
+                    if (jqXHR.status === 419 || message.includes("CSRF token mismatch")) {
+                        return refreshCsrfToken().then(() => {
+                            return AjaxRequestPromise(url, data, method, options);
+                        }).catch(() => {
+                            console.log("Failed to refresh CSRF token. Please try again.");
+                            reject(textStatus);
+                        });
+                    }
+                    if (jqXHR.status === 422 && response && response.errors) {
+                        const isUpdate = url.includes('update');
+
+                        for (let field in response.errors) {
+                            const fieldWithPrefix = isUpdate ? `#edit_${field}` : `#${field}`;
+
+                            const errorMessages = response.errors[field];
+                            errorMessages.forEach(message => {
+                                $(fieldWithPrefix).after(`<span class="text-danger">${message}</span>`);
+                            });
+
+                            $(fieldWithPrefix).addClass('is-invalid');
+
+                            setTimeout(function () {
+                                $(fieldWithPrefix).removeClass('is-invalid');
+                                $(fieldWithPrefix).siblings('.text-danger').fadeOut();
+                            }, 5000);
+                        }
+                    }
+                    /** Show generic error with SweetAlert */
+                    if (options.useSwal) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: message,
+                            confirmButtonText: options.showConfirmButton ? options.confirmButtonText : null,
+                            showConfirmButton: options.showConfirmButton,
+                            cancelButtonText: options.useSwalReload ? options.cancelButtonText : null,
+                            showCancelButton: options.useSwalReload,
+                            focusConfirm: false,
+                            customClass: {
+                                cancelButton: 'swal2-left-button',
+                                confirmButton: 'swal2-right-button'
+                            },
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                if (options.useRedirect && options.redirectLocation) {
+                                    window.location.href = options.redirectLocation;
+                                }
+                            } else if (result.dismiss === Swal.DismissReason.cancel) {
+                                if (options.useSwalReload) {
+                                    location.reload();
+                                }
+                            }
+                        });
+                    }
+                    /** Show generic error with toastr */
+                    if (options.useToastr) {
+                        toastr['error'](message);
+                        if (options.useToastrReload) {
+                            setTimeout(() => location.reload(), 5000);
+                        } else if (options.useRedirect && options.redirectLocation) {
+                            setTimeout(() => window.location.href = options.redirectLocation, 5000);
+                        }
+                    }
+
+                    reject(textStatus);
+                },
+                complete: function () {
+                    $(".modal").modal('hide');
+                    // $('#loading').hide();
+                }
+            });
+        });
+    }
+</script>

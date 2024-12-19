@@ -89,7 +89,7 @@ Route::middleware(['auth:admin'])->prefix('admin')->name('admin.')->group(functi
     });
 
     /** Client Routes */
-    Route::name('client.')->group(function () {
+    Route::name('contact.')->group(function () {
         Route::get('/contacts', [AdminClientController::class, 'index'])->name('index');
         Route::prefix('contact')->group(function () {
             Route::get('/create', [AdminClientController::class, 'create'])->name('create');

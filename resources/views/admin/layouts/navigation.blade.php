@@ -68,7 +68,7 @@
                 <ul class="mainnav__menu nav flex-column">
                     <!-- Link with submenu -->
                     <li class="nav-item has-sub">
-                        <a class="mininav-toggle nav-link collapsed " ><i
+                        <a class="mininav-toggle nav-link collapsed "><i
                                 class="demo-pli-home fs-5 me-2"></i>
                             <span class="nav-label ms-1">Dashboard</span>
                         </a>
@@ -76,7 +76,9 @@
                         <ul class="mininav-content nav collapse">
                             <li data-popper-arrow class="arrow"></li>
                             <li class="nav-item">
-                                <a href="{{route('admin.dashboard')}}" class="nav-link {{ request()->is('admin/dashboard*') ? 'active' : '' }}">Dashboard 1</a>
+                                <a href="{{route('admin.dashboard')}}"
+                                   class="nav-link {{ request()->is('admin/dashboard*') ? 'active' : '' }}">Dashboard
+                                    1</a>
                             </li>
                         </ul>
                         <!-- END : Dashboard submenu list -->
@@ -164,6 +166,10 @@
                         <!-- Ui Elements submenu list -->
                         <ul class="mininav-content nav collapse">
                             <li data-popper-arrow class="arrow"></li>
+                            <div class="navigate-heading">
+                                <i class="demo-pli-address-book"></i>
+                                <h3>Companies</h3>
+                            </div>
                             <li class="nav-item">
                                 <a href="{{route('company.index')}}"
                                    class="nav-link {{ request()->is('companies*') ? 'active' : '' }}">Lists</a>
@@ -180,6 +186,10 @@
                         <!-- Ui Elements submenu list -->
                         <ul class="mininav-content nav collapse">
                             <li data-popper-arrow class="arrow"></li>
+                            <div class="navigate-heading">
+                                <i class="demo-pli-lock-user"></i>
+                                <h3>Admins</h3>
+                            </div>
                             <li class="nav-item">
                                 <a href="{{route('admin.account.index')}}"
                                    class="nav-link {{ request()->is('admin/account*') ? 'active' : '' }}">Lists</a>
@@ -196,6 +206,10 @@
                         <!-- Ui Elements submenu list -->
                         <ul class="mininav-content nav collapse">
                             <li data-popper-arrow class="arrow"></li>
+                            <div class="navigate-heading">
+                                <i class="demo-pli-add-user"></i>
+                                <h3>Employees</h3>
+                            </div>
                             <li class="nav-item">
                                 <a href="{{route('admin.employee.index')}}"
                                    class="nav-link {{ request()->is('admin/employee*') ? 'active' : '' }}">Lists</a>
@@ -212,6 +226,10 @@
                         <!-- Ui Elements submenu list -->
                         <ul class="mininav-content nav collapse">
                             <li data-popper-arrow class="arrow"></li>
+                            <div class="navigate-heading">
+                                <i class="demo-pli-tag"></i>
+                                <h3>Brands</h3>
+                            </div>
                             <li class="nav-item">
                                 <a href="{{ route('admin.brand.index') }}"
                                    class="nav-link {{ request()->is('admin/brand*') ? 'active' : '' }}">Lists</a>
@@ -228,6 +246,10 @@
                         <!-- Ui Elements submenu list -->
                         <ul class="mininav-content nav collapse">
                             <li data-popper-arrow class="arrow"></li>
+                            <div class="navigate-heading">
+                                <i class="demo-pli-add-user"></i>
+                                <h3>Teams</h3>
+                            </div>
                             <li class="nav-item">
                                 <a href="{{ route('admin.team.index') }}"
                                    class="nav-link {{ request()->is('admin/team*') ? 'active' : '' }}">Lists</a>
@@ -237,16 +259,20 @@
                     </li>
                     <li class="nav-item has-sub">
                         <a href="#"
-                           class="mininav-toggle nav-link collapsed {{ request()->is('admin/client*') ? 'active' : '' }}"><i
+                           class="mininav-toggle nav-link collapsed {{ request()->is('admin/contact*') ? 'active' : '' }}"><i
                                 class="demo-pli-address-book fs-5 me-2"></i>
                             <span class="nav-label ms-1">Contacts</span>
                         </a>
                         <!-- Ui Elements submenu list -->
                         <ul class="mininav-content nav collapse">
                             <li data-popper-arrow class="arrow"></li>
+                            <div class="navigate-heading">
+                                <i class="demo-pli-address-book"></i>
+                                <h3>Contacts</h3>
+                            </div>
                             <li class="nav-item">
-                                <a href="{{ route('admin.client.index') }}"
-                                       class="nav-link {{ request()->is('admin/client*') ? 'active' : '' }}">Lists</a>
+                                <a href="{{ route('admin.contact.index') }}"
+                                   class="nav-link {{ request()->is('admin/contact*') ? 'active' : '' }}">Lists</a>
                             </li>
                         </ul>
                         <!-- END : Ui Elements submenu list -->
@@ -261,6 +287,10 @@
                         <!-- Ui Elements submenu list -->
                         <ul class="mininav-content nav collapse">
                             <li data-popper-arrow class="arrow"></li>
+                            <div class="navigate-heading">
+                                <i class="demo-pli-mine"></i>
+                                <h3>Leads</h3>
+                            </div>
                             <li class="nav-item">
                                 <a href="{{ route('admin.lead.index') }}"
                                    class="nav-link {{ request()->is('admin/lead*') ? 'active' : '' }}">Lists</a>
@@ -277,6 +307,10 @@
                         <!-- Ui Elements submenu list -->
                         <ul class="mininav-content nav collapse">
                             <li data-popper-arrow class="arrow"></li>
+                            <div class="navigate-heading">
+                                <i class="demo-pli-gears"></i>
+                                <h3>Lead Status</h3>
+                            </div>
                             <li class="nav-item">
                                 <a href="{{ route('admin.lead-status.index') }}"
                                    class="nav-link {{ request()->is('admin/lead-status*') ? 'active' : '' }}">Lists</a>
@@ -293,6 +327,10 @@
                         <!-- Ui Elements submenu list -->
                         <ul class="mininav-content nav collapse">
                             <li data-popper-arrow class="arrow"></li>
+                            <div class="navigate-heading">
+                                <i class="demo-pli-file"></i>
+                                <h3>Invoices</h3>
+                            </div>
                             <li class="nav-item">
                                 <a href="{{ route('admin.invoice.index') }}"
                                    class="nav-link {{ request()->is('admin/invoice*') ? 'active' : '' }}">Lists</a>
@@ -309,6 +347,10 @@
                         <!-- Ui Elements submenu list -->
                         <ul class="mininav-content nav collapse">
                             <li data-popper-arrow class="arrow"></li>
+                            <div class="navigate-heading">
+                                <i class="demo-pli-wallet-2"></i>
+                                <h3>Payments</h3>
+                            </div>
                             <li class="nav-item">
                                 <a href="{{ route('admin.payment.index') }}"
                                    class="nav-link {{ request()->is('admin/payment*') ? 'active' : '' }}">Lists</a>

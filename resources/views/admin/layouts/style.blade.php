@@ -284,9 +284,6 @@
       href="../assets/themes/nifty/assets/css/nifty.min.ef4dee33cb03225ab91107ec2905fe15f71a06ba22edcf1e480874b0fb882a31.css">
 
 <!-- Favicons [ OPTIONAL ] -->
-<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
 <link rel="manifest" href="{{asset('assets/themes/nifty/site.webmanifest')}}">
 <!-- Spinkit [ OPTIONAL ] -->
 <link rel="stylesheet" href="{{asset('assets/themes/nifty/assets/pages/spinkit.css')}}">
@@ -318,7 +315,8 @@
         opacity: 0;
         transition: opacity 0.3s ease, visibility 0s ease 0s;
     }
-    .load-spinner{
+
+    .load-spinner {
         display: none;
     }
 </style>
@@ -352,9 +350,11 @@ Detailed information and more samples can be found in the documentation.
     .mainnav__top-content::-webkit-scrollbar {
         display: none;
     }
+
     .root .mainnav__inner li.nav-item {
         margin-top: 1px;
     }
+
     .is-invalid {
         background-color: #f8d7da85;
     }
@@ -366,6 +366,7 @@ Detailed information and more samples can be found in the documentation.
     .modal span.text-danger {
         font-size: 12px;
     }
+
     /** Datatable */
 
     div.dt-container div.dt-length select {
@@ -438,26 +439,31 @@ Detailed information and more samples can be found in the documentation.
     .dt-buttons .btn.btn-secondary span:hover {
         color: #fff;
     }
+
     span.dt-column-title {
         color: var(--bs-primary);
     }
 
     ul.custm-filtr li {
         color: var(--bs-primary);
-        margin-right:20px;
-        display:inline-block;
+        margin-right: 20px;
+        display: inline-block;
     }
+
     .table.dataTable.table.table-striped > tbody > tr:nth-of-type(2n+1).selected > *,
     .table.dataTable.table > tbody > tr.selected > * {
         box-shadow: inset 0 0 0 9999px var(--bs-primary);
         color: var(--bs-primary-color);
     }
+
     .dt-search {
         float: right;
     }
+
     .dt-paging ul.pagination {
         float: right;
     }
+
     .dt-buttons button {
         border: none;
         padding: 0;
@@ -467,6 +473,7 @@ Detailed information and more samples can be found in the documentation.
     .card-header:has(.fltr-sec) {
         border-bottom: none;
     }
+
     /** Status */
     .status-toggle {
         width: 40px;
@@ -504,5 +511,33 @@ Detailed information and more samples can be found in the documentation.
 
     .table a {
         text-decoration: underline;
+    }
+</style>
+<style>
+    table object.avatar.avatar-sm.me-3 {
+        width: 50px;
+    }
+
+    .mn--min .mininav-content h3 {
+        color: var(--nf-mainnav-submenu-active-color);
+        font-size: var(--nf-brand-size);
+        font-weight: 600;
+        font-family: var(--bs-body-font-family);
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        padding: var(--nf-mainnav-min-submenu-link-padding-y) var(--nf-mainnav-min-submenu-link-padding-x) 0;
+    }
+
+    .navigate-heading {
+        display: none;
+    }
+
+    .mn--min .navigate-heading {
+        margin-left: 5px;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: center;
     }
 </style>
