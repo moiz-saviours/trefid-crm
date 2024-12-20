@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\{
     AccountController as AdminAccountController,
+    CompanyController as AdminCompanyController,
     ProfileController as AdminProfileController,
     BrandController as AdminBrandController,
     EmployeeController as AdminEmployeeController,
@@ -88,7 +89,12 @@ Route::middleware(['auth:admin'])->prefix('admin')->name('admin.')->group(functi
         });
     });
 
-    /** Client Routes */
+    /** Companies Routes */
+    Route::prefix('companies')->name('company.')->group(function () {
+        Route::get('/', [AdminCompanyController::class, 'index'])->name('index');
+    });
+
+    /** Contacts Routes */
     Route::name('contact.')->group(function () {
         Route::get('/contacts', [AdminClientController::class, 'index'])->name('index');
         Route::prefix('contact')->group(function () {

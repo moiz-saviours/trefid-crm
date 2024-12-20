@@ -223,37 +223,5 @@
 
     @push('script')
         @include('admin.brands.script')
-        <script>
-
-            $(document).ready(function () {
-                const formContainer = $('#formContainer');
-                $('.open-form-btn , .editBtn').click(function () {
-                    $(this).hasClass('void') ? $(this).attr('title', "You don't have access to create a company.").tooltip({placement: 'bottom'}).tooltip('show') : (formContainer.addClass('open'));
-                });
-                $(document).click(function (event) {
-                    if (
-                        (
-                            !$(event.target).closest('#formContainer').length
-                            && !$(event.target).is('#formContainer')
-                            && !$(event.target).closest('.open-form-btn').length
-                            && !$(event.target).is('.editBtn')
-                        )
-                        || $(event.target).is('#formContainer .close-btn')
-                        )   {
-                                formContainer.removeClass('open')
-                                $('form')[0].reset();
-                            }
-                });
-                $(".tab-item").on("click", function () {
-                    $(".tab-item").removeClass("active");
-                    $(".tab-pane").removeClass("active");
-
-                    $(this).addClass("active");
-
-                    const targetPane = $(this).data("tab");
-                    $("#" + targetPane).addClass("active");
-                });
-            });
-        </script>
     @endpush
 @endsection

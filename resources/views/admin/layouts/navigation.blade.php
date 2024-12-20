@@ -2,7 +2,7 @@
     <div class="mainnav__inner">
 
         <!-- Navigation menu -->
-        <div class="mainnav__top-content scrollable-content pb-5 pt-2">
+        <div class="mainnav__top-content scrollable-content pb-2 pt-2">
 
 
             <!-- Profile Widget -->
@@ -11,8 +11,8 @@
                 <!-- Profile picture  -->
                 <div class="mininav-toggle text-center py-2">
                     <img class="mainnav__avatar img-md rounded-circle hv-oc"
-                         src="{{auth()->guard('web')->user()->image && file_exists(public_path('assets/images/employees/'.auth()->guard('web')->user()->image)) ? asset('assets/images/employees/'.auth()->guard('web')->user()->image) : asset('assets/themes/nifty/assets/img/profile-photos/2.png')}}"
-                         alt="{{auth()->guard('web')->user()->name}}" title="Dashboard" loading="lazy">
+                         src="{{auth()->guard('admin')->user()->image && file_exists(public_path('assets/images/employees/'.auth()->guard('admin')->user()->image)) ? asset('assets/images/employees/'.auth()->guard('admin')->user()->image) : asset('assets/themes/nifty/assets/img/profile-photos/2.png')}}"
+                         alt="{{auth()->guard('admin')->user()->name}}" title="Dashboard" loading="lazy">
                 </div>
                 <div class="mininav-content collapse d-mn-max">
                     <span data-popper-arrow class="arrow"></span>
@@ -22,9 +22,9 @@
                         <button class="mainnav-widget-toggle d-block btn border-0 p-2" data-bs-toggle="collapse"
                                 data-bs-target="#usernav" aria-expanded="false" aria-controls="usernav">
                            <span class="dropdown-toggle d-flex justify-content-center align-items-center">
-                              <h5 class="mb-0 me-3">{{auth()->guard('web')->user()->name}}</h5>
+                              <h5 class="mb-0 me-3">{{auth()->guard('admin')->user()->name}}</h5>
                            </span>
-                            <small class="text-body-secondary">{{auth()->guard('web')->user()->designation}}</small>
+                            <small class="text-body-secondary">{{auth()->guard('admin')->user()->designation}}</small>
                         </button>
 
 
@@ -158,7 +158,7 @@
                 <ul class="mainnav__menu nav flex-column">
                     <!-- Link with submenu -->
                     <li class="nav-item has-sub">
-                        <a href="#"
+                        <a href="javascript:void(0)"
                            class="mininav-toggle nav-link collapsed {{ request()->is('companies*') ? 'active' : '' }}"><i
                                 class="demo-pli-address-book fs-5 me-2"></i>
                             <span class="nav-label ms-1">Companies</span>
@@ -171,14 +171,14 @@
                                 <h3>Companies</h3>
                             </div>
                             <li class="nav-item">
-                                <a href="{{route('company.index')}}"
+                                <a href="{{route('admin.company.index')}}"
                                    class="nav-link {{ request()->is('companies*') ? 'active' : '' }}">Lists</a>
                             </li>
                         </ul>
                         <!-- END : Ui Elements submenu list -->
                     </li>
                     <li class="nav-item has-sub">
-                        <a href="#"
+                        <a href="javascript:void(0)"
                            class="mininav-toggle nav-link collapsed {{ request()->is('admin/account*') ? 'active' : '' }}"><i
                                 class="demo-pli-lock-user fs-5 me-2"></i>
                             <span class="nav-label ms-1">Admins</span>
@@ -198,7 +198,7 @@
                         <!-- END : Ui Elements submenu list -->
                     </li>
                     <li class="nav-item has-sub">
-                        <a href="#"
+                        <a href="javascript:void(0)"
                            class="mininav-toggle nav-link collapsed {{ request()->is('admin/employee*') ? 'active' : '' }}"><i
                                 class="demo-pli-add-user fs-5 me-2"></i>
                             <span class="nav-label ms-1">Employees</span>
@@ -218,7 +218,7 @@
                         <!-- END : Ui Elements submenu list -->
                     </li>
                     <li class="nav-item has-sub">
-                        <a href="#"
+                        <a href="javascript:void(0)"
                            class="mininav-toggle nav-link collapsed {{ request()->is('admin/brand*') ? 'active' : '' }}"><i
                                 class="demo-pli-tag fs-5 me-2"></i>
                             <span class="nav-label ms-1">Brands</span>
@@ -238,7 +238,7 @@
                         <!-- END : Ui Elements submenu list -->
                     </li>
                     <li class="nav-item has-sub">
-                        <a href="#"
+                        <a href="javascript:void(0)"
                            class="mininav-toggle nav-link collapsed {{ request()->is('admin/team*') ? 'active' : '' }}"><i
                                 class="demo-pli-add-user fs-5 me-2"></i>
                             <span class="nav-label ms-1">Teams</span>
@@ -258,7 +258,7 @@
                         <!-- END : Ui Elements submenu list -->
                     </li>
                     <li class="nav-item has-sub">
-                        <a href="#"
+                        <a href="javascript:void(0)"
                            class="mininav-toggle nav-link collapsed {{ request()->is('admin/contact*') ? 'active' : '' }}"><i
                                 class="demo-pli-address-book fs-5 me-2"></i>
                             <span class="nav-label ms-1">Contacts</span>
@@ -279,7 +279,7 @@
                     </li>
 
                     <li class="nav-item has-sub">
-                        <a href="#"
+                        <a href="javascript:void(0)"
                            class="mininav-toggle nav-link collapsed {{ request()->is('admin/lead*') ? 'active' : '' }}"><i
                                 class="demo-pli-mine fs-5 me-2"></i>
                             <span class="nav-label ms-1">Leads</span>
@@ -299,7 +299,7 @@
                         <!-- END : Ui Elements submenu list -->
                     </li>
                     <li class="nav-item has-sub">
-                        <a href="#"
+                        <a href="javascript:void(0)"
                            class="mininav-toggle nav-link collapsed {{ request()->is('admin/lead-status*') ? 'active' : '' }}"><i
                                 class="demo-pli-gears fs-5 me-2"></i>
                             <span class="nav-label ms-1">Lead Status</span>
@@ -319,7 +319,7 @@
                         <!-- END : Ui Elements submenu list -->
                     </li>
                     <li class="nav-item has-sub">
-                        <a href="#"
+                        <a href="javascript:void(0)"
                            class="mininav-toggle nav-link collapsed {{ request()->is('admin/invoice*') ? 'active' : '' }}"><i
                                 class="demo-pli-file fs-5 me-2"></i>
                             <span class="nav-label ms-1">Invoices</span>
@@ -339,7 +339,7 @@
                         <!-- END : Ui Elements submenu list -->
                     </li>
                     <li class="nav-item has-sub">
-                        <a href="#"
+                        <a href="javascript:void(0)"
                            class="mininav-toggle nav-link collapsed {{ request()->is('admin/payment*') ? 'active' : '' }}"><i
                                 class="demo-pli-wallet-2 fs-5 me-2"></i>
                             <span class="nav-label ms-1">Payments</span>
@@ -358,6 +358,26 @@
                         </ul>
                         <!-- END : Ui Elements submenu list -->
                     </li>
+                    <li class="nav-item has-sub">
+                        <a href="javascript:void(0)"
+                           class="mininav-toggle nav-link collapsed {{ request()->is('admin/client*') ? 'active' : '' }}"><i
+                                class="demo-pli-add-user-star  fs-5 me-2"></i>
+                            <span class="nav-label ms-1">Clients</span>
+                        </a>
+                        <!-- Ui Elements submenu list -->
+                        <ul class="mininav-content nav collapse">
+                            <li data-popper-arrow class="arrow"></li>
+                            <div class="navigate-heading">
+                                <i class="demo-pli-wallet-2"></i>
+                                <h3>Clients</h3>
+                            </div>
+                            <li class="nav-item">
+                                <a href="{{ route('admin.client.index') }}"
+                                   class="nav-link {{ request()->is('admin/client*') ? 'active' : '' }}">Lists</a>
+                            </li>
+                        </ul>
+                        <!-- END : Ui Elements submenu list -->
+                    </li>
 
                     <!-- END : Link with submenu -->
                 </ul>
@@ -365,48 +385,48 @@
             <!-- END : Components Category -->
 
             <!-- Server Status Category -->
-            <div class="mainnav__widget">
+{{--            <div class="mainnav__widget">--}}
 
-                <!-- Widget buttton form small navigation -->
-                <div class="mininav-toggle text-center py-2 d-mn-min">
-                    <i class="demo-pli-monitor-2"></i>
-                </div>
+{{--                <!-- Widget buttton form small navigation -->--}}
+{{--                <div class="mininav-toggle text-center py-2 d-mn-min">--}}
+{{--                    <i class="demo-pli-monitor-2"></i>--}}
+{{--                </div>--}}
 
-                <div class="d-mn-max mt-5"></div>
+{{--                <div class="d-mn-max mt-5"></div>--}}
 
-                <!-- Widget content -->
-                <div class="mininav-content collapse d-mn-max">
-                    <span data-popper-arrow class="arrow"></span>
-                    <h6 class="mainnav__caption fw-bold">Server Status</h6>
-                    <ul class="list-group list-group-borderless">
-                        <li class="list-group-item text-reset">
-                            <div class="d-flex justify-content-between align-items-start">
-                                <p class="mb-2 me-auto">CPU Usage</p>
-                                <span class="badge bg-info rounded">35%</span>
-                            </div>
-                            <div class="progress progress-md">
-                                <div class="progress-bar bg-info" role="progressbar" style="width: 35%"
-                                     aria-label="CPU Progress" aria-valuenow="35" aria-valuemin="0"
-                                     aria-valuemax="100"></div>
-                            </div>
-                        </li>
-                        <li class="list-group-item text-reset">
-                            <div class="d-flex justify-content-between align-items-start">
-                                <p class="mb-2 me-auto">Bandwidth</p>
-                                <span class="badge bg-warning rounded">73%</span>
-                            </div>
-                            <div class="progress progress-md">
-                                <div class="progress-bar bg-warning" role="progressbar" style="width: 73%"
-                                     aria-label="Bandwidth Progress" aria-valuenow="73" aria-valuemin="0"
-                                     aria-valuemax="100"></div>
-                            </div>
-                        </li>
-                    </ul>
-                    <div class="d-grid px-3 mt-3">
-                        <a href="#" class="btn btn-sm btn-success">View Details</a>
-                    </div>
-                </div>
-            </div>
+{{--                <!-- Widget content -->--}}
+{{--                <div class="mininav-content collapse d-mn-max">--}}
+{{--                    <span data-popper-arrow class="arrow"></span>--}}
+{{--                    <h6 class="mainnav__caption fw-bold">Server Status</h6>--}}
+{{--                    <ul class="list-group list-group-borderless">--}}
+{{--                        <li class="list-group-item text-reset">--}}
+{{--                            <div class="d-flex justify-content-between align-items-start">--}}
+{{--                                <p class="mb-2 me-auto">CPU Usage</p>--}}
+{{--                                <span class="badge bg-info rounded">35%</span>--}}
+{{--                            </div>--}}
+{{--                            <div class="progress progress-md">--}}
+{{--                                <div class="progress-bar bg-info" role="progressbar" style="width: 35%"--}}
+{{--                                     aria-label="CPU Progress" aria-valuenow="35" aria-valuemin="0"--}}
+{{--                                     aria-valuemax="100"></div>--}}
+{{--                            </div>--}}
+{{--                        </li>--}}
+{{--                        <li class="list-group-item text-reset">--}}
+{{--                            <div class="d-flex justify-content-between align-items-start">--}}
+{{--                                <p class="mb-2 me-auto">Bandwidth</p>--}}
+{{--                                <span class="badge bg-warning rounded">73%</span>--}}
+{{--                            </div>--}}
+{{--                            <div class="progress progress-md">--}}
+{{--                                <div class="progress-bar bg-warning" role="progressbar" style="width: 73%"--}}
+{{--                                     aria-label="Bandwidth Progress" aria-valuenow="73" aria-valuemin="0"--}}
+{{--                                     aria-valuemax="100"></div>--}}
+{{--                            </div>--}}
+{{--                        </li>--}}
+{{--                    </ul>--}}
+{{--                    <div class="d-grid px-3 mt-3">--}}
+{{--                        <a href="#" class="btn btn-sm btn-success">View Details</a>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--            </div>--}}
             <!-- End : Server Status Category -->
 
 
@@ -415,7 +435,7 @@
 
 
         <!-- Bottom navigation menu -->
-        <div class="mainnav__bottom-content border-top pb-2">
+        <div class="mainnav__bottom-content border-top pb-2 pt-2">
             <ul id="mainnav" class="mainnav__menu nav flex-column">
                 <li class="nav-item has-sub">
                     <button type="button" class="nav-link"
@@ -423,7 +443,7 @@
                         <i class="demo-pli-unlock fs-5 me-2"></i>
                         <span class="nav-label ms-1">Logout</span>
                     </button>
-                    <form method="POST" action="{{ route('logout') }}" id="logout-form"
+                    <form method="POST" action="{{ route('admin.logout') }}" id="logout-form"
                           class="d-none">
                         @csrf
                     </form>
