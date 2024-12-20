@@ -341,7 +341,7 @@
 
 
         <!-- Bottom navigation menu -->
-        <div class="mainnav__bottom-content border-top pb-2">
+        <div class="mainnav__bottom-content border-top pb-2 pt-2">
             <ul id="mainnav" class="mainnav__menu nav flex-column">
                 <li class="nav-item has-sub">
                     <button type="button" class="nav-link"

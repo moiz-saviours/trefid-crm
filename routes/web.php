@@ -4,11 +4,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use App\Http\Controllers\User\{BrandController,
-    BrandsController,
+use App\Http\Controllers\User\{
+    DashboardController,
+    BrandController,
     CompanyController,
     ContactController,
-    ContactsController,
     InvoiceController,
     LeadController,
     LeadStatusController,
@@ -16,7 +16,7 @@ use App\Http\Controllers\User\{BrandController,
     ProfileController,
     TeamController,
     TeamMemberController,
-    UserDashboardController};
+};
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -25,9 +25,7 @@ Route::get('/', function () {
 
 require __DIR__ . '/auth.php';
 
-//Route::get('/dashboard', function () {
-//    return view('user.dashboard');
-//})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('user.dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -73,13 +71,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/lead-status', [LeadStatusController::class, 'index'])->name('lead-status.index');
     Route::get('/invoices', [InvoiceController::class, 'index'])->name('invoice.index');
     Route::get('/payments', [PaymentController::class, 'index'])->name('payment.index');
-
-    Route::get('/dashboard',[UserDashboardController::class,'index'])->name('user.dashboard');
-
-
-
-
-
 });
 
 require __DIR__ . '/admin-routes.php';

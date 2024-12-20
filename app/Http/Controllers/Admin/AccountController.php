@@ -49,23 +49,30 @@ class AccountController extends Controller
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        $admin = new Admin($request->only([
-            'team_key', 'name', 'email', 'designation', 'gender',
-            'phone_number', 'address', 'city', 'country',
-            'postal_code', 'dob', 'about', 'status'
-        ]));
+        try {
+            $admin = new Admin($request->only([
+                'team_key', 'name', 'email', 'designation', 'gender',
+                'phone_number', 'address', 'city', 'country',
+                'postal_code', 'dob', 'about', 'status'
+            ]));
 
-        if ($request->hasFile('image')) {
-            $originalFileName = time() . '_' . $request->file('image')->getClientOriginalName();
-            $publicPath = public_path('assets/images/admins');
-            $request->file('image')->move($publicPath, $originalFileName);
-            $admin->image = $originalFileName;
+            if ($request->hasFile('image')) {
+                $originalFileName = time() . '_' . $request->file('image')->getClientOriginalName();
+                $publicPath = public_path('assets/images/admins');
+                $request->file('image')->move($publicPath, $originalFileName);
+                $admin->image = $originalFileName;
+            } else if ($request->image_url) {
+                $admin->image = $request->image_url;
+            }
+
+            $admin->password = Hash::make(12345678);
+            $admin->save();
+
+            return response()->json(['data' => $admin, 'message' => 'Record created successfully.']);
+
+        } catch (\Exception $e) {
+            return response()->json(['error' => ' Internal Server Error', 'message' => $e->getMessage(), 'line' => $e->getLine()], 500);
         }
-
-        $admin->password = Hash::make(12345678);
-        $admin->save();
-
-        return redirect()->route('admin.account.index')->with('success', 'Employee created successfully.');
     }
 
     /**
@@ -79,9 +86,13 @@ class AccountController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Admin $admin)
+    public function edit(Request $request, Admin $admin)
     {
-        return view('admin.accounts.edit', compact('admin'));
+        if ($request->ajax()) {
+            return response()->json($admin);
+        }
+        session(['edit_admin' => $admin]);
+        return redirect()->route('admin.account.index');
     }
 
     /**
@@ -97,31 +108,36 @@ class AccountController extends Controller
             'status' => 'required|in:0,1',
         ]);
 
-        $admin->fill($request->only([
-            'team_key', 'name', 'email', 'designation', 'gender',
-            'phone_number', 'address', 'city', 'country',
-            'postal_code', 'dob', 'about', 'status'
-        ]));
+        try {
+            $admin->fill($request->only([
+                'team_key', 'name', 'email', 'designation', 'gender',
+                'phone_number', 'address', 'city', 'country',
+                'postal_code', 'dob', 'about', 'status'
+            ]));
 
-        if ($request->hasFile('image')) {
+            if ($request->hasFile('image')) {
 
-            if ($admin->image) {
-                if (!filter_var($admin->image, FILTER_VALIDATE_URL)) {
-                    $path = public_path('assets/images/admins/' . $admin->image);
-                    if (File::exists($path)) {
+                if ($admin->image) {
+                    if (!filter_var($admin->image, FILTER_VALIDATE_URL)) {
+                        $path = public_path('assets/images/admins/' . $admin->image);
+                        if (File::exists($path)) {
 //                        File::delete($path);
+                        }
                     }
                 }
+                $originalFileName = time() . '_' . $request->file('image')->getClientOriginalName();
+                $publicPath = public_path('assets/images/admins');
+                $request->file('image')->move($publicPath, $originalFileName);
+                $admin->image = $originalFileName;
+            } else if ($request->image_url) {
+                $admin->image = $request->image_url;
             }
-            $originalFileName = time() . '_' . $request->file('image')->getClientOriginalName();
-            $publicPath = public_path('assets/images/admins');
-            $request->file('image')->move($publicPath, $originalFileName);
-            $admin->image = $originalFileName;
+
+            $admin->save();
+            return response()->json(['data' => $admin, 'message' => 'Record updated successfully.']);
+        } catch (\Exception $e) {
+            return response()->json(['error' => ' Internal Server Error', 'message' => $e->getMessage(), 'line' => $e->getLine()], 500);
         }
-
-        $admin->save();
-
-        return redirect()->route('admin.account.index')->with('success', 'Record updated successfully.');
     }
 
     /**

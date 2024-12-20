@@ -253,6 +253,7 @@
                 })
                 .catch(error => console.log(error));
         });
+
         function setDataAndShowEditModel(data) {
             $('#manage-form').data('id', data.id);
 
@@ -297,7 +298,7 @@
                     }
                 });
             }
-            $('#update-form')[0].reset();
+            $('form')[0].reset();
             $.ajax({
                 url: `{{route('admin.brand.edit')}}/` + id,
                 type: 'GET',
@@ -327,7 +328,7 @@
                         const index = table.rows().count() + 1;
                         const columns = [
                             null,
-                            id,
+                            index,
                             `<object data="${logoUrl}" class="avatar avatar-sm me-3" style="width: 100px; height: 50px;" title="${name}">
                                         <img src="${logoUrl}" alt="${name}" class="avatar avatar-sm me-3" title="${name}">
                                     </object>`,
@@ -379,3 +380,4 @@
         @php session()->forget('edit_brand') @endphp
     });
 </script>
+

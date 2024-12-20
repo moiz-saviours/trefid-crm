@@ -1,12 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\User;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Client;
 use App\Models\Company;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 
 class CompanyController extends Controller
@@ -17,10 +16,7 @@ class CompanyController extends Controller
     public function index()
     {
 
-        $all_contacts = Client::whereIn('brand_key', Auth::user()->teams()->with('brands')->get()->pluck('brands.*.brand_key')->flatten())->get();
-        $my_contacts = $all_contacts->filter(function ($contact) {
-            return $contact->loggable_type === get_class(Auth::user()) && $contact->loggable_id === Auth::id();
-        });
+        $all_contacts = Client::all();
         $domains = $all_contacts->map(function ($contact) {
             return substr(strrchr($contact->email, "@"), 1);
         })->unique();
@@ -50,9 +46,8 @@ class CompanyController extends Controller
             }
         }
         $companies = Company::whereIn('domain', $domains)->where('status', 1)->get();
-//        $companies = Cache::remember('companies_list', config('cache.durations.short_lived'), fn() => Company::whereIn('domain', $domains)->where('status', 1)->get());
 
-        return view('user.companies.index', compact('companies'));
+        return view('admin.companies.index', compact('companies'));
     }
 
     /**
