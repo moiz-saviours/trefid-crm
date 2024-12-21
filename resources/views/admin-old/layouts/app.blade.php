@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>@yield('title')</title>
 
-    @include('admin.layouts.style')
+    @include('admin.layouts.style_prev')
     @stack('style')
 </head>
 
@@ -27,10 +27,10 @@
         <span class="mask opacity-6"></span>
     </div>
 @endif
-@include('admin.layouts.navigation')
+@include('admin.layouts.navigation_prev')
 
 <main class="main-content position-relative max-height-vh-100 h-100 " style="margin-top: 17px;">
-    @include('admin.layouts.navbar')
+    @include('admin.layouts.navbar_prev')
     @yield('content')
 
     {{--    <footer class="footer pt-3  ">--}}
@@ -139,7 +139,7 @@
         </div>
     </div>
 </div>
-@include('admin.layouts.script')
+@include('admin.layouts.script_prev')
 @stack('script')
 </body>
 

@@ -105,15 +105,25 @@ class TeamController extends Controller
     {
         try {
             if (!$team->id) {
+                if (request()->ajax()) {
+                    return response()->json(['error' => 'Oops! Record not found.']);
+                }
                 return redirect()->route('admin.team.index')->with('error', 'Team not found.');
             }
             $brands = Brand::where('status', 1)->get();
             $users = User::where('status', 1)->get();
-
+            if (request()->ajax()) {
+                $assign_brands = $team->brands->pluck('name')->map('htmlspecialchars_decode')->implode(', ');
+                return response()->json(['data' => array_merge($team->toArray(), ['assign_brands' => $assign_brands]), 'message' => 'Record updated successfully.']);
+            }
             $teamEmployees = $team->users->pluck('id')->toArray();
             $teamBrands = $team->brands->pluck('brand_key')->toArray();
             return view('admin.teams.edit', compact('team', 'brands', 'users', 'teamEmployees', 'teamBrands'));
+
         } catch (\Exception $e) {
+            if (request()->ajax()) {
+                return response()->json(['error' => ' Internal Server Error', 'message' => $e->getMessage(), 'line' => $e->getLine()], 500);
+            }
             return redirect()->route('admin.team.index')->with('error', $e->getMessage());
         }
     }
@@ -144,6 +154,10 @@ class TeamController extends Controller
         $team->users()->sync($employees);
         $team->brands()->sync($request->input('brands', []));
 
+        if (request()->ajax()) {
+            $assign_brands = $team->brands->pluck('name')->map('htmlspecialchars_decode')->implode(', ');
+            return response()->json(['data' => array_merge($team->toArray(), ['assign_brands' => $assign_brands]), 'message' => 'Record updated successfully.']);
+        }
         return redirect()->route('admin.team.edit', [$team->id])->with('success', 'Team updated successfully.');
     }
 

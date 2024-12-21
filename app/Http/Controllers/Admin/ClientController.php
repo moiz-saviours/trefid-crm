@@ -17,7 +17,7 @@ class ClientController extends Controller
     public function index()
     {
         $clients = Client::all();
-        return view('admin.clients.index', compact('clients'));
+        return view('admin.contacts.index', compact('clients'));
     }
 
     /**
@@ -28,7 +28,7 @@ class ClientController extends Controller
         $brands = Cache::remember('brands_list', config('cache.durations.short_lived'), fn() => Brand::all());
         $teams = Cache::remember('teams_list', config('cache.durations.short_lived'), fn() => Team::all());
         $countries = Cache::rememberForever('countries_list', fn() => config('countries'));
-        return view('admin.clients.create', compact('brands', 'teams', 'countries'));
+        return view('admin.contacts.create', compact('brands', 'teams', 'countries'));
     }
 
 
@@ -78,7 +78,7 @@ class ClientController extends Controller
      */
     public function show(Client $client)
     {
-        return view('admin.clients.edit', compact('client'));
+        return view('admin.contacts.edit', compact('client'));
     }
 
     /**
@@ -92,7 +92,7 @@ class ClientController extends Controller
         $teams = Cache::remember('teams_list', config('cache.durations.short_lived'), fn() => Team::all());
         $countries = Cache::rememberForever('countries_list', fn() => config('countries'));
 
-        return view('admin.clients.edit', compact('client', 'brands', 'teams', 'countries'));
+        return view('admin.contacts.edit', compact('client', 'brands', 'teams', 'countries'));
     }
 
     /**

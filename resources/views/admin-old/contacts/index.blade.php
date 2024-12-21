@@ -3,12 +3,12 @@
 @section('datatable', true)
 @push('breadcrumb')
     <li class="breadcrumb-item text-sm text-white active" aria-current="page"><a
-            href="{{route('admin.client.index')}}">Client</a>
+                href="{{route('admin.client.index')}}">Client</a>
     </li>
 @endpush
 @section('content')
     @push('style')
-        @include('admin.clients.style')
+        @include('admin.contacts.style')
     @endpush
     <div class="container-fluid py-4">
         <div class="row">
@@ -57,14 +57,16 @@
                                             @else
                                                 ---
                                             @endif
-                                        </td><td class="align-middle text-center text-nowrap">{{ $client->name }}</td>
+                                        </td>
+                                        <td class="align-middle text-center text-nowrap">{{ $client->name }}</td>
                                         <td class="align-middle text-center text-nowrap">{{ $client->email }}</td>
                                         <td class="align-middle text-center text-nowrap">{{ $client->phone }}</td>
                                         <td class="align-middle text-center text-nowrap">{{ $client->address }}</td>
                                         <td class="align-middle text-center text-nowrap">{{ $client->city }}</td>
                                         <td class="align-middle text-center text-nowrap">{{ $client->state }}</td>
                                         <td class="align-middle text-center text-nowrap">
-                                            <input type="checkbox" class="status-toggle change-status" data-id="{{ $client->id }}"
+                                            <input type="checkbox" class="status-toggle change-status"
+                                                   data-id="{{ $client->id }}"
                                                    {{ $client->status == 1 ? 'checked' : '' }} data-bs-toggle="toggle">
                                         </td>
                                         <td class="align-middle text-center table-actions">
@@ -88,7 +90,7 @@
         </div>
     </div>
     @push('script')
-        @include('admin.clients.script')
+        @include('admin.contacts.script')
     @endpush
 @endsection
 

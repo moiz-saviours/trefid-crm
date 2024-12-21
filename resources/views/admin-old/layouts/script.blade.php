@@ -13,7 +13,7 @@
 <script src="{{asset('assets/js/plugins/sweetalert2@11.js')}}"></script>
 
 <!-- Bootstrap 5 JS -->
-{{--<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>--}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 
 @if (View::hasSection('datatable'))
     <link rel="stylesheet" href="{{asset('assets/css/dataTables.bootstrap5.css')}}">

@@ -73,6 +73,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/payments', [PaymentController::class, 'index'])->name('payment.index');
 });
 
+require __DIR__ . '/admin-old-routes.php';
+
 require __DIR__ . '/admin-routes.php';
 
 require __DIR__ . '/developer-routes.php';

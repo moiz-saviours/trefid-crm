@@ -2,13 +2,13 @@
 @section('title', 'Client / Edit')
 @push('breadcrumb')
     <li class="breadcrumb-item text-sm text-white" aria-current="page"><a
-            href="{{ route('admin.client.index') }}">Client</a></li>
+                href="{{ route('admin.client.index') }}">Client</a></li>
     <li class="breadcrumb-item text-sm text-white active" aria-current="page"><a
-            href="{{ route('admin.client.edit', $client->id) }}">Edit</a></li>
+                href="{{ route('admin.client.edit', $client->id) }}">Edit</a></li>
 @endpush
 @section('content')
     @push('style')
-        @include('admin.clients.style')
+        @include('admin.contacts.style')
     @endpush
 
     <div class="container-fluid py-4">
@@ -29,7 +29,7 @@
                                         <option value="" disabled>Please select brand</option>
                                         @foreach($brands as $brand)
                                             <option
-                                                value="{{ $brand->brand_key }}" {{ $client->brand_key == $brand->brand_key ? 'selected' : '' }}>
+                                                    value="{{ $brand->brand_key }}" {{ $client->brand_key == $brand->brand_key ? 'selected' : '' }}>
                                                 {{ $brand->name }}
                                             </option>
                                         @endforeach
@@ -45,7 +45,7 @@
                                         <option value="" disabled>Please select team</option>
                                         @foreach($teams as $team)
                                             <option
-                                                value="{{ $team->team_key }}" {{ $client->team_key == $team->team_key ? 'selected' : '' }}>
+                                                    value="{{ $team->team_key }}" {{ $client->team_key == $team->team_key ? 'selected' : '' }}>
                                                 {{ $team->name }}
                                             </option>
                                         @endforeach
@@ -111,7 +111,7 @@
                                                     title="Please select country" required>
                                                 @foreach($countries as $code => $country)
                                                     <option
-                                                        value="{{ $code }}" {{ (old('country', $client->country) == $code ) || ($code == "US") ? 'selected' : '' }}>
+                                                            value="{{ $code }}" {{ (old('country', $client->country) == $code ) || ($code == "US") ? 'selected' : '' }}>
                                                         {{ $country }}
                                                     </option>
                                                 @endforeach
@@ -148,9 +148,11 @@
                                     <div class="col-md-4 mb-3">
                                         <label for="status" class="form-label">Status</label>
                                         <select class="form-control" id="status" name="status">
-                                            <option value="1" {{ old('status', $client->status) == '1' ? 'selected' : '' }}>Active
+                                            <option value="1" {{ old('status', $client->status) == '1' ? 'selected' : '' }}>
+                                                Active
                                             </option>
-                                            <option value="0" {{ old('status', $client->status) == '0' ? 'selected' : '' }}>Inactive
+                                            <option value="0" {{ old('status', $client->status) == '0' ? 'selected' : '' }}>
+                                                Inactive
                                             </option>
                                         </select>
                                     </div>
@@ -167,6 +169,6 @@
         </div>
     </div>
     @push('script')
-        @include('admin.clients.script')
+        @include('admin.contacts.script')
     @endpush
 @endsection

@@ -50,23 +50,29 @@ class EmployeeController extends Controller
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        $user = new User($request->only([
-            'team_key', 'name', 'email', 'designation', 'gender',
-            'phone_number', 'address', 'city', 'country',
-            'postal_code', 'dob', 'about', 'status'
-        ]));
+        try {
 
-        if ($request->hasFile('image')) {
-            $originalFileName = time() . '_' . $request->file('image')->getClientOriginalName();
-            $publicPath = public_path('assets/images/employees');
-            $request->file('image')->move($publicPath, $originalFileName);
-            $user->image = $originalFileName;
+            $user = new User($request->only([
+                'team_key', 'name', 'email', 'designation', 'gender',
+                'phone_number', 'address', 'city', 'country',
+                'postal_code', 'dob', 'about', 'status'
+            ]));
+
+            if ($request->hasFile('image')) {
+                $originalFileName = time() . '_' . $request->file('image')->getClientOriginalName();
+                $publicPath = public_path('assets/images/employees');
+                $request->file('image')->move($publicPath, $originalFileName);
+                $user->image = $originalFileName;
+            }
+
+            $user->password = Hash::make(12345678);
+            $user->save();
+
+            return response()->json(['data' => $user, 'message' => 'Record created successfully.']);
+
+        } catch (\Exception $e) {
+            return response()->json(['error' => ' Internal Server Error', 'message' => $e->getMessage(), 'line' => $e->getLine()], 500);
         }
-
-        $user->password = Hash::make(12345678);
-        $user->save();
-
-        return redirect()->route('admin.employee.index')->with('success', 'Employee created successfully.');
     }
 
     /**
@@ -80,8 +86,11 @@ class EmployeeController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(User $user)
+    public function edit(Request $request, User $user)
     {
+        if ($request->ajax()) {
+            return response()->json($user);
+        }
         return view('admin.employees.edit', compact('user'));
     }
 
@@ -104,25 +113,31 @@ class EmployeeController extends Controller
             'postal_code', 'dob', 'about', 'status'
         ]));
 
-        if ($request->hasFile('image')) {
+        try {
 
-            if ($user->image) {
-                if (!filter_var($user->image, FILTER_VALIDATE_URL)) {
-                    $path = public_path('assets/images/employees/' . $user->image);
-                    if (File::exists($path)) {
+            if ($request->hasFile('image')) {
+
+                if ($user->image) {
+                    if (!filter_var($user->image, FILTER_VALIDATE_URL)) {
+                        $path = public_path('assets/images/employees/' . $user->image);
+                        if (File::exists($path)) {
 //                        File::delete($path);
+                        }
                     }
                 }
+                $originalFileName = time() . '_' . $request->file('image')->getClientOriginalName();
+                $publicPath = public_path('assets/images/employees');
+                $request->file('image')->move($publicPath, $originalFileName);
+                $user->image = $originalFileName;
             }
-            $originalFileName = time() . '_' . $request->file('image')->getClientOriginalName();
-            $publicPath = public_path('assets/images/employees');
-            $request->file('image')->move($publicPath, $originalFileName);
-            $user->image = $originalFileName;
+
+            $user->save();
+            $teamNames = $user->teams->pluck('name')->map('htmlspecialchars_decode')->implode(', ');
+
+            return response()->json(['data' => array_merge($user->toArray(), ['team_name' => $teamNames]), 'message' => 'Record updated successfully.']);
+        } catch (\Exception $e) {
+            return response()->json(['error' => ' Internal Server Error', 'message' => $e->getMessage(), 'line' => $e->getLine()], 500);
         }
-
-        $user->save();
-
-        return redirect()->route('admin.employee.index')->with('success', 'Employee updated successfully.');
     }
 
     /**
