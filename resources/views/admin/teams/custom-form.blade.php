@@ -1,63 +1,68 @@
+
 <div class="custom-form">
     <form id="manage-form" method="POST" enctype="multipart/form-data">
         <div class="form-container" id="formContainer">
             <!-- Form Header -->
             <div class="form-header fh-1">
-                <span id="custom-form-heading">Manage Employee</span>
+                <span id="custom-form-heading">Manage Team</span>
                 <button type="button" class="close-btn">×</button>
             </div>
             <!-- Form Body -->
             <div class="form-body">
                 <div class="form-group mb-3">
-                    <label for="name" class="form-label">Name</label>
+                    <label for="name" class="form-label">Team Name</label>
                     <input type="text" class="form-control" id="name" name="name" placeholder="Enter name" required>
                     @error('name')
                     <span class="text-danger">{{ $message }}</span>
                     @enderror
                 </div>
                 <div class="form-group mb-3">
-                    <label for="email" class="form-label">Email</label>
-                    <input type="email" class="form-control" id="email" name="email" placeholder="Enter email" required>
-                    @error('email')
-                    <span class="text-danger">{{ $message }}</span>
-                    @enderror
-                </div>
-                <div class="form-group mb-3">
-                    <label for="designation" class="form-label">Designation</label>
-                    <input type="text" class="form-control" id="designation" name="designation"
-                           placeholder="e.g. Software Engineer">
-                    @error('designation')
-                    <span class="text-danger">{{ $message }}</span>
-                    @enderror
-                </div>
-                <div class="form-group mb-3">
-                    <label for="gender" class="form-label">Gender</label>
-                    <select class="form-control" id="gender" name="gender">
-                        <option value="" disabled>Select Gender</option>
-                        <option value="male" selected>Male</option>
-                        <option value="female">Female</option>
+                    <label for="email" class="form-label">Team Lead</label>
+                    <select class="form-control select2" id="lead_id" name="lead_id" >
+                        <option value="" selected>Select Team Lead</option>
+                        @foreach($users as $user)
+                            <option
+                                value="{{ $user->id }}" {{ old('lead_id') == $user->id ? 'selected' : '' }}>
+                                {{ $user->name }}
+                            </option>
+                        @endforeach
+                        @error('lead')
+                        <span class="text-danger">{{ $message }}</span>
+                        @enderror
                     </select>
-                    @error('gender')
-                    <span class="text-danger">{{ $message }}</span>
-                    @enderror
                 </div>
                 <div class="form-group mb-3">
-                    <label for="phone_number" class="form-label">Phone Number</label>
-                    <input type="text" class="form-control" id="phone_number" name="phone_number"
-                           placeholder="e.g. +1234567890">
-                    @error('phone_number')
+                    <label for="designation" class="form-label">Description</label>
+                    <input type="text" class="form-control" id="description" name="description">
+
+                    @error('description')
                     <span class="text-danger">{{ $message }}</span>
                     @enderror
                 </div>
 
                 <div class="form-group mb-3">
-                    <label for="address" class="form-label">Address</label>
-                    <textarea class="form-control" id="address" name="address" rows="3"></textarea>
+                    <label for="address" class="form-label">Team Members</label>
+                    @foreach($users as $user)
+                        <div class="col-md-2">
+                            <div class="image-checkbox-container">
+                                <input type="checkbox" name="employees[]" value="{{ $user->id }}" id="user-{{ $user->id }}"
+                                       {{ in_array($user->id, old('employees', [])) ? 'checked' : '' }}
+                                       class="select-user-checkbox">
+                                <img
+                                    src="{{ $user->image && file_exists(public_path('assets/images/employees/'.$user->image)) ? asset('assets/images/employees/'.$user->image) : asset('assets/img/team-1.jpg') }}"
+                                    alt="{{ $user->name }}" title="{{ $user->email }}"
+                                    class="rounded-circle user-image" width="30" height="30">
+                                <div class="checkmark-overlay">✔</div>
+                            </div>
+                            <div>
+                                <strong>{{ $user->name }}</strong>
+                            </div>
+                        </div>
+                    @endforeach
                     @error('address')
                     <span class="text-danger">{{ $message }}</span>
                     @enderror
                 </div>
-
 
                 <div class="form-group mb-3">
                     <label for="image" class="form-label d-block">Profile Image (Optional)</label>
@@ -115,3 +120,5 @@
         </div>
     </form>
 </div>
+
+

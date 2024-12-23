@@ -24,8 +24,11 @@ class LeadController extends Controller
      */
     public function index()
     {
+        $brands = Brand::all();
+        $teams = Team::all();
+        $clients = Client::all();
         $leads = Lead::all();
-        return view('admin.leads.index', compact('leads'));
+        return view('admin.leads.index', compact('leads', 'brands', 'teams', 'clients'));
     }
 
     /**
@@ -123,7 +126,8 @@ class LeadController extends Controller
             'note' => $request->input('note'),
         ]);
 
-        return redirect()->route('admin.lead.index')->with('success', 'Lead created successfully.');
+
+        return response()->json(['success' => 'Lead created successfully.']);
     }
 
     /**
@@ -139,10 +143,17 @@ class LeadController extends Controller
      */
     public function edit(Lead $lead)
     {
-        $brands = Cache::remember('brands_list', config('cache.durations.short_lived'), fn() => Brand::all());
-        $teams = Cache::remember('teams_list', config('cache.durations.short_lived'), fn() => Team::all());
+        //$brands = Cache::remember('brands_list', config('cache.durations.short_lived'), fn() => Brand::all());
+        //$teams = Cache::remember('teams_list', config('cache.durations.short_lived'), fn() => Team::all());
+        $brands = Brand::all();
+        $teams = Team::all();
         $clients = Client::all();
-        return view('admin.leads.edit', compact('lead', 'brands', 'teams', 'clients'));
+
+        $lead->loadMissing('client');
+
+        return response()->json(['lead' => $lead, 'brands' => $brands, 'teams' => $teams, 'clients' => $clients]);
+       // return view('admin.leads.edit', compact('lead', 'brands', 'teams', 'clients'));
+
     }
 
     /**
@@ -172,7 +183,8 @@ class LeadController extends Controller
 
         $lead->update($request->all());
 
-        return redirect()->route('admin.lead.index')->with('success', 'Lead updated successfully.');
+//        return redirect()->route('admin.lead.index')->with('success', 'Lead updated successfully.');
+          return response()->json(['success' => 'Lead updated successfully.']);
     }
 
     /**

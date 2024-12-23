@@ -117,7 +117,7 @@
             }
             $('#manage-form')[0].reset();
             $.ajax({
-                url: `{{route('admin.employee.edit')}}/` + id,
+                url: `{{route('admin.lead.edit')}}/` + id,
                 type: 'GET',
                 success: function (data) {
                     setDataAndShowEdit(data);
@@ -128,89 +128,62 @@
             });
         });
 
-        var $defaultImage;
-        const $imageInput = $('#image'), $imageUrl = $('#image_url'), $imageDisplay = $('#image-display'),
-            $imageDiv = $('#image-div');
-
-        const updateImage = (src) => {
-            $imageDisplay.attr('src', src || $defaultImage);
-            $imageDiv.toggle(!!src)
-        };
-        $imageInput.on('change', function () {
-            const file = this.files[0];
-            if (file) {
-                updateImage(URL.createObjectURL(file));
-                $imageUrl.val(null);
-            } else {
-                updateImage($imageUrl.val());
-            }
-        });
-        $imageUrl.on('input', function () {
-            if (!$imageInput.val()) updateImage($(this).val());
-        });
-        updateImage();
-
         function setDataAndShowEdit(data) {
-            $('#manage-form').data('id', data.id);
+            let lead = data?.lead;
+            let lead_client = data?.lead?.client;
+            $('#manage-form').data('id', lead.id);
 
-            $('#name').val(data.name);
-            $('#email').val(data.email);
-            $('#designation').val(data.designation);
-            $('#gender').val(data.gender);
-            $('#phone_number').val(data.phone_number);
-            $('#address').val(data.address);
-            $('#status').val(data.status);
-            if (data.image) {
-                var isValidUrl = data.image.match(/^(https?:\/\/|\/|\.\/)/);
-                if (isValidUrl) {
-                    $imageUrl.val(data.image);
-                    $defaultImage = data.image;
-                    updateImage(data.image)
-                } else {
-                    $imageUrl.val(`{{asset('assets/images/employees/')}}/` + data.image);
-                    $defaultImage = `{{asset('assets/images/employees/')}}/` + data.image;
-                    updateImage(`{{asset('assets/images/employees/')}}/` + data.image)
-                }
-                $imageDisplay.attr('alt', data.name);
-                $imageDiv.show();
-            }
-            $('#manage-form').attr('action', `{{route('admin.employee.update')}}/` + data.id);
+            $('#brand_key').val(lead.brand_key);
+            $('#team_key').val(lead.team_key);
+            $('#type').val(lead.type);
+            $('#client_email').val(lead_client.email);
+            $('#client_phone').val(lead_client.phone);
+            $('#lead_status_id').val(lead.lead_status_id);
+            $('#note').val(lead.note);
+
+            $('#manage-form').attr('action', `{{route('admin.lead.update')}}/` + lead.id);
             $('#formContainer').addClass('open')
         }
+
         const decodeHtml = (html) => {
             const txt = document.createElement("textarea");
             txt.innerHTML = html;
             return txt.value;
         };
 
-        /** Manage Record */
+        /** Create Manage Record */
         $('#manage-form').on('submit', function (e) {
             e.preventDefault();
             var dataId = $('#manage-form').data('id');
             var formData = new FormData(this);
             if (!dataId) {
-                AjaxRequestPromise(`{{ route("admin.employee.store") }}`, formData, 'POST', {useToastr: true})
+                AjaxRequestPromise(`{{ route("admin.lead.store") }}`, formData, 'POST', {useToastr: true})
                     .then(response => {
                         if (response?.data) {
-                            const {id, image, name, email, designation, team_name, status} = response.data;
-                            const imageUrl = isValidUrl(image) ? image : (image ? `{{ asset('assets/images/employees/') }}/${image}` : '{{ asset("assets/images/no-image-available.png") }}');
+                            const {
+                                id,
+                                brand_key,
+                                team_key,
+                                type,
+                                client_email,
+                                client_phone,
+                                lead_status_id,
+                                note
+                            } = response.data;
+
                             const index = table.rows().count() + 1;
                             const columns = `
                                 <td class="align-middle text-center text-nowrap"></td>
                                 <td class="align-middle text-center text-nowrap">${index}</td>
-                                <td class="align-middle text-center text-nowrap">
-                                    ${imageUrl ? `<object data="${imageUrl}" class="avatar avatar-sm me-3" title="${name}">
-                                        <img src="${imageUrl}" alt="${name}" class="avatar avatar-sm me-3" title="${name}">
-                                    </object>`
-                                : null}
-                                </td>
-                                <td class="align-middle text-center text-nowrap">${name}</td>
-                                <td class="align-middle text-center text-nowrap">${email}</td>
-                                <td class="align-middle text-center text-nowrap">${designation}</td>
-                                <td class="align-middle text-center text-nowrap">${team_name}</td>
-                                <td class="align-middle text-center text-nowrap">
-                                    <input type="checkbox" class="status-toggle change-status" data-id="${id}" ${status == 1 ? 'checked' : ''} data-bs-toggle="toggle">
-                                </td>
+
+                                <td class="align-middle text-center text-nowrap">${brand_key}</td>
+                                <td class="align-middle text-center text-nowrap">${team_key}</td>
+                                <td class="align-middle text-center text-nowrap">${type}</td>
+                                <td class="align-middle text-center text-nowrap">${client_email}</td>
+                                <td class="align-middle text-center text-nowrap">${client_phone}</td>
+                                <td class="align-middle text-center text-nowrap">${lead_status_id}</td>
+                                <td class="align-middle text-center text-nowrap">${note}</td>
+
                                 <td class="align-middle text-center table-actions">
                                     <button type="button" class="btn btn-sm btn-primary editBtn" data-id="${id}" title="Edit">
                                         <i class="fas fa-edit"></i>
@@ -222,7 +195,6 @@
                         `;
                             table.row.add($('<tr>', {id: `tr-${id}`}).append(columns)).draw(false);
                             $('#manage-form')[0].reset();
-                            $('#image-display').attr('src', null);
                             $('#formContainer').removeClass('open')
                         }
                     })
@@ -290,7 +262,7 @@
         /** Delete Record */
         $(document).on('click', '.deleteBtn', function () {
             const id = $(this).data('id');
-            AjaxDeleteRequestPromise(`{{ route("admin.employee.delete", "") }}/${id}`, null, 'DELETE', {
+            AjaxDeleteRequestPromise(`{{ route("admin.lead.delete", "") }}/${id}`, null, 'DELETE', {
                 useDeleteSwal: true,
                 useToastr: true,
             })

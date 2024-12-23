@@ -11,7 +11,7 @@
                 <header class="custm_header">
                     <div class="new_head">
                         <h1 class="page-title mb-2">Employees <i class="fa fa-caret-down" aria-hidden="true"></i></h1>
-                        <h2 id="record-count" class="h6">{{count($users)}} records</h2>
+                        <h2 id="record-count" class="h6"> records</h2>
                     </div>
                     <div class="filters">
                         <div class="actions">
@@ -83,37 +83,37 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        @foreach($users as $user)
-                                            <tr id="tr-{{$user->id}}">
-                                                <td class="align-middle text-center text-nowrap"></td>
-                                                <td class="align-middle text-center text-nowrap">{{$loop->iteration}}</td>
-                                                <td class="align-middle text-center text-nowrap">
-                                                    @php
-                                                        $imageUrl = $user->image
-                                                            ? (filter_var($user->image, FILTER_VALIDATE_URL) ? $user->image : asset('assets/images/employees/' . $user->image))
-                                                            : asset('assets/images/no-image-available.png');
-                                                    @endphp
-                                                    <object data="{{ $imageUrl }}" class="avatar avatar-sm me-3" title="{{ $user->name }}"><img src="{{ $imageUrl }}" alt="{{ $user->name }}" class="avatar avatar-sm me-3" title="{{ $user->name }}"></object>
-                                                </td>
-                                                <td class="align-middle text-center text-nowrap">{{ $user->name }}</td>
-                                                <td class="align-middle text-center text-nowrap">{{ $user->email }}</td>
-                                                <td class="align-middle text-center text-nowrap">{{ $user->designation }}</td>
-                                                <td class="align-middle text-center text-nowrap">{{ optional($user->teams)->pluck('name')->map('htmlspecialchars_decode')->implode(', ') }}</td>
-                                                <td class="align-middle text-center text-nowrap">
-                                                    <input type="checkbox" class="status-toggle change-status"
-                                                           data-id="{{ $user->id }}"
-                                                           {{ $user->status == 1 ? 'checked' : '' }} data-bs-toggle="toggle">
-                                                </td>
-                                                <td class="align-middle text-center table-actions">
-                                                    <button type="button" class="btn btn-sm btn-primary editBtn"
-                                                            data-id="{{ $user->id }}" title="Edit"><i
-                                                            class="fas fa-edit"></i></button>
-                                                    <button type="button" class="btn btn-sm btn-danger deleteBtn"
-                                                            data-id="{{ $user->id }}" title="Delete"><i
-                                                            class="fas fa-trash"></i></button>
-                                                </td>
-                                            </tr>
-                                        @endforeach
+{{--                                        @foreach($users as $user)--}}
+{{--                                            <tr id="tr-{{$user->id}}">--}}
+{{--                                                <td class="align-middle text-center text-nowrap"></td>--}}
+{{--                                                <td class="align-middle text-center text-nowrap">{{$loop->iteration}}</td>--}}
+{{--                                                <td class="align-middle text-center text-nowrap">--}}
+{{--                                                    @php--}}
+{{--                                                        $imageUrl = $user->image--}}
+{{--                                                            ? (filter_var($user->image, FILTER_VALIDATE_URL) ? $user->image : asset('assets/images/employees/' . $user->image))--}}
+{{--                                                            : asset('assets/images/no-image-available.png');--}}
+{{--                                                    @endphp--}}
+{{--                                                    <object data="{{ $imageUrl }}" class="avatar avatar-sm me-3" title="{{ $user->name }}"><img src="{{ $imageUrl }}" alt="{{ $user->name }}" class="avatar avatar-sm me-3" title="{{ $user->name }}"></object>--}}
+{{--                                                </td>--}}
+{{--                                                <td class="align-middle text-center text-nowrap">{{ $user->name }}</td>--}}
+{{--                                                <td class="align-middle text-center text-nowrap">{{ $user->email }}</td>--}}
+{{--                                                <td class="align-middle text-center text-nowrap">{{ $user->designation }}</td>--}}
+{{--                                                <td class="align-middle text-center text-nowrap">{{ optional($user->teams)->pluck('name')->map('htmlspecialchars_decode')->implode(', ') }}</td>--}}
+{{--                                                <td class="align-middle text-center text-nowrap">--}}
+{{--                                                    <input type="checkbox" class="status-toggle change-status"--}}
+{{--                                                           data-id="{{ $user->id }}"--}}
+{{--                                                           {{ $user->status == 1 ? 'checked' : '' }} data-bs-toggle="toggle">--}}
+{{--                                                </td>--}}
+{{--                                                <td class="align-middle text-center table-actions">--}}
+{{--                                                    <button type="button" class="btn btn-sm btn-primary editBtn"--}}
+{{--                                                            data-id="{{ $user->id }}" title="Edit"><i--}}
+{{--                                                            class="fas fa-edit"></i></button>--}}
+{{--                                                    <button type="button" class="btn btn-sm btn-danger deleteBtn"--}}
+{{--                                                            data-id="{{ $user->id }}" title="Delete"><i--}}
+{{--                                                            class="fas fa-trash"></i></button>--}}
+{{--                                                </td>--}}
+{{--                                            </tr>--}}
+{{--                                        @endforeach--}}
                                         </tbody>
                                     </table>
                                 </div>
