@@ -135,11 +135,13 @@
 
             $('#brand_key').val(lead.brand_key);
             $('#team_key').val(lead.team_key);
-            $('#type').val(lead.type);
-            $('#client_email').val(lead_client.email);
-            $('#client_phone').val(lead_client.phone);
+            $('#client_type').val(lead_client.type);
+            $('#name').val(lead.name)
+            $('#email').val(lead_client.email);
+            $('#phone').val(lead_client.phone);
             $('#lead_status_id').val(lead.lead_status_id);
             $('#note').val(lead.note);
+            $('#status').val(lead.status);
 
             $('#manage-form').attr('action', `{{route('admin.lead.update')}}/` + lead.id);
             $('#formContainer').addClass('open')
@@ -164,11 +166,13 @@
                                 id,
                                 brand_key,
                                 team_key,
-                                type,
-                                client_email,
-                                client_phone,
+                                client_type,
+                                name,
+                                email,
+                                phone,
                                 lead_status_id,
-                                note
+                                note,
+                                status
                             } = response.data;
 
                             const index = table.rows().count() + 1;
@@ -178,11 +182,13 @@
 
                                 <td class="align-middle text-center text-nowrap">${brand_key}</td>
                                 <td class="align-middle text-center text-nowrap">${team_key}</td>
-                                <td class="align-middle text-center text-nowrap">${type}</td>
-                                <td class="align-middle text-center text-nowrap">${client_email}</td>
-                                <td class="align-middle text-center text-nowrap">${client_phone}</td>
+                                <td class="align-middle text-center text-nowrap">${client_type}</td>
+                                <td class="align-middle text-center text-nowrap">${name}</td>
+                                <td class="align-middle text-center text-nowrap">${email}</td>
+                                <td class="align-middle text-center text-nowrap">${phone}</td>
                                 <td class="align-middle text-center text-nowrap">${lead_status_id}</td>
                                 <td class="align-middle text-center text-nowrap">${note}</td>
+                                <td class="align-middle text-center text-nowrap">${status}</td>
 
                                 <td class="align-middle text-center table-actions">
                                     <button type="button" class="btn btn-sm btn-primary editBtn" data-id="${id}" title="Edit">
@@ -204,7 +210,7 @@
                 AjaxRequestPromise(url, formData, 'POST', {useToastr: true})
                     .then(response => {
                         if (response?.data) {
-                            const {id, image, name, email, designation, team_name, status} = response.data;
+                            const {id, name, email, designation, team_name, status} = response.data;
                             const imageUrl = isValidUrl(image) ? image : (image ? `{{ asset('assets/images/employees/') }}/${image}` : `{{ asset("assets/images/no-image-available.png") }}`);
                             const index = table.row($('#tr-' + id)).index();
                             const rowData = table.row(index).data();
@@ -249,7 +255,7 @@
             const statusCheckbox = $(this);
             const status = +statusCheckbox.is(':checked');
             const rowId = statusCheckbox.data('id');
-            AjaxRequestPromise(`{{ route('admin.employee.change.status') }}/${rowId}?status=${status}`, null, 'GET', {useToastr: true})
+            AjaxRequestPromise(`{{ route('admin.lead.change.status') }}/${rowId}?status=${status}`, null, 'GET', {useToastr: true})
                 .then(response => {
                     const rowIndex = table.row($('#tr-' + rowId)).index();
                     const statusHtml = `<input type="checkbox" class="status-toggle change-status" data-id="${rowId}" ${status ? "checked" : ""} data-bs-toggle="toggle">`;
@@ -262,6 +268,7 @@
         /** Delete Record */
         $(document).on('click', '.deleteBtn', function () {
             const id = $(this).data('id');
+            console.log('Deleting record with ID:', id);
             AjaxDeleteRequestPromise(`{{ route("admin.lead.delete", "") }}/${id}`, null, 'DELETE', {
                 useDeleteSwal: true,
                 useToastr: true,

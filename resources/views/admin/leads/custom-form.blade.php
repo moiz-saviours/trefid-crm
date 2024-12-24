@@ -1,6 +1,6 @@
 <div class="custom-form">
-    <form id="manage-form" action="{{ route('admin.lead.store') }}" method="POST" enctype="multipart/form-data">
-        @csrf
+    <form id="manage-form" enctype="multipart/form-data">
+
         <div class="form-container" id="formContainer">
             <!-- Form Header -->
             <div class="form-header fh-1">
@@ -43,6 +43,7 @@
                 <div class="form-group mb-3">
                     <label for="type" class="form-label">Client Type</label>
                     <select class="form-control" id="type" name="type" required>
+
                         <option value="0" {{ old('type') == 0 ? 'selected' : '' }}>New</option>
                         @if($clients->count() > 0)
                             <option value="1" {{ old('type') == 1 ? 'selected' : '' }}>Existing</option>
@@ -53,26 +54,26 @@
                     @enderror
                 </div>
                 <div class="form-group mb-3">
-                    <label for="client_name" class="form-label">Client Name</label>
-                    <input type="text" class="form-control" id="client_name" name="client_name"
-                           value="{{ old('client_name') }}">
-                    @error('client_name')
+                    <label for="name" class="form-label">Client Name</label>
+                    <input type="text" class="form-control" id="name" name="name"
+                           value="{{ old('name') }}">
+                    @error('name')
                     <span class="text-danger">{{ $message }}</span>
                     @enderror
                 </div>
                 <div class="form-group mb-3">
                     <label for="client_email" class="form-label">Client Email</label>
-                    <input type="email" class="form-control" id="client_email"
-                           name="client_email" value="{{ old('client_email') }}">
-                    @error('client_email')
+                    <input type="email" class="form-control" id="email"
+                           name="email" value="{{ old('email') }}">
+                    @error('email')
                     <span class="text-danger">{{ $message }}</span>
                     @enderror
                 </div>
                 <div class="form-group mb-3">
-                    <label for="client_phone" class="form-label">Client Phone</label>
-                    <input type="text" class="form-control" id="client_phone"
-                           name="client_phone" value="{{ old('client_phone') }}">
-                    @error('client_phone')
+                    <label for="phone" class="form-label">Client Phone</label>
+                    <input type="text" class="form-control" id="phone"
+                           name="phone" value="{{ old('phone') }}">
+                    @error('phone')
                     <span class="text-danger">{{ $message }}</span>
                     @enderror
                 </div>
@@ -101,6 +102,13 @@
                     @error('note')
                     <span class="text-danger">{{ $message }}</span>
                     @enderror
+                </div>
+                <div class="form-group mb-3">
+                    <label for="status" class="form-label">Status</label>
+                    <select class="form-control" id="status" name="status">
+                        <option value="1">Active</option>
+                        <option value="0">Inactive</option>
+                    </select>
                 </div>
 
             </div>
