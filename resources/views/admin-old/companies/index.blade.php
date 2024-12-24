@@ -1,4 +1,4 @@
-@extends('admin.layouts.app')
+@extends('admin-old.layouts.app')
 @section('title','Companies')
 @section('datatable', true)
 @section('content')

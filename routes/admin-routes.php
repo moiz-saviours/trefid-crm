@@ -90,8 +90,11 @@ Route::middleware(['auth:admin'])->prefix('admin')->name('admin.')->group(functi
     });
 
     /** Companies Routes */
-    Route::prefix('companies')->name('company.')->group(function () {
-        Route::get('/', [AdminCompanyController::class, 'index'])->name('index');
+    Route::name('company.')->group(function () {
+        Route::get('/companies', [AdminCompanyController::class, 'index'])->name('index');
+        Route::prefix('company')->group(function () {
+            Route::get('/edit', [AdminCompanyController::class, 'edit'])->name('edit');
+        });
     });
 
     /** Contacts Routes */

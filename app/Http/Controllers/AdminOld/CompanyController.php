@@ -47,7 +47,7 @@ class CompanyController extends Controller
         }
         $companies = Company::whereIn('domain', $domains)->where('status', 1)->get();
 
-        return view('admin.companies.index', compact('companies'));
+        return view('admin-old.companies.index', compact('companies'));
     }
 
     /**

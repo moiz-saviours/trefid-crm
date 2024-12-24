@@ -1,5 +1,5 @@
 @extends('admin.layouts.app')
-@section('title','Companies')
+@section('title','Company / Edit')
 @section('datatable', true)
 @section('content')
     @push('style')
@@ -10,8 +10,8 @@
             <div class="content__wrap">
                 <header class="custm_header">
                     <div class="new_head">
-                        <h1 class="page-title mb-2">Companies <i class="fa fa-caret-down" aria-hidden="true"></i></h1>
-                        <h2 id="record-count" class="h6"> records</h2>
+                        <h1 class="page-title mb-2">Employees <i class="fa fa-caret-down" aria-hidden="true"></i></h1>
+                        <h2 id="record-count" class="h6">{{count($users??[])}} records</h2>
                     </div>
                     <div class="filters">
                         <div class="actions">
