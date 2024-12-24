@@ -11,7 +11,7 @@
                 <header class="custm_header">
                     <div class="new_head">
                         <h1 class="page-title mb-2">Leads <i class="fa fa-caret-down" aria-hidden="true"></i></h1>
-                        <h2 id="record-count" class="h6"> records</h2>
+                        <h2 id="record-count" class="h6">{{count($leads)}} records</h2>
                     </div>
                     <div class="filters">
                         <div class="actions">
@@ -84,6 +84,7 @@
                                             <th class="align-middle text-center text-nowrap">Lead Status</th>
                                             <th class="align-middle text-center text-nowrap">Note</th>
                                             <th class="align-middle text-center text-nowrap">Created Date</th>
+                                            <th class="align-middle text-center text-nowrap">Status</th>
                                             <th class="align-middle text-center text-nowrap">Action</th>
                                         </tr>
                                         </thead>
@@ -116,6 +117,11 @@
                                                         {{ $lead->created_at->timezone('GMT+5')->format('M d, Y g:i A') }}
                                                         GMT+5
                                                     @endif
+                                                </td>
+                                                <td class="align-middle text-center text-nowrap">
+                                                    <input type="checkbox" class="status-toggle change-status"
+                                                           data-id="{{ $lead->id }}"
+                                                           {{ $lead->status == 1 ? 'checked' : '' }} data-bs-toggle="toggle">
                                                 </td>
                                                 <td class="align-middle text-center table-actions">
                                                     <button type="button" class="btn btn-sm btn-primary editBtn"

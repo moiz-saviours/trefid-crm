@@ -36,9 +36,11 @@ class LeadController extends Controller
      */
     public function create()
     {
-        $brands = Cache::remember('brands_list', config('cache.durations.short_lived'), fn() => Brand::all());
-        $teams = Cache::remember('teams_list', config('cache.durations.short_lived'), fn() => Team::all());
-        $clients = Client::all();
+//        $brands = Cache::remember('brands_list', config('cache.durations.short_lived'), fn() => Brand::all());
+//        $teams = Cache::remember('teams_list', config('cache.durations.short_lived'), fn() => Team::all());
+          $teams = Team::all();
+          $brands = Brand::all();
+          $clients = Client::all();
         return view('admin.leads.create', compact('brands', 'teams', 'clients'));
     }
 
@@ -53,9 +55,9 @@ class LeadController extends Controller
             'team_key' => 'nullable|integer|exists:teams,team_key',
             'lead_status_id' => 'required|integer|exists:lead_statuses,id',
             'client_key' => 'required_if:type,1|nullable|integer|exists:clients,client_key',
-            'client_name' => 'required_if:type,0|nullable|string|max:255',
-            'client_email' => 'required_if:type,0|nullable|email|max:255|unique:clients,email',
-            'client_phone' => 'required_if:type,0|nullable|string|max:15',
+            'name' => 'required_if:type,0|nullable|string|max:255',
+            'email' => 'required_if:type,0|nullable|email|max:255|unique:clients,email',
+            'phone' => 'required_if:type,0|nullable|string|max:15',
             'type' => 'required|integer|in:0,1', /** 0 = new, 1 = existing */
             'note' => 'nullable|string',
         ], [
@@ -85,7 +87,7 @@ class LeadController extends Controller
             'type.in' => 'The type field must be fresh or upsale.',
         ]);
         if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator)->withInput();
+            return response()->json(['errors' => $validator->errors()->all()]);
         }
 
         $client = $request->input('type') == 0
@@ -107,10 +109,10 @@ class LeadController extends Controller
             : Client::where('client_key', $request->input('client_key'))->first();
 
         if (!$client) {
-            return redirect()->back()->with('error', 'Please try again later.');
+            return response()->json(['errors' => 'The client key does not exist.']);
         }
 
-        Lead::create([
+        $lead = Lead::create([
             'brand_key' => $request->input('brand_key'),
             'team_key' => $request->input('team_key'),
             'client_key' => $client->client_key,
@@ -127,7 +129,7 @@ class LeadController extends Controller
         ]);
 
 
-        return response()->json(['success' => 'Lead created successfully.']);
+        return response()->json(['success' => 'Lead created successfully.','data'=>$lead]);
     }
 
     /**
@@ -135,7 +137,8 @@ class LeadController extends Controller
      */
     public function show(Lead $lead)
     {
-        return view('admin.leads.show', compact('lead'));
+        return response()->json(['lead' => $lead]);
+//        return view('admin.leads.show', compact('lead'));
     }
 
     /**
@@ -161,6 +164,7 @@ class LeadController extends Controller
      */
     public function update(Request $request, Lead $lead)
     {
+
         $validator = Validator::make($request->all(), [
             'brand_key' => 'nullable|integer',
             'team_key' => 'nullable|integer',
@@ -178,13 +182,14 @@ class LeadController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator)->withInput();
+            return response()->json(['errors' => $validator->errors()->all()]);
         }
 
         $lead->update($request->all());
 
-//        return redirect()->route('admin.lead.index')->with('success', 'Lead updated successfully.');
           return response()->json(['success' => 'Lead updated successfully.']);
+        //return redirect()->route('admin.lead.index')->with('success', 'Lead updated successfully.');
+
     }
 
     /**
@@ -193,7 +198,7 @@ class LeadController extends Controller
     public function delete(Lead $lead)
     {
         try {
-            return response()->json(['success' => 'The record has been deleted successfully.']);
+
             if ($lead->delete()) {
                 return response()->json(['success' => 'The record has been deleted successfully.']);
             }
