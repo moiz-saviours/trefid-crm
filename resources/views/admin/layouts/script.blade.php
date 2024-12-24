@@ -328,7 +328,7 @@
                 $(this).hasClass('void') ? $(this).attr('title', "You don't have access to create a company.").tooltip({placement: 'bottom'}).tooltip('show') : (formContainer.addClass('open'));
             });
         } else {
-            console.warn('#formContainer does not exist.');
+            // console.warn('#formContainer does not exist.');
         }
         $(document).on('click', function (event) {
             if ((!$(event.target).closest('#formContainer').length && !$(event.target).is('#formContainer') && !$(event.target).closest('.open-form-btn').length && !$(event.target).is('.editBtn')) || $(event.target).is('#formContainer .close-btn')) {

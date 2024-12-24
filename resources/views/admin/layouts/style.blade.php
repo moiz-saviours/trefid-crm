@@ -45,7 +45,7 @@
         font-family: Poppins;
         font-style: normal;
         font-weight: 400;
-        src: url('../assets/themes/nifty/assets/fonts/poppins/400-normal.woff2');
+        src: url('{{asset('assets/themes/nifty/assets/fonts/poppins/400-normal.woff2')}}');
         unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
         font-display: swap;
     }
@@ -108,7 +108,7 @@
         font-family: Poppins;
         font-style: normal;
         font-weight: 700;
-        src: url('../assets/themes/nifty/assets/fonts/poppins/700-normal.woff2');
+        src: url({{asset('assets/themes/nifty/assets/fonts/poppins/700-normal.woff2')}});
         unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
         font-display: swap;
     }
@@ -162,7 +162,7 @@
         font-family: Ubuntu;
         font-style: normal;
         font-weight: 400;
-        src: url('../assets/themes/nifty/assets/fonts/ubuntu/400-normal.woff2');
+        src: url({{asset('assets/themes/nifty/assets/fonts/ubuntu/400-normal.woff2')}});
         unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
         font-display: swap;
     }
@@ -180,7 +180,7 @@
         font-family: Ubuntu;
         font-style: normal;
         font-weight: 500;
-        src: url('../assets/themes/nifty/assets/fonts/ubuntu/500-normal.woff2');
+        src: url({{asset('assets/themes/nifty/assets/fonts/ubuntu/500-normal.woff2')}});
         unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
         font-display: swap;
     }
@@ -261,7 +261,7 @@
         font-family: Ubuntu;
         font-style: normal;
         font-weight: 700;
-        src: url('../assets/themes/nifty/assets/fonts/ubuntu/700-normal.woff2');
+        src: url({{asset('assets/themes/nifty/assets/fonts/ubuntu/700-normal.woff2')}});
         unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
         font-display: swap;
     }
@@ -284,6 +284,7 @@
       href="{{asset('assets/themes/nifty/assets/css/nifty.min.ef4dee33cb03225ab91107ec2905fe15f71a06ba22edcf1e480874b0fb882a31.css')}}">
 
 <!-- Favicons [ OPTIONAL ] -->
+<link rel="manifest" href="{{asset('assets/themes/nifty/site.webmanifest')}}">
 <link rel="manifest" href="{{asset('assets/themes/nifty/site.webmanifest')}}">
 <!-- Spinkit [ OPTIONAL ] -->
 <link rel="stylesheet" href="{{asset('assets/themes/nifty/assets/pages/spinkit.css')}}">

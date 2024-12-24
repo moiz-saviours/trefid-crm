@@ -7,13 +7,13 @@
     <section id="content" class="content">
         <!-- ab content -->
         <style>
-            body {
-                font-family: Arial, sans-serif;
-                margin: 0;
-                padding: 0;
-                display: flex;
-                height: 100vh;
-            }
+            /*body {*/
+            /*    font-family: Arial, sans-serif;*/
+            /*    margin: 0;*/
+            /*    padding: 0;*/
+            /*    display: flex;*/
+            /*    height: 100vh;*/
+            /*}*/
 
             .containerr {
                 display: flex;
