@@ -1,12 +1,10 @@
-<!-- Jquery UI -->
-<script src="{{asset('assets/js/jquery.min.js')}}"></script>
 <!-- Bootstrap JS [ OPTIONAL ] -->
-<script src="../assets/themes/nifty/assets/js/bootstrap.min.705accd2201a27b32a1b95615e20fbb58fc9f3200388517b3a66f322ad955857.js"></script>
+<script src="{{asset('assets/themes/nifty/assets/js/bootstrap.min.705accd2201a27b32a1b95615e20fbb58fc9f3200388517b3a66f322ad955857.js')}}"></script>
 <!-- JS [ OPTIONAL ] -->
-<script src="../assets/themes/nifty/assets/js/nifty.min.b960437305df20c97b96bfb28e62b7d655ad70041fcfed38fae70d11012b2b58.js"></script>
+<script src="{{asset('assets/themes/nifty/assets/js/nifty.min.b960437305df20c97b96bfb28e62b7d655ad70041fcfed38fae70d11012b2b58.js')}}"></script>
 
 <!-- Plugin scripts [ OPTIONAL ] -->
-<script src="../assets/themes/nifty/assets/pages/dashboard-1.min.b651fbd1a6f6a43e11bc01617b4481ab0edc4ba4582106c466d7ae2a9a9ac178.js"></script>
+<script src="{{asset('assets/themes/nifty/assets/pages/dashboard-1.min.b651fbd1a6f6a43e11bc01617b4481ab0edc4ba4582106c466d7ae2a9a9ac178.js')}}"></script>
 <script src="{{asset('assets/js/jquery.min.js')}}"></script>
 <!-- New -->
 <link href="https://cdn.datatables.net/v/bs4/jszip-3.10.1/dt-2.1.8/b-3.2.0/b-colvis-3.2.0/b-html5-3.2.0/b-print-3.2.0/cr-2.0.4/date-1.5.4/fc-5.0.4/fh-4.0.1/sc-2.4.3/sp-2.3.3/sl-2.1.0/datatables.min.css" rel="stylesheet">

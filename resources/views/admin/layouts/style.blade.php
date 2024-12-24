@@ -277,11 +277,11 @@
 
 <!-- Bootstrap CSS [ REQUIRED ] -->
 <link rel="stylesheet"
-      href="../assets/themes/nifty/assets/css/bootstrap.min.66c59451bbe016158b4aec61e40cb76ecbf0a3d3ff23ba206bdbffb9a89b97f5.css">
+      href="{{asset('assets/themes/nifty/assets/css/bootstrap.min.66c59451bbe016158b4aec61e40cb76ecbf0a3d3ff23ba206bdbffb9a89b97f5.css')}}">
 
 <!-- CSS [ REQUIRED ] -->
 <link rel="stylesheet"
-      href="../assets/themes/nifty/assets/css/nifty.min.ef4dee33cb03225ab91107ec2905fe15f71a06ba22edcf1e480874b0fb882a31.css">
+      href="{{asset('assets/themes/nifty/assets/css/nifty.min.ef4dee33cb03225ab91107ec2905fe15f71a06ba22edcf1e480874b0fb882a31.css')}}">
 
 <!-- Favicons [ OPTIONAL ] -->
 <link rel="manifest" href="{{asset('assets/themes/nifty/site.webmanifest')}}">

@@ -93,7 +93,7 @@ Route::middleware(['auth:admin'])->prefix('admin')->name('admin.')->group(functi
     Route::name('company.')->group(function () {
         Route::get('/companies', [AdminCompanyController::class, 'index'])->name('index');
         Route::prefix('company')->group(function () {
-            Route::get('/edit', [AdminCompanyController::class, 'edit'])->name('edit');
+            Route::get('/edit/{company?}', [AdminCompanyController::class, 'edit'])->name('edit');
         });
     });
 
