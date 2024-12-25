@@ -65,7 +65,8 @@ class LeadStatusController extends Controller
             return response()->json($leadStatus);
         }
         session(['edit_leadStatus' => $leadStatus]);
-        return redirect()->route('admin.lead-statuses.edit');
+        return response()->json(['data' => $leadStatus]);
+//        return redirect()->route('admin.lead-statuses.edit');
     }
 
     /**

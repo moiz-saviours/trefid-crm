@@ -317,7 +317,6 @@
             if(!dataId){
                 return false;
             }
-            e.preventDefault();
             const url = $(this).attr('action');
             AjaxRequestPromise(url, new FormData(this), 'POST', {useToastr: true})
                 .then(response => {
@@ -325,7 +324,7 @@
                         const {id, logo, name, brand_key, url, status} = response.data;
                         $('#edit-modal').modal('hide');
                         const logoUrl = isValidUrl(logo) ? logo : `{{ asset('assets/images/brand-logos/') }}/${logo}`;
-                        const index = table.rows().count() + 1;
+                        const index = table.row($('#tr-' + id)).index();
                         const columns = [
                             null,
                             index,

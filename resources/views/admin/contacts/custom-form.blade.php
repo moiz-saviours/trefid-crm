@@ -1,58 +1,74 @@
 <div class="custom-form">
-    <form id="manage-form" method="POST" enctype="multipart/form-data">
+    <form id="manage-form" enctype="multipart/form-data">
         <div class="form-container" id="formContainer">
             <!-- Form Header -->
             <div class="form-header fh-1">
-                <span id="custom-form-heading">Manage Employee</span>
+                <span id="custom-form-heading">Manage Contact</span>
                 <button type="button" class="close-btn">×</button>
             </div>
             <!-- Form Body -->
             <div class="form-body">
                 <div class="form-group mb-3">
-                    <label for="name" class="form-label">Name</label>
-                    <input type="text" class="form-control" id="name" name="name" placeholder="Enter name" required>
+                    <label for="brand_key" class="form-label">Brand</label>
+                    <select class="form-control searchable" id="brand_key" name="brand_key"
+                            title="Please select a brand" required>
+                        <option value="" disabled>Please select brand</option>
+                        @foreach($brands as $brand)
+                            <option
+                                value="{{ $brand->brand_key }}" {{ old('brand_key') == $brand->brand_key ? 'selected' : '' }}>
+                                {{ $brand->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                    @error('brand_key')
+                    <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
+                <div class="form-group mb-3">
+                    <label for="team_key" class="form-label">Team</label>
+                    <select class="form-control searchable" id="team_key" name="team_key"
+                            title="Please select a team">
+                        <option value="" disabled>Please select team</option>
+                        @foreach($teams as $team)
+                            <option
+                                value="{{ $team->team_key }}" {{ old('team_key') == $team->team_key ? 'selected' : '' }}>
+                                {{ $team->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                    @error('team_key')
+                    <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
+                <div class="form-group mb-3">
+                    <label for="name" class="form-label">Client Name</label>
+                    <input type="text" class="form-control" id="name" name="name"
+                           value="{{ old('name') }}" required>
                     @error('name')
                     <span class="text-danger">{{ $message }}</span>
                     @enderror
                 </div>
                 <div class="form-group mb-3">
                     <label for="email" class="form-label">Email</label>
-                    <input type="email" class="form-control" id="email" name="email" placeholder="Enter email" required>
+                    <input type="email" class="form-control" id="email" name="email"
+                           value="{{ old('email') }}" required>
                     @error('email')
                     <span class="text-danger">{{ $message }}</span>
                     @enderror
                 </div>
                 <div class="form-group mb-3">
-                    <label for="designation" class="form-label">Designation</label>
-                    <input type="text" class="form-control" id="designation" name="designation"
-                           placeholder="e.g. Software Engineer">
-                    @error('designation')
-                    <span class="text-danger">{{ $message }}</span>
-                    @enderror
-                </div>
-                <div class="form-group mb-3">
-                    <label for="gender" class="form-label">Gender</label>
-                    <select class="form-control" id="gender" name="gender">
-                        <option value="" disabled>Select Gender</option>
-                        <option value="male" selected>Male</option>
-                        <option value="female">Female</option>
-                    </select>
-                    @error('gender')
-                    <span class="text-danger">{{ $message }}</span>
-                    @enderror
-                </div>
-                <div class="form-group mb-3">
-                    <label for="phone_number" class="form-label">Phone Number</label>
-                    <input type="text" class="form-control" id="phone_number" name="phone_number"
-                           placeholder="e.g. +1234567890">
-                    @error('phone_number')
+                    <label for="phone" class="form-label">Phone</label>
+                    <input type="text" class="form-control" id="phone" name="phone"
+                           value="{{ old('phone') }}">
+                    @error('phone')
                     <span class="text-danger">{{ $message }}</span>
                     @enderror
                 </div>
 
                 <div class="form-group mb-3">
                     <label for="address" class="form-label">Address</label>
-                    <textarea class="form-control" id="address" name="address" rows="3"></textarea>
+                    <textarea class="form-control" id="address" name="address"
+                              rows="5">{{ old('address') }}</textarea>
                     @error('address')
                     <span class="text-danger">{{ $message }}</span>
                     @enderror
@@ -60,41 +76,57 @@
 
 
                 <div class="form-group mb-3">
-                    <label for="image" class="form-label d-block">Profile Image (Optional)</label>
+                    <div class="col-md-12 mb-3">
+                        <label for="city" class="form-label">City</label>
+                        <input type="text" class="form-control" id="city" name="city"
+                               value="{{ old('city') }}">
+                        @error('city')
+                        <span class="text-danger">{{ $message }}</span>
+                        @enderror
 
-                    <div class="d-flex align-items-start">
-                        <!-- Image Upload Section (Left) -->
-                        <div class="me-3" id="image-div" style="display: none">
-                            <label for="image">
-                                <img id="image-display" src="" alt="Preview"
-                                     class="img-thumbnail"
-                                     style="cursor: pointer; max-width: 100px;"
-                                     title="Click to choose a new file">
-                            </label>
-                        </div>
-
-                        <!-- Input Fields (Right) -->
-                        <div class="flex-grow-1">
-                            <div class="">
-                                <input type="file" class="form-control" id="image" name="image" accept="image/*" aria-describedby="imageHelp">
-                            </div>
-                            <div class="input-group">
-                                <input type="url" class="form-control" id="image_url" name="image_url"
-                                       placeholder="https://example.com/image.png" aria-describedby="imageHelp">
-                            </div>
-                            <small id="imageHelp" class="form-text text-muted">
-                                You can either upload an image or provide a valid image URL.
-                            </small>
-                            <!-- Validation Error Messages -->
-                            @error('image')
-                            <span class="text-danger d-block">{{ $message }}</span>
-                            @enderror
-                            @error('image_url')
-                            <span class="text-danger d-block">{{ $message }}</span>
-                            @enderror
-                        </div>
                     </div>
                 </div>
+
+                    <div class="form-group mb-3">
+                        <div class="col-md-12 mb-3">
+                            <label for="country" class="form-label">Country</label>
+                            <select class="form-control searchable" id="country" name="country"
+                                    title="Please select country" required>
+                                @foreach($countries as $code => $country)
+                                    <option
+                                        value="{{ $code }}" {{ (old('country') == $code ) || ($code == "US") ? 'selected' : '' }}>
+                                        {{ $country }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            @error('country')
+                            <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <div class="col-md-12 mb-3">
+                                <label for="state" class="form-label">State</label>
+                                <input type="text" class="form-control" id="state" name="state"
+                                       value="{{ old('state') }}">
+                                @error('state')
+                                <span class="text-danger">{{ $message }}</span>
+                                @enderror
+
+                            </div>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <div class="col-md-12 mb-3">
+                                <label for="zipcode" class="form-label">Zip Code</label>
+                                <input type="text" class="form-control" id="zipcode" name="zipcode"
+                                       value="{{ old('zipcode') }}">
+                                @error('zipcode')
+                                <span class="text-danger">{{ $message }}</span>
+                                @enderror
+
+                            </div>
+                        </div>
 
                 <div class="form-group mb-3">
                     <label for="status" class="form-label">Status</label>
@@ -113,5 +145,7 @@
                 <button type="button" class="btn-secondary close-btn">Cancel</button>
             </div>
         </div>
+        </div>
+
     </form>
 </div>

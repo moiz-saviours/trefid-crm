@@ -16,8 +16,11 @@ class ClientController extends Controller
      */
     public function index()
     {
+        $brands = Brand::all();
+        $teams = Team::all();
+        $countries = config('countries');
         $clients = Client::all();
-        return view('admin.contacts.index', compact('clients'));
+        return view('admin.contacts.index', compact('clients', 'brands', 'teams', 'countries'));
     }
 
     /**
@@ -39,7 +42,7 @@ class ClientController extends Controller
     {
         $request->validate([
             'brand_key' => 'required|integer|exists:brands,brand_key',
-            'team_key' => 'nullable|integer|exists:teams,brand_key',
+            'team_key' => 'nullable|integer|exists:teams,team_key',
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255|unique:clients,email',
             'phone' => 'nullable|string|max:15',
@@ -70,7 +73,8 @@ class ClientController extends Controller
 
         $client->save();
 
-        return redirect()->route('admin.client.index')->with('success', 'Client created successfully.');
+        return response()->json(['client' => $client, 'success'=> 'Contact Created Successfully!']);
+//        return redirect()->route('admin.client.index')->with('success', 'Client created successfully.');
     }
 
     /**
@@ -86,13 +90,22 @@ class ClientController extends Controller
      */
     public function edit(Client $client)
     {
-        if (!$client->id) return redirect()->route('admin.client.index')->with('error', 'Record not found.');
+        if (!$client->id) return response()->json(['error' => 'Client Not Found!']);
 
-        $brands = Cache::remember('brands_list', config('cache.durations.short_lived'), fn() => Brand::all());
-        $teams = Cache::remember('teams_list', config('cache.durations.short_lived'), fn() => Team::all());
-        $countries = Cache::rememberForever('countries_list', fn() => config('countries'));
 
-        return view('admin.contacts.edit', compact('client', 'brands', 'teams', 'countries'));
+
+//        $brands = Cache::remember('brands_list', config('cache.durations.short_lived'), fn() => Brand::all());
+//        $teams = Cache::remember('teams_list', config('cache.durations.short_lived'), fn() => Team::all());
+//        $countries = Cache::rememberForever('countries_list', fn() => config('countries'));
+        $brands = Brand::all();
+        $teams = Team::all();
+        $countries = config('countries');
+
+
+
+        return response()->json(['client' => $client, 'brands' => $brands, 'teams' => $teams, 'countries' => $countries]);
+
+//        return view('admin.contacts.edit', compact('client', 'brands', 'teams', 'countries'));
     }
 
     /**
@@ -102,7 +115,7 @@ class ClientController extends Controller
     {
         $request->validate([
             'brand_key' => 'required|integer|exists:brands,brand_key',
-            'team_key' => 'nullable|integer|exists:teams,brand_key',
+            'team_key' => 'nullable|integer|exists:teams,team_key',
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255|unique:clients,email,' . $client->id,
             'phone' => 'nullable|string|max:15',
@@ -132,8 +145,9 @@ class ClientController extends Controller
         ]));
 
         $client->save();
+        return response()->json(['client' => $client, 'success'=> 'Contact Updated Successfully!']);
 
-        return redirect()->route('admin.client.index')->with('success', 'Client updated successfully.');
+        //return redirect()->route('admin.client.index')->with('success', 'Client updated successfully.');
     }
 
     /**
@@ -160,7 +174,7 @@ class ClientController extends Controller
         try {
             $client->status = $request->query('status');
             $client->save();
-            return response()->json(['message' => 'Status updated successfully']);
+            return response()->json(['success' => 'Status updated successfully']);
         } catch (\Exception $e) {
             return response()->json(['error' => ' Internal Server Error', 'message' => $e->getMessage(), 'line' => $e->getLine()], 500);
         }

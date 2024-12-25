@@ -105,7 +105,7 @@ Route::middleware(['auth:admin'])->prefix('admin')->name('admin.')->group(functi
             Route::post('/store', [AdminClientController::class, 'store'])->name('store');
             Route::get('/edit/{client?}', [AdminClientController::class, 'edit'])->name('edit');
             Route::post('/update/{client?}', [AdminClientController::class, 'update'])->name('update');
-            Route::get('/change-status/{team?}', [AdminClientController::class, 'change_status'])->name('change.status');
+            Route::get('/change-status/{client?}', [AdminClientController::class, 'change_status'])->name('change.status');
             Route::delete('/delete/{client?}', [AdminClientController::class, 'delete'])->name('delete');
         });
     });
