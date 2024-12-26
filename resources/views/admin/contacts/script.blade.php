@@ -129,13 +129,15 @@
             });
         });
 
+        const decodeHtml = (html) => {
+            const txt = document.createElement("textarea");
+            txt.innerHTML = html;
+            return txt.value;
+        };
 
         function setDataAndShowEdit(data) {
             let client = data?.client;
             $('#manage-form').data('id', client.id);
-
-
-
             $('#brand_key').val(client.brand_key);
             $('#team_key').val(client.team_key);
             $('#name').val(client.name);
@@ -151,11 +153,7 @@
             $('#manage-form').attr('action', `{{route('admin.contact.update')}}/` + client.id);
             $('#formContainer').addClass('open')
         }
-        const decodeHtml = (html) => {
-            const txt = document.createElement("textarea");
-            txt.innerHTML = html;
-            return txt.value;
-        };
+
 
         /** Manage Record */
         $('#manage-form').on('submit', function (e) {
@@ -180,8 +178,7 @@
                                 <td class="align-middle text-center text-nowrap">${address}</td>
                                 <td class="align-middle text-center text-nowrap">${city}</td>
                                 <td class="align-middle text-center text-nowrap">${state}</td>
-                                <td class="align-middle text-center text-nowrap">${country}</td>
-                                <td class="align-middle text-center text-nowrap">${zipcode}</td>
+
 
                                 <td class="align-middle text-center text-nowrap">
                                     <input type="checkbox" class="status-toggle change-status" data-id="${id}" ${status == 1 ? 'checked' : ''} data-bs-toggle="toggle">
@@ -207,7 +204,7 @@
                 AjaxRequestPromise(url, formData, 'POST', {useToastr: true})
                     .then(response => {
                         if (response?.data) {
-                            const {id, brand_key, team_key, name, email, phone,address,city,state,status,country,zipcode } = response.data;
+                            const {id, brand_key, team_key, name, email, phone,address,city,state,status } = response.data;
                             const index = table.row($('#tr-' + id)).index();
                             const rowData = table.row(index).data();
                             // Column 2: Brand
@@ -249,14 +246,7 @@
                             if (decodeHtml(rowData[10]) !== statusHtml) {
                                 table.cell(index, 10).data(statusHtml).draw();
                             }
-                            // Column 11: country
-                            if (decodeHtml(rowData[11]) !== country) {
-                                table.cell(index, 11).data(country).draw();
-                            }
-                            // Column 12: state
-                            if (decodeHtml(rowData[12]) !== zipcode) {
-                                table.cell(index, 12).data(zipcode).draw();
-                            }
+
 
                             $('#manage-form')[0].reset();
                             $('#formContainer').removeClass('open')

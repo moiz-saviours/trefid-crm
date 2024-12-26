@@ -268,6 +268,77 @@
             $('#formContainer').addClass('open')
         }
 
+        {{--$('#manage-form').on('submit', function (e) {--}}
+        {{--    e.preventDefault();--}}
+        {{--    var dataId = $('#manage-form').data('id');--}}
+        {{--    var formData = new FormData(this);--}}
+        {{--    if (!dataId) {--}}
+        {{--        AjaxRequestPromise(`{{ route("admin.lead-status.store") }}`, formData, 'POST', {useToastr: true})--}}
+        {{--            .then(response => {--}}
+        {{--                if (response?.data) {--}}
+        {{--                    const {id, name, color, description, status} = response.data;--}}
+        {{--                    const index = table.rows().count() + 1;--}}
+        {{--                    const columns = `--}}
+        {{--                        <td class="align-middle text-center text-nowrap"></td>--}}
+        {{--                        <td class="align-middle text-center text-nowrap">${index}</td>--}}
+
+        {{--                        <td class="align-middle text-center text-nowrap">${name}</td>--}}
+        {{--                        <td class="align-middle text-center">--}}
+        {{--                            <span class="status-color" style="background-color: ${color};"></span>--}}
+        {{--                                            </td>--}}
+        {{--                        <td class="align-middle text-center text-nowrap">${description}</td>--}}
+        {{--                        <td class="align-middle text-center text-nowrap">--}}
+        {{--                            <input type="checkbox" class="status-toggle change-status" data-id="${id}" ${status == 1 ? 'checked' : ''} data-bs-toggle="toggle">--}}
+        {{--                        </td>--}}
+        {{--                        <td class="align-middle text-center table-actions">--}}
+        {{--                            <button type="button" class="btn btn-sm btn-primary editBtn" data-id="${id}" title="Edit">--}}
+        {{--                                <i class="fas fa-edit"></i>--}}
+        {{--                            </button>--}}
+        {{--                            <button type="button" class="btn btn-sm btn-danger deleteBtn" data-id="${id}" title="Delete">--}}
+        {{--                                <i class="fas fa-trash"></i>--}}
+        {{--                            </button>--}}
+        {{--                        </td>--}}
+        {{--                `;--}}
+        {{--                    table.row.add($('<tr>', {id: `tr-${id}`}).append(columns)).draw();--}}
+        {{--                    $('#manage-form')[0].reset();--}}
+        {{--                    $('#formContainer').removeClass('open')--}}
+        {{--                }--}}
+        {{--            })--}}
+        {{--            .catch(error => console.log('An error occurred while updating the record.'));--}}
+        {{--    } else {--}}
+        {{--        const url = $(this).attr('action');--}}
+        {{--        AjaxRequestPromise(url, formData, 'POST', {useToastr: true})--}}
+        {{--            .then(response => {--}}
+        {{--                if (response?.data) {--}}
+        {{--                    const {id, name, color, description, status} = response.data;--}}
+        {{--                    const index = table.row($('#tr-' + id)).index();--}}
+        {{--                    const rowData = table.row(index).data();--}}
+        {{--                    // Column 2: name--}}
+        {{--                    if (decodeHtml(rowData[2]) !== name) {--}}
+        {{--                        table.cell(index, 2).data(name).draw();--}}
+        {{--                    }--}}
+        {{--                    // Column 3: Name--}}
+        {{--                    if (decodeHtml(rowData[3]) !== color) {--}}
+        {{--                        const colorHtml = `<span class="status-color" style="background-color: ${color};"></span>`;--}}
+        {{--                        table.cell(index, 3).data(colorHtml).draw();--}}
+        {{--                    }--}}
+        {{--                    // Column 4: description--}}
+        {{--                    if (decodeHtml(rowData[4]) !== description) {--}}
+        {{--                        table.cell(index, 4).data(description).draw();--}}
+        {{--                    }--}}
+
+        {{--                    // Column 5: Status--}}
+        {{--                    const statusHtml = `<input type="checkbox" class="status-toggle change-status" data-id="${id}" ${status == 1 ? "checked" : ""} data-bs-toggle="toggle">`;--}}
+        {{--                    if (decodeHtml(rowData[5]) !== statusHtml) {--}}
+        {{--                        table.cell(index, 5).data(statusHtml).draw();--}}
+        {{--                    }--}}
+        {{--                    $('#manage-form')[0].reset();--}}
+        {{--                    $('#formContainer').removeClass('open')--}}
+        {{--                }--}}
+        {{--            })--}}
+        {{--            .catch(error => console.log(error));--}}
+        {{--    }--}}
+        {{--});--}}
         $('#manage-form').on('submit', function (e) {
             e.preventDefault();
             var dataId = $('#manage-form').data('id');
@@ -279,29 +350,30 @@
                             const {id, name, color, description, status} = response.data;
                             const index = table.rows().count() + 1;
                             const columns = `
-                                <td class="align-middle text-center text-nowrap"></td>
-                                <td class="align-middle text-center text-nowrap">${index}</td>
+                        <td class="align-middle text-center text-nowrap"></td>
+                        <td class="align-middle text-center text-nowrap">${index}</td>
 
-                                <td class="align-middle text-center text-nowrap">${name}</td>
-                                <td class="align-middle text-center">
-                                    <span class="status-color" style="background-color: ${color};"></span>
-                                                    </td>
-                                <td class="align-middle text-center text-nowrap">${description}</td>
-                                <td class="align-middle text-center text-nowrap">
-                                    <input type="checkbox" class="status-toggle change-status" data-id="${id}" ${status == 1 ? 'checked' : ''} data-bs-toggle="toggle">
-                                </td>
-                                <td class="align-middle text-center table-actions">
-                                    <button type="button" class="btn btn-sm btn-primary editBtn" data-id="${id}" title="Edit">
-                                        <i class="fas fa-edit"></i>
-                                    </button>
-                                    <button type="button" class="btn btn-sm btn-danger deleteBtn" data-id="${id}" title="Delete">
-                                        <i class="fas fa-trash"></i>
-                                    </button>
-                                </td>
-                        `;
-                            table.row.add($('<tr>', {id: `tr-${id}`}).append(columns)).draw(false);
+                        <td class="align-middle text-center text-nowrap">${name}</td>
+                        <td class="align-middle text-center">
+                            <span class="status-color" style="background-color: ${color};"></span>
+                                            </td>
+                        <td class="align-middle text-center text-nowrap">${description}</td>
+                        <td class="align-middle text-center text-nowrap">
+                            <input type="checkbox" class="status-toggle change-status" data-id="${id}" ${status == 1 ? 'checked' : ''} data-bs-toggle="toggle">
+                        </td>
+                        <td class="align-middle text-center table-actions">
+                            <button type="button" class="btn btn-sm btn-primary editBtn" data-id="${id}" title="Edit">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button type="button" class="btn btn-sm btn-danger deleteBtn" data-id="${id}" title="Delete">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </td>
+                `;
+                            table.row.add($('<tr>', {id: `tr-${id}`}).append(columns)).draw();
                             $('#manage-form')[0].reset();
-                            $('#formContainer').removeClass('open')
+                            $('#manage-form').removeData('id'); // Reset data-id
+                            $('#formContainer').removeClass('open');
                         }
                     })
                     .catch(error => console.log('An error occurred while updating the record.'));
@@ -317,7 +389,7 @@
                             if (decodeHtml(rowData[2]) !== name) {
                                 table.cell(index, 2).data(name).draw();
                             }
-                            // Column 3: Name
+                            // Column 3: Color
                             if (decodeHtml(rowData[3]) !== color) {
                                 const colorHtml = `<span class="status-color" style="background-color: ${color};"></span>`;
                                 table.cell(index, 3).data(colorHtml).draw();
@@ -333,12 +405,14 @@
                                 table.cell(index, 5).data(statusHtml).draw();
                             }
                             $('#manage-form')[0].reset();
-                            $('#formContainer').removeClass('open')
+                            $('#manage-form').removeData('id'); // Reset data-id
+                            $('#formContainer').removeClass('open');
                         }
                     })
                     .catch(error => console.log(error));
             }
         });
+
 
         /** Change Status*/
         $('tbody').on('change', '.change-status', function () {

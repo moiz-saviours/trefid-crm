@@ -82,7 +82,8 @@ class ClientController extends Controller
      */
     public function show(Client $client)
     {
-        return view('admin.contacts.edit', compact('client'));
+        return response()->json(['client' => $client]);
+//        return view('admin.contacts.edit', compact('client'));
     }
 
     /**
@@ -145,7 +146,7 @@ class ClientController extends Controller
         ]));
 
         $client->save();
-        return response()->json(['client' => $client, 'success'=> 'Contact Updated Successfully!']);
+        return response()->json([ 'success'=> 'Contact Updated Successfully!']);
 
         //return redirect()->route('admin.client.index')->with('success', 'Client updated successfully.');
     }
