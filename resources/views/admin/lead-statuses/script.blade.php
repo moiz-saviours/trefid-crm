@@ -250,6 +250,12 @@
             });
         });
 
+        const decodeHtml = (html) => {
+            const txt = document.createElement("textarea");
+            txt.innerHTML = html;
+            return txt.value;
+        };
+
         function setDataAndShowEdit(data) {
             $('#manage-form').data('id', data.id);
 
@@ -304,17 +310,17 @@
                 AjaxRequestPromise(url, formData, 'POST', {useToastr: true})
                     .then(response => {
                         if (response?.data) {
-                            const {id, image, name, email, designation, team_name, status} = response.data;
-                            const imageUrl = isValidUrl(image) ? image : (image ? `{{ asset('assets/images/employees/') }}/${image}` : `{{ asset("assets/images/no-image-available.png") }}`);
+                            const {id, name, color, description, status} = response.data;
                             const index = table.row($('#tr-' + id)).index();
                             const rowData = table.row(index).data();
                             // Column 2: name
                             if (decodeHtml(rowData[2]) !== name) {
                                 table.cell(index, 2).data(name).draw();
                             }
-                            /** Column 3: Name */
+                            // Column 3: Name
                             if (decodeHtml(rowData[3]) !== color) {
-                                table.cell(index, 3).data(color).draw();
+                                const colorHtml = `<span class="status-color" style="background-color: ${color};"></span>`;
+                                table.cell(index, 3).data(colorHtml).draw();
                             }
                             // Column 4: description
                             if (decodeHtml(rowData[4]) !== description) {
@@ -327,7 +333,6 @@
                                 table.cell(index, 5).data(statusHtml).draw();
                             }
                             $('#manage-form')[0].reset();
-                            $('#image-display').attr('src', null);
                             $('#formContainer').removeClass('open')
                         }
                     })

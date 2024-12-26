@@ -77,7 +77,8 @@ class BrandController extends Controller
             return response()->json($brand);
         }
         session(['edit_brand' => $brand]);
-        return redirect()->route('admin.brand.index');
+        return response()->json(['data' => $brand]);
+//        return redirect()->route('admin.brand.index');
     }
 
     /**

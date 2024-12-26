@@ -19,7 +19,11 @@ class InvoiceController extends Controller
     public function index()
     {
         $invoices = Invoice::all();
-        return view('admin.invoices.index', compact('invoices'));
+        $brands = Brand::all();
+        $teams = Team::all();
+        $clients = Client::all();
+        $users = User::all();
+        return view('admin.invoices.index', compact('invoices', 'brands', 'teams', 'clients', 'users'));
     }
 
     /**
@@ -117,7 +121,8 @@ class InvoiceController extends Controller
             'invoice_key' => Invoice::generateInvoiceKey(),
             'invoice_number' => Invoice::generateInvoiceNumber(),
         ]);
-        return redirect()->route('admin.invoice.index')->with('success', 'Invoice created successfully.');
+        return response()->json(['success' => 'Invoice has been created!']);
+//        return redirect()->route('admin.invoice.index')->with('success', 'Invoice created successfully.');
     }
 
     /**
