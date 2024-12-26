@@ -114,6 +114,7 @@ class TeamController extends Controller
             }
             $brands = Brand::where('status', 1)->get();
             $users = User::where('status', 1)->get();
+            $team = $team->with('users:id','brands:brand_key,name')->first();
             if (request()->ajax()) {
                 $assign_brands = $team->brands->pluck('name')->map('htmlspecialchars_decode')->implode(', ');
                 return response()->json(['data' => array_merge($team->toArray(), ['assign_brands' => $assign_brands]), 'message' => 'Record updated successfully.']);

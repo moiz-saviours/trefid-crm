@@ -1,4 +1,4 @@
-@extends('admin.layouts.app')
+@extends('admin-old.layouts.app')
 @section('title', 'Team / Create')
 @push('breadcrumb')
     <li class="breadcrumb-item text-sm " aria-current="page"><a
@@ -9,7 +9,7 @@
 @endpush
 @section('content')
     @push('style')
-        @include('admin.teams.style')
+        @include('admin-old.teams.style')
     @endpush
     <div class="container-fluid py-4">
         <div class="row">
@@ -149,6 +149,6 @@
         </div>
     </div>
     @push('script')
-        @include('admin.teams.script')
+        @include('admin-old.teams.script')
     @endpush
 @endsection

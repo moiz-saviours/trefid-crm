@@ -331,22 +331,22 @@
                                         <div class="row g-1 rounded-3 overflow-hidden">
                                             <div class="col-6 mt-0">
                                                 <img class="img-fluid"
-                                                     src="../assets/themes/nifty/assets/img/megamenu/img-1.jpg"
+                                                     src="{{asset('assets/themes/nifty/assets/img/megamenu/img-1.jpg')}}"
                                                      alt="thumbnails" loading="lazy">
                                             </div>
                                             <div class="col-6 mt-0">
                                                 <img class="img-fluid"
-                                                     src="../assets/themes/nifty/assets/img/megamenu/img-3.jpg"
+                                                     src="{{asset('assets/themes/nifty/assets/img/megamenu/img-3.jpg')}}"
                                                      alt="thumbnails" loading="lazy">
                                             </div>
                                             <div class="col-6">
                                                 <img class="img-fluid"
-                                                     src="../assets/themes/nifty/assets/img/megamenu/img-2.jpg"
+                                                     src="{{asset('assets/themes/nifty/assets/img/megamenu/img-2.jpg')}}"
                                                      alt="thumbnails" loading="lazy">
                                             </div>
                                             <div class="col-6">
                                                 <img class="img-fluid"
-                                                     src="../assets/themes/nifty/assets/img/megamenu/img-4.jpg"
+                                                     src="{{asset('assets/themes/nifty/assets/img/megamenu/img-4.jpg')}}"
                                                      alt="thumbnails" loading="lazy">
                                             </div>
                                         </div>
@@ -444,7 +444,7 @@
                                 <div class="list-group-item list-group-item-action d-flex align-items-start mb-3">
                                     <div class="flex-shrink-0 me-3">
                                         <img class="img-xs rounded-circle"
-                                             src="../assets/themes/nifty/assets/img/profile-photos/7.png"
+                                             src="{{asset('assets/themes/nifty/assets/img/profile-photos/7.png')}}"
                                              alt="Profile Picture" loading="lazy">
                                     </div>
                                     <div class="flex-grow-1">
@@ -460,7 +460,7 @@
                                 <div class="list-group-item list-group-item-action d-flex align-items-start mb-3">
                                     <div class="flex-shrink-0 me-3">
                                         <img class="img-xs rounded-circle"
-                                             src="../assets/themes/nifty/assets/img/profile-photos/3.png"
+                                             src="{{asset('assets/themes/nifty/assets/img/profile-photos/3.png')}}"
                                              alt="Profile Picture" loading="lazy">
                                     </div>
                                     <div class="flex-grow-1">
@@ -501,7 +501,7 @@
                             <div class="d-flex align-items-center border-bottom px-3 py-2">
                                 <div class="flex-shrink-0">
                                     <img class="img-sm rounded-circle"
-                                         src="../assets/themes/nifty/assets/img/profile-photos/4.png"
+                                         src="{{asset('assets/themes/nifty/assets/img/profile-photos/4.png')}}"
                                          alt="Profile Picture" loading="lazy">
                                 </div>
                                 <div class="flex-grow-1 ms-3">
@@ -666,7 +666,8 @@
                         <div class="list-group-item list-group-item-action d-flex align-items-start mb-2">
                             <div class="flex-shrink-0 me-3">
                                 <img class="img-xs rounded-circle"
-                                     src="../assets/themes/nifty/assets/img/profile-photos/2.png" alt="Profile Picture"
+                                     src="{{asset('assets/themes/nifty/assets/img/profile-photos/2.png')}}"
+                                     alt="Profile Picture"
                                      loading="lazy">
                             </div>
                             <div class="flex-grow-1 ">
@@ -692,7 +693,8 @@
                         <div class="list-group-item list-group-item-action d-flex align-items-start mb-2">
                             <div class="flex-shrink-0 me-3">
                                 <img class="img-xs rounded-circle"
-                                     src="../assets/themes/nifty/assets/img/profile-photos/7.png" alt="Profile Picture"
+                                     src="{{asset('assets/themes/nifty/assets/img/profile-photos/7.png')}}"
+                                     alt="Profile Picture"
                                      loading="lazy">
                             </div>
                             <div class="flex-grow-1 ">
@@ -706,7 +708,8 @@
                         <div class="list-group-item list-group-item-action d-flex align-items-start mb-2">
                             <div class="flex-shrink-0 me-3">
                                 <img class="img-xs rounded-circle"
-                                     src="../assets/themes/nifty/assets/img/profile-photos/4.png" alt="Profile Picture"
+                                     src="{{asset('assets/themes/nifty/assets/img/profile-photos/4.png')}}"
+                                     alt="Profile Picture"
                                      loading="lazy">
                             </div>
                             <div class="flex-grow-1 ">
@@ -939,82 +942,82 @@
                 <div class="_dm-boxbg__img-container d-flex flex-wrap">
                     <a href="#" class="_dm-boxbg__thumb ratio ratio-16x9">
                         <img class="img-responsive"
-                             src="../assets/themes/nifty/assets/premium/boxed-bg/blurred/thumbs/1.jpg"
+                             src="{{asset('assets/themes/nifty/assets/premium/boxed-bg/blurred/thumbs/1.jpg')}}"
                              alt="Background Image" loading="lazy">
                     </a>
                     <a href="#" class="_dm-boxbg__thumb ratio ratio-16x9">
                         <img class="img-responsive"
-                             src="../assets/themes/nifty/assets/premium/boxed-bg/blurred/thumbs/2.jpg"
+                             src="{{asset('assets/themes/nifty/assets/premium/boxed-bg/blurred/thumbs/2.jpg')}}"
                              alt="Background Image" loading="lazy">
                     </a>
                     <a href="#" class="_dm-boxbg__thumb ratio ratio-16x9">
                         <img class="img-responsive"
-                             src="../assets/themes/nifty/assets/premium/boxed-bg/blurred/thumbs/3.jpg"
+                             src="{{asset('assets/themes/nifty/assets/premium/boxed-bg/blurred/thumbs/3.jpg')}}"
                              alt="Background Image" loading="lazy">
                     </a>
                     <a href="#" class="_dm-boxbg__thumb ratio ratio-16x9">
                         <img class="img-responsive"
-                             src="../assets/themes/nifty/assets/premium/boxed-bg/blurred/thumbs/4.jpg"
+                             src="{{asset('assets/themes/nifty/assets/premium/boxed-bg/blurred/thumbs/4.jpg')}}"
                              alt="Background Image" loading="lazy">
                     </a>
                     <a href="#" class="_dm-boxbg__thumb ratio ratio-16x9">
                         <img class="img-responsive"
-                             src="../assets/themes/nifty/assets/premium/boxed-bg/blurred/thumbs/5.jpg"
+                             src="{{asset('assets/themes/nifty/assets/premium/boxed-bg/blurred/thumbs/5.jpg')}}"
                              alt="Background Image" loading="lazy">
                     </a>
                     <a href="#" class="_dm-boxbg__thumb ratio ratio-16x9">
                         <img class="img-responsive"
-                             src="../assets/themes/nifty/assets/premium/boxed-bg/blurred/thumbs/6.jpg"
+                             src="{{asset('assets/themes/nifty/assets/premium/boxed-bg/blurred/thumbs/6.jpg')}}"
                              alt="Background Image" loading="lazy">
                     </a>
                     <a href="#" class="_dm-boxbg__thumb ratio ratio-16x9">
                         <img class="img-responsive"
-                             src="../assets/themes/nifty/assets/premium/boxed-bg/blurred/thumbs/7.jpg"
+                             src="{{asset('assets/themes/nifty/assets/premium/boxed-bg/blurred/thumbs/7.jpg')}}"
                              alt="Background Image" loading="lazy">
                     </a>
                     <a href="#" class="_dm-boxbg__thumb ratio ratio-16x9">
                         <img class="img-responsive"
-                             src="../assets/themes/nifty/assets/premium/boxed-bg/blurred/thumbs/8.jpg"
+                             src="{{asset('assets/themes/nifty/assets/premium/boxed-bg/blurred/thumbs/8.jpg')}}"
                              alt="Background Image" loading="lazy">
                     </a>
                     <a href="#" class="_dm-boxbg__thumb ratio ratio-16x9">
                         <img class="img-responsive"
-                             src="../assets/themes/nifty/assets/premium/boxed-bg/blurred/thumbs/9.jpg"
+                             src="{{asset('assets/themes/nifty/assets/premium/boxed-bg/blurred/thumbs/9.jpg')}}"
                              alt="Background Image" loading="lazy">
                     </a>
                     <a href="#" class="_dm-boxbg__thumb ratio ratio-16x9">
                         <img class="img-responsive"
-                             src="../assets/themes/nifty/assets/premium/boxed-bg/blurred/thumbs/10.jpg"
+                             src="{{asset('assets/themes/nifty/assets/premium/boxed-bg/blurred/thumbs/10.jpg')}}"
                              alt="Background Image" loading="lazy">
                     </a>
                     <a href="#" class="_dm-boxbg__thumb ratio ratio-16x9">
                         <img class="img-responsive"
-                             src="../assets/themes/nifty/assets/premium/boxed-bg/blurred/thumbs/11.jpg"
+                             src="{{asset('assets/themes/nifty/assets/premium/boxed-bg/blurred/thumbs/11.jpg')}}"
                              alt="Background Image" loading="lazy">
                     </a>
                     <a href="#" class="_dm-boxbg__thumb ratio ratio-16x9">
                         <img class="img-responsive"
-                             src="../assets/themes/nifty/assets/premium/boxed-bg/blurred/thumbs/12.jpg"
+                             src="{{asset('assets/themes/nifty/assets/premium/boxed-bg/blurred/thumbs/12.jpg')}}"
                              alt="Background Image" loading="lazy">
                     </a>
                     <a href="#" class="_dm-boxbg__thumb ratio ratio-16x9">
                         <img class="img-responsive"
-                             src="../assets/themes/nifty/assets/premium/boxed-bg/blurred/thumbs/13.jpg"
+                             src="{{asset('assets/themes/nifty/assets/premium/boxed-bg/blurred/thumbs/13.jpg')}}"
                              alt="Background Image" loading="lazy">
                     </a>
                     <a href="#" class="_dm-boxbg__thumb ratio ratio-16x9">
                         <img class="img-responsive"
-                             src="../assets/themes/nifty/assets/premium/boxed-bg/blurred/thumbs/14.jpg"
+                             src="{{asset('assets/themes/nifty/assets/premium/boxed-bg/blurred/thumbs/14.jpg')}}"
                              alt="Background Image" loading="lazy">
                     </a>
                     <a href="#" class="_dm-boxbg__thumb ratio ratio-16x9">
                         <img class="img-responsive"
-                             src="../assets/themes/nifty/assets/premium/boxed-bg/blurred/thumbs/15.jpg"
+                             src="{{asset('assets/themes/nifty/assets/premium/boxed-bg/blurred/thumbs/15.jpg')}}"
                              alt="Background Image" loading="lazy">
                     </a>
                     <a href="#" class="_dm-boxbg__thumb ratio ratio-16x9">
                         <img class="img-responsive"
-                             src="../assets/themes/nifty/assets/premium/boxed-bg/blurred/thumbs/16.jpg"
+                             src="{{asset('assets/themes/nifty/assets/premium/boxed-bg/blurred/thumbs/16.jpg')}}"
                              alt="Background Image" loading="lazy">
                     </a>
                 </div>
@@ -1028,82 +1031,82 @@
                 <div class="_dm-boxbg__img-container d-flex flex-wrap mb-4">
                     <a href="#" class="_dm-boxbg__thumb ratio ratio-16x9">
                         <img class="img-responsive"
-                             src="../assets/themes/nifty/assets/premium/boxed-bg/polygon/thumbs/1.jpg"
+                             src="{{asset('assets/themes/nifty/assets/premium/boxed-bg/polygon/thumbs/1.jpg')}}"
                              alt="Background Image" loading="lazy">
                     </a>
                     <a href="#" class="_dm-boxbg__thumb ratio ratio-16x9">
                         <img class="img-responsive"
-                             src="../assets/themes/nifty/assets/premium/boxed-bg/polygon/thumbs/2.jpg"
+                             src="{{asset('assets/themes/nifty/assets/premium/boxed-bg/polygon/thumbs/2.jpg')}}"
                              alt="Background Image" loading="lazy">
                     </a>
                     <a href="#" class="_dm-boxbg__thumb ratio ratio-16x9">
                         <img class="img-responsive"
-                             src="../assets/themes/nifty/assets/premium/boxed-bg/polygon/thumbs/3.jpg"
+                             src="{{asset('assets/themes/nifty/assets/premium/boxed-bg/polygon/thumbs/3.jpg')}}"
                              alt="Background Image" loading="lazy">
                     </a>
                     <a href="#" class="_dm-boxbg__thumb ratio ratio-16x9">
                         <img class="img-responsive"
-                             src="../assets/themes/nifty/assets/premium/boxed-bg/polygon/thumbs/4.jpg"
+                             src="{{asset('assets/themes/nifty/assets/premium/boxed-bg/polygon/thumbs/4.jpg')}}"
                              alt="Background Image" loading="lazy">
                     </a>
                     <a href="#" class="_dm-boxbg__thumb ratio ratio-16x9">
                         <img class="img-responsive"
-                             src="../assets/themes/nifty/assets/premium/boxed-bg/polygon/thumbs/5.jpg"
+                             src="{{asset('assets/themes/nifty/assets/premium/boxed-bg/polygon/thumbs/5.jpg')}}"
                              alt="Background Image" loading="lazy">
                     </a>
                     <a href="#" class="_dm-boxbg__thumb ratio ratio-16x9">
                         <img class="img-responsive"
-                             src="../assets/themes/nifty/assets/premium/boxed-bg/polygon/thumbs/6.jpg"
+                             src="{{asset('assets/themes/nifty/assets/premium/boxed-bg/polygon/thumbs/6.jpg')}}"
                              alt="Background Image" loading="lazy">
                     </a>
                     <a href="#" class="_dm-boxbg__thumb ratio ratio-16x9">
                         <img class="img-responsive"
-                             src="../assets/themes/nifty/assets/premium/boxed-bg/polygon/thumbs/7.jpg"
+                             src="{{asset('assets/themes/nifty/assets/premium/boxed-bg/polygon/thumbs/7.jpg')}}"
                              alt="Background Image" loading="lazy">
                     </a>
                     <a href="#" class="_dm-boxbg__thumb ratio ratio-16x9">
                         <img class="img-responsive"
-                             src="../assets/themes/nifty/assets/premium/boxed-bg/polygon/thumbs/8.jpg"
+                             src="{{asset('assets/themes/nifty/assets/premium/boxed-bg/polygon/thumbs/8.jpg')}}"
                              alt="Background Image" loading="lazy">
                     </a>
                     <a href="#" class="_dm-boxbg__thumb ratio ratio-16x9">
                         <img class="img-responsive"
-                             src="../assets/themes/nifty/assets/premium/boxed-bg/polygon/thumbs/9.jpg"
+                             src="{{asset('assets/themes/nifty/assets/premium/boxed-bg/polygon/thumbs/9.jpg')}}"
                              alt="Background Image" loading="lazy">
                     </a>
                     <a href="#" class="_dm-boxbg__thumb ratio ratio-16x9">
                         <img class="img-responsive"
-                             src="../assets/themes/nifty/assets/premium/boxed-bg/polygon/thumbs/10.jpg"
+                             src="{{asset('assets/themes/nifty/assets/premium/boxed-bg/polygon/thumbs/10.jpg')}}"
                              alt="Background Image" loading="lazy">
                     </a>
                     <a href="#" class="_dm-boxbg__thumb ratio ratio-16x9">
                         <img class="img-responsive"
-                             src="../assets/themes/nifty/assets/premium/boxed-bg/polygon/thumbs/11.jpg"
+                             src="{{asset('assets/themes/nifty/assets/premium/boxed-bg/polygon/thumbs/11.jpg')}}"
                              alt="Background Image" loading="lazy">
                     </a>
                     <a href="#" class="_dm-boxbg__thumb ratio ratio-16x9">
                         <img class="img-responsive"
-                             src="../assets/themes/nifty/assets/premium/boxed-bg/polygon/thumbs/12.jpg"
+                             src="{{asset('assets/themes/nifty/assets/premium/boxed-bg/polygon/thumbs/12.jpg')}}"
                              alt="Background Image" loading="lazy">
                     </a>
                     <a href="#" class="_dm-boxbg__thumb ratio ratio-16x9">
                         <img class="img-responsive"
-                             src="../assets/themes/nifty/assets/premium/boxed-bg/polygon/thumbs/13.jpg"
+                             src="{{asset('assets/themes/nifty/assets/premium/boxed-bg/polygon/thumbs/13.jpg')}}"
                              alt="Background Image" loading="lazy">
                     </a>
                     <a href="#" class="_dm-boxbg__thumb ratio ratio-16x9">
                         <img class="img-responsive"
-                             src="../assets/themes/nifty/assets/premium/boxed-bg/polygon/thumbs/14.jpg"
+                             src="{{asset('assets/themes/nifty/assets/premium/boxed-bg/polygon/thumbs/14.jpg')}}"
                              alt="Background Image" loading="lazy">
                     </a>
                     <a href="#" class="_dm-boxbg__thumb ratio ratio-16x9">
                         <img class="img-responsive"
-                             src="../assets/themes/nifty/assets/premium/boxed-bg/polygon/thumbs/15.jpg"
+                             src="{{asset('assets/themes/nifty/assets/premium/boxed-bg/polygon/thumbs/15.jpg')}}"
                              alt="Background Image" loading="lazy">
                     </a>
                     <a href="#" class="_dm-boxbg__thumb ratio ratio-16x9">
                         <img class="img-responsive"
-                             src="../assets/themes/nifty/assets/premium/boxed-bg/polygon/thumbs/16.jpg"
+                             src="{{asset('assets/themes/nifty/assets/premium/boxed-bg/polygon/thumbs/16.jpg')}}"
                              alt="Background Image" loading="lazy">
                     </a>
                 </div>
@@ -1117,82 +1120,82 @@
                 <div class="_dm-boxbg__img-container d-flex flex-wrap">
                     <a href="#" class="_dm-boxbg__thumb ratio ratio-16x9">
                         <img class="img-responsive"
-                             src="../assets/themes/nifty/assets/premium/boxed-bg/abstract/thumbs/1.jpg"
+                             src="{{asset('assets/themes/nifty/assets/premium/boxed-bg/abstract/thumbs/1.jpg')}}"
                              alt="Background Image" loading="lazy">
                     </a>
                     <a href="#" class="_dm-boxbg__thumb ratio ratio-16x9">
                         <img class="img-responsive"
-                             src="../assets/themes/nifty/assets/premium/boxed-bg/abstract/thumbs/2.jpg"
+                             src="{{asset('assets/themes/nifty/assets/premium/boxed-bg/abstract/thumbs/2.jpg')}}"
                              alt="Background Image" loading="lazy">
                     </a>
                     <a href="#" class="_dm-boxbg__thumb ratio ratio-16x9">
                         <img class="img-responsive"
-                             src="../assets/themes/nifty/assets/premium/boxed-bg/abstract/thumbs/3.jpg"
+                             src="{{asset('assets/themes/nifty/assets/premium/boxed-bg/abstract/thumbs/3.jpg')}}"
                              alt="Background Image" loading="lazy">
                     </a>
                     <a href="#" class="_dm-boxbg__thumb ratio ratio-16x9">
                         <img class="img-responsive"
-                             src="../assets/themes/nifty/assets/premium/boxed-bg/abstract/thumbs/4.jpg"
+                             src="{{asset('assets/themes/nifty/assets/premium/boxed-bg/abstract/thumbs/4.jpg')}}"
                              alt="Background Image" loading="lazy">
                     </a>
                     <a href="#" class="_dm-boxbg__thumb ratio ratio-16x9">
                         <img class="img-responsive"
-                             src="../assets/themes/nifty/assets/premium/boxed-bg/abstract/thumbs/5.jpg"
+                             src="{{asset('assets/themes/nifty/assets/premium/boxed-bg/abstract/thumbs/5.jpg')}}"
                              alt="Background Image" loading="lazy">
                     </a>
                     <a href="#" class="_dm-boxbg__thumb ratio ratio-16x9">
                         <img class="img-responsive"
-                             src="../assets/themes/nifty/assets/premium/boxed-bg/abstract/thumbs/6.jpg"
+                             src="{{asset('assets/themes/nifty/assets/premium/boxed-bg/abstract/thumbs/6.jpg')}}"
                              alt="Background Image" loading="lazy">
                     </a>
                     <a href="#" class="_dm-boxbg__thumb ratio ratio-16x9">
                         <img class="img-responsive"
-                             src="../assets/themes/nifty/assets/premium/boxed-bg/abstract/thumbs/7.jpg"
+                             src="{{asset('assets/themes/nifty/assets/premium/boxed-bg/abstract/thumbs/7.jpg')}}"
                              alt="Background Image" loading="lazy">
                     </a>
                     <a href="#" class="_dm-boxbg__thumb ratio ratio-16x9">
                         <img class="img-responsive"
-                             src="../assets/themes/nifty/assets/premium/boxed-bg/abstract/thumbs/8.jpg"
+                             src="{{asset('assets/themes/nifty/assets/premium/boxed-bg/abstract/thumbs/8.jpg')}}"
                              alt="Background Image" loading="lazy">
                     </a>
                     <a href="#" class="_dm-boxbg__thumb ratio ratio-16x9">
                         <img class="img-responsive"
-                             src="../assets/themes/nifty/assets/premium/boxed-bg/abstract/thumbs/9.jpg"
+                             src="{{asset('assets/themes/nifty/assets/premium/boxed-bg/abstract/thumbs/9.jpg')}}"
                              alt="Background Image" loading="lazy">
                     </a>
                     <a href="#" class="_dm-boxbg__thumb ratio ratio-16x9">
                         <img class="img-responsive"
-                             src="../assets/themes/nifty/assets/premium/boxed-bg/abstract/thumbs/10.jpg"
+                             src="{{asset('assets/themes/nifty/assets/premium/boxed-bg/abstract/thumbs/10.jpg')}}"
                              alt="Background Image" loading="lazy">
                     </a>
                     <a href="#" class="_dm-boxbg__thumb ratio ratio-16x9">
                         <img class="img-responsive"
-                             src="../assets/themes/nifty/assets/premium/boxed-bg/abstract/thumbs/11.jpg"
+                             src="{{asset('assets/themes/nifty/assets/premium/boxed-bg/abstract/thumbs/11.jpg')}}"
                              alt="Background Image" loading="lazy">
                     </a>
                     <a href="#" class="_dm-boxbg__thumb ratio ratio-16x9">
                         <img class="img-responsive"
-                             src="../assets/themes/nifty/assets/premium/boxed-bg/abstract/thumbs/12.jpg"
+                             src="{{asset('assets/themes/nifty/assets/premium/boxed-bg/abstract/thumbs/12.jpg')}}"
                              alt="Background Image" loading="lazy">
                     </a>
                     <a href="#" class="_dm-boxbg__thumb ratio ratio-16x9">
                         <img class="img-responsive"
-                             src="../assets/themes/nifty/assets/premium/boxed-bg/abstract/thumbs/13.jpg"
+                             src="{{asset('assets/themes/nifty/assets/premium/boxed-bg/abstract/thumbs/13.jpg')}}"
                              alt="Background Image" loading="lazy">
                     </a>
                     <a href="#" class="_dm-boxbg__thumb ratio ratio-16x9">
                         <img class="img-responsive"
-                             src="../assets/themes/nifty/assets/premium/boxed-bg/abstract/thumbs/14.jpg"
+                             src="{{asset('assets/themes/nifty/assets/premium/boxed-bg/abstract/thumbs/14.jpg')}}"
                              alt="Background Image" loading="lazy">
                     </a>
                     <a href="#" class="_dm-boxbg__thumb ratio ratio-16x9">
                         <img class="img-responsive"
-                             src="../assets/themes/nifty/assets/premium/boxed-bg/abstract/thumbs/15.jpg"
+                             src="{{asset('assets/themes/nifty/assets/premium/boxed-bg/abstract/thumbs/15.jpg')}}"
                              alt="Background Image" loading="lazy">
                     </a>
                     <a href="#" class="_dm-boxbg__thumb ratio ratio-16x9">
                         <img class="img-responsive"
-                             src="../assets/themes/nifty/assets/premium/boxed-bg/abstract/thumbs/16.jpg"
+                             src="{{asset('assets/themes/nifty/assets/premium/boxed-bg/abstract/thumbs/16.jpg')}}"
                              alt="Background Image" loading="lazy">
                     </a>
                 </div>
@@ -1514,8 +1517,9 @@
                                 <!-- Scheme Button -->
                                 <button type="button" class="_dm-colorModeBtn btn p-1 shadow-none"
                                         data-color-mode="tm--expanded-hd">
-                                    <img src="../assets/themes/nifty/assets/img/color-schemes/expanded-header.png"
-                                         alt="color scheme illusttration" loading="lazy">
+                                    <img
+                                        src="{{asset('assets/themes/nifty/assets/img/color-schemes/expanded-header.png')}}"
+                                        alt="color scheme illusttration" loading="lazy">
                                 </button>
 
                             </div>
@@ -1530,7 +1534,7 @@
                                 <!-- Scheme Button -->
                                 <button type="button" class="_dm-colorModeBtn btn p-1 shadow-none"
                                         data-color-mode="tm--fair-hd">
-                                    <img src="../assets/themes/nifty/assets/img/color-schemes/fair-header.png"
+                                    <img src="{{asset('assets/themes/nifty/assets/img/color-schemes/fair-header.png')}}"
                                          alt="color scheme illusttration" loading="lazy">
                                 </button>
 
@@ -1546,7 +1550,7 @@
                                 <!-- Scheme Button -->
                                 <button type="button" class="_dm-colorModeBtn btn p-1 shadow-none"
                                         data-color-mode="tm--full-hd">
-                                    <img src="../assets/themes/nifty/assets/img/color-schemes/full-header.png"
+                                    <img src="{{asset('assets/themes/nifty/assets/img/color-schemes/full-header.png')}}"
                                          alt="color scheme illusttration" loading="lazy">
                                 </button>
 
@@ -1564,7 +1568,7 @@
                                 <!-- Scheme Button -->
                                 <button type="button" class="_dm-colorModeBtn btn p-1 shadow-none"
                                         data-color-mode="tm--primary-mn">
-                                    <img src="../assets/themes/nifty/assets/img/color-schemes/navigation.png"
+                                    <img src="{{asset('assets/themes/nifty/assets/img/color-schemes/navigation.png')}}"
                                          alt="color scheme illusttration" loading="lazy">
                                 </button>
 
@@ -1579,7 +1583,7 @@
                                 <!-- Scheme Button -->
                                 <button type="button" class="_dm-colorModeBtn btn p-1 shadow-none"
                                         data-color-mode="tm--primary-brand">
-                                    <img src="../assets/themes/nifty/assets/img/color-schemes/brand.png"
+                                    <img src="{{asset('assets/themes/nifty/assets/img/color-schemes/brand.png')}}"
                                          alt="color scheme illusttration" loading="lazy">
                                 </button>
 
@@ -1593,7 +1597,7 @@
                                 <!-- Scheme Button -->
                                 <button type="button" class="_dm-colorModeBtn btn p-1 shadow-none"
                                         data-color-mode="tm--tall-hd">
-                                    <img src="../assets/themes/nifty/assets/img/color-schemes/tall-header.png"
+                                    <img src="{{asset('assets/themes/nifty/assets/img/color-schemes/tall-header.png')}}"
                                          alt="color scheme illusttration" loading="lazy">
                                 </button>
 
