@@ -27,7 +27,7 @@ class TeamController extends Controller
         try {
             $brands = Brand::where('status', 1)->get();
             $users = User::where('status', 1)->get();
-            return view('admin.teams.create', compact('brands', 'users'));
+            return view('admin-old.teams.create', compact('brands', 'users'));
         } catch (\Exception $e) {
             return redirect()->route('admin.team.index')->with('error', $e->getMessage());
         }

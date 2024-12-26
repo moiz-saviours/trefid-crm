@@ -119,8 +119,8 @@
             $.ajax({
                 url: `{{route('admin.team.edit')}}/` + id,
                 type: 'GET',
-                success: function (data) {
-                    setDataAndShowEdit(data);
+                success: function (response) {
+                    setDataAndShowEdit(response.data);
                 },
                 error: function () {
                     alert('Error fetching data.');
@@ -308,3 +308,31 @@
         });
     });
 </script>
+<script>
+    /** For Select Employee through Image */
+
+    $('.select-user-checkbox').each(function() {
+        var checkbox = $(this);
+        if (checkbox.is(':checked')) {
+            checkbox.siblings('.checkmark-overlay').css('display', 'flex');
+        } else {
+            checkbox.siblings('.checkmark-overlay').css('display', 'none');
+        }
+    });
+
+    $('.select-user-checkbox').on('change', function() {
+        var checkmarkOverlay = $(this).siblings('.checkmark-overlay');
+        if ($(this).is(':checked')) {
+            checkmarkOverlay.css('display', 'flex');
+        } else {
+            checkmarkOverlay.css('display', 'none');
+        }
+    });
+
+    $('.user-image').on('click', function() {
+        const checkbox = $(this).closest('.image-checkbox-container').find('.select-user-checkbox');
+        checkbox.prop('checked', !checkbox.prop('checked')).trigger('change');
+    });
+
+</script>
+
