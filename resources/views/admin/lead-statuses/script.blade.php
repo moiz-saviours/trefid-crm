@@ -370,7 +370,7 @@
                             </button>
                         </td>
                 `;
-                            table.row.add($('<tr>', {id: `tr-${id}`}).append(columns)).draw();
+                            table.row.add($('<tr>', {id: `tr-${id}`}).append(columns)).draw(false);
                             $('#manage-form')[0].reset();
                             $('#manage-form').removeData('id'); // Reset data-id
                             $('#formContainer').removeClass('open');
