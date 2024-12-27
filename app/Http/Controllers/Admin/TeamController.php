@@ -88,8 +88,9 @@ class TeamController extends Controller
         if ($request->has('brands')) {
             $team->brands()->sync($request->brands);
         }
+        return response()->json(['team' => $team,'success', 'Team created successfully.']);
 
-        return redirect()->route('admin.team.edit', [$team->id])->with('success', 'Team created successfully.');
+        //return redirect()->route('admin.team.edit', [$team->id])->with('success', 'Team created successfully.');
     }
 
     /**
@@ -121,13 +122,15 @@ class TeamController extends Controller
             }
             $teamEmployees = $team->users->pluck('id')->toArray();
             $teamBrands = $team->brands->pluck('brand_key')->toArray();
-            return view('admin.teams.edit', compact('team', 'brands', 'users', 'teamEmployees', 'teamBrands'));
+            return response()->json(['team', $team, 'teamEmployees' => $teamEmployees, 'teamBrands' => $teamBrands]);
+//            return view('admin.teams.edit', compact('team', 'brands', 'users', 'teamEmployees', 'teamBrands'));
 
         } catch (\Exception $e) {
             if (request()->ajax()) {
                 return response()->json(['error' => ' Internal Server Error', 'message' => $e->getMessage(), 'line' => $e->getLine()], 500);
             }
-            return redirect()->route('admin.team.index')->with('error', $e->getMessage());
+            return response()->json(['error' => 'Internal Server Error', 'message' => $e->getMessage(), 'line' => $e->getLine()]);
+//            return redirect()->route('admin.team.index')->with('error', $e->getMessage());
         }
     }
 

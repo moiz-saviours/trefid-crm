@@ -128,52 +128,18 @@
             });
         });
 
-        var $defaultImage;
-        const $imageInput = $('#image'), $imageUrl = $('#image_url'), $imageDisplay = $('#image-display'),
-            $imageDiv = $('#image-div');
 
-        const updateImage = (src) => {
-            $imageDisplay.attr('src', src || $defaultImage);
-            $imageDiv.toggle(!!src)
-        };
-        $imageInput.on('change', function () {
-            const file = this.files[0];
-            if (file) {
-                updateImage(URL.createObjectURL(file));
-                $imageUrl.val(null);
-            } else {
-                updateImage($imageUrl.val());
-            }
-        });
-        $imageUrl.on('input', function () {
-            if (!$imageInput.val()) updateImage($(this).val());
-        });
-        updateImage();
 
         function setDataAndShowEdit(data) {
             $('#manage-form').data('id', data.id);
 
             $('#name').val(data.name);
-            $('#email').val(data.email);
-            $('#designation').val(data.designation);
-            $('#gender').val(data.gender);
-            $('#phone_number').val(data.phone_number);
-            $('#address').val(data.address);
+            $('#description').val(data.description);
+            $('#lead_id').val(data.lead_id);
+            $('#employees').val(data.employees);
+            $('#brands').val(data.brands);
             $('#status').val(data.status);
-            if (data.image) {
-                var isValidUrl = data.image.match(/^(https?:\/\/|\/|\.\/)/);
-                if (isValidUrl) {
-                    $imageUrl.val(data.image);
-                    $defaultImage = data.image;
-                    updateImage(data.image)
-                } else {
-                    $imageUrl.val(`{{asset('assets/images/teams/')}}/` + data.image);
-                    $defaultImage = `{{asset('assets/images/teams/')}}/` + data.image;
-                    updateImage(`{{asset('assets/images/teams/')}}/` + data.image)
-                }
-                $imageDisplay.attr('alt', data.name);
-                $imageDiv.show();
-            }
+
             $('#manage-form').attr('action', `{{route('admin.team.update')}}/` + data.id);
             $('#formContainer').addClass('open')
         }
@@ -203,7 +169,7 @@
                                 <td class="align-middle text-center text-nowrap" style="max-width: 200px; overflow: hidden; text-overflow: ellipsis;" title="${assign_brands}">
                                     ${assign_brands}
                                 </td>
-                                <td class="align-middle text-center text-nowrap">${lead.name}</td>
+                                <td class="align-middle text-center text-nowrap">${lead}</td>
                                 <td class="align-middle text-center text-nowrap">
                                     <input type="checkbox" class="status-toggle change-status" data-id="${id}" ${status == 1 ? 'checked' : ''} data-bs-toggle="toggle">
                                 </td>

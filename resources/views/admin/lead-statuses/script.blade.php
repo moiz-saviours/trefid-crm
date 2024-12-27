@@ -356,7 +356,7 @@
                         <td class="align-middle text-center text-nowrap">${name}</td>
                         <td class="align-middle text-center">
                             <span class="status-color" style="background-color: ${color};"></span>
-                                            </td>
+                        </td>
                         <td class="align-middle text-center text-nowrap">${description}</td>
                         <td class="align-middle text-center text-nowrap">
                             <input type="checkbox" class="status-toggle change-status" data-id="${id}" ${status == 1 ? 'checked' : ''} data-bs-toggle="toggle">
@@ -372,7 +372,7 @@
                 `;
                             table.row.add($('<tr>', {id: `tr-${id}`}).append(columns)).draw(false);
                             $('#manage-form')[0].reset();
-                            $('#manage-form').removeData('id'); // Reset data-id
+
                             $('#formContainer').removeClass('open');
                         }
                     })
@@ -387,7 +387,7 @@
                             const rowData = table.row(index).data();
                             // Column 2: name
                             if (decodeHtml(rowData[2]) !== name) {
-                                table.cell(index, 2).data(name).draw();
+                                table.cell(index, 2).data(name).draw(false);
                             }
                             // Column 3: Color
                             if (decodeHtml(rowData[3]) !== color) {
@@ -405,7 +405,7 @@
                                 table.cell(index, 5).data(statusHtml).draw();
                             }
                             $('#manage-form')[0].reset();
-                            $('#manage-form').removeData('id'); // Reset data-id
+                            $('#manage-form').data('id', null);
                             $('#formContainer').removeClass('open');
                         }
                     })

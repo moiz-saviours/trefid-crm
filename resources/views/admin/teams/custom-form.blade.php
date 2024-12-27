@@ -196,46 +196,6 @@
                             </div>
                         </div>
                 </div>
-
-
-                <div class="form-group mb-3">
-                    <label for="image" class="form-label d-block">Profile Image (Optional)</label>
-
-                    <div class="d-flex align-items-start">
-                        <!-- Image Upload Section (Left) -->
-                        <div class="me-3" id="image-div" style="display: none">
-                            <label for="image">
-                                <img id="image-display" src="" alt="Preview"
-                                     class="img-thumbnail"
-                                     style="cursor: pointer; max-width: 100px;"
-                                     title="Click to choose a new file">
-                            </label>
-                        </div>
-
-                        <!-- Input Fields (Right) -->
-                        <div class="flex-grow-1">
-                            <div class="">
-                                <input type="file" class="form-control" id="image" name="image" accept="image/*"
-                                       aria-describedby="imageHelp">
-                            </div>
-                            <div class="input-group">
-                                <input type="url" class="form-control" id="image_url" name="image_url"
-                                       placeholder="https://example.com/image.png" aria-describedby="imageHelp">
-                            </div>
-                            <small id="imageHelp" class="form-text text-muted">
-                                You can either upload an image or provide a valid image URL.
-                            </small>
-                            <!-- Validation Error Messages -->
-                            @error('image')
-                            <span class="text-danger d-block">{{ $message }}</span>
-                            @enderror
-                            @error('image_url')
-                            <span class="text-danger d-block">{{ $message }}</span>
-                            @enderror
-                        </div>
-                    </div>
-                </div>
-
                 <div class="form-group mb-3">
                     <label for="status" class="form-label">Status</label>
                     <select class="form-control" id="status" name="status">
