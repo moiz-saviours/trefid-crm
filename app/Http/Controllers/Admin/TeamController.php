@@ -116,13 +116,13 @@ class TeamController extends Controller
             $brands = Brand::where('status', 1)->get();
             $users = User::where('status', 1)->get();
 
-            $assign_brands = $team->brands()->pluck('brands.brand_key')->toArray();
-            $assign_users = $team->users()->pluck('users.id')->toArray();
+            $assign_brand_keys = $team->brands()->pluck('brands.brand_key')->toArray();
+            $assign_user_ids = $team->users()->pluck('users.id')->toArray();
 
             if (request()->ajax()) {
-                return response()->json(['data' => array_merge($team->toArray(), ['assign_user_ids' => $assign_users], ['assign_brand_keys' => $assign_brands]), 'message' => 'Record updated successfully.']);
+                return response()->json(['data' => array_merge($team->toArray(), ['assign_user_ids' => $assign_user_ids], ['assign_brand_keys' => $assign_brand_keys]), 'message' => 'Record updated successfully.']);
             }
-            return view('admin.teams.edit', compact('team', 'brands', 'users'));
+            return view('admin.teams.edit', compact('team', 'brands', 'users', 'assign_brand_keys', 'assign_user_ids'));
 
         } catch (\Exception $e) {
             if (request()->ajax()) {

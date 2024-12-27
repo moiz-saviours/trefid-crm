@@ -111,7 +111,6 @@
                                                 @enderror
                                             </div>
                                         </div>
-                                        @dd( old('lead_id'), $team->lead_id , $users[1]->id )
                                         <div class="col-md-6">
                                             <div class="mb-3">
                                                 <label for="lead_id" class="form-label">Team Lead</label>
@@ -157,7 +156,7 @@
                                                     <div class="image-checkbox-container">
                                                         <input type="checkbox" name="employees[]" value="{{ $user->id }}"
                                                                id="user-{{ $user->id }}"
-                                                               {{ in_array($user->id, old('employees', $teamEmployees ?? [])) ? 'checked' : '' }}
+                                                               {{ in_array($user->id, old('employees', $assign_user_ids ?? [])) ? 'checked' : '' }}
                                                                class="select-user-checkbox">
                                                         <img
                                                             src="{{ $user->image && file_exists(public_path('assets/images/employees/'.$user->image)) ? asset('assets/images/employees/'.$user->image) : asset('assets/img/team-1.jpg') }}"
@@ -180,9 +179,8 @@
                                     <div class="assign-brands-div">
                                         <div class="mb-3">
                                             @php
-                                                $allBrandsSelected = count(old('brands', $teamBrands ?? [])) === $brands->count();
+                                                $allBrandsSelected = count(old('brands', $assign_brand_keys ?? [])) === $brands->count();
                                             @endphp
-
                                             <div class="d-flex justify-content-between align-items-center mb-3">
                                                 <h5 class="font-weight-bold mb-0 text-center">Brands</h5>
                                                 <div class="form-check form-check-inline">
@@ -199,7 +197,7 @@
                                                     <div class="col-6">
                                                         <div class="form-check">
                                                             <input class="form-check-input brand-checkbox" type="checkbox" name="brands[]" value="{{ $brand->brand_key }}"
-                                                                   id="brand-{{ $brand->brand_key }}" {{ in_array($brand->brand_key, old('brands', $teamBrands ?? [])) ? 'checked' : '' }}>
+                                                                   id="brand-{{ $brand->brand_key }}" {{ in_array($brand->brand_key, old('brands', $assign_brand_keys ?? [])) ? 'checked' : '' }}>
                                                             <label class="form-check-label" for="brand-{{ $brand->brand_key }}">{{ $brand->name }}</label>
                                                             <span class="brand-url d-block text-muted">{{ $brand->url }}</span>
                                                         </div>
