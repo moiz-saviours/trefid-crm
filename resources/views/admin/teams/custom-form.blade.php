@@ -77,10 +77,11 @@
             position: absolute;
         }
 
-        .assign-brands select[multiple] option:checked , .assign-brands select[multiple]:focus option:checked {
+        .assign-brands select[multiple] option:checked, .assign-brands select[multiple]:focus option:checked {
             background: var(--bs-primary) linear-gradient(0deg, var(--bs-primary) 0%, var(--bs-primary) 100%);
             color: var(--bs-primary-color);
         }
+
         @media (max-width: 576px) {
             .team-emp .col-md-2 {
                 width: 25%;
@@ -158,43 +159,44 @@
                     @enderror
                 </div>
                 <div class="form-group mb-3">
-                        <!-- Assign Brands Section -->
-                        <div class="assign-brands">
-                            <div class="mb-3">
-                                @php
-                                    $allBrandsSelected = count(old('brands', [])) === $brands->count();
-                                @endphp
+                    <!-- Assign Brands Section -->
+                    <div class="assign-brands">
+                        <div class="mb-3">
+                            @php
+                                $allBrandsSelected = count(old('brands', [])) === $brands->count();
+                            @endphp
 
-                                    <!-- Select All Toggle Section -->
-                                <div class="d-flex justify-content-between align-items-center mb-3">
-                                    <h5 class="font-weight-bold mb-0 text-center">Brands</h5>
-                                    <div class="form-check form-check-inline">
-                                        <input type="checkbox" id="select-all-brands"
-                                               class="form-check-input" {{ $allBrandsSelected ? 'checked' : '' }}>
-                                        <label class="form-check-label" for="select-all-brands">
-                                            <small id="select-all-label">{{ $allBrandsSelected ? 'Unselect' : 'Select' }} All</small>
-                                        </label>
-                                    </div>
-                                </div>
-
-                                <!-- Brands Select Dropdown -->
-                                <div class="form-group">
-                                    <select name="brands[]" id="brands" class="form-control" multiple>
-                                        @foreach($brands as $brand)
-                                            <option value="{{ $brand->brand_key }}"
-                                                {{ in_array($brand->brand_key, old('brands', [])) ? 'selected' : '' }}>
-                                                {{ $brand->name }} - {{ $brand->url }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-
-                                    <!-- Error Display for Brands -->
-                                    @error('brands')
-                                    <div class="text-danger mt-2">{{ $message }}</div>
-                                    @enderror
+                                <!-- Select All Toggle Section -->
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h5 class="font-weight-bold mb-0 text-center">Brands</h5>
+                                <div class="form-check form-check-inline">
+                                    <input type="checkbox" id="select-all-brands"
+                                           class="form-check-input" {{ $allBrandsSelected ? 'checked' : '' }}>
+                                    <label class="form-check-label" for="select-all-brands">
+                                        <small id="select-all-label">{{ $allBrandsSelected ? 'Unselect' : 'Select' }}
+                                            All</small>
+                                    </label>
                                 </div>
                             </div>
+
+                            <!-- Brands Select Dropdown -->
+                            <div class="form-group">
+                                <select name="brands[]" id="brands" class="form-control" multiple>
+                                    @foreach($brands as $brand)
+                                        <option value="{{ $brand->brand_key }}"
+                                            {{ in_array($brand->brand_key, old('brands', [])) ? 'selected' : '' }}>
+                                            {{ $brand->name }} - {{ $brand->url }}
+                                        </option>
+                                    @endforeach
+                                </select>
+
+                                <!-- Error Display for Brands -->
+                                @error('brands')
+                                <div class="text-danger mt-2">{{ $message }}</div>
+                                @enderror
+                            </div>
                         </div>
+                    </div>
                 </div>
                 <div class="form-group mb-3">
                     <label for="status" class="form-label">Status</label>
@@ -220,8 +222,21 @@
 @push('script')
 
     <script>
-        /** For Assign brand to team */
+        $(document).ready(function () {
+            function handleFormVisibility() {
+                if ($('#manage-form').is(':visible')) {
+                    $('.select-user-checkbox').prop('checked', false);
+                    $('.checkmark-overlay').hide();
+                }
+            }
+            handleFormVisibility();
+            $('#manage-form').on('transitionend', function () {
+                handleFormVisibility();
+            });
+        });
 
+
+        /** For Assign brand to team */
         $('#select-all-brands').change(function () {
             const isChecked = this.checked;
             $('#brands option').prop('selected', isChecked);

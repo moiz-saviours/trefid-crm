@@ -125,7 +125,7 @@
 
 <script>
     function refreshCsrfToken() {
-        return $.get('{{route('csrf.token')}}').then((response) => {
+        return $.get('{{route('csrf.token')}}').then(response => {
             $('meta[name="csrf-token"]').attr('content', response.token);
         });
     }
@@ -345,6 +345,7 @@
                 if (manageForm.length > 0) {
                     manageForm[0].reset();
                     manageForm.removeData('id');
+
                 }
             }
         });

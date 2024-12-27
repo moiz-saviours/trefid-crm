@@ -40,7 +40,7 @@ class TeamController extends Controller
      */
     public function store(Request $request)
     {
-        $request->merge(['status' => $request->has('status') & $request->get('status') == "on" ? 1 : 0]);
+        $request->merge(['status' => $request->has('status') & in_array($request->get('status'), ['on', 1]) ? 1 : 0]);
         $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
@@ -88,9 +88,12 @@ class TeamController extends Controller
         if ($request->has('brands')) {
             $team->brands()->sync($request->brands);
         }
-        return response()->json(['data' => $team, 'success', 'Team created successfully.']);
-
-        //return redirect()->route('admin.team.edit', [$team->id])->with('success', 'Team created successfully.');
+        if (request()->ajax()) {
+            $lead = $team->lead()->value('users.name');
+            $assign_brands = $team->brands()->pluck('brands.name')->map('htmlspecialchars_decode')->implode(', ');
+            return response()->json(['data' => array_merge($team->toArray(), ['assign_brands' => $assign_brands], ['lead' => $lead]), 'message' => 'Record created successfully.']);
+        }
+        return redirect()->route('admin.team.edit', [$team->id])->with('success', 'Team created successfully.');
     }
 
     /**
