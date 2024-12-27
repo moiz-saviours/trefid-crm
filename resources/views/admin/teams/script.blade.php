@@ -136,8 +136,10 @@
             $('#name').val(data.name);
             $('#description').val(data.description);
             $('#lead_id').val(data.lead_id);
-            $('#employees').val(data.employees);
-            $('#brands').val(data.brands);
+            data.assign_user_ids.forEach(id => {
+                $(`#user-${id}`).prop('checked', true).siblings('.checkmark-overlay').show();
+            });
+            $('#brands').val(data.assign_brand_keys);
             $('#status').val(data.status);
 
             $('#manage-form').attr('action', `{{route('admin.team.update')}}/` + data.id);

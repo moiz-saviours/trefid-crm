@@ -111,6 +111,7 @@
                                                 @enderror
                                             </div>
                                         </div>
+                                        @dd( old('lead_id'), $team->lead_id , $users[1]->id )
                                         <div class="col-md-6">
                                             <div class="mb-3">
                                                 <label for="lead_id" class="form-label">Team Lead</label>
