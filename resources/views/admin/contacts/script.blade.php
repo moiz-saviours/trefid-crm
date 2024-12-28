@@ -99,162 +99,162 @@
             table.buttons().container().appendTo(`#right-icon-${index}`);
         }
 
-        /** Edit */
-        $(document).on('click', '.editBtn', function () {
-            const id = $(this).data('id');
-            if (!id) {
-                Swal.fire({
-                    title: 'Error!',
-                    text: 'Record not found. Do you want to reload the page?',
-                    icon: 'error',
-                    showCancelButton: true,
-                    confirmButtonText: 'Reload',
-                    cancelButtonText: 'Cancel'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        location.reload();
+            /** Edit */
+            $(document).on('click', '.editBtn', function () {
+                const id = $(this).data('id');
+                if (!id) {
+                    Swal.fire({
+                        title: 'Error!',
+                        text: 'Record not found. Do you want to reload the page?',
+                        icon: 'error',
+                        showCancelButton: true,
+                        confirmButtonText: 'Reload',
+                        cancelButtonText: 'Cancel'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            location.reload();
+                        }
+                    });
+                }
+                $('#manage-form')[0].reset();
+                $.ajax({
+                    url: `{{route('admin.contact.edit')}}/` + id,
+                    type: 'GET',
+                    success: function (data) {
+                        setDataAndShowEdit(data);
+                    },
+                    error: function () {
+                        alert('Error fetching data.');
                     }
                 });
+            });
+
+            const decodeHtml = (html) => {
+                const txt = document.createElement("textarea");
+                txt.innerHTML = html;
+                return txt.value;
+            };
+
+            function setDataAndShowEdit(data) {
+                let client = data?.client;
+                $('#manage-form').data('id', client.id);
+                $('#brand_key').val(client.brand_key);
+                $('#team_key').val(client.team_key);
+                $('#name').val(client.name);
+                $('#email').val(client.email);
+                $('#phone').val(client.phone);
+                $('#address').val(client.address);
+                $('#city').val(client.city);
+                $('#state').val(client.state);
+                $('#country').val(client.country);
+                $('#zipcode').val(client.zipcode);
+                $('#status').val(client.status);
+
+                $('#manage-form').attr('action', `{{route('admin.contact.update')}}/` + client.id);
+                $('#formContainer').addClass('open')
             }
-            $('#manage-form')[0].reset();
-            $.ajax({
-                url: `{{route('admin.contact.edit')}}/` + id,
-                type: 'GET',
-                success: function (data) {
-                    setDataAndShowEdit(data);
-                },
-                error: function () {
-                    alert('Error fetching data.');
+
+
+            /** Manage Record */
+            $('#manage-form').on('submit', function (e) {
+                e.preventDefault();
+                var dataId = $('#manage-form').data('id');
+                var formData = new FormData(this);
+                if (!dataId) {
+                    AjaxRequestPromise(`{{ route("admin.contact.store") }}`, formData, 'POST', {useToastr: true})
+                        .then(response => {
+                            if (response?.data) {
+                                const {id, brand_key, team_key, name, email, phone,address,city,state,status,country,zipcode } = response.data;
+                                const index = table.rows().count() + 1;
+                                const columns = `
+                                    <td class="align-middle text-center text-nowrap"></td>
+                                    <td class="align-middle text-center text-nowrap">${index}</td>
+
+                                    <td class="align-middle text-center text-nowrap">${brand_key}</td>
+                                    <td class="align-middle text-center text-nowrap">${team_key}</td>
+                                    <td class="align-middle text-center text-nowrap">${name}</td>
+                                    <td class="align-middle text-center text-nowrap">${email}</td>
+                                    <td class="align-middle text-center text-nowrap">${phone}</td>
+                                    <td class="align-middle text-center text-nowrap">${address}</td>
+                                    <td class="align-middle text-center text-nowrap">${city}</td>
+                                    <td class="align-middle text-center text-nowrap">${state}</td>
+
+
+                                    <td class="align-middle text-center text-nowrap">
+                                        <input type="checkbox" class="status-toggle change-status" data-id="${id}" ${status == 1 ? 'checked' : ''} data-bs-toggle="toggle">
+                                    </td>
+                                    <td class="align-middle text-center table-actions">
+                                        <button type="button" class="btn btn-sm btn-primary editBtn" data-id="${id}" title="Edit">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button type="button" class="btn btn-sm btn-danger deleteBtn" data-id="${id}" title="Delete">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </td>
+                            `;
+                                table.row.add($('<tr>', {id: `tr-${id}`}).append(columns)).draw(false);
+                                $('#manage-form')[0].reset();
+
+                                $('#formContainer').removeClass('open')
+                            }
+                        })
+                        .catch(error => console.log('An error occurred while updating the record.'));
+                } else {
+                    const url = $(this).attr('action');
+                    AjaxRequestPromise(url, formData, 'POST', {useToastr: true})
+                        .then(response => {
+                            if (response?.data) {
+                                const {id, brand_key, team_key, name, email, phone,address,city,state,status } = response.data;
+                                const index = table.row($('#tr-' + id)).index();
+                                const rowData = table.row(index).data();
+                                // Column 2: Brand
+                                if (decodeHtml(rowData[2]) !== brand_key) {
+                                    table.cell(index, 2).data(brand_key).draw();
+                                }
+                                /** Column 3: Team */
+                                if (decodeHtml(rowData[3]) !== team_key) {
+                                    table.cell(index, 3).data(team_key).draw();
+                                }
+                                // Column 4: name
+                                if (decodeHtml(rowData[4]) !== name) {
+                                    table.cell(index, 4).data(name).draw();
+                                }
+                                // Column 5: email
+                                if (decodeHtml(rowData[5]) !== email) {
+                                    table.cell(index, 5).data(email).draw();
+                                }
+                                // Column 6: phone
+                                if (decodeHtml(rowData[6]) !== phone) {
+                                    table.cell(index, 6).data(phone).draw();
+                                }
+                                // Column 7: address
+                                if (decodeHtml(rowData[7]) !== address) {
+                                    table.cell(index, 7).data(address).draw();
+                                }
+
+                                // Column 8: city
+                                if (decodeHtml(rowData[8]) !== city) {
+                                    table.cell(index, 8).data(city).draw();
+                                }
+                                // Column 9: state
+                                if (decodeHtml(rowData[9]) !== state) {
+                                    table.cell(index, 9).data(state).draw();
+                                }
+
+                                // Column 10: Status
+                                const statusHtml = `<input type="checkbox" class="status-toggle change-status" data-id="${id}" ${status == 1 ? "checked" : ""} data-bs-toggle="toggle">`;
+                                if (decodeHtml(rowData[10]) !== statusHtml) {
+                                    table.cell(index, 10).data(statusHtml).draw();
+                                }
+
+
+                                $('#manage-form')[0].reset();
+                                $('#formContainer').removeClass('open')
+                            }
+                        })
+                        .catch(error => console.log(error));
                 }
             });
-        });
-
-        const decodeHtml = (html) => {
-            const txt = document.createElement("textarea");
-            txt.innerHTML = html;
-            return txt.value;
-        };
-
-        function setDataAndShowEdit(data) {
-            let client = data?.client;
-            $('#manage-form').data('id', client.id);
-            $('#brand_key').val(client.brand_key);
-            $('#team_key').val(client.team_key);
-            $('#name').val(client.name);
-            $('#email').val(client.email);
-            $('#phone').val(client.phone);
-            $('#address').val(client.address);
-            $('#city').val(client.city);
-            $('#state').val(client.state);
-            $('#country').val(client.country);
-            $('#zipcode').val(client.zipcode);
-            $('#status').val(client.status);
-
-            $('#manage-form').attr('action', `{{route('admin.contact.update')}}/` + client.id);
-            $('#formContainer').addClass('open')
-        }
-
-
-        /** Manage Record */
-        $('#manage-form').on('submit', function (e) {
-            e.preventDefault();
-            var dataId = $('#manage-form').data('id');
-            var formData = new FormData(this);
-            if (!dataId) {
-                AjaxRequestPromise(`{{ route("admin.contact.store") }}`, formData, 'POST', {useToastr: true})
-                    .then(response => {
-                        if (response?.data) {
-                            const {id, brand_key, team_key, name, email, phone,address,city,state,status,country,zipcode } = response.data;
-                            const index = table.rows().count() + 1;
-                            const columns = `
-                                <td class="align-middle text-center text-nowrap"></td>
-                                <td class="align-middle text-center text-nowrap">${index}</td>
-
-                                <td class="align-middle text-center text-nowrap">${brand_key}</td>
-                                <td class="align-middle text-center text-nowrap">${team_key}</td>
-                                <td class="align-middle text-center text-nowrap">${name}</td>
-                                <td class="align-middle text-center text-nowrap">${email}</td>
-                                <td class="align-middle text-center text-nowrap">${phone}</td>
-                                <td class="align-middle text-center text-nowrap">${address}</td>
-                                <td class="align-middle text-center text-nowrap">${city}</td>
-                                <td class="align-middle text-center text-nowrap">${state}</td>
-
-
-                                <td class="align-middle text-center text-nowrap">
-                                    <input type="checkbox" class="status-toggle change-status" data-id="${id}" ${status == 1 ? 'checked' : ''} data-bs-toggle="toggle">
-                                </td>
-                                <td class="align-middle text-center table-actions">
-                                    <button type="button" class="btn btn-sm btn-primary editBtn" data-id="${id}" title="Edit">
-                                        <i class="fas fa-edit"></i>
-                                    </button>
-                                    <button type="button" class="btn btn-sm btn-danger deleteBtn" data-id="${id}" title="Delete">
-                                        <i class="fas fa-trash"></i>
-                                    </button>
-                                </td>
-                        `;
-                            table.row.add($('<tr>', {id: `tr-${id}`}).append(columns)).draw(false);
-                            $('#manage-form')[0].reset();
-
-                            $('#formContainer').removeClass('open')
-                        }
-                    })
-                    .catch(error => console.log('An error occurred while updating the record.'));
-            } else {
-                const url = $(this).attr('action');
-                AjaxRequestPromise(url, formData, 'POST', {useToastr: true})
-                    .then(response => {
-                        if (response?.data) {
-                            const {id, brand_key, team_key, name, email, phone,address,city,state,status } = response.data;
-                            const index = table.row($('#tr-' + id)).index();
-                            const rowData = table.row(index).data();
-                            // Column 2: Brand
-                            if (decodeHtml(rowData[2]) !== brand_key) {
-                                table.cell(index, 2).data(brand_key).draw();
-                            }
-                            /** Column 3: Team */
-                            if (decodeHtml(rowData[3]) !== team_key) {
-                                table.cell(index, 3).data(team_key).draw();
-                            }
-                            // Column 4: name
-                            if (decodeHtml(rowData[4]) !== name) {
-                                table.cell(index, 4).data(name).draw();
-                            }
-                            // Column 5: email
-                            if (decodeHtml(rowData[5]) !== email) {
-                                table.cell(index, 5).data(email).draw();
-                            }
-                            // Column 6: phone
-                            if (decodeHtml(rowData[6]) !== phone) {
-                                table.cell(index, 6).data(phone).draw();
-                            }
-                            // Column 7: address
-                            if (decodeHtml(rowData[7]) !== address) {
-                                table.cell(index, 7).data(address).draw();
-                            }
-
-                            // Column 8: city
-                            if (decodeHtml(rowData[8]) !== city) {
-                                table.cell(index, 8).data(city).draw();
-                            }
-                            // Column 9: state
-                            if (decodeHtml(rowData[9]) !== state) {
-                                table.cell(index, 9).data(state).draw();
-                            }
-
-                            // Column 10: Status
-                            const statusHtml = `<input type="checkbox" class="status-toggle change-status" data-id="${id}" ${status == 1 ? "checked" : ""} data-bs-toggle="toggle">`;
-                            if (decodeHtml(rowData[10]) !== statusHtml) {
-                                table.cell(index, 10).data(statusHtml).draw();
-                            }
-
-
-                            $('#manage-form')[0].reset();
-                            $('#formContainer').removeClass('open')
-                        }
-                    })
-                    .catch(error => console.log(error));
-            }
-        });
         /** Change Status*/
         $('tbody').on('change', '.change-status', function () {
             const statusCheckbox = $(this);

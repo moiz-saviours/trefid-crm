@@ -117,10 +117,10 @@
             }
             $('#manage-form')[0].reset();
             $.ajax({
-                url: `{{route('admin.employee.edit')}}/` + id,
+                url: `{{route('admin.payment.edit')}}/` + id,
                 type: 'GET',
-                success: function (data) {
-                    setDataAndShowEdit(data);
+                success: function (response) {
+                    setDataAndShowEdit(response.data);
                 },
                 error: function () {
                     alert('Error fetching data.');
@@ -128,53 +128,29 @@
             });
         });
 
-        var $defaultImage;
-        const $imageInput = $('#image'), $imageUrl = $('#image_url'), $imageDisplay = $('#image-display'),
-            $imageDiv = $('#image-div');
 
-        const updateImage = (src) => {
-            $imageDisplay.attr('src', src || $defaultImage);
-            $imageDiv.toggle(!!src)
-        };
-        $imageInput.on('change', function () {
-            const file = this.files[0];
-            if (file) {
-                updateImage(URL.createObjectURL(file));
-                $imageUrl.val(null);
-            } else {
-                updateImage($imageUrl.val());
-            }
-        });
-        $imageUrl.on('input', function () {
-            if (!$imageInput.val()) updateImage($(this).val());
-        });
-        updateImage();
 
         function setDataAndShowEdit(data) {
-            $('#manage-form').data('id', data.id);
+            let payment = data;
+            $('#manage-form').data('id', payment.id);
 
-            $('#name').val(data.name);
-            $('#email').val(data.email);
-            $('#designation').val(data.designation);
-            $('#gender').val(data.gender);
-            $('#phone_number').val(data.phone_number);
-            $('#address').val(data.address);
-            $('#status').val(data.status);
-            if (data.image) {
-                var isValidUrl = data.image.match(/^(https?:\/\/|\/|\.\/)/);
-                if (isValidUrl) {
-                    $imageUrl.val(data.image);
-                    $defaultImage = data.image;
-                    updateImage(data.image)
-                } else {
-                    $imageUrl.val(`{{asset('assets/images/employees/')}}/` + data.image);
-                    $defaultImage = `{{asset('assets/images/employees/')}}/` + data.image;
-                    updateImage(`{{asset('assets/images/employees/')}}/` + data.image)
-                }
-                $imageDisplay.attr('alt', data.name);
-                $imageDiv.show();
-            }
-            $('#manage-form').attr('action', `{{route('admin.employee.update')}}/` + data.id);
+            $('#brand_key').val(payment.brand_key);
+            $('#team_key').val(payment.team_key);
+            $('#agent_id').val(payment.agent_id);
+            $('#payment_type').val(payment.payment_type).trigger('change');
+            $('#client_name').val(payment.client_name);
+            $('#client_email').val(payment.client_email);
+            $('#client_phone').val(payment.client_phone);
+            $('#address').val(payment.address);
+            $('#client_key').val(payment.client_key);
+            $('#amount').val(payment.amount);
+            $('#description').val(payment.description);
+            $('#payment_method').val(payment.payment_method);
+            $('#transaction_id').val(payment.transaction_id);
+
+
+
+            $('#manage-form').attr('action', `{{route('admin.payment.update')}}/` + payment.id);
             $('#formContainer').addClass('open')
         }
         const decodeHtml = (html) => {
@@ -189,25 +165,28 @@
             var dataId = $('#manage-form').data('id');
             var formData = new FormData(this);
             if (!dataId) {
-                AjaxRequestPromise(`{{ route("admin.employee.store") }}`, formData, 'POST', {useToastr: true})
+                AjaxRequestPromise(`{{ route("admin.payment.store") }}`, formData, 'POST', {useToastr: true})
                     .then(response => {
                         if (response?.data) {
-                            const {id, image, name, email, designation, team_name, status} = response.data;
-                            const imageUrl = isValidUrl(image) ? image : (image ? `{{ asset('assets/images/employees/') }}/${image}` : '{{ asset("assets/images/no-image-available.png") }}');
+                            const {id, brand_key, team_key, agent_id, payment_type, client_name, client_email,client_phone,address,client_key,amount,description,payment_method,transaction_id} = response.data;
                             const index = table.rows().count() + 1;
                             const columns = `
                                 <td class="align-middle text-center text-nowrap"></td>
                                 <td class="align-middle text-center text-nowrap">${index}</td>
-                                <td class="align-middle text-center text-nowrap">
-                                    ${imageUrl ? `<object data="${imageUrl}" class="avatar avatar-sm me-3" title="${name}">
-                                        <img src="${imageUrl}" alt="${name}" class="avatar avatar-sm me-3" title="${name}">
-                                    </object>`
-                                : null}
-                                </td>
-                                <td class="align-middle text-center text-nowrap">${name}</td>
-                                <td class="align-middle text-center text-nowrap">${email}</td>
-                                <td class="align-middle text-center text-nowrap">${designation}</td>
-                                <td class="align-middle text-center text-nowrap">${team_name}</td>
+                                <td class="align-middle text-center text-nowrap">${brand_key}</td>
+                                <td class="align-middle text-center text-nowrap">${team_key}</td>
+                                <td class="align-middle text-center text-nowrap">${agent_id}</td>
+                                <td class="align-middle text-center text-nowrap">${payment_type}</td>
+                                <td class="align-middle text-center text-nowrap">${client_name}</td>
+                                <td class="align-middle text-center text-nowrap">${client_email}</td>
+                                <td class="align-middle text-center text-nowrap">${client_phone}</td>
+                                <td class="align-middle text-center text-nowrap">${address}</td>
+                                <td class="align-middle text-center text-nowrap">${client_key}</td>
+                                <td class="align-middle text-center text-nowrap">${amount}</td>
+                                <td class="align-middle text-center text-nowrap">${description}</td>
+                                <td class="align-middle text-center text-nowrap">${payment_method}</td>
+                                <td class="align-middle text-center text-nowrap">${transaction_id}</td>
+
                                 <td class="align-middle text-center text-nowrap">
                                     <input type="checkbox" class="status-toggle change-status" data-id="${id}" ${status == 1 ? 'checked' : ''} data-bs-toggle="toggle">
                                 </td>
@@ -222,7 +201,6 @@
                         `;
                             table.row.add($('<tr>', {id: `tr-${id}`}).append(columns)).draw(false);
                             $('#manage-form')[0].reset();
-                            $('#image-display').attr('src', null);
                             $('#formContainer').removeClass('open')
                         }
                     })
@@ -272,50 +250,7 @@
                     .catch(error => console.log(error));
             }
         });
-        /** Change Status*/
-        $('tbody').on('change', '.change-status', function () {
-            const statusCheckbox = $(this);
-            const status = +statusCheckbox.is(':checked');
-            const rowId = statusCheckbox.data('id');
-            AjaxRequestPromise(`{{ route('admin.employee.change.status') }}/${rowId}?status=${status}`, null, 'GET', {useToastr: true})
-                .then(response => {
-                    const rowIndex = table.row($('#tr-' + rowId)).index();
-                    const statusHtml = `<input type="checkbox" class="status-toggle change-status" data-id="${rowId}" ${status ? "checked" : ""} data-bs-toggle="toggle">`;
-                    table.cell(rowIndex, 7).data(statusHtml).draw();
-                })
-                .catch(() => {
-                    statusCheckbox.prop('checked', !status);
-                });
-        });
-        /** Delete Record */
-        $(document).on('click', '.deleteBtn', function () {
-            const id = $(this).data('id');
-            AjaxDeleteRequestPromise(`{{ route("admin.employee.delete", "") }}/${id}`, null, 'DELETE', {
-                useDeleteSwal: true,
-                useToastr: true,
-            })
-                .then(response => {
-                    table.row(`#tr-${id}`).remove().draw();
-                })
-                .catch(error => {
-                    if (error.isConfirmed === false) {
-                        Swal.fire({
-                            title: 'Action Canceled',
-                            text: error?.message || 'The deletion has been canceled.',
-                            icon: 'info',
-                            confirmButtonText: 'OK'
-                        });
-                        console.error('Record deletion was canceled:', error?.message);
-                    } else {
-                        Swal.fire({
-                            title: 'Error!',
-                            text: 'An error occurred while deleting the record.',
-                            icon: 'error',
-                            confirmButtonText: 'Try Again'
-                        });
-                        console.error('An error occurred while deleting the record:', error);
-                    }
-                });
-        });
+
+
     });
 </script>

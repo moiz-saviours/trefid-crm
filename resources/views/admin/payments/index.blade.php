@@ -1,16 +1,16 @@
 @extends('admin.layouts.app')
-@section('title','Employees')
+@section('title','Payments')
 @section('datatable', true)
 @section('content')
     @push('style')
-        @include('admin.employees.style')
+        @include('admin.payments.style')
     @endpush
     <section id="content" class="content">
         <div class="content__header content__boxed overlapping">
             <div class="content__wrap">
                 <header class="custm_header">
                     <div class="new_head">
-                        <h1 class="page-title mb-2">Employees <i class="fa fa-caret-down" aria-hidden="true"></i></h1>
+                        <h1 class="page-title mb-2">Payments <i class="fa fa-caret-down" aria-hidden="true"></i></h1>
                         <h2 id="record-count" class="h6"> records</h2>
                     </div>
                     <div class="filters">
@@ -31,7 +31,7 @@
                 <div class="container">
                     <div class="custom-tabs">
                         <ul class="tab-nav">
-                            <li class="tab-item active" data-tab="home">Employees
+                            <li class="tab-item active" data-tab="home">Payments
                                 <i class="fa fa-times close-icon" aria-hidden="true"></i></li>
                         </ul>
                     </div>
@@ -64,7 +64,7 @@
                                     </div>
                                 </div>
                                 <div class="card-body">
-                                    <table id="allEmployeesTable" class="table table-striped datatable-exportable
+                                    <table id="allPaymentsTable" class="table table-striped datatable-exportable
                             stripe row-border order-column nowrap
                             initTable
                             ">
@@ -73,60 +73,78 @@
                                         <tr>
                                             <th><input type="checkbox"></th>
                                             <th class="align-middle text-center text-nowrap">SNO.</th>
-                                            <th class="align-middle text-center text-nowrap">Image</th>
-                                            <th class="align-middle text-center text-nowrap">Name</th>
-                                            <th class="align-middle text-center text-nowrap">Email</th>
-                                            <th class="align-middle text-center text-nowrap">Designation</th>
-                                            <th class="align-middle text-center text-nowrap">Team</th>
-                                            <th class="align-middle text-center text-nowrap">Status</th>
-                                            <th class="align-middle text-center text-nowrap">Action</th>
+                                            <th class="align-middle text-center text-nowrap">INVOICE#</th>
+                                            <th class="align-middle text-center text-nowrap">PAYMENT METHOD</th>
+                                            <th class="align-middle text-center text-nowrap">METHOD NAME</th>
+                                            <th class="align-middle text-center text-nowrap">TRANSACTION ID</th>
+                                            <th class="align-middle text-center text-nowrap">BRAND</th>
+                                            <th class="align-middle text-center text-nowrap">TEAM</th>
+                                            <th class="align-middle text-center text-nowrap">AGENT</th>
+                                            <th class="align-middle text-center text-nowrap">CUSTOMER</th>
+                                            <th class="align-middle text-center text-nowrap">AMOUNT</th>
+                                            <th class="align-middle text-center text-nowrap">STATUS</th>
+                                            <th class="align-middle text-center text-nowrap">CREATE DATE</th>
+                                            <th class="align-middle text-center text-nowrap">ACTION</th>
                                         </tr>
                                         </thead>
                                         <tbody>
-{{--                                        @foreach($users as $user)--}}
-{{--                                            <tr id="tr-{{$user->id}}">--}}
-{{--                                                <td class="align-middle text-center text-nowrap"></td>--}}
-{{--                                                <td class="align-middle text-center text-nowrap">{{$loop->iteration}}</td>--}}
-{{--                                                <td class="align-middle text-center text-nowrap">--}}
-{{--                                                    @php--}}
-{{--                                                        $imageUrl = $user->image--}}
-{{--                                                            ? (filter_var($user->image, FILTER_VALIDATE_URL) ? $user->image : asset('assets/images/employees/' . $user->image))--}}
-{{--                                                            : asset('assets/images/no-image-available.png');--}}
-{{--                                                    @endphp--}}
-{{--                                                    <object data="{{ $imageUrl }}" class="avatar avatar-sm me-3" title="{{ $user->name }}"><img src="{{ $imageUrl }}" alt="{{ $user->name }}" class="avatar avatar-sm me-3" title="{{ $user->name }}"></object>--}}
-{{--                                                </td>--}}
-{{--                                                <td class="align-middle text-center text-nowrap">{{ $user->name }}</td>--}}
-{{--                                                <td class="align-middle text-center text-nowrap">{{ $user->email }}</td>--}}
-{{--                                                <td class="align-middle text-center text-nowrap">{{ $user->designation }}</td>--}}
-{{--                                                <td class="align-middle text-center text-nowrap">{{ optional($user->teams)->pluck('name')->map('htmlspecialchars_decode')->implode(', ') }}</td>--}}
-{{--                                                <td class="align-middle text-center text-nowrap">--}}
-{{--                                                    <input type="checkbox" class="status-toggle change-status"--}}
-{{--                                                           data-id="{{ $user->id }}"--}}
-{{--                                                           {{ $user->status == 1 ? 'checked' : '' }} data-bs-toggle="toggle">--}}
-{{--                                                </td>--}}
-{{--                                                <td class="align-middle text-center table-actions">--}}
-{{--                                                    <button type="button" class="btn btn-sm btn-primary editBtn"--}}
-{{--                                                            data-id="{{ $user->id }}" title="Edit"><i--}}
-{{--                                                            class="fas fa-edit"></i></button>--}}
-{{--                                                    <button type="button" class="btn btn-sm btn-danger deleteBtn"--}}
-{{--                                                            data-id="{{ $user->id }}" title="Delete"><i--}}
-{{--                                                            class="fas fa-trash"></i></button>--}}
-{{--                                                </td>--}}
-{{--                                            </tr>--}}
-{{--                                        @endforeach--}}
+                                        @foreach($all_payments as $payment)
+                                            <tr id="tr-{{$payment->id}}">
+                                                <td class="align-middle text-center text-nowrap"></td>
+                                                <td class="align-middle text-center text-nowrap">{{$loop->iteration}}</td>
+                                                <td class="align-middle text-center text-nowrap">
+                                                    <span class="invoice-number">{{ optional($payment->invoice)->invoice_number }}</span><br>
+                                                    <span class="invoice-key">{{ optional($payment->invoice)->invoice_key }}</span>
+                                                </td>
+                                                <td class="align-middle text-center text-nowrap">{{optional($payment->payment_gateway)->name}}</td>
+                                                <td class="align-middle text-center text-nowrap">{{optional($payment->payment_gateway)->descriptor}}</td>
+                                                <td class="align-middle text-center text-nowrap">{{$payment->transaction_id}}</td>
+                                                <td class="align-middle text-center text-nowrap">{{optional($payment->brand)->name ?? "---"}}</td>
+                                                <td class="align-middle text-center text-nowrap">{{optional($payment->team)->name ?? "---"}}</td>
+                                                <td class="align-middle text-center text-nowrap">{{optional($payment->agent)->name ?? "---"}}</td>
+                                                <td class="align-middle text-center text-nowrap">{{optional($payment->customer)->name ?? "---"}}</td>
+                                                <td class="align-middle text-center text-nowrap">${{$payment->amount}}</td>
+                                                <td class="align-middle text-center text-nowrap">
+                                                    @if($payment->status == 0)
+                                                        <span class="badge bg-warning text-dark">Due</span>
+                                                    @elseif($payment->status == 1)
+                                                        <span class="badge bg-success">Paid</span>
+                                                    @elseif($payment->status == 2)
+                                                        <span class="badge bg-danger">Refund</span>
+                                                    @endif
+                                                </td>
+                                                <td class="align-middle text-center text-nowrap">
+                                                    @if ($payment->created_at->isToday())
+                                                        Today
+                                                        at {{ $payment->created_at->timezone('GMT+5')->format('g:i A') }}
+                                                        GMT+5
+                                                    @else
+                                                        {{ $payment->created_at->timezone('GMT+5')->format('M d, Y g:i A') }}
+                                                        GMT+5
+                                                    @endif
+                                                </td>
+                                                <td class="align-middle text-center table-actions">
+                                                    <button type="button" class="btn btn-sm btn-primary editBtn"
+                                                            data-id="{{ $payment->id }}" title="Edit"><i
+                                                            class="fas fa-edit"></i></button>
+
+                                                </td>
+                                            </tr>
+
+                                        @endforeach
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    @include('admin.employees.custom-form')
+                    @include('admin.payments.custom-form')
                 </div>
             </div>
         </div>
     </section>
     <!-- Modal -->
     @push('script')
-        @include('admin.employees.script')
+        @include('admin.payments.script')
     @endpush
 @endsection

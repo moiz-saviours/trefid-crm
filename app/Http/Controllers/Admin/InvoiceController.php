@@ -138,12 +138,15 @@ class InvoiceController extends Controller
      */
     public function edit(Invoice $invoice)
     {
-        if (!$invoice->id) return redirect()->route('admin.invoice.index')->with('error', 'Record not found.');
+        if (!$invoice->id)
+            return response()->json(['error' => 'Invoice does not exist.']);
+//            return redirect()->route('admin.invoice.index')->with('error', 'Record not found.');
         $brands = Brand::all();
         $teams = Team::all();
         $clients = Client::all();
         $users = User::all();
-        return view('admin.invoices.edit', compact('invoice', 'brands', 'teams', 'clients', 'users'));
+        return response()->json(['invoice' => $invoice, 'brands' => $brands, 'teams' => $teams, 'clients' => $clients, 'users' => $users]);
+//        return view('admin.invoices.edit', compact('invoice', 'brands', 'teams', 'clients', 'users'));
     }
 
     /**
@@ -209,7 +212,8 @@ class InvoiceController extends Controller
             : Client::where('client_key', $request->input('client_key'))->first();
 
         if (!$client) {
-            return redirect()->back()->with('error', 'The selected client does not exist.');
+            return response()->json(['error' => 'The selected client does not exist.']);
+//            return redirect()->back()->with('error', 'The selected client does not exist.');
         }
 
         $invoice->update([
@@ -221,8 +225,9 @@ class InvoiceController extends Controller
             'amount' => $request->input('amount'),
             'type' => $request->input('type'),
         ]);
+        return response()->json(['success' => 'Invoice updated successfully.']);
 
-        return redirect()->route('admin.invoice.index')->with('success', 'Invoice updated successfully.');
+//        return redirect()->route('admin.invoice.index')->with('success', 'Invoice updated successfully.');
     }
 
     /**
