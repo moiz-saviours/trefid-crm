@@ -128,8 +128,6 @@
             });
         });
 
-
-
         function setDataAndShowEdit(data) {
             $('#manage-form').data('id', data.id);
 
@@ -186,7 +184,6 @@
                         `;
                             table.row.add($('<tr>', {id: `tr-${id}`}).append(columns)).draw(false);
                             $('#manage-form')[0].reset();
-                            $('#image-display').attr('src', null);
                             $('#formContainer').removeClass('open')
                         }
                     })
@@ -196,7 +193,7 @@
                 AjaxRequestPromise(url, formData, 'POST', {useToastr: true})
                     .then(response => {
                         if (response?.data) {
-                            const {id, name, description, assign_brands, lead_name, status} = response.data;
+                            const {id, name, description, assign_brands, lead, status} = response.data;
                             const index = table.row($('#tr-' + id)).index();
                             const rowData = table.row(index).data();
 
@@ -213,8 +210,8 @@
                                 table.cell(index, 5).data(assign_brands).draw();
                             }
                             // Column 6: Team
-                            if (decodeHtml(rowData[6]) !== lead.name) {
-                                table.cell(index, 6).data(lead.name).draw();
+                            if (decodeHtml(rowData[6]) !== lead) {
+                                table.cell(index, 6).data(lead).draw();
                             }
                             // Column 7: Status
                             const statusHtml = `<input type="checkbox" class="status-toggle change-status" data-id="${id}" ${status == 1 ? "checked" : ""} data-bs-toggle="toggle">`;
@@ -222,7 +219,6 @@
                                 table.cell(index, 7).data(statusHtml).draw();
                             }
                             $('#manage-form')[0].reset();
-                            $('#image-display').attr('src', null);
                             $('#formContainer').removeClass('open')
                         }
                     })

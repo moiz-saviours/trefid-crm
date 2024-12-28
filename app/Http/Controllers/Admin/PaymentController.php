@@ -20,8 +20,13 @@ class PaymentController extends Controller
      */
     public function index()
     {
+        $brands = Brand::all();
+        $teams = Team::all();
+        $agents = User::all();
+        $clients = Client::all();
+        $all_payments = Payment::all();
         $payments = Payment::with(['brand', 'team', 'agent'])->get();
-        return view('admin.payments.index', compact('payments'));
+        return view('admin.payments.index', compact('payments','brands','teams','agents','clients','all_payments'));
     }
 
     /**
@@ -115,10 +120,12 @@ class PaymentController extends Controller
 
             Payment::create($paymentData);
             DB::commit();
-            return redirect()->route('admin.payment.index')->with('success', 'Payment created successfully.');
+            return response()->json(['success' => 'Payment Created Successfully.']);
+//            return redirect()->route('admin.payment.index')->with('success', 'Payment created successfully.');
         } catch (\Exception $e) {
             DB::rollBack();
-            return redirect()->back()->withErrors(['error' => $e->getMessage()])->withInput();
+            return response()->json(['error' => $e->getMessage()]);
+            //return redirect()->back()->withErrors(['error' => $e->getMessage()])->withInput();
         }
     }
 
@@ -136,14 +143,35 @@ class PaymentController extends Controller
      */
     public function edit(Payment $payment)
     {
+        try {
+            if (!$payment->exists) {
+                if (request()->ajax()) {
+                    return response()->json(['error' => 'Oops! Record not found.']);
+                }
+                return redirect()->route('admin.payment.index')->with('error', 'Record not found.');
+            }
+            if (request()->ajax()) {
+                return response()->json(['data' => array_merge($payment->toArray()), 'message' => 'Record fetched successfully.']);
+            }
 
-        $brands = Cache::remember('brands_list', config('cache.durations.short_lived'), fn() => Brand::all());
-        $teams = Cache::remember('teams_list', config('cache.durations.short_lived'), fn() => Team::all());
-        $agents = User::all();
-        $clients = Client::all();
-        return view('admin.payments.edit', compact('payment', 'brands', 'teams', 'agents', 'clients'));
+            //$brands = Cache::remember('brands_list', config('cache.durations.short_lived'), fn() => Brand::all());
+            //$teams = Cache::remember('teams_list', config('cache.durations.short_lived'), fn() => Team::all());
+
+            $brands = Brand::where('status', 1)->get();
+            $teams = Team::where('status', 1)->get();
+            $agents = User::where('status', 1)->get();
+            $clients = Client::where('status', 1)->get();
+
+            return view('admin.payments.edit', compact('payment', 'brands', 'teams', 'agents', 'clients'));
+
+        } catch (\Exception $e) {
+            if (request()->ajax()) {
+                return response()->json(['error' => ' Internal Server Error', 'message' => $e->getMessage(), 'line' => $e->getLine()], 500);
+            }
+            return redirect()->route('admin.payment.index')->with('error', $e->getMessage());
+        }
+
     }
-
     /**
      * Update the specified payment in storage.
      */
@@ -211,10 +239,12 @@ class PaymentController extends Controller
             ]);
 
             DB::commit();
-            return redirect()->route('admin.payment.index')->with('success', 'Payment updated successfully.');
+            return response()->json(['success' => 'Payment Updated Successfully']);
+//            return redirect()->route('admin.payment.index')->with('success', 'Payment updated successfully.');
         } catch (\Exception $e) {
             DB::rollBack();
-            return redirect()->back()->withErrors(['error' => $e->getMessage()])->withInput();
+            return response()->json(['error' => $e->getMessage()]);
+            //return redirect()->back()->withErrors(['error' => $e->getMessage()])->withInput();
         }
     }
 

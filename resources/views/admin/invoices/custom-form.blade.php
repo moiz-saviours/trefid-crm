@@ -57,33 +57,35 @@
                     <span class="text-danger">{{ $message }}</span>
                     @enderror
                 </div>
-                <div class="form-group mb-3">
-                    <label for="client_name" class="form-label">Client Name</label>
-                    <input type="text" class="form-control" id="client_name"
-                           name="client_name"
-                           value="{{ old('client_name') }}">
-                    @error('client_name')
-                    <span class="text-danger">{{ $message }}</span>
-                    @enderror
-                </div>
+                <div id="fresh-client-fields" class="form-group mb-3 d-none">
+                    <div class="form-group mb-3">
+                        <label for="client_name" class="form-label">Client Name</label>
+                        <input type="text" class="form-control" id="client_name"
+                               name="client_name"
+                               value="{{ old('client_name') }}">
+                        @error('client_name')
+                        <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
 
-                <div class="form-group mb-3">
-                    <label for="client_email" class="form-label">Client Email</label>
-                    <input type="email" class="form-control" id="client_email"
-                           name="client_email"
-                           value="{{ old('client_email') }}">
-                    @error('client_email')
-                    <span class="text-danger">{{ $message }}</span>
-                    @enderror
-                </div>
-                <div class="form-group mb-3">
-                    <label for="client_phone" class="form-label">Client Phone</label>
-                    <input type="text" class="form-control" id="client_phone"
-                           name="client_phone"
-                           value="{{ old('client_phone') }}">
-                    @error('client_phone')
-                    <span class="text-danger">{{ $message }}</span>
-                    @enderror
+                    <div class="form-group mb-3">
+                        <label for="client_email" class="form-label">Client Email</label>
+                        <input type="email" class="form-control" id="client_email"
+                               name="client_email"
+                               value="{{ old('client_email') }}">
+                        @error('client_email')
+                        <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="client_phone" class="form-label">Client Phone</label>
+                        <input type="text" class="form-control" id="client_phone"
+                               name="client_phone"
+                               value="{{ old('client_phone') }}">
+                        @error('client_phone')
+                        <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
                 </div>
                 <div id="upsale-client-fields" class="form-group mb-3 d-none">
                     <label for="client_key" class="form-label">Select Client</label>
@@ -131,16 +133,7 @@
                     @enderror
                 </div>
 
-                <div class="form-group mb-3">
-                    <label for="status" class="form-label">Status</label>
-                    <select class="form-control" id="status" name="status">
-                        <option value="1">Active</option>
-                        <option value="0">Inactive</option>
-                    </select>
-                    @error('status')
-                    <span class="text-danger">{{ $message }}</span>
-                    @enderror
-                </div>
+
             </div>
 
             <div class="form-button">

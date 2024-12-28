@@ -116,15 +116,14 @@ class TeamController extends Controller
                 }
                 return redirect()->route('admin.team.index')->with('error', 'Team not found.');
             }
-            $brands = Brand::where('status', 1)->get();
-            $users = User::where('status', 1)->get();
-
             $assign_brand_keys = $team->brands()->pluck('brands.brand_key')->toArray();
             $assign_user_ids = $team->users()->pluck('users.id')->toArray();
-
             if (request()->ajax()) {
-                return response()->json(['data' => array_merge($team->toArray(), ['assign_user_ids' => $assign_user_ids], ['assign_brand_keys' => $assign_brand_keys]), 'message' => 'Record updated successfully.']);
+                return response()->json(['data' => array_merge($team->toArray(), ['assign_user_ids' => $assign_user_ids], ['assign_brand_keys' => $assign_brand_keys]), 'message' => 'Record fetched successfully.']);
             }
+
+            $brands = Brand::where('status', 1)->get();
+            $users = User::where('status', 1)->get();
             return view('admin.teams.edit', compact('team', 'brands', 'users', 'assign_brand_keys', 'assign_user_ids'));
 
         } catch (\Exception $e) {
@@ -162,8 +161,9 @@ class TeamController extends Controller
         $team->brands()->sync($request->input('brands', []));
 
         if (request()->ajax()) {
-            $assign_brands = $team->brands->pluck('name')->map('htmlspecialchars_decode')->implode(', ');
-            return response()->json(['data' => array_merge($team->toArray(), ['assign_brands' => $assign_brands]), 'message' => 'Record updated successfully.']);
+            $lead = $team->lead()->value('users.name');
+            $assign_brands = $team->brands()->pluck('brands.name')->map('htmlspecialchars_decode')->implode(', ');
+            return response()->json(['data' => array_merge($team->toArray(), ['assign_brands' => $assign_brands], ['lead' => $lead]), 'message' => 'Record updated successfully.']);
         }
         return redirect()->route('admin.team.edit', [$team->id])->with('success', 'Team updated successfully.');
     }
