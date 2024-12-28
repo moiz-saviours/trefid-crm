@@ -140,7 +140,7 @@ class TeamController extends Controller
      */
     public function update(Request $request, Team $team)
     {
-        $request->merge(['status' => $request->has('status') & $request->get('status') == "on" ? 1 : 0]);
+        $request->merge(['status' => $request->has('status') & in_array($request->get('status'), ['on', 1]) ? 1 : 0]);
         $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
