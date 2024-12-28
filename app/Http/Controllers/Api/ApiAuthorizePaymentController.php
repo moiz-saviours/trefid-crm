@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Invoice;
+use App\Models\Payment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use net\authorize\api\contract\v1 as AnetAPI;
@@ -17,7 +19,6 @@ class ApiAuthorizePaymentController extends Controller
                 'card_number' => 'required|numeric',
                 'expiration_date' => 'required|date_format:m/Y',
                 'cvv' => 'required|numeric',
-                'amount' => 'required|numeric|min:1',
                 'invoice_number' => 'required|numeric|exists:invoices,invoice_key',
             ], [
                 'card_number.numeric' => 'Card number must be numeric.',
@@ -34,11 +35,17 @@ class ApiAuthorizePaymentController extends Controller
             if ($validator->fails()) {
                 return response()->json(['errors' => $validator->errors()], 422);
             }
-            
+
             $cardNumber = $request->input('card_number');
             $expirationDate = $request->input('expiration_date');
             $cvv = $request->input('cvv');
-            $amount = $request->input('amount');
+            $invoice = Invoice::where('invoice_key', $request->input('invoice_number'))->first();
+            $payment = Payment::where('invoice_key', $request->input('invoice_number'))->first();
+
+            if ($invoice->status == 1 || $payment) {
+                return response()->json(['errors' => 'Invoice already paid.'], 422);
+            }
+            $amount = $invoice->amount;
 
             $merchantAuthentication = new AnetAPI\MerchantAuthenticationType();
             $merchantAuthentication->setName(env('AUTHORIZE_NET_API_LOGIN_ID'));
@@ -67,17 +74,46 @@ class ApiAuthorizePaymentController extends Controller
             if ($response != null) {
                 $transactionResponse = $response->getTransactionResponse();
 
-                if ($transactionResponse != null && $transactionResponse->getResponseCode() == "1") {
-                    return response()->json([
-                        'status' => 'success',
-                        'message' => 'Payment successful!',
-                        'transaction_id' => $transactionResponse->getTransId(),
-                    ]);
+                if ($transactionResponse != null) {
+                    if ($transactionResponse->getResponseCode() == "1") {
+
+                        $invoice->update(['status' => 1]);
+                        Payment::create([
+                            'invoice_key' => $invoice->invoice_key,
+                            'brand_key' => $invoice->brand_key,
+                            'team_key' => $invoice->team_key,
+                            'client_key' => $invoice->client_key,
+                            'agent_id' => $invoice->agent_id,
+                            'merchant_id' => null,
+                            'transaction_id' => $transactionResponse->getTransId(),
+                            'response' => json_encode($response),
+                            'transaction_response' => json_encode($transactionResponse),
+                            'amount' => $amount,
+                            'payment_type' => $invoice->type,
+                            'status' => 1,/** paid */
+                        ]);
+                        return response()->json([
+                            'status' => 'success',
+                            'message' => 'Payment successful!',
+                            'transaction_id' => $transactionResponse->getTransId(),
+                            'response' => $response,
+                            'transactionResponse' => $transactionResponse,
+                        ]);
+                    } else {
+                        $errorMessages = $transactionResponse->getErrors();
+                        return response()->json([
+                            'status' => 'error',
+                            'message' => $errorMessages ? $errorMessages[0]->getErrorText() : 'Payment failed',
+                            'response' => $response,
+                            'transactionResponse' => $transactionResponse,
+                        ], 400);
+                    }
                 } else {
                     $errorMessages = $transactionResponse->getErrors();
                     return response()->json([
                         'status' => 'error',
                         'message' => $errorMessages ? $errorMessages[0]->getErrorText() : 'Payment failed',
+                        'response' => $response,
                     ], 400);
                 }
             } else {
@@ -86,7 +122,8 @@ class ApiAuthorizePaymentController extends Controller
                     'message' => $response->getMessages()->getMessage()[0]->getText(),
                 ], 500);
             }
-        } catch (\Exception $e) {
+        } catch
+        (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }

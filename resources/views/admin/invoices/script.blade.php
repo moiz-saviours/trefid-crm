@@ -1,4 +1,9 @@
 <script>
+    <!---- SCRIPT BLADE----->
+    $(document).ready(function () {
+        console.log('Document ready fired');
+    });
+
     $(document).ready(function () {
         /** Valid Url */
         function isValidUrl(url) {
@@ -67,6 +72,10 @@
         var table;
 
         function initializeDatatable(table_div, index) {
+            console.log(`Initializing table: ${table_div.attr('id')} - Instance: ${index}`);
+            if ($.fn.DataTable.isDataTable(table_div)) {
+                table_div.DataTable().destroy();
+            }
             table = table_div.DataTable({
                 dom:
                 // "<'row'<'col-sm-12 col-md-6'B><'col-sm-12 col-md-6'>>" +

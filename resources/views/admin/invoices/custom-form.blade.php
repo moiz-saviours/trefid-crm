@@ -144,7 +144,6 @@
     </form>
 </div>
 @push('script')
-    @include('admin.invoices.script')
     <script>
         $(document).ready(function () {
             $('#type').on('change', function () {
