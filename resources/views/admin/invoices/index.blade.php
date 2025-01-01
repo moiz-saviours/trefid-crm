@@ -80,6 +80,7 @@
                                             <th class="align-middle text-center text-nowrap">AGENT</th>
                                             <th class="align-middle text-center text-nowrap">AMOUNT</th>
                                             <th class="align-middle text-center text-nowrap">STATUS</th>
+                                            <th class="align-middle text-center text-nowrap">CREATE DATE</th>
                                             <th class="align-middle text-center text-nowrap">ACTION</th>
                                         </tr>
                                         </thead>
@@ -125,9 +126,23 @@
                                                 </td>
                                                 <td class="align-middle text-center text-nowrap">{{ number_format($invoice->amount, 2) }}</td>
                                                 <td class="align-middle text-center text-nowrap">
-                                                    <input type="checkbox" class="status-toggle change-status"
-                                                           data-id="{{ $invoice->id }}"
-                                                           {{ $invoice->status == 1 ? 'checked' : '' }} data-bs-toggle="toggle">
+                                                    @if($invoice->status == 0)
+                                                        <span class="badge bg-warning text-dark">Due</span>
+                                                    @elseif($invoice->status == 1)
+                                                        <span class="badge bg-success">Paid</span>
+                                                    @elseif($invoice->status == 2)
+                                                        <span class="badge bg-danger">Refund</span>
+                                                    @endif
+                                                </td>
+                                                <td class="align-middle text-center text-nowrap">
+                                                    @if ($invoice->created_at->isToday())
+                                                        Today
+                                                        at {{ $invoice->created_at->timezone('GMT+5')->format('g:i A') }}
+                                                        GMT+5
+                                                    @else
+                                                        {{ $invoice->created_at->timezone('GMT+5')->format('M d, Y g:i A') }}
+                                                        GMT+5
+                                                    @endif
                                                 </td>
                                                 <td class="align-middle text-center table-actions">
                                                     <button type="button" class="btn btn-sm btn-primary editBtn"
@@ -152,6 +167,7 @@
     </section>
     <!-- Modal -->
     @push('script')
+        <!-- INDEX SCRIPT -->
         @include('admin.invoices.script')
     @endpush
 @endsection
