@@ -15,7 +15,8 @@ class PaymentMerchantController extends Controller
     public function index()
     {
         $payment_merchants = PaymentMerchant::get();
-        return view('admin.payment-merchants.index', compact('payment_merchants'));
+        $brands = Brand::where('status', 1)->get();
+        return view('admin.payment-merchants.index', compact('payment_merchants', 'brands'));
     }
 
     /**

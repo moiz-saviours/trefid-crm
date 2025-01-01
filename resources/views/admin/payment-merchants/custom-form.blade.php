@@ -3,104 +3,132 @@
         <div class="form-container" id="formContainer">
             <!-- Form Header -->
             <div class="form-header fh-1">
-                <span id="custom-form-heading">Manage Employee</span>
+                <span id="custom-form-heading">Manage Client</span>
                 <button type="button" class="close-btn">×</button>
             </div>
             <!-- Form Body -->
             <div class="form-body">
                 <div class="form-group mb-3">
-                    <label for="name" class="form-label">Name</label>
-                    <input type="text" class="form-control" id="name" name="name" placeholder="Enter name" required>
+                    <label for="brand_key" class="form-label">Brand</label>
+                    <select class="form-control" id="brand_key" name="brand_key">
+                        <option value="">Select Brand</option>
+                        @foreach($brands as $brand)
+                            <option
+                                value="{{ $brand->brand_key }}" {{ old('brand_key') == $brand->brand_key ? 'selected' : '' }}>
+                                {{ $brand->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                    @error('brand_key')
+                    <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
+                <div class="form-group mb-3">
+                    <label for="name" class="form-label">Client Name</label>
+                    <input type="text" class="form-control" id="name" name="name"
+                           value="{{ old('name') }}"
+                           required>
                     @error('name')
                     <span class="text-danger">{{ $message }}</span>
                     @enderror
                 </div>
                 <div class="form-group mb-3">
+                    <label for="descriptor" class="form-label">Descriptor</label>
+                    <input type="text" class="form-control" id="descriptor" name="descriptor"
+                           value="{{ old('descriptor') }}"
+                           required>
+                    @error('descriptor')
+                    <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
+                <div class="form-group mb-3">
+                    <label for="vendor_name" class="form-label">Vendor Name</label>
+                    <input type="text" class="form-control" id="vendor_name" name="vendor_name"
+                           value="{{ old('vendor_name') }}" required>
+                    @error('vendor_name')
+                    <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
+                <div class="form-group mb-3">
                     <label for="email" class="form-label">Email</label>
-                    <input type="email" class="form-control" id="email" name="email" placeholder="Enter email" required>
+                    <input type="email" class="form-control" id="email" name="email"
+                           value="{{ old('email') }}" required>
                     @error('email')
                     <span class="text-danger">{{ $message }}</span>
                     @enderror
                 </div>
+
                 <div class="form-group mb-3">
-                    <label for="designation" class="form-label">Designation</label>
-                    <input type="text" class="form-control" id="designation" name="designation"
-                           placeholder="e.g. Software Engineer">
-                    @error('designation')
+                    <label for="login_id" class="form-label">Login ID</label>
+                    <input type="text" class="form-control" id="login_id" name="login_id"
+                           value="{{ old('login_id') }}" required>
+                    @error('login_id')
                     <span class="text-danger">{{ $message }}</span>
                     @enderror
                 </div>
+
                 <div class="form-group mb-3">
-                    <label for="gender" class="form-label">Gender</label>
-                    <select class="form-control" id="gender" name="gender">
-                        <option value="" disabled>Select Gender</option>
-                        <option value="male" selected>Male</option>
-                        <option value="female">Female</option>
+                    <label for="transaction_key" class="form-label">Transaction Key</label>
+                    <input type="text" class="form-control" id="transaction_key"
+                           name="transaction_key"
+                           value="{{ old('transaction_key') }}" required>
+                    @error('transaction_key')
+                    <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
+
+                <div class="form-group mb-3">
+                    <label for="limit" class="form-label">Limit</label>
+                    <input type="number" class="form-control" id="limit" name="limit" step="1"
+                           min="1"
+                           value="{{ old('limit') }}" required>
+                    @error('limit')
+                    <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
+
+                <div class="form-group mb-3">
+                    <label for="capacity" class="form-label">Capacity</label>
+                    <input type="number" class="form-control" id="capacity" name="capacity" step="1"
+                           min="1"
+                           value="{{ old('capacity') }}" required>
+                    @error('capacity')
+                    <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
+
+                <div class="form-group mb-3">
+                    <label for="environment" class="form-label">Environment</label>
+                    <select class="form-control" id="environment" name="environment" required>
+                        <option
+                            value="sandbox" {{ old('environment') == 'sandbox' ? 'selected' : '' }}>
+                            Sandbox
+                        </option>
+                        <option
+                            value="production" {{ old('environment') == 'production' ? 'selected' : '' }}>
+                            Production
+                        </option>
                     </select>
-                    @error('gender')
-                    <span class="text-danger">{{ $message }}</span>
-                    @enderror
-                </div>
-                <div class="form-group mb-3">
-                    <label for="phone_number" class="form-label">Phone Number</label>
-                    <input type="text" class="form-control" id="phone_number" name="phone_number"
-                           placeholder="e.g. +1234567890">
-                    @error('phone_number')
+                    @error('environment')
                     <span class="text-danger">{{ $message }}</span>
                     @enderror
                 </div>
 
-                <div class="form-group mb-3">
-                    <label for="address" class="form-label">Address</label>
-                    <textarea class="form-control" id="address" name="address" rows="3"></textarea>
-                    @error('address')
-                    <span class="text-danger">{{ $message }}</span>
-                    @enderror
-                </div>
-
-
-                <div class="form-group mb-3">
-                    <label for="image" class="form-label d-block">Profile Image (Optional)</label>
-
-                    <div class="d-flex align-items-start">
-                        <!-- Image Upload Section (Left) -->
-                        <div class="me-3" id="image-div" style="display: none">
-                            <label for="image">
-                                <img id="image-display" src="" alt="Preview"
-                                     class="img-thumbnail"
-                                     style="cursor: pointer; max-width: 100px;"
-                                     title="Click to choose a new file">
-                            </label>
-                        </div>
-
-                        <!-- Input Fields (Right) -->
-                        <div class="flex-grow-1">
-                            <div class="">
-                                <input type="file" class="form-control" id="image" name="image" accept="image/*" aria-describedby="imageHelp">
-                            </div>
-                            <div class="input-group">
-                                <input type="url" class="form-control" id="image_url" name="image_url"
-                                       placeholder="https://example.com/image.png" aria-describedby="imageHelp">
-                            </div>
-                            <small id="imageHelp" class="form-text text-muted">
-                                You can either upload an image or provide a valid image URL.
-                            </small>
-                            <!-- Validation Error Messages -->
-                            @error('image')
-                            <span class="text-danger d-block">{{ $message }}</span>
-                            @enderror
-                            @error('image_url')
-                            <span class="text-danger d-block">{{ $message }}</span>
-                            @enderror
-                        </div>
-                    </div>
-                </div>
 
                 <div class="form-group mb-3">
                     <label for="status" class="form-label">Status</label>
-                    <select class="form-control" id="status" name="status">
-                        <option value="1">Active</option>
-                        <option value="0">Inactive</option>
+                    <select class="form-control" id="status" name="status" required>
+                        <option value="active" {{ old('status') == 'active' ? 'selected' : '' }}>
+                            Active
+                        </option>
+                        <option
+                            value="inactive" {{ old('status') == 'inactive' ? 'selected' : '' }}>
+                            Inactive
+                        </option>
+                        <option
+                            value="suspended" {{ old('status') == 'suspended' ? 'selected' : '' }}>
+                            Suspended
+                        </option>
                     </select>
                     @error('status')
                     <span class="text-danger">{{ $message }}</span>
