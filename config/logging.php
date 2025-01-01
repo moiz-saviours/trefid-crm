@@ -127,6 +127,11 @@ return [
             'path' => storage_path('logs/laravel.log'),
         ],
 
+        'sanctum_output' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/sanctum_output.log'),
+            'level' => 'warning',
+        ],
     ],
 
 ];
