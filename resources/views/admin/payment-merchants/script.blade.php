@@ -128,8 +128,6 @@
             });
         });
 
-
-
         function setDataAndShowEdit(data) {
             $('#manage-form').data('id', data.id);
 

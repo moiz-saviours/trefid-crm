@@ -31,7 +31,7 @@
                 <div class="container">
                     <div class="custom-tabs">
                         <ul class="tab-nav">
-                            <li class="tab-item active" data-tab="home">Employees
+                            <li class="tab-item active" data-tab="home">CLients
                                 <i class="fa fa-times close-icon" aria-hidden="true"></i></li>
                         </ul>
                     </div>
@@ -65,9 +65,7 @@
                                 </div>
                                 <div class="card-body">
                                     <table id="allClientTable" class="table table-striped datatable-exportable
-                            stripe row-border order-column nowrap
-                            initTable
-                            ">
+                            stripe row-border order-column nowrap initTable">
                                         <thead>
 
                                         <tr>
