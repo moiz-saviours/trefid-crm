@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\{
     ClientController as AdminClientController,
     LeadController as AdminLeadController,
     LeadStatusController as AdminLeadStatusController,
+    ClientContactController as AdminClientContactController,
     PaymentController as AdminPaymentController,
     PaymentMerchantController as AdminPaymentMerchantController
 };
@@ -143,6 +144,19 @@ Route::middleware(['auth:admin'])->prefix('admin')->name('admin.')->group(functi
         Route::post('/store', [AdminPaymentController::class, 'store'])->name('store');
         Route::get('/edit/{payment?}', [AdminPaymentController::class, 'edit'])->name('edit');
         Route::post('/update/{payment?}', [AdminPaymentController::class, 'update'])->name('update');
+    });
+
+    /** Client Contacts Routes */
+    Route::name('client.contact.')->group(function () {
+        Route::get('/client/contacts', [AdminClientContactController::class, 'index'])->name('index');
+        Route::prefix('client/contact')->group(function () {
+            Route::get('/create', [AdminClientContactController::class, 'create'])->name('create');
+            Route::post('/store', [AdminClientContactController::class, 'store'])->name('store');
+            Route::get('/edit/{client?}', [AdminClientContactController::class, 'edit'])->name('edit');
+            Route::post('/update/{client?}', [AdminClientContactController::class, 'update'])->name('update');
+            Route::get('/change-status/{client?}', [AdminClientContactController::class, 'change_status'])->name('change.status');
+            Route::delete('/delete/{client?}', [AdminClientContactController::class, 'delete'])->name('delete');
+        });
     });
 
     /** Payment Merchant Routes */

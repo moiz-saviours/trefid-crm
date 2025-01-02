@@ -358,17 +358,17 @@
                                 <h3>Clients</h3>
                             </div>
                             <li class="nav-item">
-                                <a href="{{ route('admin.client.index') }}"
-                                   class="nav-link {{ request()->is('admin/client*') ? '' : '' }}">Contacts</a>
+                                <a href="{{ route('admin.client.contact.index') }}"
+                                   class="nav-link {{ request()->is('admin/client/contact*') ? '' : '' }}">Contacts</a>
                             </li>
 
                             <li class="nav-item">
                                 <a href="{{ route('admin.client.index') }}"
-                                   class="nav-link {{ request()->is('admin/client*') ? '' : '' }}">Company</a>
+                                   class="nav-link {{ request()->is('admin/client/{company,companies}*') ? '' : '' }}">Company</a>
                             </li>
                             <li class="nav-item">
                                 <a href="{{ route('admin.client.index') }}"
-                                   class="nav-link {{ request()->is('admin/client*') ? '' : '' }}">Accounts</a>
+                                   class="nav-link {{ request()->is('admin/client/account*') ? '' : '' }}">Accounts</a>
                             </li>
 
                         </ul>
