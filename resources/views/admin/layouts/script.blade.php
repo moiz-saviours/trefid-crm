@@ -24,6 +24,11 @@
 <!-- SweetAlert2 -->
 <script src="{{asset('assets/js/plugins/sweetalert2@11.js')}}"></script>
 
+{{--Chart JS Script--}}
+
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
+
 <!-- Jquery UI -->
 {{--<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>--}}
 <!-- End Jquery UI -->
