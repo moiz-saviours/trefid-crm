@@ -88,16 +88,6 @@
                 </div>
 
                 <div class="form-group mb-3">
-                    <label for="capacity" class="form-label">Capacity</label>
-                    <input type="number" class="form-control" id="capacity" name="capacity" step="1"
-                           min="1"
-                           value="{{ old('capacity') }}" required>
-                    @error('capacity')
-                    <span class="text-danger">{{ $message }}</span>
-                    @enderror
-                </div>
-
-                <div class="form-group mb-3">
                     <label for="environment" class="form-label">Environment</label>
                     <select class="form-control" id="environment" name="environment" required>
                         <option

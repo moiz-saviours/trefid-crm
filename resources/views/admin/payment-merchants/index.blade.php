@@ -73,17 +73,17 @@
                                         <tr>
                                             <th><input type="checkbox"></th>
                                             <th class="align-middle text-center text-nowrap">SNO.</th>
-                                            <th class="align-middle text-center text-nowrap">Brand</th>
-                                            <th class="align-middle text-center text-nowrap">Client Name</th>
-                                            <th class="align-middle text-center text-nowrap">Descriptor</th>
-                                            <th class="align-middle text-center text-nowrap">Vendor Name</th>
-                                            <th class="align-middle text-center text-nowrap">Email</th>
-                                            <th class="align-middle text-center text-nowrap">Login ID</th>
-                                            <th class="align-middle text-center text-nowrap">Transaction Key</th>
-                                            <th class="align-middle text-center text-nowrap">Limit</th>
-                                            <th class="align-middle text-center text-nowrap">Environment</th>
-                                            <th class="align-middle text-center text-nowrap">Status</th>
-                                            <th class="align-middle text-center text-nowrap">Action</th>
+                                            <th class="align-middle text-center text-nowrap">BRAND</th>
+                                            <th class="align-middle text-center text-nowrap">CLIENT NAME</th>
+                                            <th class="align-middle text-center text-nowrap">DESCRIPTOR</th>
+                                            <th class="align-middle text-center text-nowrap">VENDOR NAME</th>
+                                            <th class="align-middle text-center text-nowrap">EMAIL</th>
+                                            <th class="align-middle text-center text-nowrap">LOGIN ID</th>
+                                            <th class="align-middle text-center text-nowrap">TRANSACTION KEY</th>
+                                            <th class="align-middle text-center text-nowrap">LIMIT</th>
+                                            <th class="align-middle text-center text-nowrap">ENVIRONMENT</th>
+                                            <th class="align-middle text-center text-nowrap">STATUS</th>
+                                            <th class="align-middle text-center text-nowrap">ACTION</th>
 
                                         </tr>
                                         </thead>
@@ -108,6 +108,10 @@
                                                     <button type="button" class="btn btn-sm btn-primary editBtn"
                                                             data-id="{{ $payment_merchant->id }}" title="Edit"><i
                                                             class="fas fa-edit"></i></button>
+
+                                                    <button type="button" class="btn btn-sm btn-danger deleteBtn"
+                                                            data-id="{{ $payment_merchant->id }}" title="Delete"><i
+                                                            class="fas fa-trash"></i></button>
 
                                                 </td>
                                             </tr>

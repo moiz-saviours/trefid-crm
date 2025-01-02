@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Brand;
 use App\Models\PaymentMerchant;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class PaymentMerchantController extends Controller
 {
@@ -60,8 +61,10 @@ class PaymentMerchantController extends Controller
             'status' => $request->status,
         ]);
 
-        return redirect()->route('admin.client.index')
-            ->with('success', 'Payment Merchant created successfully.');
+        $paymentMerchant->save();
+        return response()->json(['success', 'Client Created Successfully.']);
+       // return redirect()->route('admin.client.index')->with('success', 'Payment Merchant created successfully.');
+
     }
 
 
@@ -76,9 +79,13 @@ class PaymentMerchantController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(PaymentMerchant $client)
+    public function edit(Request $request, PaymentMerchant $client)
     {
-        //
+        if ($request->ajax()) {
+            return response()->json($client);
+        }
+        session(['edit_client' => $client]);
+        return response()->json(['data' => $client]);
     }
 
     /**
@@ -86,14 +93,43 @@ class PaymentMerchantController extends Controller
      */
     public function update(Request $request, PaymentMerchant $client)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'brand_key' => 'nullable|exists:brands,brand_key',
+            'name' => 'required|string|max:255',
+            'descriptor' => 'nullable|string|max:255',
+            'vendor_name' => 'nullable|string|max:255',
+            'email' => 'nullable|email|max:255',
+            'login_id' => 'nullable|string|max:255',
+            'transaction_key' => 'nullable|string|max:255',
+            'limit' => 'nullable|integer|min:1',
+            'environment' => 'required|in:sandbox,production',
+            'status' => 'required|in:active,inactive,suspended',
+
+        ]);
+        if ($validator->fails()) {
+
+            return response()->json(['errors' => $validator->errors()->all()]);
+        }
+
+        $client->update($request->all());
+
+        return response()->json(['success' => 'Client updated successfully']);
+
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(PaymentMerchant $client)
+    public function delete(PaymentMerchant $client)
     {
-        //
+        try {
+            if ($client->delete()) {
+                return response()->json(['success' => 'The record has been deleted successfully.']);
+            }
+            return response()->json(['error' => 'An error occurred while deleting the record.']);
+
+        } catch (\Exception $e) {
+            return response()->json(['error' => ' Internal Server Error', 'message' => $e->getMessage(), 'line' => $e->getLine()], 500);
+        }
     }
 }
