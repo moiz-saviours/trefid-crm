@@ -15,7 +15,7 @@ class AccountController extends Controller
      */
     public function index()
     {
-        $admins = Admin::all();
+        $admins = Admin::where('status', 1)->get();
         return view('admin.accounts.index', compact('admins'));
     }
 

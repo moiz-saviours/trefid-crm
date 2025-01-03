@@ -1,9 +1,9 @@
 @extends('user.layouts.app')
-@section('title','Contacts')
+@section('title','Companies')
 @section('datatable', true)
 @section('content')
     @push('style')
-        @include('user.contacts.style')
+        @include('user.customers.companies.style')
         <style>
 
             .void {
@@ -250,8 +250,8 @@
             <div class="content__wrap">
                 <header class="custm_header">
                     <div class="new_head">
-                        <h1 class="page-title mb-2">Contacts <i class="fa fa-caret-down" aria-hidden="true"></i></h1>
-                        <h2 id="record-count" class="h6"> records</h2>
+                        <h1 class="page-title mb-2">Companies <i class="fa fa-caret-down" aria-hidden="true"></i></h1>
+                        <h2 id="record-count" class="h6">{{count($companies)}} records</h2>
                     </div>
                     <div class="filters">
                         <div class="actions">
@@ -260,7 +260,7 @@
                             <button class="header_btn">Actions <i class="fa fa-caret-down" aria-hidden="true"></i>
                             </button>
                             <button class="header_btn">Import</button>
-                            <button class="create-contact open-form-btn void">Create Contacts</button>
+                            <button class="create-contact open-form-btn void">Create Companies</button>
                         </div>
                     </div>
                 </header>
@@ -271,15 +271,11 @@
                 <div class="container">
                     <div class="custom-tabs">
                         <ul class="tab-nav">
-                            <li class="tab-item active" data-tab="home">All Contacts
+                            <li class="tab-item active" data-tab="home">Companies
                                 <i class="fa fa-times close-icon" aria-hidden="true"></i></li>
-                            <li class="tab-item " data-tab="menu1">My Contacts <i class="fa fa-times close-icon"
-                                                                                  aria-hidden="true"></i></li>
+                            {{--                            <li class="tab-item " data-tab="menu1">My Companies <i class="fa fa-times close-icon"--}}
+                            {{--                                                                                   aria-hidden="true"></i></li>--}}
                         </ul>
-                        {{--                        <div class="tab-buttons" >--}}
-                        {{--                            <button class="btn btn-primary"><i class="fa fa-add"></i> Views (2/5)</button>--}}
-                        {{--                            <button class="btn btn-secondary">All Views</button>--}}
-                        {{--                        </div>--}}
                     </div>
                     <div class="tab-content">
                         <div class="tab-pane active" id="home">
@@ -310,118 +306,51 @@
                                     </div>
                                 </div>
                                 <div class="card-body">
-                                    <table id="allContactsTable" class="table table-striped datatable-exportable
+                                    <table id="allCompaniesTable" class="table table-striped datatable-exportable
                             stripe row-border order-column nowrap
                             initTable
                             ">
                                         <thead>
                                         <tr>
                                             <th><input type="checkbox"></th>
-                                            <th>ID</th>
-                                            <th>NAME</th>
-                                            <th>EMAIL</th>
-                                            <th>PHONE NUMBER</th>
-                                            <th>CONTACT OWNER</th>
-                                            <th>PRIMARY COMPANY</th>
-                                            <th>CREATE DATE</th>
+                                            <th class="align-middle text-center text-nowrap">SNO.</th>
+                                            <th class="align-middle text-center text-nowrap">COMPANY DOMAIN</th>
+                                            <th class="align-middle text-center text-nowrap">COMPANY NAME</th>
+{{--                                            <th class="align-middle text-center text-nowrap">COMPANY OWNER</th>--}}
+                                            <th class="align-middle text-center text-nowrap">CREATE DATE (GMT+5)</th>
+                                            <th class="align-middle text-center text-nowrap">PHONE NUMBER</th>
+                                            <th class="align-middle text-center text-nowrap">ADDRESS</th>
+                                            <th class="align-middle text-center text-nowrap">CITY</th>
+                                            <th class="align-middle text-center text-nowrap">STATE</th>
+                                            <th class="align-middle text-center text-nowrap">COUNTRY</th>
+                                            <th class="align-middle text-center text-nowrap">POSTAL CODE</th>
+                                            <th class="align-middle text-center text-nowrap">INDUSTRY</th>
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        @foreach($all_contacts as $key => $contact)
-                                            <tr id="tr-{{$contact->id}}">
-                                                <td></td>
+                                        @foreach($companies as $key => $company)
+                                            <tr id="tr-{{$company->id}}">
+                                                <td class="align-middle text-center text-nowrap"></td>
                                                 <td class="align-middle text-center text-nowrap">{{$loop->iteration}}</td>
-                                                <td class="align-middle text-center text-nowrap">{{$contact->name}}</td>
-                                                <td class="align-middle text-center text-nowrap">{{$contact->email}}</td>
-                                                <td class="align-middle text-center text-nowrap">{{$contact->phone}}</td>
-                                                <td class="align-middle text-center text-nowrap">{{optional($contact->loggable)->name ?? "---"}}</td>
-                                                <td class="align-middle text-center text-nowrap">{{optional($contact->company->first())->name ?? "---"}}</td>
+                                                <td class="align-middle text-center text-nowrap">{{$company->domain}}</td>
+                                                <td class="align-middle text-center text-nowrap">{{$company->name}}</td>
                                                 <td class="align-middle text-center text-nowrap">
-                                                    @if ($contact->created_at->isToday())
+                                                    @if ($company->created_at->isToday())
                                                         Today
-                                                        at {{ $contact->created_at->timezone('GMT+5')->format('g:i A') }}
+                                                        at {{ $company->created_at->timezone('GMT+5')->format('g:i A') }}
                                                         GMT+5
                                                     @else
-                                                        {{ $contact->created_at->timezone('GMT+5')->format('M d, Y g:i A') }}
+                                                        {{ $company->created_at->timezone('GMT+5')->format('M d, Y g:i A') }}
                                                         GMT+5
                                                     @endif
                                                 </td>
-                                            </tr>
-                                        @endforeach
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="tab-pane" id="menu1">
-                            <div class="card">
-                                <div class="card-header">
-                                    <div class="container">
-                                        <div class="row fltr-sec">
-                                            <div class="col-md-8">
-                                                <ul class="custm-filtr">
-                                                    <div class="table-li">
-                                                        <li class="">Company Owner <i class="fa fa-caret-down"
-                                                                                      aria-hidden="true"></i></li>
-                                                        <li class="">Create date <i class="fa fa-caret-down"
-                                                                                    aria-hidden="true"></i></li>
-                                                        <li class="">Last activity date <i class="fa fa-caret-down"
-                                                                                           aria-hidden="true"></i>
-                                                        </li>
-                                                        <li class="">Lead status <i class="fa fa-caret-down"
-                                                                                    aria-hidden="true"></i></li>
-                                                        <li class=""><i class="fa fa-bars" aria-hidden="true"></i> All
-                                                            filters
-                                                        </li>
-                                                    </div>
-                                                </ul>
-                                            </div>
-                                            <div class="col-md-4 right-icon" id="right-icon-1">
-                                                {{--                                        <div class="right-icon">--}}
-                                                {{--                                            <i class="fa fa-reply" aria-hidden="true"></i>--}}
-                                                {{--                                            <i class="fa fa-clone" aria-hidden="true"></i>--}}
-                                                {{--                                            <i class="fa fa-file-pdf-o" aria-hidden="true"></i>--}}
-                                                {{--                                        </div>--}}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card-body">
-                                    <table id="myCompaniesTable" class="table table-striped datatable-exportable
-                            stripe row-border order-column nowrap
-                            initTable">
-                                        <thead>
-                                        <tr>
-                                            <th><input type="checkbox"></th>
-                                            <th>ID</th>
-                                            <th>NAME</th>
-                                            <th>EMAIL</th>
-                                            <th>PHONE NUMBER</th>
-                                            <th>CONTACT OWNER</th>
-                                            <th>PRIMARY COMPANY</th>
-                                            <th>CREATE DATE</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        @foreach($my_contacts as $key => $contact)
-                                            <tr id="tr-{{$contact->id}}">
-                                                <td></td>
-                                                <td class="align-middle text-center text-nowrap">{{$loop->iteration}}</td>
-                                                <td class="align-middle text-center text-nowrap">{{$contact->name}}</td>
-                                                <td class="align-middle text-center text-nowrap">{{$contact->email}}</td>
-                                                <td class="align-middle text-center text-nowrap">{{$contact->phone_number}}</td>
-                                                <td class="align-middle text-center text-nowrap">{{optional($contact->loggable)->name}}</td>
-                                                <td class="align-middle text-center text-nowrap">{{optional($contact->company->first())->name}}</td>
-                                                <td class="align-middle text-center text-nowrap">
-                                                    @if ($contact->created_at->isToday())
-                                                        Today
-                                                        at {{ $contact->created_at->timezone('GMT+5')->format('g:i A') }}
-                                                        GMT+5
-                                                    @else
-                                                        {{ $contact->created_at->timezone('GMT+5')->format('M d, Y g:i A') }}
-                                                        GMT+5
-                                                    @endif
-                                                </td>
+                                                <td class="align-middle text-center text-nowrap">{{$company->phone}}</td>
+                                                <td class="align-middle text-center text-nowrap">{{$company->address}}</td>
+                                                <td class="align-middle text-center text-nowrap">{{$company->city}}</td>
+                                                <td class="align-middle text-center text-nowrap">{{$company->state}}</td>
+                                                <td class="align-middle text-center text-nowrap">{{$company->country}}</td>
+                                                <td class="align-middle text-center text-nowrap">{{$company->zipcode}}</td>
+                                                <td class="align-middle text-center text-nowrap">{{isset($company->response)? json_decode($company->response)->industry:"---"}}</td>
                                             </tr>
                                         @endforeach
                                         </tbody>
@@ -456,7 +385,7 @@
     <!-- Modal -->
 
     @push('script')
-        @include('user.contacts.script')
+        @include('user.customers.companies.script')
         <script>
 
             $(document).ready(function () {
@@ -478,6 +407,26 @@
 
                     const targetPane = $(this).data("tab");
                     $("#" + targetPane).addClass("active");
+                });
+
+                // Handle tab close button
+                $(".close-icon").on("click", function (e) {
+                    e.stopPropagation(); // Prevent triggering tab click
+
+                    const parentTab = $(this).closest(".tab-item");
+                    const targetPane = parentTab.data("tab");
+
+                    // Remove the tab and its content
+                    parentTab.remove();
+                    $("#" + targetPane).remove();
+
+                    // If the closed tab was active, activate the first tab
+                    if (parentTab.hasClass("active")) {
+                        const firstTab = $(".tab-item").first();
+                        firstTab.addClass("active");
+                        const firstPane = firstTab.data("tab");
+                        $("#" + firstPane).addClass("active");
+                    }
                 });
             });
 

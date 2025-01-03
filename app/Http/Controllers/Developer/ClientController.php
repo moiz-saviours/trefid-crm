@@ -16,7 +16,7 @@ class ClientController extends Controller
      */
     public function index()
     {
-        $clients = CustomerContact::all();
+        $clients = CustomerContact::where('status', 1)->get();
         return view('developer.clients.index', compact('clients'));
     }
 
@@ -25,8 +25,8 @@ class ClientController extends Controller
      */
     public function create()
     {
-        $brands = Cache::remember('brands_list', config('cache.durations.short_lived'), fn() => Brand::all());
-        $teams = Cache::remember('teams_list', config('cache.durations.short_lived'), fn() => Team::all());
+        $brands = Cache::remember('brands_list', config('cache.durations.short_lived'), fn() => Brand::where('status', 1)->get());
+        $teams = Cache::remember('teams_list', config('cache.durations.short_lived'), fn() => Team::where('status', 1)->get());
         $countries = Cache::rememberForever('countries_list', fn() => config('countries'));
         return view('developer.clients.create', compact('brands', 'teams', 'countries'));
     }
@@ -88,8 +88,8 @@ class ClientController extends Controller
     {
         if (!$client->id) return redirect()->route('developer.client.index')->with('error', 'Record not found.');
 
-        $brands = Cache::remember('brands_list', config('cache.durations.short_lived'), fn() => Brand::all());
-        $teams = Cache::remember('teams_list', config('cache.durations.short_lived'), fn() => Team::all());
+        $brands = Cache::remember('brands_list', config('cache.durations.short_lived'), fn() => Brand::where('status', 1)->get());
+        $teams = Cache::remember('teams_list', config('cache.durations.short_lived'), fn() => Team::where('status', 1)->get());
         $countries = Cache::rememberForever('countries_list', fn() => config('countries'));
 
         return view('developer.clients.edit', compact('client', 'brands', 'teams', 'countries'));

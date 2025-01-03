@@ -15,7 +15,7 @@ class TeamController extends Controller
      */
     public function index()
     {
-        $teams = Team::all();
+        $teams = Team::where('status', 1)->get();
         return view('admin.teams.index', compact('teams'));
     }
 

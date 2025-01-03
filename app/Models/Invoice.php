@@ -9,6 +9,7 @@ use Illuminate\Notifications\Notifiable;
 class Invoice extends Model
 {
     use Notifiable, SoftDeletes;
+
 //    public function getRouteKeyName()
 //    {
 //        return 'invoice_key';
@@ -24,7 +25,7 @@ class Invoice extends Model
     protected $fillable = [
         'brand_key',
         'team_key',
-        'client_key',
+        'cus_contact_key',
         'agent_id',
         'agent_type',
         'creator_id',
@@ -64,6 +65,21 @@ class Invoice extends Model
         return $invoiceNumber;
     }
 
+
+    /**
+     * Automatically set the special_key and creator details before creating the record.
+     * @return void
+     */
+    protected static function booted(): void
+    {
+        static::creating(function ($invoice) {
+            if (auth()->check()) {
+                $invoice->creator_type = get_class(auth()->user());
+                $invoice->creator_id = auth()->user()->id;
+            }
+        });
+    }
+
     public function brand(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(Brand::class, 'brand_key', 'brand_key');
@@ -74,9 +90,9 @@ class Invoice extends Model
         return $this->belongsTo(Team::class, 'team_key', 'team_key');
     }
 
-    public function client(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function customer_contact(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
-        return $this->belongsTo(CustomerContact::class, 'client_key', 'client_key');
+        return $this->belongsTo(CustomerContact::class, 'cus_contact_key', 'special_key');
     }
 
     public function agent(): \Illuminate\Database\Eloquent\Relations\BelongsTo

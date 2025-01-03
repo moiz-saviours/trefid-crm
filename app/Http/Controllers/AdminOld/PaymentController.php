@@ -29,10 +29,10 @@ class PaymentController extends Controller
      */
     public function create()
     {
-        $brands = Brand::all();
-        $teams = Team::all();
-        $agents = User::all();
-        $clients = CustomerContact::all();
+        $brands = Brand::where('status', 1)->get();
+        $teams = Team::where('status', 1)->get();
+        $agents = User::where('status', 1)->get();
+        $clients = CustomerContact::where('status', 1)->get();
 
         return view('admin.payments.create', compact('brands', 'teams', 'agents', 'clients'));
     }
@@ -137,10 +137,10 @@ class PaymentController extends Controller
     public function edit(Payment $payment)
     {
 
-        $brands = Cache::remember('brands_list', config('cache.durations.short_lived'), fn() => Brand::all());
-        $teams = Cache::remember('teams_list', config('cache.durations.short_lived'), fn() => Team::all());
-        $agents = User::all();
-        $clients = CustomerContact::all();
+        $brands = Cache::remember('brands_list', config('cache.durations.short_lived'), fn() => Brand::where('status', 1)->get());
+        $teams = Cache::remember('teams_list', config('cache.durations.short_lived'), fn() => Team::where('status', 1)->get());
+        $agents = User::where('status', 1)->get();
+        $clients = CustomerContact::where('status', 1)->get();
         return view('admin.payments.edit', compact('payment', 'brands', 'teams', 'agents', 'clients'));
     }
 

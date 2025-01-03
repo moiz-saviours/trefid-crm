@@ -16,10 +16,10 @@ class ContactController extends Controller
      */
     public function index()
     {
-        $brands = Brand::all();
-        $teams = Team::all();
+        $brands = Brand::where('status', 1)->get();
+        $teams = Team::where('status', 1)->get();
         $countries = config('countries');
-        $customer_contacts = CustomerContact::all();
+        $customer_contacts = CustomerContact::where('status', 1)->get();
         return view('admin.customers.contacts.index', compact('customer_contacts', 'brands', 'teams', 'countries'));
     }
 
@@ -28,8 +28,8 @@ class ContactController extends Controller
      */
     public function create()
     {
-        $brands = Cache::remember('brands_list', config('cache.durations.short_lived'), fn() => Brand::all());
-        $teams = Cache::remember('teams_list', config('cache.durations.short_lived'), fn() => Team::all());
+        $brands = Cache::remember('brands_list', config('cache.durations.short_lived'), fn() => Brand::where('status', 1)->get());
+        $teams = Cache::remember('teams_list', config('cache.durations.short_lived'), fn() => Team::where('status', 1)->get());
         $countries = Cache::rememberForever('countries_list', fn() => config('countries'));
         return view('admin.customers.contacts.create', compact('brands', 'teams', 'countries'));
     }
@@ -55,7 +55,7 @@ class ContactController extends Controller
             'loggable_type' => 'nullable|string|max:255',
             'loggable_id' => 'nullable|integer',
             'status' => 'required|in:0,1',
-        ],[
+        ], [
             'brand_key.required' => 'The brand field is required.',
             'brand_key.integer' => 'The brand must be a valid integer.',
             'brand_key.exists' => 'Please select a valid brand.',
@@ -69,11 +69,11 @@ class ContactController extends Controller
                 'email', 'phone', 'address', 'city', 'state',
                 'country', 'zipcode', 'ip_address', 'loggable_type',
                 'loggable_id', 'status',
-            ]) + ['client_key' => CustomerContact::generateClientKey()]);
+            ]) + ['special_key' => CustomerContact::generateSpecialKey()]);
 
         $customer_contact->save();
 
-        return response()->json(['customer_contact' => $customer_contact, 'success'=> 'Contact Created Successfully!']);
+        return response()->json(['customer_contact' => $customer_contact, 'success' => 'Contact Created Successfully!']);
     }
 
     /**
@@ -90,18 +90,9 @@ class ContactController extends Controller
     public function edit(CustomerContact $customer_contact)
     {
         if (!$customer_contact->id) return response()->json(['error' => 'CustomerContact Not Found!']);
-
-
-
-//        $brands = Cache::remember('brands_list', config('cache.durations.short_lived'), fn() => Brand::all());
-//        $teams = Cache::remember('teams_list', config('cache.durations.short_lived'), fn() => Team::all());
-//        $countries = Cache::rememberForever('countries_list', fn() => config('countries'));
-        $brands = Brand::all();
-        $teams = Team::all();
+        $brands = Brand::where('status', 1)->get();
+        $teams = Team::where('status', 1)->get();
         $countries = config('countries');
-
-
-
         return response()->json(['customer_contact' => $customer_contact, 'brands' => $brands, 'teams' => $teams, 'countries' => $countries]);
 
     }
@@ -136,14 +127,14 @@ class ContactController extends Controller
         ]);
 
         $customer_contact->fill($request->only([
-            'client_key', 'brand_key', 'team_key', 'name',
+            'special_key', 'brand_key', 'team_key', 'name',
             'email', 'phone', 'address', 'city', 'state',
             'country', 'zipcode', 'ip_address', 'loggable_type',
             'loggable_id', 'status',
         ]));
 
         $customer_contact->save();
-        return response()->json([ 'success'=> 'Contact Updated Successfully!']);
+        return response()->json(['success' => 'Contact Updated Successfully!']);
     }
 
     /**

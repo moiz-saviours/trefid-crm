@@ -165,7 +165,7 @@
                         <ul class="mininav-content nav collapse">
                             <li data-popper-arrow class="arrow"></li>
                             <li class="nav-item">
-                                <a href="{{route('company.index')}}"
+                                <a href="{{route('customer.company.index')}}"
                                    class="nav-link {{ request()->is('companies*') ? 'active' : '' }}">Lists</a>
                             </li>
                         </ul>
@@ -181,7 +181,7 @@
                         <ul class="mininav-content nav collapse">
                             <li data-popper-arrow class="arrow"></li>
                             <li class="nav-item">
-                                <a href="{{route('contact.index')}}"
+                                <a href="{{route('customer.contact.index')}}"
                                        class="nav-link {{ request()->is('contacts*') ? 'active' : '' }}">Lists</a>
                             </li>
                         </ul>

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\User;
+namespace App\Http\Controllers\User\Customer;
 
 use App\Http\Controllers\Controller;
-use App\Models\CustomerContact;
 use App\Models\CustomerCompany;
+use App\Models\CustomerContact;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
@@ -52,7 +52,7 @@ class CompanyController extends Controller
         $companies = CustomerCompany::whereIn('domain', $domains)->where('status', 1)->get();
 //        $companies = Cache::remember('companies_list', config('cache.durations.short_lived'), fn() => CustomerCompany::whereIn('domain', $domains)->where('status', 1)->get());
 
-        return view('user.companies.index', compact('companies'));
+        return view('user.customer.companies.index', compact('companies'));
     }
 
     /**

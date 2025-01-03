@@ -13,7 +13,7 @@ class LeadStatusController extends Controller
      */
     public function index()
     {
-        $leadStatus = LeadStatus::all();
+        $leadStatus = LeadStatus::where('status', 1)->get();
         return view('developer.lead-statuses.index', compact('leadStatus'));
     }
 

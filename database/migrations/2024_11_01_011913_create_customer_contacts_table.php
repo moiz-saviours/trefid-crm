@@ -26,8 +26,7 @@ return new class extends Migration {
                 $table->string('country')->nullable()->default(null);
                 $table->string('zipcode')->nullable()->default(null);
                 $table->string('ip_address')->nullable()->default(null);
-                $table->string('loggable')->nullable()->default(null);
-                $table->unsignedBigInteger('loggable_id')->nullable()->default(null);
+                $table->morphs('creator');
                 $table->integer('status')->nullable()->default(1)->comment('0 = inactive, 1 = active');
                 $table->softDeletes();
                 $table->timestamps();

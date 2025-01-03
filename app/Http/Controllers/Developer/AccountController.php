@@ -16,7 +16,7 @@ class AccountController extends Controller
      */
     public function index()
     {
-        $developers = Developer::all();
+        $developers = Developer::where('status', 1)->get();
         return view('developer.accounts.index', compact('developers'));
     }
 

@@ -76,7 +76,7 @@
                                             <th class="align-middle text-center text-nowrap">INVOICE #</th>
                                             <th class="align-middle text-center text-nowrap">BRAND</th>
                                             <th class="align-middle text-center text-nowrap">TEAM</th>
-                                            <th class="align-middle text-center text-nowrap">CLIENT</th>
+                                            <th class="align-middle text-center text-nowrap">CUSTOMER CONTACT</th>
                                             <th class="align-middle text-center text-nowrap">AGENT</th>
                                             <th class="align-middle text-center text-nowrap">AMOUNT</th>
                                             <th class="align-middle text-center text-nowrap">STATUS</th>
@@ -110,9 +110,9 @@
                                                     @endif
                                                 </td>
                                                 <td class="align-middle text-center text-nowrap">
-                                                    @if(isset($invoice->client))
-                                                        <a href="{{route('admin.client.edit',[$invoice->client->id])}}">{{ $invoice->client->name }}</a>
-                                                        <br> {{ $invoice->client->client_key }}
+                                                    @if(isset($invoice->customer_contact))
+                                                        <a href="{{route('admin.customer.contact.edit',[$invoice->customer_contact->id])}}">{{ $invoice->customer_contact->name }}</a>
+                                                        <br> {{ $invoice->customer_contact->special_key }}
                                                     @else
                                                         ---
                                                     @endif

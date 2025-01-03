@@ -11,7 +11,7 @@
                 <header class="custm_header">
                     <div class="new_head">
                         <h1 class="page-title mb-2">Contacts <i class="fa fa-caret-down" aria-hidden="true"></i></h1>
-                        <h2 id="record-count" class="h6">{{count($clients)}} records</h2>
+                        <h2 id="record-count" class="h6">{{count($customer_contacts)}} records</h2>
                     </div>
                     <div class="filters">
                         <div class="actions">
@@ -86,44 +86,44 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        @foreach($clients as $client)
-                                            <tr id="tr-{{$client->id}}">
+                                        @foreach($customer_contacts as $customer_contact)
+                                            <tr id="tr-{{$customer_contact->id}}">
                                                 <td class="align-middle text-center text-nowrap"></td>
                                                 <td class="align-middle text-center text-nowrap">{{$loop->iteration}}</td>
 
                                                 <td class="align-middle text-center text-nowrap">
-                                                    @if(isset($client->brand))
-                                                        <a href="{{route('admin.brand.edit',[$client->brand->id])}}">{{ $client->brand->name }}</a>
-                                                        <br> {{ $client->brand->brand_key }}
+                                                    @if(isset($customer_contact->brand))
+                                                        <a href="{{route('admin.brand.edit',[$customer_contact->brand->id])}}">{{ $customer_contact->brand->name }}</a>
+                                                        <br> {{ $customer_contact->brand->brand_key }}
                                                     @else
                                                         ---
                                                     @endif
                                                 </td>
                                                 <td class="align-middle text-center text-nowrap">
-                                                    @if(isset($client->team))
-                                                        <a href="{{route('admin.team.edit',[$client->team->id])}}">{{ $client->team->name }}</a>
-                                                        <br> {{ $client->team->team_key }}
+                                                    @if(isset($customer_contact->team))
+                                                        <a href="{{route('admin.team.edit',[$customer_contact->team->id])}}">{{ $customer_contact->team->name }}</a>
+                                                        <br> {{ $customer_contact->team->team_key }}
                                                     @else
                                                         ---
                                                     @endif
                                                 </td>
-                                                <td class="align-middle text-center text-nowrap">{{ $client->name }}</td>
-                                                <td class="align-middle text-center text-nowrap">{{ $client->email }}</td>
-                                                <td class="align-middle text-center text-nowrap">{{ $client->phone }}</td>
-                                                <td class="align-middle text-center text-nowrap">{{ $client->address }}</td>
-                                                <td class="align-middle text-center text-nowrap">{{ $client->city }}</td>
-                                                <td class="align-middle text-center text-nowrap">{{ $client->state }}</td>
+                                                <td class="align-middle text-center text-nowrap">{{ $customer_contact->name }}</td>
+                                                <td class="align-middle text-center text-nowrap">{{ $customer_contact->email }}</td>
+                                                <td class="align-middle text-center text-nowrap">{{ $customer_contact->phone }}</td>
+                                                <td class="align-middle text-center text-nowrap">{{ $customer_contact->address }}</td>
+                                                <td class="align-middle text-center text-nowrap">{{ $customer_contact->city }}</td>
+                                                <td class="align-middle text-center text-nowrap">{{ $customer_contact->state }}</td>
                                                 <td class="align-middle text-center text-nowrap">
                                                     <input type="checkbox" class="status-toggle change-status"
-                                                           data-id="{{ $client->id }}"
-                                                           {{ $client->status == 1 ? 'checked' : '' }} data-bs-toggle="toggle">
+                                                           data-id="{{ $customer_contact->id }}"
+                                                           {{ $customer_contact->status == 1 ? 'checked' : '' }} data-bs-toggle="toggle">
                                                 </td>
                                                 <td class="align-middle text-center table-actions">
                                                     <button type="button" class="btn btn-sm btn-primary editBtn"
-                                                            data-id="{{ $client->id }}" title="Edit"><i
+                                                            data-id="{{ $customer_contact->id }}" title="Edit"><i
                                                                 class="fas fa-edit"></i></button>
                                                     <button type="button" class="btn btn-sm btn-danger deleteBtn"
-                                                            data-id="{{ $client->id }}" title="Delete"><i
+                                                            data-id="{{ $customer_contact->id }}" title="Delete"><i
                                                                 class="fas fa-trash"></i></button>
                                                 </td>
                                             </tr>

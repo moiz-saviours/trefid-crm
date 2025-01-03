@@ -16,7 +16,7 @@ class LeadController extends Controller
 {
     public function __construct()
     {
-        view()->share('leadStatuses', LeadStatus::all());
+        view()->share('leadStatuses', LeadStatus::where('status', 1)->get());
     }
 
     /**
@@ -24,10 +24,10 @@ class LeadController extends Controller
      */
     public function index()
     {
-        $brands = Brand::all();
-        $teams = Team::all();
-        $clients = CustomerContact::all();
-        $leads = Lead::all();
+        $brands = Brand::where('status', 1)->get();
+        $teams = Team::where('status', 1)->get();
+        $clients = CustomerContact::where('status', 1)->get();
+        $leads = Lead::where('status', 1)->get();
         return view('admin.leads.index', compact('leads', 'brands', 'teams', 'clients'));
     }
 
@@ -36,11 +36,11 @@ class LeadController extends Controller
      */
     public function create()
     {
-//        $brands = Cache::remember('brands_list', config('cache.durations.short_lived'), fn() => Brand::all());
-//        $teams = Cache::remember('teams_list', config('cache.durations.short_lived'), fn() => Team::all());
-          $teams = Team::all();
-          $brands = Brand::all();
-          $clients = CustomerContact::all();
+//        $brands = Cache::remember('brands_list', config('cache.durations.short_lived'), fn() => Brand::where('status', 1)->get());
+//        $teams = Cache::remember('teams_list', config('cache.durations.short_lived'), fn() => Team::where('status', 1)->get());
+          $teams = Team::where('status', 1)->get();
+          $brands = Brand::where('status', 1)->get();
+          $clients = CustomerContact::where('status', 1)->get();
         return view('admin.leads.create', compact('brands', 'teams', 'clients'));
     }
 
@@ -146,11 +146,11 @@ class LeadController extends Controller
      */
     public function edit(Lead $lead)
     {
-        //$brands = Cache::remember('brands_list', config('cache.durations.short_lived'), fn() => Brand::all());
-        //$teams = Cache::remember('teams_list', config('cache.durations.short_lived'), fn() => Team::all());
-        $brands = Brand::all();
-        $teams = Team::all();
-        $clients = CustomerContact::all();
+        //$brands = Cache::remember('brands_list', config('cache.durations.short_lived'), fn() => Brand::where('status', 1)->get());
+        //$teams = Cache::remember('teams_list', config('cache.durations.short_lived'), fn() => Team::where('status', 1)->get());
+        $brands = Brand::where('status', 1)->get();
+        $teams = Team::where('status', 1)->get();
+        $clients = CustomerContact::where('status', 1)->get();
 
         $lead->loadMissing('client');
 

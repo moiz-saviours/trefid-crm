@@ -17,9 +17,10 @@ class AdminSeeder extends Seeder
     {
         DB::table('admins')->truncate();
         Admin::create([
-            'name' => 'admin',
-            'email' => 'admin@gmail.com',
-            'password' => Hash::make('admin'),
+            'name' => 'Syed Moiz Athar',
+            'email' => 'moiz@saviours.co',
+            'password' => Hash::make('12345678'),
+            'type' => 'super-admin',
         ]);
     }
 }

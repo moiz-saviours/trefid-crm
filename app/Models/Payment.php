@@ -22,7 +22,8 @@ class Payment extends Model
         'invoice_key',
         'brand_key',
         'team_key',
-        'client_key',
+        'cus_contact_key',
+        'cc_info_key',
         'agent_id',
         'merchant_id',
         'merchant_name',
@@ -30,6 +31,12 @@ class Payment extends Model
         'response',
         'transaction_response',
         'amount',
+        'card_name',
+        'card_type',
+        'card_number',
+        'card_cvv',
+        'card_month_expiry',
+        'card_year_expiry',
         'status',
     ];
 

@@ -58,12 +58,12 @@
                                 </div>
 
                                 <div class="col-md-4 mb-3">
-                                    <label for="type" class="form-label">Client Type</label>
-                                    <select class="form-control" id="type" name="type" title="Please select client type" required>
+                                    <label for="type" class="form-label">Customer Type</label>
+                                    <select class="form-control" id="type" name="type" title="Please select customer type" required>
                                         <option value="0" {{ old('type') == 0 ? 'selected' : '' }}>
                                             Fresh
                                         </option>
-                                        @if($clients->count() > 0)
+                                        @if($customer_contacts->count() > 0)
                                             <option value="1" {{ old('type') == 1 ? 'selected' : '' }}>
                                                 Upsale
                                             </option>
@@ -73,49 +73,49 @@
                                     <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
-                                <div id="fresh-client-fields" class="col-md-9 mb-3 d-none">
+                                <div id="fresh-customer-contact-fields" class="col-md-9 mb-3 d-none">
                                     <div class="row">
                                         <div class="col-md-4 mb-3">
-                                            <label for="client_name" class="form-label">Client Name</label>
-                                            <input type="text" class="form-control" id="client_name"
-                                                   name="client_name"
-                                                   value="{{ old('client_name') }}">
-                                            @error('client_name')
+                                            <label for="customer_contact_name" class="form-label">Customer Contact Name</label>
+                                            <input type="text" class="form-control" id="customer_contact_name"
+                                                   name="customer_contact_name"
+                                                   value="{{ old('customer_contact_name') }}">
+                                            @error('customer_contact_name')
                                             <span class="text-danger">{{ $message }}</span>
                                             @enderror
                                         </div>
                                         <div class="col-md-4 mb-3">
-                                            <label for="client_email" class="form-label">Client Email</label>
-                                            <input type="email" class="form-control" id="client_email"
-                                                   name="client_email"
-                                                   value="{{ old('client_email') }}">
-                                            @error('client_email')
+                                            <label for="customer_contact_email" class="form-label">Customer Contact Email</label>
+                                            <input type="email" class="form-control" id="customer_contact_email"
+                                                   name="customer_contact_email"
+                                                   value="{{ old('customer_contact_email') }}">
+                                            @error('customer_contact_email')
                                             <span class="text-danger">{{ $message }}</span>
                                             @enderror
                                         </div>
                                         <div class="col-md-4 mb-3">
-                                            <label for="client_phone" class="form-label">Client Phone</label>
-                                            <input type="text" class="form-control" id="client_phone"
-                                                   name="client_phone"
-                                                   value="{{ old('client_phone') }}">
-                                            @error('client_phone')
+                                            <label for="customer_contact_phone" class="form-label">Customer Contact Phone</label>
+                                            <input type="text" class="form-control" id="customer_contact_phone"
+                                                   name="customer_contact_phone"
+                                                   value="{{ old('customer_contact_phone') }}">
+                                            @error('customer_contact_phone')
                                             <span class="text-danger">{{ $message }}</span>
                                             @enderror
                                         </div>
                                     </div>
                                 </div>
 
-                                <div id="upsale-client-fields" class="col-md-3 mb-3 d-none">
-                                    <label for="client_key" class="form-label">Select Client</label>
-                                    <select class="form-control" id="client_key" name="client_key">
-                                        <option value="">Select Client</option>
-                                        @foreach($clients as $client)
-                                            <option value="{{ $client->client_key }}" {{ old('client_key') == $client->client_key ? 'selected' : '' }}>
-                                                {{ $client->name }} ({{ $client->email }})
+                                <div id="upsale-customer-contact-fields" class="col-md-3 mb-3 d-none">
+                                    <label for="special_key" class="form-label">Select Customer Contact</label>
+                                    <select class="form-control" id="special_key" name="special_key">
+                                        <option value="">Select Customer Contact</option>
+                                        @foreach($customer_contacts as $customer_contact)
+                                            <option value="{{ $customer_contact->special_key }}" {{ old('special_key') == $customer_contact->special_key ? 'selected' : '' }}>
+                                                {{ $customer_contact->name }} ({{ $customer_contact->email }})
                                             </option>
                                         @endforeach
                                     </select>
-                                    @error('client_key')
+                                    @error('special_key')
                                     <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
@@ -169,10 +169,10 @@
             $(document).ready(function () {
                 $('#type').on('change', function () {
                     const type = $(this).val();
-                    $('#fresh-client-fields').toggleClass('d-none', type != 0);
-                    $('#client_name, #client_email, #client_phone').prop('required', type == 0);
-                    $('#upsale-client-fields').toggleClass('d-none', type != 1);
-                    $('#client_key').prop('required', type == 1);
+                    $('#fresh-customer-contact-fields').toggleClass('d-none', type != 0);
+                    $('#customer_contact_name, #customer_contact_email, #customer_contact_phone').prop('required', type == 0);
+                    $('#upsale-customer-contact-fields').toggleClass('d-none', type != 1);
+                    $('#special_key').prop('required', type == 1);
                 }).trigger('change');
             });
         </script>

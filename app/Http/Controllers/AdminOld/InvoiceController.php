@@ -18,7 +18,7 @@ class InvoiceController extends Controller
      */
     public function index()
     {
-        $invoices = Invoice::all();
+        $invoices = Invoice::where('status', 1)->get();
         return view('admin.invoices.index', compact('invoices'));
     }
 
@@ -27,10 +27,10 @@ class InvoiceController extends Controller
      */
     public function create()
     {
-        $brands = Cache::remember('brands_list', config('cache.durations.short_lived'), fn() => Brand::all());
-        $teams = Cache::remember('teams_list', config('cache.durations.short_lived'), fn() => Team::all());
-        $clients = CustomerContact::all();
-        $users = User::all();
+        $brands = Cache::remember('brands_list', config('cache.durations.short_lived'), fn() => Brand::where('status', 1)->get());
+        $teams = Cache::remember('teams_list', config('cache.durations.short_lived'), fn() => Team::where('status', 1)->get());
+        $clients = CustomerContact::where('status', 1)->get();
+        $users = User::where('status', 1)->get();
         return view('admin.invoices.create', compact('brands', 'teams', 'clients', 'users'));
     }
 
@@ -134,10 +134,10 @@ class InvoiceController extends Controller
     public function edit(Invoice $invoice)
     {
         if (!$invoice->id) return redirect()->route('admin.invoice.index')->with('error', 'Record not found.');
-        $brands = Brand::all();
-        $teams = Team::all();
-        $clients = CustomerContact::all();
-        $users = User::all();
+        $brands = Brand::where('status', 1)->get();
+        $teams = Team::where('status', 1)->get();
+        $clients = CustomerContact::where('status', 1)->get();
+        $users = User::where('status', 1)->get();
         return view('admin.invoices.edit', compact('invoice', 'brands', 'teams', 'clients', 'users'));
     }
 

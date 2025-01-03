@@ -1,14 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\User;
+namespace App\Http\Controllers\User\Customer;
 
 use App\Http\Controllers\Controller;
-use App\Models\Brand;
 use App\Models\CustomerContact;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Cache;
-use App\Models\Team;
-use Illuminate\Http\Request;
 
 class ContactController extends Controller
 {
@@ -22,7 +18,7 @@ class ContactController extends Controller
             return $contact->loggable_type === get_class(Auth::user()) && $contact->loggable_id === Auth::id();
 
         });
-        return view('user.contacts.index', compact('all_contacts', 'my_contacts'));
+        return view('user.customers.contacts.index', compact('all_contacts', 'my_contacts'));
     }
 
 }

@@ -128,8 +128,8 @@
             $.ajax({
                 url: `{{route('admin.invoice.edit')}}/` + id,
                 type: 'GET',
-                success: function (data) {
-                    setDataAndShowEdit(data);
+                success: function (response) {
+                    setDataAndShowEdit(response);
                 },
                 error: function () {
                     alert('Error fetching data.');
@@ -145,10 +145,10 @@
             $('#team_key').val(invoice.team_key);
             $('#type').val(invoice.type).trigger('change');
 
-            $('#client_name').val(invoice.client_name);
-            $('#client_email').val(invoice.client_email);
-            $('#client_phone').val(invoice.client_phone);
-            $('#client_key').val(invoice.client_key);
+            $('#customer_contact_name').val(invoice.customer_contact.name);
+            $('#customer_contact_email').val(invoice.customer_contact.email);
+            $('#customer_contact_phone').val(invoice.customer_contact.phone);
+            $('#special_key').val(invoice.customer_contact.special_key);
             $('#agent_id').val(invoice.agent_id);
             $('#amount').val(invoice.amount);
             $('#description').val(invoice.description);
@@ -173,17 +173,18 @@
                 AjaxRequestPromise(`{{ route("admin.invoice.store") }}`, formData, 'POST', {useToastr: true})
                     .then(response => {
                         if (response?.data) {
-                            const {id, brand_key, team_key, client_name, client_email, client_phone,agent_id, amount, status} = response.data;
+                            const {id, brand_key, team_key, customer_contact,agent_id, amount, status} = response.data;
                             const index = table.rows().count() + 1;
+                            table.row.add($('<tr>', {id: `tr-${id}`}).append(columns)).draw(false);
                             const columns = `
                         <td class="align-middle text-center text-nowrap"></td>
                         <td class="align-middle text-center text-nowrap">${index}</td>
                         <td class="align-middle text-center text-nowrap">${brand_key}</td>
                         <td class="align-middle text-center text-nowrap">${team_key}</td>
-                        <td class="align-middle text-center text-nowrap">${client_name}</td>
+                        <td class="align-middle text-center text-nowrap">${customer_contact.name}</td>
                         <td class="align-middle text-center text-nowrap">${agent_id}</td>
-                        <td class="align-middle text-center text-nowrap">${client_email}</td>
-                        <td class="align-middle text-center text-nowrap">${client_phone}</td>
+                        <td class="align-middle text-center text-nowrap">${customer_contact.email}</td>
+                        <td class="align-middle text-center text-nowrap">${customer_contact.phone}</td>
                         <td class="align-middle text-center text-nowrap">${amount}</td>
                         <td class="align-middle text-center text-nowrap">
                             <input type="checkbox" class="status-toggle change-status" data-id="${id}" ${status == 1 ? 'checked' : ''} data-bs-toggle="toggle">
@@ -196,7 +197,6 @@
                                 <i class="fas fa-trash"></i>
                             </button>
                         </td>`;
-                            table.row.add($('<tr>', {id: `tr-${id}`}).append(columns)).draw(false);
                             $('#manage-form')[0].reset();
                             $('#formContainer').removeClass('open');
                         }

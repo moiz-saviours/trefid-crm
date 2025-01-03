@@ -12,7 +12,7 @@ class CustomerCompany extends Model
 
     use Notifiable, SoftDeletes;
 
-    protected $table = 'companies';
+    protected $table = 'customer_companies';
     protected $primaryKey = 'id';
 
     /**
@@ -21,7 +21,7 @@ class CustomerCompany extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'company_key',
+        'special_key',
         'domain',
         'name',
         'email',
@@ -38,17 +38,17 @@ class CustomerCompany extends Model
     ];
 
     /**
-     * Generate a unique client key.
+     * Generate a unique special key.
      *
      * @return string
      */
-    public static function generateCompanyKey(): string
+    public static function generateSpecialKey(): string
     {
         do {
-            $companyKey = str_pad(rand(0, 999999), 6, '0', STR_PAD_LEFT);
-        } while (self::where('company_key', $companyKey)->exists());
+            $specialKey = str_pad(rand(0, 999999), 6, '0', STR_PAD_LEFT);
+        } while (self::where('special_key', $specialKey)->exists());
 
-        return $companyKey;
+        return $specialKey;
     }
 
     /**
@@ -61,19 +61,19 @@ class CustomerCompany extends Model
         parent::boot();
 
         static::creating(function ($company) {
-            $company->company_key = self::generateCompanyKey();
+            $company->special_key = self::generateSpecialKey();
             if (auth()->check()) {
-                $company->loggable_type = get_class(auth()->user());
-                $company->loggable_id = auth()->user()->id;
+                $company->creator_type = get_class(auth()->user());
+                $company->creator_id = auth()->user()->id;
             }
         });
 
         static::created(function () {
-            self::updateCompanyCache();
+            self::updateCustomerCompanyCache();
         });
 
         static::updated(function () {
-            self::updateCompanyCache();
+            self::updateCustomerCompanyCache();
         });
 
         static::deleted(function () {
@@ -81,11 +81,11 @@ class CustomerCompany extends Model
         });
 
         static::deleted(function () {
-            self::updateCompanyCache();
+            self::updateCustomerCompanyCache();
         });
 
         static::restored(function () {
-            self::updateCompanyCache();
+            self::updateCustomerCompanyCache();
         });
     }
 
@@ -95,7 +95,7 @@ class CustomerCompany extends Model
      *
      * @return void
      */
-    private static function updateCompanyCache(): void
+    private static function updateCustomerCompanyCache(): void
     {
         Cache::forget('companies_list');
         Cache::remember('companies_list', config('cache.durations.short_lived'), function () {

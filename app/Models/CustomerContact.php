@@ -11,7 +11,7 @@ class CustomerContact extends Model
 
     use Notifiable, SoftDeletes;
 
-    protected $table = 'clients';
+    protected $table = 'customer_contacts';
     protected $primaryKey = 'id';
 
     /**
@@ -20,7 +20,7 @@ class CustomerContact extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'client_key',
+        'special_key',
         'brand_key',
         'team_key',
         'name',
@@ -32,44 +32,44 @@ class CustomerContact extends Model
         'country',
         'zipcode',
         'ip_address',
-        'loggable_type',
-        'loggable_id',
+        'creator_type',
+        'creator_id',
         'status',
     ];
 
     /**
-     * Generate a unique client key.
+     * Generate a unique special key.
      *
      * @return string
      */
-    public static function generateClientKey(): string
+    public static function generateSpecialKey(): string
     {
         do {
-            $clientKey = str_pad(rand(0, 999999), 6, '0', STR_PAD_LEFT);
-        } while (self::where('client_key', $clientKey)->exists());
+            $specialKey = str_pad(rand(0, 999999), 6, '0', STR_PAD_LEFT);
+        } while (self::where('special_key', $specialKey)->exists());
 
-        return $clientKey;
+        return $specialKey;
     }
 
     /**
-     * Automatically set the client_key and loggable details before creating the record.
+     * Automatically set the special_key and creator details before creating the record.
      *
      * @param \Illuminate\Database\Eloquent\Model $model
      * @return void
      */
     protected static function booted()
     {
-        static::creating(function ($client) {
-            $client->client_key = self::generateClientKey();
+        static::creating(function ($customer_contact) {
+            $customer_contact->special_key = self::generateSpecialKey();
             if (auth()->check()) {
-                $client->loggable_type = get_class(auth()->user());
-                $client->loggable_id = auth()->user()->id;
+                $customer_contact->creator_type = get_class(auth()->user());
+                $customer_contact->creator_id = auth()->user()->id;
             }
         });
     }
 
     /**
-     * The brand associated with the client.
+     * The brand associated with the customer contact.
      */
     public function brand(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
@@ -77,7 +77,7 @@ class CustomerContact extends Model
     }
 
     /**
-     * The team associated with the client.
+     * The team associated with the customer contact.
      */
     public function team(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
@@ -85,11 +85,11 @@ class CustomerContact extends Model
     }
 
     /**
-     * TODO NEED TO BE UPDATE : LOGGABLE WILL BE FOR WHO CREATED THIS RECORD
+     * TODO NEED TO BE UPDATE : Creator WILL BE FOR WHO CREATED THIS RECORD
      * Define a polymorphic relationship with logs.
      */
     public function company(): \Illuminate\Database\Eloquent\Relations\MorphMany
     {
-        return $this->morphMany(CustomerCompany::class, 'loggable');
+        return $this->morphMany(CustomerCompany::class, 'creator');
     }
 }

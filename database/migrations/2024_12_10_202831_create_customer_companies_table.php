@@ -12,10 +12,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        if (!Schema::hasTable('companies')) {
-            Schema::create('companies', function (Blueprint $table) {
+        if (!Schema::hasTable('customer_companies')) {
+            Schema::create('customer_companies', function (Blueprint $table) {
                 $table->id();
-                $table->unsignedBigInteger('company_key')->nullable()->default(null)->unique();
+                $table->unsignedBigInteger('special_key')->nullable()->default(null)->unique();
+                $table->string('domain')->nullable()->default(null);
                 $table->string('name')->nullable()->default(null);
                 $table->string('email')->unique();
                 $table->string('phone')->nullable()->default(null);
@@ -24,13 +25,13 @@ return new class extends Migration
                 $table->string('state')->nullable()->default(null);
                 $table->string('country')->nullable()->default(null);
                 $table->string('zipcode')->nullable()->default(null);
-                $table->string('loggable')->nullable()->default(null);
-                $table->unsignedBigInteger('loggable_id')->nullable()->default(null);
+                $table->json('response')->nullable()->default(null);
+                $table->morphs('creator');
                 $table->integer('status')->nullable()->default(1)->comment('0 = inactive, 1 = active');
                 $table->softDeletes();
                 $table->timestamps();
 
-                $table->index('company_key');
+                $table->index('special_key');
             });
         }
     }
@@ -40,6 +41,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('companies');
+        Schema::dropIfExists('customer_companies');
     }
 };

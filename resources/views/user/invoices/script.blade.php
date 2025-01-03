@@ -108,13 +108,13 @@
     {{--        AjaxRequestPromise('{{ route("company.store") }}', new FormData(this), 'POST', {useToastr: true})--}}
     {{--            .then(response => {--}}
     {{--                if (response?.data) {--}}
-    {{--                    const {id, logo, name, company_key, url, status} = response.data;--}}
+    {{--                    const {id, logo, name, special_key, url, status} = response.data;--}}
     {{--                    $('#create-modal').modal('hide');--}}
     {{--                    const logoUrl = isValidUrl(logo) ? logo : `{{ asset('assets/images/company-logos/') }}/${logo}`;--}}
     {{--                    const columns = [--}}
     {{--                        id,--}}
     {{--                        `<img src="${logoUrl}" alt="${name}" class="avatar avatar-sm me-3" title="${name}">`,--}}
-    {{--                        company_key,--}}
+    {{--                        special_key,--}}
     {{--                        name,--}}
     {{--                        url,--}}
     {{--                        `<input type="checkbox" class="status-toggle change-status" data-id="${id}" ${status == 1 ? "checked" : ""} data-bs-toggle="toggle">`,--}}
@@ -185,13 +185,13 @@
     {{--        AjaxRequestPromise(url, new FormData(this), 'POST', {useToastr: true})--}}
     {{--            .then(response => {--}}
     {{--                if (response?.data) {--}}
-    {{--                    const {id, logo, name, company_key, url, status} = response.data;--}}
+    {{--                    const {id, logo, name, special_key, url, status} = response.data;--}}
     {{--                    $('#edit-modal').modal('hide');--}}
     {{--                    const logoUrl = isValidUrl(logo) ? logo : `{{ asset('assets/images/company-logos/') }}/${logo}`;--}}
     {{--                    const columns = [--}}
     {{--                        id,--}}
     {{--                        `<img src="${logoUrl}" alt="${name}" class="avatar avatar-sm me-3" title="${name}">`,--}}
-    {{--                        company_key,--}}
+    {{--                        special_key,--}}
     {{--                        name,--}}
     {{--                        url,--}}
     {{--                        `<input type="checkbox" class="status-toggle change-status" data-id="${id}" ${status == 1 ? "checked" : ""} data-bs-toggle="toggle">`,--}}

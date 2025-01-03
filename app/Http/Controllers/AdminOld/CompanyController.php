@@ -16,7 +16,7 @@ class CompanyController extends Controller
     public function index()
     {
 
-        $all_contacts = CustomerContact::all();
+        $all_contacts = CustomerContact::where('status', 1)->get();
         $domains = $all_contacts->map(function ($contact) {
             return substr(strrchr($contact->email, "@"), 1);
         })->unique();

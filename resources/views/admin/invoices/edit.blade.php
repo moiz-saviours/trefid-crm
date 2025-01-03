@@ -58,14 +58,14 @@
                                 <div class="col-md-4 mb-3">
                                     <div class="row">
                                         <div class="col-md-10 mb-3">
-                                            <label for="type" class="form-label">Client Type</label>
+                                            <label for="type" class="form-label">Customer Contact Type</label>
                                             <select class="form-control" id="type" name="type"
-                                                    title="Please select client type" required>
+                                                    title="Please select customer type" required>
                                                 <option
                                                     value="0" {{ old('type', $invoice->type) == 0 ? 'selected' : '' }}>
                                                     Fresh
                                                 </option>
-                                                @if($clients && $clients->count() > 0)
+                                                @if($customer_contacts && $customer_contacts->count() > 0)
                                                     <option
                                                         value="1" {{ old('type', $invoice->type) == 1 ? 'selected' : '' }}>
                                                         Upsale
@@ -77,55 +77,55 @@
                                             @enderror
                                         </div>
                                         <div class="col-md-2 mb-3" style="display:flex;align-items: flex-end;">
-                                            <a href="javascript:void(0)" title="create new client"
-                                               id="create-new-client"><i class="fas fa-add"></i></a>
+                                            <a href="javascript:void(0)" title="create new customer contact"
+                                               id="create-new-customer-contact"><i class="fas fa-add"></i></a>
                                         </div>
                                     </div>
                                 </div>
-                                <div id="fresh-client-fields" class="col-md-9 mb-3 d-none">
+                                <div id="fresh-customer-contact-fields" class="col-md-9 mb-3 d-none">
                                     <div class="row">
                                         <div class="col-md-4 mb-3">
-                                            <label for="client_name" class="form-label">Client Name</label>
-                                            <input type="text" class="form-control" id="client_name"
-                                                   name="client_name"
-                                                   value="{{ old('client_name', optional($invoice->client)->name) }}">
-                                            @error('client_name')
+                                            <label for="customer_contact_name" class="form-label">Customer Contact Name</label>
+                                            <input type="text" class="form-control" id="customer_contact_name"
+                                                   name="customer_contact_name"
+                                                   value="{{ old('customer_contact_name', optional($invoice->customer_contact)->name) }}">
+                                            @error('customer_contact_name')
                                             <span class="text-danger">{{ $message }}</span>
                                             @enderror
                                         </div>
                                         <div class="col-md-4 mb-3">
-                                            <label for="client_email" class="form-label">Client Email</label>
-                                            <input type="email" class="form-control" id="client_email"
-                                                   name="client_email"
-                                                   value="{{ old('client_email', optional($invoice->client)->email) }}">
-                                            @error('client_email')
+                                            <label for="customer_contact_email" class="form-label">Customer Contact Email</label>
+                                            <input type="email" class="form-control" id="customer_contact_email"
+                                                   name="customer_contact_email"
+                                                   value="{{ old('customer_contact_email', optional($invoice->customer_contact)->email) }}">
+                                            @error('customer_contact_email')
                                             <span class="text-danger">{{ $message }}</span>
                                             @enderror
                                         </div>
                                         <div class="col-md-4 mb-3">
-                                            <label for="client_phone" class="form-label">Client Phone</label>
-                                            <input type="text" class="form-control" id="client_phone"
-                                                   name="client_phone"
-                                                   value="{{ old('client_phone', optional($invoice->client)->phone) }}">
-                                            @error('client_phone')
+                                            <label for="customer_contact_phone" class="form-label">Customer Contact Phone</label>
+                                            <input type="text" class="form-control" id="customer_contact_phone"
+                                                   name="customer_contact_phone"
+                                                   value="{{ old('customer_contact_phone', optional($invoice->customer_contact)->phone) }}">
+                                            @error('customer_contact_phone')
                                             <span class="text-danger">{{ $message }}</span>
                                             @enderror
                                         </div>
                                     </div>
                                 </div>
 
-                                <div id="upsale-client-fields" class="col-md-3 mb-3">
-                                    <label for="client_key" class="form-label">Select Client</label>
-                                    <select class="form-control" id="client_key" name="client_key">
-                                        <option value="">Select Client</option>
-                                        @foreach($clients as $client)
+                                <div id="upsale-customer-contact-fields" class="col-md-3 mb-3">
+                                    <label for="special_key" class="form-label">Select Customer Contact</label>
+                                    <select class="form-control" id="special_key" name="special_key">
+                                        <option value="">Select Customer Contact</option>
+                                        @foreach($customer_contacts as $customer_contact)
                                             <option
-                                                value="{{ $client->client_key }}" {{ old('client_key', $invoice->client_key) == $client->client_key ? 'selected' : '' }}>
-                                                {{ $client->name }} ({{ $client->email }})
+                                                value="{{ $customer_contact->special_key }}" {{ old('customer_contact_key', $invoice->cus_contact_key) == $customer_contact->special_key ? 'selected' : '' }}>
+                                                {{ $customer_contact->name }} ({{ $customer_contact->email }})
                                             </option>
                                         @endforeach
                                     </select>
-                                    @error('client_key')
+                                    @error('special_key')
                                     <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
@@ -181,14 +181,14 @@
             $(document).ready(function () {
                 $('#type').on('change', function () {
                     const type = $(this).val();
-                    $("#create-new-client").toggle(type == 1);
-                    $('#fresh-client-fields').toggleClass('d-none', type != 0);
-                    $('#client_name, #client_email, #client_phone').prop('required', type == 0);
-                    $('#upsale-client-fields').toggleClass('d-none', type != 1);
-                    $('#client_key').prop('required', type == 1);
+                    $("#create-new-customer-contact").toggle(type == 1);
+                    $('#fresh-customer-contact-fields').toggleClass('d-none', type != 0);
+                    $('#customer_contact_name, #customer_contact_email, #customer_contact_phone').prop('required', type == 0);
+                    $('#upsale-customer-contact-fields').toggleClass('d-none', type != 1);
+                    $('#special_key').prop('required', type == 1);
                 });
 
-                $('#create-new-client').on('click', () => $('#create-new-client').hide() && $("#type").val(0).trigger('change'));
+                $('#create-new-customer-contact').on('click', () => $('#create-new-customer-contact').hide() && $("#type").val(0).trigger('change'));
 
             });
         </script>
