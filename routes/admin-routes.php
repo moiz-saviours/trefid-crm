@@ -110,7 +110,12 @@ Route::middleware(['auth:admin'])->prefix('admin')->name('admin.')->group(functi
         Route::name('company.')->group(function () {
             Route::get('customer/companies', [AdminCustomerCompanyController::class, 'index'])->name('index');
             Route::prefix('customer/company')->group(function () {
+                Route::get('/create', [AdminCustomerCompanyController::class, 'create'])->name('create');
+                Route::post('/store', [AdminCustomerCompanyController::class, 'store'])->name('store');
                 Route::get('/edit/{company?}', [AdminCustomerCompanyController::class, 'edit'])->name('edit');
+                Route::post('/update/{company?}', [AdminCustomerCompanyController::class, 'update'])->name('update');
+                Route::get('/change-status/{company?}', [AdminCustomerCompanyController::class, 'change_status'])->name('change.status');
+                Route::delete('/delete/{company?}', [AdminCustomerCompanyController::class, 'delete'])->name('delete');
             });
         });
     });

@@ -117,7 +117,7 @@
             }
             $('#manage-form')[0].reset();
             $.ajax({
-                url: `{{route('admin.customer.companies.edit')}}/` + id,
+                url: `{{route('admin.customer.company.edit')}}/` + id,
                 type: 'GET',
                 success: function (data) {
                     setDataAndShowEdit(data);
@@ -174,7 +174,7 @@
                 $imageDisplay.attr('alt', data.name);
                 $imageDiv.show();
             }
-            $('#manage-form').attr('action', `{{route('admin.customer.companies.update')}}/` + data.id);
+            $('#manage-form').attr('action', `{{route('admin.customer.company.update')}}/` + data.id);
             $('#formContainer').addClass('open')
         }
         const decodeHtml = (html) => {
@@ -189,7 +189,7 @@
             var dataId = $('#manage-form').data('id');
             var formData = new FormData(this);
             if (!dataId) {
-                AjaxRequestPromise(`{{ route("admin.customer.companies.store") }}`, formData, 'POST', {useToastr: true})
+                AjaxRequestPromise(`{{ route("admin.customer.company.store") }}`, formData, 'POST', {useToastr: true})
                     .then(response => {
                         if (response?.data) {
                             const {id, image, name, email, designation, team_name, status} = response.data;
@@ -277,7 +277,7 @@
             const statusCheckbox = $(this);
             const status = +statusCheckbox.is(':checked');
             const rowId = statusCheckbox.data('id');
-            AjaxRequestPromise(`{{ route('admin.customer.companies.change.status') }}/${rowId}?status=${status}`, null, 'GET', {useToastr: true})
+            AjaxRequestPromise(`{{ route('admin.customer.company.change.status') }}/${rowId}?status=${status}`, null, 'GET', {useToastr: true})
                 .then(response => {
                     const rowIndex = table.row($('#tr-' + rowId)).index();
                     const statusHtml = `<input type="checkbox" class="status-toggle change-status" data-id="${rowId}" ${status ? "checked" : ""} data-bs-toggle="toggle">`;
@@ -290,7 +290,7 @@
         /** Delete Record */
         $(document).on('click', '.deleteBtn', function () {
             const id = $(this).data('id');
-            AjaxDeleteRequestPromise(`{{ route("admin.customer.companies.delete", "") }}/${id}`, null, 'DELETE', {
+            AjaxDeleteRequestPromise(`{{ route("admin.customer.company.delete", "") }}/${id}`, null, 'DELETE', {
                 useDeleteSwal: true,
                 useToastr: true,
             })

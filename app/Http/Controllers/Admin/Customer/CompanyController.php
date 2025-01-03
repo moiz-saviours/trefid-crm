@@ -90,12 +90,35 @@ class CompanyController extends Controller
         //
     }
 
+
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Company $company)
+    public function delete(Company $company)
     {
-        //
+        try {
+            if ($company->delete()) {
+                return response()->json(['success' => 'The record has been deleted successfully.']);
+            }
+            return response()->json(['error' => 'An error occurred while deleting the record.']);
+
+        } catch (\Exception $e) {
+            return response()->json(['error' => ' Internal Server Error', 'message' => $e->getMessage(), 'line' => $e->getLine()], 500);
+        }
+    }
+
+    /**
+     * Change the specified resource status from storage.
+     */
+    public function change_status(Request $request, Company $company)
+    {
+        try {
+            $company->status = $request->query('status');
+            $company->save();
+            return response()->json(['success' => 'Record status updated successfully']);
+        } catch (\Exception $e) {
+            return response()->json(['error' => ' Internal Server Error', 'message' => $e->getMessage(), 'line' => $e->getLine()], 500);
+        }
     }
 
 
