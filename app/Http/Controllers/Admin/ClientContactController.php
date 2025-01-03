@@ -70,8 +70,11 @@ class ClientContactController extends Controller
      */
     public function edit(ClientContact $client_contact)
     {
-        if (!$client_contact->id) return response()->json(['error' => 'Record not found!'], 404);
+        if (!$client_contact){
+            return response()->json(['error' => 'Record not found!'], 404);
+        }
         $countries = config('countries');
+
         return response()->json(['client_contact' => $client_contact, 'countries' => $countries]);
     }
 
@@ -122,12 +125,12 @@ class ClientContactController extends Controller
     /**
      * Change the specified resource status from storage.
      */
-    public function change_status(Request $request, ClientContact $client_contact)
+    public function change_status(Request $request, ClientContact $clientContact)
     {
         try {
-            $client_contact->status = $request->query('status');
-            $client_contact->save();
-            return response()->json(['success' => 'Record status updated successfully']);
+            $clientContact->status = $request->query('status');
+            $clientContact->save();
+            return response()->json(['message' => 'Status updated successfully']);
         } catch (\Exception $e) {
             return response()->json(['error' => ' Internal Server Error', 'message' => $e->getMessage(), 'line' => $e->getLine()], 500);
         }

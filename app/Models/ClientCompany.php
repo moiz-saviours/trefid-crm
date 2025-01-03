@@ -22,7 +22,7 @@ class ClientCompany extends Model
      *
      * @var array<int, string>
      */
-    protected $fillable = ['special_key', 'name', 'logo', 'email', 'description', 'status'];
+    protected $fillable = ['special_key', 'name', 'logo', 'email', 'url','description', 'status'];
 
     /**
      * Generate a unique special key.

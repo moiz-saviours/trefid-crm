@@ -162,21 +162,19 @@
                     AjaxRequestPromise(`{{ route("admin.client.contact.store") }}`, formData, 'POST', {useToastr: true})
                         .then(response => {
                             if (response?.data) {
-                                const {id, brand_key, team_key, name, email, phone,address,city,state,status,country,zipcode } = response.data;
+                                const {id, name, email, phone, address, city,state,status} = response.data;
                                 const index = table.rows().count() + 1;
                                 const columns = `
                                     <td class="align-middle text-center text-nowrap"></td>
                                     <td class="align-middle text-center text-nowrap">${index}</td>
 
-                                    <td class="align-middle text-center text-nowrap">${brand_key}</td>
-                                    <td class="align-middle text-center text-nowrap">${team_key}</td>
                                     <td class="align-middle text-center text-nowrap">${name}</td>
                                     <td class="align-middle text-center text-nowrap">${email}</td>
+                                    <td class="align-middle text-center text-nowrap">${name}</td>
                                     <td class="align-middle text-center text-nowrap">${phone}</td>
                                     <td class="align-middle text-center text-nowrap">${address}</td>
                                     <td class="align-middle text-center text-nowrap">${city}</td>
                                     <td class="align-middle text-center text-nowrap">${state}</td>
-
 
                                     <td class="align-middle text-center text-nowrap">
                                         <input type="checkbox" class="status-toggle change-status" data-id="${id}" ${status == 1 ? 'checked' : ''} data-bs-toggle="toggle">
@@ -202,47 +200,38 @@
                     AjaxRequestPromise(url, formData, 'POST', {useToastr: true})
                         .then(response => {
                             if (response?.data) {
-                                const {id, brand_key, team_key, name, email, phone,address,city,state,status } = response.data;
+                                const {id, name, email, phone, address, city,state,status} = response.data;
                                 const index = table.row($('#tr-' + id)).index();
                                 const rowData = table.row(index).data();
-                                // Column 2: Brand
-                                if (decodeHtml(rowData[2]) !== brand_key) {
-                                    table.cell(index, 2).data(brand_key).draw();
+                                // Column 2: Name
+                                if (decodeHtml(rowData[2]) !== name) {
+                                    table.cell(index, 2).data(name).draw();
                                 }
-                                /** Column 3: Team */
-                                if (decodeHtml(rowData[3]) !== team_key) {
-                                    table.cell(index, 3).data(team_key).draw();
+                                /** Column 3: email */
+                                if (decodeHtml(rowData[3]) !== email) {
+                                    table.cell(index, 3).data(email).draw();
                                 }
-                                // Column 4: name
-                                if (decodeHtml(rowData[4]) !== name) {
-                                    table.cell(index, 4).data(name).draw();
+                                // Column 4: phone
+                                if (decodeHtml(rowData[4]) !== phone) {
+                                    table.cell(index, 4).data(phone).draw();
                                 }
-                                // Column 5: email
-                                if (decodeHtml(rowData[5]) !== email) {
-                                    table.cell(index, 5).data(email).draw();
+                                // Column 5: address
+                                if (decodeHtml(rowData[5]) !== address) {
+                                    table.cell(index, 5).data(address).draw();
                                 }
-                                // Column 6: phone
-                                if (decodeHtml(rowData[6]) !== phone) {
-                                    table.cell(index, 6).data(phone).draw();
+                                // Column 6: city
+                                if (decodeHtml(rowData[6]) !== city) {
+                                    table.cell(index, 6).data(city).draw();
                                 }
-                                // Column 7: address
-                                if (decodeHtml(rowData[7]) !== address) {
-                                    table.cell(index, 7).data(address).draw();
-                                }
-
-                                // Column 8: city
-                                if (decodeHtml(rowData[8]) !== city) {
-                                    table.cell(index, 8).data(city).draw();
-                                }
-                                // Column 9: state
-                                if (decodeHtml(rowData[9]) !== state) {
-                                    table.cell(index, 9).data(state).draw();
+                                // Column 7: state
+                                if (decodeHtml(rowData[7]) !== state) {
+                                    table.cell(index, 7).data(state).draw();
                                 }
 
-                                // Column 10: Status
+                                // Column 8: Status
                                 const statusHtml = `<input type="checkbox" class="status-toggle change-status" data-id="${id}" ${status == 1 ? "checked" : ""} data-bs-toggle="toggle">`;
-                                if (decodeHtml(rowData[10]) !== statusHtml) {
-                                    table.cell(index, 10).data(statusHtml).draw();
+                                if (decodeHtml(rowData[8]) !== statusHtml) {
+                                    table.cell(index, 8).data(statusHtml).draw();
                                 }
 
 
@@ -262,7 +251,7 @@
                 .then(response => {
                     const rowIndex = table.row($('#tr-' + rowId)).index();
                     const statusHtml = `<input type="checkbox" class="status-toggle change-status" data-id="${rowId}" ${status ? "checked" : ""} data-bs-toggle="toggle">`;
-                    table.cell(rowIndex, 10).data(statusHtml).draw();
+                    table.cell(rowIndex, 8).data(statusHtml).draw();
                 })
                 .catch(() => {
                     statusCheckbox.prop('checked', !status);

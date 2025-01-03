@@ -12,8 +12,10 @@ use App\Http\Controllers\Admin\{
     LeadController as AdminLeadController,
     LeadStatusController as AdminLeadStatusController,
     ClientContactController as AdminClientContactController,
+    ClientCompanyController as AdminClientCompanyController,
     PaymentController as AdminPaymentController,
     PaymentMerchantController as AdminPaymentMerchantController
+
 };
 use Illuminate\Support\Facades\Route;
 
@@ -152,10 +154,23 @@ Route::middleware(['auth:admin'])->prefix('admin')->name('admin.')->group(functi
         Route::prefix('client/contact')->group(function () {
             Route::get('/create', [AdminClientContactController::class, 'create'])->name('create');
             Route::post('/store', [AdminClientContactController::class, 'store'])->name('store');
-            Route::get('/edit/{client?}', [AdminClientContactController::class, 'edit'])->name('edit');
-            Route::post('/update/{client?}', [AdminClientContactController::class, 'update'])->name('update');
-            Route::get('/change-status/{client?}', [AdminClientContactController::class, 'change_status'])->name('change.status');
-            Route::delete('/delete/{client?}', [AdminClientContactController::class, 'delete'])->name('delete');
+            Route::get('/edit/{client_contact?}', [AdminClientContactController::class, 'edit'])->name('edit');
+            Route::post('/update/{client_contact?}', [AdminClientContactController::class, 'update'])->name('update');
+            Route::get('/change-status/{client_contact?}', [AdminClientContactController::class, 'change_status'])->name('change.status');
+            Route::delete('/delete/{client_contact?}', [AdminClientContactController::class, 'delete'])->name('delete');
+        });
+    });
+
+    /** Client Companies Routes */
+    Route::name('client.company.')->group(function () {
+        Route::get('/client/companies', [AdminClientCompanyController::class, 'index'])->name('index');
+        Route::prefix('client/company')->group(function () {
+            Route::get('/create', [AdminClientCompanyController::class, 'create'])->name('create');
+            Route::post('/store', [AdminClientCompanyController::class, 'store'])->name('store');
+            Route::get('/edit/{client_company?}', [AdminClientCompanyController::class, 'edit'])->name('edit');
+            Route::post('/update/{client_company?}', [AdminClientCompanyController::class, 'update'])->name('update');
+            Route::get('/change-status/{client_company?}', [AdminClientCompanyController::class, 'change_status'])->name('change.status');
+            Route::delete('/delete/{client_company?}', [AdminClientCompanyController::class, 'delete'])->name('delete');
         });
     });
 

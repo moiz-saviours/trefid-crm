@@ -1,5 +1,5 @@
 @extends('admin.layouts.app')
-@section('title','Brands')
+@section('title','Client Companies')
 @section('datatable', true)
 @push('breadcrumb')
     <li class="breadcrumb-item text-sm active" aria-current="page"><a href="{{route('admin.brand.index')}}">Brand</a>
@@ -7,7 +7,7 @@
 @endpush
 @section('content')
     @push('style')
-        @include('admin.brands.style')
+        @include('admin.clients.companies.style')
     @endpush
     {{--    <div class="container-fluid py-4">--}}
     {{--        <div class="row">--}}
@@ -91,8 +91,8 @@
             <div class="content__wrap">
                 <header class="custm_header">
                     <div class="new_head">
-                        <h1 class="page-title mb-2">Brands <i class="fa fa-caret-down" aria-hidden="true"></i></h1>
-                        <h2 id="record-count" class="h6">{{count($brands)}} records</h2>
+                        <h1 class="page-title mb-2">Companies <i class="fa fa-caret-down" aria-hidden="true"></i></h1>
+                        <h2 id="record-count" class="h6">{{count($client_companies) }} records</h2>
                     </div>
                     <div class="filters">
                         <div class="actions">
@@ -102,7 +102,7 @@
                             </button>
                             <button class="header_btn">Import</button>
                             {{--                            <button type="button" class="create-contact open-form-btn" data-bs-target="#create-modal" data-bs-toggle="modal">Add New</button>--}}
-                            <button class="create-contact open-form-btn">Create Brand</button>
+                            <button class="create-contact open-form-btn">Create New</button>
 
                         </div>
                     </div>
@@ -114,7 +114,7 @@
                 <div class="container">
                     <div class="custom-tabs">
                         <ul class="tab-nav">
-                            <li class="tab-item active" data-tab="home">Brands
+                            <li class="tab-item active" data-tab="home">Client Companies
                                 <i class="fa fa-times close-icon" aria-hidden="true"></i></li>
                         </ul>
                     </div>
@@ -146,7 +146,7 @@
                                     </div>
                                 </div>
                                 <div class="card-body">
-                                    <table id="allBrandsTable" class="table table-striped datatable-exportable
+                                    <table id="allClientCompaniesTable" class="table table-striped datatable-exportable
                             stripe row-border order-column nowrap
                             initTable
                             ">
@@ -154,52 +154,56 @@
                                         <tr>
                                             <th><input type="checkbox"></th>
                                             <th class="align-middle text-center text-nowrap">SNO.</th>
-                                            <th class="align-middle text-center text-nowrap">Logo</th>
-                                            <th class="align-middle text-center text-nowrap">Brand Key</th>
+                                            <th class="align-middle text-center text-nowrap">LOGO</th>
                                             <th class="align-middle text-center text-nowrap">Name</th>
+                                            <th class="align-middle text-center text-nowrap">Email</th>
                                             <th class="align-middle text-center text-nowrap">Url</th>
+                                            <th class="align-middle text-center text-nowrap">Description</th>
                                             <th class="align-middle text-center text-nowrap">Status</th>
                                             <th class="">Action</th>
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        @foreach($brands as $key => $brand)
-                                            <tr id="tr-{{$brand->id}}">
+                                        @foreach($client_companies as $key => $client_company)
+                                            <tr id="tr-{{$client_company->id}}">
                                                 <td class="align-middle text-center text-nowrap"></td>
                                                 <td class="align-middle text-center text-nowrap">{{$loop->iteration}}</td>
                                                 <td class="align-middle text-center text-nowrap">
                                                     @php
-                                                        $logoUrl = filter_var($brand->logo, FILTER_VALIDATE_URL) ? $brand->logo : asset('assets/images/brand-logos/'.$brand->logo);
+                                                        $logoUrl = filter_var($client_company->logo, FILTER_VALIDATE_URL) ? $client_company->logo : asset('assets/images/clients/companies/logos/'.$client_company->logo);
                                                     @endphp
                                                     <object
                                                         data="{{ $logoUrl }}"
                                                         class="avatar avatar-sm me-3"
                                                         style="width: 100px; height: 50px;"
-                                                        title="{{ $brand->name }}"
+                                                        title="{{ $client_company->name }}"
                                                     >
                                                         <img
                                                             src="{{ $logoUrl }}"
-                                                            alt="{{ $brand->name }}"
+                                                            alt="{{ $client_company->name }}"
                                                             class="avatar avatar-sm me-3"
-                                                            title="{{ $brand->name }}">
+                                                            title="{{ $client_company->name }}">
                                                     </object>
                                                 </td>
-                                                <td class="align-middle text-center text-nowrap">{{$brand->brand_key}}</td>
-                                                <td class="align-middle text-center text-nowrap">{{$brand->name}}
+                                                <td class="align-middle text-center text-nowrap">{{$client_company->name}}
                                                 </td>
-                                                <td class="align-middle text-center text-nowrap">{{$brand->url}}
+                                                <td class="align-middle text-center text-nowrap">{{$client_company->email}}
+                                                </td>
+                                                <td class="align-middle text-center text-nowrap">{{$client_company->url}}
+                                                </td>
+                                                <td class="align-middle text-center text-nowrap">{{$client_company->description}}
                                                 </td>
                                                 <td class="align-middle text-center text-nowrap">
                                                     <input type="checkbox" class="status-toggle change-status"
-                                                           data-id="{{ $brand->id }}"
-                                                           {{ $brand->status == 1 ? 'checked' : '' }} data-bs-toggle="toggle">
+                                                           data-id="{{ $client_company->id }}"
+                                                           {{ $client_company->status == 1 ? 'checked' : '' }} data-bs-toggle="toggle">
                                                 </td>
                                                 <td class="align-middle text-center table-actions">
                                                     <button type="button" class="btn btn-sm btn-primary editBtn"
-                                                            data-id="{{ $brand->id }}" title="Edit"><i
+                                                            data-id="{{ $client_company->id }}" title="Edit"><i
                                                             class="fas fa-edit"></i></button>
                                                     <button type="button" class="btn btn-sm btn-danger deleteBtn"
-                                                            data-id="{{ $brand->id }}" title="Delete"><i
+                                                            data-id="{{ $client_company->id }}" title="Delete"><i
                                                             class="fas fa-trash"></i></button>
                                                 </td>
                                             </tr>
@@ -210,18 +214,14 @@
                             </div>
                         </div>
                     </div>
-                    @include('admin.brands.custom-form')
+                    @include('admin.clients.companies.custom-form')
                 </div>
             </div>
         </div>
     </section>
 
 
-    <!-- Modal -->
-    @include('admin.brands.create-modal')
-    @include('admin.brands.edit-modal')
-
     @push('script')
-        @include('admin.brands.script')
+        @include('admin.clients.companies.script')
     @endpush
 @endsection

@@ -149,28 +149,29 @@
         updateImage();
 
         function setDataAndShowEdit(data) {
+            let client_company = data?.client_company;
 
-            $('#manage-form').data('id', data.id);
-            $('#name').val(data.name);
-            $('#email').val(data.email);
-            $('#description').val(data.description);
-            $('#url').val(data.url);
-            $('#status').val(data.status);
-            if (data.logo) {
-                var isValidUrl = data.logo.match(/^(https?:\/\/|\/|\.\/)/);
+            $('#manage-form').data('id', client_company.id);
+            $('#name').val(client_company.name);
+            $('#email').val(client_company.email);
+            $('#url').val(client_company.url);
+            $('#description').val(client_company.description);
+            $('#status').val(client_company.status);
+            if (client_company.logo) {
+                var isValidUrl = client_company.logo.match(/^(https?:\/\/|\/|\.\/)/);
                 if (isValidUrl) {
-                    $logoUrl.val(data.logo);
-                    $defaultImage = data.logo;
-                    updateImage(data.logo)
+                    $logoUrl.val(client_company.logo);
+                    $defaultImage = client_company.logo;
+                    updateImage(client_company.logo)
                 } else {
-                    $logoUrl.val(`{{asset('assets/images/clients/companies/logos/')}}/` + data.logo);
-                    $defaultImage = `{{asset('assets/images/clients/companies/logos/')}}/` + data.logo;
-                    updateImage(`{{asset('assets/images/clients/companies/logos/')}}/` + data.logo)
+                    $logoUrl.val(`{{asset('assets/images/clients/companies/logos/')}}/` + client_company.logo);
+                    $defaultImage = `{{asset('assets/images/clients/companies/logos/')}}/` + client_company.logo;
+                    updateImage(`{{asset('assets/images/clients/companies/logos/')}}/` + client_company.logo)
                 }
-                $imageDisplay.attr('alt', data.name);
+                $imageDisplay.attr('alt', client_company.name);
                 $imageDiv.show();
             }
-            $('#manage-form').attr('action', `{{route('admin.brand.update')}}/` + data.id);
+            $('#manage-form').attr('action', `{{route('admin.client.company.update')}}/` + client_company.id);
             $('#formContainer').addClass('open')
         }
         const decodeHtml = (html) => {
@@ -185,11 +186,11 @@
             var dataId = $('#manage-form').data('id');
             var formData = new FormData(this);
             if (!dataId) {
-                AjaxRequestPromise(`{{ route("admin.brand.store") }}`, formData, 'POST', {useToastr: true})
+                AjaxRequestPromise(`{{ route("admin.client.company.store") }}`, formData, 'POST', {useToastr: true})
                     .then(response => {
                         if (response?.data) {
-                            const {id, logo, brand_key, name,email,description, url, status} = response.data;
-                            const logoUrl = isValidUrl(logo) ? logo : (logo ? `{{ asset('assets/images/clients/companies/logos/') }}/${logo}` : '{{ asset("assets/images/no-image-available.png") }}');
+                            const {id, logo, name,email,url,description,status} = response.data;
+                            const logoUrl = isValidUrl(logo) ? logo : (logo ? `{{ asset('assets/images/clients/companies/logos') }}/${logo}` : '{{ asset("assets/images/no-image-available.png") }}');
                             const index = table.rows().count() + 1;
                             const columns = `
                                 <td class="align-middle text-center text-nowrap"></td>
@@ -200,9 +201,10 @@
                                     </object>`
                                 : null}
                                 </td>
-                                <td class="align-middle text-center text-nowrap">${brand_key}</td>
                                 <td class="align-middle text-center text-nowrap">${name}</td>
+                                <td class="align-middle text-center text-nowrap">${email}</td>
                                 <td class="align-middle text-center text-nowrap">${url}</td>
+                                <td class="align-middle text-center text-nowrap">${description}</td>
                                 <td class="align-middle text-center text-nowrap">
                                     <input type="checkbox" class="status-toggle change-status" data-id="${id}" ${status == 1 ? 'checked' : ''} data-bs-toggle="toggle">
                                 </td>
@@ -227,31 +229,41 @@
                 AjaxRequestPromise(url, formData, 'POST', {useToastr: true})
                     .then(response => {
                         if (response?.data) {
-                            const {id, logo, name,url, status} = response.data;
-                            const logoUrl = isValidUrl(logo) ? logo : (logo ? `{{ asset('assets/images/clients/companies/logos/') }}/${logo}` : `{{ asset("assets/images/no-image-available.png") }}`);
+                            const {id, logo, name,email,url,description,status} = response.data;
+                            const logoUrl = isValidUrl(logo) ? logo : (logo ? `{{ asset('assets/images/clients/companies/logos') }}/${logo}` : `{{ asset("assets/images/no-image-available.png") }}`);
                             const index = table.row($('#tr-' + id)).index();
                             const rowData = table.row(index).data();
                             // Column 2: Image
-                            const imageHtml = logoUrl ? `<object data="${logoUrl}" class="avatar avatar-sm me-3" title="${name}"><img src="${logoUrl}" alt="${name}" class="avatar avatar-sm me-3" style="width: 100px; height: 50px;" title="${name}"></object>` : '';
+                            const imageHtml = logoUrl ? `<object data="${logoUrl}" class="avatar avatar-sm me-3" title="${name}"><img src="${logoUrl}" alt="${name}" class="avatar avatar-sm me-3"  title="${name}"></object>` : '';
                             if (decodeHtml(rowData[2]) !== imageHtml) {
                                 table.cell(index, 2).data(logoUrl ? `<object data="${logoUrl}" class="avatar avatar-sm me-3" title="${name}">
                                                             <img src="${logoUrl}" alt="${name}" class="avatar avatar-sm me-3" title="${name}">
                                                         </object>` : '').draw();
                             }
                             // Column 3: Name
-                            if (decodeHtml(rowData[4]) !== name) {
-                                table.cell(index, 4).data(name).draw();
+                            if (decodeHtml(rowData[3]) !== name) {
+                                table.cell(index, 3).data(name).draw();
                             }
 
-                            // Column 5: Url
+                            // Column 4: Email
+                            if (decodeHtml(rowData[4]) !== email) {
+                                table.cell(index, 4).data(email).draw();
+                            }
+
+                            // Column 5: URL
                             if (decodeHtml(rowData[5]) !== url) {
                                 table.cell(index, 5).data(url).draw();
                             }
 
+                            // Column 6: Description
+                            if (decodeHtml(rowData[6]) !== description) {
+                                table.cell(index, 6).data(description).draw();
+                            }
+
                             // Column 7: Status
                             const statusHtml = `<input type="checkbox" class="status-toggle change-status" data-id="${id}" ${status == 1 ? "checked" : ""} data-bs-toggle="toggle">`;
-                            if (decodeHtml(rowData[6]) !== statusHtml) {
-                                table.cell(index, 6).data(statusHtml).draw();
+                            if (decodeHtml(rowData[7]) !== statusHtml) {
+                                table.cell(index, 7).data(statusHtml).draw();
                             }
                             $('#manage-form')[0].reset();
                             $('#image-display').attr('src', null);
@@ -267,11 +279,11 @@
             const statusCheckbox = $(this);
             const status = +statusCheckbox.is(':checked');
             const rowId = statusCheckbox.data('id');
-            AjaxRequestPromise(`{{ route('admin.brand.change.status') }}/${rowId}?status=${status}`, null, 'GET', {useToastr: true})
+            AjaxRequestPromise(`{{ route('admin.client.company.change.status') }}/${rowId}?status=${status}`, null, 'GET', {useToastr: true})
                 .then(response => {
                     const rowIndex = table.row($('#tr-' + rowId)).index();
                     const statusHtml = `<input type="checkbox" class="status-toggle change-status" data-id="${rowId}" ${status ? "checked" : ""} data-bs-toggle="toggle">`;
-                    table.cell(rowIndex, 6).data(statusHtml).draw();
+                    table.cell(rowIndex, 7).data(statusHtml).draw();
                 })
                 .catch(() => {
                     statusCheckbox.prop('checked', !status);
@@ -281,7 +293,7 @@
         /** Delete Record */
         $(document).on('click', '.deleteBtn', function () {
             const id = $(this).data('id');
-            AjaxDeleteRequestPromise(`{{ route("admin.brand.delete", "") }}/${id}`, null, 'DELETE', {
+            AjaxDeleteRequestPromise(`{{ route("admin.client.company.delete", "") }}/${id}`, null, 'DELETE', {
                 useDeleteSwal: true,
                 useToastr: true,
             })

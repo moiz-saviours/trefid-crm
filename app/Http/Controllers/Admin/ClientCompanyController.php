@@ -35,6 +35,7 @@ class ClientCompanyController extends Controller
             'name' => 'required|max:255',
             'logo' => 'nullable|mimes:jpeg,png,jpg,gif|max:2048',
             'email' => 'nullable|email',
+            'url' => 'nullable|url',
             'description' => 'nullable|string',
             'status' => 'nullable|integer|in:0,1',
         ]);
@@ -43,7 +44,7 @@ class ClientCompanyController extends Controller
 
             if ($request->hasFile('logo')) {
                 $originalFileName = time() . '_' . $request->file('logo')->getClientOriginalName();
-                $publicPath = public_path('assets/images/clients/companies/logos');
+                $publicPath = public_path('assets/images/clients/companies/logos/');
                 $request->file('logo')->move($publicPath, $originalFileName);
                 $client_company->logo = $originalFileName;
             }
@@ -82,7 +83,8 @@ class ClientCompanyController extends Controller
         $request->validate([
             'name' => 'required|max:255',
             'logo' => 'nullable|mimes:jpeg,png,jpg,gif|max:2048',
-            'logo_url' => 'nullable|url',
+            'logo_url' => 'nullable|logo_url',
+            'url' => 'nullable|url',
             'email' => 'nullable|email',
             'description' => 'nullable|string',
             'status' => 'nullable|integer|in:0,1',
@@ -92,7 +94,7 @@ class ClientCompanyController extends Controller
 
             if ($request->hasFile('logo')) {
                 $originalFileName = time() . '_' . $request->file('logo')->getClientOriginalName();
-                $publicPath = public_path('assets/images/clients/companies/logos');
+                $publicPath = public_path('assets/images/clients/companies/logos/');
                 $request->file('logo')->move($publicPath, $originalFileName);
                 $client_company->logo = $originalFileName;
             }
