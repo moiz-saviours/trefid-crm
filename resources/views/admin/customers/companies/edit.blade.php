@@ -1,8 +1,8 @@
 @extends('admin.layouts.app')
-@section('title','Company / Edit')
+@section('title','Customer Company / Edit')
 @section('content')
     @push('style')
-        @include('admin.companies.style')
+        @include('admin.customers.companies.style')
     @endpush
     <section id="content" class="content">
         <!-- ab content -->
@@ -808,6 +808,6 @@
         </div>
     </section>
     @push('script')
-        @include('admin.companies.script')
+        @include('admin.customers.companies.script')
     @endpush
 @endsection

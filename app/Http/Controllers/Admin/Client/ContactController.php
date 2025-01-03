@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Admin\Client;
 
 use App\Http\Controllers\Controller;
 use App\Models\ClientContact;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 
-class ClientContactController extends Controller
+class ContactController extends Controller
 {
     /**
      * Display a listing of the resource.

@@ -252,12 +252,12 @@
                                 <h3>Customer</h3>
                             </div>
                             <li class="nav-item">
-                                <a href="{{ route('admin.contact.index') }}"
-                                   class="nav-link {{ request()->is('admin/contact*') ? 'active' : '' }}">Contact</a>
+                                <a href="{{ route('admin.customer.contact.index') }}"
+                                   class="nav-link {{ request()->is('admin/customer/contact*') ? 'active' : '' }}">Contact</a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{route('admin.company.index')}}"
-                                   class="nav-link {{ request()->is('companies*') ? 'active' : '' }}">Company</a>
+                                <a href="{{route('admin.customer.company.index')}}"
+                                   class="nav-link {{ request()->is("admin/customer/{company,companies}*") ? 'active' : '' }}">Company</a>
                             </li>
 
                         </ul>

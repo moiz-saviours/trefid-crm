@@ -2,21 +2,21 @@
 
 use App\Http\Controllers\Admin\{
     AccountController as AdminAccountController,
-    CompanyController as AdminCompanyController,
     ProfileController as AdminProfileController,
     BrandController as AdminBrandController,
     EmployeeController as AdminEmployeeController,
     TeamController as AdminTeamController,
     InvoiceController as AdminInvoiceController,
-    ClientController as AdminClientController,
     LeadController as AdminLeadController,
     LeadStatusController as AdminLeadStatusController,
-    ClientContactController as AdminClientContactController,
-    ClientCompanyController as AdminClientCompanyController,
+    Customer\CompanyController as AdminCustomerCompanyController,
+    Customer\ContactController as AdminCustomerContactController,
+    Client\ContactController as AdminClientContactController,
+    Client\CompanyController as AdminClientCompanyController,
     PaymentController as AdminPaymentController,
-    PaymentMerchantController as AdminPaymentMerchantController
-
+    PaymentMerchantController as AdminPaymentMerchantController,
 };
+
 use Illuminate\Support\Facades\Route;
 
 
@@ -92,24 +92,26 @@ Route::middleware(['auth:admin'])->prefix('admin')->name('admin.')->group(functi
         });
     });
 
-    /** Companies Routes */
-    Route::name('company.')->group(function () {
-        Route::get('/companies', [AdminCompanyController::class, 'index'])->name('index');
-        Route::prefix('company')->group(function () {
-            Route::get('/edit/{company?}', [AdminCompanyController::class, 'edit'])->name('edit');
-        });
-    });
 
     /** Contacts Routes */
-    Route::name('contact.')->group(function () {
-        Route::get('/contacts', [AdminClientController::class, 'index'])->name('index');
-        Route::prefix('contact')->group(function () {
-            Route::get('/create', [AdminClientController::class, 'create'])->name('create');
-            Route::post('/store', [AdminClientController::class, 'store'])->name('store');
-            Route::get('/edit/{client?}', [AdminClientController::class, 'edit'])->name('edit');
-            Route::post('/update/{client?}', [AdminClientController::class, 'update'])->name('update');
-            Route::get('/change-status/{client?}', [AdminClientController::class, 'change_status'])->name('change.status');
-            Route::delete('/delete/{client?}', [AdminClientController::class, 'delete'])->name('delete');
+    Route::name('customer.')->group(function () {
+        Route::name('contact.')->group(function () {
+            Route::get('/customer/contacts', [AdminCustomerContactController::class, 'index'])->name('index');
+            Route::prefix('customer/contact')->group(function () {
+                Route::get('/create', [AdminCustomerContactController::class, 'create'])->name('create');
+                Route::post('/store', [AdminCustomerContactController::class, 'store'])->name('store');
+                Route::get('/edit/{client?}', [AdminCustomerContactController::class, 'edit'])->name('edit');
+                Route::post('/update/{client?}', [AdminCustomerContactController::class, 'update'])->name('update');
+                Route::get('/change-status/{client?}', [AdminCustomerContactController::class, 'change_status'])->name('change.status');
+                Route::delete('/delete/{client?}', [AdminCustomerContactController::class, 'delete'])->name('delete');
+            });
+        });
+        /** Companies Routes */
+        Route::name('company.')->group(function () {
+            Route::get('customer/companies', [AdminCustomerCompanyController::class, 'index'])->name('index');
+            Route::prefix('customer/company')->group(function () {
+                Route::get('/edit/{company?}', [AdminCustomerCompanyController::class, 'edit'])->name('edit');
+            });
         });
     });
 
@@ -174,16 +176,16 @@ Route::middleware(['auth:admin'])->prefix('admin')->name('admin.')->group(functi
         });
     });
 
-    /** Payment Merchant Routes */
-    Route::name('client.')->group(function () {
-        Route::get('/clients', [AdminPaymentMerchantController::class, 'index'])->name('index');
-        Route::prefix('client')->group(function () {
-            Route::get('/create', [AdminPaymentMerchantController::class, 'create'])->name('create');
-            Route::post('/store', [AdminPaymentMerchantController::class, 'store'])->name('store');
-            Route::get('/edit/{client?}', [AdminPaymentMerchantController::class, 'edit'])->name('edit');
-            Route::post('/update/{client?}', [AdminPaymentMerchantController::class, 'update'])->name('update');
-            Route::get('/change-status/{client?}', [AdminPaymentMerchantController::class, 'change_status'])->name('change.status');
-            Route::delete('/delete/{client?}', [AdminPaymentMerchantController::class, 'delete'])->name('delete');
-        });
-    });
+//    /** Payment Merchant Routes */
+//    Route::name('client.')->group(function () {
+//        Route::get('/clients', [AdminPaymentMerchantController::class, 'index'])->name('index');
+//        Route::prefix('client')->group(function () {
+//            Route::get('/create', [AdminPaymentMerchantController::class, 'create'])->name('create');
+//            Route::post('/store', [AdminPaymentMerchantController::class, 'store'])->name('store');
+//            Route::get('/edit/{client?}', [AdminPaymentMerchantController::class, 'edit'])->name('edit');
+//            Route::post('/update/{client?}', [AdminPaymentMerchantController::class, 'update'])->name('update');
+//            Route::get('/change-status/{client?}', [AdminPaymentMerchantController::class, 'change_status'])->name('change.status');
+//            Route::delete('/delete/{client?}', [AdminPaymentMerchantController::class, 'delete'])->name('delete');
+//        });
+//    });
 });

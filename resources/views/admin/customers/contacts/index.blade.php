@@ -3,7 +3,7 @@
 @section('datatable', true)
 @section('content')
     @push('style')
-        @include('admin.contacts.style')
+        @include('admin.customers.contacts.style')
     @endpush
     <section id="content" class="content">
         <div class="content__header content__boxed overlapping">
@@ -134,13 +134,13 @@
                             </div>
                         </div>
                     </div>
-                    @include('admin.contacts.custom-form')
+                    @include('admin.customers.contacts.custom-form')
                 </div>
             </div>
         </div>
     </section>
     <!-- Modal -->
     @push('script')
-        @include('admin.contacts.script')
+        @include('admin.customers.contacts.script')
     @endpush
 @endsection

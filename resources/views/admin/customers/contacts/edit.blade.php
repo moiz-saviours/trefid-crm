@@ -1,14 +1,14 @@
 @extends('admin.layouts.app')
-@section('title', 'Client / Edit')
+@section('title', 'Customer Contact / Edit')
 @push('breadcrumb')
     <li class="breadcrumb-item text-sm text-white" aria-current="page"><a
-                href="{{ route('admin.client.index') }}">Client</a></li>
+                href="{{ route('admin.customer.contact.index') }}">Client</a></li>
     <li class="breadcrumb-item text-sm text-white active" aria-current="page"><a
-                href="{{ route('admin.client.edit', $client->id) }}">Edit</a></li>
+                href="{{ route('admin.customer.contact.edit', $client->id) }}">Edit</a></li>
 @endpush
 @section('content')
     @push('style')
-        @include('admin.contacts.style')
+        @include('admin.customers.contacts.style')
     @endpush
 
     <div class="container-fluid py-4">
@@ -19,7 +19,7 @@
                         <h5>Edit Client</h5>
                     </div>
                     <div class="card-body">
-                        <form action="{{ route('admin.client.update', $client->id) }}" method="POST">
+                        <form action="{{ route('admin.customer.contact.update', $client->id) }}" method="POST">
                             @csrf
                             <div class="row">
                                 <div class="col-md-6 mb-3">
@@ -159,7 +159,7 @@
                                 </div>
                                 <div class="d-flex justify-content-between">
                                     <button type="submit" class="btn btn-primary">Update Client</button>
-                                    <a href="{{ route('admin.client.index') }}" class="btn btn-secondary">Cancel</a>
+                                    <a href="{{ route('admin.customer.contact.index') }}" class="btn btn-secondary">Cancel</a>
                                 </div>
                             </div>
                         </form>
@@ -169,6 +169,6 @@
         </div>
     </div>
     @push('script')
-        @include('admin.contacts.script')
+        @include('admin.customers.contacts.script')
     @endpush
 @endsection

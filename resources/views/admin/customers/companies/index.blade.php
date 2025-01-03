@@ -1,9 +1,9 @@
 @extends('admin.layouts.app')
-@section('title','Companies')
+@section('title','Customer Companies')
 @section('datatable', true)
 @section('content')
     @push('style')
-        @include('admin.companies.style')
+        @include('admin.customers.companies.style')
     @endpush
     <section id="content" class="content">
         <div class="content__header content__boxed overlapping">
@@ -120,13 +120,13 @@
                             </div>
                         </div>
                     </div>
-                    @include('admin.employees.custom-form')
+                    @include('admin.customers.companies.custom-form')
                 </div>
             </div>
         </div>
     </section>
     <!-- Modal -->
     @push('script')
-        @include('admin.companies.script')
+        @include('admin.customers.companies.script')
     @endpush
 @endsection

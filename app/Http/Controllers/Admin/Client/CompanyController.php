@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Admin\Client;
 
 use App\Http\Controllers\Controller;
 use App\Models\ClientCompany;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 
-class ClientCompanyController extends Controller
+class CompanyController extends Controller
 {
     /**
      * Display a listing of the resource.
