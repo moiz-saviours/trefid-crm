@@ -100,10 +100,10 @@ Route::middleware(['auth:admin'])->prefix('admin')->name('admin.')->group(functi
             Route::prefix('customer/contact')->group(function () {
                 Route::get('/create', [AdminCustomerContactController::class, 'create'])->name('create');
                 Route::post('/store', [AdminCustomerContactController::class, 'store'])->name('store');
-                Route::get('/edit/{client?}', [AdminCustomerContactController::class, 'edit'])->name('edit');
-                Route::post('/update/{client?}', [AdminCustomerContactController::class, 'update'])->name('update');
-                Route::get('/change-status/{client?}', [AdminCustomerContactController::class, 'change_status'])->name('change.status');
-                Route::delete('/delete/{client?}', [AdminCustomerContactController::class, 'delete'])->name('delete');
+                Route::get('/edit/{customer_contact?}', [AdminCustomerContactController::class, 'edit'])->name('edit');
+                Route::post('/update/{customer_contact?}', [AdminCustomerContactController::class, 'update'])->name('update');
+                Route::get('/change-status/{customer_contact?}', [AdminCustomerContactController::class, 'change_status'])->name('change.status');
+                Route::delete('/delete/{customer_contact?}', [AdminCustomerContactController::class, 'delete'])->name('delete');
             });
         });
         /** Companies Routes */
@@ -112,10 +112,10 @@ Route::middleware(['auth:admin'])->prefix('admin')->name('admin.')->group(functi
             Route::prefix('customer/company')->group(function () {
                 Route::get('/create', [AdminCustomerCompanyController::class, 'create'])->name('create');
                 Route::post('/store', [AdminCustomerCompanyController::class, 'store'])->name('store');
-                Route::get('/edit/{company?}', [AdminCustomerCompanyController::class, 'edit'])->name('edit');
-                Route::post('/update/{company?}', [AdminCustomerCompanyController::class, 'update'])->name('update');
-                Route::get('/change-status/{company?}', [AdminCustomerCompanyController::class, 'change_status'])->name('change.status');
-                Route::delete('/delete/{company?}', [AdminCustomerCompanyController::class, 'delete'])->name('delete');
+                Route::get('/edit/{customer_company?}', [AdminCustomerCompanyController::class, 'edit'])->name('edit');
+                Route::post('/update/{customer_company?}', [AdminCustomerCompanyController::class, 'upd  ate'])->name('update');
+                Route::get('/change-status/{customer_company?}', [AdminCustomerCompanyController::class, 'change_status'])->name('change.status');
+                Route::delete('/delete/{customer_company?}', [AdminCustomerCompanyController::class, 'delete'])->name('delete');
             });
         });
     });
@@ -155,7 +155,7 @@ Route::middleware(['auth:admin'])->prefix('admin')->name('admin.')->group(functi
         Route::post('/update/{payment?}', [AdminPaymentController::class, 'update'])->name('update');
     });
 
-    /** Client Contacts Routes */
+    /** CustomerContact Contacts Routes */
     Route::name('client.contact.')->group(function () {
         Route::get('/client/contacts', [AdminClientContactController::class, 'index'])->name('index');
         Route::prefix('client/contact')->group(function () {
@@ -168,7 +168,7 @@ Route::middleware(['auth:admin'])->prefix('admin')->name('admin.')->group(functi
         });
     });
 
-    /** Client Companies Routes */
+    /** CustomerContact Companies Routes */
     Route::name('client.company.')->group(function () {
         Route::get('/client/companies', [AdminClientCompanyController::class, 'index'])->name('index');
         Route::prefix('client/company')->group(function () {

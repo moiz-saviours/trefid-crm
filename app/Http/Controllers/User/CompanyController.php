@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
-use App\Models\Client;
-use App\Models\Company;
+use App\Models\CustomerContact;
+use App\Models\CustomerCompany;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
@@ -17,14 +17,14 @@ class CompanyController extends Controller
     public function index()
     {
 
-        $all_contacts = Client::whereIn('brand_key', Auth::user()->teams()->with('brands')->get()->pluck('brands.*.brand_key')->flatten())->get();
+        $all_contacts = CustomerContact::whereIn('brand_key', Auth::user()->teams()->with('brands')->get()->pluck('brands.*.brand_key')->flatten())->get();
         $my_contacts = $all_contacts->filter(function ($contact) {
             return $contact->loggable_type === get_class(Auth::user()) && $contact->loggable_id === Auth::id();
         });
         $domains = $all_contacts->map(function ($contact) {
             return substr(strrchr($contact->email, "@"), 1);
         })->unique();
-        $existingDomains = Company::whereIn('domain', $domains)->pluck('domain')->toArray();
+        $existingDomains = CustomerCompany::whereIn('domain', $domains)->pluck('domain')->toArray();
 
         $domainsToFetch = $domains->diff($existingDomains);
 
@@ -36,7 +36,7 @@ class CompanyController extends Controller
 
             if ($response->successful() && isset($response->json()['data'])) {
                 $companyData = $response->json()['data'];
-                Company::create([
+                CustomerCompany::create([
                     'name' => $companyData['organization'] ?? $domain,
                     'email' => 'no-reply@'.$domain,
                     'domain' => $domain,
@@ -49,8 +49,8 @@ class CompanyController extends Controller
                 ]);
             }
         }
-        $companies = Company::whereIn('domain', $domains)->where('status', 1)->get();
-//        $companies = Cache::remember('companies_list', config('cache.durations.short_lived'), fn() => Company::whereIn('domain', $domains)->where('status', 1)->get());
+        $companies = CustomerCompany::whereIn('domain', $domains)->where('status', 1)->get();
+//        $companies = Cache::remember('companies_list', config('cache.durations.short_lived'), fn() => CustomerCompany::whereIn('domain', $domains)->where('status', 1)->get());
 
         return view('user.companies.index', compact('companies'));
     }
@@ -74,7 +74,7 @@ class CompanyController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Company $company)
+    public function show(CustomerCompany $company)
     {
         //
     }
@@ -82,7 +82,7 @@ class CompanyController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Company $company)
+    public function edit(CustomerCompany $company)
     {
         //
     }
@@ -90,7 +90,7 @@ class CompanyController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Company $company)
+    public function update(Request $request, CustomerCompany $company)
     {
         //
     }
@@ -98,7 +98,7 @@ class CompanyController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Company $company)
+    public function destroy(CustomerCompany $company)
     {
         //
     }

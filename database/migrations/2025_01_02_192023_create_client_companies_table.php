@@ -16,8 +16,10 @@ return new class extends Migration
             Schema::create('client_companies', function (Blueprint $table) {
                 $table->id();
                 $table->unsignedBigInteger('special_key')->nullable()->default(null);
+                $table->unsignedBigInteger('c_contact_key')->nullable()->default(null);
                 $table->string('name')->nullable()->default(null);
                 $table->string('logo')->nullable()->default(null);
+                $table->string('url')->nullable()->default(null);
                 $table->string('email')->nullable()->default(null);
                 $table->text('description')->nullable()->default(null);
                 $table->morphs('creator');
@@ -25,6 +27,10 @@ return new class extends Migration
                 $table->softDeletes();
                 $table->timestamps();
                 $table->index('special_key');
+                $table->index('c_contact_key');
+
+                $table->foreign('c_contact_key')->references('special_key')->on('client_contacts')->onDelete('NO ACTION');
+
             });
         }
     }

@@ -1,5 +1,5 @@
 @extends('developer.layouts.app')
-@section('title','Client / Create')
+@section('title','CustomerContact / Create')
 @push('breadcrumb')
     <li class="breadcrumb-item text-sm text-white" aria-current="page"><a
             href="{{route('developer.client.index')}}">Client</a></li>

@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Brand;
-use App\Models\Client;
+use App\Models\CustomerContact;
 use App\Models\Invoice;
 use App\Models\Payment;
 use App\Models\Team;
@@ -23,7 +23,7 @@ class PaymentController extends Controller
         $brands = Brand::all();
         $teams = Team::all();
         $agents = User::all();
-        $clients = Client::all();
+        $clients = CustomerContact::all();
         $all_payments = Payment::all();
         $payments = Payment::with(['brand', 'team', 'agent'])->get();
         return view('admin.payments.index', compact('payments','brands','teams','agents','clients','all_payments'));
@@ -37,7 +37,7 @@ class PaymentController extends Controller
         $brands = Brand::all();
         $teams = Team::all();
         $agents = User::all();
-        $clients = Client::all();
+        $clients = CustomerContact::all();
 
         return view('admin.payments.create', compact('brands', 'teams', 'agents', 'clients'));
     }
@@ -95,7 +95,7 @@ class PaymentController extends Controller
             $invoice->save();
 
             $client = $request->input('payment_type') == 'fresh'
-                ? Client::firstOrCreate(
+                ? CustomerContact::firstOrCreate(
                     ['email' => $request->input('client_email')],
                     [
                         'brand_key' => $request->input('brand_key'),
@@ -104,7 +104,7 @@ class PaymentController extends Controller
                         'phone' => $request->input('client_phone'),
                     ]
                 )
-                : Client::where('client_key', $request->input('client_key'))->first();
+                : CustomerContact::where('client_key', $request->input('client_key'))->first();
 
             $paymentData = [
                 'brand_key' => $request->brand_key,
@@ -160,7 +160,7 @@ class PaymentController extends Controller
             $brands = Brand::where('status', 1)->get();
             $teams = Team::where('status', 1)->get();
             $agents = User::where('status', 1)->get();
-            $clients = Client::where('status', 1)->get();
+            $clients = CustomerContact::where('status', 1)->get();
 
             return view('admin.payments.edit', compact('payment', 'brands', 'teams', 'agents', 'clients'));
 
@@ -216,7 +216,7 @@ class PaymentController extends Controller
 
             // Handle client update or retrieval
             $client = $request->input('payment_type') == 'fresh'
-                ? Client::firstOrCreate(
+                ? CustomerContact::firstOrCreate(
                     ['email' => $request->input('client_email')],
                     [
                         'brand_key' => $request->input('brand_key'),
@@ -225,7 +225,7 @@ class PaymentController extends Controller
                         'phone' => $request->input('client_phone'),
                     ]
                 )
-                : Client::where('client_key', $request->input('client_key'))->firstOrFail();
+                : CustomerContact::where('client_key', $request->input('client_key'))->firstOrFail();
 
             // Update the payment record
             $payment->update([

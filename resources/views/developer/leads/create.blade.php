@@ -56,7 +56,7 @@
                                     @enderror
                                 </div>
 
-                                <!-- Client Type Selection (New or Existing) -->
+                                <!-- CustomerContact Type Selection (New or Existing) -->
                                 <div class="col-md-4 mb-3">
                                     <label for="type" class="form-label">Client Type</label>
                                     <select class="form-control" id="type" name="type" required>
@@ -70,7 +70,7 @@
                                     @enderror
                                 </div>
 
-                                <!-- Fresh Client Fields (Only show for "New" clients) -->
+                                <!-- Fresh CustomerContact Fields (Only show for "New" clients) -->
                                 <div id="fresh-client-fields" class="col-md-12 mb-3 d-none">
                                     <div class="row">
                                         <div class="col-md-4 mb-3">
@@ -100,7 +100,7 @@
                                     </div>
                                 </div>
 
-                                <!-- Upsale Client Fields (Only show for "Existing" clients) -->
+                                <!-- Upsale CustomerContact Fields (Only show for "Existing" clients) -->
                                 <div id="upsale-client-fields" class="col-md-4 mb-3 d-none">
                                     <label for="client_key" class="form-label">Select Existing Client</label>
                                     <select class="form-control searchable" id="client_key" name="client_key">

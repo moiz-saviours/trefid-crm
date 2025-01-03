@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Cache;
 
-class Company extends Model
+class CustomerCompany extends Model
 {
 
     use Notifiable, SoftDeletes;

@@ -1,5 +1,5 @@
 @extends('admin.layouts.app')
-@section('title','Client Contacts')
+@section('title','CustomerContact Contacts')
 @section('datatable', true)
 @section('content')
     @push('style')

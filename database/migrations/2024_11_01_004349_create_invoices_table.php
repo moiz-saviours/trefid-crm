@@ -16,7 +16,7 @@ return new class extends Migration {
                 $table->id();
                 $table->unsignedBigInteger('brand_key')->nullable()->default(null);
                 $table->unsignedBigInteger('team_key')->nullable()->default(null);
-                $table->unsignedBigInteger('client_key')->nullable()->default(null);
+                $table->unsignedBigInteger('cus_contact_key')->nullable()->default(null);
                 $table->nullableMorphs('agent');
                 $table->nullableMorphs('creator');
                 $table->unsignedBigInteger('invoice_key')->nullable()->default(null)->unique();

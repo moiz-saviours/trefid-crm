@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Brand;
-use App\Models\Client;
+use App\Models\CustomerContact;
 use Illuminate\Support\Facades\Cache;
 use App\Models\Team;
 use Illuminate\Http\Request;
@@ -19,7 +19,7 @@ class ClientController extends Controller
         $brands = Brand::all();
         $teams = Team::all();
         $countries = config('countries');
-        $clients = Client::all();
+        $clients = CustomerContact::all();
         return view('admin.contacts.index', compact('clients', 'brands', 'teams', 'countries'));
     }
 
@@ -64,23 +64,23 @@ class ClientController extends Controller
             'team_key.exists' => 'Please select a valid team.',
         ]);
 
-        $client = new Client($request->only([
+        $client = new CustomerContact($request->only([
                 'brand_key', 'team_key', 'name',
                 'email', 'phone', 'address', 'city', 'state',
                 'country', 'zipcode', 'ip_address', 'loggable_type',
                 'loggable_id', 'status',
-            ]) + ['client_key' => Client::generateClientKey()]);
+            ]) + ['client_key' => CustomerContact::generateClientKey()]);
 
         $client->save();
 
         return response()->json(['client' => $client, 'success'=> 'Contact Created Successfully!']);
-//        return redirect()->route('admin.client.index')->with('success', 'Client created successfully.');
+//        return redirect()->route('admin.client.index')->with('success', 'CustomerContact created successfully.');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Client $client)
+    public function show(CustomerContact $client)
     {
         return response()->json(['client' => $client]);
 //        return view('admin.contacts.edit', compact('client'));
@@ -89,9 +89,9 @@ class ClientController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Client $client)
+    public function edit(CustomerContact $client)
     {
-        if (!$client->id) return response()->json(['error' => 'Client Not Found!']);
+        if (!$client->id) return response()->json(['error' => 'CustomerContact Not Found!']);
 
 
 
@@ -112,7 +112,7 @@ class ClientController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Client $client)
+    public function update(Request $request, CustomerContact $client)
     {
         $request->validate([
             'brand_key' => 'required|integer|exists:brands,brand_key',
@@ -148,13 +148,13 @@ class ClientController extends Controller
         $client->save();
         return response()->json([ 'success'=> 'Contact Updated Successfully!']);
 
-        //return redirect()->route('admin.client.index')->with('success', 'Client updated successfully.');
+        //return redirect()->route('admin.client.index')->with('success', 'CustomerContact updated successfully.');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function delete(Client $client)
+    public function delete(CustomerContact $client)
     {
         try {
             if ($client->delete()) {
@@ -170,7 +170,7 @@ class ClientController extends Controller
     /**
      * Change the specified resource status from storage.
      */
-    public function change_status(Request $request, Client $client)
+    public function change_status(Request $request, CustomerContact $client)
     {
         try {
             $client->status = $request->query('status');

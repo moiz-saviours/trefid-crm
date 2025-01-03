@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Brand;
-use App\Models\Client;
+use App\Models\CustomerContact;
 use App\Models\Lead;
 use App\Models\LeadStatus;
 use App\Models\Team;
@@ -26,7 +26,7 @@ class LeadController extends Controller
     {
         $brands = Brand::all();
         $teams = Team::all();
-        $clients = Client::all();
+        $clients = CustomerContact::all();
         $leads = Lead::all();
         return view('admin.leads.index', compact('leads', 'brands', 'teams', 'clients'));
     }
@@ -40,7 +40,7 @@ class LeadController extends Controller
 //        $teams = Cache::remember('teams_list', config('cache.durations.short_lived'), fn() => Team::all());
           $teams = Team::all();
           $brands = Brand::all();
-          $clients = Client::all();
+          $clients = CustomerContact::all();
         return view('admin.leads.create', compact('brands', 'teams', 'clients'));
     }
 
@@ -91,7 +91,7 @@ class LeadController extends Controller
         }
 
         $client = $request->input('type') == 0
-            ? Client::firstOrCreate(
+            ? CustomerContact::firstOrCreate(
                 ['email' => $request->input('client_email')],
                 [
                     'brand_key' => $request->input('brand_key'),
@@ -106,7 +106,7 @@ class LeadController extends Controller
                     'ip_address' => $request->input('ip_address'),
                 ]
             )
-            : Client::where('client_key', $request->input('client_key'))->first();
+            : CustomerContact::where('client_key', $request->input('client_key'))->first();
 
         if (!$client) {
             return response()->json(['errors' => 'The client key does not exist.']);
@@ -150,7 +150,7 @@ class LeadController extends Controller
         //$teams = Cache::remember('teams_list', config('cache.durations.short_lived'), fn() => Team::all());
         $brands = Brand::all();
         $teams = Team::all();
-        $clients = Client::all();
+        $clients = CustomerContact::all();
 
         $lead->loadMissing('client');
 

@@ -11,10 +11,10 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        if (!Schema::hasTable('clients')) {
-            Schema::create('clients', function (Blueprint $table) {
+        if (!Schema::hasTable('customer_contacts')) {
+            Schema::create('customer_contacts', function (Blueprint $table) {
                 $table->id();
-                $table->unsignedBigInteger('client_key')->nullable()->default(null)->unique();
+                $table->unsignedBigInteger('special_key')->nullable()->default(null)->unique();
                 $table->unsignedBigInteger('brand_key')->nullable()->default(null);
                 $table->unsignedBigInteger('team_key')->nullable()->default(null);
                 $table->string('name')->nullable()->default(null);
@@ -32,7 +32,7 @@ return new class extends Migration {
                 $table->softDeletes();
                 $table->timestamps();
 
-                $table->index('client_key');
+                $table->index('special_key');
 
                 $table->foreign('brand_key')->references('brand_key')->on('brands')->onDelete('NO ACTION');
                 $table->foreign('team_key')->references('team_key')->on('teams')->onDelete('NO ACTION');
@@ -40,9 +40,9 @@ return new class extends Migration {
             });
         }
 
-        if (Schema::hasColumn('invoices', 'client_key')) {
+        if (Schema::hasColumn('invoices', 'special_key')) {
             Schema::table('invoices', function (Blueprint $table) {
-                $table->foreign('client_key')->references('client_key')->on('clients')->onDelete('NO ACTION');
+                $table->foreign('cus_contact_key')->references('special_key')->on('customer_contacts')->onDelete('NO ACTION');
             });
         }
     }
@@ -52,6 +52,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('clients');
+        Schema::dropIfExists('customer_contacts');
     }
 };

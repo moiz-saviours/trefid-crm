@@ -99,7 +99,7 @@ Route::middleware(['auth:developer'])->prefix('developer')->name('developer.')->
         });
     });
 
-    /** Client Routes */
+    /** CustomerContact Routes */
     Route::name('client.')->group(function () {
         Route::get('/clients', [DeveloperClientController::class, 'index'])->name('index');
         Route::prefix('client')->group(function () {

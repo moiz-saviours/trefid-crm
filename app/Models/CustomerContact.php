@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 
-class Client extends Model
+class CustomerContact extends Model
 {
 
     use Notifiable, SoftDeletes;
@@ -90,6 +90,6 @@ class Client extends Model
      */
     public function company(): \Illuminate\Database\Eloquent\Relations\MorphMany
     {
-        return $this->morphMany(company::class, 'loggable');
+        return $this->morphMany(CustomerCompany::class, 'loggable');
     }
 }

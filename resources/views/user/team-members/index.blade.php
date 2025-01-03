@@ -294,7 +294,7 @@
                                                 <div class="col-md-8">
                                                     {{--                                                <ul class="custm-filtr">--}}
                                                     {{--                                                    <div class="table-li">--}}
-                                                    {{--                                                        <li class="">Company Owner <i class="fa fa-caret-down"--}}
+                                                    {{--                                                        <li class="">CustomerCompany Owner <i class="fa fa-caret-down"--}}
                                                     {{--                                                                                      aria-hidden="true"></i></li>--}}
                                                     {{--                                                        <li class="">Create date <i class="fa fa-caret-down"--}}
                                                     {{--                                                                                    aria-hidden="true"></i></li>--}}

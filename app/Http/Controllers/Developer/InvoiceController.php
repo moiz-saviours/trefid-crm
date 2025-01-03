@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Developer;
 
 use App\Http\Controllers\Controller;
 use App\Models\Brand;
-use App\Models\Client;
+use App\Models\CustomerContact;
 use App\Models\Invoice;
 use App\Models\Team;
 use App\Models\User;
@@ -29,7 +29,7 @@ class InvoiceController extends Controller
     {
         $brands = Cache::remember('brands_list', config('cache.durations.short_lived'), fn() => Brand::all());
         $teams = Cache::remember('teams_list', config('cache.durations.short_lived'), fn() => Team::all());
-        $clients = Client::all();
+        $clients = CustomerContact::all();
         $users = User::all();
         return view('developer.invoices.create', compact('brands', 'teams', 'clients', 'users'));
     }
@@ -88,7 +88,7 @@ class InvoiceController extends Controller
             'type.in' => 'The type field must be fresh or upsale.',
         ]);
         $client = $request->input('type') == 0
-            ? Client::firstOrCreate(
+            ? CustomerContact::firstOrCreate(
                 ['email' => $request->input('client_email')],
                 [
                     'brand_key' => $request->input('brand_key'),
@@ -97,7 +97,7 @@ class InvoiceController extends Controller
                     'phone' => $request->input('client_phone'),
                 ]
             )
-            : Client::where('client_key', $request->input('client_key'))->first();
+            : CustomerContact::where('client_key', $request->input('client_key'))->first();
         if (!$client) {
             return redirect()->back()->with('error', 'The selected client does not exist.');
         }
@@ -136,7 +136,7 @@ class InvoiceController extends Controller
         if (!$invoice->id) return redirect()->route('developer.invoice.index')->with('error', 'Record not found.');
         $brands = Brand::all();
         $teams = Team::all();
-        $clients = Client::all();
+        $clients = CustomerContact::all();
         $users = User::all();
         return view('developer.invoices.edit', compact('invoice', 'brands', 'teams', 'clients', 'users'));
     }
@@ -192,7 +192,7 @@ class InvoiceController extends Controller
             'type.in' => 'The type field must be fresh or upsale.',
         ]);
         $client = $request->input('type') == 0
-            ? Client::firstOrCreate(
+            ? CustomerContact::firstOrCreate(
                 ['email' => $request->input('client_email')],
                 [
                     'brand_key' => $request->input('brand_key'),
@@ -201,7 +201,7 @@ class InvoiceController extends Controller
                     'phone' => $request->input('client_phone'),
                 ]
             )
-            : Client::where('client_key', $request->input('client_key'))->first();
+            : CustomerContact::where('client_key', $request->input('client_key'))->first();
 
         if (!$client) {
             return redirect()->back()->with('error', 'The selected client does not exist.');

@@ -47,7 +47,7 @@ class Lead extends Model
 
     public function client(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
-        return $this->belongsTo(Client::class, 'client_key', 'client_key');
+        return $this->belongsTo(CustomerContact::class, 'client_key', 'client_key');
     }
     public function leadStatus(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {

@@ -61,7 +61,7 @@ class Brand extends Model
 
     public function contacts(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
-        return $this->hasMany(Client::class, 'brand_key');
+        return $this->hasMany(CustomerContact::class, 'brand_key');
     }
 }
 

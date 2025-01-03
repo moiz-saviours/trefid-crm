@@ -4,7 +4,7 @@ namespace App\Http\Controllers\AdminOld;
 
 use App\Http\Controllers\Controller;
 use App\Models\Brand;
-use App\Models\Client;
+use App\Models\CustomerContact;
 use App\Models\Invoice;
 use App\Models\Payment;
 use App\Models\Team;
@@ -32,7 +32,7 @@ class PaymentController extends Controller
         $brands = Brand::all();
         $teams = Team::all();
         $agents = User::all();
-        $clients = Client::all();
+        $clients = CustomerContact::all();
 
         return view('admin.payments.create', compact('brands', 'teams', 'agents', 'clients'));
     }
@@ -90,7 +90,7 @@ class PaymentController extends Controller
             $invoice->save();
 
             $client = $request->input('payment_type') == 'fresh'
-                ? Client::firstOrCreate(
+                ? CustomerContact::firstOrCreate(
                     ['email' => $request->input('client_email')],
                     [
                         'brand_key' => $request->input('brand_key'),
@@ -99,7 +99,7 @@ class PaymentController extends Controller
                         'phone' => $request->input('client_phone'),
                     ]
                 )
-                : Client::where('client_key', $request->input('client_key'))->first();
+                : CustomerContact::where('client_key', $request->input('client_key'))->first();
 
             $paymentData = [
                 'brand_key' => $request->brand_key,
@@ -140,7 +140,7 @@ class PaymentController extends Controller
         $brands = Cache::remember('brands_list', config('cache.durations.short_lived'), fn() => Brand::all());
         $teams = Cache::remember('teams_list', config('cache.durations.short_lived'), fn() => Team::all());
         $agents = User::all();
-        $clients = Client::all();
+        $clients = CustomerContact::all();
         return view('admin.payments.edit', compact('payment', 'brands', 'teams', 'agents', 'clients'));
     }
 
@@ -188,7 +188,7 @@ class PaymentController extends Controller
 
             // Handle client update or retrieval
             $client = $request->input('payment_type') == 'fresh'
-                ? Client::firstOrCreate(
+                ? CustomerContact::firstOrCreate(
                     ['email' => $request->input('client_email')],
                     [
                         'brand_key' => $request->input('brand_key'),
@@ -197,7 +197,7 @@ class PaymentController extends Controller
                         'phone' => $request->input('client_phone'),
                     ]
                 )
-                : Client::where('client_key', $request->input('client_key'))->firstOrFail();
+                : CustomerContact::where('client_key', $request->input('client_key'))->firstOrFail();
 
             // Update the payment record
             $payment->update([

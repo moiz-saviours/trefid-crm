@@ -1,5 +1,5 @@
 @extends('admin.layouts.app')
-@section('title', 'Client / Edit')
+@section('title', 'CustomerContact / Edit')
 @push('breadcrumb')
     <li class="breadcrumb-item text-sm text-white" aria-current="page"><a
                 href="{{ route('admin.client.index') }}">Client</a></li>

@@ -1,5 +1,5 @@
 @extends('admin.layouts.app')
-@section('title','Customer Company / Edit')
+@section('title','Customer CustomerCompany / Edit')
 @section('content')
     @push('style')
         @include('admin.customers.companies.style')

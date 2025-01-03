@@ -62,7 +62,7 @@ class PaymentMerchantController extends Controller
         ]);
 
         $paymentMerchant->save();
-        return response()->json(['success', 'Client Created Successfully.']);
+        return response()->json(['success', 'CustomerContact Created Successfully.']);
        // return redirect()->route('admin.client.index')->with('success', 'Payment Merchant created successfully.');
 
     }
@@ -113,7 +113,7 @@ class PaymentMerchantController extends Controller
 
         $client->update($request->all());
 
-        return response()->json(['success' => 'Client updated successfully']);
+        return response()->json(['success' => 'CustomerContact updated successfully']);
 
     }
 

@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin\Customer;
 
 use App\Http\Controllers\Controller;
 use App\Models\Brand;
-use App\Models\Client;
+use App\Models\CustomerContact;
 use Illuminate\Support\Facades\Cache;
 use App\Models\Team;
 use Illuminate\Http\Request;
@@ -19,8 +19,8 @@ class ContactController extends Controller
         $brands = Brand::all();
         $teams = Team::all();
         $countries = config('countries');
-        $clients = Client::all();
-        return view('admin.customers.contacts.index', compact('clients', 'brands', 'teams', 'countries'));
+        $customer_contacts = CustomerContact::all();
+        return view('admin.customers.contacts.index', compact('customer_contacts', 'brands', 'teams', 'countries'));
     }
 
     /**
@@ -44,7 +44,7 @@ class ContactController extends Controller
             'brand_key' => 'required|integer|exists:brands,brand_key',
             'team_key' => 'nullable|integer|exists:teams,team_key',
             'name' => 'required|string|max:255',
-            'email' => 'required|email|max:255|unique:clients,email',
+            'email' => 'required|email|max:255|unique:customer_contacts,email',
             'phone' => 'nullable|string|max:15',
             'address' => 'nullable|string|max:255',
             'city' => 'nullable|string|max:255',
@@ -64,34 +64,32 @@ class ContactController extends Controller
             'team_key.exists' => 'Please select a valid team.',
         ]);
 
-        $client = new Client($request->only([
+        $customer_contact = new CustomerContact($request->only([
                 'brand_key', 'team_key', 'name',
                 'email', 'phone', 'address', 'city', 'state',
                 'country', 'zipcode', 'ip_address', 'loggable_type',
                 'loggable_id', 'status',
-            ]) + ['client_key' => Client::generateClientKey()]);
+            ]) + ['client_key' => CustomerContact::generateClientKey()]);
 
-        $client->save();
+        $customer_contact->save();
 
-        return response()->json(['client' => $client, 'success'=> 'Contact Created Successfully!']);
-//        return redirect()->route('admin.client.index')->with('success', 'Client created successfully.');
+        return response()->json(['customer_contact' => $customer_contact, 'success'=> 'Contact Created Successfully!']);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Client $client)
+    public function show(CustomerContact $customer_contact)
     {
-        return response()->json(['client' => $client]);
-//        return view('admin.contacts.edit', compact('client'));
+        return response()->json(['customer_contact' => $customer_contact]);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Client $client)
+    public function edit(CustomerContact $customer_contact)
     {
-        if (!$client->id) return response()->json(['error' => 'Client Not Found!']);
+        if (!$customer_contact->id) return response()->json(['error' => 'CustomerContact Not Found!']);
 
 
 
@@ -104,21 +102,20 @@ class ContactController extends Controller
 
 
 
-        return response()->json(['client' => $client, 'brands' => $brands, 'teams' => $teams, 'countries' => $countries]);
+        return response()->json(['customer_contact' => $customer_contact, 'brands' => $brands, 'teams' => $teams, 'countries' => $countries]);
 
-//        return view('admin.contacts.edit', compact('client', 'brands', 'teams', 'countries'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Client $client)
+    public function update(Request $request, CustomerContact $customer_contact)
     {
         $request->validate([
             'brand_key' => 'required|integer|exists:brands,brand_key',
             'team_key' => 'nullable|integer|exists:teams,team_key',
             'name' => 'required|string|max:255',
-            'email' => 'required|email|max:255|unique:clients,email,' . $client->id,
+            'email' => 'required|email|max:255|unique:customer_contacts,email,' . $customer_contact->id,
             'phone' => 'nullable|string|max:15',
             'address' => 'nullable|string|max:255',
             'city' => 'nullable|string|max:255',
@@ -138,26 +135,24 @@ class ContactController extends Controller
             'team_key.exists' => 'Please select a valid team.',
         ]);
 
-        $client->fill($request->only([
+        $customer_contact->fill($request->only([
             'client_key', 'brand_key', 'team_key', 'name',
             'email', 'phone', 'address', 'city', 'state',
             'country', 'zipcode', 'ip_address', 'loggable_type',
             'loggable_id', 'status',
         ]));
 
-        $client->save();
+        $customer_contact->save();
         return response()->json([ 'success'=> 'Contact Updated Successfully!']);
-
-        //return redirect()->route('admin.client.index')->with('success', 'Client updated successfully.');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function delete(Client $client)
+    public function delete(CustomerContact $customer_contact)
     {
         try {
-            if ($client->delete()) {
+            if ($customer_contact->delete()) {
                 return response()->json(['success' => 'The record has been deleted successfully.']);
             }
             return response()->json(['error' => 'An error occurred while deleting the record.']);
@@ -170,11 +165,11 @@ class ContactController extends Controller
     /**
      * Change the specified resource status from storage.
      */
-    public function change_status(Request $request, Client $client)
+    public function change_status(Request $request, CustomerContact $customer_contact)
     {
         try {
-            $client->status = $request->query('status');
-            $client->save();
+            $customer_contact->status = $request->query('status');
+            $customer_contact->save();
             return response()->json(['success' => 'Status updated successfully']);
         } catch (\Exception $e) {
             return response()->json(['error' => ' Internal Server Error', 'message' => $e->getMessage(), 'line' => $e->getLine()], 500);

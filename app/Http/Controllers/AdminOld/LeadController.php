@@ -4,7 +4,7 @@ namespace App\Http\Controllers\AdminOld;
 
 use App\Http\Controllers\Controller;
 use App\Models\Brand;
-use App\Models\Client;
+use App\Models\CustomerContact;
 use App\Models\Lead;
 use App\Models\LeadStatus;
 use App\Models\Team;
@@ -35,7 +35,7 @@ class LeadController extends Controller
     {
         $brands = Cache::remember('brands_list', config('cache.durations.short_lived'), fn() => Brand::all());
         $teams = Cache::remember('teams_list', config('cache.durations.short_lived'), fn() => Team::all());
-        $clients = Client::all();
+        $clients = CustomerContact::all();
         return view('admin.leads.create', compact('brands', 'teams', 'clients'));
     }
 
@@ -86,7 +86,7 @@ class LeadController extends Controller
         }
 
         $client = $request->input('type') == 0
-            ? Client::firstOrCreate(
+            ? CustomerContact::firstOrCreate(
                 ['email' => $request->input('client_email')],
                 [
                     'brand_key' => $request->input('brand_key'),
@@ -101,7 +101,7 @@ class LeadController extends Controller
                     'ip_address' => $request->input('ip_address'),
                 ]
             )
-            : Client::where('client_key', $request->input('client_key'))->first();
+            : CustomerContact::where('client_key', $request->input('client_key'))->first();
 
         if (!$client) {
             return redirect()->back()->with('error', 'Please try again later.');
@@ -141,7 +141,7 @@ class LeadController extends Controller
     {
         $brands = Cache::remember('brands_list', config('cache.durations.short_lived'), fn() => Brand::all());
         $teams = Cache::remember('teams_list', config('cache.durations.short_lived'), fn() => Team::all());
-        $clients = Client::all();
+        $clients = CustomerContact::all();
         return view('admin.leads.edit', compact('lead', 'brands', 'teams', 'clients'));
     }
 
