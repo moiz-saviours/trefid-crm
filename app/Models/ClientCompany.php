@@ -22,7 +22,7 @@ class ClientCompany extends Model
      *
      * @var array<int, string>
      */
-    protected $fillable = ['special_key', 'name', 'logo', 'email', 'url','description', 'status'];
+    protected $fillable = ['special_key', 'c_contact_key','name', 'logo', 'email', 'url','description', 'status'];
 
     /**
      * Generate a unique special key.
@@ -51,5 +51,10 @@ class ClientCompany extends Model
                 $client_contact->creator_id = auth()->user()->id;
             }
         });
+    }
+
+    public function client_contact(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(ClientContact::class, 'c_contact_key', 'special_key');
     }
 }

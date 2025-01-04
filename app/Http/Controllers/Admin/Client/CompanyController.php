@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin\Client;
 
 use App\Http\Controllers\Controller;
 use App\Models\ClientCompany;
+use App\Models\ClientContact;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 
@@ -15,7 +16,9 @@ class CompanyController extends Controller
     public function index()
     {
         $client_companies = ClientCompany::get();
-        return view('admin.clients.companies.index', compact('client_companies'));
+
+        $client_contacts = ClientContact::get();
+        return view('admin.clients.companies.index', compact('client_companies', 'client_contacts'));
     }
 
     /**
@@ -32,6 +35,7 @@ class CompanyController extends Controller
     public function store(Request $request)
     {
         $request->validate([
+            'c_contact_key' => 'required:exists:client_contacts,special_key',
             'name' => 'required|max:255',
             'logo' => 'nullable|mimes:jpeg,png,jpg,gif|max:2048',
             'email' => 'nullable|email',
@@ -40,7 +44,7 @@ class CompanyController extends Controller
             'status' => 'nullable|integer|in:0,1',
         ]);
         try {
-            $client_company = new ClientCompany($request->only(['name', 'email', 'description', 'status']) + ['special_key' => ClientCompany::generateSpecialKey()]);
+            $client_company = new ClientCompany($request->only(['name', 'email','c_contact_key', 'description','url', 'status']) + ['special_key' => ClientCompany::generateSpecialKey()]);
 
             if ($request->hasFile('logo')) {
                 $originalFileName = time() . '_' . $request->file('logo')->getClientOriginalName();
@@ -81,16 +85,16 @@ class CompanyController extends Controller
     public function update(Request $request, ClientCompany $client_company)
     {
         $request->validate([
+            'c_contact_key' => 'required:exists:client_contacts,special_key',
             'name' => 'required|max:255',
             'logo' => 'nullable|mimes:jpeg,png,jpg,gif|max:2048',
-            'logo_url' => 'nullable|logo_url',
             'url' => 'nullable|url',
             'email' => 'nullable|email',
             'description' => 'nullable|string',
             'status' => 'nullable|integer|in:0,1',
         ]);
         try {
-            $client_company->fill($request->only(['name', 'email', 'description', 'status', 'url']));
+            $client_company->fill($request->only(['name', 'email', 'description', 'status','c_contact_key', 'url']));
 
             if ($request->hasFile('logo')) {
                 $originalFileName = time() . '_' . $request->file('logo')->getClientOriginalName();

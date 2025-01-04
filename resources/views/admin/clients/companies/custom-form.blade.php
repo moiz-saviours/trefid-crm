@@ -8,6 +8,24 @@
             </div>
             <!-- Form Body -->
             <div class="form-body">
+                <div class="form-group mb-3">
+                    <label for="c_contact_key" class="form-label">Contact</label>
+                    <select class="form-control searchable" id="c_contact_key" name="c_contact_key"
+                            title="Please select a brand" required>
+                        <option value="" disabled>Please select Contact</option>
+                        @foreach($client_contacts as $client_contact)
+                            <option
+                                value="{{ $client_contact->special_key }}"
+                                {{ $client_company->c_contact_key == $client_contact->special_key ? 'selected' : '' }}>
+                                {{ $client_contact->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                    @error('brand_key')
+                    <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
+
                 <div class="">
                     <label for="name" class="form-label">Name</label>
                     <input type="text" class="form-control" id="name" name="name" placeholder="Enter name">

@@ -62,4 +62,8 @@ class ClientContact extends Model
             }
         });
     }
+    public function client_company(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(ClientCompany::class, 'c_contact_key','special_key');
+    }
 }

@@ -52,7 +52,7 @@ class CompanyController extends Controller
         $companies = CustomerCompany::whereIn('domain', $domains)->where('status', 1)->get();
 //        $companies = Cache::remember('companies_list', config('cache.durations.short_lived'), fn() => CustomerCompany::whereIn('domain', $domains)->where('status', 1)->get());
 
-        return view('user.customer.companies.index', compact('companies'));
+        return view('user.customers.companies.index', compact('companies'));
     }
 
     /**
