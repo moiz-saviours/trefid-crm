@@ -148,8 +148,7 @@
                                 <div class="card-body">
                                     <table id="allClientCompaniesTable" class="table table-striped datatable-exportable
                             stripe row-border order-column nowrap
-                            initTable
-                            ">
+                            initTable ">
                                         <thead>
                                         <tr>
                                             <th><input type="checkbox"></th>
@@ -161,7 +160,7 @@
                                             <th class="align-middle text-center text-nowrap">Url</th>
                                             <th class="align-middle text-center text-nowrap">Description</th>
                                             <th class="align-middle text-center text-nowrap">Status</th>
-                                            <th class="">Action</th>
+                                            <th class="align-middle text-center text-nowrap">Action</th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -179,8 +178,7 @@
                                                         data="{{ $logoUrl }}"
                                                         class="avatar avatar-sm me-3"
                                                         style="width: 100px; height: 50px;"
-                                                        title="{{ $client_company->name }}"
-                                                    >
+                                                        title="{{ $client_company->name }}" >
                                                         <img
                                                             src="{{ $logoUrl }}"
                                                             alt="{{ $client_company->name }}"
