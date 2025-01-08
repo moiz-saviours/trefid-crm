@@ -10,7 +10,7 @@
             <div class="content__wrap">
                 <header class="custm_header">
                     <div class="new_head">
-                        <h1 class="page-title mb-2">Clients <i class="fa fa-caret-down" aria-hidden="true"></i></h1>
+                        <h1 class="page-title mb-2">Client Accounts <i class="fa fa-caret-down" aria-hidden="true"></i></h1>
                         <h2 id="record-count" class="h6">{{count($payment_merchants)}} records</h2>
                     </div>
                     <div class="filters">
@@ -31,7 +31,7 @@
                 <div class="container">
                     <div class="custom-tabs">
                         <ul class="tab-nav">
-                            <li class="tab-item active" data-tab="home">CLient Accounts
+                            <li class="tab-item active" data-tab="home">Client Accounts
                                 <i class="fa fa-times close-icon" aria-hidden="true"></i></li>
                         </ul>
                     </div>
