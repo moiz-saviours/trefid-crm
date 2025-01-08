@@ -72,8 +72,8 @@ class ContactController extends Controller
             ]) + ['special_key' => CustomerContact::generateSpecialKey()]);
 
         $customer_contact->save();
-
-        return response()->json(['customer_contact' => $customer_contact, 'success' => 'Contact Created Successfully!']);
+        $customer_contact->loadMissing('team','brand');
+        return response()->json(['data' => $customer_contact, 'success' => 'Contact Created Successfully!']);
     }
 
     /**
@@ -89,12 +89,11 @@ class ContactController extends Controller
      */
     public function edit(CustomerContact $customer_contact)
     {
-        if (!$customer_contact->id) return response()->json(['error' => 'CustomerContact Not Found!']);
+        if (!$customer_contact->id) return response()->json(['error' => 'Oops! Customer contact not found!']);
         $brands = Brand::where('status', 1)->get();
         $teams = Team::where('status', 1)->get();
         $countries = config('countries');
         return response()->json(['customer_contact' => $customer_contact, 'brands' => $brands, 'teams' => $teams, 'countries' => $countries]);
-
     }
 
     /**

@@ -45,9 +45,8 @@ class CompanyController extends Controller
                 ]);
             }
         }
-        $companies = CustomerCompany::whereIn('domain', $domains)->where('status', 1)->get();
-
-        return view('admin.customers.companies.index', compact('companies'));
+        $customer_companies = CustomerCompany::whereIn('domain', $domains)->where('status', 1)->get();
+        return view('admin.customers.companies.index', compact('customer_companies'));
     }
 
     /**

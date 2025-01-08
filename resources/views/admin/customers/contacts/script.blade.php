@@ -136,21 +136,21 @@
             };
 
             function setDataAndShowEdit(data) {
-                let client = data?.client;
-                $('#manage-form').data('id', client.id);
-                $('#brand_key').val(client.brand_key);
-                $('#team_key').val(client.team_key);
-                $('#name').val(client.name);
-                $('#email').val(client.email);
-                $('#phone').val(client.phone);
-                $('#address').val(client.address);
-                $('#city').val(client.city);
-                $('#state').val(client.state);
-                $('#country').val(client.country);
-                $('#zipcode').val(client.zipcode);
-                $('#status').val(client.status);
+                let customer_contact = data?.customer_contact;
+                $('#manage-form').data('id', customer_contact.id);
+                $('#brand_key').val(customer_contact.brand_key);
+                $('#team_key').val(customer_contact.team_key);
+                $('#name').val(customer_contact.name);
+                $('#email').val(customer_contact.email);
+                $('#phone').val(customer_contact.phone);
+                $('#address').val(customer_contact.address);
+                $('#city').val(customer_contact.city);
+                $('#state').val(customer_contact.state);
+                $('#country').val(customer_contact.country);
+                $('#zipcode').val(customer_contact.zipcode);
+                $('#status').val(customer_contact.status);
 
-                $('#manage-form').attr('action', `{{route('admin.customer.contact.update')}}/` + client.id);
+                $('#manage-form').attr('action', `{{route('admin.customer.contact.update')}}/` + customer_contact.id);
                 $('#formContainer').addClass('open')
             }
 
@@ -164,14 +164,13 @@
                     AjaxRequestPromise(`{{ route("admin.customer.contact.store") }}`, formData, 'POST', {useToastr: true})
                         .then(response => {
                             if (response?.data) {
-                                const {id, brand_key, team_key, name, email, phone,address,city,state,status,country,zipcode } = response.data;
+                                const {id, brand, team, name, email, phone,address,city,state,status,country,zipcode } = response.data;
                                 const index = table.rows().count() + 1;
                                 const columns = `
                                     <td class="align-middle text-center text-nowrap"></td>
                                     <td class="align-middle text-center text-nowrap">${index}</td>
-
-                                    <td class="align-middle text-center text-nowrap">${brand_key}</td>
-                                    <td class="align-middle text-center text-nowrap">${team_key}</td>
+                                    <td class="align-middle text-center text-nowrap">${brand ? `<a href="/admin/brand/edit/${brand.id}">${brand.name}</a><br> ${brand.brand_key}` : '---'}</td>
+                                    <td class="align-middle text-center text-nowrap">${team ? `<a href="/admin/team/edit/${team.id}">${team.name}</a><br> ${team.team_key}` : '---'}</td>
                                     <td class="align-middle text-center text-nowrap">${name}</td>
                                     <td class="align-middle text-center text-nowrap">${email}</td>
                                     <td class="align-middle text-center text-nowrap">${phone}</td>

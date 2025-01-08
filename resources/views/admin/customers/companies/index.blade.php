@@ -20,7 +20,7 @@
                             <button class="header_btn">Actions <i class="fa fa-caret-down" aria-hidden="true"></i>
                             </button>
                             <button class="header_btn">Import</button>
-{{--                            <button class="create-contact open-form-btn">Create New</button>--}}
+                            {{--                            <button class="create-contact open-form-btn">Create New</button>--}}
                         </div>
                     </div>
                 </header>
@@ -69,51 +69,47 @@
                             initTable
                             ">
                                         <thead>
-
                                         <tr>
                                             <th><input type="checkbox"></th>
                                             <th class="align-middle text-center text-nowrap">SNO.</th>
-                                            <th class="align-middle text-center text-nowrap">Image</th>
-                                            <th class="align-middle text-center text-nowrap">Name</th>
-                                            <th class="align-middle text-center text-nowrap">Email</th>
-                                            <th class="align-middle text-center text-nowrap">Designation</th>
-                                            <th class="align-middle text-center text-nowrap">Team</th>
-                                            <th class="align-middle text-center text-nowrap">Status</th>
-                                            <th class="align-middle text-center text-nowrap">Action</th>
+                                            <th class="align-middle text-center text-nowrap">COMPANY DOMAIN</th>
+                                            <th class="align-middle text-center text-nowrap">COMPANY NAME</th>
+                                            <th class="align-middle text-center text-nowrap">CREATE DATE (GMT+5)</th>
+                                            <th class="align-middle text-center text-nowrap">PHONE NUMBER</th>
+                                            <th class="align-middle text-center text-nowrap">ADDRESS</th>
+                                            <th class="align-middle text-center text-nowrap">CITY</th>
+                                            <th class="align-middle text-center text-nowrap">STATE</th>
+                                            <th class="align-middle text-center text-nowrap">COUNTRY</th>
+                                            <th class="align-middle text-center text-nowrap">POSTAL CODE</th>
+                                            <th class="align-middle text-center text-nowrap">INDUSTRY</th>
                                         </tr>
                                         </thead>
                                         <tbody>
-{{--                                        @foreach($users as $user)--}}
-{{--                                            <tr id="tr-{{$user->id}}">--}}
-{{--                                                <td class="align-middle text-center text-nowrap"></td>--}}
-{{--                                                <td class="align-middle text-center text-nowrap">{{$loop->iteration}}</td>--}}
-{{--                                                <td class="align-middle text-center text-nowrap">--}}
-{{--                                                    @php--}}
-{{--                                                        $imageUrl = $user->image--}}
-{{--                                                            ? (filter_var($user->image, FILTER_VALIDATE_URL) ? $user->image : asset('assets/images/employees/' . $user->image))--}}
-{{--                                                            : asset('assets/images/no-image-available.png');--}}
-{{--                                                    @endphp--}}
-{{--                                                    <object data="{{ $imageUrl }}" class="avatar avatar-sm me-3" title="{{ $user->name }}"><img src="{{ $imageUrl }}" alt="{{ $user->name }}" class="avatar avatar-sm me-3" title="{{ $user->name }}"></object>--}}
-{{--                                                </td>--}}
-{{--                                                <td class="align-middle text-center text-nowrap">{{ $user->name }}</td>--}}
-{{--                                                <td class="align-middle text-center text-nowrap">{{ $user->email }}</td>--}}
-{{--                                                <td class="align-middle text-center text-nowrap">{{ $user->designation }}</td>--}}
-{{--                                                <td class="align-middle text-center text-nowrap">{{ optional($user->teams)->pluck('name')->map('htmlspecialchars_decode')->implode(', ') }}</td>--}}
-{{--                                                <td class="align-middle text-center text-nowrap">--}}
-{{--                                                    <input type="checkbox" class="status-toggle change-status"--}}
-{{--                                                           data-id="{{ $user->id }}"--}}
-{{--                                                           {{ $user->status == 1 ? 'checked' : '' }} data-bs-toggle="toggle">--}}
-{{--                                                </td>--}}
-{{--                                                <td class="align-middle text-center table-actions">--}}
-{{--                                                    <button type="button" class="btn btn-sm btn-primary editBtn"--}}
-{{--                                                            data-id="{{ $user->id }}" title="Edit"><i--}}
-{{--                                                            class="fas fa-edit"></i></button>--}}
-{{--                                                    <button type="button" class="btn btn-sm btn-danger deleteBtn"--}}
-{{--                                                            data-id="{{ $user->id }}" title="Delete"><i--}}
-{{--                                                            class="fas fa-trash"></i></button>--}}
-{{--                                                </td>--}}
-{{--                                            </tr>--}}
-{{--                                        @endforeach--}}
+                                        @foreach($customer_companies as $key => $company)
+                                            <tr id="tr-{{$company->id}}">
+                                                <td class="align-middle text-center text-nowrap"></td>
+                                                <td class="align-middle text-center text-nowrap">{{$loop->iteration}}</td>
+                                                <td class="align-middle text-center text-nowrap">{{$company->domain}}</td>
+                                                <td class="align-middle text-center text-nowrap">{{$company->name}}</td>
+                                                <td class="align-middle text-center text-nowrap">
+                                                    @if ($company->created_at->isToday())
+                                                        Today
+                                                        at {{ $company->created_at->timezone('GMT+5')->format('g:i A') }}
+                                                        GMT+5
+                                                    @else
+                                                        {{ $company->created_at->timezone('GMT+5')->format('M d, Y g:i A') }}
+                                                        GMT+5
+                                                    @endif
+                                                </td>
+                                                <td class="align-middle text-center text-nowrap">{{$company->phone}}</td>
+                                                <td class="align-middle text-center text-nowrap">{{$company->address}}</td>
+                                                <td class="align-middle text-center text-nowrap">{{$company->city}}</td>
+                                                <td class="align-middle text-center text-nowrap">{{$company->state}}</td>
+                                                <td class="align-middle text-center text-nowrap">{{$company->country}}</td>
+                                                <td class="align-middle text-center text-nowrap">{{$company->zipcode}}</td>
+                                                <td class="align-middle text-center text-nowrap">{{isset($company->response)? json_decode($company->response)->industry:"---"}}</td>
+                                            </tr>
+                                        @endforeach
                                         </tbody>
                                     </table>
                                 </div>
