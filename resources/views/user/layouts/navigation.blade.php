@@ -291,48 +291,48 @@
             <!-- END : Components Category -->
 
             <!-- Server Status Category -->
-            <div class="mainnav__widget">
+{{--            <div class="mainnav__widget">--}}
 
-                <!-- Widget buttton form small navigation -->
-                <div class="mininav-toggle text-center py-2 d-mn-min">
-                    <i class="demo-pli-monitor-2"></i>
-                </div>
+{{--                <!-- Widget buttton form small navigation -->--}}
+{{--                <div class="mininav-toggle text-center py-2 d-mn-min">--}}
+{{--                    <i class="demo-pli-monitor-2"></i>--}}
+{{--                </div>--}}
 
-                <div class="d-mn-max mt-5"></div>
+{{--                <div class="d-mn-max mt-5"></div>--}}
 
-                <!-- Widget content -->
-                <div class="mininav-content collapse d-mn-max">
-                    <span data-popper-arrow class="arrow"></span>
-                    <h6 class="mainnav__caption fw-bold">Server Status</h6>
-                    <ul class="list-group list-group-borderless">
-                        <li class="list-group-item text-reset">
-                            <div class="d-flex justify-content-between align-items-start">
-                                <p class="mb-2 me-auto">CPU Usage</p>
-                                <span class="badge bg-info rounded">35%</span>
-                            </div>
-                            <div class="progress progress-md">
-                                <div class="progress-bar bg-info" role="progressbar" style="width: 35%"
-                                     aria-label="CPU Progress" aria-valuenow="35" aria-valuemin="0"
-                                     aria-valuemax="100"></div>
-                            </div>
-                        </li>
-                        <li class="list-group-item text-reset">
-                            <div class="d-flex justify-content-between align-items-start">
-                                <p class="mb-2 me-auto">Bandwidth</p>
-                                <span class="badge bg-warning rounded">73%</span>
-                            </div>
-                            <div class="progress progress-md">
-                                <div class="progress-bar bg-warning" role="progressbar" style="width: 73%"
-                                     aria-label="Bandwidth Progress" aria-valuenow="73" aria-valuemin="0"
-                                     aria-valuemax="100"></div>
-                            </div>
-                        </li>
-                    </ul>
-                    <div class="d-grid px-3 mt-3">
-                        <a href="#" class="btn btn-sm btn-success">View Details</a>
-                    </div>
-                </div>
-            </div>
+{{--                <!-- Widget content -->--}}
+{{--                <div class="mininav-content collapse d-mn-max">--}}
+{{--                    <span data-popper-arrow class="arrow"></span>--}}
+{{--                    <h6 class="mainnav__caption fw-bold">Server Status</h6>--}}
+{{--                    <ul class="list-group list-group-borderless">--}}
+{{--                        <li class="list-group-item text-reset">--}}
+{{--                            <div class="d-flex justify-content-between align-items-start">--}}
+{{--                                <p class="mb-2 me-auto">CPU Usage</p>--}}
+{{--                                <span class="badge bg-info rounded">35%</span>--}}
+{{--                            </div>--}}
+{{--                            <div class="progress progress-md">--}}
+{{--                                <div class="progress-bar bg-info" role="progressbar" style="width: 35%"--}}
+{{--                                     aria-label="CPU Progress" aria-valuenow="35" aria-valuemin="0"--}}
+{{--                                     aria-valuemax="100"></div>--}}
+{{--                            </div>--}}
+{{--                        </li>--}}
+{{--                        <li class="list-group-item text-reset">--}}
+{{--                            <div class="d-flex justify-content-between align-items-start">--}}
+{{--                                <p class="mb-2 me-auto">Bandwidth</p>--}}
+{{--                                <span class="badge bg-warning rounded">73%</span>--}}
+{{--                            </div>--}}
+{{--                            <div class="progress progress-md">--}}
+{{--                                <div class="progress-bar bg-warning" role="progressbar" style="width: 73%"--}}
+{{--                                     aria-label="Bandwidth Progress" aria-valuenow="73" aria-valuemin="0"--}}
+{{--                                     aria-valuemax="100"></div>--}}
+{{--                            </div>--}}
+{{--                        </li>--}}
+{{--                    </ul>--}}
+{{--                    <div class="d-grid px-3 mt-3">--}}
+{{--                        <a href="#" class="btn btn-sm btn-success">View Details</a>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--            </div>--}}
             <!-- End : Server Status Category -->
 
 

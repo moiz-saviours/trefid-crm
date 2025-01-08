@@ -314,7 +314,7 @@
                                             <th class="align-middle text-center text-nowrap">ID</th>
                                             <th class="align-middle text-center text-nowrap">INVOICE#</th>
                                             <th class="align-middle text-center text-nowrap">BRAND</th>
-                                            <th class="align-middle text-center text-nowrap">CLIENT</th>
+                                            <th class="align-middle text-center text-nowrap">CUSTOMER</th>
                                             <th class="align-middle text-center text-nowrap">AGENT</th>
                                             <th class="align-middle text-center text-nowrap">AMOUNT</th>
                                             <th class="align-middle text-center text-nowrap">STATUS</th>
