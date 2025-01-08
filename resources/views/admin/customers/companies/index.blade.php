@@ -31,7 +31,7 @@
                 <div class="container">
                     <div class="custom-tabs">
                         <ul class="tab-nav">
-                            <li class="tab-item active" data-tab="home">Employees
+                            <li class="tab-item active" data-tab="home">Companies
                                 <i class="fa fa-times close-icon" aria-hidden="true"></i></li>
                         </ul>
                     </div>
