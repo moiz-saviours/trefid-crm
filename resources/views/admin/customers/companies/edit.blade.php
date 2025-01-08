@@ -51,6 +51,23 @@
                 padding: 30px 7px;
             }
 
+            .nav-tabs .nav-link.main-tabs-view {
+                border-radius: 0px;
+                font-weight: 400;
+                font-size: 13px;
+                padding: 12px 28px;
+                color: rgb(51, 71, 91);
+                position: relative;
+                white-space: nowrap;
+                /* transition: background-color 200ms cubic-bezier(0.25, 0.1, 0.25, 1); */
+                /* background-color: rgb(234, 240, 246); */
+                /* border-left: 1px solid rgb(203, 214, 226); */
+            }
+
+            .nav-tabs .nav-link.main-tabs-view.active {
+                background-color: rgb(234, 240, 246);
+            }
+
             .nav-tabs .nav-link.customize {
                 background-color: transparent !important;
                 border: 0px;
@@ -130,6 +147,13 @@
                 margin-left: 8px;
             }
 
+            .email-box-container {
+                background-color: rgb(255, 255, 255);
+                border: 1px solid rgb(223, 227, 235);
+                border-radius: 4px;
+                padding: 12px 16px 0px;
+            }
+
             .contact-info h2 {
                 margin: 0;
                 font-size: 20px;
@@ -137,6 +161,13 @@
                 font-weight: 600;
                 color: #2d3e50;
                 margin-bottom: -3px;
+            }
+
+            .recent-filters {
+                color: rgb(81, 111, 144);
+                font-weight: 400;
+                font-size: 14px;
+                line-height: 24px;
             }
 
             .contact-info p {
@@ -149,6 +180,12 @@
                 font-size: 12px;
                 margin: 0px 8px;
                 color: gray;
+            }
+            .email-child-wrapper{
+                display: flex;
+                gap: 8px;
+                
+                
             }
 
             .profile_actions p i {
@@ -306,7 +343,7 @@
             .data-row {
                 display: flex;
                 justify-content: space-between;
-                padding: 0px 17px;
+                padding: 2px 9px;
             }
 
             .data-row div {
@@ -322,7 +359,7 @@
                 margin: 0;
                 color: gray;
                 font-size: 12px;
-                text-align: left;
+                text-align: center;
             }
 
             .activity {
@@ -335,10 +372,16 @@
 
             .recent-activities h2 {
                 text-align: left;
-                padding-left: 15px;
+                /* padding-left: 15px; */
                 font-size: 17px;
                 color: #2d3e50;
                 padding-top: 10px;
+            }
+
+            .activities-seprater {
+                color: #0091ae;
+                font-weight: 600;
+
             }
 
             .activity-header {
@@ -417,24 +460,24 @@
                 padding-bottom: 7px;
                 padding-top: 7px;
                 margin-top: 20px;
-                border-radius: 6px;
+                border-radius: 3px;
                 box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
             }
 
             .data-highlights h2 {
                 text-align: left;
                 /* padding-left: 15px;
-                    padding-bottom: 15px; */
+                                        padding-bottom: 15px; */
                 font-size: 15px;
                 color: #2d3e50;
             }
 
             .data-row h5 {
-                font-size: 14px;
+                font-size: 12px;
                 font-weight: 500;
                 color: #2d3e50;
                 margin-bottom: 3px;
-                text-align: left;
+                text-align: center;
             }
 
             .activ_head p {
@@ -720,29 +763,25 @@
                     </div>
                 </div>
                 <div class="col-lg-6">
+
                     <div class="custom-tabs-row">
-                        <ul class="nav nav-tabs newtabs-space" id="myTab" role="tablist">
+                        <ul class="nav nav-tabs" id="myTab" role="tablist">
                             <li class="nav-item" role="presentation">
-                                <button class="nav-link customize active" id="home-tab" data-bs-toggle="tab"
+                                <button class="nav-link main-tabs-view active" id="home-tab" data-bs-toggle="tab"
                                     data-bs-target="#home" type="button" role="tab" aria-controls="home"
-                                    aria-selected="true">Activity</button>
+                                    aria-selected="true">Overview</button>
                             </li>
                             <li class="nav-item" role="presentation">
-                                <button class="nav-link customize" id="profile-tab" data-bs-toggle="tab"
+                                <button class="nav-link main-tabs-view" id="profile-tab" data-bs-toggle="tab"
                                     data-bs-target="#profile" type="button" role="tab" aria-controls="profile"
-                                    aria-selected="false">Notes</button>
-                            </li>
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link customize" id="contact-tab" data-bs-toggle="tab"
-                                    data-bs-target="#contact" type="button" role="tab" aria-controls="contact"
-                                    aria-selected="false">Emails</button>
+                                    aria-selected="false">Activities</button>
                             </li>
                         </ul>
                         <div class="tab-content" id="myTabContent">
                             <div class="tab-pane fade show active" id="home" role="tabpanel"
                                 aria-labelledby="home-tab">
                                 <div>
-                                    <p class="date-by-order"> May 2021</p>
+                                    {{-- <p class="date-by-order"> May 2021</p> --}}
                                     <div class="data-highlights">
                                         <div class="data-top-heading-header">
                                             <h2>Data highlights</h2>
@@ -764,34 +803,45 @@
                                         </div>
                                     </div>
                                     <div class="recent-activities">
-                                        <h2>Recent activities</h2>
-                                        <div class="activity">
-                                            <div class="activ_head">
-                                                <p>
-                                                    Inbound email from
-                                                    <span class="user_name">Mr Malik</span>
-                                                </p>
-                                                <p class="usre_date">Dec 3, 2024 at 4:48 PM GMT+5</p>
-                                            </div>
 
+                                        <div class="activity">
+                                            <h2>Recent activities</h2>
                                             <div>
-                                                <div class="user_profile">
-                                                    <div class="user_profile_img">
-                                                        <div class="avatarr">MM</div>
+                                                <p class="recent-filters"> Filter by: <span class="activities-seprater">7
+                                                        activities</span></p>
+                                            </div>
+                                            <div class="email-box-container">
+                                                <div class="activ_head">
+                                                    <div class="email-child-wrapper">
+                                                        <i class="fa fa-envelope-o sidebar-icons" aria-hidden="true"></i>
+                                                        <p> Email</p>
+                                                        <p>
+                                                            Inbound email from
+                                                            <span class="activities-seprater">Mr Malik</span>
+                                                        </p>
                                                     </div>
-                                                    <div class="user_profile_text">
-                                                        <p>Mike Stewar mikestewar1932@outlook.com</p>
-                                                        <p>to info@phototouchexpert.com</p>
+                                                    <p class="usre_date">Dec 3, 2024 at 4:48 PM GMT+5</p>
+                                                </div>
+
+                                                <div>
+                                                    <div class="user_profile">
+                                                        <div class="user_profile_img">
+                                                            <div class="avatarr">MM</div>
+                                                        </div>
+                                                        <div class="user_profile_text">
+                                                            <p>Mike Stewar mikestewar1932@outlook.com</p>
+                                                            <p>to info@phototouchexpert.com</p>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="user_cont">
-                                                <p>
-                                                    Hi there, I hope you're doing well. I specialize in
-                                                    online reputation management and can help boost your
-                                                    business's presence by generating positive reviews and
-                                                    addressing any negative feedback.
-                                                </p>
+                                                <div class="user_cont">
+                                                    <p>
+                                                        Hi there, I hope you're doing well. I specialize in
+                                                        online reputation management and can help boost your
+                                                        business's presence by generating positive reviews and
+                                                        addressing any negative feedback.
+                                                    </p>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="activity">
@@ -826,12 +876,133 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">...
+                            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                                {{-- actvity tabs start --}}
+                                <div class="custom-tabs-row">
+                                    <ul class="nav nav-tabs newtabs-space" id="myTab" role="tablist">
+                                        <li class="nav-item" role="presentation">
+                                            <button class="nav-link customize active" id="act-tab" data-bs-toggle="tab"
+                                                data-bs-target="#act" type="button" role="tab" aria-controls="act"
+                                                aria-selected="true">Activity</button>
+                                        </li>
+                                        <li class="nav-item" role="presentation">
+                                            <button class="nav-link customize" id="notes-tab" data-bs-toggle="tab"
+                                                data-bs-target="#notes" type="button" role="tab"
+                                                aria-controls="notes" aria-selected="false">Notes</button>
+                                        </li>
+                                        <li class="nav-item" role="presentation">
+                                            <button class="nav-link customize" id="email-tab" data-bs-toggle="tab"
+                                                data-bs-target="#email" type="button" role="tab"
+                                                aria-controls="email" aria-selected="false">Emails</button>
+                                        </li>
+                                    </ul>
+                                    <div class="tab-content" id="myTabContent">
+                                        <div class="tab-pane fade show active" id="act" role="tabpanel"
+                                            aria-labelledby="act-tab">
+                                            <div>
+                                                <p class="date-by-order"> May 2021</p>
+                                                <div class="data-highlights">
+                                                    <div class="data-top-heading-header">
+                                                        <h2>Data highlights</h2>
+                                                        <p>12/03/2024 4:48 PM GMT+5</p>
+                                                    </div>
+                                                    <div class="data-row">
+                                                        <div>
+                                                            <h5>CREATE DATE</h5>
+                                                            <p>12/03/2024 4:48 PM GMT+5</p>
+                                                        </div>
+                                                        <div>
+                                                            <h5>LIFECYCLE STAGE</h5>
+                                                            <p>Lead</p>
+                                                        </div>
+                                                        <div>
+                                                            <h5>LAST ACTIVITY DATE</h5>
+                                                            <p>12/03/2024 4:48 PM GMT+5</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="recent-activities">
+                                                    <h2>Recent activities</h2>
+                                                    <div class="activity">
+                                                        <div class="activ_head">
+                                                            <p>
+                                                                Inbound email from
+                                                                <span class="user_name">Mr Malik</span>
+                                                            </p>
+                                                            <p class="usre_date">Dec 3, 2024 at 4:48 PM GMT+5</p>
+                                                        </div>
+
+                                                        <div>
+                                                            <div class="user_profile">
+                                                                <div class="user_profile_img">
+                                                                    <div class="avatarr">MM</div>
+                                                                </div>
+                                                                <div class="user_profile_text">
+                                                                    <p>Mike Stewar mikestewar1932@outlook.com</p>
+                                                                    <p>to info@phototouchexpert.com</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="user_cont">
+                                                            <p>
+                                                                Hi there, I hope you're doing well. I specialize in
+                                                                online reputation management and can help boost your
+                                                                business's presence by generating positive reviews and
+                                                                addressing any negative feedback.
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="activity">
+                                                        <div class="activ_head">
+                                                            <p>
+                                                                Inbound email from
+                                                                <span class="user_name">Mr Malik</span>
+                                                            </p>
+                                                            <p class="usre_date">Dec 3, 2024 at 4:48 PM GMT+5</p>
+                                                        </div>
+
+                                                        <div>
+                                                            <div class="user_profile">
+                                                                <div class="user_profile_img">
+                                                                    <div class="avatarr">MM</div>
+                                                                </div>
+                                                                <div class="user_profile_text">
+                                                                    <p>Mike Stewar mikestewar1932@outlook.com</p>
+                                                                    <p>to info@phototouchexpert.com</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="user_cont">
+                                                            <p>
+                                                                Hi there, I hope you're doing well. I specialize in
+                                                                online reputation management and can help boost your
+                                                                business's presence by generating positive reviews and
+                                                                addressing any negative feedback.
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane fade" id="notes" role="tabpanel"
+                                            aria-labelledby="notes-tab">notes
+                                        </div>
+                                        <div class="tab-pane fade" id="email" role="tabpanel"
+                                            aria-labelledby="email-tab">email
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+
+                                {{-- actvity tabs ends --}}
                             </div>
-                            <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">...
-                            </div>
+
                         </div>
                     </div>
+
+
 
                     <div class="main">
                         {{-- <div class="headerr">
