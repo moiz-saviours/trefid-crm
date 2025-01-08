@@ -332,7 +332,24 @@
                                                 <tr>
                                                     <td class="align-middle text-center text-nowrap"></td>
                                                     <td class="align-middle text-center text-nowrap">{{$loop->iteration}}</td>
-                                                    <td class="align-middle text-center text-nowrap"><img src="{{ asset('assets/images/brand-logos/'.$brand->logo)}}" width="50px" height="50px"></td>
+
+                                                    <td class="align-middle text-center text-nowrap">
+                                                        @php
+                                                            $logoUrl = filter_var($brand->logo, FILTER_VALIDATE_URL) ? $brand->logo : asset('assets/images/brand-logos/'.$brand->logo);
+                                                        @endphp
+                                                        <object
+                                                            data="{{ $logoUrl }}"
+                                                            class="avatar avatar-sm me-3"
+                                                            style="width: 100px; height: 50px;"
+                                                            title="{{ $brand->name }}"
+                                                        >
+                                                            <img
+                                                                src="{{ $logoUrl }}"
+                                                                alt="{{ $brand->name }}"
+                                                                class="avatar avatar-sm me-3"
+                                                                title="{{ $brand->name }}">
+                                                        </object>
+                                                    </td>
                                                     <td class="align-middle text-center text-nowrap">{{$brand->name}} <br> {{$brand->brand_key}} </td>
                                                     <td class="align-middle text-center text-nowrap">{{$brand->url}}</td>
                                                 </tr>

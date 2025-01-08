@@ -367,7 +367,7 @@
                                    class="nav-link {{ request()->is('admin/client/{company,companies}*') ? '' : '' }}">Company</a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route('admin.client.index') }}"
+                                <a href="{{ route('admin.client.account.index') }}"
                                    class="nav-link {{ request()->is('admin/client/account*') ? '' : '' }}">Accounts</a>
                             </li>
 

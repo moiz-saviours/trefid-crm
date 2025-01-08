@@ -10,7 +10,7 @@ class PaymentController extends Controller
 {
     public function index()
     {
-        $all_payments = Payment::whereIn('brand_key', Auth::user()->teams()->with('brands')->get()->pluck('brands.*.brand_key')->flatten())->get();
+        $all_payments = Payment::whereIn('brand_key', Auth::user()->teams()->with('brands')->get()->pluck('brands.*.brand_key')->flatten())->with(['customer_contact'])->get();
         $my_payments = $all_payments->filter(function ($payment) {
             return $payment->agent_id === Auth::id();
         });

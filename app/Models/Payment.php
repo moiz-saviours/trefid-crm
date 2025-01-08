@@ -55,10 +55,11 @@ class Payment extends Model
         return $this->belongsTo(Team::class, 'team_key', 'team_key');
     }
 
-    public function customer(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function customer_contact(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
-        return $this->belongsTo(CustomerContact::class, 'client_key', 'client_key');
+        return $this->belongsTo(CustomerContact::class, 'cus_contact_key', 'special_key');
     }
+
 
     public function agent(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {

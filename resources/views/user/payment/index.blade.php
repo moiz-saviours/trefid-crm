@@ -343,7 +343,7 @@
                                                 <td class="align-middle text-center text-nowrap">{{optional($payment->brand)->name ?? "---"}}</td>
                                                 <td class="align-middle text-center text-nowrap">{{optional($payment->team)->name ?? "---"}}</td>
                                                 <td class="align-middle text-center text-nowrap">{{optional($payment->agent)->name ?? "---"}}</td>
-                                                <td class="align-middle text-center text-nowrap">{{optional($payment->customer)->name ?? "---"}}</td>
+                                                <td class="align-middle text-center text-nowrap">{{optional($payment->customer_contact)->name ?? "---"}}</td>
                                                 <td class="align-middle text-center text-nowrap">${{$payment->amount}}</td>
                                                 <td class="align-middle text-center text-nowrap">
                                                     @if($payment->status == 0)
@@ -436,7 +436,7 @@
                                                 <td class="align-middle text-center text-nowrap">{{optional($payment->brand)->name ?? "---"}}</td>
                                                 <td class="align-middle text-center text-nowrap">{{optional($payment->team)->name ?? "---"}}</td>
                                                 <td class="align-middle text-center text-nowrap">{{optional($payment->agent)->name ?? "---"}}</td>
-                                                <td class="align-middle text-center text-nowrap">{{optional($payment->customer)->name ?? "---"}}</td>
+                                                <td class="align-middle text-center text-nowrap">{{optional($payment->customer_contact)->name ?? "---"}}</td>
                                                 <td class="align-middle text-center text-nowrap">${{$payment->amount}}</td>
                                                 <td class="align-middle text-center text-nowrap">
                                                     @if($payment->status == 0)

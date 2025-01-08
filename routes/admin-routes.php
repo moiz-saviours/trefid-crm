@@ -181,16 +181,16 @@ Route::middleware(['auth:admin'])->prefix('admin')->name('admin.')->group(functi
         });
     });
 
-//    /** Payment Merchant Routes */
-//    Route::name('client.')->group(function () {
-//        Route::get('/clients', [AdminPaymentMerchantController::class, 'index'])->name('index');
-//        Route::prefix('client')->group(function () {
-//            Route::get('/create', [AdminPaymentMerchantController::class, 'create'])->name('create');
-//            Route::post('/store', [AdminPaymentMerchantController::class, 'store'])->name('store');
-//            Route::get('/edit/{client?}', [AdminPaymentMerchantController::class, 'edit'])->name('edit');
-//            Route::post('/update/{client?}', [AdminPaymentMerchantController::class, 'update'])->name('update');
-//            Route::get('/change-status/{client?}', [AdminPaymentMerchantController::class, 'change_status'])->name('change.status');
-//            Route::delete('/delete/{client?}', [AdminPaymentMerchantController::class, 'delete'])->name('delete');
-//        });
-//    });
+    /** Payment Merchant Routes */
+    Route::name('client.account.')->group(function () {
+        Route::get('/client/accounts', [AdminPaymentMerchantController::class, 'index'])->name('index');
+        Route::prefix('client/account')->group(function () {
+            Route::get('/create', [AdminPaymentMerchantController::class, 'create'])->name('create');
+            Route::post('/store', [AdminPaymentMerchantController::class, 'store'])->name('store');
+            Route::get('/edit/{client_account?}', [AdminPaymentMerchantController::class, 'edit'])->name('edit');
+            Route::post('/update/{client_account?}', [AdminPaymentMerchantController::class, 'update'])->name('update');
+            Route::get('/change-status/{client_account?}', [AdminPaymentMerchantController::class, 'change_status'])->name('change.status');
+            Route::delete('/delete/{client_account?}', [AdminPaymentMerchantController::class, 'delete'])->name('delete');
+        });
+    });
 });
