@@ -88,17 +88,17 @@
                     </div>
                 </div>
                 <div id="upsale-customer-contact-fields" class="form-group mb-3 d-none">
-                    <label for="special_key" class="form-label">Select Customer Contact</label>
-                    <select class="form-control" id="special_key" name="special_key">
+                    <label for="cus_contact_key" class="form-label">Select Customer Contact</label>
+                    <select class="form-control" id="cus_contact_key" name="cus_contact_key">
                         <option value="">Select Customer Contact</option>
                         @foreach($customer_contacts as $customer_contact)
                             <option
-                                value="{{ $customer_contact->special_key }}" {{ old('special_key') == $customer_contact->special_key ? 'selected' : '' }}>
+                                value="{{ $customer_contact->special_key }}" {{ old('cus_contact_key') == $customer_contact->special_key ? 'selected' : '' }}>
                                 {{ $customer_contact->name }} ({{ $customer_contact->email }})
                             </option>
                         @endforeach
                     </select>
-                    @error('special_key')
+                    @error('cus_contact_key')
                     <span class="text-danger">{{ $message }}</span>
                     @enderror
                 </div>
@@ -153,7 +153,7 @@
                 $('#fresh-customer-contact-fields').toggleClass('d-none', type != 0);
                 $('#customer_contact_name, #customer_contact_email, #customer_contact_phone').prop('required', type == 0);
                 $('#upsale-customer-contact-fields').toggleClass('d-none', type != 1);
-                $('#special_key').prop('required', type == 1);
+                $('#cus_contact_key').prop('required', type == 1);
             }).trigger('change');
         });
     </script>

@@ -148,7 +148,7 @@
             $('#customer_contact_name').val(invoice.customer_contact.name);
             $('#customer_contact_email').val(invoice.customer_contact.email);
             $('#customer_contact_phone').val(invoice.customer_contact.phone);
-            $('#special_key').val(invoice.customer_contact.special_key);
+            $('#cus_contact_key').val(invoice.customer_contact.special_key);
             $('#agent_id').val(invoice.agent_id);
             $('#amount').val(invoice.amount);
             $('#description').val(invoice.description);

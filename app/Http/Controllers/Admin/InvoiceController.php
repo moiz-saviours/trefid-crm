@@ -49,10 +49,9 @@ class InvoiceController extends Controller
         $request->validate([
             'brand_key' => 'required|integer|exists:brands,brand_key',
             'team_key' => 'nullable|integer|exists:teams,team_key',
-            'special_key' => 'required_if:type,1|nullable|integer|exists:customer_contacts,special_key',
+            'cus_contact_key' => 'required_if:type,1|nullable|integer|exists:customer_contacts,special_key',
             'customer_contact_name' => 'required_if:type,0|nullable|string|max:255',
-            'customer_contact_email' => 'required_if:type,0|nullable|email|max:255',
-//            |unique:customer_contacts,email',
+            'customer_contact_email' => 'required_if:type,0|nullable|email|max:255|unique:customer_contacts,email',
             'customer_contact_phone' => 'required_if:type,0|nullable|string|max:15',
             'agent_id' => 'nullable|integer',
 //            'agent_type' => 'required|string|in:admins,users',
@@ -66,9 +65,9 @@ class InvoiceController extends Controller
             'team_key.required' => 'The team field is required.',
             'team_key.integer' => 'The team must be a valid integer.',
             'team_key.exists' => 'The selected team does not exist.',
-            'special_key.integer' => 'The customer contact key must be a valid integer.',
-            'special_key.exists' => 'The selected customer contact does not exist.',
-            'special_key.required' => 'The customer contact key field is required when type is upsale.',
+            'cus_contact_key.integer' => 'The customer contact key must be a valid integer.',
+            'cus_contact_key.exists' => 'The selected customer contact does not exist.',
+            'cus_contact_key.required' => 'The customer contact key field is required when type is upsale.',
             'customer_contact_name.required_if' => 'The customer contact name is required for fresh customers.',
             'customer_contact_name.string' => 'The customer contact name must be a valid string.',
             'customer_contact_name.max' => 'The customer contact name cannot exceed 255 characters.',
@@ -94,7 +93,7 @@ class InvoiceController extends Controller
         ]);
         $customer_contact = $request->input('type') == 0
             ? CustomerContact::firstOrCreate(
-                ['email' => rand(1,100).$request->input('customer_contact_email')],
+                ['email' => rand(1, 100) . $request->input('customer_contact_email')],
                 [
                     'brand_key' => $request->input('brand_key'),
                     'team_key' => $request->input('team_key'),
@@ -104,7 +103,7 @@ class InvoiceController extends Controller
             )
             : CustomerContact::where('special_key', $request->input('cus_contact_key'))->first();
         if (!$customer_contact) {
-            return redirect()->back()->with('error', 'The selected customer contact does not exist.');
+            return response()->json(['error' => 'The selected customer contact does not exist.'], 404);
         }
 
         $invoice = Invoice::create([
@@ -121,7 +120,7 @@ class InvoiceController extends Controller
             'invoice_number' => Invoice::generateInvoiceNumber(),
         ]);
         $invoice->loadMissing('customer_contact');
-        return response()->json(['invoice' => $invoice, 'success' => 'Record created successfully!']);
+        return response()->json(['data' => $invoice, 'success' => 'Record created successfully!']);
     }
 
     /**
