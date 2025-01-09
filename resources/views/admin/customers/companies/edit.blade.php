@@ -22,6 +22,10 @@
                 padding: 0px;
                 margin: 0px;
             }
+            .custom-drop-down-show.dropdown-menu.show{
+                box-shadow: none;
+                border: 1px solid #ddd;
+            }
 
             .collpase-divider {
                 background-color: #ddd;
@@ -181,11 +185,11 @@
                 margin: 0px 8px;
                 color: gray;
             }
-            .email-child-wrapper{
+
+            .email-child-wrapper {
                 display: flex;
                 gap: 8px;
-                
-                
+                align-items: center
             }
 
             .profile_actions p i {
@@ -379,9 +383,13 @@
             }
 
             .activities-seprater {
-                color: #0091ae;
+                color: #0091ae !important;
                 font-weight: 600;
+                margin: 0px !important;
+            }
 
+            .add-coment-icon {
+                color: #0091ae;
             }
 
             .activity-header {
@@ -467,7 +475,7 @@
             .data-highlights h2 {
                 text-align: left;
                 /* padding-left: 15px;
-                                        padding-bottom: 15px; */
+                                                            padding-bottom: 15px; */
                 font-size: 15px;
                 color: #2d3e50;
             }
@@ -482,6 +490,7 @@
 
             .activ_head p {
                 color: gray;
+                margin: 0px;
                 font-size: 13px;
             }
 
@@ -489,20 +498,52 @@
                 color: #2d3e50;
             }
 
+            .new-sidebar-icons {
+                color: #808080;
+                background-color: #ddd;
+                padding: 12px;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+            }
+
             .avatarr {
-                width: 40px;
-                height: 40px;
+                width: 35px;
+                height: 35px;
                 background-color: #ccc;
                 border-radius: 50%;
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                font-size: 15px;
+                font-size: 12px;
                 margin-bottom: 20px;
+            }
+
+            .custom-drop-btn-design {
+                background: transparent;
+                border: none;
+                color: #0c96b2;
+                font-weight: 600;
+            }
+            .custom-drop-btn-design:hover{
+                background-color: transparent;
+                box-shadow: none;
+                border: none;
+                color: #0c96b2;
             }
 
             .user_profile {
                 display: flex;
+            }
+
+            .contact-us-text {
+                .user_profile_text p
+                /* margin-bottom: -3px; */
+                font-size: 11px;
+                font-weight: 700;
+                margin-top: 4px;
+                padding-left: 4px;
+
             }
 
             .user_profile_text p {
@@ -516,6 +557,8 @@
             .activ_head {
                 display: flex;
                 justify-content: space-between;
+                margin-bottom: 10px;
+                align-items: center;
             }
 
             .user_cont p {
@@ -813,8 +856,9 @@
                                             <div class="email-box-container">
                                                 <div class="activ_head">
                                                     <div class="email-child-wrapper">
-                                                        <i class="fa fa-envelope-o sidebar-icons" aria-hidden="true"></i>
-                                                        <p> Email</p>
+                                                        <i class="fa fa-envelope-o new-sidebar-icons"
+                                                            aria-hidden="true"></i>
+                                                        {{-- <p> Email</p> --}}
                                                         <p>
                                                             Inbound email from
                                                             <span class="activities-seprater">Mr Malik</span>
@@ -823,14 +867,19 @@
                                                     <p class="usre_date">Dec 3, 2024 at 4:48 PM GMT+5</p>
                                                 </div>
 
+
                                                 <div>
+                                                    <div class="contact-us-text">
+                                                        <p>contact us</p>
+
+                                                    </div>
                                                     <div class="user_profile">
                                                         <div class="user_profile_img">
                                                             <div class="avatarr">MM</div>
                                                         </div>
                                                         <div class="user_profile_text">
                                                             <p>Mike Stewar mikestewar1932@outlook.com</p>
-                                                            <p>to info@phototouchexpert.com</p>
+                                                            <p style="font-weight: 500">to info@phototouchexpert.com</p>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -842,6 +891,34 @@
                                                         addressing any negative feedback.
                                                     </p>
                                                 </div>
+
+
+
+                                                <div class="activ_head">
+                                                    <div class="email-child-wrapper">
+                                                        <i class="fa fa-commenting-o add-coment-icon"
+                                                            aria-hidden="true"></i>
+                                                        <p class="activities-seprater">
+                                                            Add Comments
+                                                        </p>
+                                                    </div>
+                                                    <div class="dropdown">
+                                                        <button
+                                                            class="btn custom-drop-btn-design dropdown-toggle"
+                                                            type="button" id="dropdownMenuButton1"
+                                                            data-bs-toggle="dropdown" aria-expanded="false">
+                                                            1 association
+                                                        </button>
+                                                        <ul class="custom-drop-down-show dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                                            <li><a class="dropdown-item" href="#">Action</a></li>
+                                                            <li><a class="dropdown-item" href="#">Another action</a>
+                                                            </li>
+                                                            <li><a class="dropdown-item" href="#">Something else
+                                                                    here</a></li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+
                                             </div>
                                         </div>
                                         <div class="activity">
