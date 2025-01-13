@@ -64,7 +64,7 @@
                                     </div>
                                 </div>
                                 <div class="card-body">
-                                    <table id="allEmployeesTable" class="table table-striped datatable-exportable
+                                    <table id="allLeadsTable" class="table table-striped datatable-exportable
                             stripe row-border order-column nowrap initTable">
                                         <thead>
 
@@ -72,7 +72,7 @@
                                             <th><input type="checkbox"></th>
                                             <th class="align-middle text-center text-nowrap">SNO.</th>
                                             <th class="align-middle text-center text-nowrap">Brand</th>
-                                            <th class="align-middle text-center text-nowrap">Client</th>
+                                            <th class="align-middle text-center text-nowrap">Customer</th>
                                             <th class="align-middle text-center text-nowrap">Name</th>
                                             <th class="align-middle text-center text-nowrap">Email</th>
                                             <th class="align-middle text-center text-nowrap">Phone Number</th>
@@ -95,7 +95,7 @@
                                                 <td class="align-middle text-center text-nowrap"></td>
                                                 <td class="align-middle text-center text-nowrap">{{$loop->iteration}}</td>
                                                 <td class="align-middle text-center text-nowrap">{{optional($lead->brand)->name ?? "---"}}</td>
-                                                <td class="align-middle text-center text-nowrap">{{optional($lead->client)->name ?? "---"}}</td>
+                                                <td class="align-middle text-center text-nowrap">{{optional($lead->customer)->name ?? "---"}}</td>
                                                 <td class="align-middle text-center text-nowrap">{{$lead->name}}</td>
                                                 <td class="align-middle text-center text-nowrap">{{$lead->email}}</td>
                                                 <td class="align-middle text-center text-nowrap">{{$lead->phone}}</td>

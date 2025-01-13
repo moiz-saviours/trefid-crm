@@ -170,6 +170,11 @@
                                 name,
                                 email,
                                 phone,
+                                address,
+                                city,
+                                state,
+                                zipcode,
+                                country,
                                 lead_status_id,
                                 note,
                                 status
@@ -186,6 +191,11 @@
                                 <td class="align-middle text-center text-nowrap">${name}</td>
                                 <td class="align-middle text-center text-nowrap">${email}</td>
                                 <td class="align-middle text-center text-nowrap">${phone}</td>
+                                <td class="align-middle text-center text-nowrap">${address}</td>
+                                <td class="align-middle text-center text-nowrap">${city}</td>
+                                <td class="align-middle text-center text-nowrap">${state}</td>
+                                <td class="align-middle text-center text-nowrap">${zipcode}</td>
+                                <td class="align-middle text-center text-nowrap">${country}</td>
                                 <td class="align-middle text-center text-nowrap">${lead_status_id}</td>
                                 <td class="align-middle text-center text-nowrap">${note}</td>
                                 <td class="align-middle text-center text-nowrap">${status}</td>
