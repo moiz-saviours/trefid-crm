@@ -20,7 +20,7 @@ return new class extends Migration
                 $table->unsignedBigInteger('cus_contact_key')->nullable()->default(null);
                 $table->unsignedBigInteger('lead_status_id')->nullable()->default(null);
                 $table->string('name')->nullable()->default(null);
-                $table->string('email')->unique();
+                $table->string('email')->nullable()->default(null);
                 $table->string('phone')->nullable()->default(null);
                 $table->string('address')->nullable()->default(null);
                 $table->string('city')->nullable()->default(null);
