@@ -6,11 +6,6 @@
 /public/assets/images/admins
 /public/assets/images/employees
 .env
-public/assets/images/clients/companies/logos/1735968297_images.jpg
-public/assets/images/clients/companies/logos/1735973275_logo.jpg
-public/assets/images/clients/companies/logos/1735974813_logo.png
-public/assets/images/clients/companies/logos/1735981229_logo.jpg
+/public/assets/images/clients/companies/logos
 database/seeders/AdminSeeder.php
-database/seeders/AdminSeeder.php
-public/assets/images/clients/companies/logos/1735992747_logo.jpg
-public/assets/images/clients/companies/logos/1735992979_logo.jpg
+/app/Http/Controllers/Api/

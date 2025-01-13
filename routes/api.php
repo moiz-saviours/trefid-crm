@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\ApiAuthorizePaymentController;
+use App\Http\Controllers\Api\ApiStripePaymentController;
 use App\Http\Resources\UserResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -30,5 +31,6 @@ Route::post('login', function (Request $request) {
     ], 401);
 });
 Route::middleware(['auth:sanctum', 'abilities:create,update,read'])->group(function () {
-    Route::post('process-payment', [ApiAuthorizePaymentController::class, 'processPayment'])->name('process-payment');
+    Route::post('process-payment', [ApiAuthorizePaymentController::class, 'processPayment']);
 });
+Route::post('stripe-process-payment', [ApiStripePaymentController::class, 'processPayment']);
