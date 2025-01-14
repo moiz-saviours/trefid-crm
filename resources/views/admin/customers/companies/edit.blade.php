@@ -108,7 +108,7 @@
             .sidebar-icons {
                 color: #808080;
                 background-color: #ddd;
-                padding: 15px;
+                padding: 10px;
                 border-radius: 31px;
             }
 
@@ -196,8 +196,8 @@
             }
 
             .profile_actions p {
-                font-size: 12px;
-                margin: 0px 8px;
+                font-size: 10px;
+                margin: 0px 9px;
                 color: gray;
             }
 
@@ -491,8 +491,8 @@
                 justify-content: center;
                 border-bottom: 1px solid #ddd;
                 /* padding-bottom: 30px; */
-                padding: 20px 20px;
-                gap: 11px;
+                padding: 20px 0px;
+
             }
 
 
