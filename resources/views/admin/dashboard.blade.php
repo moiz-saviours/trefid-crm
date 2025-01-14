@@ -1,6 +1,49 @@
 @extends('admin.layouts.app')
 @section('title','Dashboard')
 @section('content')
+    <style>
+        .btn-minimize {
+            background-color: #ff5722;
+            color: #fff;
+            font-size: 12px;
+        }
+        .btn-minimize:hover {
+            background-color: #ff5722;
+            color: #fff;
+        }
+        .clos_btn {
+            background-color:#2d3e50;
+            color: #fff;
+            font-size: 12px;
+        }
+        .clos_btn:hover {
+            background-color:#2d3e50;
+            color: #fff;
+        }
+        .right_col {
+            display: block;
+        }
+        .right_col .card {
+            margin: 20px 0px;
+        }
+        .dashbord_tbl {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        .tabl_td, .tabl_th {
+            text-align: left;
+            padding: 15px 0px;
+            text-align:center;
+        }
+        .tabl_tr:nth-child(odd) {
+            background-color: #2d3e50;
+            color: #fff;
+        }
+        .tabl_tr:nth-child(even) {
+            background-color: #fff;
+            color: #000 !important;
+        }
+        </style>
     <section id="content" class="content">
         <div class="content__header content__boxed overlapping">
             <div class="content__wrap">
@@ -162,15 +205,43 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="card">
+                            <div class="card-header toolbar">
+                                <div class="toolbar-start">
+                                    <h5 class="m-0">First Chart</h5>
+                                </div>
+                                <div class="toolbar-end">
+                                    <button type="button" class="btn btn-icon btn-minimize btn-xs" data-bs-toggle="collapse" data-bs-target="#_dm-Barchart" aria-expanded="true" aria-controls="_dm-Barchart">
+                                        <i class="demo-psi-min"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-icon btn-xs btn-secondary clos_btn" data-nf-toggler="dismiss" data-nf-target=".card">
+                                        <i class="demo-psi-cross"></i>
+                                        <span class="visually-hidden">Close the card</span>
+                                    </button>
+                                </div>
+                            </div>
                             <div class="card-body">
-                                <div class="barchart" id="barchart"></div>
+                                <div class="barchart collapse show" id="_dm-Barchart"></div>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="card">
+                            <div class="card-header toolbar">
+                                <div class="toolbar-start">
+                                    <h5 class="m-0">Second Chart</h5>
+                                </div>
+                                <div class="toolbar-end">
+                                    <button type="button" class="btn btn-icon btn-minimize btn-xs" data-bs-toggle="collapse" data-bs-target="#_dm-AreaChart" aria-expanded="true" aria-controls="_dm-AreaChart">
+                                        <i class="demo-psi-min"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-icon btn-xs btn-secondary clos_btn" data-nf-toggler="dismiss" data-nf-target=".card">
+                                        <i class="demo-psi-cross"></i>
+                                        <span class="visually-hidden">Close the card</span>
+                                    </button>
+                                </div>
+                            </div>
                             <div class="card-body">
-                                <div class="areachart" id="areachart"></div>
+                                <div class="areachart collapse show" id="_dm-AreaChart"></div>
                             </div>
                         </div>
                     </div>
@@ -180,38 +251,130 @@
         <div class="content__boxed">
             <div class="content__wrap">
                 <div class="row">
-                    <div class="col-md-6">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="piechart" id="piechart"></div>
-                            </div>
-                        </div>
+                    <div class="col-md-8">
+                        <h2>Recent Payments</h2>
+
+                        <table class="dashbord_tbl">
+                            <tr class="tabl_tr">
+                                <th class="tabl_th">Serial No</th>
+                                <th class="tabl_th">Invoice No</th>
+                                <th class="tabl_th">Payment Method</th>
+                                <th class="tabl_th">Brand</th>
+                                <th class="tabl_th">Team</th>
+                                <th class="tabl_th">Amount</th>
+                                <th class="tabl_th">Status</th>
+                            </tr>
+                            <tr class="tabl_tr">
+                                <td class="tabl_td">1</td>
+                                <td class="tabl_td">INV-000007</td>
+                                <td class="tabl_td">Paypal</td>
+                                <td class="tabl_td">Pivot Book Writing</td>
+                                <td class="tabl_td">Team 1</td>
+                                <td class="tabl_td">1500 USD</td>
+                                <td class="tabl_td">Paid</td>
+                            </tr>
+                            <tr class="tabl_tr">
+                                <td class="tabl_td">2</td>
+                                <td class="tabl_td">INV-000009</td>
+                                <td class="tabl_td">Stripe</td>
+                                <td class="tabl_td">Visionary Book Writing</td>
+                                <td class="tabl_td">Team 3</td>
+                                <td class="tabl_td">500 USD</td>
+                                <td class="tabl_td">Paid</td>
+                            </tr>
+                            <tr class="tabl_tr">
+                                <td class="tabl_td">3</td>
+                                <td class="tabl_td">INV-000012</td>
+                                <td class="tabl_td">Authorize</td>
+                                <td class="tabl_td">The Writers Tree</td>
+                                <td class="tabl_td">Team 1</td>
+                                <td class="tabl_td">2500 USD</td>
+                                <td class="tabl_td">Partially Paid</td>
+                            </tr>
+                            <tr class="tabl_tr">
+                                <td class="tabl_td">4</td>
+                                <td class="tabl_td">INV-000016</td>
+                                <td class="tabl_td">Stripe</td>
+                                <td class="tabl_td">The Writers Tree</td>
+                                <td class="tabl_td">Team 1</td>
+                                <td class="tabl_td">2500 USD</td>
+                                <td class="tabl_td">Paid</td>
+                            </tr>
+                            <tr class="tabl_tr">
+                                <td class="tabl_td">5</td>
+                                <td class="tabl_td">INV-000017</td>
+                                <td class="tabl_td">Paypal</td>
+                                <td class="tabl_td">The Writers Tree</td>
+                                <td class="tabl_td">Team 1</td>
+                                <td class="tabl_td">2500 USD</td>
+                                <td class="tabl_td">Paid</td>
+                            </tr>
+                        </table>
                     </div>
-                    <div class="col-md-6">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="donutchart" id="donutchart"></div>
+                    <div class="col-md-4 right_col">
+                            <div class="card">
+                                <div class="card-header toolbar">
+                                    <div class="toolbar-start">
+                                        <h5 class="m-0">Third Chart</h5>
+                                    </div>
+                                    <div class="toolbar-end">
+                                        <button type="button" class="btn btn-icon btn-minimize btn-xs" data-bs-toggle="collapse" data-bs-target="#_dm-PieChart" aria-expanded="true" aria-controls="_dm-PieChart">
+                                            <i class="demo-psi-min"></i>
+                                        </button>
+                                        <button type="button" class="btn btn-icon btn-xs btn-secondary clos_btn" data-nf-toggler="dismiss" data-nf-target=".card">
+                                            <i class="demo-psi-cross"></i>
+                                            <span class="visually-hidden">Close the card</span>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="pieChart collapse show" id="_dm-PieChart"></div>
+                                </div>
                             </div>
-                        </div>
+                            <div class="card">
+                                <div class="card-header toolbar">
+                                    <div class="toolbar-start">
+                                        <h5 class="m-0">Fourth Chart</h5>
+                                    </div>
+                                    <div class="toolbar-end">
+                                        <button type="button" class="btn btn-icon btn-minimize btn-xs" data-bs-toggle="collapse" data-bs-target="#_dm-DonutChart" aria-expanded="true" aria-controls="_dm-DonutChart">
+                                            <i class="demo-psi-min"></i>
+                                        </button>
+                                        <button type="button" class="btn btn-icon btn-xs btn-secondary clos_btn" data-nf-toggler="dismiss" data-nf-target=".card">
+                                            <i class="demo-psi-cross"></i>
+                                            <span class="visually-hidden">Close the card</span>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="donutchart" id="_dm-DonutChart"></div>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-header toolbar">
+                                    <div class="toolbar-start">
+                                        <h5 class="m-0">Fifth Chart</h5>
+                                    </div>
+                                    <div class="toolbar-end">
+                                        <button type="button" class="btn btn-icon btn-minimize btn-xs" data-bs-toggle="collapse" data-bs-target="#_dm-RadialChart" aria-expanded="true" aria-controls="_dm-RadialChart">
+                                            <i class="demo-psi-min"></i>
+                                        </button>
+                                        <button type="button" class="btn btn-icon btn-xs btn-secondary clos_btn" data-nf-toggler="dismiss" data-nf-target=".card">
+                                            <i class="demo-psi-cross"></i>
+                                            <span class="visually-hidden">Close the card</span>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="radialchart" id="_dm-RadialChart"></div>
+                                </div>
+                            </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="content__boxed">
-            <div class="content__wrap">
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="radialchart" id="radialchart"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
-            </div>
-        </div>
     </section>
 
     @push('script')
@@ -244,11 +407,7 @@
                 stroke: {
                     width: [1, 1, 1]
                 },
-                title: {
-                    text: ' Title',
-                    align: 'left',
-                    offsetX: 110
-                },
+
                 xaxis: {
                     categories: [2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016],
                 },
@@ -264,8 +423,8 @@
 
             };
 
-            var barchart = new ApexCharts(document.querySelector("#barchart"), options);
-            barchart.render();
+                var barchart = new ApexCharts($(".barchart")[0], options);
+                barchart.render();
             // Bar Chart
 
             // Area Chart
@@ -290,11 +449,7 @@
                     type:'solid',
                     opacity: [0.35, 1],
                 },
-                title: {
-                    text: ' Title',
-                    align: 'left',
-                    offsetX: 110
-                },
+
                 colors: ['#2d3e50', '#ff5722'],
                 labels: ['Jan', 'Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
 
@@ -305,7 +460,7 @@
                 }
             };
 
-            var areachart = new ApexCharts(document.querySelector("#areachart"), options);
+            var areachart = new ApexCharts($(".areachart")[0], options);
             areachart.render();
             // Area Chart
 
@@ -313,11 +468,9 @@
             var options = {
                 series: [44, 55, 60],
                 chart: {
-
                     type: 'pie',
                     toolbar: {
                         show: true,
-
                     },
                 },
                 colors: ['#2d3e50', '#ff5722','#98a3b0'],
@@ -325,9 +478,7 @@
                 legend: {
                     position: 'right',
                 },
-                title: {
-                    text: 'Title',
-                   },
+
                 responsive: [{
                     breakpoint: 480,
                     options: {
@@ -341,8 +492,8 @@
                 }]
             };
 
-            var piechart = new ApexCharts(document.querySelector("#piechart"), options);
-            piechart.render();
+            var pieChart = new ApexCharts($(".pieChart")[0], options);
+            pieChart.render();
             //Pie Chart
 
             //Donut Chart
@@ -357,9 +508,7 @@
 
                 colors: ['#2d3e50', '#ff5722','#98a3b0'],
                 labels: ['Team A', 'Team B', 'Team C'],
-                title :{
-                    text: 'Title',
-                },
+
                 legend: {
                     position: 'right',
                 },
@@ -376,7 +525,7 @@
                 }]
             };
 
-            var donutchart = new ApexCharts(document.querySelector("#donutchart"), options);
+            var donutchart = new ApexCharts($(".donutchart")[0], options);
             donutchart.render();
             //Donut Chart
 
@@ -420,11 +569,9 @@
                     }
                 },
                 labels: ['Apples', 'Oranges', 'Bananas'], // Only 3 labels
-                title: {
-                    text: 'Title',
-                }
+
             };
-            var radialchart = new ApexCharts(document.querySelector("#radialchart"), options);
+            var radialchart = new ApexCharts($(".radialchart")[0], options);
             radialchart.render();
             //Radial Chart
 

@@ -7,14 +7,6 @@
     <section id="content" class="content">
         <!-- ab content -->
         <style>
-            /*body {*/
-            /*    font-family: Arial, sans-serif;*/
-            /*    margin: 0;*/
-            /*    padding: 0;*/
-            /*    display: flex;*/
-            /*    height: 100vh;*/
-            /*}*/
-
             .containerr {
                 display: flex;
                 width: 100%;
@@ -22,7 +14,13 @@
                 padding: 0px;
                 margin: 0px;
             }
-            .custom-drop-down-show.dropdown-menu.show{
+
+            .custom-drop-down-show-main {
+                display: flex !important;
+
+            }
+
+            .custom-drop-down-show.dropdown-menu.show {
                 box-shadow: none;
                 border: 1px solid #ddd;
             }
@@ -134,6 +132,13 @@
                 align-items: center;
             }
 
+            .searchbox .searchbox__input.bg-color {
+                border: 0;
+                box-shadow: none !important;
+                background: #fff !important;
+                color: #ddd !important;
+            }
+
             .avatar {
                 width: 58px;
                 height: 58px;
@@ -147,7 +152,7 @@
             }
 
             .contact-info {
-                text-align: center;
+                /* text-align: center; */
                 margin-left: 8px;
             }
 
@@ -156,6 +161,16 @@
                 border: 1px solid rgb(223, 227, 235);
                 border-radius: 4px;
                 padding: 12px 16px 0px;
+                margin-bottom: 20px;
+            }
+
+            .customize-select {
+                min-width: 150px;
+            }
+
+            .customize-select select {
+                appearance: none;
+                width: 100%;
             }
 
             .contact-info h2 {
@@ -175,7 +190,7 @@
             }
 
             .contact-info p {
-                margin: 5px 0;
+                /* margin: 5px 0; */
                 font-size: 13px;
                 color: gray;
             }
@@ -189,7 +204,15 @@
             .email-child-wrapper {
                 display: flex;
                 gap: 8px;
+                cursor: pointer;
                 align-items: center
+            }
+
+            .comment-active_head {
+                display: flex;
+                justify-content: space-between;
+                margin-bottom: 10px;
+                /* align-items: center; */
             }
 
             .profile_actions p i {
@@ -389,8 +412,24 @@
             }
 
             .add-coment-icon {
-                color: #0091ae;
+                color: #75868f;
             }
+
+            .hidden {
+                display: none;
+            }
+
+            /* .email-child-wrapper {
+                color: #007bff;
+                padding: 10px 15px;
+
+                font-size: 14px;
+            } */
+
+            .comment-box {
+                margin-top: 10px;
+            }
+
 
             .activity-header {
                 display: flex;
@@ -405,7 +444,7 @@
             .activity-header p {
                 margin: 0;
                 margin-right: 10px;
-                color: #007bff;
+                /* color: #007bff; */
             }
 
             .right-sidebarr {
@@ -442,7 +481,7 @@
             .profile_box {
                 display: flex;
                 padding: 0px 13px;
-                align-items: center;
+                /* align-items: center; */
                 gap: 9px;
             }
 
@@ -475,7 +514,7 @@
             .data-highlights h2 {
                 text-align: left;
                 /* padding-left: 15px;
-                                                            padding-bottom: 15px; */
+                                                        padding-bottom: 15px; */
                 font-size: 15px;
                 color: #2d3e50;
             }
@@ -519,13 +558,59 @@
                 margin-bottom: 20px;
             }
 
+            .editor-container {
+                /* width: 80%; */
+                display: flex;
+                gap: 8px;
+                /* margin: 0 auto; */
+            }
+
+            .your-comment-btn {}
+
+            .toolbar {
+                background-color: #dddddda6;
+                padding: 6px;
+                border: 1px solid #ccc;
+                display: flex;
+                justify-content: flex-start;
+                gap: 10px;
+                margin-bottom: 10px;
+            }
+
+            .toolbar button {
+                padding: 2px 12px;
+                cursor: pointer;
+                border: 1px solid #ccc;
+                background-color: #fff;
+                font-size: 12px;
+            }
+
+            .editor {
+                border: 1px solid #ccc;
+                padding: 10px;
+                min-height: 90px;
+                background-color: #dddddda6;
+                width: 100%;
+            }
+
+            .editor[contenteditable="true"]:empty:before {
+                content: "Leave comment...";
+                color: #aaa;
+            }
+
             .custom-drop-btn-design {
                 background: transparent;
                 border: none;
                 color: #0c96b2;
                 font-weight: 600;
+                padding: 0;
+                font-size: 13px;
+                text-align: left;
             }
-            .custom-drop-btn-design:hover{
+
+
+
+            .custom-drop-btn-design:hover {
                 background-color: transparent;
                 box-shadow: none;
                 border: none;
@@ -536,8 +621,12 @@
                 display: flex;
             }
 
+            .user_profile-hidden {
+                display: none;
+            }
+
             .contact-us-text {
-                .user_profile_text p
+
                 /* margin-bottom: -3px; */
                 font-size: 11px;
                 font-weight: 700;
@@ -562,6 +651,11 @@
             }
 
             .user_cont p {
+                font-size: 12px;
+                color: gray;
+            }
+
+            .user_cont {
                 font-size: 12px;
                 color: gray;
             }
@@ -610,14 +704,13 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-3">
-
-
                     <div class="sidebarr">
                         <div>
                             <div class="profile_box">
                                 <div class="avatar">MM</div>
                                 <div class="contact-info">
                                     <h2>Mr Malik</h2>
+                                    <h5>Business Development Executive</h5>
                                     <p>mmr840327@gmail.com</p>
                                 </div>
                             </div>
@@ -644,110 +737,60 @@
                                     <i class="fa fa-phone-square sidebar-icons" aria-hidden="true"></i>
                                     <p>Call</p>
                                 </div>
-
-                                {{-- <div class="text-center">
-
-                                    <i class="fa fa-coffee sidebar-icons" aria-hidden="true"></i>
-                                    <p> Task </p>
-
-                                </div> --}}
+                                <div class="text-center">
+                                    <i class="fa fa-list sidebar-icons" aria-hidden="true"></i>
+                                    <p>Task</p>
+                                </div>
+                                <div class="text-center">
+                                    <i class="fa fa-list sidebar-icons" aria-hidden="true"></i>
+                                    <p>Task</p>
+                                </div>
 
                                 <div class="text-center">
-
                                     <i class="fa fa-calendar-check-o sidebar-icons" aria-hidden="true"></i>
-
                                     <p>More</p>
                                 </div>
                             </div>
                         </div>
-                        {{-- <div class="profile">
-                            <div class="profile_box">
-                                <div class="avatar">MM</div>
-                                <div class="contact-info">
-                                    <h2>Mr Malik</h2>
-                                    <p>mmr840327@gmail.com</p>
-                                </div>
-                            </div>
-                            <div class="profile_actions">
-                                <p>
-                                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Note
-                                </p>
-                                <p><i class="fa fa-envelope-o" aria-hidden="true"></i> Email</p>
-                                <p>
-                                    <i class="fa fa-phone-square" aria-hidden="true"></i> Call
-                                </p>
-                                <p><i class="fa fa-coffee" aria-hidden="true"></i> Task</p>
-                                <p>
-                                    <i class="fa fa-calendar-check-o" aria-hidden="true"></i> More
-                                </p>
-                            </div>
-                        </div> --}}
+
                         <div class="sections">
                             <div class="collaborators">
-                                {{-- <div class="collapsible">
-                                    <button class="collapsible-header">
-                                        About this contact
-                                        <i class="fa fa-caret-down" aria-hidden="true"></i>
-                                    </button>
-                                    <div class="collapsible-content">
-                                        <h5>Eamil</h5>
-                                        <p>arhamumar63@gmail.com</p>
-                                        <h5>Phone number</h5>
-                                        <p>+92 306-1343427</p>
-                                        <h5>Contact owner</h5>
-                                        <p>arhum butt</p>
-                                    </div>
-                                </div> --}}
-
                                 <div class="collapse-header-prent-box">
                                     <div class="collapse-header-box">
                                         <i class="fa fa-caret-down" aria-hidden="true"></i>
-                                        <button class="btn custom-btn-collapse" type="button" data-bs-toggle="collapse"
-                                            data-bs-target="#collapseExamplecontact" aria-expanded="false"
-                                            aria-controls="collapseExamplecontact">
+                                        <button class="btn custom-btn-collapse" type="button"
+                                                data-bs-toggle="collapse" data-bs-target="#collapseExamplecontact"
+                                                aria-expanded="true" aria-controls="collapseExamplecontact">
 
                                             About this contact
                                         </button>
                                     </div>
                                 </div>
 
-                                <div class="collapse" id="collapseExamplecontact">
+                                <div class="collapse show" id="collapseExamplecontact" style="">
                                     <div class="card custom-contact-cards card-body">
-                                        Some placeholder content for the collapse component. This panel is hidden by default
+                                        Some placeholder content for the collapse component. This panel is hidden by
+                                        default
                                         but
                                         revealed when the user activates the relevant trigger.
                                     </div>
                                 </div>
 
-
-
-                                {{-- <div class="collapsible">
-                                    <button class="collapsible-header">
-                                        Communication subscriptions
-                                        <i class="fa fa-caret-down" aria-hidden="true"></i>
-                                    </button>
-                                    <div class="collapsible-content">
-                                        <p>
-                                            Use subscription types to manage the communications this
-                                            contact receives from you
-                                        </p>
-                                    </div>
-                                </div> --}}
-
                                 <div class="collapse-header-prent-box">
                                     <div class="collapse-header-box">
                                         <i class="fa fa-caret-down" aria-hidden="true"></i>
-                                        <button class="btn custom-btn-collapse" type="button" data-bs-toggle="collapse"
-                                            data-bs-target="#collapseExamplesubscriptions" aria-expanded="false"
-                                            aria-controls="collapseExamplesubscriptions">
+                                        <button class="btn custom-btn-collapse" type="button"
+                                                data-bs-toggle="collapse" data-bs-target="#collapseExamplesubscriptions"
+                                                aria-expanded="true" aria-controls="collapseExamplesubscriptions">
                                             Communication subscriptions
                                         </button>
                                     </div>
                                 </div>
 
-                                <div class="collapse" id="collapseExamplesubscriptions">
+                                <div class="collapse show" id="collapseExamplesubscriptions" style="">
                                     <div class="card custom-contact-cards card-body">
-                                        Some placeholder content for the collapse component. This panel is hidden by default
+                                        Some placeholder content for the collapse component. This panel is hidden by
+                                        default
                                         but
                                         revealed when the user activates the relevant trigger.
                                     </div>
@@ -756,9 +799,9 @@
                                 <div class="collapse-header-prent-box">
                                     <div class="collapse-header-box">
                                         <i class="fa fa-caret-down" aria-hidden="true"></i>
-                                        <button class="btn custom-btn-collapse" type="button" data-bs-toggle="collapse"
-                                            data-bs-target="#collapseExampleactivity" aria-expanded="false"
-                                            aria-controls="collapseExampleactivity">
+                                        <button class="btn custom-btn-collapse" type="button"
+                                                data-bs-toggle="collapse" data-bs-target="#collapseExampleactivity"
+                                                aria-expanded="false" aria-controls="collapseExampleactivity">
                                             Website activity
                                         </button>
                                     </div>
@@ -766,41 +809,12 @@
 
                                 <div class="collapse" id="collapseExampleactivity">
                                     <div class="card custom-contact-cards card-body">
-                                        Some placeholder content for the collapse component. This panel is hidden by default
+                                        Some placeholder content for the collapse component. This panel is hidden by
+                                        default
                                         but
                                         revealed when the user activates the relevant trigger.
                                     </div>
                                 </div>
-
-
-
-
-
-
-
-                                {{-- <div class="collapsible">
-                                    <button class="collapsible-header">
-                                        Website activity
-                                        <i class="fa fa-caret-down" aria-hidden="true"></i>
-                                    </button>
-                                    <div class="collapsible-content">
-                                        <p>
-                                            Website activity shows you how many times a contact has
-                                            visited your site and viewed your pages.
-                                        </p>
-                                    </div>
-                                </div> --}}
-
-
-
-
-
-
-
-
-
-
-
                             </div>
                         </div>
                     </div>
@@ -811,20 +825,20 @@
                         <ul class="nav nav-tabs" id="myTab" role="tablist">
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link main-tabs-view active" id="home-tab" data-bs-toggle="tab"
-                                    data-bs-target="#home" type="button" role="tab" aria-controls="home"
-                                    aria-selected="true">Overview</button>
+                                        data-bs-target="#home" type="button" role="tab" aria-controls="home"
+                                        aria-selected="true">Overview</button>
                             </li>
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link main-tabs-view" id="profile-tab" data-bs-toggle="tab"
-                                    data-bs-target="#profile" type="button" role="tab" aria-controls="profile"
-                                    aria-selected="false">Activities</button>
+                                        data-bs-target="#profile" type="button" role="tab" aria-controls="profile"
+                                        aria-selected="false" tabindex="-1">Activities</button>
                             </li>
                         </ul>
                         <div class="tab-content" id="myTabContent">
-                            <div class="tab-pane fade show active" id="home" role="tabpanel"
-                                aria-labelledby="home-tab">
+                            <div class="tab-pane fade active show" id="home" role="tabpanel"
+                                 aria-labelledby="home-tab">
                                 <div>
-                                    {{-- <p class="date-by-order"> May 2021</p> --}}
+
                                     <div class="data-highlights">
                                         <div class="data-top-heading-header">
                                             <h2>Data highlights</h2>
@@ -850,15 +864,17 @@
                                         <div class="activity">
                                             <h2>Recent activities</h2>
                                             <div>
-                                                <p class="recent-filters"> Filter by: <span class="activities-seprater">7
-                                                        activities</span></p>
+                                                <p class="recent-filters"> Filter by: <span
+                                                        class="activities-seprater">7
+                                                            activities</span></p>
                                             </div>
                                             <div class="email-box-container">
-                                                <div class="activ_head">
+                                                <div class="activ_head" onclick="toggleContent('toggledContent1')">
                                                     <div class="email-child-wrapper">
+                                                        <i class="fa fa-caret-down" aria-hidden="true"></i>
                                                         <i class="fa fa-envelope-o new-sidebar-icons"
-                                                            aria-hidden="true"></i>
-                                                        {{-- <p> Email</p> --}}
+                                                           aria-hidden="true"></i>
+
                                                         <p>
                                                             Inbound email from
                                                             <span class="activities-seprater">Mr Malik</span>
@@ -873,13 +889,14 @@
                                                         <p>contact us</p>
 
                                                     </div>
-                                                    <div class="user_profile">
+                                                    <div class="user_profile-hidden" id="toggledContent1">
                                                         <div class="user_profile_img">
                                                             <div class="avatarr">MM</div>
                                                         </div>
                                                         <div class="user_profile_text">
                                                             <p>Mike Stewar mikestewar1932@outlook.com</p>
-                                                            <p style="font-weight: 500">to info@phototouchexpert.com</p>
+                                                            <p style="font-weight: 500">to info@phototouchexpert.com
+                                                            </p>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -892,112 +909,231 @@
                                                     </p>
                                                 </div>
 
-
-
-                                                <div class="activ_head">
-                                                    <div class="email-child-wrapper">
-                                                        <i class="fa fa-commenting-o add-coment-icon"
-                                                            aria-hidden="true"></i>
+                                                <div class="comment-active_head" id="toggledContent1">
+                                                    <!-- <div class="email-child-wrapper" >
+                                                        <i class="fa fa-commenting-o add-coment-icon" aria-hidden="true"></i>
                                                         <p class="activities-seprater">
                                                             Add Comments
                                                         </p>
+                                                    </div> -->
+                                                    <div>
+
+                                                        <div class="email-child-wrapper" id="toggleButton">
+                                                            <i class="fa fa-commenting-o add-coment-icon"
+                                                               aria-hidden="true"></i>
+                                                            <span class="activities-seprater">Add Comments</span>
+                                                        </div>
+
+
+                                                        <div id="contents" class="hidden comment-box">
+                                                            <div class="editor-container">
+                                                                <div class="avatarr">MM</div>
+                                                                <div>
+                                                                    <!-- Editable content area -->
+                                                                    <div class="editor" id="editor"
+                                                                         contenteditable="true">
+                                                                        <!-- <textarea class="editor"
+                                                                            placeholder="Leave comment..."></textarea> -->
+                                                                    </div>
+                                                                    <!-- Toolbar with buttons for text formatting -->
+                                                                    <div class="toolbar">
+                                                                        <button id="boldBtn"><b>B</b></button>
+                                                                        <button id="italicBtn"><i>I</i></button>
+                                                                        <button id="underlineBtn"><u>U</u></button>
+                                                                        <button id="strikeBtn"><s>S</s></button>
+                                                                        <!-- <button id="fontSizeBtn">Font Size</button> -->
+                                                                        <!-- <button id="linkBtn">Link</button> -->
+                                                                        <button id="alignLeftBtn">Left</button>
+                                                                        <button id="alignCenterBtn">Center</button>
+                                                                        <button id="alignRightBtn">Right</button>
+                                                                        <button id="unorderedListBtn">UL</button>
+                                                                        <button id="orderedListBtn">OL</button>
+                                                                    </div>
+
+                                                                    <!-- Save content as .txt file -->
+                                                                    <div class="editor-container">
+                                                                        <button
+                                                                            class="your-create-contact create-contact">comment</button>
+                                                                        <button
+                                                                            class="your-comment-cancel">Cancel</button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                     </div>
+
+                                                    <!-- <div class="customize-select">
+                                                            <select class="btn custom-drop-btn-design selection-box">
+                                                                <option> Selected<span>0</span></option>
+                                                                <option> Carts <span>0</span></option>
+                                                                <option>Companies 0</option>
+                                                                <option> Leads <span>1</span></option>
+                                                                <option>Orders <span>1</span></option>
+                                                            </select>
+
+                                                        </div> -->
+
+
                                                     <div class="dropdown">
-                                                        <button
-                                                            class="btn custom-drop-btn-design dropdown-toggle"
+                                                        <div class="dropdown-toggle custom-drop-btn-design ">1
+                                                            Association </div>
+                                                        <div class="dropdown-content">
+
+                                                            <div class="dropdown-content-wraper">
+                                                                <ul class="nested-select-list">
+                                                                    <li class="checkbox-item">
+
+                                                                        <label>Companies 0</label>
+                                                                    </li>
+                                                                    <li class="checkbox-item">
+
+                                                                        <label>Carts 0</label>
+                                                                    </li>
+                                                                    <li class="checkbox-item">
+
+                                                                        <label>Contacts 0</label>
+                                                                    </li>
+                                                                    <li class="checkbox-item">
+
+                                                                        <label>Leads 0</label>
+                                                                    </li>
+                                                                    <li class="checkbox-item">
+
+                                                                        <label>Deals 0</label>
+                                                                    </li>
+                                                                    <li class="checkbox-item">
+
+                                                                        <label>Orders 0</label>
+                                                                    </li>
+                                                                    <!-- Add more items as needed -->
+                                                                </ul>
+                                                                <div>
+                                                                    <div class="search-box-select">
+                                                                        <input type="text"
+                                                                               placeholder="Search current associations"
+                                                                               class="search-input">
+                                                                    </div>
+                                                                    <div class="select-contact-box-space">
+                                                                        <p class="select-contact">Contacts</p>
+
+                                                                        <input type="checkbox" id="contact2">
+                                                                        <label for="contact2">HoeoSQMLp
+                                                                            becelhmerthewatt@yahoo.com</label>
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- <div class="dropdown">
+                                                        <button class="btn custom-drop-btn-design dropdown-toggle"
                                                             type="button" id="dropdownMenuButton1"
                                                             data-bs-toggle="dropdown" aria-expanded="false">
-                                                            1 association
+                                                            1 Association
                                                         </button>
-                                                        <ul class="custom-drop-down-show dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                                            <li><a class="dropdown-item" href="#">Action</a></li>
-                                                            <li><a class="dropdown-item" href="#">Another action</a>
+
+                                                        <ul class="custom-drop-down-show-main custom-drop-down-show dropdown-menu"
+                                                            aria-labelledby="dropdownMenuButton1">
+                                                            <li>
+
                                                             </li>
-                                                            <li><a class="dropdown-item" href="#">Something else
-                                                                    here</a></li>
+                                                            <li>
+                                                                <div class="customize-select">
+
+                                                                </div>
+                                                            </li>
                                                         </ul>
-                                                    </div>
+                                                    </div> -->
                                                 </div>
 
                                             </div>
                                         </div>
+
                                         <div class="activity">
-                                            <div class="activ_head">
-                                                <p>
-                                                    Inbound email from
-                                                    <span class="user_name">Mr Malik</span>
-                                                </p>
-                                                <p class="usre_date">Dec 3, 2024 at 4:48 PM GMT+5</p>
-                                            </div>
-
-                                            <div>
-                                                <div class="user_profile">
-                                                    <div class="user_profile_img">
-                                                        <div class="avatarr">MM</div>
-                                                    </div>
-                                                    <div class="user_profile_text">
-                                                        <p>Mike Stewar mikestewar1932@outlook.com</p>
-                                                        <p>to info@phototouchexpert.com</p>
-                                                    </div>
+                                            <div class="association-activities-box">
+                                                <h2>Companies</h2>
+                                                <div>
+                                                    <i class="fa fa-plus create-contact open-form-btn"
+                                                       aria-hidden="true"> Add</i>
                                                 </div>
+
                                             </div>
-                                            <div class="user_cont">
-                                                <p>
-                                                    Hi there, I hope you're doing well. I specialize in
-                                                    online reputation management and can help boost your
-                                                    business's presence by generating positive reviews and
-                                                    addressing any negative feedback.
-                                                </p>
-                                            </div>
+                                            <p class="user_cont text-center"> No associated objects of this type
+                                                exist or you don't have permission to view them.</p>
                                         </div>
+
                                     </div>
                                 </div>
                             </div>
                             <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                                {{-- actvity tabs start --}}
+
                                 <div class="custom-tabs-row">
                                     <ul class="nav nav-tabs newtabs-space" id="myTab" role="tablist">
                                         <li class="nav-item" role="presentation">
-                                            <button class="nav-link customize active" id="act-tab" data-bs-toggle="tab"
-                                                data-bs-target="#act" type="button" role="tab" aria-controls="act"
-                                                aria-selected="true">Activity</button>
+                                            <button class="nav-link customize active" id="act-tab"
+                                                    data-bs-toggle="tab" data-bs-target="#act" type="button" role="tab"
+                                                    aria-controls="act" aria-selected="true">Activity</button>
                                         </li>
                                         <li class="nav-item" role="presentation">
                                             <button class="nav-link customize" id="notes-tab" data-bs-toggle="tab"
-                                                data-bs-target="#notes" type="button" role="tab"
-                                                aria-controls="notes" aria-selected="false">Notes</button>
+                                                    data-bs-target="#notes" type="button" role="tab"
+                                                    aria-controls="notes" aria-selected="false"
+                                                    tabindex="-1">Notes</button>
                                         </li>
                                         <li class="nav-item" role="presentation">
                                             <button class="nav-link customize" id="email-tab" data-bs-toggle="tab"
-                                                data-bs-target="#email" type="button" role="tab"
-                                                aria-controls="email" aria-selected="false">Emails</button>
+                                                    data-bs-target="#email" type="button" role="tab"
+                                                    aria-controls="email" aria-selected="false"
+                                                    tabindex="-1">Emails</button>
                                         </li>
                                     </ul>
                                     <div class="tab-content" id="myTabContent">
                                         <div class="tab-pane fade show active" id="act" role="tabpanel"
-                                            aria-labelledby="act-tab">
+                                             aria-labelledby="act-tab">
+                                            <div class="activ_head">
+
+                                                <!-- Searchbox input -->
+                                                <div class="search-containers">
+                                                    <form id="search-form" style="margin:0;">
+                                                        <input type="text" class="search-inputs"
+                                                               placeholder="Search activities" name="query">
+                                                        <button class="search-btns">
+                                                            <i class="fa fa-search" aria-hidden="true"></i>
+                                                        </button>
+                                                    </form>
+                                                </div>
+
+                                                <!-- dropdown  -->
+                                                <div class="dropdown">
+                                                    <button
+                                                        class="new-activity-dropdown btn-secondary dropdown-toggle"
+                                                        type="button" id="dropdownMenuButton1"
+                                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                                        Collapse all
+                                                    </button>
+                                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                                        <li><a class="dropdown-item" href="#">Action</a></li>
+                                                        <li><a class="dropdown-item" href="#">Another action</a>
+                                                        </li>
+                                                        <li><a class="dropdown-item" href="#">Something else
+                                                                here</a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+
                                             <div>
                                                 <p class="date-by-order"> May 2021</p>
                                                 <div class="data-highlights">
                                                     <div class="data-top-heading-header">
-                                                        <h2>Data highlights</h2>
+                                                        <h2>Life Cycle</h2>
                                                         <p>12/03/2024 4:48 PM GMT+5</p>
                                                     </div>
-                                                    <div class="data-row">
-                                                        <div>
-                                                            <h5>CREATE DATE</h5>
-                                                            <p>12/03/2024 4:48 PM GMT+5</p>
-                                                        </div>
-                                                        <div>
-                                                            <h5>LIFECYCLE STAGE</h5>
-                                                            <p>Lead</p>
-                                                        </div>
-                                                        <div>
-                                                            <h5>LAST ACTIVITY DATE</h5>
-                                                            <p>12/03/2024 4:48 PM GMT+5</p>
-                                                        </div>
-                                                    </div>
+                                                    <p class="user_cont"> No associated objects of this
+                                                        type
+                                                        exist or you don't have permission to view them.</p>
                                                 </div>
+
                                                 <div class="recent-activities">
                                                     <h2>Recent activities</h2>
                                                     <div class="activity">
@@ -1006,7 +1142,8 @@
                                                                 Inbound email from
                                                                 <span class="user_name">Mr Malik</span>
                                                             </p>
-                                                            <p class="usre_date">Dec 3, 2024 at 4:48 PM GMT+5</p>
+                                                            <p class="usre_date">Dec 3, 2024 at 4:48 PM GMT+5
+                                                            </p>
                                                         </div>
 
                                                         <div>
@@ -1015,16 +1152,21 @@
                                                                     <div class="avatarr">MM</div>
                                                                 </div>
                                                                 <div class="user_profile_text">
-                                                                    <p>Mike Stewar mikestewar1932@outlook.com</p>
+                                                                    <p>Mike Stewar mikestewar1932@outlook.com
+                                                                    </p>
                                                                     <p>to info@phototouchexpert.com</p>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                         <div class="user_cont">
                                                             <p>
-                                                                Hi there, I hope you're doing well. I specialize in
-                                                                online reputation management and can help boost your
-                                                                business's presence by generating positive reviews and
+                                                                Hi there, I hope you're doing well. I specialize
+                                                                in
+                                                                online reputation management and can help boost
+                                                                your
+                                                                business's presence by generating positive
+                                                                reviews
+                                                                and
                                                                 addressing any negative feedback.
                                                             </p>
                                                         </div>
@@ -1035,7 +1177,8 @@
                                                                 Inbound email from
                                                                 <span class="user_name">Mr Malik</span>
                                                             </p>
-                                                            <p class="usre_date">Dec 3, 2024 at 4:48 PM GMT+5</p>
+                                                            <p class="usre_date">Dec 3, 2024 at 4:48 PM GMT+5
+                                                            </p>
                                                         </div>
 
                                                         <div>
@@ -1044,16 +1187,21 @@
                                                                     <div class="avatarr">MM</div>
                                                                 </div>
                                                                 <div class="user_profile_text">
-                                                                    <p>Mike Stewar mikestewar1932@outlook.com</p>
+                                                                    <p>Mike Stewar mikestewar1932@outlook.com
+                                                                    </p>
                                                                     <p>to info@phototouchexpert.com</p>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                         <div class="user_cont">
                                                             <p>
-                                                                Hi there, I hope you're doing well. I specialize in
-                                                                online reputation management and can help boost your
-                                                                business's presence by generating positive reviews and
+                                                                Hi there, I hope you're doing well. I specialize
+                                                                in
+                                                                online reputation management and can help boost
+                                                                your
+                                                                business's presence by generating positive
+                                                                reviews
+                                                                and
                                                                 addressing any negative feedback.
                                                             </p>
                                                         </div>
@@ -1062,10 +1210,10 @@
                                             </div>
                                         </div>
                                         <div class="tab-pane fade" id="notes" role="tabpanel"
-                                            aria-labelledby="notes-tab">notes
+                                             aria-labelledby="notes-tab">notes
                                         </div>
                                         <div class="tab-pane fade" id="email" role="tabpanel"
-                                            aria-labelledby="email-tab">email
+                                             aria-labelledby="email-tab">email
                                         </div>
                                     </div>
                                 </div>
@@ -1073,7 +1221,7 @@
 
 
 
-                                {{-- actvity tabs ends --}}
+
                             </div>
 
                         </div>
@@ -1082,231 +1230,8 @@
 
 
                     <div class="main">
-                        {{-- <div class="headerr">
-                            <button class="tablink active" onclick="openTab('Overview')">
-                                Overview
-                            </button>
-                            <button class="tablink" onclick="openTab('Activities')">
-                                Activities
-                            </button>
-                        </div> --}}
-                        {{-- <div class="content">
-                            <div id="Overview" class="tabcontent">
-                                <div class="data-highlights">
-                                    <h2>Data highlights</h2>
-                                    <div class="data-row">
-                                        <div>
-                                            <h5>CREATE DATE</h5>
-                                            <p>12/03/2024 4:48 PM GMT+5</p>
-                                        </div>
-                                        <div>
-                                            <h5>LIFECYCLE STAGE</h5>
-                                            <p>Lead</p>
-                                        </div>
-                                        <div>
-                                            <h5>LAST ACTIVITY DATE</h5>
-                                            <p>12/03/2024 4:48 PM GMT+5</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="recent-activities">
-                                    <h2>Recent activities</h2>
-                                    <div class="activity">
-                                        <div class="activ_head">
-                                            <p>
-                                                Inbound email from
-                                                <span class="user_name">Mr Malik</span>
-                                            </p>
-                                            <p class="usre_date">Dec 3, 2024 at 4:48 PM GMT+5</p>
-                                        </div>
 
-                                        <div>
-                                            <div class="user_profile">
-                                                <div class="user_profile_img">
-                                                    <div class="avatarr">MM</div>
-                                                </div>
-                                                <div class="user_profile_text">
-                                                    <p>Mike Stewar mikestewar1932@outlook.com</p>
-                                                    <p>to info@phototouchexpert.com</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="user_cont">
-                                            <p>
-                                                Hi there, I hope you're doing well. I specialize in
-                                                online reputation management and can help boost your
-                                                business's presence by generating positive reviews and
-                                                addressing any negative feedback.
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <div class="activity">
-                                        <div class="activ_head">
-                                            <p>
-                                                Inbound email from
-                                                <span class="user_name">Mr Malik</span>
-                                            </p>
-                                            <p class="usre_date">Dec 3, 2024 at 4:48 PM GMT+5</p>
-                                        </div>
 
-                                        <div>
-                                            <div class="user_profile">
-                                                <div class="user_profile_img">
-                                                    <div class="avatarr">MM</div>
-                                                </div>
-                                                <div class="user_profile_text">
-                                                    <p>Mike Stewar mikestewar1932@outlook.com</p>
-                                                    <p>to info@phototouchexpert.com</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="user_cont">
-                                            <p>
-                                                Hi there, I hope you're doing well. I specialize in
-                                                online reputation management and can help boost your
-                                                business's presence by generating positive reviews and
-                                                addressing any negative feedback.
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div id="Activities" class="tabcontent" style="display: none">
-                                <div class="recent-activities">
-                                    <div class="tabs_header">
-                                        <input type="email" class="form-control" id="exampleFormControlInput1"
-                                            placeholder="name@example.com" />
-                                        <select class="form-control" id="exampleFormControlSelect1">
-                                            <option>Collapse All</option>
-                                            <option>Expand All</option>
-                                        </select>
-                                    </div>
-
-                                    <ul class="nav nav-tabs" id="myTab" role="tablist">
-                                        <li class="nav-item" role="presentation">
-                                            <button class="nav-link active" id="activity-tab" data-bs-toggle="tab"
-                                                data-bs-target="#activity" type="button" role="tab"
-                                                aria-controls="activity" aria-selected="true">
-                                                Activity
-                                            </button>
-                                        </li>
-                                        <li class="nav-item" role="presentation">
-                                            <button class="nav-link" id="notes-tab" data-bs-toggle="tab"
-                                                data-bs-target="#notes" type="button" role="tab"
-                                                aria-controls="notes" aria-selected="false">
-                                                Notes
-                                            </button>
-                                        </li>
-                                        <li class="nav-item" role="presentation">
-                                            <button class="nav-link" id="emails-tab" data-bs-toggle="tab"
-                                                data-bs-target="#emails" type="button" role="tab"
-                                                aria-controls="emails" aria-selected="false">
-                                                Emails
-                                            </button>
-                                        </li>
-                                        <li class="nav-item" role="presentation">
-                                            <button class="nav-link" id="calls-tab" data-bs-toggle="tab"
-                                                data-bs-target="#calls" type="button" role="tab"
-                                                aria-controls="calls" aria-selected="false">
-                                                Calls
-                                            </button>
-                                        </li>
-                                        <li class="nav-item" role="presentation">
-                                            <button class="nav-link" id="tasks-tab" data-bs-toggle="tab"
-                                                data-bs-target="#tasks" type="button" role="tab"
-                                                aria-controls="tasks" aria-selected="false">
-                                                Tasks
-                                            </button>
-                                        </li>
-                                        <li class="nav-item" role="presentation">
-                                            <button class="nav-link" id="meetings-tab" data-bs-toggle="tab"
-                                                data-bs-target="#meetings" type="button" role="tab"
-                                                aria-controls="meetings" aria-selected="false">
-                                                Meetings
-                                            </button>
-                                        </li>
-                                    </ul>
-                                    <div class="tab-content" id="myTabContent">
-                                        <div class="tab-pane fade show active" id="activity" role="tabpanel"
-                                            aria-labelledby="activity-tab">
-                                            <div>
-                                                <div class="activity activ_top">
-                                                    <div class="activ_head">
-                                                        <p>
-                                                            Inbound email from
-                                                            <span class="user_name">Mr Malik</span>
-                                                        </p>
-                                                        <p class="usre_date">
-                                                            Dec 3, 2024 at 4:48 PM GMT+5
-                                                        </p>
-                                                    </div>
-
-                                                    <div class="user_cont">
-                                                        <h4>Online Reputation Management</h4>
-                                                        <p>
-                                                            Hi there, I hope you're doing well. I specialize
-                                                            in online reputation management and can help boost
-                                                            your business's presence by generating positive
-                                                            reviews and addressing any negative feedback.
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="tab-pane fade" id="notes" role="tabpanel"
-                                            aria-labelledby="notes-tab">
-                                            <div class="balnk_text">
-                                                <p>
-                                                    Take notes about this record to keep track of
-                                                    important info. You can even @mention a teammate if
-                                                    you need to. Learn more
-                                                </p>
-                                            </div>
-                                        </div>
-                                        <div class="tab-pane fade" id="emails" role="tabpanel"
-                                            aria-labelledby="emails-tab">
-                                            <div class="balnk_text">
-                                                <p>
-                                                    Take notes about this record to keep track of
-                                                    important info. You can even @mention a teammate if
-                                                    you need to. Learn more
-                                                </p>
-                                            </div>
-                                        </div>
-                                        <div class="tab-pane fade" id="calls" role="tabpanel"
-                                            aria-labelledby="calls-tab">
-                                            <div class="balnk_text">
-                                                <p>
-                                                    Take notes about this record to keep track of
-                                                    important info. You can even @mention a teammate if
-                                                    you need to. Learn more
-                                                </p>
-                                            </div>
-                                        </div>
-                                        <div class="tab-pane fade" id="tasks" role="tabpanel"
-                                            aria-labelledby="tasks-tab">
-                                            <div class="balnk_text">
-                                                <p>
-                                                    Take notes about this record to keep track of
-                                                    important info. You can even @mention a teammate if
-                                                    you need to. Learn more
-                                                </p>
-                                            </div>
-                                        </div>
-                                        <div class="tab-pane fade" id="meetings" role="tabpanel"
-                                            aria-labelledby="meetings-tab">
-                                            <div class="balnk_text">
-                                                <p>
-                                                    Take notes about this record to keep track of
-                                                    important info. You can even @mention a teammate if
-                                                    you need to. Learn more
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> --}}
                     </div>
                 </div>
                 <div class="col-lg-3">
@@ -1314,28 +1239,15 @@
 
                     <div class="right-sidebarr">
                         <div class="collaborators right_collab">
-                            {{-- <div class="collapsible">
-                                <button class="collapsible-header fa fa-caret-down">
-                                    About this contact
-                                    <i class="fa fa-plus" aria-hidden="true"> Add</i>
-                                </button>
-                                <div class="collapsible-content">
-                                    <h5>Eamil</h5>
-                                    <p>arhamumar63@gmail.com</p>
-                                    <h5>Phone number</h5>
-                                    <p>+92 306-1343427</p>
-                                    <h5>Contact owner</h5>
-                                    <p>arhum butt</p>
-                                </div>
-                            </div> --}}
+
 
 
                             <div class="collapse-header-prent-box">
                                 <div class="collapse-header-box">
                                     <i class="fa fa-caret-down" aria-hidden="true"></i>
                                     <button class="btn custom-btn-collapse" type="button" data-bs-toggle="collapse"
-                                        data-bs-target="#collapseExample" aria-expanded="false"
-                                        aria-controls="collapseExample">
+                                            data-bs-target="#collapseExample" aria-expanded="true"
+                                            aria-controls="collapseExample">
 
                                         Company <span> (1) </span>
                                     </button>
@@ -1343,9 +1255,10 @@
                                 <i class="fa fa-plus create-contact open-form-btn" aria-hidden="true"> Add</i>
                             </div>
 
-                            <div class="collapse" id="collapseExample">
+                            <div class="collapse show" id="collapseExample" style="">
                                 <div class="card custom-collapse-cards card-body">
-                                    Some placeholder content for the collapse component. This panel is hidden by default but
+                                    Some placeholder content for the collapse component. This panel is hidden by
+                                    default but
                                     revealed when the user activates the relevant trigger.
                                 </div>
                             </div>
@@ -1357,8 +1270,8 @@
                                 <div class="collapse-header-box">
                                     <i class="fa fa-caret-down" aria-hidden="true"></i>
                                     <button class="btn custom-btn-collapse" type="button" data-bs-toggle="collapse"
-                                        data-bs-target="#collapseExampleone" aria-expanded="false"
-                                        aria-controls="collapseExampleone">
+                                            data-bs-target="#collapseExampleone" aria-expanded="true"
+                                            aria-controls="collapseExampleone">
 
                                         Company <span> (1) </span>
                                     </button>
@@ -1366,9 +1279,10 @@
                                 <i class="fa fa-plus create-contact open-form-btn" aria-hidden="true"> Add</i>
                             </div>
 
-                            <div class="collapse" id="collapseExampleone">
+                            <div class="collapse show" id="collapseExampleone" style="">
                                 <div class="card custom-collapse-cards-two card-body">
-                                    Some placeholder content for the collapse component. This panel is hidden by default but
+                                    Some placeholder content for the collapse component. This panel is hidden by
+                                    default but
                                     revealed when the user activates the relevant trigger.
                                 </div>
                             </div>
@@ -1386,5 +1300,165 @@
 
     @push('script')
         @include('admin.customers.companies.script')
+        <script>
+            // Function to toggle the visibility of the additional content div
+            function toggleContent(contentId) {
+                var contentDiv = document.getElementById(contentId);
+
+                // Toggle the display property (show/hide)
+                if (contentDiv.style.display === "none" || contentDiv.style.display === "") {
+                    contentDiv.style.display = "flex"; // Show the content
+                } else {
+                    contentDiv.style.display = "none"; // Hide the content
+                }
+            }
+
+            // Second comment function
+
+            $(document).ready(function () {
+                $('#toggleButton').click(function () {
+                    const contents = $('#contents');
+                    if (contents.hasClass('hidden')) {
+                        contents.removeClass('hidden');
+                        $(this).find('span').text('Hide Comment');
+                    } else {
+                        contents.addClass('hidden');
+                        $(this).find('span').text('Add Comments');
+                    }
+                });
+            });
+
+
+            //Comment box editor function
+
+            $(document).ready(function () {
+                // Toggle Bold
+                $('#boldBtn').click(function () {
+                    document.execCommand('bold');
+                });
+
+                // Toggle Italic
+                $('#italicBtn').click(function () {
+                    document.execCommand('italic');
+                });
+
+                // Toggle Underline
+                $('#underlineBtn').click(function () {
+                    document.execCommand('underline');
+                });
+
+                // Toggle Strikethrough
+                $('#strikeBtn').click(function () {
+                    document.execCommand('strikeThrough');
+                });
+
+                // Change font size
+                $('#fontSizeBtn').click(function () {
+                    // var size = prompt("Enter font size (1-7):", "3");
+                    document.execCommand('fontSize', false, size);
+                });
+
+                // Insert link
+                $('#linkBtn').click(function () {
+                    var url = prompt("Enter the URL:", "http://");
+                    document.execCommand('createLink', false, url);
+                });
+
+                // Align Left
+                $('#alignLeftBtn').click(function () {
+                    document.execCommand('justifyLeft');
+                });
+
+                // Align Center
+                $('#alignCenterBtn').click(function () {
+                    document.execCommand('justifyCenter');
+                });
+
+                // Align Right
+                $('#alignRightBtn').click(function () {
+                    document.execCommand('justifyRight');
+                });
+
+                // Insert Unordered List
+                $('#unorderedListBtn').click(function () {
+                    document.execCommand('insertUnorderedList');
+                });
+
+                // Insert Ordered List
+                $('#orderedListBtn').click(function () {
+                    document.execCommand('insertOrderedList');
+                });
+
+                // Save content as .txt file
+                // $('#saveBtn').click(function () {
+                //     var content = $('#editor').text();
+                //     var blob = new Blob([content], { type: 'text/plain' });
+                //     var link = document.createElement('a');
+                //     link.href = URL.createObjectURL(blob);
+                //     link.download = 'document.txt';
+                //     link.click();
+                // });
+            });
+
+
+            // select to function
+            $(document).ready(function () {
+                // Toggle dropdown visibility
+                $(".dropdown-toggle").on("click", function () {
+                    $(".dropdown-content").toggle();
+                });
+
+                // Filter list based on search input
+                $(".search-input").on("input", function () {
+                    const filter = $(this).val().toLowerCase();
+                    $(".checkbox-item").each(function () {
+                        const label = $(this).find("label").text().toLowerCase();
+                        $(this).toggle(label.includes(filter));
+                    });
+                });
+
+                // Close dropdown if clicked outside
+                $(document).on("click", function (e) {
+                    if (!$(e.target).closest(".dropdown").length) {
+                        $(".dropdown-content").hide();
+                    }
+                });
+            });
+            // $('select>option:eq(3)').attr('selected', true);
+
+            // Searching Input function
+
+            $(document).ready(function () {
+                // Expand and collapse the search bar
+                $(".search-btns").on("click", function (e) {
+                    e.preventDefault(); // Prevent form submission on button click
+                    $(".search-containers").toggleClass("expanded");
+                    $(".search-inputs").focus();
+                });
+
+                // Handle form submission for search
+                $("#search-form").on("submit", function (e) {
+                    e.preventDefault(); // Prevent default form submission
+                    const query = $(".search-inputs").val().trim();
+
+                    if (query) {
+                        // Log the search query or perform an action
+                        console.log("Searching for:", query);
+
+                        // Redirect or process search here
+                        // Example: window.location.href = `/search?q=${encodeURIComponent(query)}`;
+                    } else {
+                        alert("Please enter a search term.");
+                    }
+                });
+
+                // Collapse the search bar when clicking outside
+                $(document).on("click", function (e) {
+                    if (!$(e.target).closest(".search-containers").length) {
+                        $(".search-containers").removeClass("expanded");
+                    }
+                });
+            });
+        </script>
     @endpush
 @endsection

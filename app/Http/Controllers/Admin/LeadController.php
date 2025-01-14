@@ -54,7 +54,7 @@ class LeadController extends Controller
             'brand_key' => 'required|integer|exists:brands,brand_key',
             'team_key' => 'nullable|integer|exists:teams,team_key',
             'lead_status_id' => 'required|integer|exists:lead_statuses,id',
-            'cus_contact_key' => 'required_if:type,1|nullable|integer|exists:customer_contacts,cus_contact_key',
+            'cus_contact_key' => 'required_if:type,1|nullable|integer|exists:customer_contacts,special_key',
             'name' => 'required_if:type,0|nullable|string|max:255',
             'email' => 'required_if:type,0|nullable|email|max:255|unique:customer_contacts,email',
             'phone' => 'required_if:type,0|nullable|string|max:15',
