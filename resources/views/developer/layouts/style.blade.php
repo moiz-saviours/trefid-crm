@@ -198,6 +198,12 @@
     }
 
     .table a {
+        /*text-decoration: underline;*/
+        text-decoration: none;
+        color: var(--bs-primary);
+        font-weight: 600;
+    }
+    .table a:hover {
         text-decoration: underline;
     }
 </style>

@@ -81,6 +81,8 @@
                                             <th class="align-middle text-center text-nowrap">ADDRESS</th>
                                             <th class="align-middle text-center text-nowrap">CITY</th>
                                             <th class="align-middle text-center text-nowrap">STATE</th>
+                                            <th class="align-middle text-center text-nowrap">COUNTRY</th>
+                                            <th class="align-middle text-center text-nowrap">POSTAL CODE</th>
                                             <th class="align-middle text-center text-nowrap">STATUS</th>
                                             <th class="align-middle text-center text-nowrap">ACTION</th>
                                         </tr>
@@ -107,24 +109,29 @@
                                                         ---
                                                     @endif
                                                 </td>
-                                                <td class="align-middle text-center text-nowrap">{{ $customer_contact->name }}</td>
+                                                <td class="align-middle text-center text-nowrap">
+                                                        <a href="{{route('admin.customer.contact.edit',[$customer_contact->id])}}"
+                                                           title="{{isset($customer_contact->company) ? $customer_contact->company->name : 'No associated company'}}">{{ $customer_contact->name }}</a>
+                                                </td>
                                                 <td class="align-middle text-center text-nowrap">{{ $customer_contact->email }}</td>
                                                 <td class="align-middle text-center text-nowrap">{{ $customer_contact->phone }}</td>
                                                 <td class="align-middle text-center text-nowrap">{{ $customer_contact->address }}</td>
                                                 <td class="align-middle text-center text-nowrap">{{ $customer_contact->city }}</td>
                                                 <td class="align-middle text-center text-nowrap">{{ $customer_contact->state }}</td>
+                                                <td class="align-middle text-center text-nowrap">{{ $customer_contact->address }}</td>
+                                                <td class="align-middle text-center text-nowrap">{{ $customer_contact->zipcode }}</td>
                                                 <td class="align-middle text-center text-nowrap">
                                                     <input type="checkbox" class="status-toggle change-status"
                                                            data-id="{{ $customer_contact->id }}"
                                                            {{ $customer_contact->status == 1 ? 'checked' : '' }} data-bs-toggle="toggle">
                                                 </td>
                                                 <td class="align-middle text-center table-actions">
-                                                    <button type="button" class="btn btn-sm btn-primary editBtn"
-                                                            data-id="{{ $customer_contact->id }}" title="Edit"><i
-                                                                class="fas fa-edit"></i></button>
+{{--                                                    <button type="button" class="btn btn-sm btn-primary editBtn"--}}
+{{--                                                            data-id="{{ $customer_contact->id }}" title="Edit"><i--}}
+{{--                                                            class="fas fa-edit"></i></button>--}}
                                                     <button type="button" class="btn btn-sm btn-danger deleteBtn"
                                                             data-id="{{ $customer_contact->id }}" title="Delete"><i
-                                                                class="fas fa-trash"></i></button>
+                                                            class="fas fa-trash"></i></button>
                                                 </td>
                                             </tr>
                                         @endforeach

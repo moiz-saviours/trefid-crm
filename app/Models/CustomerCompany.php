@@ -9,12 +9,10 @@ use Illuminate\Support\Facades\Cache;
 
 class CustomerCompany extends Model
 {
-
     use Notifiable, SoftDeletes;
 
     protected $table = 'customer_companies';
     protected $primaryKey = 'id';
-
     /**
      * The attributes that are mass assignable.
      *
@@ -47,7 +45,6 @@ class CustomerCompany extends Model
         do {
             $specialKey = str_pad(rand(0, 999999), 6, '0', STR_PAD_LEFT);
         } while (self::where('special_key', $specialKey)->exists());
-
         return $specialKey;
     }
 
@@ -59,7 +56,6 @@ class CustomerCompany extends Model
     protected static function booted()
     {
         parent::boot();
-
         static::creating(function ($company) {
             $company->special_key = self::generateSpecialKey();
             if (auth()->check()) {
@@ -67,28 +63,22 @@ class CustomerCompany extends Model
                 $company->creator_id = auth()->user()->id;
             }
         });
-
         static::created(function () {
             self::updateCustomerCompanyCache();
         });
-
         static::updated(function () {
             self::updateCustomerCompanyCache();
         });
-
         static::deleted(function () {
             Cache::forget('companies_list');
         });
-
         static::deleted(function () {
             self::updateCustomerCompanyCache();
         });
-
         static::restored(function () {
             self::updateCustomerCompanyCache();
         });
     }
-
 
     /**
      * Update the companies cache.
@@ -103,4 +93,8 @@ class CustomerCompany extends Model
         });
     }
 
+    public function contacts(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(CustomerContact::class, AssignCompanyContact::class, 'cus_company_key', 'cus_contact_key', 'special_key', 'special_key')->withTimestamps();
+    }
 }

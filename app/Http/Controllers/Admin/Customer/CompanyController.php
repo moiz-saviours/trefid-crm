@@ -7,9 +7,54 @@ use App\Models\CustomerContact;
 use App\Models\CustomerCompany;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 class CompanyController extends Controller
 {
+    /**
+     * Fetch company data for a list of domains using the Hunter.io API.
+     *
+     * @param \Illuminate\Support\Collection $domains
+     * @return array
+     */
+    private function fetchCompaniesFromDomains($domains)
+    {
+        if (!env('HUNTER_API_KEY')) {
+            Log::error('Hunter.io API key is missing.');
+            return [];
+        }
+        $fetchedCompanies = [];
+        foreach ($domains as $domain) {
+            $response = Http::retry(3, 100)->get('https://api.hunter.io/v2/domain-search', [
+                'domain' => $domain,
+                'api_key' => env('HUNTER_API_KEY'),
+            ]);
+            if ($response->successful() && isset($response->json()['data'])) {
+                $companyData = $response->json()['data'];
+                $company = CustomerCompany::updateOrCreate(
+                    ['domain' => $domain],
+                    [
+                        'name' => $companyData['organization'] ?? ucfirst(preg_replace('/^www\./', '', preg_replace('/\.(com|net|org|co|io)$/', '', parse_url('http://' . $domain, PHP_URL_HOST)))) ?? $domain,
+                        'email' => 'no-reply@' . $domain,
+                        'address' => $companyData['street'] ?? null,
+                        'city' => $companyData['city'] ?? null,
+                        'state' => $companyData['state'] ?? null,
+                        'country' => $companyData['country'] ?? null,
+                        'zipcode' => $companyData['postal_code'] ?? null,
+                        'response' => json_encode($companyData),
+                        'status' => 1,
+                    ]
+                );
+                CustomerContact::where('email', 'LIKE', "%@$domain")->whereNull('cus_company_key')->update(['cus_company_key' => $company->special_key]);
+                $company->contacts()->syncWithoutDetaching(CustomerContact::where('email', 'LIKE', "%@$domain")->pluck('special_key'));
+                $fetchedCompanies[] = $company;
+            } else {
+                Log::error('Hunter.io API failed', ['domain' => $domain, 'response' => $response->body()]);
+            }
+        }
+        return $fetchedCompanies;
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -17,33 +62,11 @@ class CompanyController extends Controller
     {
 
         $all_contacts = CustomerContact::where('status', 1)->get();
-        $domains = $all_contacts->map(function ($contact) {
-            return substr(strrchr($contact->email, "@"), 1);
-        })->unique();
-        $existingDomains = CustomerCompany::whereIn('domain', $domains)->pluck('domain')->toArray();
-
+        $domains = $all_contacts->map(fn($contact) => substr(strrchr($contact->email, "@"), 1))->unique();
+        $existingDomains = CustomerCompany::whereIn('domain', $domains)->pluck('domain');
         $domainsToFetch = $domains->diff($existingDomains);
-
-        foreach ($domainsToFetch as $domain) {
-            $response = Http::get('https://api.hunter.io/v2/domain-search', [
-                'domain' => $domain,
-                'api_key' => env('HUNTER_API_KEY'),
-            ]);
-
-            if ($response->successful() && isset($response->json()['data'])) {
-                $companyData = $response->json()['data'];
-                CustomerCompany::create([
-                    'name' => $companyData['organization'] ?? $domain,
-                    'email' => 'no-reply@'.$domain,
-                    'domain' => $domain,
-                    'city' =>$companyData['city'],
-                    'state'=>$companyData['state'],
-                    'country'=>$companyData['country'],
-                    'zipcode'=>$companyData['postal_code'],
-                    'response' => json_encode($companyData),
-                    'status' => 1,
-                ]);
-            }
+        if ($domainsToFetch->isNotEmpty()) {
+            $this->fetchCompaniesFromDomains($domainsToFetch);
         }
         $customer_companies = CustomerCompany::whereIn('domain', $domains)->where('status', 1)->get();
         return view('admin.customers.companies.index', compact('customer_companies'));
@@ -78,7 +101,7 @@ class CompanyController extends Controller
      */
     public function edit(CustomerCompany $company)
     {
-        return view('admin.customers.companies.edit',compact('company'));
+        return view('admin.customers.companies.edit', compact('company'));
     }
 
     /**
@@ -88,7 +111,6 @@ class CompanyController extends Controller
     {
         //
     }
-
 
     /**
      * Remove the specified resource from storage.
@@ -119,6 +141,4 @@ class CompanyController extends Controller
             return response()->json(['error' => ' Internal Server Error', 'message' => $e->getMessage(), 'line' => $e->getLine()], 500);
         }
     }
-
-
 }

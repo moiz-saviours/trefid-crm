@@ -164,33 +164,36 @@
                     AjaxRequestPromise(`{{ route("admin.customer.contact.store") }}`, formData, 'POST', {useToastr: true})
                         .then(response => {
                             if (response?.data) {
-                                const {id, brand, team, name, email, phone,address,city,state,status,country,zipcode } = response.data;
+                                const {id, brand, team, company, name, email, phone,address,city,state,status,country,zipcode } = response.data;
                                 const index = table.rows().count() + 1;
                                 const columns = `
                                     <td class="align-middle text-center text-nowrap"></td>
                                     <td class="align-middle text-center text-nowrap">${index}</td>
                                     <td class="align-middle text-center text-nowrap">${brand ? `<a href="/admin/brand/edit/${brand.id}">${brand.name}</a><br> ${brand.brand_key}` : '---'}</td>
                                     <td class="align-middle text-center text-nowrap">${team ? `<a href="/admin/team/edit/${team.id}">${team.name}</a><br> ${team.team_key}` : '---'}</td>
-                                    <td class="align-middle text-center text-nowrap">${name}</td>
+                                    <td class="align-middle text-center text-nowrap"><a href="/admin/contact/edit/${id}" title="${company ? company.name : 'No associated company'}" >${name}</a></td>
                                     <td class="align-middle text-center text-nowrap">${email}</td>
                                     <td class="align-middle text-center text-nowrap">${phone}</td>
                                     <td class="align-middle text-center text-nowrap">${address}</td>
                                     <td class="align-middle text-center text-nowrap">${city}</td>
                                     <td class="align-middle text-center text-nowrap">${state}</td>
+                                    <td class="align-middle text-center text-nowrap">${country}</td>
+                                    <td class="align-middle text-center text-nowrap">${zipcode}</td>
 
 
                                     <td class="align-middle text-center text-nowrap">
                                         <input type="checkbox" class="status-toggle change-status" data-id="${id}" ${status == 1 ? 'checked' : ''} data-bs-toggle="toggle">
                                     </td>
                                     <td class="align-middle text-center table-actions">
-                                        <button type="button" class="btn btn-sm btn-primary editBtn" data-id="${id}" title="Edit">
-                                            <i class="fas fa-edit"></i>
-                                        </button>
                                         <button type="button" class="btn btn-sm btn-danger deleteBtn" data-id="${id}" title="Delete">
                                             <i class="fas fa-trash"></i>
                                         </button>
                                     </td>
                             `;
+
+                                // <button type="button" class="btn btn-sm btn-primary editBtn" data-id="${id}" title="Edit">
+                                //     <i class="fas fa-edit"></i>
+                                // </button>
                                 table.row.add($('<tr>', {id: `tr-${id}`}).append(columns)).draw(false);
                                 $('#manage-form')[0].reset();
 
@@ -203,7 +206,7 @@
                     AjaxRequestPromise(url, formData, 'POST', {useToastr: true})
                         .then(response => {
                             if (response?.data) {
-                                const {id, brand_key, team_key, name, email, phone,address,city,state,status } = response.data;
+                                const {id, brand_key, team_key, cus_company_key, name, email, phone,address,city,state,status } = response.data;
                                 const index = table.row($('#tr-' + id)).index();
                                 const rowData = table.row(index).data();
                                 // Column 2: Brand
@@ -239,11 +242,19 @@
                                 if (decodeHtml(rowData[9]) !== state) {
                                     table.cell(index, 9).data(state).draw();
                                 }
+                                // Column 10: country
+                                if (decodeHtml(rowData[10]) !== country) {
+                                    table.cell(index, 10).data(country).draw();
+                                }
+                                // Column 11: zipcode
+                                if (decodeHtml(rowData[11]) !== zipcode) {
+                                    table.cell(index, 11).data(zipcode).draw();
+                                }
 
                                 // Column 10: Status
                                 const statusHtml = `<input type="checkbox" class="status-toggle change-status" data-id="${id}" ${status == 1 ? "checked" : ""} data-bs-toggle="toggle">`;
-                                if (decodeHtml(rowData[10]) !== statusHtml) {
-                                    table.cell(index, 10).data(statusHtml).draw();
+                                if (decodeHtml(rowData[12]) !== statusHtml) {
+                                    table.cell(index, 12).data(statusHtml).draw();
                                 }
 
 
@@ -263,7 +274,7 @@
                 .then(response => {
                     const rowIndex = table.row($('#tr-' + rowId)).index();
                     const statusHtml = `<input type="checkbox" class="status-toggle change-status" data-id="${rowId}" ${status ? "checked" : ""} data-bs-toggle="toggle">`;
-                    table.cell(rowIndex, 10).data(statusHtml).draw();
+                    table.cell(rowIndex, 12).data(statusHtml).draw();
                 })
                 .catch(() => {
                     statusCheckbox.prop('checked', !status);

@@ -34,7 +34,6 @@ class ContactController extends Controller
         return view('admin.customers.contacts.create', compact('brands', 'teams', 'countries'));
     }
 
-
     /**
      * Store a newly created resource in storage.
      */
@@ -63,16 +62,14 @@ class ContactController extends Controller
             'team_key.integer' => 'The team must be a valid integer.',
             'team_key.exists' => 'Please select a valid team.',
         ]);
-
         $customer_contact = new CustomerContact($request->only([
                 'brand_key', 'team_key', 'name',
                 'email', 'phone', 'address', 'city', 'state',
                 'country', 'zipcode', 'ip_address', 'loggable_type',
                 'loggable_id', 'status',
             ]) + ['special_key' => CustomerContact::generateSpecialKey()]);
-
         $customer_contact->save();
-        $customer_contact->loadMissing('team','brand');
+        $customer_contact->loadMissing('team', 'brand','companies');
         return response()->json(['data' => $customer_contact, 'success' => 'Contact Created Successfully!']);
     }
 
@@ -93,7 +90,8 @@ class ContactController extends Controller
         $brands = Brand::where('status', 1)->get();
         $teams = Team::where('status', 1)->get();
         $countries = config('countries');
-        return response()->json(['customer_contact' => $customer_contact, 'brands' => $brands, 'teams' => $teams, 'countries' => $countries]);
+        return view('admin.customers.contacts.edit', compact('customer_contact', 'brands', 'teams', 'countries'));
+//        return response()->json(['customer_contact' => $customer_contact, 'brands' => $brands, 'teams' => $teams, 'countries' => $countries]);
     }
 
     /**
@@ -124,14 +122,12 @@ class ContactController extends Controller
             'team_key.integer' => 'The team must be a valid integer.',
             'team_key.exists' => 'Please select a valid team.',
         ]);
-
         $customer_contact->fill($request->only([
             'special_key', 'brand_key', 'team_key', 'name',
             'email', 'phone', 'address', 'city', 'state',
             'country', 'zipcode', 'ip_address', 'loggable_type',
             'loggable_id', 'status',
         ]));
-
         $customer_contact->save();
         return response()->json(['success' => 'Contact Updated Successfully!']);
     }
