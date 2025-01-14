@@ -8,12 +8,10 @@ use Illuminate\Notifications\Notifiable;
 
 class CustomerContact extends Model
 {
-
     use Notifiable, SoftDeletes;
 
     protected $table = 'customer_contacts';
     protected $primaryKey = 'id';
-
     /**
      * The attributes that are mass assignable.
      *
@@ -47,7 +45,6 @@ class CustomerContact extends Model
         do {
             $specialKey = str_pad(rand(0, 999999), 6, '0', STR_PAD_LEFT);
         } while (self::where('special_key', $specialKey)->exists());
-
         return $specialKey;
     }
 
@@ -84,12 +81,13 @@ class CustomerContact extends Model
         return $this->belongsTo(Team::class, 'team_key', 'team_key');
     }
 
-    /**
-     * TODO NEED TO BE UPDATE : Creator WILL BE FOR WHO CREATED THIS RECORD
-     * Define a polymorphic relationship with logs.
-     */
-    public function company(): \Illuminate\Database\Eloquent\Relations\MorphMany
+    public function company(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
-        return $this->morphMany(CustomerCompany::class, 'creator');
+        return $this->belongsTo(CustomerCompany::class, 'cus_company_key', 'special_key');
+    }
+
+    public function companies(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(CustomerCompany::class, AssignCompanyContact::class, 'cus_contact_key', 'cus_company_key', 'special_key', 'special_key')->withTimestamps();
     }
 }

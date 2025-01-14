@@ -38,7 +38,7 @@ class Team extends Model
 
     public function users(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
-        return $this->belongsToMany(User::class, AssignTeamMember::class, 'team_key', 'user_id', 'team_key', 'id');
+        return $this->belongsToMany(User::class, AssignTeamMember::class, 'team_key', 'user_id', 'team_key', 'id')->withTimestamps();
     }
     public function lead(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {

@@ -3,9 +3,6 @@
 @section('content')
     @push('style')
         @include('admin.customers.companies.style')
-    @endpush
-    <section id="content" class="content">
-        <!-- ab content -->
         <style>
             .containerr {
                 display: flex;
@@ -700,7 +697,8 @@
                 width: 35%;
             }
         </style>
-
+    @endpush
+    <section id="content" class="content">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-3">
