@@ -30,13 +30,18 @@
             border-collapse: collapse;
             width: 100%;
         }
+        .tabl_th {
+            background-color: #2d3e50;
+            text-align: center;
+            padding: 15px 0px;
+        }
         .tabl_td, .tabl_th {
             text-align: left;
             padding: 15px 0px;
             text-align:center;
         }
         .tabl_tr:nth-child(odd) {
-            background-color: #2d3e50;
+            background-color: var();
             color: #fff;
         }
         .tabl_tr:nth-child(even) {
