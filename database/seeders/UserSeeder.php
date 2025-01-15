@@ -15,7 +15,7 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('users')->truncate();
+//        DB::table('users')->truncate();
         User::create([
             'name' => 'user',
             'email' => 'user@gmail.com',
