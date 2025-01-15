@@ -118,7 +118,7 @@
                                                     @endif
                                                 </td>
                                                 <td class="align-middle text-center text-nowrap">
-                                                    @if(isset($invoice->agent))
+                                                    @if(isset($invoice->agent_id , $invoice->agent_type ,$invoice->agent ))
                                                         <a href="{{route('admin.employee.edit',[$invoice->agent->id])}}">{{ $invoice->agent->name }}</a>
                                                     @else
                                                         ---
