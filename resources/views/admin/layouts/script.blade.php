@@ -129,22 +129,131 @@
 </script>
 
 <script>
+    var error = false;
     function refreshCsrfToken() {
         return $.get('{{route('csrf.token')}}').then(response => {
             $('meta[name="csrf-token"]').attr('content', response.token);
         });
     }
+    $(document).ready(function () {
+        /** Ajax Error Handle Start */
+        $.ajaxSetup({
+            error: function (jqXHR, textStatus, errorThrown) {
+                error = true;
+                if (jqXHR.status === 429) {
+                    Swal.fire({
+                        title: 'Too Many Requests',
+                        text: 'You are making requests too frequently. Please slow down and try again later.',
+                        icon: 'warning',
+                        confirmButtonText: 'OK'
+                    });
+                } else if (jqXHR.status === 500) {
+                    Swal.fire({
+                        title: 'Server Error',
+                        text: 'An unexpected error occurred on the server. Please try again later.',
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
+                } else if (jqXHR.status === 404) {
+                    Swal.fire({
+                        title: 'Not Found',
+                        text: 'The requested resource could not be found.',
+                        icon: 'info',
+                        confirmButtonText: 'OK'
+                    });
+                } else if (jqXHR.status === 403) {
+                    Swal.fire({
+                        title: 'Forbidden',
+                        text: 'You do not have permission to perform this action.',
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
+                } else if (jqXHR.status === 0) {
+                    Swal.fire({
+                        title: 'Network Error',
+                        text: 'It seems you are offline or there was a network issue.',
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
+                } else {
+                    Swal.fire({
+                        title: 'Error',
+                        text: `An error occurred: ${jqXHR.status} - ${jqXHR.statusText}`,
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
+                }
+            }
+        });
+    });
+    /** Ajax Error Handle End */
+
     let currentRequest = null;
-    $(document).ajaxSend(function(event, jqXHR, settings) {
+    $(document).ajaxSend(function (event, jqXHR, settings) {
         if (currentRequest) {
             currentRequest.abort();
         }
         currentRequest = jqXHR;
     });
-    $(document).ajaxComplete(function(event, jqXHR, settings) {
+    $(document).ajaxComplete(function (event, jqXHR, settings) {
         currentRequest = null;
-    });
+        error = false;
 
+    });
+    $(document).ajaxError(function myErrorHandler(event, jqXHR, ajaxOptions, thrownError) {
+        const formContainer = $('.form-container');
+        if (formContainer.length > 0) {
+            formContainer.removeClass('open')
+        }
+        const manageForm = $('.custom-form form')
+        if (manageForm.length > 0) {
+            manageForm[0].reset();
+            manageForm.removeData('id');
+        }
+        if (jqXHR.status === 429) {
+            Swal.fire({
+                title: 'Too Many Requests',
+                text: 'You are making requests too frequently. Please slow down and try again later.',
+                icon: 'warning',
+                confirmButtonText: 'OK'
+            });
+        } else if (jqXHR.status === 500) {
+            Swal.fire({
+                title: 'Server Error',
+                text: 'An unexpected error occurred on the server. Please try again later.',
+                icon: 'error',
+                confirmButtonText: 'OK'
+            });
+        } else if (jqXHR.status === 404) {
+            Swal.fire({
+                title: 'Not Found',
+                text: 'The requested resource could not be found.',
+                icon: 'info',
+                confirmButtonText: 'OK'
+            });
+        } else if (jqXHR.status === 403) {
+            Swal.fire({
+                title: 'Forbidden',
+                text: 'You do not have permission to perform this action.',
+                icon: 'error',
+                confirmButtonText: 'OK'
+            });
+        } else if (jqXHR.status === 0) {
+            Swal.fire({
+                title: 'Network Error',
+                text: 'It seems you are offline or there was a network issue.',
+                icon: 'error',
+                confirmButtonText: 'OK'
+            });
+        } else {
+            Swal.fire({
+                title: 'Error',
+                text: `An error occurred: ${jqXHR.status} - ${jqXHR.statusText}`,
+                icon: 'error',
+                confirmButtonText: 'OK'
+            });
+        }
+    });
     function AjaxDeleteRequestPromise(url, data, method = 'DELETE', options = {}) {
         method = method.toUpperCase();
         options = {
@@ -340,7 +449,6 @@
         });
     }
 
-
     function generateRandomPassword(length) {
         const upperCase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
         const lowerCase = 'abcdefghijklmnopqrstuvwxyz';
@@ -361,19 +469,24 @@
         return password;
     }
 
-
-</script>
-
-<script>
-
     $(document).ready(function () {
         const formContainer = $('#formContainer');
         const manageForm = $('.custom-form form')
+
+        let isAjaxRequestInProgress = false;
+        $(document).ajaxStart(function () {
+            isAjaxRequestInProgress = true;
+        }).ajaxStop(function () {
+            isAjaxRequestInProgress = false;
+        }).ajaxError(function () {
+            error = true;
+        });
 
         if (formContainer.length > 0) {
             $('.open-form-btn , .editBtn').click(function () {
                 manageForm[0].reset();
                 manageForm.removeData('id');
+
                 $(this).hasClass('void') ? $(this).attr('title', "You don't have access to create a company.").tooltip({placement: 'bottom'}).tooltip('show') : (formContainer.addClass('open'));
             });
         } else {

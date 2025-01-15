@@ -22,7 +22,7 @@ use Illuminate\Support\Facades\Route;
 
 require __DIR__ . '/admin-auth.php';
 
-Route::middleware(['auth:admin'])->prefix('admin')->name('admin.')->group(function () {
+Route::middleware(['auth:admin','throttle:2,1'])->prefix('admin')->name('admin.')->group(function () {
 
     /** Profile Routes */
     Route::prefix('profile')->name('profile.')->group(function () {
