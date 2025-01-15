@@ -67,7 +67,7 @@ class InvoiceController extends Controller
             'team_key.exists' => 'The selected team does not exist.',
             'cus_contact_key.integer' => 'The customer contact key must be a valid integer.',
             'cus_contact_key.exists' => 'The selected customer contact does not exist.',
-            'cus_contact_key.required' => 'The customer contact key field is required when type is upsale.',
+            'cus_contact_key.required_if' => 'The customer contact key field is required when type is upsale.',
             'customer_contact_name.required_if' => 'The customer contact name is required for fresh customers.',
             'customer_contact_name.string' => 'The customer contact name must be a valid string.',
             'customer_contact_name.max' => 'The customer contact name cannot exceed 255 characters.',
@@ -105,7 +105,9 @@ class InvoiceController extends Controller
         if (!$customer_contact) {
             return response()->json(['error' => 'The selected customer contact does not exist.'], 404);
         }
-
+        if (!$customer_contact->special_key) {
+            return response()->json(['error' => 'The selected customer contact does not exist. Please select a different or create a new one.'], 404);
+        }
         $invoice = Invoice::create([
             'brand_key' => $request->input('brand_key'),
             'team_key' => $request->input('team_key'),
@@ -206,12 +208,10 @@ class InvoiceController extends Controller
                 ]
             )
             : CustomerContact::where('special_key', $request->input('cus_contact_key'))->first();
-
         if (!$customer_contact) {
             return response()->json(['error' => 'The selected customer contact does not exist.']);
 //            return redirect()->back()->with('error', 'The selected customer contact does not exist.');
         }
-
         $invoice->update([
             'brand_key' => $request->input('brand_key'),
             'team_key' => $request->input('team_key'),
@@ -241,5 +241,4 @@ class InvoiceController extends Controller
             return response()->json(['error' => ' Internal Server Error', 'message' => $e->getMessage(), 'line' => $e->getLine()], 500);
         }
     }
-
 }
