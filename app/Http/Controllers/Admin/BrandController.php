@@ -53,7 +53,7 @@ class BrandController extends Controller
             }
             $brand->save();
             $brand->update(['brand_key' => $brand->generateBrandKey($brand->id)]);
-            return response()->json(['data' => $brand, 'message' => 'Brand created successfully.']);
+            return response()->json(['data' => $brand, 'message' => 'Record created successfully.']);
 
         } catch (\Exception $e) {
             return response()->json(['error' => ' Internal Server Error', 'message' => $e->getMessage(), 'line' => $e->getLine()], 500);
@@ -107,7 +107,7 @@ class BrandController extends Controller
                 $brand->logo = $request->logo_url;
             }
             $brand->save();
-            return response()->json(['data' => $brand, 'message' => 'Brand updated successfully.']);
+            return response()->json(['data' => $brand, 'message' => 'Record updated successfully.']);
         } catch (\Exception $e) {
             return response()->json(['error' => ' Internal Server Error', 'message' => $e->getMessage(), 'line' => $e->getLine()], 500);
         }

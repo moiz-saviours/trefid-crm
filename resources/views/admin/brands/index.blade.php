@@ -102,7 +102,7 @@
                             </button>
                             <button class="header_btn">Import</button>
                             {{--                            <button type="button" class="create-contact open-form-btn" data-bs-target="#create-modal" data-bs-toggle="modal">Add New</button>--}}
-                            <button class="create-contact open-form-btn">Create Brand</button>
+                            <button class="create-contact open-form-btn">Create New</button>
 
                         </div>
                     </div>
@@ -215,7 +215,6 @@
             </div>
         </div>
     </section>
-
 
     <!-- Modal -->
     @include('admin.brands.create-modal')

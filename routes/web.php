@@ -51,12 +51,16 @@ Route::middleware('auth')->group(function () {
         });
     });
 
-    /** Team Brands Routes */
-    Route::name('brand.')->group(function () {
-        Route::get('/brands', [BrandController::class, 'index'])->name('index');
-        Route::prefix('brands')->group(function () {
 
-        });
+
+
+    /** Brand Routes */
+    Route::prefix('brands')->name('brand.')->group(function () {
+        Route::get('/', [BrandController::class, 'index'])->name('index');
+        Route::get('/create', [BrandController::class, 'create'])->name('create');
+        Route::post('/store', [BrandController::class, 'store'])->name('store');
+        Route::get('/edit/{brand?}', [BrandController::class, 'edit'])->name('edit');
+        Route::post('/update/{brand?}', [BrandController::class, 'update'])->name('update');
     });
 
     /** Leads Routes */
@@ -66,6 +70,7 @@ Route::middleware('auth')->group(function () {
             Route::post('/change-lead-status', [LeadController::class, 'change_lead_status'])->name('change.lead-status');
         });
     });
+
     Route::get('/lead-status', [LeadStatusController::class, 'index'])->name('lead-status.index');
     Route::get('/invoices', [InvoiceController::class, 'index'])->name('invoice.index');
     Route::get('/payments', [PaymentController::class, 'index'])->name('payment.index');

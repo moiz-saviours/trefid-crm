@@ -34,6 +34,7 @@
             background-color: #2d3e50;
             text-align: center;
             padding: 15px 0px;
+            color: #fff;
         }
         .tabl_td, .tabl_th {
             text-align: left;
@@ -41,7 +42,7 @@
             text-align:center;
         }
         .tabl_tr:nth-child(odd) {
-            background-color: var();
+            background-color: #98a3b0;
             color: #fff;
         }
         .tabl_tr:nth-child(even) {
