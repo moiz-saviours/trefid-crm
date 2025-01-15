@@ -367,7 +367,7 @@
 <script>
 
     $(document).ready(function () {
-        const formContainer = $('#form-container');
+        const formContainer = $('#formContainer');
         const manageForm = $('.custom-form form')
 
         if (formContainer.length > 0) {
