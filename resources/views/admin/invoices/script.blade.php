@@ -108,7 +108,8 @@
         }
 
         /** Edit */
-        $(document).on('click', '.editBtn', function () {
+        $(document).on('click', '.editBtn', function (e) {
+            e.preventDefault();
             const id = $(this).data('id');
             if (!id) {
                 Swal.fire({
@@ -131,8 +132,8 @@
                 success: function (response) {
                     setDataAndShowEdit(response);
                 },
-                error: function () {
-                    alert('Error fetching data.');
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.log(jqXHR, textStatus, errorThrown);
                 }
             });
         });

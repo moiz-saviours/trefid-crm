@@ -125,7 +125,7 @@
                     setDataAndShowEdit(data);
                 },
                 error: function () {
-                    alert('Error fetching data.');
+                    console.log(jqXHR, textStatus, errorThrown);
                 }
             });
         });

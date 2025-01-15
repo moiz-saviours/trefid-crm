@@ -105,6 +105,9 @@
                                                            {{ $admin->status == 1 ? 'checked' : '' }} data-bs-toggle="toggle">
                                                 </td>
                                                 <td class="align-middle text-center table-actions">
+                                                    <button type="button" class="btn btn-sm btn-primary changePwdBtn"
+                                                            data-id="{{ $admin->id }}" title="Change Password"><i
+                                                            class="fas fa-key"></i></button>
                                                     <button type="button" class="btn btn-sm btn-primary editBtn"
                                                             data-id="{{ $admin->id }}" title="Edit"><i
                                                             class="fas fa-edit"></i></button>
@@ -121,6 +124,7 @@
                         </div>
                     </div>
                     @include('admin.accounts.custom-form')
+                    @include('admin.accounts.change-password-form')
                 </div>
             </div>
         </div>

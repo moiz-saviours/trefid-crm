@@ -134,6 +134,16 @@
             $('meta[name="csrf-token"]').attr('content', response.token);
         });
     }
+    let currentRequest = null;
+    $(document).ajaxSend(function(event, jqXHR, settings) {
+        if (currentRequest) {
+            currentRequest.abort();
+        }
+        currentRequest = jqXHR;
+    });
+    $(document).ajaxComplete(function(event, jqXHR, settings) {
+        currentRequest = null;
+    });
 
     function AjaxDeleteRequestPromise(url, data, method = 'DELETE', options = {}) {
         method = method.toUpperCase();
@@ -323,22 +333,47 @@
                 },
                 complete: function () {
                     $(".modal").modal('hide');
-                    $('#formContainer').removeClass('open');
+                    $('.form-container').removeClass('open');
                     // $('#loading').hide();
                 }
             });
         });
     }
+
+
+    function generateRandomPassword(length) {
+        const upperCase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        const lowerCase = 'abcdefghijklmnopqrstuvwxyz';
+        const numbers = '0123456789';
+        const symbols = '!@#$%^&*()';
+        const allChars = upperCase + lowerCase + numbers + symbols;
+        let password = '';
+        for (let i = 0; i < 2; i++) {
+            password += upperCase.charAt(Math.floor(Math.random() * upperCase.length));
+            password += lowerCase.charAt(Math.floor(Math.random() * lowerCase.length));
+            password += numbers.charAt(Math.floor(Math.random() * numbers.length));
+            password += symbols.charAt(Math.floor(Math.random() * symbols.length));
+        }
+        for (let i = password.length; i < length; i++) {
+            password += allChars.charAt(Math.floor(Math.random() * allChars.length));
+        }
+        password = password.split('').sort(() => 0.5 - Math.random()).join('');
+        return password;
+    }
+
+
 </script>
 
 <script>
 
     $(document).ready(function () {
-        const formContainer = $('#formContainer');
-        const manageForm = $('#manage-form');
+        const formContainer = $('#form-container');
+        const manageForm = $('.custom-form form')
 
         if (formContainer.length > 0) {
             $('.open-form-btn , .editBtn').click(function () {
+                manageForm[0].reset();
+                manageForm.removeData('id');
                 $(this).hasClass('void') ? $(this).attr('title', "You don't have access to create a company.").tooltip({placement: 'bottom'}).tooltip('show') : (formContainer.addClass('open'));
             });
         } else {
@@ -346,6 +381,7 @@
         }
         $(document).on('click', function (event) {
             if ((!$(event.target).closest('#formContainer').length && !$(event.target).is('#formContainer') && !$(event.target).closest('.open-form-btn').length && !$(event.target).is('.editBtn')) || $(event.target).is('#formContainer .close-btn')) {
+                $('.form-container').removeClass('open')
                 formContainer.removeClass('open')
                 if (manageForm.length > 0) {
                     manageForm[0].reset();

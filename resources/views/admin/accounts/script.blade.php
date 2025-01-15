@@ -123,9 +123,29 @@
                     setDataAndShowEdit(data);
                 },
                 error: function () {
-                    alert('Error fetching data.');
+                    console.log(jqXHR, textStatus, errorThrown);
                 }
             });
+        });
+        /** Change Password Btn */
+        $(document).on('click', '.changePwdBtn', function () {
+            const id = $(this).data('id');
+            if (!id) {
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'Record not found. Do you want to reload the page?',
+                    icon: 'error',
+                    showCancelButton: true,
+                    confirmButtonText: 'Reload',
+                    cancelButtonText: 'Cancel'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        location.reload();
+                    }
+                });
+            }
+            $('#manage-form')[0].reset();
+            $('#formContainerChangePassword').addClass('open')
         });
 
         var $defaultImage;
