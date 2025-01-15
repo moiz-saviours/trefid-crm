@@ -124,6 +124,7 @@ class InvoiceController extends Controller
                 $data['agent_id'] = $request->input('agent_id');
                 $data['agent_type'] = 'App\Models\User';
             }
+            //TODO
 //            else {
 //                if (!auth()->check()) {
 //                    return response()->json(['error' => 'Authentication required to create an invoice'], 401);
