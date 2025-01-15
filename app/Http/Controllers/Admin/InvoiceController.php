@@ -138,7 +138,7 @@ class InvoiceController extends Controller
             return response()->json(['data' => $invoice, 'success' => 'Record created successfully!']);
         } catch (\Exception $e) {
             DB::rollBack();
-            return response()->json(['error' => 'An error occurred while creating the invoice'], 500);
+            return response()->json(['error' => 'An error occurred while creating the invoice','message'=>$e->getMessage()], 500);
         }
     }
 
