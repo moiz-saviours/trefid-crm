@@ -16,7 +16,6 @@ class Invoice extends Model
 //    }
     protected $table = 'invoices';
     protected $primaryKey = 'id';
-
     /**
      * The attributes that are mass assignable.
      *
@@ -47,7 +46,6 @@ class Invoice extends Model
         do {
             $invoiceKey = str_pad(rand(0, 999999999), 9, '0', STR_PAD_LEFT);
         } while (self::where('invoice_key', $invoiceKey)->exists());
-
         return $invoiceKey;
     }
 
@@ -61,10 +59,8 @@ class Invoice extends Model
         do {
             $invoiceNumber = "INV-" . str_pad(rand(0, 999999), 6, '0', STR_PAD_LEFT);
         } while (self::where('invoice_number', $invoiceNumber)->exists());
-
         return $invoiceNumber;
     }
-
 
     /**
      * Automatically set the special_key and creator details before creating the record.
@@ -73,6 +69,8 @@ class Invoice extends Model
     protected static function booted(): void
     {
         static::creating(function ($invoice) {
+            $invoice->invoice_key = self::generateInvoiceKey();
+            $invoice->invoice_number = self::generateInvoiceNumber();
             if (auth()->check()) {
                 $invoice->creator_type = get_class(auth()->user());
                 $invoice->creator_id = auth()->user()->id;
