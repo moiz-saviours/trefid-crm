@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
+use App\Traits\ActivityLoggable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 
 class PaymentMerchant extends Model
 {
-    use Notifiable, SoftDeletes;
+    use Notifiable, SoftDeletes, ActivityLoggable;
 
     protected $table = 'payment_merchants';
     protected $primaryKey = 'id';

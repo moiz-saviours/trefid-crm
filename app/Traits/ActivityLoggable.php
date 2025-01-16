@@ -51,6 +51,7 @@ trait ActivityLoggable
             'actor_type' => get_class(auth()->user()),
             'actor_id' => auth()->id(),
             'description' => $description,
+            'ip_address' => request()->ip(),
         ]);
     }
 }

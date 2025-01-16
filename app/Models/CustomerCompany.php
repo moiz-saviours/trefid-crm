@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\ActivityLoggable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
@@ -9,7 +10,7 @@ use Illuminate\Support\Facades\Cache;
 
 class CustomerCompany extends Model
 {
-    use Notifiable, SoftDeletes;
+    use Notifiable, SoftDeletes, ActivityLoggable;
 
     protected $table = 'customer_companies';
     protected $primaryKey = 'id';

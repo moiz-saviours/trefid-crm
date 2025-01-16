@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
+use App\Traits\ActivityLoggable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 
 class AssignTeamMember extends Model
 {
-    use Notifiable;
+    use Notifiable, ActivityLoggable;
 
     protected $guarded = [];
 

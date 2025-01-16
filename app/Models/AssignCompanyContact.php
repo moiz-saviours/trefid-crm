@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
+use App\Traits\ActivityLoggable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Notifications\Notifiable;
 
 class AssignCompanyContact extends Model
 {
-    use Notifiable;
+    use Notifiable , ActivityLoggable;
 
     protected $guarded = [];
     protected $table = 'assign_company_contacts';
