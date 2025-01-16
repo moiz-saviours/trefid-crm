@@ -178,6 +178,7 @@
                             const index = table.rows().count() + 1;
                             const columns = `
                         <td class="align-middle text-center text-nowrap"></td>
+                        <td class="align-middle text-center text-nowrap">${index}</td>
                         <td class="align-middle text-center text-nowrap text-sm invoice-cell">
                                                     <span class="invoice-number">${invoice_number }</span><br>
                                                     <span class="invoice-key">${invoice_key }</span>
@@ -190,7 +191,7 @@
                         <td class="align-middle text-center text-nowrap">${agent ? `<a href="/admin/employee/edit/${agent.id}">${agent.name}</a>` : '---'}</td>
                         <td class="align-middle text-center text-nowrap">${amount}</td>
                         <td class="align-middle text-center text-nowrap">
-                            <input type="checkbox" class="status-toggle change-status" data-id="${id}" ${status == 1 ? 'checked' : ''} data-bs-toggle="toggle">
+                            ${status == 0 ? '<span class="badge bg-warning text-dark">Due</span>' : status == 1 ? '<span class="badge bg-success">Paid</span>' : status == 2 ? <span class="badge bg-danger">Refund</span> : ''}
                         </td>
                         <td class="align-middle text-center text-nowrap">${date}</td>
                         <td class="align-middle text-center table-actions">
@@ -219,47 +220,47 @@
                             const rowData = table.row(index).data();
 
                             // Update columns in the table dynamically
-                            // Column 2: Invoice Number & Invoice Key
-                            if (decodeHtml(rowData[1]) !== `${invoice_number}<br>${invoice_key}`) {
-                                table.cell(index, 1).data(`
+                            // Column 3: Invoice Number & Invoice Key
+                            if (decodeHtml(rowData[2]) !== `${invoice_number}<br>${invoice_key}`) {
+                                table.cell(index, 2).data(`
                                     <span class="invoice-number">${invoice_number}</span><br>
                                     <span class="invoice-key">${invoice_key}</span>
                                 `).draw();
                             }
 
-                            // Column 3: Brand
-                            if (decodeHtml(rowData[2]) !== `${brand ? `<a href="/admin/brand/edit/${brand.id}">${brand.name}</a><br> ${brand.brand_key}` : '---'}`) {
-                                table.cell(index, 2).data(`${brand ? `<a href="/admin/brand/edit/${brand.id}">${brand.name}</a><br> ${brand.brand_key}` : '---'}`).draw();
+                            // Column 4: Brand
+                            if (decodeHtml(rowData[3]) !== `${brand ? `<a href="/admin/brand/edit/${brand.id}">${brand.name}</a><br> ${brand.brand_key}` : '---'}`) {
+                                table.cell(index, 3).data(`${brand ? `<a href="/admin/brand/edit/${brand.id}">${brand.name}</a><br> ${brand.brand_key}` : '---'}`).draw();
                             }
 
-                            // Column 4: Team
-                            if (decodeHtml(rowData[3]) !== `${team ? `<a href="/admin/team/edit/${team.id}">${team.name}</a><br> ${team.team_key}` : '---'}`) {
-                                table.cell(index, 3).data(`${team ? `<a href="/admin/team/edit/${team.id}">${team.name}</a><br> ${team.team_key}` : '---'}`).draw();
+                            // Column 5: Team
+                            if (decodeHtml(rowData[4]) !== `${team ? `<a href="/admin/team/edit/${team.id}">${team.name}</a><br> ${team.team_key}` : '---'}`) {
+                                table.cell(index, 4).data(`${team ? `<a href="/admin/team/edit/${team.id}">${team.name}</a><br> ${team.team_key}` : '---'}`).draw();
                             }
 
-                            // Column 5: Customer Contact
-                            if (decodeHtml(rowData[4]) !== `${customer_contact ? `<a href="/admin/contact/edit/${customer_contact.id}">${customer_contact.name}</a>` : '---'}`) {
-                                table.cell(index, 4).data(`${customer_contact ? `<a href="/admin/contact/edit/${customer_contact.id}">${customer_contact.name}</a>` : '---'}`).draw();
+                            // Column 6: Customer Contact
+                            if (decodeHtml(rowData[5]) !== `${customer_contact ? `<a href="/admin/contact/edit/${customer_contact.id}">${customer_contact.name}</a>` : '---'}`) {
+                                table.cell(index, 5).data(`${customer_contact ? `<a href="/admin/contact/edit/${customer_contact.id}">${customer_contact.name}</a>` : '---'}`).draw();
                             }
 
-                            // Column 6: Agent
-                            if (decodeHtml(rowData[5]) !== `${agent ? `<a href="/admin/employee/edit/${agent.id}">${agent.name}</a>` : '---'}`) {
-                                table.cell(index, 5).data(`${agent ? `<a href="/admin/employee/edit/${agent.id}">${agent.name}</a>` : '---'}`).draw();
+                            // Column 7: Agent
+                            if (decodeHtml(rowData[6]) !== `${agent ? `<a href="/admin/employee/edit/${agent.id}">${agent.name}</a>` : '---'}`) {
+                                table.cell(index, 6).data(`${agent ? `<a href="/admin/employee/edit/${agent.id}">${agent.name}</a>` : '---'}`).draw();
                             }
 
-                            // Column 7: Amount
-                            if (decodeHtml(rowData[6]) !== amount) {
-                                table.cell(index, 6).data(amount).draw();
+                            // Column 8: Amount
+                            if (decodeHtml(rowData[7]) !== amount) {
+                                table.cell(index, 7).data(amount).draw();
                             }
-                            // Column 8: Status
+                            // Column 9: Status
                             const statusHtml = `<input type="checkbox" class="status-toggle change-status" data-id="${id}" ${status == 1 ? "checked" : ""} data-bs-toggle="toggle">`;
-                            if (decodeHtml(rowData[7]) !== statusHtml) {
-                                table.cell(index, 7).data(statusHtml).draw();
+                            if (decodeHtml(rowData[8]) !== statusHtml) {
+                                table.cell(index, 8).data(statusHtml).draw();
                             }
 
-                            // Column 9: Date
-                            if (decodeHtml(rowData[8]) !== date) {
-                                table.cell(index, 8).data(date).draw();
+                            // Column 10: Date
+                            if (decodeHtml(rowData[9]) !== date) {
+                                table.cell(index, 9).data(date).draw();
                             }
                             $('#manage-form')[0].reset();
                             $('#formContainer').removeClass('open')
