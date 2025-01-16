@@ -257,7 +257,7 @@
                                 table.cell(index, 7).data(statusHtml).draw();
                             }
 
-                            // Column 9: Amount
+                            // Column 9: Date
                             if (decodeHtml(rowData[8]) !== date) {
                                 table.cell(index, 8).data(date).draw();
                             }
