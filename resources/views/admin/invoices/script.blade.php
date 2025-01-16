@@ -176,7 +176,6 @@
                         if (response?.data) {
                             const {id, invoice_number, invoice_key, brand, team, customer_contact, agent, amount, status} = response.data;
                             const index = table.rows().count() + 1;
-                            table.row.add($('<tr>', {id: `tr-${id}`}).append(columns)).draw(false);
                             const columns = `
                         <td class="align-middle text-center text-nowrap"></td>
                         <td class="align-middle text-center text-nowrap text-sm invoice-cell">
@@ -201,6 +200,9 @@
                                 <i class="fas fa-trash"></i>
                             </button>
                         </td>`;
+
+                            table.row.add($('<tr>', {id: `tr-${id}`}).append(columns)).draw(false);
+
                             $('#manage-form')[0].reset();
                             $('#formContainer').removeClass('open');
                         }
