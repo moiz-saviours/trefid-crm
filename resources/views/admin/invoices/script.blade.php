@@ -254,7 +254,7 @@
                             }
                             // Column 9: Status
 
-                            const statusHtml = `status == 0 ? '<span class="badge bg-warning text-dark">Due</span>' : status == 1 ? '<span class="badge bg-success">Paid</span>' : status == 2 ? '<span class="badge bg-danger">Refund</span>' : '';`;
+                            const statusHtml = status == 0 ? '<span class="badge bg-warning text-dark">Due</span>' : status == 1 ? '<span class="badge bg-success">Paid</span>' : status == 2 ? '<span class="badge bg-danger">Refund</span>' : '';
                             if (decodeHtml(rowData[8]) !== statusHtml) {
                                 table.cell(index, 8).data(statusHtml).draw();
                             }
