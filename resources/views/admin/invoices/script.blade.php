@@ -174,18 +174,21 @@
                 AjaxRequestPromise(`{{ route("admin.invoice.store") }}`, formData, 'POST', {useToastr: true})
                     .then(response => {
                         if (response?.data) {
-                            const {id, brand_key, team_key, customer_contact,agent_id, amount, status} = response.data;
+                            const {id, invoice_number, invoice_key, brand, team, customer_contact, agent, amount, status} = response.data;
                             const index = table.rows().count() + 1;
                             table.row.add($('<tr>', {id: `tr-${id}`}).append(columns)).draw(false);
                             const columns = `
                         <td class="align-middle text-center text-nowrap"></td>
-                        <td class="align-middle text-center text-nowrap">${index}</td>
-                        <td class="align-middle text-center text-nowrap">${brand_key}</td>
-                        <td class="align-middle text-center text-nowrap">${team_key}</td>
-                        <td class="align-middle text-center text-nowrap">${customer_contact.name}</td>
-                        <td class="align-middle text-center text-nowrap">${agent_id}</td>
-                        <td class="align-middle text-center text-nowrap">${customer_contact.email}</td>
-                        <td class="align-middle text-center text-nowrap">${customer_contact.phone}</td>
+                        <td class="align-middle text-center text-nowrap text-sm invoice-cell">
+                                                    <span class="invoice-number">${invoice_number }</span><br>
+                                                    <span class="invoice-key">${invoice_key }</span>
+                                                </td>
+                        <td class="align-middle text-center text-nowrap">
+                            ${brand ? `<a href="{{ route('admin.brand.edit', ['brand' => '${brand.id}']) }}">${brand.name}</a><br> ${brand.brand_key}` : '---'}
+                        </td>
+                        <td class="align-middle text-center text-nowrap">${team ? `<a href="/admin/team/edit/${team.id}">${team.name}</a><br> ${team.team_key}` : '---'}</td>
+                        <td class="align-middle text-center text-nowrap">${customer_contact ? `<a href="/admin/contact/edit/${customer_contact.id}">${customer_contact.name}</a>` : '---'}</td>
+                        <td class="align-middle text-center text-nowrap">${agent ? `<a href="/admin/employee/edit/${agent.id}">${agent.name}</a>` : '---'}</td>
                         <td class="align-middle text-center text-nowrap">${amount}</td>
                         <td class="align-middle text-center text-nowrap">
                             <input type="checkbox" class="status-toggle change-status" data-id="${id}" ${status == 1 ? 'checked' : ''} data-bs-toggle="toggle">
@@ -202,39 +205,53 @@
                             $('#formContainer').removeClass('open');
                         }
                     })
-                    .catch(error => console.log('An error occurred while updating the record.',error));
+                    .catch(error => console.log('An error occurred while updating the record.', error));
             } else {
                 const url = $(this).attr('action');
                 AjaxRequestPromise(url, formData, 'POST', {useToastr: true})
                     .then(response => {
                         if (response?.data) {
-                            const {id,brand_key, team_key, client_name,agent_id, amount, status} = response.data;
+                            const {id, invoice_number, invoice_key, brand, team, customer_contact, agent, amount, status} = response.data;
                             const index = table.row($('#tr-' + id)).index();
                             const rowData = table.row(index).data();
-                            // Column 3: Image
-                            if (decodeHtml(rowData[3]) !== brand_key) {
-                                table.cell(index, 3).data(brand_key).draw();
+
+                            // Update columns in the table dynamically
+                            // Column 2: Invoice Number & Invoice Key
+                            if (decodeHtml(rowData[1]) !== `${invoice_number}<br>${invoice_key}`) {
+                                table.cell(index, 1).data(`
+                                    <span class="invoice-number">${invoice_number}</span><br>
+                                    <span class="invoice-key">${invoice_key}</span>
+                                `).draw();
                             }
-                            // Column 4: team_key
-                            if (decodeHtml(rowData[4]) !== team_key) {
-                                table.cell(index, 4).data(team_key).draw();
+
+                            // Column 3: Brand
+                            if (decodeHtml(rowData[2]) !== `${brand ? `<a href="{{ route('admin.brand.edit', ['brand' => '${brand.id}']) }}">${brand.name}</a><br> ${brand.brand_key}` : '---'}`) {
+                                table.cell(index, 2).data(`${brand ? `<a href="{{ route('admin.brand.edit', ['brand' => '${brand.id}']) }}">${brand.name}</a><br> ${brand.brand_key}` : '---'}`).draw();
                             }
-                            // Column 5: client_name
-                            if (decodeHtml(rowData[5]) !== client_name) {
-                                table.cell(index, 5).data(client_name).draw();
+
+                            // Column 4: Team
+                            if (decodeHtml(rowData[3]) !== `${team ? `<a href="/admin/team/edit/${team.id}">${team.name}</a><br> ${team.team_key}` : '---'}`) {
+                                table.cell(index, 3).data(`${team ? `<a href="/admin/team/edit/${team.id}">${team.name}</a><br> ${team.team_key}` : '---'}`).draw();
                             }
-                            // Column 6: agent_id
-                            if (decodeHtml(rowData[6]) !== agent_id) {
-                                table.cell(index, 6).data(agent_id).draw();
+
+                            // Column 5: Customer Contact
+                            if (decodeHtml(rowData[4]) !== `${customer_contact ? `<a href="/admin/contact/edit/${customer_contact.id}">${customer_contact.name}</a>` : '---'}`) {
+                                table.cell(index, 4).data(`${customer_contact ? `<a href="/admin/contact/edit/${customer_contact.id}">${customer_contact.name}</a>` : '---'}`).draw();
                             }
-                            // Column 7: amount
+
+                            // Column 6: Agent
+                            if (decodeHtml(rowData[5]) !== `${agent ? `<a href="/admin/employee/edit/${agent.id}">${agent.name}</a>` : '---'}`) {
+                                table.cell(index, 5).data(`${agent ? `<a href="/admin/employee/edit/${agent.id}">${agent.name}</a>` : '---'}`).draw();
+                            }
+
+                            // Column 7: Amount
                             if (decodeHtml(rowData[6]) !== amount) {
                                 table.cell(index, 6).data(amount).draw();
                             }
                             // Column 8: Status
                             const statusHtml = `<input type="checkbox" class="status-toggle change-status" data-id="${id}" ${status == 1 ? "checked" : ""} data-bs-toggle="toggle">`;
-                            if (decodeHtml(rowData[8]) !== statusHtml) {
-                                table.cell(index, 8).data(statusHtml).draw();
+                            if (decodeHtml(rowData[7]) !== statusHtml) {
+                                table.cell(index, 7).data(statusHtml).draw();
                             }
                             $('#manage-form')[0].reset();
                             $('#formContainer').removeClass('open')
@@ -243,7 +260,6 @@
                     .catch(error => console.log(error));
             }
         });
-
 
         /** Delete Record */
         $(document).on('click', '.deleteBtn', function () {
