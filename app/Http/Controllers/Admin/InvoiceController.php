@@ -96,7 +96,7 @@ class InvoiceController extends Controller
             ]);
             $customer_contact = $request->input('type') == 0
                 ? CustomerContact::firstOrCreate(
-                    ['email' => rand(1, 100) . $request->input('customer_contact_email')],
+                    ['email' => $request->input('customer_contact_email')],
                     [
                         'brand_key' => $request->input('brand_key'),
                         'team_key' => $request->input('team_key'),
@@ -228,9 +228,8 @@ class InvoiceController extends Controller
                 ]
             )
             : CustomerContact::where('special_key', $request->input('cus_contact_key'))->first();
-        if (!$customer_contact) {
+        if (!$customer_contact || !$customer_contact->special_key) {
             return response()->json(['error' => 'The selected customer contact does not exist.']);
-//            return redirect()->back()->with('error', 'The selected customer contact does not exist.');
         }
         $invoice->update([
             'brand_key' => $request->input('brand_key'),
@@ -242,8 +241,6 @@ class InvoiceController extends Controller
             'type' => $request->input('type'),
         ]);
         return response()->json(['success' => 'Invoice updated successfully.']);
-
-//        return redirect()->route('admin.invoice.index')->with('success', 'Invoice updated successfully.');
     }
 
     /**

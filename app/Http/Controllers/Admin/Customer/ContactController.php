@@ -51,8 +51,6 @@ class ContactController extends Controller
             'country' => 'nullable|string|max:255',
             'zipcode' => 'nullable|string|max:10',
             'ip_address' => 'nullable|string|max:45',
-            'loggable_type' => 'nullable|string|max:255',
-            'loggable_id' => 'nullable|integer',
             'status' => 'required|in:0,1',
         ], [
             'brand_key.required' => 'The brand field is required.',
@@ -65,8 +63,8 @@ class ContactController extends Controller
         $customer_contact = new CustomerContact($request->only([
                 'brand_key', 'team_key', 'name',
                 'email', 'phone', 'address', 'city', 'state',
-                'country', 'zipcode', 'ip_address', 'loggable_type',
-                'loggable_id', 'status',
+                'country', 'zipcode', 'ip_address', 'creator_type',
+                'creator_id', 'status',
             ]) + ['special_key' => CustomerContact::generateSpecialKey()]);
         $customer_contact->save();
         $customer_contact->loadMissing('team', 'brand','companies');
@@ -111,8 +109,6 @@ class ContactController extends Controller
             'country' => 'nullable|string|max:255',
             'zipcode' => 'nullable|string|max:10',
             'ip_address' => 'nullable|string|max:45',
-            'loggable_type' => 'nullable|string|max:255',
-            'loggable_id' => 'nullable|integer',
             'status' => 'required|in:0,1',
         ], [
             'brand_key.required' => 'The brand field is required.',
@@ -125,8 +121,7 @@ class ContactController extends Controller
         $customer_contact->fill($request->only([
             'special_key', 'brand_key', 'team_key', 'name',
             'email', 'phone', 'address', 'city', 'state',
-            'country', 'zipcode', 'ip_address', 'loggable_type',
-            'loggable_id', 'status',
+            'country', 'zipcode', 'ip_address', 'status',
         ]));
         $customer_contact->save();
         return response()->json(['success' => 'Contact Updated Successfully!']);

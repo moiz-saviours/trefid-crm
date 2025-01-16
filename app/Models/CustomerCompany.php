@@ -30,8 +30,8 @@ class CustomerCompany extends Model
         'country',
         'zipcode',
         'response',
-        'loggable_type',
-        'loggable_id',
+        'creator_type',
+        'creator_id',
         'status',
     ];
 

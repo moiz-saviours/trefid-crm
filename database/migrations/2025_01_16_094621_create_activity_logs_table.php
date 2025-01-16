@@ -16,9 +16,8 @@ return new class extends Migration
             Schema::create('activity_logs', function (Blueprint $table) {
                 $table->id();
                 $table->string('action')->nullable()->default(null);
-                $table->string('model_type')->nullable()->default(null);
-                $table->unsignedBigInteger('model_id')->nullable()->default(null);
-                $table->unsignedBigInteger('user_id')->nullable()->default(null);
+                $table->morphs('model');
+                $table->morphs('actor');
                 $table->text('details')->nullable()->default(null);
                 $table->softDeletes();
                 $table->timestamps();
