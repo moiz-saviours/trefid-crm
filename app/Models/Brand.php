@@ -10,12 +10,10 @@ use App\Traits\ActivityLoggable;
 
 class Brand extends Model
 {
-
     use Notifiable, SoftDeletes, ActivityLoggable;
 
     protected $table = 'brands';
     protected $primaryKey = 'id';
-
     /**
      * The attributes that are mass assignable.
      *
@@ -37,25 +35,56 @@ class Brand extends Model
         $shuffledBrandKey = implode('', $brandKeyArray);
         return str_pad($shuffledBrandKey, 6, '0', STR_PAD_LEFT);
     }
+
+    /**
+     * Generate a unique special key.
+     *
+     * @return string
+     */
+    public static function generateSpecialKey(): string
+    {
+        do {
+            $specialKey = str_pad(rand(0, 999999), 6, '0', STR_PAD_LEFT);
+        } while (self::where('brand_key', $specialKey)->exists());
+        return $specialKey;
+    }
+
+    /**
+     * Automatically set the special_key and creator details before creating the record.
+     * @return void
+     */
+//    protected static function booted(): void
+//    {
+//        static::creating(function ($brand) {
+//            $brand->brand_key = self::generateSpecialKey();
+//        });
+//    }
+
     protected static function boot()
     {
         parent::boot();
 
-        static::created(function ($brand) {
+        /**
+         * Automatically set the special_key and creator details before creating the record.
+         * @return void
+         */
+        static::creating(function ($brand) {
+            $brand->brand_key = self::generateSpecialKey();
+        });
+
+        static::created(function () {
             Cache::forget('brands_list');
             Cache::remember('brands_list', config('cache.durations.short_lived'), function () {
                 return Brand::all();
             });
         });
-
-        static::updated(function ($brand) {
+        static::updated(function () {
             Cache::forget('brands_list');
             Cache::remember('brands_list', config('cache.durations.short_lived'), function () {
                 return Brand::all();
             });
         });
-
-        static::deleted(function ($brand) {
+        static::deleted(function () {
             Cache::forget('brands_list');
         });
     }

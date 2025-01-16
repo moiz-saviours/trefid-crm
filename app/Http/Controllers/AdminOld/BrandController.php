@@ -52,7 +52,7 @@ class BrandController extends Controller
                 $brand->logo = $request->logo_url;
             }
             $brand->save();
-            $brand->update(['brand_key' => $brand->generateBrandKey($brand->id)]);
+//            $brand->update(['brand_key' => $brand->generateBrandKey($brand->id)]);
             return response()->json(['data' => $brand, 'message' => 'Brand created successfully.']);
 
         } catch (\Exception $e) {
