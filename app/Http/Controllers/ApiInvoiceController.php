@@ -61,6 +61,8 @@ class ApiInvoiceController extends Controller
                 ],
                 'payment_methods' => [
                     "credit_card",
+                    "paypal",
+                    "stripe",
                 ],
             ];
             return response()->json(['success' => true, 'invoice' => $data,]);
