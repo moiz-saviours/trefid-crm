@@ -253,7 +253,8 @@
                                 table.cell(index, 7).data(amount).draw();
                             }
                             // Column 9: Status
-                            const statusHtml = `<input type="checkbox" class="status-toggle change-status" data-id="${id}" ${status == 1 ? "checked" : ""} data-bs-toggle="toggle">`;
+
+                            const statusHtml = `status == 0 ? '<span class="badge bg-warning text-dark">Due</span>' : status == 1 ? '<span class="badge bg-success">Paid</span>' : status == 2 ? '<span class="badge bg-danger">Refund</span>' : '';`;
                             if (decodeHtml(rowData[8]) !== statusHtml) {
                                 table.cell(index, 8).data(statusHtml).draw();
                             }
