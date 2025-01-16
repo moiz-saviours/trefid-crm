@@ -49,7 +49,7 @@ trait ActivityLoggable
             'model_type' => get_class($this),
             'model_id' => $this->id,
             'actor_type' => get_class(auth()->user()),
-            'actor_id' => auth()->id,
+            'actor_id' => auth()->id(),
             'description' => $description,
             'user_id' => auth()->user()->id,
         ]);
