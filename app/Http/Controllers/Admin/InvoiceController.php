@@ -135,6 +135,7 @@ class InvoiceController extends Controller
             $invoice = Invoice::create($data);
             DB::commit();
             $invoice->loadMissing('customer_contact', 'brand', 'team', 'agent');
+            $invoice->date = "Today at" . $invoice->created_at->timezone('GMT+5')->format('g:i A') . "GMT + 5";
             return response()->json(['data' => $invoice, 'success' => 'Record created successfully!']);
         } catch (\Exception $e) {
             DB::rollBack();
@@ -241,6 +242,12 @@ class InvoiceController extends Controller
             ]);
             DB::commit();
             $invoice->loadMissing('customer_contact', 'brand', 'team', 'agent');
+            if ($invoice->created_at->isToday()) {
+                $date = "Today at" . $invoice->created_at->timezone('GMT+5')->format('g:i A') . "GMT + 5";
+            } else {
+                $date = $invoice->created_at->timezone('GMT+5')->format('M d, Y g:i A') . "GMT + 5";
+            }
+            $invoice->date = $date;
             return response()->json(['data' => $invoice, 'success' => 'Record updated successfully!']);
         } catch (\Exception $e) {
             DB::rollBack();

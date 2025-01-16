@@ -174,7 +174,7 @@
                 AjaxRequestPromise(`{{ route("admin.invoice.store") }}`, formData, 'POST', {useToastr: true})
                     .then(response => {
                         if (response?.data) {
-                            const {id, invoice_number, invoice_key, brand, team, customer_contact, agent, amount, status} = response.data;
+                            const {id, invoice_number, invoice_key, brand, team, customer_contact, agent, amount, status, date} = response.data;
                             const index = table.rows().count() + 1;
                             const columns = `
                         <td class="align-middle text-center text-nowrap"></td>
@@ -192,6 +192,7 @@
                         <td class="align-middle text-center text-nowrap">
                             <input type="checkbox" class="status-toggle change-status" data-id="${id}" ${status == 1 ? 'checked' : ''} data-bs-toggle="toggle">
                         </td>
+                        <td class="align-middle text-center text-nowrap">${date}</td>
                         <td class="align-middle text-center table-actions">
                             <button type="button" class="btn btn-sm btn-primary editBtn" data-id="${id}" title="Edit">
                                 <i class="fas fa-edit"></i>
@@ -213,7 +214,7 @@
                 AjaxRequestPromise(url, formData, 'POST', {useToastr: true})
                     .then(response => {
                         if (response?.data) {
-                            const {id, invoice_number, invoice_key, brand, team, customer_contact, agent, amount, status} = response.data;
+                            const {id, invoice_number, invoice_key, brand, team, customer_contact, agent, amount, status, date} = response.data;
                             const index = table.row($('#tr-' + id)).index();
                             const rowData = table.row(index).data();
 
@@ -254,6 +255,11 @@
                             const statusHtml = `<input type="checkbox" class="status-toggle change-status" data-id="${id}" ${status == 1 ? "checked" : ""} data-bs-toggle="toggle">`;
                             if (decodeHtml(rowData[7]) !== statusHtml) {
                                 table.cell(index, 7).data(statusHtml).draw();
+                            }
+
+                            // Column 9: Amount
+                            if (decodeHtml(rowData[8]) !== date) {
+                                table.cell(index, 8).data(date).draw();
                             }
                             $('#manage-form')[0].reset();
                             $('#formContainer').removeClass('open')
