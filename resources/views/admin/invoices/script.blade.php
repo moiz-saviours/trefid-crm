@@ -226,7 +226,7 @@
 
                             // Column 3: Brand
                             if (decodeHtml(rowData[2]) !== `${brand ? `<a href="/admin/brand/edit/${brand.id}">${brand.name}</a><br> ${brand.brand_key}` : '---'}`) {
-                                table.cell(index, 2).data(`${brand ? `<a href="{{ route('admin.brand.edit', ['brand' => '${brand.id}']) }}">${brand.name}</a><br> ${brand.brand_key}` : '---'}`).draw();
+                                table.cell(index, 2).data(`${brand ? `<a href="/admin/brand/edit/${brand.id}">${brand.name}</a><br> ${brand.brand_key}` : '---'}`).draw();
                             }
 
                             // Column 4: Team
