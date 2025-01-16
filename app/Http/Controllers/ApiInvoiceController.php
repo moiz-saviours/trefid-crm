@@ -35,8 +35,8 @@ class ApiInvoiceController extends Controller
                 "description" => $invoice->description,
                 "amount" => $invoice->amount,
                 "type" => $invoice->type,
-                "created_at" => $invoice->created_at,
-                "due_date" => $invoice->created_at,
+                "created_at" => $invoice->created_at->format('Y-m-d'),
+                "due_date" => $invoice->created_at->format('Y-m-d'),
                 "status" => $invoice->status,
                 "brand" => [
                     "name" => $brand->name,
