@@ -9,3 +9,4 @@
 /public/assets/images/clients/companies/logos
 database/seeders/AdminSeeder.php
 /app/Http/Controllers/Api/
+public/assets/images/user.png
