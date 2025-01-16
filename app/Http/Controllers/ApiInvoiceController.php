@@ -24,6 +24,7 @@ class ApiInvoiceController extends Controller
             if (!$invoice) {
                 return response()->json(['success' => false, 'message' => 'Invoice not found for the given key.',], 404);
             }
+            $invoice->loadMissing('brand','team','customer_contact','agent');
             return response()->json(['success' => true, 'invoice' => $invoice,]);
         } catch (ValidationException $exception) {
             return response()->json(['success' => false, 'error' => 'Invalid invoice id format.', 'message' => $exception->getMessage(),], 422);
