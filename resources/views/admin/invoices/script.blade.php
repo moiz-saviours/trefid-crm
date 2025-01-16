@@ -191,7 +191,7 @@
                         <td class="align-middle text-center text-nowrap">${agent ? `<a href="/admin/employee/edit/${agent.id}">${agent.name}</a>` : '---'}</td>
                         <td class="align-middle text-center text-nowrap">${amount}</td>
                         <td class="align-middle text-center text-nowrap">
-                            ${status == 0 ? '<span class="badge bg-warning text-dark">Due</span>' : status == 1 ? '<span class="badge bg-success">Paid</span>' : status == 2 ? <span class="badge bg-danger">Refund</span> : ''}
+                            ${status == 0 ? '<span class="badge bg-warning text-dark">Due</span>' : status == 1 ? '<span class="badge bg-success">Paid</span>' : status == 2 ? '<span class="badge bg-danger">Refund</span>' : ''}
                         </td>
                         <td class="align-middle text-center text-nowrap">${date}</td>
                         <td class="align-middle text-center table-actions">
