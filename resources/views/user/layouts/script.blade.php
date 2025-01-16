@@ -21,6 +21,7 @@
 <script type="text/javascript" charset="utf-8" src="https://cdn.datatables.net/1.10.25/extensions/Editor/js/dataTables.editor.min.js"></script>
 
 <!-- New -->
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 
 <!-- Jquery UI -->
 <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>

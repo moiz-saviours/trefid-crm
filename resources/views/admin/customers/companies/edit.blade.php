@@ -4,6 +4,14 @@
     @push('style')
         @include('admin.customers.companies.style')
         <style>
+            /*body {*/
+            /*    font-family: Arial, sans-serif;*/
+            /*    margin: 0;*/
+            /*    padding: 0;*/
+            /*    display: flex;*/
+            /*    height: 100vh;*/
+            /*}*/
+
             .containerr {
                 display: flex;
                 width: 100%;
@@ -110,10 +118,10 @@
             }
 
 
-
             .sidebarr {
                 width: auto;
-                background-color: #f0f4f8;
+                /*background-color: #f0f4f8;*/
+                background-color: #fff;
                 padding: 20px 2px;
                 box-sizing: border-box;
                 border-right: 1px solid #ddd;
@@ -137,14 +145,15 @@
             }
 
             .avatar {
-                width: 58px;
-                height: 58px;
+                width: 42px;
+                height: 42px;
                 background-color: #ccc;
                 border-radius: 50%;
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                font-size: 20px;
+                font-size: 13px;
+                padding: 9px;
                 /* margin-bottom: 20px; */
             }
 
@@ -172,11 +181,12 @@
 
             .contact-info h2 {
                 margin: 0;
-                font-size: 20px;
+                font-size: 24px;
                 text-align: left;
-                font-weight: 600;
+                font-weight: 400;
                 color: #2d3e50;
-                margin-bottom: -3px;
+                /*margin-bottom: -3px;*/
+                /*line-height: 1.5;*/
             }
 
             .recent-filters {
@@ -193,8 +203,8 @@
             }
 
             .profile_actions p {
-                font-size: 10px;
-                margin: 0px 9px;
+                font-size: 11px;
+                margin: 0px 8px;
                 color: gray;
             }
 
@@ -488,8 +498,8 @@
                 justify-content: center;
                 border-bottom: 1px solid #ddd;
                 /* padding-bottom: 30px; */
-                padding: 20px 0px;
-
+                padding: 20px 20px;
+                /*gap: 11px;*/
             }
 
 
@@ -562,7 +572,8 @@
                 /* margin: 0 auto; */
             }
 
-            .your-comment-btn {}
+            .your-comment-btn {
+            }
 
             .toolbar {
                 background-color: #dddddda6;
@@ -604,7 +615,6 @@
                 font-size: 13px;
                 text-align: left;
             }
-
 
 
             .custom-drop-btn-design:hover {
@@ -696,12 +706,17 @@
             .tabs_header input {
                 width: 35%;
             }
+
+
         </style>
     @endpush
     <section id="content" class="content">
+
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-3">
+
+
                     <div class="sidebarr">
                         <div>
                             <div class="profile_box">
@@ -744,8 +759,12 @@
                                     <p>Task</p>
                                 </div>
 
+
+
                                 <div class="text-center">
+
                                     <i class="fa fa-calendar-check-o sidebar-icons" aria-hidden="true"></i>
+
                                     <p>More</p>
                                 </div>
                             </div>
@@ -753,6 +772,8 @@
 
                         <div class="sections">
                             <div class="collaborators">
+
+
                                 <div class="collapse-header-prent-box">
                                     <div class="collapse-header-box">
                                         <i class="fa fa-caret-down" aria-hidden="true"></i>
@@ -773,6 +794,10 @@
                                         revealed when the user activates the relevant trigger.
                                     </div>
                                 </div>
+
+
+
+
 
                                 <div class="collapse-header-prent-box">
                                     <div class="collapse-header-box">
@@ -813,6 +838,25 @@
                                         revealed when the user activates the relevant trigger.
                                     </div>
                                 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                             </div>
                         </div>
                     </div>
@@ -907,6 +951,8 @@
                                                     </p>
                                                 </div>
 
+
+
                                                 <div class="comment-active_head" id="toggledContent1">
                                                     <!-- <div class="email-child-wrapper" >
                                                         <i class="fa fa-commenting-o add-coment-icon" aria-hidden="true"></i>
@@ -914,6 +960,9 @@
                                                             Add Comments
                                                         </p>
                                                     </div> -->
+
+
+
                                                     <div>
 
                                                         <div class="email-child-wrapper" id="toggleButton">
@@ -926,6 +975,8 @@
                                                         <div id="contents" class="hidden comment-box">
                                                             <div class="editor-container">
                                                                 <div class="avatarr">MM</div>
+
+
                                                                 <div>
                                                                     <!-- Editable content area -->
                                                                     <div class="editor" id="editor"
@@ -959,6 +1010,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
+
 
                                                     <!-- <div class="customize-select">
                                                             <select class="btn custom-drop-btn-design selection-box">
@@ -1024,6 +1076,8 @@
                                                         </div>
                                                     </div>
 
+
+
                                                     <!-- <div class="dropdown">
                                                         <button class="btn custom-drop-btn-design dropdown-toggle"
                                                             type="button" id="dropdownMenuButton1"
@@ -1047,6 +1101,7 @@
 
                                             </div>
                                         </div>
+
 
                                         <div class="activity">
                                             <div class="association-activities-box">
@@ -1118,6 +1173,8 @@
                                                                 here</a></li>
                                                     </ul>
                                                 </div>
+
+
                                             </div>
 
                                             <div>
@@ -1302,7 +1359,6 @@
             // Function to toggle the visibility of the additional content div
             function toggleContent(contentId) {
                 var contentDiv = document.getElementById(contentId);
-
                 // Toggle the display property (show/hide)
                 if (contentDiv.style.display === "none" || contentDiv.style.display === "") {
                     contentDiv.style.display = "flex"; // Show the content
@@ -1310,9 +1366,7 @@
                     contentDiv.style.display = "none"; // Hide the content
                 }
             }
-
             // Second comment function
-
             $(document).ready(function () {
                 $('#toggleButton').click(function () {
                     const contents = $('#contents');
@@ -1325,87 +1379,12 @@
                     }
                 });
             });
-
-
-            //Comment box editor function
-
-            $(document).ready(function () {
-                // Toggle Bold
-                $('#boldBtn').click(function () {
-                    document.execCommand('bold');
-                });
-
-                // Toggle Italic
-                $('#italicBtn').click(function () {
-                    document.execCommand('italic');
-                });
-
-                // Toggle Underline
-                $('#underlineBtn').click(function () {
-                    document.execCommand('underline');
-                });
-
-                // Toggle Strikethrough
-                $('#strikeBtn').click(function () {
-                    document.execCommand('strikeThrough');
-                });
-
-                // Change font size
-                $('#fontSizeBtn').click(function () {
-                    // var size = prompt("Enter font size (1-7):", "3");
-                    document.execCommand('fontSize', false, size);
-                });
-
-                // Insert link
-                $('#linkBtn').click(function () {
-                    var url = prompt("Enter the URL:", "http://");
-                    document.execCommand('createLink', false, url);
-                });
-
-                // Align Left
-                $('#alignLeftBtn').click(function () {
-                    document.execCommand('justifyLeft');
-                });
-
-                // Align Center
-                $('#alignCenterBtn').click(function () {
-                    document.execCommand('justifyCenter');
-                });
-
-                // Align Right
-                $('#alignRightBtn').click(function () {
-                    document.execCommand('justifyRight');
-                });
-
-                // Insert Unordered List
-                $('#unorderedListBtn').click(function () {
-                    document.execCommand('insertUnorderedList');
-                });
-
-                // Insert Ordered List
-                $('#orderedListBtn').click(function () {
-                    document.execCommand('insertOrderedList');
-                });
-
-                // Save content as .txt file
-                // $('#saveBtn').click(function () {
-                //     var content = $('#editor').text();
-                //     var blob = new Blob([content], { type: 'text/plain' });
-                //     var link = document.createElement('a');
-                //     link.href = URL.createObjectURL(blob);
-                //     link.download = 'document.txt';
-                //     link.click();
-                // });
-            });
-
-
             // select to function
             $(document).ready(function () {
                 // Toggle dropdown visibility
                 $(".dropdown-toggle").on("click", function () {
                     $(".dropdown-content").toggle();
                 });
-
                 // Filter list based on search input
                 $(".search-input").on("input", function () {
                     const filter = $(this).val().toLowerCase();
@@ -1414,7 +1393,6 @@
                         $(this).toggle(label.includes(filter));
                     });
                 });
-
                 // Close dropdown if clicked outside
                 $(document).on("click", function (e) {
                     if (!$(e.target).closest(".dropdown").length) {
@@ -1423,9 +1401,7 @@
                 });
             });
             // $('select>option:eq(3)').attr('selected', true);
-
             // Searching Input function
-
             $(document).ready(function () {
                 // Expand and collapse the search bar
                 $(".search-btns").on("click", function (e) {
@@ -1433,23 +1409,19 @@
                     $(".search-containers").toggleClass("expanded");
                     $(".search-inputs").focus();
                 });
-
                 // Handle form submission for search
                 $("#search-form").on("submit", function (e) {
                     e.preventDefault(); // Prevent default form submission
                     const query = $(".search-inputs").val().trim();
-
                     if (query) {
                         // Log the search query or perform an action
                         console.log("Searching for:", query);
-
                         // Redirect or process search here
                         // Example: window.location.href = `/search?q=${encodeURIComponent(query)}`;
                     } else {
                         alert("Please enter a search term.");
                     }
                 });
-
                 // Collapse the search bar when clicking outside
                 $(document).on("click", function (e) {
                     if (!$(e.target).closest(".search-containers").length) {
