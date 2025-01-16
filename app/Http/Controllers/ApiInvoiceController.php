@@ -24,8 +24,38 @@ class ApiInvoiceController extends Controller
             if (!$invoice) {
                 return response()->json(['success' => false, 'message' => 'Invoice not found for the given key.',], 404);
             }
-            $invoice->loadMissing('brand','team','customer_contact','agent');
-            return response()->json(['success' => true, 'invoice' => $invoice,]);
+            $invoice->loadMissing('brand', 'team', 'customer_contact', 'agent');
+            $data = [
+                "id" => $invoice->id,
+                "invoice_key" => $invoice->invoice_key,
+                "invoice_number" => $invoice->invoice_number,
+                "description" => $invoice->description,
+                "amount" => $invoice->amount,
+                "type" => $invoice->type,
+                "status" => $invoice->status,
+                "brand" => [
+                    "name" => $invoice->brand->name,
+                    "url" => $invoice->brand->url,
+                    "logo" => $invoice->brand->logo,
+                    "email" => $invoice->brand->email,
+                    "description" => $invoice->brand->description,
+                ],
+                'customer' => [
+                    "name" => $invoice->customer_contact->name,
+                    "email" => $invoice->customer_contact->email,
+                    "phone" => $invoice->customer_contact->phone,
+                    "address" => $invoice->customer_contact->address,
+                    "city" => $invoice->customer_contact->city,
+                    "state" => $invoice->customer_contact->state,
+                    "zipcode" => $invoice->customer_contact->zipcode,
+                    "country" => $invoice->customer_contact->country,
+                ],
+                'agent' => [
+                    "name" => $invoice->agent->name,
+                    "email" => $invoice->agent->email,
+                ],
+            ];
+            return response()->json(['success' => true, 'invoice' => $data,]);
         } catch (ValidationException $exception) {
             return response()->json(['success' => false, 'error' => 'Invalid invoice id format.', 'message' => $exception->getMessage(),], 422);
         } catch (ModelNotFoundException $exception) {
