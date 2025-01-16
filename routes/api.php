@@ -1,8 +1,8 @@
 <?php
 
 use App\Http\Controllers\Api\ApiAuthorizePaymentController;
-use App\Http\Controllers\Api\ApiInvoiceController;
 use App\Http\Controllers\Api\ApiStripePaymentController;
+use App\Http\Controllers\ApiInvoiceController;
 use App\Http\Resources\UserResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
