@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\{
     AccountController as AdminAccountController,
     ProfileController as AdminProfileController,
     BrandController as AdminBrandController,
+    ActivityLogController as AdminActivityLogController,
     EmployeeController as AdminEmployeeController,
     TeamController as AdminTeamController,
     InvoiceController as AdminInvoiceController,
@@ -193,4 +194,6 @@ Route::middleware(['auth:admin','throttle:60,1'])->prefix('admin')->name('admin.
             Route::delete('/delete/{client_account?}', [AdminPaymentMerchantController::class, 'delete'])->name('delete');
         });
     });
+
+    Route::get('/activity-logs',[AdminActivityLogController::class, 'index']);
 });
