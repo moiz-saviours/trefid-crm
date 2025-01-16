@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Invoice;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Validator;
@@ -65,7 +66,7 @@ class ApiInvoiceController extends Controller
                     "stripe",
                 ],
             ];
-            return response()->json(['success' => true, 'invoice' => $data,]);
+            return response()->json(['success' => true, 'invoice' => $data,'current_date'=>Carbon::now()->format('jS F Y')]);
         } catch (ValidationException $exception) {
             return response()->json(['success' => false, 'error' => 'Invalid invoice id format.', 'message' => $exception->getMessage(),], 422);
         } catch (ModelNotFoundException $exception) {
