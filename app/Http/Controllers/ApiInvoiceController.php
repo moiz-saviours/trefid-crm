@@ -25,6 +25,9 @@ class ApiInvoiceController extends Controller
                 return response()->json(['success' => false, 'message' => 'Invoice not found for the given key.',], 404);
             }
             $invoice->loadMissing('brand', 'team', 'customer_contact', 'agent');
+            $brand = $invoice->brand;
+            $customer = $invoice->customer_contact;
+            $agent = $invoice->agent;
             $data = [
                 "id" => $invoice->id,
                 "invoice_key" => $invoice->invoice_key,
@@ -34,25 +37,25 @@ class ApiInvoiceController extends Controller
                 "type" => $invoice->type,
                 "status" => $invoice->status,
                 "brand" => [
-                    "name" => $invoice->brand->name,
-                    "url" => $invoice->brand->url,
-                    "logo" => $invoice->brand->logo,
-                    "email" => $invoice->brand->email,
-                    "description" => $invoice->brand->description,
+                    "name" => $brand->name,
+                    "url" => $brand->url,
+                    "logo" => $brand->logo,
+                    "email" => $brand->email,
+                    "description" => $brand->description,
                 ],
                 'customer' => [
-                    "name" => $invoice->customer_contact->name,
-                    "email" => $invoice->customer_contact->email,
-                    "phone" => $invoice->customer_contact->phone,
-                    "address" => $invoice->customer_contact->address,
-                    "city" => $invoice->customer_contact->city,
-                    "state" => $invoice->customer_contact->state,
-                    "zipcode" => $invoice->customer_contact->zipcode,
-                    "country" => $invoice->customer_contact->country,
+                    "name" => $customer->name,
+                    "email" => $customer->email,
+                    "phone" => $customer->phone,
+                    "address" => $customer->address,
+                    "city" => $customer->city,
+                    "state" => $customer->state,
+                    "zipcode" => $customer->zipcode,
+                    "country" => $customer->country,
                 ],
                 'agent' => [
-                    "name" => $invoice->agent->name,
-                    "email" => $invoice->agent->email,
+                    "name" => $agent->name,
+                    "email" => $agent->email,
                 ],
             ];
             return response()->json(['success' => true, 'invoice' => $data,]);
