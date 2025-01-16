@@ -57,6 +57,9 @@ class ApiInvoiceController extends Controller
                     "name" => $agent->name,
                     "email" => $agent->email,
                 ],
+                'payment_methods' => [
+                    "credit_card",
+                ],
             ];
             return response()->json(['success' => true, 'invoice' => $data,]);
         } catch (ValidationException $exception) {
