@@ -106,7 +106,7 @@ class LeadController extends Controller
                     'ip_address' => $request->input('ip_address'),
                 ]
             )
-            : CustomerContact::where('cus_contact_key', $request->input('cus_contact_key'))->first();
+            : CustomerContact::where('special_key', $request->input('cus_contact_key'))->first();
 
         if (!$client) {
             return response()->json(['errors' => 'The Customer key does not exist.']);
@@ -128,6 +128,7 @@ class LeadController extends Controller
             'note' => $request->input('note'),
         ]);
 
+        $lead->loadMissing('customer');
 
         return response()->json(['success' => 'Record created successfully.','data'=>$lead]);
     }
@@ -187,6 +188,7 @@ class LeadController extends Controller
 
         $lead->update($request->all());
 
+        $lead->loadMissing('customer');
           return response()->json(['success' => 'Record updated successfully.']);
         //return redirect()->route('admin.lead.index')->with('success', 'Lead updated successfully.');
 
