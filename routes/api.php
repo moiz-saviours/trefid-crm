@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\ApiAuthorizePaymentController;
+use App\Http\Controllers\Api\ApiInvoiceController;
 use App\Http\Controllers\Api\ApiStripePaymentController;
 use App\Http\Resources\UserResource;
 use Illuminate\Http\Request;
@@ -34,3 +35,6 @@ Route::middleware(['auth:sanctum', 'abilities:create,update,read'])->group(funct
     Route::post('process-payment', [ApiAuthorizePaymentController::class, 'processPayment']);
 });
 Route::post('stripe-process-payment', [ApiStripePaymentController::class, 'processPayment']);
+Route::get('fetch-invoice/{invoice?}', [ApiInvoiceController::class, 'fetch_invoice'])->missing(function (Request $request) {
+    return response()->json(['error' => 'Invalid url.'], 404);
+});
