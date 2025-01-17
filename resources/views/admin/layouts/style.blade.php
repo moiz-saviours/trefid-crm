@@ -294,6 +294,12 @@
 <style>
 
     /* Full-screen loader styles */
+
+    .loader-light {
+        background-color: rgba(255, 255, 255, 0.2) !important;
+    }
+
+
     #loader {
         position: fixed;
         top: 0;
@@ -320,6 +326,7 @@
     .load-spinner {
         display: none;
     }
+
 </style>
 <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 

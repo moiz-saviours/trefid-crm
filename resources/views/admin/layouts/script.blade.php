@@ -101,7 +101,7 @@
         $("#dm_colorModeContainer ._dm-colorModeBtn[data-color-mode='tm--primary-mn']:not(.active)").click();
     });
 
-    <!-- Loader -->
+    /** Loader Start */
     const loaders = ['sk-plane', 'sk-chase', 'sk-bounce', 'sk-wave', 'sk-pulse', 'sk-flow', 'sk-swing', 'sk-circle', 'sk-circle-fade', 'sk-grid', 'sk-fold', 'sk-wander'];
     let randomLoader;
 
@@ -113,6 +113,7 @@
 
     $(`#loader`).show();
     $(`.${randomLoader}`).removeClass('load-spinner');
+
     $(document).ready(function () {
         if (@json(View::hasSection('datatable'))) {
             setTimeout(() => {
@@ -126,9 +127,21 @@
 
         $('#testTable').DataTable();
     });
-</script>
+    /** Loader End */
 
-<script>
+    $(document).ajaxStart(function () {
+        randomLoader = randomLoaderFunction();
+        $(`#loader`).show();
+        $(`#loader`).addClass('loader-light');
+        $(`.${randomLoader}`).removeClass('load-spinner');
+    });
+
+    $(document).ajaxStop(function () {
+        $(`#loader`).hide();
+        $(`#loader`).removeClass('loader-light');
+        $(`.${randomLoader}`).addClass('load-spinner');
+    });
+
     var error = false;
     function refreshCsrfToken() {
         return $.get('{{route('csrf.token')}}').then(response => {

@@ -1,3 +1,30 @@
+@push('style')
+    <style>
+        .generatePassword {
+            padding: 8px;
+            cursor: pointer;
+            font-size: 18px;
+            background-color: var(--bs-primary);
+            border-radius: 5px;
+            height: 35px;
+            width: 35px;
+            color: var(--bs-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 5px;
+            transition: background-color 0.3s ease;
+            margin-bottom: 15px;
+
+        }
+        .generatePassword:hover {
+            color: var(--bs-primary);
+            background-color: var(--bs-light);
+            border: 1px solid var(--bs-primary);
+        }
+    </style>
+@endpush
+
 <div class="custom-form">
     <form id="manage-form" method="POST" enctype="multipart/form-data">
         <div class="form-container" id="formContainer">
@@ -76,7 +103,8 @@
                         <!-- Input Fields (Right) -->
                         <div class="flex-grow-1">
                             <div class="">
-                                <input type="file" class="form-control" id="image" name="image" accept="image/*" aria-describedby="imageHelp">
+                                <input type="file" class="form-control" id="image" name="image" accept="image/*"
+                                       aria-describedby="imageHelp">
                             </div>
                             <div class="input-group">
                                 <input type="url" class="form-control" id="image_url" name="image_url"
@@ -97,6 +125,18 @@
                 </div>
 
                 <div class="form-group mb-3">
+                    <label for="password" class="form-label">Password</label>
+                    <div class="d-flex align-items-center">
+                        <input type="text" id="password" class="form-control" placeholder="Generated Password">
+                        <i id="generatePassword" class="generatePassword fa fa-key ms-2" title="Generate Password"></i>
+                    </div>
+                    @error('password')
+                    <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
+
+
+                <div class="form-group mb-3">
                     <label for="status" class="form-label">Status</label>
                     <select class="form-control" id="status" name="status">
                         <option value="1">Active</option>
@@ -115,3 +155,14 @@
         </div>
     </form>
 </div>
+
+@push('script')
+    <script>
+        $(document).ready(function () {
+            $('.generatePassword').click(function () {
+                const randomPassword = generateRandomPassword(12);
+                $('#password').val(randomPassword);
+            });
+        });
+    </script>
+@endpush

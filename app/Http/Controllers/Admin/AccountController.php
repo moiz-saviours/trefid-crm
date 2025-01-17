@@ -48,14 +48,12 @@ class AccountController extends Controller
             'status' => 'required|in:0,1',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
-
         try {
             $admin = new Admin($request->only([
                 'team_key', 'name', 'email', 'designation', 'gender',
                 'phone_number', 'address', 'city', 'country',
                 'postal_code', 'dob', 'about', 'status'
             ]));
-
             if ($request->hasFile('image')) {
                 $originalFileName = time() . '_' . $request->file('image')->getClientOriginalName();
                 $publicPath = public_path('assets/images/admins');
@@ -64,10 +62,12 @@ class AccountController extends Controller
             } else if ($request->image_url) {
                 $admin->image = $request->image_url;
             }
-
-            $admin->password = Hash::make(12345678);
+            if ($request->has('password')) {
+                $admin->password = Hash::make($request->input('password'));
+            } else {
+                $admin->password = Hash::make(12345678);
+            }
             $admin->save();
-
             return response()->json(['data' => $admin, 'message' => 'Record created successfully.']);
 
         } catch (\Exception $e) {
@@ -107,14 +107,12 @@ class AccountController extends Controller
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'status' => 'required|in:0,1',
         ]);
-
         try {
             $admin->fill($request->only([
                 'team_key', 'name', 'email', 'designation', 'gender',
                 'phone_number', 'address', 'city', 'country',
                 'postal_code', 'dob', 'about', 'status'
             ]));
-
             if ($request->hasFile('image')) {
 
                 if ($admin->image) {
@@ -132,9 +130,25 @@ class AccountController extends Controller
             } else if ($request->image_url) {
                 $admin->image = $request->image_url;
             }
-
             $admin->save();
             return response()->json(['data' => $admin, 'message' => 'Record updated successfully.']);
+        } catch (\Exception $e) {
+            return response()->json(['error' => ' Internal Server Error', 'message' => $e->getMessage(), 'line' => $e->getLine()], 500);
+        }
+    }
+
+    /**
+     * Update password of specified resource in storage.
+     */
+    public function update_password(Request $request, Admin $admin)
+    {
+        $request->validate([
+            'password' => 'required|string|max:255',
+        ]);
+        try {
+            $admin->password = Hash::make($request->input('password'));
+            $admin->save();
+            return response()->json(['data' => $admin, 'message' => 'Record password updated successfully.']);
         } catch (\Exception $e) {
             return response()->json(['error' => ' Internal Server Error', 'message' => $e->getMessage(), 'line' => $e->getLine()], 500);
         }
