@@ -219,7 +219,7 @@
                 background-color: rgb(255, 255, 255);
                 border: 1px solid rgb(223, 227, 235);
                 border-radius: 4px;
-                padding: 12px 16px 0px;
+                padding: 16px 21px;
                 margin-bottom: 20px;
             }
 
@@ -416,8 +416,8 @@
                 /* box-shadow: none; */
                 width: 100%;
             }
-            Another action
 
+            Another action
             .contact-card-subscription-para {
                 font-size: 12px;
                 font-weight: 400;
@@ -533,6 +533,19 @@
                 font-weight: 600;
                 font-size: 12px;
                 margin: 0px !important;
+            }
+
+            .activities-addition-links {
+                color: #0091ae !important;
+                font-weight: 600;
+                font-size: 12px;
+                margin: 0px !important;
+                text-decoration: none;
+            }
+
+            .activities-addition-links:hover {
+                text-decoration: underline;
+
             }
 
             .add-coment-icon {
@@ -690,6 +703,68 @@
                 /* margin: 0 auto; */
             }
 
+            .search-containers {
+                display: flex;
+                align-items: center;
+                position: relative;
+                overflow: hidden;
+                border: 1px solid #ccc;
+                /* border-radius: 20px; */
+                background-color: white;
+                transition: width 0.4s ease;
+                /* Initial small width */
+            }
+            .search-containers.expanded {
+                width: 300px;
+                /* Expanded width */
+            }
+            .search-inputs {
+                border: none;
+                outline: none;
+                padding: 6px 0;
+                padding-left: 14px;
+                font-size: 12px;
+                width: 136px;
+                /* width: 0; */
+                transition: width 0.4s ease;
+                opacity: 1;
+            }
+            .search-containers.expanded .search-inputs {
+                width: 240px;
+                /* Full width inside expanded container */
+                padding-left: 15px;
+                opacity: 1;
+            }
+            .search-btns {
+                background: none;
+                border: none;
+                outline: none;
+                padding: 8px;
+                cursor: pointer;
+                font-size: 12px;
+                color: #666;
+            }
+            .search-btns span {
+                font-size: 18px;
+            }
+            .new-activity-dropdown {
+                background-color: #dddddd;
+                border: 1px solid #ccc;
+                border-radius: 0;
+                padding: 8px 16px;
+                font-size: 13px;
+            }
+            .new-activity-dropdown:hover {
+                box-shadow: none;
+            }
+            .new-activity-dropdown:focus {
+                box-shadow: none;
+            }
+            .new-activity-dropdown.dropdown-menu.show {
+                box-shadow: none;
+                border: 1px solid #ddd;
+            }
+
             .your-comment-btn {
             }
 
@@ -803,23 +878,28 @@
             .right_collab:hover {
                 text-decoration: underline;
             }
-            .prof-edit-icons{
+
+            .prof-edit-icons {
                 color: #0091ae !important;
                 font-size: 12px;
             }
-            .edit-icons-kit{
+
+            .edit-icons-kit {
                 opacity: 0;
             }
-            .profile_box:hover .edit-icons-kit{
+
+            .profile_box:hover .edit-icons-kit {
                 opacity: 1;
             }
-            .edit-prof-head{
+
+            .edit-prof-head {
                 color: #33475b;
                 /*line-height: 24px;*/
                 font-weight: 500;
                 margin-bottom: 0px;
                 font-size: 14px;
             }
+
             .dropdown-menu.custom-edit-detail-dropdown-show.show {
                 /* box-shadow: none; */
                 width: 19%;
@@ -827,7 +907,8 @@
                 padding: 20px 24px;
                 transform: translate(440px, 133px) !important;
             }
-            .edit-input-fields{
+
+            .edit-input-fields {
                 margin: 7px 0px 15px;
                 width: 100%;
                 font-size: 13px;
@@ -844,7 +925,8 @@
                 display: inline-block;
                 font-weight: 400 !important;
             }
-            .companies-add-forms{
+
+            .companies-add-forms {
                 background-color: #eaf0f6;
                 border-color: #cbd6e2;
                 color: #506e91;
@@ -856,16 +938,18 @@
                 border-width: 1px;
             }
 
-            .edit-input-fields:focus-visible{
+            .edit-input-fields:focus-visible {
                 outline: 0;
                 border: 1px solid #0091ae;
             }
-            .main-edit-btn-box{
+
+            .main-edit-btn-box {
                 display: flex;
                 align-items: center;
                 gap: 12px;
             }
-            .edit-prof-btn{
+
+            .edit-prof-btn {
                 background-color: #425b76;
                 border-color: #425b76;
                 border-radius: 3px;
@@ -878,12 +962,14 @@
                 width: 35%;
 
             }
-            .canel-edition-btn{
+
+            .canel-edition-btn {
                 background-color: #eaf0f6;
                 border-color: #cbd6e2;
                 color: #506e91;
             }
-            }
+
+
 
             .create-contact {
                 font-size: 7px;
@@ -1002,13 +1088,14 @@
                                                    placeholder="Hanny">
                                         </li>
                                         <li>
-                                           <div class="main-edit-btn-box">
+                                            <div class="main-edit-btn-box">
                                                 <button class="edit-prof-btn">
                                                     Save
-                                                </button><button class="edit-prof-btn canel-edition-btn">
+                                                </button>
+                                                <button class="edit-prof-btn canel-edition-btn">
                                                     Cancel
                                                 </button>
-                                           </div>
+                                            </div>
                                         </li>
 
                                     </ul>
@@ -1159,9 +1246,6 @@
                                 </div>
 
 
-
-
-
                             </div>
                         </div>
                     </div>
@@ -1232,6 +1316,8 @@
                                                     <p class="usre_date">Dec 3, 2024 at 4:48 PM GMT+5</p>
                                                 </div>
 
+                                                <div class="collpase-divider mt-2 mb-2"></div>
+
 
                                                 <div>
                                                     <div class="contact-us-text">
@@ -1259,102 +1345,100 @@
                                                 </div>
 
 
-                                                <div class="comment-active_head" id="toggledContent1">
-                                                    <!-- <div class="email-child-wrapper" >
-                                                        <i class="fa fa-commenting-o add-coment-icon" aria-hidden="true"></i>
-                                                        <p class="activities-seprater">
-                                                            Add Comments
-                                                        </p>
-                                                    </div> -->
+                                                <div>
+                                                    <div class="comment-active_head" id="toggledContent1">
 
 
-                                                    <div>
+                                                        <div>
 
-                                                        <div class="email-child-wrapper" id="toggleButton">
-                                                            <i class="fa fa-commenting-o add-coment-icon"
-                                                               aria-hidden="true"></i>
-                                                            <span class="activities-seprater">Add Comments</span>
-                                                        </div>
-
-
-                                                        <div id="contents" class="hidden comment-box">
-                                                            <div class="editor-container">
-                                                                <div class="avatarr">MM</div>
+                                                            <div class="email-child-wrapper" id="toggleButton">
+                                                                <i class="fa fa-commenting-o add-coment-icon"
+                                                                   aria-hidden="true"></i>
+                                                                <span
+                                                                    class="activities-addition-links">Add Comments</span>
+                                                            </div>
 
 
-                                                                <div>
-                                                                    <!-- editor -->
+                                                            <div id="contents" class="hidden comment-box">
+                                                                <div class="editor-container">
+                                                                    <div class="avatarr">MM</div>
 
-                                                                    <!-- <div class="editor-container">
-                                                                        <button
-                                                                            class="your-create-contact create-contact">comment</button>
-                                                                        <button
-                                                                            class="your-comment-cancel">Cancel</button>
-                                                                    </div> -->
+
+                                                                    <div>
+                                                                        <!-- editor -->
+
+                                                                        <!-- <div class="editor-container">
+                                                                            <button
+                                                                                class="your-create-contact create-contact">comment</button>
+                                                                            <button
+                                                                                class="your-comment-cancel">Cancel</button>
+                                                                        </div> -->
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </div>
 
 
+                                                        <div class="dropdown">
+                                                            <div class="dropdown-toggle custom-drop-btn-design ">1
+                                                                Association
+                                                            </div>
+                                                            <div class="dropdown-content">
 
+                                                                <div class="dropdown-content-wraper">
+                                                                    <ul class="nested-select-list">
+                                                                        <li class="checkbox-item">
 
+                                                                            <label>Companies 0</label>
+                                                                        </li>
+                                                                        <li class="checkbox-item">
 
-                                                    <div class="dropdown">
-                                                        <div class="dropdown-toggle custom-drop-btn-design ">1
-                                                            Association
-                                                        </div>
-                                                        <div class="dropdown-content">
+                                                                            <label>Carts 0</label>
+                                                                        </li>
+                                                                        <li class="checkbox-item">
 
-                                                            <div class="dropdown-content-wraper">
-                                                                <ul class="nested-select-list">
-                                                                    <li class="checkbox-item">
+                                                                            <label>Contacts 0</label>
+                                                                        </li>
+                                                                        <li class="checkbox-item">
 
-                                                                        <label>Companies 0</label>
-                                                                    </li>
-                                                                    <li class="checkbox-item">
+                                                                            <label>Leads 0</label>
+                                                                        </li>
+                                                                        <li class="checkbox-item">
 
-                                                                        <label>Carts 0</label>
-                                                                    </li>
-                                                                    <li class="checkbox-item">
+                                                                            <label>Deals 0</label>
+                                                                        </li>
+                                                                        <li class="checkbox-item">
 
-                                                                        <label>Contacts 0</label>
-                                                                    </li>
-                                                                    <li class="checkbox-item">
+                                                                            <label>Orders 0</label>
+                                                                        </li>
+                                                                        <!-- Add more items as needed -->
+                                                                    </ul>
+                                                                    <div>
+                                                                        <div class="search-box-select">
+                                                                            <input type="text"
+                                                                                   placeholder="Search current associations"
+                                                                                   class="search-input">
+                                                                        </div>
+                                                                        <div class="select-contact-box-space">
+                                                                            <p class="select-contact">Contacts</p>
 
-                                                                        <label>Leads 0</label>
-                                                                    </li>
-                                                                    <li class="checkbox-item">
-
-                                                                        <label>Deals 0</label>
-                                                                    </li>
-                                                                    <li class="checkbox-item">
-
-                                                                        <label>Orders 0</label>
-                                                                    </li>
-                                                                    <!-- Add more items as needed -->
-                                                                </ul>
-                                                                <div>
-                                                                    <div class="search-box-select">
-                                                                        <input type="text"
-                                                                               placeholder="Search current associations"
-                                                                               class="search-input">
+                                                                            <input type="checkbox" id="contact2">
+                                                                            <label for="contact2">HoeoSQMLp
+                                                                                becelhmerthewatt@yahoo.com</label>
+                                                                        </div>
                                                                     </div>
-                                                                    <div class="select-contact-box-space">
-                                                                        <p class="select-contact">Contacts</p>
 
-                                                                        <input type="checkbox" id="contact2">
-                                                                        <label for="contact2">HoeoSQMLp
-                                                                            becelhmerthewatt@yahoo.com</label>
-                                                                    </div>
                                                                 </div>
-
                                                             </div>
                                                         </div>
+
+
                                                     </div>
-
-
-
+                                                    <div class="collpase-divider mt-2 mb-2"></div>
+                                                    <div class=" mt-2 mb-2">
+                                                        <a href="#" class="activities-addition-links">View full
+                                                            activity</a>
+                                                    </div>
                                                 </div>
 
                                             </div>
@@ -1573,7 +1657,7 @@
                                 </div>
 
                             </div>
-                            <div class="collapse show" id="collapseExample" >
+                            <div class="collapse show" id="collapseExample">
                                 <div class="card custom-collapse-cards card-body">
                                     <p class="contact-card-subscription-para">
                                         See the businesses or organizations associated with this record.
@@ -1643,20 +1727,18 @@
                             <div class="collpase-divider mt-2 mb-2"></div>
 
 
+                            <div class="collapse-header-prent-box">
+                                <div class="collapse-header-box">
+                                    <i class="fa fa-caret-down" aria-hidden="true"></i>
+                                    <button class="btn custom-btn-collapse" type="button" data-bs-toggle="collapse"
+                                            data-bs-target="#collapseExamplepay" aria-expanded="true"
+                                            aria-controls="collapseExamplepay">
 
-                                <div class="collapse-header-prent-box">
-                                    <div class="collapse-header-box">
-                                        <i class="fa fa-caret-down" aria-hidden="true"></i>
-                                        <button class="btn custom-btn-collapse" type="button" data-bs-toggle="collapse"
-                                                data-bs-target="#collapseExamplepay" aria-expanded="true"
-                                                aria-controls="collapseExamplepay">
-
-                                            Payments <span> (0) </span>
-                                        </button>
-                                    </div>
-
+                                        Payments <span> (0) </span>
+                                    </button>
                                 </div>
 
+                            </div>
 
 
                             <div class="collapse show" id="collapseExamplepay">
@@ -1694,7 +1776,7 @@
                                 </div>
 
                             </div>
-                            <div class="collapse show" id="collapseExampleatt" >
+                            <div class="collapse show" id="collapseExampleatt">
                                 <div class="card custom-collapse-cards card-body">
                                     <p class="contact-card-subscription-para">
                                         See the businesses or organizations associated with this record.
@@ -1703,10 +1785,6 @@
                             </div>
 
                             <div class="collpase-divider mt-2 mb-2"></div>
-
-
-
-
 
 
                         </div>
