@@ -16,10 +16,10 @@ class ContactController extends Controller
      */
     public function index()
     {
-        $brands = Brand::where('status', 1)->get();
-        $teams = Team::where('status', 1)->get();
+        $brands = Brand::all();
+        $teams = Team::all();
         $countries = config('countries');
-        $customer_contacts = CustomerContact::where('status', 1)->withTrashed()->get();
+        $customer_contacts = CustomerContact::all();
         return view('admin.customers.contacts.index', compact('customer_contacts', 'brands', 'teams', 'countries'));
     }
 
