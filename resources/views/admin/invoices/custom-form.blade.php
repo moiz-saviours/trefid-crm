@@ -104,8 +104,7 @@
                 </div>
                 <div class="form-group mb-3">
                     <label for="agent_id" class="form-label">Agent</label>
-                    <select class="form-control searchable" id="agent_id" name="agent_id" title="Please select agent"
-                            >
+                    <select class="form-control searchable" id="agent_id" name="agent_id" title="Please select agent">
                         <option value="" disabled>Select Agent</option>
                         @foreach($users as $user)
                             <option value="{{ $user->id }}" {{ old('agent_id') == $user->id ? 'selected' : '' }}>
@@ -117,10 +116,88 @@
                     <span class="text-danger">{{ $message }}</span>
                     @enderror
                 </div>
+
+                <div class="form-group mb-3">
+                    <label for="due_date" class="form-label">Due Date</label>
+                    <input type="date" class="form-control" id="due_date" name="due_date" value="{{ old('due_date') }}">
+                    @error('due_date')
+                    <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
+
+
+                <div class="form-group mb-3">
+                    <label for="currency" class="form-label">Currency</label>
+                    <select class="form-control" id="currency" name="currency">
+                        <option value="USD" {{ old('currency') == 'USD' ? 'selected' : '' }}>USD</option>
+                        <option value="GBP" {{ old('currency') == 'GBP' ? 'selected' : '' }} disabled>GBP</option>
+                        <option value="AUD" {{ old('currency') == 'AUD' ? 'selected' : '' }} disabled>AUD</option>
+                        <option value="CAD" {{ old('currency') == 'CAD' ? 'selected' : '' }} disabled>CAD</option>
+                    </select>
+                    @error('currency')
+                    <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
                 <div class="form-group mb-3">
                     <label for="amount" class="form-label">Amount</label>
-                    <input type="number" class="form-control" id="amount" name="amount" step="0.01"
+                    <input type="number" class="form-control" id="amount" name="amount" step="1"
                            min="1"
+                           max="4999" value="{{ old('amount') }}" required>
+                    @error('amount')
+                    <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
+                <div class="form-group mb-3">
+                    <label for="taxable" class="form-label d-flex align-items-center">
+                        <input type="checkbox" class="form-check-input me-2" id="taxable" name="taxable"
+                               value="1" {{ old('taxable') ? 'checked' : '' }}>
+                        Is this invoice taxable?
+                    </label>
+                    @error('taxable')
+                    <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
+
+                <div class="form-group mb-3" id="tax-fields" style="display: none;">
+                    <div>
+                        <label for="tax_type" class="form-label">Tax Type</label>
+                        <select class="form-control" id="tax_type" name="tax_type">
+                            <option value="" disabled selected>Select Tax Type</option>
+                            <option value="percentage" {{ old('tax_type') == 'percentage' ? 'selected' : '' }}>
+                                Percentage
+                            </option>
+                            <option value="fixed" {{ old('tax_type') == 'fixed' ? 'selected' : '' }}>Fixed</option>
+                        </select>
+                        @error('tax_type')
+                        <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
+
+                    <div class="mt-3">
+                        <label for="tax_value" class="form-label">Tax Value</label>
+                        <input type="number" class="form-control" id="tax_value" name="tax_value" min="1"
+                               value="{{ old('tax_value') }}">
+                        @error('tax_value')
+                        <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
+
+                    <div class="mt-3">
+                        <label for="tax_amount" class="form-label">Tax Amount</label>
+                        <input type="number" class="form-control" id="tax_amount" name="tax_amount" step="0.01" min="1"
+                               readonly
+                               value="{{ old('tax_amount') }}">
+                        @error('tax_amount')
+                        <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label for="total_amount" class="form-label">Total Amount</label>
+                    <input type="number" class="form-control" id="total_amount" name="total_amount" step="0.01"
+                           min="1"
+                           readonly
                            max="4999" value="{{ old('amount') }}" required>
                     @error('amount')
                     <span class="text-danger">{{ $message }}</span>
@@ -156,5 +233,49 @@
                 $('#cus_contact_key').prop('required', type == 1);
             }).trigger('change');
         });
+
+        $(document).ready(function () {
+            $('#taxable').on('change', function () {
+                if ($(this).is(':checked')) {
+                    $('#tax-fields').slideDown();
+                } else {
+                    $('#tax-fields').slideUp();
+                    $('#tax_type').val('');
+                    $('#tax_value').val('');
+                    $('#tax_amount').val(0);
+                    updateTotalAmount();
+                }
+            });
+
+            $('#tax_type, #tax_value, #amount').on('input change', function () {
+                updateTaxAmount();
+                updateTotalAmount();
+            });
+
+            function updateTaxAmount() {
+                const taxType = $('#tax_type').val();
+                const taxValue = parseFloat($('#tax_value').val());
+                const amount = parseFloat($('#amount').val());
+
+                let taxAmount = 0;
+
+                if (taxType === 'percentage' && !isNaN(taxValue) && !isNaN(amount)) {
+                    taxAmount = (amount * taxValue) / 100;
+                } else if (taxType === 'fixed' && !isNaN(taxValue)) {
+                    taxAmount = taxValue;
+                }
+
+                $('#tax_amount').val(taxAmount.toFixed(2));
+            }
+
+            function updateTotalAmount() {
+                const amount = parseFloat($('#amount').val());
+                const taxAmount = parseFloat($('#tax_amount').val()) || 0;
+                const totalAmount = amount + taxAmount;
+
+                $('#total_amount').val(totalAmount.toFixed(2));
+            }
+        });
+
     </script>
 @endpush

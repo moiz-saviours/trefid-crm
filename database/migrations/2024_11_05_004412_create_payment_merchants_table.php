@@ -27,7 +27,7 @@ return new class extends Migration {
                 $table->integer('limit')->nullable()->default(null);
                 $table->integer('capacity')->nullable()->default(null);
                 $table->enum('environment', ['production', 'sandbox'])->default('sandbox');
-                $table->integer('status')->nullable()->default(1)->comment('0 = inactive, 1 = active, 2 = suspended');
+                $table->enum('status', ['active', 'inactive', 'suspended'])->default('active');
                 $table->softDeletes();
                 $table->timestamps();
 

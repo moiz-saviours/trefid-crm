@@ -60,6 +60,12 @@ class InvoiceController extends Controller
 //            'agent_type' => 'required|string|in:admins,users',
                 'description' => 'nullable|string|max:500',
                 'amount' => 'required|numeric|min:1|max:' . config('invoice.max_amount'),
+                'taxable' => 'nullable|boolean',
+                'tax_type' => 'nullable|in:none,percentage,fixed',
+                'tax_value' => 'nullable|integer|min:0',
+                'currency' => 'nullable|in:USD,GBP,AUD,CAD',
+                'tax_amount' => 'nullable|numeric|min:0',
+                'total_amount' => 'required|numeric|min:1|max:' . config('invoice.max_amount'),
                 'type' => 'required|integer|in:0,1',/** 0 = fresh, 1 = upsale */
             ], [
                 'brand_key.required' => 'The brand field is required.',
@@ -91,6 +97,19 @@ class InvoiceController extends Controller
                 'amount.numeric' => 'The amount must be a number.',
                 'amount.min' => 'The amount must be at least 1.00',
                 'amount.max' => 'The amount may not be greater than ' . config('invoice.max_amount') . '.',
+
+                'taxable.boolean' => 'The taxable field must be true or false.',
+                'tax_type.in' => 'The tax type must be one of the following: none, percentage, fixed.',
+                'tax_value.integer' => 'The tax value must be an integer.',
+                'tax_value.min' => 'The tax value must be at least 0.',
+                'currency.in' => 'The currency must be one of the following: USD, GBP, AUD, CAD.',
+                'tax_amount.numeric' => 'The tax amount must be a valid number.',
+                'tax_amount.min' => 'The tax amount must be at least 0.',
+
+                'total_amount.required' => 'The total amount field is required.',
+                'total_amount.numeric' => 'The total amount must be a number.',
+                'total_amount.min' => 'The total amount must be at least 1.00',
+                'total_amount.max' => 'The total amount may not be greater than ' . config('invoice.max_amount') . '.',
                 'type.required' => 'The invoice type is required.',
                 'type.in' => 'The type field must be fresh or upsale.',
             ]);
@@ -111,12 +130,45 @@ class InvoiceController extends Controller
             if (!$customer_contact->special_key) {
                 return response()->json(['error' => 'The selected customer contact does not exist. Please select a different or create a new one.'], 404);
             }
+
+            $taxable = $request->input('taxable', false);
+            $tax_type = $request->input('tax_type', 'none');
+            $tax_value = $request->input('tax_value', 0);
+            $tax_amount = $request->input('tax_amount', 0);
+            $amount = $request->input('amount');
+            $total_amount = $amount;
+
+            if ($taxable) {
+                if ($tax_type == 'percentage' && $tax_value > 0) {
+                    $calculated_tax_amount = ($amount * $tax_value) / 100;
+                    if ($tax_amount > 0 && $tax_amount != $calculated_tax_amount) {
+                        return response()->json(['error' => 'The provided tax amount does not match the calculated percentage tax.'], 400);
+                    }
+                } elseif ($tax_type == 'fixed' && $tax_value > 0) {
+                    if ($tax_amount > 0 && $tax_amount != $tax_value) {
+                        return response()->json(['error' => 'The provided tax amount does not match the fixed tax value.'], 400);
+                    }
+                } elseif ($tax_type == 'none') {
+                    if ($tax_amount > 0) {
+                        return response()->json(['error' => 'Tax amount should be 0 when tax type is none.'], 400);
+                    }
+                }
+            }
+
+            if ($taxable) {
+                $total_amount = $amount + $tax_amount;
+            }
             $data = [
                 'brand_key' => $request->input('brand_key'),
                 'team_key' => $request->input('team_key'),
                 'cus_contact_key' => $customer_contact->special_key,
                 'description' => $request->input('description'),
                 'amount' => $request->input('amount'),
+                'taxable' => $taxable,
+                'tax_type' => $tax_type,
+                'tax_value' => $tax_value,
+                'tax_amount' => $tax_amount,
+                'total_amount' => $total_amount,
                 'type' => $request->input('type'),
                 'status' => 0,
             ];
