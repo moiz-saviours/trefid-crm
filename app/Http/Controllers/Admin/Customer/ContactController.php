@@ -19,7 +19,7 @@ class ContactController extends Controller
         $brands = Brand::where('status', 1)->get();
         $teams = Team::where('status', 1)->get();
         $countries = config('countries');
-        $customer_contacts = CustomerContact::where('status', 1)->get();
+        $customer_contacts = CustomerContact::where('status', 1)->withTrashed()->get();
         return view('admin.customers.contacts.index', compact('customer_contacts', 'brands', 'teams', 'countries'));
     }
 
