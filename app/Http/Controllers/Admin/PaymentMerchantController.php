@@ -26,7 +26,8 @@ class PaymentMerchantController extends Controller
     public function create()
     {
         $brands = Brand::where('status', 1)->get();
-        return view('admin.payment-merchants.create', compact('brands'));
+        //return view('admin.payment-merchants.create', compact('brands'));
+        return response()->json(['brands' => $brands]);
     }
 
     /**
@@ -62,7 +63,7 @@ class PaymentMerchantController extends Controller
         ]);
 
         $paymentMerchant->save();
-        return response()->json(['success', 'CustomerContact Created Successfully.']);
+        return response()->json(['success', 'Record Created Successfully.']);
        // return redirect()->route('admin.client.index')->with('success', 'Payment Merchant created successfully.');
 
     }
@@ -81,11 +82,14 @@ class PaymentMerchantController extends Controller
      */
     public function edit(Request $request, PaymentMerchant $client)
     {
+
         if ($request->ajax()) {
             return response()->json($client);
         }
         session(['edit_client' => $client]);
+
         return response()->json(['data' => $client]);
+
     }
 
     /**

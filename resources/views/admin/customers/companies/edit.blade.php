@@ -969,8 +969,6 @@
                 color: #506e91;
             }
 
-
-
             .create-contact {
                 font-size: 7px;
             }

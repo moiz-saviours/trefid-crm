@@ -117,7 +117,7 @@
             }
             $('#manage-form')[0].reset();
             $.ajax({
-                url: `{{route('admin.client.edit')}}/` + id,
+                url: `{{route('admin.client.account.edit')}}/` + id,
                 type: 'GET',
                 success: function (data) {
                     setDataAndShowEdit(data);
@@ -129,6 +129,7 @@
         });
 
         function setDataAndShowEdit(data) {
+
             $('#manage-form').data('id', data.id);
 
             $('#brand_key').val(data.brand_key);
@@ -143,7 +144,7 @@
             $('#status').val(data.status);
 
 
-            $('#manage-form').attr('action', `{{route('admin.client.update')}}/` + data.id);
+            $('#manage-form').attr('action', `{{route('admin.client.account.update')}}/` + client.id);
             $('#formContainer').addClass('open')
         }
         const decodeHtml = (html) => {
@@ -158,7 +159,7 @@
             var dataId = $('#manage-form').data('id');
             var formData = new FormData(this);
             if (!dataId) {
-                AjaxRequestPromise(`{{ route("admin.client.store") }}`, formData, 'POST', {useToastr: true})
+                AjaxRequestPromise(`{{ route("admin.client.account.store") }}`, formData, 'POST', {useToastr: true})
                     .then(response => {
                         if (response?.data) {
                             const {id, brand_key, name, descriptor, vendor_name,email, login_id,transaction_key,limit,environment, status} = response.data;
