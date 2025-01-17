@@ -199,8 +199,7 @@ class LeadController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public
-    function delete(Lead $lead)
+    public function delete(Lead $lead)
     {
         try {
 
@@ -217,8 +216,7 @@ class LeadController extends Controller
     /**
      * Change the specified resource status from storage.
      */
-    public
-    function change_lead_status(Request $request, Lead $lead)
+    public function change_lead_status(Request $request, Lead $lead)
     {
         if (!$lead) {
             return response()->json(['error' => 'Please try again later.'], 400);
@@ -240,8 +238,7 @@ class LeadController extends Controller
     /**
      * Change the specified resource status from storage.
      */
-    public
-    function change_status(Request $request, Lead $lead)
+    public function change_status(Request $request, Lead $lead)
     {
         try {
             $lead->status = $request->query('status');
