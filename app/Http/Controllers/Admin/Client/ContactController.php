@@ -86,7 +86,7 @@ class ContactController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|email|max:255|unique:clients,email,' . $client_contact->id,
+            'email' => 'required|email|max:255|unique:client_contacts,email,' . $client_contact->id,
             'phone' => 'nullable|string|max:15',
             'address' => 'nullable|string|max:255',
             'city' => 'nullable|string|max:255',
