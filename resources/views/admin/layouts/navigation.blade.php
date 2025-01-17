@@ -80,6 +80,11 @@
                                    class="nav-link {{ request()->is('admin/dashboard*') ? 'active' : '' }}">Dashboard
                                     1</a>
                             </li>
+                            <li class="nav-item">
+                                <a href="{{route('admin.dashboard.2')}}"
+                                   class="nav-link {{ request()->is('admin/dashboard-2*') ? 'active' : '' }}">Dashboard
+                                    2</a>
+                            </li>
                         </ul>
                         <!-- END : Dashboard submenu list -->
                     </li>

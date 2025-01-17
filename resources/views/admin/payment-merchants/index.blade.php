@@ -100,7 +100,11 @@
                                                 <td class="align-middle text-center text-nowrap">{{ $payment_merchant->transaction_key }}</td>
                                                 <td class="align-middle text-center text-nowrap">{{ $payment_merchant->limit }}</td>
                                                 <td class="align-middle text-center text-nowrap">{{ $payment_merchant->environment }}</td>
-                                                <td class="align-middle text-center text-nowrap">{{ $payment_merchant->status }}</td>
+                                                <td class="align-middle text-center text-nowrap">
+                                                    <input type="checkbox" class="status-toggle change-status"
+                                                           data-id="{{ $payment_merchant->id }}"
+                                                           {{ $payment_merchant->status == "active" ? 'checked' : '' }} data-bs-toggle="toggle">
+                                                </td>
 
                                                 <td class="align-middle text-center table-actions">
                                                     <button type="button" class="btn btn-sm btn-primary editBtn"

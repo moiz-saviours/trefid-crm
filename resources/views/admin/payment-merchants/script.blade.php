@@ -144,7 +144,7 @@
             $('#status').val(data.status);
 
 
-            $('#manage-form').attr('action', `{{route('admin.client.account.update')}}/` + client.id);
+            $('#manage-form').attr('action', `{{route('admin.client.account.update')}}/` + data.id);
             $('#formContainer').addClass('open')
         }
         const decodeHtml = (html) => {
@@ -176,7 +176,9 @@
                                 <td class="align-middle text-center text-nowrap">${transaction_key}</td>
                                 <td class="align-middle text-center text-nowrap">${limit}</td>
                                 <td class="align-middle text-center text-nowrap">${environment}</td>
-                                <td class="align-middle text-center text-nowrap">${status}</td>
+                                 <td class="align-middle text-center text-nowrap">
+                                        <input type="checkbox" class="status-toggle change-status" data-id="${id}" ${status == "active" ? 'checked' : ''} data-bs-toggle="toggle">
+                                    </td>
                                 <td class="align-middle text-center table-actions">
                                     <button type="button" class="btn btn-sm btn-primary editBtn" data-id="${id}" title="Edit">
                                         <i class="fas fa-edit"></i>
@@ -236,9 +238,10 @@
                             if (decodeHtml(rowData[10]) !== environment) {
                                 table.cell(index, 10).data(environment).draw();
                             }
-                            // Column 11: status
-                            if (decodeHtml(rowData[11]) !== status) {
-                                table.cell(index, 11).data(status).draw();
+                            // Column 10: Status
+                            const statusHtml = `<input type="checkbox" class="status-toggle change-status" data-id="${id}" ${status == "active" ? "checked" : ""} data-bs-toggle="toggle">`;
+                            if (decodeHtml(rowData[11]) !== statusHtml) {
+                                table.cell(index, 11).data(statusHtml).draw();
                             }
 
                             $('#manage-form')[0].reset();
@@ -249,10 +252,26 @@
             }
         });
 
+        /** Change Status*/
+        $('tbody').on('change', '.change-status', function () {
+            const statusCheckbox = $(this);
+            const status = +statusCheckbox.is(':checked');
+            const rowId = statusCheckbox.data('id');
+            AjaxRequestPromise(`{{ route('admin.client.account.change.status') }}/${rowId}?status=${status}`, null, 'GET', {useToastr: true})
+                .then(response => {
+                    const rowIndex = table.row($('#tr-' + rowId)).index();
+                    const statusHtml = `<input type="checkbox" class="status-toggle change-status" data-id="${rowId}" ${status ? "checked" : ""} data-bs-toggle="toggle">`;
+                    table.cell(rowIndex, 11).data(statusHtml).draw();
+                })
+                .catch(() => {
+                    statusCheckbox.prop('checked', !status);
+                });
+        });
+
         /** Delete Record */
         $(document).on('click', '.deleteBtn', function () {
             const id = $(this).data('id');
-            AjaxDeleteRequestPromise(`{{ route("admin.client.delete", "") }}/${id}`, null, 'DELETE', {
+            AjaxDeleteRequestPromise(`{{ route("admin.client.account.delete", "") }}/${id}`, null, 'DELETE', {
                 useDeleteSwal: true,
                 useToastr: true,
             })

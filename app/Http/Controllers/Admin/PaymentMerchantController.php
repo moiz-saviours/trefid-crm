@@ -63,7 +63,7 @@ class PaymentMerchantController extends Controller
         ]);
 
         $paymentMerchant->save();
-        return response()->json(['success', 'Record Created Successfully.']);
+        return response()->json(['data' => $paymentMerchant ,'success', 'Record Created Successfully.']);
        // return redirect()->route('admin.client.index')->with('success', 'Payment Merchant created successfully.');
 
     }
@@ -80,22 +80,20 @@ class PaymentMerchantController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Request $request, PaymentMerchant $client)
+    public function edit(Request $request, PaymentMerchant $client_account)
     {
 
         if ($request->ajax()) {
-            return response()->json($client);
+            return response()->json($client_account);
         }
-        session(['edit_client' => $client]);
-
-        return response()->json(['data' => $client]);
+        return response()->json(['data' => $client_account]);
 
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, PaymentMerchant $client)
+    public function update(Request $request, PaymentMerchant $client_account)
     {
         $validator = Validator::make($request->all(), [
             'brand_key' => 'nullable|exists:brands,brand_key',
@@ -115,19 +113,30 @@ class PaymentMerchantController extends Controller
             return response()->json(['errors' => $validator->errors()->all()]);
         }
 
-        $client->update($request->all());
+        $client_account->update($request->all());
 
         return response()->json(['success' => 'CustomerContact updated successfully']);
 
     }
 
+    public function change_status(Request $request, PaymentMerchant $client_account)
+    {
+        try {
+            $client_account->status = $request->query('status');
+            $client_account->save();
+            return response()->json(['success' => 'Status updated successfully']);
+        } catch (\Exception $e) {
+            return response()->json(['error' => ' Internal Server Error', 'message' => $e->getMessage(), 'line' => $e->getLine()], 500);
+        }
+    }
+
     /**
      * Remove the specified resource from storage.
      */
-    public function delete(PaymentMerchant $client)
+    public function delete(PaymentMerchant $client_account)
     {
         try {
-            if ($client->delete()) {
+            if ($client_account->delete()) {
                 return response()->json(['success' => 'The record has been deleted successfully.']);
             }
             return response()->json(['error' => 'An error occurred while deleting the record.']);
