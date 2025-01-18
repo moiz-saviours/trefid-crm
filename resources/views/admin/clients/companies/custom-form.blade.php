@@ -16,7 +16,8 @@
                         @foreach($client_contacts as $client_contact)
                             <option
                                 value="{{ $client_contact->special_key }}"
-                                {{ $client_company->c_contact_key == $client_contact->special_key ? 'selected' : '' }}>
+{{--                                {{ $client_company->c_contact_key == $client_contact->special_key ? 'selected' : '' }}--}}
+                            >
                                 {{ $client_contact->name }}
                             </option>
                         @endforeach
