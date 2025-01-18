@@ -1,23 +1,20 @@
 <?php
 
-use App\Http\Controllers\Admin\{
-    AccountController as AdminAccountController,
-    ProfileController as AdminProfileController,
-    BrandController as AdminBrandController,
+use App\Http\Controllers\Admin\{AccountController as AdminAccountController,
     ActivityLogController as AdminActivityLogController,
+    BrandController as AdminBrandController,
+    Client\CompanyController as AdminClientCompanyController,
+    Client\ContactController as AdminClientContactController,
+    Client\PaymentMerchantController as AdminPaymentMerchantController,
+    Customer\CompanyController as AdminCustomerCompanyController,
+    Customer\ContactController as AdminCustomerContactController,
     EmployeeController as AdminEmployeeController,
-    TeamController as AdminTeamController,
     InvoiceController as AdminInvoiceController,
     LeadController as AdminLeadController,
     LeadStatusController as AdminLeadStatusController,
-    Customer\CompanyController as AdminCustomerCompanyController,
-    Customer\ContactController as AdminCustomerContactController,
-    Client\ContactController as AdminClientContactController,
-    Client\CompanyController as AdminClientCompanyController,
     PaymentController as AdminPaymentController,
-    PaymentMerchantController as AdminPaymentMerchantController,
-};
-
+    ProfileController as AdminProfileController,
+    TeamController as AdminTeamController,};
 use Illuminate\Support\Facades\Route;
 
 

@@ -28,7 +28,7 @@ class LeadController extends Controller
         $brands = Brand::where('status', 1)->get();
         $teams = Team::where('status', 1)->get();
         $clients = CustomerContact::where('status', 1)->get();
-        $leads = Lead::where('status', 1)->with('customer')->get();
+        $leads = Lead::with('customer')->get();
         return view('admin.leads.index', compact('leads', 'brands', 'teams', 'clients'));
     }
 
