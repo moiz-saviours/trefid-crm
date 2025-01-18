@@ -177,7 +177,7 @@
                 } else if (jqXHR.status === 403) {
                     Swal.fire({
                         title: 'Forbidden',
-                        text: 'You do not have permission to perform this action.',
+                        text: jqXHR.responseJSON.error ?? 'You do not have permission to perform this action.',
                         icon: 'error',
                         confirmButtonText: 'OK'
                     });
@@ -247,7 +247,7 @@
         } else if (jqXHR.status === 403) {
             Swal.fire({
                 title: 'Forbidden',
-                text: 'You do not have permission to perform this action.',
+                text: jqXHR.responseJSON.error ?? 'You do not have permission to perform this action.',
                 icon: 'error',
                 confirmButtonText: 'OK'
             });

@@ -30,8 +30,6 @@
 </head>
 <body class="font-sans text-gray-900 antialiased">
 @yield('content')
-
-
 <!--   Core JS Files   -->
 <script src="{{asset('assets/js/core/popper.min.js')}}"></script>
 <script src="{{asset('assets/js/core/bootstrap.min.js')}}"></script>
@@ -48,5 +46,7 @@
 </script>
 <script async defer src="{{asset('assets/js/buttons.js')}}"></script>
 <script src="{{asset('assets/js/dashboard.min.js')}}?v=2.1.0"></script>
+
+@stack('script')
 </body>
 </html>

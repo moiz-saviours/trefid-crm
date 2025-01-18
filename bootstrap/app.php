@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\Cooldown;
 use App\Http\Middleware\LastSeen;
 use App\Http\Middleware\RedirectIfAuthenticated;
 use App\Http\Middleware\Authenticate;
@@ -19,7 +20,7 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        $middleware->web(append: [LastSeen::class,]);
+        $middleware->web(append: [LastSeen::class,Cooldown::class]);
         $middleware->alias([
             'guest' => RedirectIfAuthenticated::class,
             'auth' => Authenticate::class,

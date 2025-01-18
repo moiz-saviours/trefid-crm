@@ -19,7 +19,6 @@
 </head>
 
 <body class="out-quart">
-
 <div id="loader">
     <div class="sk-plane load-spinner"></div>
     <div class="sk-chase load-spinner">
