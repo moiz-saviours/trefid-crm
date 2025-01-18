@@ -34,6 +34,13 @@ class Invoice extends Model
         'invoice_number',
         'description',
         'amount',
+        'due_date',
+        'currency',
+        'taxable',
+        'tax_type',
+        'tax_value',
+        'tax_amount',
+        'total_amount',
         'status',
     ];
 
