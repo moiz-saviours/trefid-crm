@@ -305,7 +305,7 @@
                                                 </style>
                                                 <div class="progress-bar-wrapper">
                                                     <div>
-                                                        <div class="progress" style="width: 187px;">
+                                                        <div class="progress" style="width: 160px;">
                                                             <div class="progress-bar progress-bar-animated bg-primary"
                                                                  role="progressbar" style="width: 40%" aria-valuenow="35"
                                                                  aria-valuemin="0" aria-valuemax="100">
