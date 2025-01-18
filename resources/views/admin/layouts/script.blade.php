@@ -496,26 +496,51 @@
         });
 
         if (formContainer.length > 0) {
-            $('.open-form-btn , .editBtn').click(function () {
+            openCustomForm(formContainer, manageForm);
+            closeCustomForm(formContainer, manageForm);
+        } else {
+            console.warn('#formContainer does not exist.');
+        }
+
+        // Function to open and reset the form
+        function openCustomForm(formContainer, manageForm) {
+            $('.open-form-btn, .editBtn').click(function () {
                 manageForm[0].reset();
                 manageForm.removeData('id');
 
-                $(this).hasClass('void') ? $(this).attr('title', "You don't have access to create a company.").tooltip({placement: 'bottom'}).tooltip('show') : (formContainer.addClass('open'));
-            });
-        } else {
-            // console.warn('#formContainer does not exist.');
-        }
-        $(document).on('click', function (event) {
-            if ((!$(event.target).closest('#formContainer').length && !$(event.target).is('#formContainer') && !$(event.target).closest('.open-form-btn').length && !$(event.target).is('.editBtn')) || $(event.target).is('#formContainer .close-btn')) {
-                $('.form-container').removeClass('open')
-                formContainer.removeClass('open')
-                if (manageForm.length > 0) {
-                    manageForm[0].reset();
-                    manageForm.removeData('id');
-
+                // Show message if no access
+                if ($(this).hasClass('void')) {
+                    $(this).attr('title', "You don't have access to create a company.")
+                        .tooltip({ placement: 'bottom' }).tooltip('show');
+                } else {
+                    formContainer.addClass('open');
                 }
-            }
-        });
+            });
+        }
+
+        // Function to close the form and reset form fields
+        function closeCustomForm(formContainer, manageForm) {
+            return;
+            $(document).on('click', function (event) {
+                if (
+                    (!$(event.target).closest('#formContainer').length &&
+                        !$(event.target).is('#formContainer') &&
+                        !$(event.target).closest('.open-form-btn').length &&
+                        !$(event.target).is('.editBtn')) ||
+                    $(event.target).is('#formContainer .close-btn')
+                ) {
+                    // Close the form
+                    formContainer.removeClass('open');
+                    $('.form-container').removeClass('open');
+
+                    // Reset the form if available
+                    if (manageForm.length > 0) {
+                        manageForm[0].reset();
+                        manageForm.removeData('id');
+                    }
+                }
+            });
+        }
         $(".tab-item").on("click", function () {
             $(".tab-item").removeClass("active");
             $(".tab-pane").removeClass("active");

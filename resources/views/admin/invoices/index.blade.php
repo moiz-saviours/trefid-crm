@@ -160,7 +160,9 @@
                             </div>
                         </div>
                     </div>
-                    @include('admin.invoices.custom-form')
+                    <div id="custom-form-container">
+                        @include('admin.invoices.custom-form')
+                    </div>
                 </div>
             </div>
         </div>

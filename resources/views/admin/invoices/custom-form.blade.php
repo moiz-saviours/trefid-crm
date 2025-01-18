@@ -1,5 +1,7 @@
 <div class="custom-form">
-    <form id="manage-form" method="POST" enctype="multipart/form-data">
+    <form id="manage-form" method="POST" enctype="multipart/form-data" autocomplete="off">
+        <label for="crsf_token" class="form-label d-none">Crsf Token</label>
+        <input type="text" id="crsf_token" name="crsf_token" value="" style="opacity:0;"/>
         <div class="form-container" id="formContainer">
             <!-- Form Header -->
             <div class="form-header fh-1">
@@ -11,7 +13,7 @@
                 <div class="form-group mb-3">
                     <label for="brand_key" class="form-label">Brand</label>
                     <select class="form-control searchable" id="brand_key" name="brand_key"
-                            title="Please select a brand" required>
+                            title="Please select a brand" required autocomplete="off">
                         <option value="" disabled>Please select brand</option>
                         @foreach($brands as $brand)
                             <option
@@ -221,61 +223,65 @@
             </div>
         </div>
     </form>
-</div>
-@push('script')
-    <script>
-        $(document).ready(function () {
-            $('#type').on('change', function () {
-                const type = $(this).val();
-                $('#fresh-customer-contact-fields').toggleClass('d-none', type != 0);
-                $('#customer_contact_name, #customer_contact_email, #customer_contact_phone').prop('required', type == 0);
-                $('#upsale-customer-contact-fields').toggleClass('d-none', type != 1);
-                $('#cus_contact_key').prop('required', type == 1);
-            }).trigger('change');
-        });
+    @push('script')
+        <!------- CUSTOM FORM -------->
+        <script>
+            $(document).ready(function () {
+                $('#type').on('change', function () {
+                    const type = $(this).val();
+                    $('#fresh-customer-contact-fields').toggleClass('d-none', type != 0);
+                    $('#customer_contact_name, #customer_contact_email, #customer_contact_phone').prop('required', type == 0);
+                    $('#upsale-customer-contact-fields').toggleClass('d-none', type != 1);
+                    $('#cus_contact_key').prop('required', type == 1);
+                }).trigger('change');
+            });
 
-        $(document).ready(function () {
-            $('#taxable').on('change', function () {
-                if ($(this).is(':checked')) {
-                    $('#tax-fields').slideDown();
-                } else {
-                    $('#tax-fields').slideUp();
-                    $('#tax_type').val('');
-                    $('#tax_value').val('');
-                    $('#tax_amount').val(0);
+            $(document).ready(function () {
+                $('#taxable').on('change', function () {
+                    if ($(this).is(':checked')) {
+                        $('#tax-fields').slideDown();
+                        $('#tax_type').prop('required', true);
+                        $('#tax_value').prop('required', true);
+                    } else {
+                        $('#tax-fields').slideUp();
+                        $('#tax_type').prop('required', false).val('');
+                        $('#tax_value').prop('required', false).val('');
+                        $('#tax_amount').val(0);
+                        updateTotalAmount();
+                    }
+                });
+
+                $('#tax_type, #tax_value, #amount').on('input change', function () {
+                    updateTaxAmount();
                     updateTotalAmount();
+                });
+
+                function updateTaxAmount() {
+                    const taxType = $('#tax_type').val();
+                    const taxValue = parseFloat($('#tax_value').val());
+                    const amount = parseFloat($('#amount').val());
+
+                    let taxAmount = 0;
+
+                    if (taxType === 'percentage' && !isNaN(taxValue) && !isNaN(amount)) {
+                        taxAmount = (amount * taxValue) / 100;
+                    } else if (taxType === 'fixed' && !isNaN(taxValue)) {
+                        taxAmount = taxValue;
+                    }
+
+                    $('#tax_amount').val(taxAmount.toFixed(2));
+                }
+
+                function updateTotalAmount() {
+                    const amount = parseFloat($('#amount').val());
+                    const taxAmount = parseFloat($('#tax_amount').val()) || 0;
+                    const totalAmount = amount + taxAmount;
+
+                    $('#total_amount').val(totalAmount.toFixed(2));
                 }
             });
 
-            $('#tax_type, #tax_value, #amount').on('input change', function () {
-                updateTaxAmount();
-                updateTotalAmount();
-            });
-
-            function updateTaxAmount() {
-                const taxType = $('#tax_type').val();
-                const taxValue = parseFloat($('#tax_value').val());
-                const amount = parseFloat($('#amount').val());
-
-                let taxAmount = 0;
-
-                if (taxType === 'percentage' && !isNaN(taxValue) && !isNaN(amount)) {
-                    taxAmount = (amount * taxValue) / 100;
-                } else if (taxType === 'fixed' && !isNaN(taxValue)) {
-                    taxAmount = taxValue;
-                }
-
-                $('#tax_amount').val(taxAmount.toFixed(2));
-            }
-
-            function updateTotalAmount() {
-                const amount = parseFloat($('#amount').val());
-                const taxAmount = parseFloat($('#tax_amount').val()) || 0;
-                const totalAmount = amount + taxAmount;
-
-                $('#total_amount').val(totalAmount.toFixed(2));
-            }
-        });
-
-    </script>
-@endpush
+        </script>
+        <!------- CUSTOM FORM -------->
+    @endpush
+</div>
