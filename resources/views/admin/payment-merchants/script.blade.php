@@ -147,6 +147,7 @@
             $('#manage-form').attr('action', `{{route('admin.client.account.update')}}/` + data.id);
             $('#formContainer').addClass('open')
         }
+
         const decodeHtml = (html) => {
             const txt = document.createElement("textarea");
             txt.innerHTML = html;
@@ -162,7 +163,19 @@
                 AjaxRequestPromise(`{{ route("admin.client.account.store") }}`, formData, 'POST', {useToastr: true})
                     .then(response => {
                         if (response?.data) {
-                            const {id, brand_key, name, descriptor, vendor_name,email, login_id,transaction_key,limit,environment, status} = response.data;
+                            const {
+                                id,
+                                brand_key,
+                                name,
+                                descriptor,
+                                vendor_name,
+                                email,
+                                login_id,
+                                transaction_key,
+                                limit,
+                                environment,
+                                status
+                            } = response.data;
                             const index = table.rows().count() + 1;
                             const columns = `
                                 <td class="align-middle text-center text-nowrap"></td>
@@ -199,7 +212,19 @@
                 AjaxRequestPromise(url, formData, 'POST', {useToastr: true})
                     .then(response => {
                         if (response?.data) {
-                            const {id, brand_key, name, descriptor, vendor_name,email, login_id,transaction_key,limit,environment, status} = response.data;
+                            const {
+                                id,
+                                brand_key,
+                                name,
+                                descriptor,
+                                vendor_name,
+                                email,
+                                login_id,
+                                transaction_key,
+                                limit,
+                                environment,
+                                status
+                            } = response.data;
                             const index = table.row($('#tr-' + id)).index();
                             const rowData = table.row(index).data();
                             // Column 2: Brand
@@ -251,6 +276,7 @@
                     .catch(error => console.log(error));
             }
         });
+    });
 
         /** Change Status*/
         $('tbody').on('change', '.change-status', function () {
@@ -298,5 +324,5 @@
                     }
                 });
         });
-    });
+
 </script>

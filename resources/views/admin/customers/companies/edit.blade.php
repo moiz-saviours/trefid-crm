@@ -110,7 +110,7 @@
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
-                padding: 10px 17px;
+                /* padding: 10px 0px; */
 
             }
 
@@ -139,10 +139,10 @@
                 box-sizing: border-box;
                 border-right: 1px solid #ddd;
                 /*overflow-y: scroll;*/
-                height: 850px;
+                /*height: 850px;*/
                 overflow-y: auto !important;
 
-                /* height: 100%; */
+                 height: 100%;
                 /*height: calc(-200px + 100vh);*/
                 /*flex-grow: 1;*/
                 border-radius: 20px 0px 0px 0px;
@@ -166,8 +166,8 @@
             }
 
             /* .avatar-img-box {
-                width: 53px;
-                height: 43px;
+            width: 53px;
+            height: 43px;
             } */
 
             .avatar-img {
@@ -221,6 +221,15 @@
                 border-radius: 4px;
                 padding: 16px 21px;
                 margin-bottom: 20px;
+            }
+
+            .email-box-container-mail-box {
+                background-color: rgb(255, 255, 255);
+                border: 1px solid rgb(223, 227, 235);
+                border-radius: 4px;
+                padding: 16px 21px;
+                margin-bottom: 20px;
+                position: relative;
             }
 
             .customize-select {
@@ -417,8 +426,7 @@
                 width: 100%;
             }
 
-            Another action
-            .contact-card-subscription-para {
+            Another action .contact-card-subscription-para {
                 font-size: 12px;
                 font-weight: 400;
                 line-height: 24px;
@@ -514,7 +522,7 @@
 
             .activity {
                 border: 1px solid #ddd;
-                padding: 21px 19px;
+                padding: 21px 17px;
                 border-radius: 5px;
                 margin-bottom: 10px;
                 background-color: #fff;
@@ -557,10 +565,10 @@
             }
 
             /* .email-child-wrapper {
-                color: #007bff;
-                padding: 10px 15px;
+            color: #007bff;
+            padding: 10px 15px;
 
-                font-size: 14px;
+            font-size: 14px;
             } */
 
             .comment-box {
@@ -642,8 +650,8 @@
 
             .data-highlights {
                 background: white;
-                text-align: center;
-                padding: 12px 4px;
+                /* text-align: center; */
+                padding: 20px 17px;
                 margin-top: 20px;
                 border-radius: 3px;
                 box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
@@ -714,10 +722,12 @@
                 transition: width 0.4s ease;
                 /* Initial small width */
             }
+
             .search-containers.expanded {
                 width: 300px;
                 /* Expanded width */
             }
+
             .search-inputs {
                 border: none;
                 outline: none;
@@ -729,12 +739,14 @@
                 transition: width 0.4s ease;
                 opacity: 1;
             }
+
             .search-containers.expanded .search-inputs {
                 width: 240px;
                 /* Full width inside expanded container */
                 padding-left: 15px;
                 opacity: 1;
             }
+
             .search-btns {
                 background: none;
                 border: none;
@@ -744,9 +756,11 @@
                 font-size: 12px;
                 color: #666;
             }
+
             .search-btns span {
                 font-size: 18px;
             }
+
             .new-activity-dropdown {
                 background-color: #dddddd;
                 border: 1px solid #ccc;
@@ -754,12 +768,15 @@
                 padding: 8px 16px;
                 font-size: 13px;
             }
+
             .new-activity-dropdown:hover {
                 box-shadow: none;
             }
+
             .new-activity-dropdown:focus {
                 box-shadow: none;
             }
+
             .new-activity-dropdown.dropdown-menu.show {
                 box-shadow: none;
                 border: 1px solid #ddd;
@@ -835,6 +852,26 @@
 
             }
 
+            .user-email-template {
+                padding-left: 47px;
+
+            }
+
+            .contentdisplay {
+                display: none;
+
+            }
+
+            .new-profile-email-wrapper {
+                display: flex;
+                gap: 7px;
+            }
+
+            .new-profile-parent-wrapper {
+                display: flex;
+                justify-content: space-between;
+            }
+
 
             .user_profile_text p {
                 margin-bottom: -3px;
@@ -861,7 +898,7 @@
                 font-size: 12px;
                 color: gray;
                 margin: 0;
-                padding: 16px 6px;
+                /* padding: 16px 6px; */
             }
 
             .right_collab {
@@ -1029,7 +1066,6 @@
             .tabs_header input {
                 width: 35%;
             }
-
         </style>
     @endpush
     <section id="content" class="content new-box-main-wrapper">
@@ -1053,7 +1089,8 @@
                             <div class="profile_box">
                                 <!-- <div class="avatar">MM</div> -->
                                 <div class="avatar-img-box">
-                                    <img class="img-fluid avatar-img" src="{{asset ('assets/images/user.png')}}">
+{{--                                    <img class="img-fluid avatar-img" src="img/user.png">--}}
+                                     <img class="img-fluid avatar-img" src="{{asset ('assets/images/user.png')}}">
                                 </div>
                                 <div class="contact-info">
                                     <h2>Mr Malik</h2>
@@ -1063,27 +1100,24 @@
                                 </div>
                                 <div>
 
-                                    <button class="custom-contact-detail-dropdown"
-                                            type="button" id="dropdownMenuButtonedit"
-                                            data-bs-toggle="dropdown" aria-expanded="false">
-                                        <i class="fa fa-pencil prof-edit-icons edit-icons-kit" aria-hidden="true"></i>
+                                    <button class="custom-contact-detail-dropdown" type="button"
+                                            id="dropdownMenuButtonedit" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i class="fa fa-pencil prof-edit-icons edit-icons-kit"
+                                           aria-hidden="true"></i>
                                     </button>
                                     <ul class="dropdown-menu custom-edit-detail-dropdown-show"
                                         aria-labelledby="dropdownMenuButtonedit">
                                         <li>
                                             <p class="edit-prof-head">First Name</p>
-                                            <input class="edit-input-fields " type="text"
-                                                   placeholder="Hanny">
+                                            <input class="edit-input-fields " type="text" placeholder="Hanny">
                                         </li>
                                         <li>
                                             <p class="edit-prof-head">Last Name</p>
-                                            <input class="edit-input-fields " type="text"
-                                                   placeholder="Hanny">
+                                            <input class="edit-input-fields " type="text" placeholder="Hanny">
                                         </li>
                                         <li>
                                             <p class="edit-prof-head">Job Title</p>
-                                            <input class="edit-input-fields " type="text"
-                                                   placeholder="Hanny">
+                                            <input class="edit-input-fields " type="text" placeholder="Hanny">
                                         </li>
                                         <li>
                                             <div class="main-edit-btn-box">
@@ -1302,7 +1336,7 @@
                                             <div class="email-box-container">
                                                 <div class="activ_head" onclick="toggleContent('toggledContent1')">
                                                     <div class="email-child-wrapper">
-                                                        <i class="fa fa-caret-down" aria-hidden="true"></i>
+                                                        <i class="fa fa-caret-right" aria-hidden="true"></i>
                                                         <i class="fa fa-envelope-o new-sidebar-icons"
                                                            aria-hidden="true"></i>
 
@@ -1352,25 +1386,23 @@
                                                             <div class="email-child-wrapper" id="toggleButton">
                                                                 <i class="fa fa-commenting-o add-coment-icon"
                                                                    aria-hidden="true"></i>
-                                                                <span
-                                                                    class="activities-addition-links">Add Comments</span>
+                                                                <span class="activities-addition-links">Add
+                                                                        Comments</span>
                                                             </div>
 
 
                                                             <div id="contents" class="hidden comment-box">
                                                                 <div class="editor-container">
                                                                     <div class="avatarr">MM</div>
-
-
                                                                     <div>
                                                                         <!-- editor -->
 
                                                                         <!-- <div class="editor-container">
-                                                                            <button
-                                                                                class="your-create-contact create-contact">comment</button>
-                                                                            <button
-                                                                                class="your-comment-cancel">Cancel</button>
-                                                                        </div> -->
+                                                                        <button
+                                                                            class="your-create-contact create-contact">comment</button>
+                                                                        <button
+                                                                            class="your-comment-cancel">Cancel</button>
+                                                                    </div> -->
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -1459,7 +1491,41 @@
                                     </div>
                                 </div>
                             </div>
+
+
                             <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+
+                                <div class="activ_head mt-5">
+
+                                    <!-- Searchbox input -->
+                                    <div class="search-containers">
+                                        <form id="search-form" style="margin:0;">
+                                            <input type="text" class="search-inputs" placeholder="Search activities"
+                                                   name="query">
+                                            <button class="search-btns">
+                                                <i class="fa fa-search" aria-hidden="true"></i>
+                                            </button>
+                                        </form>
+                                    </div>
+
+                                    <!-- dropdown  -->
+                                    <div class="dropdown">
+                                        <button class="new-activity-dropdown btn-secondary dropdown-toggle"
+                                                type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown"
+                                                aria-expanded="false">
+                                            Collapse all
+                                        </button>
+                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                            <li><a class="dropdown-item" href="#">Action</a></li>
+                                            <li><a class="dropdown-item" href="#">Another action</a>
+                                            </li>
+                                            <li><a class="dropdown-item" href="#">Something else
+                                                    here</a></li>
+                                        </ul>
+                                    </div>
+
+
+                                </div>
 
                                 <div class="custom-tabs-row">
                                     <ul class="nav nav-tabs newtabs-space" id="myTab" role="tablist">
@@ -1472,55 +1538,27 @@
                                         <li class="nav-item" role="presentation">
                                             <button class="nav-link customize" id="notes-tab" data-bs-toggle="tab"
                                                     data-bs-target="#notes" type="button" role="tab"
-                                                    aria-controls="notes" aria-selected="false"
-                                                    tabindex="-1">Notes
+                                                    aria-controls="notes" aria-selected="false" tabindex="-1">Notes
                                             </button>
                                         </li>
                                         <li class="nav-item" role="presentation">
                                             <button class="nav-link customize" id="email-tab" data-bs-toggle="tab"
                                                     data-bs-target="#email" type="button" role="tab"
-                                                    aria-controls="email" aria-selected="false"
-                                                    tabindex="-1">Emails
+                                                    aria-controls="email" aria-selected="false" tabindex="-1">Emails
                                             </button>
                                         </li>
                                     </ul>
                                     <div class="tab-content" id="myTabContent">
                                         <div class="tab-pane fade show active" id="act" role="tabpanel"
                                              aria-labelledby="act-tab">
-                                            <div class="activ_head">
 
-                                                <!-- Searchbox input -->
-                                                <div class="search-containers">
-                                                    <form id="search-form" style="margin:0;">
-                                                        <input type="text" class="search-inputs"
-                                                               placeholder="Search activities" name="query">
-                                                        <button class="search-btns">
-                                                            <i class="fa fa-search" aria-hidden="true"></i>
-                                                        </button>
-                                                    </form>
-                                                </div>
-
-                                                <!-- dropdown  -->
-                                                <div class="dropdown">
-                                                    <button
-                                                        class="new-activity-dropdown btn-secondary dropdown-toggle"
-                                                        type="button" id="dropdownMenuButton1"
-                                                        data-bs-toggle="dropdown" aria-expanded="false">
-                                                        Collapse all
-                                                    </button>
-                                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                                        <li><a class="dropdown-item" href="#">Action</a></li>
-                                                        <li><a class="dropdown-item" href="#">Another action</a>
-                                                        </li>
-                                                        <li><a class="dropdown-item" href="#">Something else
-                                                                here</a></li>
-                                                    </ul>
-                                                </div>
-
-
-                                            </div>
 
                                             <div>
+                                                <div>
+                                                    <p class="recent-filters"> Filter by:
+                                                        <span class="activities-seprater">7 activities</span>
+                                                    </p>
+                                                </div>
                                                 <p class="date-by-order"> May 2021</p>
                                                 <div class="data-highlights">
                                                     <div class="data-top-heading-header">
@@ -1529,80 +1567,125 @@
                                                     </div>
                                                     <p class="user_cont"> No associated objects of this
                                                         type
-                                                        exist or you don't have permission to view them.</p>
+                                                        exist or you don't have permission to view them.
+                                                        <span class="activities-seprater"> View detail <i
+                                                                class="fa fa-external-link" aria-hidden="true"></i>
+                                                            </span>
+                                                    </p>
                                                 </div>
 
                                                 <div class="recent-activities">
-                                                    <h2>Recent activities</h2>
-                                                    <div class="activity">
-                                                        <div class="activ_head">
-                                                            <p>
-                                                                Inbound email from
-                                                                <span class="user_name">Mr Malik</span>
-                                                            </p>
-                                                            <p class="usre_date">Dec 3, 2024 at 4:48 PM GMT+5
-                                                            </p>
-                                                        </div>
 
-                                                        <div>
-                                                            <div class="user_profile">
-                                                                <div class="user_profile_img">
-                                                                    <div class="avatarr">MM</div>
+
+                                                    <div class="email-box-container ">
+                                                        <div class="toggle-btnss">
+                                                            <div class="activ_head ">
+                                                                <div class="email-child-wrapper">
+                                                                    <i class="fa fa-caret-right"
+                                                                       aria-hidden="true"></i>
+                                                                    <h2>
+                                                                        Email - #Professional Image Editing <span
+                                                                            class="user_cont">from
+                                                                                Harry
+                                                                                Brown</span></h2>
                                                                 </div>
-                                                                <div class="user_profile_text">
-                                                                    <p>Mike Stewar mikestewar1932@outlook.com
-                                                                    </p>
-                                                                    <p>to info@phototouchexpert.com</p>
-                                                                </div>
+                                                                <p>12/03/2024 4:48 PM GMT+5</p>
                                                             </div>
                                                         </div>
-                                                        <div class="user_cont">
+
+
+                                                        <div>
+                                                            <!-- <div class="contact-us-text">
+                                                                --
+                                                            </div> -->
+                                                            <div class="contentdisplay ">
+
+                                                                <div class="new-profile-parent-wrapper">
+                                                                    <div class="new-profile-email-wrapper">
+                                                                        <div class="user_profile_img">
+                                                                            <div class="avatarr">MS</div>
+                                                                        </div>
+                                                                        <div class="user_profile_text">
+                                                                            <p>Mike Stewar</p>
+                                                                            <p style="font-weight: 500">--
+                                                                            </p>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="new-profile-email-wrapper">
+                                                                        <div
+                                                                            class="activities-seprater  open-email-form" style="position: relative">
+                                                                            Reply
+                                                                        </div>
+
+
+
+
+                                                                        <div
+                                                                            class="activities-seprater open-form-btn">
+                                                                            Forward
+                                                                        </div>
+                                                                        <div
+                                                                            class="activities-seprater open-form-btn">
+                                                                            Delete
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <!-- <div class="user_profile-hidden activ_head "
+                                                                id="toggledContent01">
+                                                                <div class="">
+                                                                    <div class="user_profile_img">
+                                                                        <div class="avatarr">MM</div>
+                                                                    </div>
+                                                                    <div class="user_profile_text">
+                                                                        <p>Mike Stewar mikestewar1932@outlook.com
+                                                                        </p>
+                                                                        <p style="font-weight: 500">--
+                                                                        </p>
+                                                                    </div>
+                                                                </div>
+                                                                <div>
+                                                                    <i class="fa fa-plus companies-add-forms open-form-btn"
+                                                                        aria-hidden="true"> Add</i>
+                                                                </div>
+                                                            </div> -->
+                                                        </div>
+                                                        <div class="user_cont user-email-template">
                                                             <p>
-                                                                Hi there, I hope you're doing well. I specialize
-                                                                in
-                                                                online reputation management and can help boost
-                                                                your
-                                                                business's presence by generating positive
-                                                                reviews
+                                                                Hi, <br> I hope you're doing well. I specialize in
+                                                                online reputation management and can help boost your
+                                                                business's presence by generating positive reviews
                                                                 and
                                                                 addressing any negative feedback.
                                                             </p>
                                                         </div>
+                                                        <!-- <div class="user_cont-toggler">
+                                                            <p>
+                                                                Hi, <br> I hope you're doing well. I specialize in
+                                                                online reputation management and can help boost your
+                                                                business's presence by generating positive reviews
+                                                                and
+                                                                addressing any negative feedback.
+                                                            </p>
+                                                        </div> -->
+
+
                                                     </div>
-                                                    <div class="activity">
-                                                        <div class="activ_head">
-                                                            <p>
-                                                                Inbound email from
-                                                                <span class="user_name">Mr Malik</span>
-                                                            </p>
-                                                            <p class="usre_date">Dec 3, 2024 at 4:48 PM GMT+5
-                                                            </p>
-                                                        </div>
 
-                                                        <div>
-                                                            <div class="user_profile">
-                                                                <div class="user_profile_img">
-                                                                    <div class="avatarr">MM</div>
-                                                                </div>
-                                                                <div class="user_profile_text">
-                                                                    <p>Mike Stewar mikestewar1932@outlook.com
-                                                                    </p>
-                                                                    <p>to info@phototouchexpert.com</p>
-                                                                </div>
-                                                            </div>
+                                                    <div class="data-highlights">
+                                                        <div class="data-top-heading-header">
+                                                            <h2>Life Cycle</h2>
+                                                            <p>This contact was created </p>
                                                         </div>
-                                                        <div class="user_cont">
-                                                            <p>
-                                                                Hi there, I hope you're doing well. I specialize
-                                                                in
-                                                                online reputation management and can help boost
-                                                                your
-                                                                business's presence by generating positive
-                                                                reviews
-                                                                and
-                                                                addressing any negative feedback.
-                                                            </p>
-                                                        </div>
+                                                        <p class="user_cont"> No associated objects of this
+                                                            type
+                                                            exist or you don't have permission to view them.
+                                                            <span class="activities-seprater"> View detail <i
+                                                                    class="fa fa-external-link"
+                                                                    aria-hidden="true"></i>
+                                                                </span>
+                                                        </p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1639,9 +1722,9 @@
                                 <div class="collapse-header-prent-box">
                                     <div class="collapse-header-box">
                                         <i class="fa fa-caret-down" aria-hidden="true"></i>
-                                        <button class="btn custom-btn-collapse" type="button" data-bs-toggle="collapse"
-                                                data-bs-target="#collapseExample" aria-expanded="true"
-                                                aria-controls="collapseExample">
+                                        <button class="btn custom-btn-collapse" type="button"
+                                                data-bs-toggle="collapse" data-bs-target="#collapseExample"
+                                                aria-expanded="true" aria-controls="collapseExample">
 
                                             Company <span> (1) </span>
                                         </button>
@@ -1670,9 +1753,9 @@
                                 <div class="collapse-header-prent-box">
                                     <div class="collapse-header-box">
                                         <i class="fa fa-caret-down" aria-hidden="true"></i>
-                                        <button class="btn custom-btn-collapse" type="button" data-bs-toggle="collapse"
-                                                data-bs-target="#collapseExampleone" aria-expanded="true"
-                                                aria-controls="collapseExampleone">
+                                        <button class="btn custom-btn-collapse" type="button"
+                                                data-bs-toggle="collapse" data-bs-target="#collapseExampleone"
+                                                aria-expanded="true" aria-controls="collapseExampleone">
 
                                             Tickets <span> (0) </span>
                                         </button>
@@ -1699,9 +1782,9 @@
                                 <div class="collapse-header-prent-box">
                                     <div class="collapse-header-box">
                                         <i class="fa fa-caret-down" aria-hidden="true"></i>
-                                        <button class="btn custom-btn-collapse" type="button" data-bs-toggle="collapse"
-                                                data-bs-target="#collapseExampledeal" aria-expanded="true"
-                                                aria-controls="collapseExampledeal">
+                                        <button class="btn custom-btn-collapse" type="button"
+                                                data-bs-toggle="collapse" data-bs-target="#collapseExampledeal"
+                                                aria-expanded="true" aria-controls="collapseExampledeal">
 
                                             Deals <span> (0) </span>
                                         </button>
@@ -1758,9 +1841,9 @@
                                 <div class="collapse-header-prent-box">
                                     <div class="collapse-header-box">
                                         <i class="fa fa-caret-down" aria-hidden="true"></i>
-                                        <button class="btn custom-btn-collapse" type="button" data-bs-toggle="collapse"
-                                                data-bs-target="#collapseExampleatt" aria-expanded="true"
-                                                aria-controls="collapseExampleatt">
+                                        <button class="btn custom-btn-collapse" type="button"
+                                                data-bs-toggle="collapse" data-bs-target="#collapseExampleatt"
+                                                aria-expanded="true" aria-controls="collapseExampleatt">
 
                                             Attachments
                                         </button>
@@ -1792,7 +1875,8 @@
         </div>
     </section>
 
-    @include('admin.customers.companies.custom-form');
+    @include('admin.customers.companies.custom-form')
+    @include('admin.customers.companies.email-template')
 
     @push('script')
         @include('admin.customers.companies.script')
@@ -1871,6 +1955,34 @@
                     }
                 });
             });
+
+            // NEw
+            // Function hide and show
+            $(document).ready(function () {
+                $(".toggle-btnss").click(function () {
+                    $(".contentdisplay").slideToggle(); // Smoothly show or hide content
+                });
+            });
+            //new
+
+            // EMAIL TEMPLATE OPEN AND CLOSE
+            $(document).ready(function () {
+                const emailTemplate = $('#emailTemplate');
+
+                // Open form
+                $('.open-email-form').click(function () {
+                    emailTemplate.addClass('open');
+
+                });
+
+                // Close form
+                $('.close-btn').click(function () {
+                    emailTemplate.removeClass('open');
+
+                });
+            });
+
+
         </script>
     @endpush
 @endsection
