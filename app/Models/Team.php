@@ -52,6 +52,11 @@ class Team extends Model
             ->withTimestamps();
     }
 
+    public function targets()
+    {
+        return $this->hasMany(TeamTarget::class, 'team_key','team_key');
+    }
+
     protected static function boot()
     {
         parent::boot();

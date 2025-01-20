@@ -17,6 +17,7 @@ use App\Http\Controllers\Admin\{
     PaymentController as AdminPaymentController,
     ProfileController as AdminProfileController,
     TeamController as AdminTeamController,
+    TeamTargetController as AdminTeamTargetController,
 };
 use Illuminate\Support\Facades\Route;
 
@@ -24,6 +25,7 @@ require __DIR__ . '/admin-auth.php';
 Route::middleware(['auth:admin', 'verified:admin', 'throttle:60,1'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [AdminDashboardController::class, 'index_1'])->name('dashboard');
     Route::get('/dashboard-2', [AdminDashboardController::class, 'index_2'])->name('dashboard.2');
+    Route::get('/dashboard-2-update-stats', [AdminDashboardController::class, 'index_2_update_stats'])->name('dashboard.2.update.stats');
     /** Profile Routes */
     Route::prefix('profile')->name('profile.')->group(function () {
         Route::get('/', [AdminProfileController::class, 'edit'])->name('edit');
@@ -76,6 +78,19 @@ Route::middleware(['auth:admin', 'verified:admin', 'throttle:60,1'])->prefix('ad
             Route::delete('/delete/{team?}', [AdminTeamController::class, 'delete'])->name('delete');
         });
     });
+    /** Team Routes */
+    Route::name('team-target.')->group(function () {
+        Route::get('/team-targets', [AdminTeamTargetController::class, 'index'])->name('index');
+        Route::prefix('team-target')->group(function () {
+            Route::get('/create', [AdminTeamTargetController::class, 'create'])->name('create');
+            Route::post('/store', [AdminTeamTargetController::class, 'store'])->name('store');
+            Route::get('/edit/{team?}', [AdminTeamTargetController::class, 'edit'])->name('edit');
+            Route::post('/update/{team_key}/{month}/{year}', [AdminTeamTargetController::class, 'update'])->name('update');
+            Route::get('/change-status/{team?}', [AdminTeamTargetController::class, 'change_status'])->name('change.status');
+            Route::delete('/delete/{team?}', [AdminTeamTargetController::class, 'delete'])->name('delete');
+        });
+    });
+
     /** Invoice Routes */
     Route::name('invoice.')->group(function () {
         Route::get('/invoices', [AdminInvoiceController::class, 'index'])->name('index');

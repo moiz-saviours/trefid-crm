@@ -7,44 +7,54 @@
             color: #fff;
             font-size: 12px;
         }
+
         .btn-minimize:hover {
             background-color: #ff5722;
             color: #fff;
         }
+
         .clos_btn {
-            background-color:#2d3e50;
+            background-color: #2d3e50;
             color: #fff;
             font-size: 12px;
         }
+
         .clos_btn:hover {
-            background-color:#2d3e50;
+            background-color: #2d3e50;
             color: #fff;
         }
+
         .right_col {
             display: block;
         }
+
         .right_col .card {
             margin: 20px 0px;
         }
+
         .dashbord_tbl {
             border-collapse: collapse;
             width: 100%;
         }
+
         .tabl_th {
             background-color: #2d3e50;
             text-align: center;
             padding: 15px 0px;
             color: #fff;
         }
+
         .tabl_td, .tabl_th {
             text-align: left;
             padding: 15px 0px;
-            text-align:center;
+            text-align: center;
         }
+
         .tabl_tr:nth-child(odd) {
             background-color: #98a3b0;
             color: #fff;
         }
+
         .tabl_tr:nth-child(even) {
             background-color: #fff;
             color: #000 !important;
@@ -92,13 +102,11 @@
         }
 
         .sales-total-heading {
-            color: blue;
+            color: var(--bs-primary);
             font-size: 15px;
-
         }
 
-        .total-sales-count {
-
+        .sales-number-div > p {
             margin: 0;
             font-size: 14px;
             color: #000;
@@ -124,14 +132,14 @@
             appearance: none;
             width: 25px;
             height: 25px;
-            background: blue;
+            background: var(--bs-primary);
             cursor: pointer;
         }
 
         .slider::-moz-range-thumb {
             width: 25px;
             height: 25px;
-            background: blue;
+            background: var(--bs-primary);
             cursor: pointer;
         }
 
@@ -174,7 +182,7 @@
         }
 
         .sales-record-table-container::-webkit-scrollbar-thumb {
-            background-color: blue;
+            background-color: var(--bs-primary);
             /* color of the scroll thumb */
             /* border-radius: 20px; */
             /* roundness of the scroll thumb */
@@ -204,9 +212,11 @@
             border-radius: 7px;
         }
 
-        .table-headings {}
+        .table-headings {
+        }
 
-        .monthly-sales-record-table {}
+        .monthly-sales-record-table {
+        }
 
         .monthly-sales-record-table tr:nth-child(even) {
             background-color: #fff !important;
@@ -222,16 +232,15 @@
             justify-content: space-between;
             align-items: baseline;
         }
-        </style>
+    </style>
     <section id="content" class="content">
         <div class="content__header content__boxed overlapping">
             <div class="content__wrap">
                 <!-- Page title and information -->
-                <h1 class="page-title mb-2">Dashboard</h1>
-                <h2 class="h5">Welcome back to the Dashboard.</h2>
-                <p>Scroll down to see quick links and overviews of your Server, To do list<br> Order status or get some
-                    Help using Nifty.</p>
-                <!-- END : Page title and information -->
+                <h1 class="page-title mb-2">Stats Dashboard</h1>
+                {{--                <h2 class="h5">Welcome to the Stats Dashboard.</h2>--}}
+                <p>Welcome to the Stats Dashboard.</p>
+                {{--                <!-- END : Page title and information -->--}}
             </div>
         </div>
         <div class="content__boxed">
@@ -245,10 +254,15 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="main-dashboard-header">
-                                <h2 class="main-dashboard-heading">TL Dashboard</h2>
+                                <h2 class="main-dashboard-heading"></h2>
+                                <div class="form-group">
+                                    <label for="dateRangePicker">Select Date Range:</label>
+                                    <input type="text" id="dateRangePicker" name="dateRangePicker"
+                                           class="form-control dateRangePicker"/>
+                                </div>
 
-                                <input type="date" id="start" name="trip-start" value="2018-07-22" min="2018-01-01"
-                                       max="2018-12-31" class="main-date-input" />
+                                {{--                                <input type="date" id="start" name="trip-start" value="2018-07-22" min="2018-01-01"--}}
+                                {{--                                       max="2018-12-31" class="main-date-input"/>--}}
 
                             </div>
                         </div>
@@ -258,7 +272,7 @@
                                 <div class="col-lg-2 col-md-2">
                                     <div class="sales-number-div text-center">
                                         <h2 class="sales-total-heading">Total Sales</h2>
-                                        <p class="total-sales-count"> $256,580 </p>
+                                        <p id="total-sales-count" class="total-sales-count"> $256,580 </p>
                                     </div>
                                 </div>
                                 <div class="col-lg-2 col-md-2">
@@ -270,13 +284,13 @@
                                 <div class="col-lg-2 col-md-2">
                                     <div class="sales-number-div text-center">
                                         <h2 class="sales-total-heading">Refunds / Chargeback</h2>
-                                        <p class="total-sales-count"> $8,041 / $3,248 </p>
+                                        <p id="refund-charge-back" class="total-sales-count"> $8,041 / $3,248 </p>
                                     </div>
                                 </div>
                                 <div class="col-lg-2 col-md-2">
                                     <div class="sales-number-div text-center">
                                         <h2 class="sales-total-heading">Chargeback Ratio</h2>
-                                        <p class="total-sales-count"> 1 % </p>
+                                        <p id="charge-back-ratio" class="total-sales-count"> 1 % </p>
                                     </div>
                                 </div>
                                 <div class="col-lg-2 col-md-2">
@@ -307,7 +321,8 @@
                                                     <div>
                                                         <div class="progress" style="width: 160px;">
                                                             <div class="progress-bar progress-bar-animated bg-primary"
-                                                                 role="progressbar" style="width: 40%" aria-valuenow="35"
+                                                                 role="progressbar" style="width: 40%"
+                                                                 aria-valuenow="35"
                                                                  aria-valuemin="0" aria-valuemax="100">
 
                                                             </div>
@@ -490,213 +505,282 @@
                 </div>
 
 
-
                 <!-- new dashboard content end -->
             </div>
         </div>
-
 
 
     </section>
 
     @push('script')
         <script>
-
             // Bar Chart
-            var options = {
-                series: [{
-                    name: 'Team A',
-                    type: 'column',
-                    data: [1.4, 2, 2.5, 1.5, 2.5, 2.8, 3.8, 4.6]
-                }, {
-                    name: 'Team B',
-                    type: 'column',
-                    data: [1.1, 3, 3.1, 4, 4.1, 4.9, 6.5, 8.5]
-                },{
+            if ($(".barchart").length > 0) {
+                var options = {
+                    series: [{
+                        name: 'Team A',
+                        type: 'column',
+                        data: [1.4, 2, 2.5, 1.5, 2.5, 2.8, 3.8, 4.6]
+                    }, {
+                        name: 'Team B',
+                        type: 'column',
+                        data: [1.1, 3, 3.1, 4, 4.1, 4.9, 6.5, 8.5]
+                    }, {
                         name: 'Team C',
                         type: 'column',
                         data: [1.1, 3, 3.1, 4, 4.1, 4.9, 6.5, 8.5]
                     },],
-                chart: {
-                    height: 350,
-                    type: 'line',
-                    stacked: false
-                },
-                colors: ['#2d3e50', '#ff5722','#98a3b0'], // Custom colors for series
-                dataLabels: {
-                    enabled: false
-                },
-                stroke: {
-                    width: [1, 1, 1]
-                },
-
-                xaxis: {
-                    categories: [2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016],
-                },
-
-                tooltip: {
-                    fixed: {
-                        enabled: true,
-                        position: 'topLeft',
-                        offsetY: 30,
-                        offsetX: 60
+                    chart: {
+                        height: 350,
+                        type: 'line',
+                        stacked: false
                     },
-                },
+                    colors: ['#2d3e50', '#ff5722', '#98a3b0'], // Custom colors for series
+                    dataLabels: {
+                        enabled: false
+                    },
+                    stroke: {
+                        width: [1, 1, 1]
+                    },
 
-            };
+                    xaxis: {
+                        categories: [2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016],
+                    },
 
+                    tooltip: {
+                        fixed: {
+                            enabled: true,
+                            position: 'topLeft',
+                            offsetY: 30,
+                            offsetX: 60
+                        },
+                    },
+
+                };
                 var barchart = new ApexCharts($(".barchart")[0], options);
                 barchart.render();
+            }
             // Bar Chart
 
             // Area Chart
-            var options = {
-                series: [{
-                    name: 'TEAM A',
-                    type: 'area',
-                    data: [44, 55, 31, 47, 31, 43, 26, 41, 31, 47, 33,60]
-                }, {
-                    name: 'TEAM B',
-                    type: 'line',
-                    data: [55, 69, 45, 61, 43, 54, 37, 52, 44, 61, 43,60]
-                }],
-                chart: {
-                    height: 350,
-                    type: 'line',
-                },
-                stroke: {
-                    curve: 'smooth'
-                },
-                fill: {
-                    type:'solid',
-                    opacity: [0.35, 1],
-                },
+            if ($(".areachart").length > 0) {
+                var options = {
+                    series: [{
+                        name: 'TEAM A',
+                        type: 'area',
+                        data: [44, 55, 31, 47, 31, 43, 26, 41, 31, 47, 33, 60]
+                    }, {
+                        name: 'TEAM B',
+                        type: 'line',
+                        data: [55, 69, 45, 61, 43, 54, 37, 52, 44, 61, 43, 60]
+                    }],
+                    chart: {
+                        height: 350,
+                        type: 'line',
+                    },
+                    stroke: {
+                        curve: 'smooth'
+                    },
+                    fill: {
+                        type: 'solid',
+                        opacity: [0.35, 1],
+                    },
 
-                colors: ['#2d3e50', '#ff5722'],
-                labels: ['Jan', 'Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
+                    colors: ['#2d3e50', '#ff5722'],
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
 
-                tooltip: {
-                    shared: true,
-                    intersect: false,
+                    tooltip: {
+                        shared: true,
+                        intersect: false,
 
-                }
-            };
-
-            var areachart = new ApexCharts($(".areachart")[0], options);
-            areachart.render();
+                    }
+                };
+                var areachart = new ApexCharts($(".areachart")[0], options);
+                areachart.render();
+            }
             // Area Chart
 
             //Pie Chart
-            var options = {
-                series: [44, 55, 60],
-                chart: {
-                    type: 'pie',
-                    toolbar: {
-                        show: true,
-                    },
-                },
-                colors: ['#2d3e50', '#ff5722','#98a3b0'],
-                labels: ['Team A', 'Team B', 'Team C'],
-                legend: {
-                    position: 'right',
-                },
-
-                responsive: [{
-                    breakpoint: 480,
-                    options: {
-                        chart: {
-                            width: 300
+            if ($(".pieChart").length > 0) {
+                var options = {
+                    series: [44, 55, 60],
+                    chart: {
+                        type: 'pie',
+                        toolbar: {
+                            show: true,
                         },
-                        legend: {
-                            position: 'bottom'
-                        }
-                    }
-                }]
-            };
+                    },
+                    colors: ['#2d3e50', '#ff5722', '#98a3b0'],
+                    labels: ['Team A', 'Team B', 'Team C'],
+                    legend: {
+                        position: 'right',
+                    },
 
-            var pieChart = new ApexCharts($(".pieChart")[0], options);
-            pieChart.render();
+                    responsive: [{
+                        breakpoint: 480,
+                        options: {
+                            chart: {
+                                width: 300
+                            },
+                            legend: {
+                                position: 'bottom'
+                            }
+                        }
+                    }]
+                };
+                var pieChart = new ApexCharts($(".pieChart")[0], options);
+                pieChart.render();
+            }
             //Pie Chart
 
             //Donut Chart
-            var options = {
-                series: [44, 55, 60],
-                chart: {
-                    type: 'donut',
-                    toolbar: {
-                        show: true,
-                    },
-                },
-
-                colors: ['#2d3e50', '#ff5722','#98a3b0'],
-                labels: ['Team A', 'Team B', 'Team C'],
-
-                legend: {
-                    position: 'right',
-                },
-                responsive: [{
-                    breakpoint: 480,
-                    options: {
-                        chart: {
-                            width: 300
+            if ($(".donutchart").length > 0) {
+                var options = {
+                    series: [44, 55, 60],
+                    chart: {
+                        type: 'donut',
+                        toolbar: {
+                            show: true,
                         },
-                        legend: {
-                            position: 'bottom'
-                        }
-                    }
-                }]
-            };
+                    },
 
-            var donutchart = new ApexCharts($(".donutchart")[0], options);
-            donutchart.render();
+                    colors: ['#2d3e50', '#ff5722', '#98a3b0'],
+                    labels: ['Team A', 'Team B', 'Team C'],
+
+                    legend: {
+                        position: 'right',
+                    },
+                    responsive: [{
+                        breakpoint: 480,
+                        options: {
+                            chart: {
+                                width: 300
+                            },
+                            legend: {
+                                position: 'bottom'
+                            }
+                        }
+                    }]
+                };
+                var donutchart = new ApexCharts($(".donutchart")[0], options);
+                donutchart.render();
+            }
             //Donut Chart
 
             //Radial Chart
-            var options = {
-                series: [50, 55, 75], // Restricting to 3 values
-                chart: {
+            if ($(".radialchart").length > 0) {
+                var options = {
+                    series: [50, 55, 75], // Restricting to 3 values
+                    chart: {
 
-                    type: 'radialBar',
-                    toolbar: {
-                        show: true, // Toolbar enabled for download
-                        tools: {
-                            download: true // Allow chart download
-                        }
+                        type: 'radialBar',
+                        toolbar: {
+                            show: true, // Toolbar enabled for download
+                            tools: {
+                                download: true // Allow chart download
+                            }
+                        },
                     },
-                },
-                colors: ['#2d3e50', '#ff5722','#98a3b0'], // Custom colors
-                plotOptions: {
-                    radialBar: {
-                        hollow: {
-                            size: '30%',
-                        },
-                        track: {
-                            strokeWidth: '50%',
-                        },
-                        dataLabels: {
-                            name: {
-                                fontSize: '22px',
+                    colors: ['#2d3e50', '#ff5722', '#98a3b0'], // Custom colors
+                    plotOptions: {
+                        radialBar: {
+                            hollow: {
+                                size: '30%',
                             },
-                            value: {
-                                fontSize: '16px',
+                            track: {
+                                strokeWidth: '50%',
                             },
-                            total: {
-                                show: true,
-                                label: 'Total',
-                                formatter: function (w) {
-                                    return 166; // Total of 3 series values
+                            dataLabels: {
+                                name: {
+                                    fontSize: '22px',
+                                },
+                                value: {
+                                    fontSize: '16px',
+                                },
+                                total: {
+                                    show: true,
+                                    label: 'Total',
+                                    formatter: function (w) {
+                                        return 166; // Total of 3 series values
+                                    }
                                 }
                             }
                         }
-                    }
-                },
-                labels: ['Apples', 'Oranges', 'Bananas'], // Only 3 labels
+                    },
+                    labels: ['Apples', 'Oranges', 'Bananas'], // Only 3 labels
 
-            };
-            var radialchart = new ApexCharts($(".radialchart")[0], options);
-            radialchart.render();
+                };
+                var radialchart = new ApexCharts($(".radialchart")[0], options);
+                radialchart.render();
+            }
             //Radial Chart
 
         </script>
+
+        <!-- Date Range Picker -->
+        <script src="{{asset('assets/js/moment.min.js')}}"></script>
+        <script src="{{asset('assets/js/plugins/daterangepicker/daterangepicker.min.js')}}"></script>
+        <script>
+            function dateRangePicker(input) {
+                input.daterangepicker({
+                    locale: {
+                        format: 'YYYY-MM-DD'
+                    },
+                    startDate: moment().startOf('month'), // Default start date (beginning of current month)
+                    endDate: moment().endOf('month'), // Default end date (end of current month)
+                    ranges: {
+                        'Today': [moment(), moment()],
+                        'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                        'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+                        'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+                        'This Month': [moment().startOf('month'), moment().endOf('month')],
+                        'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+                    }
+                });
+            }
+
+            $(document).ready(function () {
+                // Initialize daterangepicker if element with ID exists
+                if ($('#dateRangePicker').length) {
+                    dateRangePicker($('#dateRangePicker'));
+                }
+
+                // Send date range request to update stats on page load with default range
+                let defaultStartDate = moment().startOf('month').format('YYYY-MM-DD');
+                let defaultEndDate = moment().endOf('month').format('YYYY-MM-DD');
+                sendDatePickerReq(defaultStartDate, defaultEndDate);
+
+                // Listen to 'apply' event and send the selected date range
+                $('#dateRangePicker').on('apply.daterangepicker', function (ev, picker) {
+                    var startDate = picker.startDate.format('YYYY-MM-DD');
+                    var endDate = picker.endDate.format('YYYY-MM-DD');
+                    sendDatePickerReq(startDate, endDate);
+                });
+
+                // Listen to 'cancel' event and clear the date range
+                $('#dateRangePicker').on('cancel.daterangepicker', function () {
+                    sendDatePickerReq('', '');
+                });
+            });
+
+            // Function to send AJAX request with date range
+            function sendDatePickerReq(startDate, endDate) {
+                let url = `{{ route("admin.dashboard.2.update.stats") }}`;
+                if (startDate && endDate) {
+                    AjaxRequestPromise(url, {start_date: startDate, end_date: endDate}, 'GET')
+                        .then(response => {
+                            if (response.success) {
+                                // Update the total sales count
+                                $("#total-sales-count").text(response.total_sales);
+                                $("#refund-charge-back").text(response.refunded + ' / ' + response.charge_back);
+                                $("#charge-back-ratio").text(response.charge_back_ratio);
+                            }
+                        })
+                        .catch(error => console.log(error));
+                }
+            }
+        </script>
+        <!-- Date Range Picker -->
+
     @endpush
 @endsection

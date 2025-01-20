@@ -499,7 +499,7 @@
             openCustomForm(formContainer, manageForm);
             closeCustomForm(formContainer, manageForm);
         } else {
-            console.warn('#formContainer does not exist.');
+            // console.warn('#formContainer does not exist.');
         }
 
         // Function to open and reset the form
@@ -511,7 +511,7 @@
                 // Show message if no access
                 if ($(this).hasClass('void')) {
                     $(this).attr('title', "You don't have access to create a company.")
-                        .tooltip({ placement: 'bottom' }).tooltip('show');
+                        .tooltip({placement: 'bottom'}).tooltip('show');
                 } else {
                     formContainer.addClass('open');
                 }

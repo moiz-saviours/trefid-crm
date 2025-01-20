@@ -1,6 +1,9 @@
 <!-- Toastr CSS -->
 <link rel="stylesheet" href="{{asset('build/toaster/css/toastr.min.css')}}">
 
+<!-- Date Range Picker CSS -->
+<link rel="stylesheet" href="{{asset('assets/css/daterangepicker/daterangepicker.css')}}">
+
 <!-- Fonts [ OPTIONAL ] -->
 <!-- Font Awesome Icons -->
 <script src="{{asset('assets/fonts/fontawsome.js')}}"></script>

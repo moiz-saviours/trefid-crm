@@ -11,6 +11,11 @@ class Invoice extends Model
 {
     use Notifiable, SoftDeletes, ActivityLoggable;
 
+    const STATUS_DUE = 0;
+    const STATUS_PAID = 1;
+    const STATUS_REFUNDED = 2;
+    const STATUS_CHARGEBACK = 3;
+
 //    public function getRouteKeyName()
 //    {
 //        return 'invoice_key';
