@@ -258,19 +258,19 @@
                                 <div class="col-lg-2 col-md-2">
                                     <div class="sales-number-div text-center">
                                         <h2 class="sales-total-heading">Total Sales</h2>
-                                        <p class="total-sales-count"> $234538 </p>
+                                        <p class="total-sales-count"> $256,580 </p>
                                     </div>
                                 </div>
                                 <div class="col-lg-2 col-md-2">
                                     <div class="sales-number-div text-center">
                                         <h2 class="sales-total-heading">Total Cash</h2>
-                                        <p class="total-sales-count"> $234538 </p>
+                                        <p class="total-sales-count"> $224,278 </p>
                                     </div>
                                 </div>
                                 <div class="col-lg-2 col-md-2">
                                     <div class="sales-number-div text-center">
-                                        <h2 class="sales-total-heading">Refund Chargeback</h2>
-                                        <p class="total-sales-count"> $234538 </p>
+                                        <h2 class="sales-total-heading">Refunds / Chargeback</h2>
+                                        <p class="total-sales-count"> $8,041 / $3,248 </p>
                                     </div>
                                 </div>
                                 <div class="col-lg-2 col-md-2">
@@ -281,14 +281,14 @@
                                 </div>
                                 <div class="col-lg-2 col-md-2">
                                     <div class="sales-number-div text-center">
-                                        <h2 class="sales-total-heading">Total Sales</h2>
-                                        <p class="total-sales-count"> $234538 </p>
+                                        <h2 class="sales-total-heading">Reverse sales</h2>
+                                        <p class="total-sales-count"> $16,594 </p>
                                     </div>
                                 </div>
                                 <div class="col-lg-2 col-md-2">
                                     <div class="sales-number-div text-center">
-                                        <h2 class="sales-total-heading">Total Sales</h2>
-                                        <p class="total-sales-count"> $234538 </p>
+                                        <h2 class="sales-total-heading">Net Cash</h2>
+                                        <p class="total-sales-count"> $229,583 </p>
                                     </div>
                                 </div>
                             </div>
