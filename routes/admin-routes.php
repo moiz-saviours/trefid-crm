@@ -1,6 +1,8 @@
 <?php
 
-use App\Http\Controllers\Admin\{AccountController as AdminAccountController,
+use App\Http\Controllers\Admin\{
+    DashboardController as AdminDashboardController,
+    AccountController as AdminAccountController,
     ActivityLogController as AdminActivityLogController,
     BrandController as AdminBrandController,
     Client\CompanyController as AdminClientCompanyController,
@@ -14,21 +16,20 @@ use App\Http\Controllers\Admin\{AccountController as AdminAccountController,
     LeadStatusController as AdminLeadStatusController,
     PaymentController as AdminPaymentController,
     ProfileController as AdminProfileController,
-    TeamController as AdminTeamController,};
+    TeamController as AdminTeamController,
+};
 use Illuminate\Support\Facades\Route;
 
-
 require __DIR__ . '/admin-auth.php';
-
-Route::middleware(['auth:admin','throttle:60,1'])->prefix('admin')->name('admin.')->group(function () {
-
+Route::middleware(['auth:admin', 'verified:admin', 'throttle:60,1'])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/dashboard', [AdminDashboardController::class, 'index_1'])->name('dashboard');
+    Route::get('/dashboard-2', [AdminDashboardController::class, 'index_2'])->name('dashboard.2');
     /** Profile Routes */
     Route::prefix('profile')->name('profile.')->group(function () {
         Route::get('/', [AdminProfileController::class, 'edit'])->name('edit');
         Route::post('/update', [AdminProfileController::class, 'update'])->name('update');
         Route::post('/image-update', [AdminProfileController::class, 'image_update'])->name('image.update');
     });
-
     /** Admin Accounts Routes */
     Route::name('account.')->group(function () {
         Route::get('/accounts', [AdminAccountController::class, 'index'])->name('index');
@@ -51,7 +52,6 @@ Route::middleware(['auth:admin','throttle:60,1'])->prefix('admin')->name('admin.
         Route::get('/change-status/{brand?}', [AdminBrandController::class, 'change_status'])->name('change.status');
         Route::delete('/delete/{brand?}', [AdminBrandController::class, 'delete'])->name('delete');
     });
-
     /** Employee Routes */
     Route::name('employee.')->group(function () {
         Route::get('/employees', [AdminEmployeeController::class, 'index'])->name('index');
@@ -64,7 +64,6 @@ Route::middleware(['auth:admin','throttle:60,1'])->prefix('admin')->name('admin.
             Route::delete('/delete/{user?}', [AdminEmployeeController::class, 'delete'])->name('delete');
         });
     });
-
     /** Team Routes */
     Route::name('team.')->group(function () {
         Route::get('/teams', [AdminTeamController::class, 'index'])->name('index');
@@ -77,7 +76,6 @@ Route::middleware(['auth:admin','throttle:60,1'])->prefix('admin')->name('admin.
             Route::delete('/delete/{team?}', [AdminTeamController::class, 'delete'])->name('delete');
         });
     });
-
     /** Invoice Routes */
     Route::name('invoice.')->group(function () {
         Route::get('/invoices', [AdminInvoiceController::class, 'index'])->name('index');
@@ -89,8 +87,6 @@ Route::middleware(['auth:admin','throttle:60,1'])->prefix('admin')->name('admin.
             Route::delete('/delete/{invoice?}', [AdminInvoiceController::class, 'delete'])->name('delete');
         });
     });
-
-
     /** Contacts Routes */
     Route::name('customer.')->group(function () {
         Route::name('contact.')->group(function () {
@@ -117,7 +113,6 @@ Route::middleware(['auth:admin','throttle:60,1'])->prefix('admin')->name('admin.
             });
         });
     });
-
     /** Lead Routes */
     Route::name('lead.')->group(function () {
         Route::get('/leads', [AdminLeadController::class, 'index'])->name('index');
@@ -143,7 +138,6 @@ Route::middleware(['auth:admin','throttle:60,1'])->prefix('admin')->name('admin.
             Route::delete('/delete/{leadStatus?}', [AdminLeadStatusController::class, 'delete'])->name('delete');
         });
     });
-
     /** Payment Routes */
     Route::prefix('payment')->name('payment.')->group(function () {
         Route::get('/', [AdminPaymentController::class, 'index'])->name('index');
@@ -152,7 +146,6 @@ Route::middleware(['auth:admin','throttle:60,1'])->prefix('admin')->name('admin.
         Route::get('/edit/{payment?}', [AdminPaymentController::class, 'edit'])->name('edit');
         Route::post('/update/{payment?}', [AdminPaymentController::class, 'update'])->name('update');
     });
-
     /** CustomerContact Contacts Routes */
     Route::name('client.contact.')->group(function () {
         Route::get('/client/contacts', [AdminClientContactController::class, 'index'])->name('index');
@@ -165,7 +158,6 @@ Route::middleware(['auth:admin','throttle:60,1'])->prefix('admin')->name('admin.
             Route::delete('/delete/{client_contact?}', [AdminClientContactController::class, 'delete'])->name('delete');
         });
     });
-
     /** CustomerContact Companies Routes */
     Route::name('client.company.')->group(function () {
         Route::get('/client/companies', [AdminClientCompanyController::class, 'index'])->name('index');
@@ -178,7 +170,6 @@ Route::middleware(['auth:admin','throttle:60,1'])->prefix('admin')->name('admin.
             Route::delete('/delete/{client_company?}', [AdminClientCompanyController::class, 'delete'])->name('delete');
         });
     });
-
     /** Payment Merchant Routes */
     Route::name('client.account.')->group(function () {
         Route::get('/client/accounts', [AdminPaymentMerchantController::class, 'index'])->name('index');
@@ -191,6 +182,5 @@ Route::middleware(['auth:admin','throttle:60,1'])->prefix('admin')->name('admin.
             Route::delete('/delete/{client_account?}', [AdminPaymentMerchantController::class, 'delete'])->name('delete');
         });
     });
-
-    Route::get('/activity-logs',[AdminActivityLogController::class, 'index']);
+    Route::get('/activity-logs', [AdminActivityLogController::class, 'index']);
 });

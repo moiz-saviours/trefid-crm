@@ -1793,7 +1793,7 @@
                                 </div>
                                 <div class="right_collab open-form-btn">
                                     <i class="fa fa-plus create-contact " aria-hidden="true"> </i>
-                                    <span>Add</span>
+                                    <span>Add</span>w
                                 </div>
                             </div>
 

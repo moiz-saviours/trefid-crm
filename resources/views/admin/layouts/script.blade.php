@@ -520,7 +520,6 @@
 
         // Function to close the form and reset form fields
         function closeCustomForm(formContainer, manageForm) {
-            return;
             $(document).on('click', function (event) {
                 if (
                     (!$(event.target).closest('#formContainer').length &&
