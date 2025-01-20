@@ -15,7 +15,7 @@ class ContactController extends Controller
     public function index()
     {
         $countries = config('countries');
-        $client_contacts = ClientContact::where('status', 1)->get();
+        $client_contacts = ClientContact::all();
         return view('admin.clients.contacts.index', compact('client_contacts', 'countries'));
     }
 
