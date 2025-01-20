@@ -1294,7 +1294,7 @@
         </div>
     </section>
 
-    @include('admin.customers.contacts.custom-form');
+    @include('admin.customers.contacts.custom-form')
 
     @push('script')
         @include('admin.customers.contacts.script')
