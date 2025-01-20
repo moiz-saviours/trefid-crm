@@ -9,7 +9,7 @@ use App\Http\Controllers\Admin\Auth\{
 //    PasswordController as AdminPasswordController,
 //    PasswordResetLinkController as AdminPasswordResetLinkController,
 //    VerifyEmailController as AdminVerifyEmailController,
-    RegisteredAdminController as AdminRegisteredAdminController
+    RegisteredAdminController as AdminRegisteredAdminController,
 };
 use Illuminate\Support\Facades\Route;
 Route::prefix('admin')->name('admin.')->group(function () {
@@ -25,14 +25,6 @@ Route::prefix('admin')->name('admin.')->group(function () {
     });
 
     Route::middleware('auth:admin')->group(function () {
-        Route::get('/dashboard', function () {
-            return view('admin.dashboard');
-        })->name('dashboard');
-
-
-        Route::get('/dashboard-2', function () {
-            return view('admin.dashboard-2');
-        })->name('dashboard.2');
 //        Route::get('verify-email', AdminEmailVerificationPromptController::class)->name('verification.notice');
 //        Route::get('verify-email/{id}/{hash}', AdminVerifyEmailController::class)->middleware(['signed', 'throttle:6,1'])->name('verification.verify');
 //        Route::post('email/verification-notification', [AdminEmailVerificationNotificationController::class, 'store'])->middleware('throttle:6,1')->name('verification.send');
