@@ -1792,7 +1792,7 @@
         </div>
     </section>
 
-    @include('admin.customers.companies.custom-form');
+    @include('admin.customers.companies.custom-form')
 
     @push('script')
         @include('admin.customers.companies.script')
