@@ -41,7 +41,7 @@
                     @enderror
                 </div>
                 <div class="form-group mb-3">
-                    <label for="type" class="form-label">Client Type</label>
+                    <label for="type" class="form-label">Customer Type</label>
                     <select class="form-control" id="type" name="type" required>
 
                         <option value="0" {{ old('type') == 0 ? 'selected' : '' }}>New</option>
