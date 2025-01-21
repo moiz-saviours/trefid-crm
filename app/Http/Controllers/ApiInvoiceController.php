@@ -26,9 +26,9 @@ class ApiInvoiceController extends Controller
                 return response()->json(['success' => false, 'message' => 'Invoice not found for the given key.',], 404);
             }
             $invoice->loadMissing('brand', 'team', 'customer_contact', 'agent');
-            $brand = $invoice->brand;
-            $customer = $invoice->customer_contact;
-            $agent = $invoice->agent;
+            $brand = optional($invoice->brand);
+            $customer = optional($invoice->customer_contact);
+            $agent = optional($invoice->agent);
             $data = [
                 "id" => $invoice->id,
                 "invoice_key" => $invoice->invoice_key,
