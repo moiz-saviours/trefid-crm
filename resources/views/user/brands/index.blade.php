@@ -23,7 +23,7 @@
                             <button class="header_btn">Actions <i class="fa fa-caret-down" aria-hidden="true"></i>
                             </button>
                             <button class="header_btn">Import</button>
-                            <button class="create-contact open-form-btn">Create New</button>
+                            <button class="create-contact open-form-btn void">Create New</button>
                         </div>
                     </div>
                 </header>
@@ -139,7 +139,7 @@
     </section>
     <!-- Modal -->
 
-    @include('user.brands.custom-form')
+
 
     @push('script')
         @include('user.brands.script')

@@ -36,10 +36,23 @@ Route::middleware('auth')->group(function () {
         Route::get('/', [UserCustomerCompanyController::class, 'index'])->name('index');
     });
     /** Contacts Routes */
-    Route::name('customer.contact.')->group(function () {
-        Route::get('/contacts', [UserCustomerContactController::class, 'index'])->name('index');
-        Route::prefix('contacts')->group(function () {
-
+//    Route::name('customer.contact.')->group(function () {
+//        Route::get('/contacts', [UserCustomerContactController::class, 'index'])->name('index');
+//        Route::prefix('contacts')->group(function () {
+//            Route::post('/store', [UserCustomerContactController::class, 'store'])->name('store');
+//            Route::get('/edit/{customer_contact?}', [UserCustomerContactController::class, 'edit'])->name('edit');
+//
+//            Route::post('/update/{customer_contact?}', [UserCustomerContactController::class, 'update'])->name('update');
+//        });
+//    });
+    Route::name('customer.')->group(function () {
+        Route::name('contact.')->group(function () {
+            Route::get('/customer/contacts', [UserCustomerContactController::class, 'index'])->name('index');
+            Route::prefix('customer/contact')->group(function () {
+                Route::post('/store', [UserCustomerContactController::class, 'store'])->name('store');
+                Route::get('/edit/{customer_contact?}', [UserCustomerContactController::class, 'edit'])->name('edit');
+                Route::post('/update/{customer_contact?}', [UserCustomerContactController::class, 'update'])->name('update');
+            });
         });
     });
     Route::get('/teams', [TeamController::class, 'index'])->name('teams.index');
