@@ -13,6 +13,9 @@ class TeamTarget extends Model
 
     protected $table = 'team_targets';
     protected $primaryKey = 'id';
+
+
+
     /**
      * The attributes that are mass assignable.
      *

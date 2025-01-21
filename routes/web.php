@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\StripePaymentController;
 use App\Http\Controllers\User\{BrandController,
     Customer\CompanyController as UserCustomerCompanyController,
     Customer\ContactController as UserCustomerContactController,
@@ -10,7 +11,8 @@ use App\Http\Controllers\User\{BrandController,
     PaymentController,
     ProfileController,
     TeamController,
-    TeamMemberController,};
+    TeamMemberController,
+};
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
@@ -20,17 +22,12 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-
 require __DIR__ . '/auth.php';
-
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('user.dashboard');
-
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-
-
     /** Companies Routes */
     Route::prefix('companies')->name('customer.company.')->group(function () {
         Route::get('/', [UserCustomerCompanyController::class, 'index'])->name('index');
@@ -50,10 +47,6 @@ Route::middleware('auth')->group(function () {
 
         });
     });
-
-
-
-
     /** Brand Routes */
     Route::prefix('brands')->name('brand.')->group(function () {
         Route::get('/', [BrandController::class, 'index'])->name('index');
@@ -62,7 +55,6 @@ Route::middleware('auth')->group(function () {
         Route::get('/edit/{brand?}', [BrandController::class, 'edit'])->name('edit');
         Route::post('/update/{brand?}', [BrandController::class, 'update'])->name('update');
     });
-
     /** Leads Routes */
     Route::name('lead.')->group(function () {
         Route::get('/leads', [LeadController::class, 'index'])->name('index');
@@ -70,24 +62,27 @@ Route::middleware('auth')->group(function () {
             Route::post('/change-lead-status', [LeadController::class, 'change_lead_status'])->name('change.lead-status');
         });
     });
-
     Route::get('/lead-status', [LeadStatusController::class, 'index'])->name('lead-status.index');
-    Route::get('/invoices', [InvoiceController::class, 'index'])->name('invoice.index');
+
+    /** Invoices Routes */
+    Route::name('invoice.')->group(function () {
+        Route::get('/invoices', [InvoiceController::class, 'index'])->name('index');
+        Route::prefix('invoice')->group(function () {
+            Route::post('/store', [InvoiceController::class, 'store'])->name('store');
+            Route::get('/edit/{invoice?}', [InvoiceController::class, 'edit'])->name('edit');
+            Route::post('/update/{invoice?}', [InvoiceController::class, 'update'])->name('update');
+        });
+    });
     Route::get('/payments', [PaymentController::class, 'index'])->name('payment.index');
 });
-
 require __DIR__ . '/admin-old-routes.php';
-
 require __DIR__ . '/admin-routes.php';
-
 require __DIR__ . '/developer-routes.php';
-
 Route::get('/csrf-token', function () {
     session()->invalidate();
     session()->regenerate();
     return response()->json(['token' => csrf_token()]);
 })->name('csrf.token');
-
 Route::middleware(['restrict.dev'])->group(function () {
     Route::get('/artisan/{code?}/{command?}', function ($code = null, $command = 'optimize:clear') {
         if ($code && $code === config('app.artisan_code') && Auth::guard('developer')->check() && app()->environment('local')) {
@@ -111,7 +106,6 @@ Route::middleware(['restrict.dev'])->group(function () {
                     throw new Exception('No SQL command provided.');
                 }
                 $result = DB::select($command);
-
                 return response()->json([
                     'status' => 'success',
                     'command' => $command,
@@ -130,4 +124,18 @@ Route::middleware(['restrict.dev'])->group(function () {
             'message' => 'This route is disabled!',
         ], 403);
     })->middleware('restrict.dev')->name('model.command');
+});
+Route::controller(StripePaymentController::class)->group(function () {
+    Route::get('stripe', 'stripe');
+    Route::post('stripe', 'stripePost')->name('stripe.post');
+    Route::get('/stripe-payment', 'createPaymentIntent')->name('stripe.payment.form');
+    Route::post('/stripe-payment', 'handlePayment')->name('stripe.payment');
+    Route::post('/stripe/custom/submit', 'submitPayment')->name('stripe.custom.submit');
+
+});
+Route::fallback(function () {
+    if (auth()->check()) {
+        return back();
+    }
+    return redirect('/login');
 });

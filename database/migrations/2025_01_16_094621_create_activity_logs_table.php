@@ -18,7 +18,8 @@ return new class extends Migration
                 $table->string('action')->nullable()->default(null);
                 $table->morphs('model');
                 $table->morphs('actor');
-                $table->text('details')->nullable()->default(null);
+                $table->string('description')->nullable()->default(null);
+                $table->longText('details')->nullable()->default(null);
                 $table->string('ip_address')->nullable()->default(null);
                 $table->softDeletes();
                 $table->timestamps();

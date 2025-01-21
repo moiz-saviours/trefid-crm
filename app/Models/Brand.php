@@ -14,6 +14,7 @@ class Brand extends Model
 
     protected $table = 'brands';
     protected $primaryKey = 'id';
+    public static array $logEvents = ['created', 'updated'];
     /**
      * The attributes that are mass assignable.
      *
@@ -93,5 +94,10 @@ class Brand extends Model
     {
         return $this->hasMany(CustomerContact::class, 'brand_key');
     }
+//
+//    public function logs(): \Illuminate\Database\Eloquent\Relations\HasMany
+//    {
+//        return $this->morp
+//    }
 }
 

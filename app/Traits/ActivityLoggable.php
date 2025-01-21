@@ -7,22 +7,33 @@ use function Pest\Laravel\get;
 
 trait ActivityLoggable
 {
+    public static $defaultLogEvents = ['created', 'updated', 'deleted'];
+
     /**
      * Boot the trait and listen to the events of the model.
      */
     protected static function bootActivityLoggable()
     {
+        $events = property_exists(static::class, 'logEvents') ? static::$logEvents : static::$defaultLogEvents;
+
+        foreach ($events as $event) {
+            static::$event(function ($model) use ($event) {
+                $model->logActivity($event);
+            });
+        }
+
+
         static::created(function ($model) {
-            $model->logActivity('create', auth()->user()->name??null . " created a new " . ($model->getTable()) . ": " . $model->name);
+            $model->logActivity('create', auth()->user()->name ?? null . " created a new " . ($model->getTable()) . ": " . $model->name);
         });
         static::updated(function ($model) {
             $entityName = $model->name ?? 'Unknown';
-            $model->logActivity('updated', auth()->user()->name??null . " updated " . ($model->getTable()) . ": " . $entityName);
+            $model->logActivity('updated', auth()->user()->name ?? null . " updated " . ($model->getTable()) . ": " . $entityName);
         });
         static::deleted(function ($model) {
             $entityName = $model->name ?? 'Unknown';
             // Log the activity
-            $model->logActivity('deleted', auth()->user()->name??null . " deleted " . ($model->getTable()) . ": " . $entityName);
+            $model->logActivity('deleted', auth()->user()->name ?? null . " deleted " . ($model->getTable()) . ": " . $entityName);
         });
 
     }
@@ -37,7 +48,6 @@ trait ActivityLoggable
     protected function logActivity($action, $description)
     {
         if (auth()->check()) {
-
             ActivityLog::create([
                 'action' => $action,
                 'model_type' => get_class($this),
