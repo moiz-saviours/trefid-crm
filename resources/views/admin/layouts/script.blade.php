@@ -525,8 +525,9 @@
                     (!$(event.target).closest('#formContainer').length &&
                         !$(event.target).is('#formContainer') &&
                         !$(event.target).closest('.open-form-btn').length &&
-                        !$(event.target).is('.editBtn')) ||
-                    $(event.target).is('#formContainer .close-btn')
+                        !$(event.target).is('.editBtn') ||
+                    !$(event.target).is('.changePwdBtn')) ||
+                    $(event.target).is('.form-container .close-btn')
                 ) {
                     // Close the form
                     formContainer.removeClass('open');
