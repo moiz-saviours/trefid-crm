@@ -66,7 +66,7 @@ class User extends Authenticatable
         ];
     }
 
-    public function teams(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    public function     teams(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
         return $this->belongsToMany(Team::class, AssignTeamMember::class,  'user_id', 'team_key', 'id', 'team_key')->withTimestamps();
     }

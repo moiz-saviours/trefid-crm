@@ -23,7 +23,7 @@
                             <button class="header_btn">Actions <i class="fa fa-caret-down" aria-hidden="true"></i>
                             </button>
                             <button class="header_btn">Import</button>
-                            <button class="create-contact open-form-btn">Create New</button>
+                            <button class="create-contact open-form-btn void">Create New</button>
                         </div>
                     </div>
                 </header>
@@ -81,9 +81,7 @@
                                     </div>
                                     <div class="card-body">
                                         <table id="{{$team->team_key}}-Table" class="table table-striped datatable-exportable
-                            stripe row-border order-column nowrap
-                            initTable
-                            ">
+                            stripe row-border order-column nowrap initTable">
                                             <thead>
                                             <tr>
                                                 <th class="align-middle text-center text-nowrap"><input type="checkbox"></th>
@@ -139,7 +137,7 @@
     </section>
     <!-- Modal -->
 
-    @include('user.brands.custom-form')
+
 
     @push('script')
         @include('user.brands.script')
