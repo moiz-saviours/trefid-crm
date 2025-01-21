@@ -37,9 +37,9 @@
             <div class="form-body">
 
                 <div class="form-group mb-3">
-                    <label for="password" class="form-label">Password</label>
+                    <label for="changePassword" class="form-label">Password</label>
                     <div class="d-fldex align-items-center">
-                        <input type="text" id="password" name="password" class="form-control" placeholder="Generated Password">
+                        <input type="text" id="changePassword" name="password" class="form-control" placeholder="Generated Password">
                         <i id="generatePassword" class="generatePassword  ms-2" title="Change Password">Generate Password</i>
                     </div>
                     @error('password')
@@ -55,14 +55,3 @@
         </div>
     </form>
 </div>
-
-@push('script')
-    <script>
-        $(document).ready(function () {
-            $('.generatePassword').click(function () {
-                const randomPassword = generateRandomPassword(12);
-                $('#password').val(randomPassword);
-            });
-        });
-    </script>
-@endpush

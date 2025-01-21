@@ -92,43 +92,7 @@
 
 @endpush
 <div class="custom-form">
-
-    <form id="manage-form">
-        <label for="team">Select Team:</label>
-        <select name="team_id" id="team">
-            <option value="1">Team 1</option>
-            <option value="2">Team 2</option>
-            <!-- More teams here -->
-        </select>
-
-        <div class="month-targets">
-            <div class="month-entry">
-                <label for="month">Month:</label>
-                <select name="month[]">
-                    <option value="January">January</option>
-                    <option value="February">February</option>
-                    <!-- More months here -->
-                </select>
-
-                <label for="year">Year:</label>
-                <select name="year[]">
-                    <option value="2025">2025</option>
-                    <option value="2026">2026</option>
-                    <!-- More years here -->
-                </select>
-
-                <label for="target">Target:</label>
-                <input type="number" name="target[]" placeholder="Enter target amount">
-
-                <button type="button" onclick="removeMonthEntry(this)">Remove</button>
-            </div>
-        </div>
-
-        <button type="button" onclick="addMonthEntry()">Add Another Month</button>
-        <button type="submit">Submit Targets</button>
-    </form>
-
-    <form id="manage-form-2" method="POST" enctype="multipart/form-data">
+    <form id="manage-form" method="POST" enctype="multipart/form-data">
         <div class="form-container" id="formContainer">
             <!-- Form Header -->
             <div class="form-header fh-1">
