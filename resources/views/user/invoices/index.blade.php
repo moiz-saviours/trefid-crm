@@ -4,245 +4,7 @@
 @section('content')
     @push('style')
         @include('user.invoices.style')
-        <style>
 
-            .void {
-                cursor: not-allowed;
-            }
-
-            .custm_header {
-                padding: 10px 20px;
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-            }
-
-            .actions {
-                display: flex;
-            }
-
-            .actions h1 {
-                margin: auto;
-                color: #52a0bf;
-                font-size: 15px;
-            }
-
-            .filters,
-            .table-controls {
-                display: flex;
-                justify-content: space-between;
-                padding: 10px 20px;
-                border-bottom: 1px solid #ddd;
-            }
-
-            .filters .filter-tabs button,
-            .actions button {
-                padding: 5px 12px;
-                border: 1px solid #ff5722;
-                border-radius: 4px;
-                background-color: #fff;
-                cursor: pointer;
-            }
-
-            .filters .actions .create-contact {
-                background-color: #ff5722;
-                color: #fff;
-                border: none;
-            }
-
-            .search-bar input {
-                padding: 8px;
-                border: 1px solid #ddd;
-                border-radius: 4px;
-                width: 250px;
-            }
-
-            .contacts-table {
-                width: 100%;
-                border-collapse: collapse;
-            }
-
-            .contacts-table th,
-            .contacts-table td {
-                padding: 10px;
-                text-align: left;
-                /*border: 1px solid #ddd;*/
-            }
-
-            .contacts-table th {
-                /*background-color: #f1f5f9;*/
-                font-weight: bold;
-            }
-
-            .contacts-table tbody tr:hover {
-                background-color: #f9f9f9;
-            }
-
-
-            .header .new_head h1 {
-                font-size: 20px;
-                color: #52a0bf;
-                font-weight: 700;
-
-            }
-
-            .header_btn {
-                padding: 0px 30px;
-                color: #ff5722;
-                margin: 0px 10px;
-            }
-
-            .custom-tabs {
-                margin: 10px 0px;
-                display: flex;
-            }
-
-            .tab-nav {
-                display: flex;
-                justify-content: space-around;
-                list-style: none;
-                padding: 0;
-                margin: 0;
-                width: 70%;
-            }
-
-            .tab-buttons {
-                margin-left: 100px;
-            }
-
-            .tab-item {
-                padding: 10px 20px;
-                cursor: pointer;
-                border: 1px solid #cbd6e2;
-                background: #f9f9f9;
-                width: 100%;
-                transition: background 0.3s ease;
-            }
-
-            .tab-item.active {
-                background: #fff;
-                border-bottom: none;
-
-            }
-
-            .tab-item.active i {
-                float: right;
-                font-size: 14px;
-                margin: auto;
-            }
-
-            .tab-content {
-                /*padding: 10px;*/
-                /*margin-top: 10px;*/
-            }
-
-            .tab-pane {
-                display: none;
-            }
-
-            .tab-pane.active {
-                display: block;
-
-            }
-
-            .fltr-sec {
-                padding-top: 20px;
-            }
-
-            .table-li {
-                display: flex;
-            }
-
-            .table-li .page-title {
-                font-size: 14px;
-                padding: 0px 30px 0px 0px;
-
-                font-weight: 700;
-            }
-
-            .right-icon i {
-                float: right;
-                margin: 0px 4px;
-                border: 1px solid #ccc;
-                padding: 5px;
-                border-radius: 5px;
-                font-size: 12px;
-            }
-
-            .custom-form .form-container {
-                position: fixed;
-                top: 0;
-                right: -100%;
-                width: 500px;
-                height: 100%;
-                background: #ffffff;
-                box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
-                transition: right 0.5s ease;
-                box-sizing: border-box;
-                z-index: 1001;
-            }
-
-            .custom-form .form-container.open {
-                right: 0;
-            }
-
-            .custom-form .form-header {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                padding: 15px 20px;
-                background: #52a0bf;
-                color: white;
-                font-size: 18px;
-                font-weight: bold;
-            }
-
-            .custom-form .form-header .close-btn {
-                font-size: 20px;
-                font-weight: bold;
-                background: none;
-                border: none;
-                color: white;
-                cursor: pointer;
-            }
-
-            .custom-form .form-body {
-                padding: 20px;
-            }
-
-            .custom-form .form-body label {
-                display: block;
-                margin-bottom: 5px;
-                font-weight: 500;
-            }
-
-            .custom-form .form-body input {
-                width: 100%;
-                padding: 8px;
-                margin-bottom: 15px;
-                border: 1px solid #ddd;
-                border-radius: 4px;
-            }
-
-            .custom-form .form-body button {
-                width: 100%;
-                padding: 10px;
-                background: #52a0bf;
-                color: white;
-                border: none;
-                border-radius: 4px;
-                cursor: pointer;
-            }
-
-            .close-icon {
-                display: none;
-            }
-
-            .tab-item.active .close-icon {
-                display: inline;
-            }
-
-        </style>
     @endpush
 
     <section id="content" class="content">
@@ -251,7 +13,7 @@
                 <header class="custm_header">
                     <div class="new_head">
                         <h1 class="page-title mb-2">Invoices <i class="fa fa-caret-down" aria-hidden="true"></i></h1>
-                        <h2 id="record-count" class="h6"> records</h2>
+                        <h2 id="record-count" class="h6">{{count ($invoices)}} records</h2>
                     </div>
                     <div class="filters">
                         <div class="actions">
@@ -260,7 +22,7 @@
                             <button class="header_btn">Actions <i class="fa fa-caret-down" aria-hidden="true"></i>
                             </button>
                             <button class="header_btn">Import</button>
-                            <button class="create-contact open-form-btn void">Create New Invoice</button>
+                            <button class="create-contact open-form-btn">Create New</button>
                         </div>
                     </div>
                 </header>
@@ -271,7 +33,7 @@
                 <div class="container">
                     <div class="custom-tabs">
                         <ul class="tab-nav">
-                            <li class="tab-item active" data-tab="home">Invoices <i class="fa fa-times close-icon" aria-hidden="true"></i></li>
+                            <li class="tab-item active" data-tab="home">All Invoices <i class="fa fa-times close-icon" aria-hidden="true"></i></li>
                             <li class="tab-item" data-tab="my-records">My Invoices <i class="fa fa-times close-icon" aria-hidden="true"></i></li>
                         </ul>
                     </div>
@@ -311,35 +73,67 @@
                                         <thead>
                                         <tr>
                                             <th><input type="checkbox"></th>
-                                            <th class="align-middle text-center text-nowrap">ID</th>
-                                            <th class="align-middle text-center text-nowrap">INVOICE#</th>
+                                            <th class="align-middle text-center text-nowrap">SNO.</th>
+                                            <th class="align-middle text-center text-nowrap">INVOICE #</th>
                                             <th class="align-middle text-center text-nowrap">BRAND</th>
-                                            <th class="align-middle text-center text-nowrap">CUSTOMER</th>
+                                            <th class="align-middle text-center text-nowrap">TEAM</th>
+                                            <th class="align-middle text-center text-nowrap">CUSTOMER CONTACT</th>
                                             <th class="align-middle text-center text-nowrap">AGENT</th>
                                             <th class="align-middle text-center text-nowrap">AMOUNT</th>
                                             <th class="align-middle text-center text-nowrap">STATUS</th>
                                             <th class="align-middle text-center text-nowrap">CREATE DATE</th>
+                                            <th class="align-middle text-center text-nowrap">ACTION</th>
                                         </tr>
                                         </thead>
                                         <tbody>
 
-                                        @foreach($all_invoices as $invoice)
+                                        @foreach($invoices as $invoice)
                                             <tr id="tr-{{$invoice->id}}">
                                                 <td class="align-middle text-center text-nowrap"></td>
                                                 <td class="align-middle text-center text-nowrap">{{$loop->iteration}}</td>
-                                                <td class="align-middle text-center text-nowrap">
+                                                <td class="align-middle text-center text-nowrap text-sm invoice-cell">
                                                     <span class="invoice-number">{{ $invoice->invoice_number }}</span><br>
                                                     <span class="invoice-key">{{ $invoice->invoice_key }}</span>
                                                 </td>
-                                                <td class="align-middle text-center text-nowrap">{{optional($invoice->brand)->name ?? "---"}}</td>
-                                                <td class="align-middle text-center text-nowrap">{{optional($invoice->client)->name ?? "---"}}</td>
-                                                <td class="align-middle text-center text-nowrap">{{optional($invoice->agent)->name ?? "---"}}</td>
-                                                <td class="align-middle text-center text-nowrap">${{$invoice->amount}}</td>
+                                                <td class="align-middle text-center text-nowrap">
+                                                    @if(isset($invoice->brand))
+                                                        <a href="{{route('admin.brand.edit',[$invoice->brand->id])}}">{{ $invoice->brand->name }}</a>
+                                                        <br> {{ $invoice->brand->brand_key }}
+                                                    @else
+                                                        ---
+                                                    @endif
+                                                </td>
+                                                <td class="align-middle text-center text-nowrap">
+                                                    @if(isset($invoice->team))
+                                                        <a href="{{route('admin.team.edit',[$invoice->team->id])}}">{{ $invoice->team->name }}</a>
+                                                        <br> {{ $invoice->team->team_key }}
+                                                    @else
+                                                        ---
+                                                    @endif
+                                                </td>
+                                                <td class="align-middle text-center text-nowrap">
+                                                    @if(isset($invoice->customer_contact))
+                                                        <a href="{{route('admin.customer.contact.edit',[$invoice->customer_contact->id])}}">{{ $invoice->customer_contact->name }}</a>
+                                                        <br> {{ $invoice->customer_contact->special_key }}
+                                                    @else
+                                                        ---
+                                                    @endif
+                                                </td>
+                                                <td class="align-middle text-center text-nowrap">
+                                                    @if(isset($invoice->agent_id , $invoice->agent_type ,$invoice->agent ))
+                                                        <a href="{{route('admin.employee.edit',[$invoice->agent->id])}}">{{ $invoice->agent->name }}</a>
+                                                    @else
+                                                        ---
+                                                    @endif
+                                                </td>
+                                                <td class="align-middle text-center text-nowrap">{{ number_format($invoice->amount, 2) }}</td>
                                                 <td class="align-middle text-center text-nowrap">
                                                     @if($invoice->status == 0)
                                                         <span class="badge bg-warning text-dark">Due</span>
                                                     @elseif($invoice->status == 1)
                                                         <span class="badge bg-success">Paid</span>
+                                                    @elseif($invoice->status == 2)
+                                                        <span class="badge bg-danger">Refund</span>
                                                     @endif
                                                 </td>
                                                 <td class="align-middle text-center text-nowrap">
@@ -351,6 +145,12 @@
                                                         {{ $invoice->created_at->timezone('GMT+5')->format('M d, Y g:i A') }}
                                                         GMT+5
                                                     @endif
+                                                </td>
+                                                <td class="align-middle text-center table-actions">
+                                                    <button type="button" class="btn btn-sm btn-primary editBtn"
+                                                            data-id="{{ $invoice->id }}" title="Edit"><i
+                                                            class="fas fa-edit"></i></button>
+
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -394,20 +194,23 @@
                                         <thead>
                                         <tr>
                                             <th><input type="checkbox"></th>
-                                            <th class="align-middle text-center text-nowrap">ID</th>
-                                            <th class="align-middle text-center text-nowrap">INVOICE#</th>
+                                            <th class="align-middle text-center text-nowrap">SNO.</th>
+                                            <th class="align-middle text-center text-nowrap">INVOICE #</th>
                                             <th class="align-middle text-center text-nowrap">BRAND</th>
-                                            <th class="align-middle text-center text-nowrap">CLIENT</th>
+                                            <th class="align-middle text-center text-nowrap">TEAM</th>
+                                            <th class="align-middle text-center text-nowrap">CUSTOMER CONTACT</th>
                                             <th class="align-middle text-center text-nowrap">AGENT</th>
                                             <th class="align-middle text-center text-nowrap">AMOUNT</th>
                                             <th class="align-middle text-center text-nowrap">STATUS</th>
                                             <th class="align-middle text-center text-nowrap">CREATE DATE</th>
+                                            <th class="align-middle text-center text-nowrap">ACTION</th>
                                         </tr>
                                         </thead>
                                         <tbody>
 
                                         @foreach($my_invoices as $invoice)
                                             <tr id="tr-{{$invoice->id}}">
+
                                                 <td class="align-middle text-center text-nowrap"></td>
                                                 <td class="align-middle text-center text-nowrap">{{$loop->iteration}}</td>
                                                 <td class="align-middle text-center text-nowrap">
@@ -443,30 +246,12 @@
                             </div>
                         </div>
                     </div>
-                    <div class="custom-form">
-                        <div class="form-container" id="formContainer">
-                            <!-- Form Header -->
-                            <div class="form-header">
-                                Add Company
-                                <button class="close-btn">×</button>
-                            </div>
-                            <!-- Form Body -->
-                            <div class="form-body">
-                                <label for="name">Company Name</label>
-                                <input type="text" id="name" placeholder="Enter your name">
-                                <label for="email">Company Domain</label>
-                                <input type="email" id="email" placeholder="Enter your email">
-                                <button>Submit</button>
-                            </div>
-                        </div>
-                    </div>
-
-
                 </div>
             </div>
         </div>
     </section>
     <!-- Modal -->
+    @include('user.invoices.custom-form')
 
     @push('script')
         @include('user.invoices.script')

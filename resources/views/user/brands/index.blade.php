@@ -81,9 +81,7 @@
                                     </div>
                                     <div class="card-body">
                                         <table id="{{$team->team_key}}-Table" class="table table-striped datatable-exportable
-                            stripe row-border order-column nowrap
-                            initTable
-                            ">
+                            stripe row-border order-column nowrap initTable">
                                             <thead>
                                             <tr>
                                                 <th class="align-middle text-center text-nowrap"><input type="checkbox"></th>

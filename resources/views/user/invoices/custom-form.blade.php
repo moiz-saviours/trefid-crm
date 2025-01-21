@@ -1,0 +1,287 @@
+<div class="custom-form">
+    <form id="manage-form" method="POST" enctype="multipart/form-data" autocomplete="off">
+        <label for="crsf_token" class="form-label d-none">Crsf Token</label>
+        <input type="text" id="crsf_token" name="crsf_token" value="" style="opacity:0;"/>
+        <div class="form-container" id="formContainer">
+            <!-- Form Header -->
+            <div class="form-header fh-1">
+                <span id="custom-form-heading">Manage Invoice</span>
+                <button type="button" class="close-btn">×</button>
+            </div>
+            <!-- Form Body -->
+            <div class="form-body">
+                <div class="form-group mb-3">
+                    <label for="brand_key" class="form-label">Brand</label>
+                    <select class="form-control searchable" id="brand_key" name="brand_key"
+                            title="Please select a brand" required autocomplete="off">
+                        <option value="" disabled>Please select brand</option>
+                        @foreach($brands as $brand)
+                            <option
+                                value="{{ $brand->brand_key }}" {{ old('brand_key') == $brand->brand_key ? 'selected' : '' }}>
+                                {{ $brand->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                    @error('brand_key')
+                    <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
+                <div class="form-group mb-3">
+                    <label for="team_key" class="form-label">Team</label>
+                    <select class="form-control searchable" id="team_key" name="team_key"
+                            title="Please select a team">
+                        <option value="" disabled>Please select team</option>
+                        @foreach($teams as $team)
+                            <option
+                                value="{{ $team->team_key }}" {{ old('team_key') == $team->team_key ? 'selected' : '' }}>
+                                {{ $team->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                    @error('team_key')
+                    <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
+
+                <div class="form-group mb-3">
+                    <label for="type" class="form-label">Customer Type</label>
+                    <select class="form-control" id="type" name="type" title="Please select customer type" required>
+                        <option value="0" {{ old('type') == 0 ? 'selected' : '' }}>
+                            Fresh
+                        </option>
+                        @if($customer_contacts->count() > 0)
+                            <option value="1" {{ old('type') == 1 ? 'selected' : '' }}>
+                                Upsale
+                            </option>
+                        @endif
+                    </select>
+                    @error('type')
+                    <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
+                <div id="fresh-customer-contact-fields" class="form-group mb-3 d-none">
+                    <div class="form-group mb-3">
+                        <label for="customer_contact_name" class="form-label">Customer Contact Name</label>
+                        <input type="text" class="form-control" id="customer_contact_name"
+                               name="customer_contact_name"
+                               value="{{ old('customer_contact_name') }}">
+                        @error('customer_contact_name')
+                        <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label for="customer_contact_email" class="form-label">Customer Contact Email</label>
+                        <input type="email" class="form-control" id="customer_contact_email"
+                               name="customer_contact_email"
+                               value="{{ old('customer_contact_email') }}">
+                        @error('customer_contact_email')
+                        <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="customer_contact_phone" class="form-label">Customer Contact Phone</label>
+                        <input type="text" class="form-control" id="customer_contact_phone"
+                               name="customer_contact_phone"
+                               value="{{ old('customer_contact_phone') }}">
+                        @error('customer_contact_phone')
+                        <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
+                </div>
+                <div id="upsale-customer-contact-fields" class="form-group mb-3 d-none">
+                    <label for="cus_contact_key" class="form-label">Select Customer Contact</label>
+                    <select class="form-control" id="cus_contact_key" name="cus_contact_key">
+                        <option value="">Select Customer Contact</option>
+                        @foreach($customer_contacts as $customer_contact)
+                            <option
+                                value="{{ $customer_contact->special_key }}" {{ old('cus_contact_key') == $customer_contact->special_key ? 'selected' : '' }}>
+                                {{ $customer_contact->name }} ({{ $customer_contact->email }})
+                            </option>
+                        @endforeach
+                    </select>
+                    @error('cus_contact_key')
+                    <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
+                <div class="form-group mb-3">
+                    <label for="agent_id" class="form-label">Agent</label>
+                    <select class="form-control searchable" id="agent_id" name="agent_id" title="Please select agent">
+                        <option value="" disabled>Select Agent</option>
+                        @foreach($users as $user)
+                            <option value="{{ $user->id }}" {{ old('agent_id') == $user->id ? 'selected' : '' }}>
+                                {{ $user->name }} ({{ $user->email }})
+                            </option>
+                        @endforeach
+                    </select>
+                    @error('agent_id')
+                    <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
+
+                <div class="form-group mb-3">
+                    <label for="due_date" class="form-label">Due Date</label>
+                    <input type="date" class="form-control" id="due_date" name="due_date" value="{{ old('due_date') }}">
+                    @error('due_date')
+                    <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
+
+
+                <div class="form-group mb-3">
+                    <label for="currency" class="form-label">Currency</label>
+                    <select class="form-control" id="currency" name="currency">
+                        <option value="USD" {{ old('currency') == 'USD' ? 'selected' : '' }}>USD</option>
+                        <option value="GBP" {{ old('currency') == 'GBP' ? 'selected' : '' }} disabled>GBP</option>
+                        <option value="AUD" {{ old('currency') == 'AUD' ? 'selected' : '' }} disabled>AUD</option>
+                        <option value="CAD" {{ old('currency') == 'CAD' ? 'selected' : '' }} disabled>CAD</option>
+                    </select>
+                    @error('currency')
+                    <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
+                <div class="form-group mb-3">
+                    <label for="amount" class="form-label">Amount</label>
+                    <input type="number" class="form-control" id="amount" name="amount" step="1"
+                           min="1"
+                           max="4999" value="{{ old('amount') }}" required>
+                    @error('amount')
+                    <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
+                <div class="form-group mb-3">
+                    <label for="taxable" class="form-label d-flex align-items-center">
+                        <input type="checkbox" class="form-check-input me-2" id="taxable" name="taxable"
+                               value="1" {{ old('taxable') ? 'checked' : '' }}>
+                        Is this invoice taxable?
+                    </label>
+                    @error('taxable')
+                    <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
+
+                <div class="form-group mb-3" id="tax-fields" style="display: none;">
+                    <div>
+                        <label for="tax_type" class="form-label">Tax Type</label>
+                        <select class="form-control" id="tax_type" name="tax_type">
+                            <option value="" disabled selected>Select Tax Type</option>
+                            <option value="percentage" {{ old('tax_type') == 'percentage' ? 'selected' : '' }}>
+                                Percentage
+                            </option>
+                            <option value="fixed" {{ old('tax_type') == 'fixed' ? 'selected' : '' }}>Fixed</option>
+                        </select>
+                        @error('tax_type')
+                        <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
+
+                    <div class="mt-3">
+                        <label for="tax_value" class="form-label">Tax Value</label>
+                        <input type="number" class="form-control" id="tax_value" name="tax_value" min="1"
+                               value="{{ old('tax_value') }}">
+                        @error('tax_value')
+                        <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
+
+                    <div class="mt-3">
+                        <label for="tax_amount" class="form-label">Tax Amount</label>
+                        <input type="number" class="form-control" id="tax_amount" name="tax_amount" step="0.01" min="1"
+                               readonly
+                               value="{{ old('tax_amount') }}">
+                        @error('tax_amount')
+                        <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label for="total_amount" class="form-label">Total Amount</label>
+                    <input type="number" class="form-control" id="total_amount" name="total_amount" step="0.01"
+                           min="1"
+                           readonly
+                           max="4999" value="{{ old('amount') }}" required>
+                    @error('amount')
+                    <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
+                <div class="form-group mb-3">
+                    <label for="description" class="form-label">Description</label>
+                    <textarea class="form-control" id="description" name="description"
+                              rows="3">{{ old('description') }}</textarea>
+                    @error('description')
+                    <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
+
+
+            </div>
+
+            <div class="form-button">
+                <button type="submit" class="btn-primary save-btn">Save</button>
+                <button type="button" class="btn-secondary close-btn">Cancel</button>
+            </div>
+        </div>
+    </form>
+    @push('script')
+        <!------- CUSTOM FORM -------->
+        <script>
+            $(document).ready(function () {
+                $('#type').on('change', function () {
+                    const type = $(this).val();
+                    $('#fresh-customer-contact-fields').toggleClass('d-none', type != 0);
+                    $('#customer_contact_name, #customer_contact_email, #customer_contact_phone').prop('required', type == 0);
+                    $('#upsale-customer-contact-fields').toggleClass('d-none', type != 1);
+                    $('#cus_contact_key').prop('required', type == 1);
+                }).trigger('change');
+            });
+
+            $(document).ready(function () {
+                $('#taxable').on('change', function () {
+                    if ($(this).is(':checked')) {
+                        $('#tax-fields').slideDown();
+                        $('#tax_type').prop('required', true);
+                        $('#tax_value').prop('required', true);
+                    } else {
+                        $('#tax-fields').slideUp();
+                        $('#tax_type').prop('required', false).val('');
+                        $('#tax_value').prop('required', false).val('');
+                        $('#tax_amount').val(0);
+                        updateTotalAmount();
+                    }
+                });
+
+                $('#tax_type, #tax_value, #amount').on('input change', function () {
+                    updateTaxAmount();
+                    updateTotalAmount();
+                });
+
+                function updateTaxAmount() {
+                    const taxType = $('#tax_type').val();
+                    const taxValue = parseFloat($('#tax_value').val());
+                    const amount = parseFloat($('#amount').val());
+
+                    let taxAmount = 0;
+
+                    if (taxType === 'percentage' && !isNaN(taxValue) && !isNaN(amount)) {
+                        taxAmount = (amount * taxValue) / 100;
+                    } else if (taxType === 'fixed' && !isNaN(taxValue)) {
+                        taxAmount = taxValue;
+                    }
+
+                    $('#tax_amount').val(taxAmount.toFixed(2));
+                }
+
+                function updateTotalAmount() {
+                    const amount = parseFloat($('#amount').val());
+                    const taxAmount = parseFloat($('#tax_amount').val()) || 0;
+                    const totalAmount = amount + taxAmount;
+
+                    $('#total_amount').val(totalAmount.toFixed(2));
+                }
+            });
+
+        </script>
+        <!------- CUSTOM FORM -------->
+    @endpush
+</div>

@@ -85,7 +85,15 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::get('/lead-status', [LeadStatusController::class, 'index'])->name('lead-status.index');
-    Route::get('/invoices', [InvoiceController::class, 'index'])->name('invoice.index');
+    /** Invoice Routes */
+    Route::name('invoice.')->group(function () {
+        Route::get('/invoices', [InvoiceController::class, 'index'])->name('index');
+        Route::prefix('invoice')->group(function () {
+            Route::post('/store', [InvoiceController::class, 'store'])->name('store');
+            Route::get('/edit/{invoice?}', [InvoiceController::class, 'edit'])->name('edit');
+            Route::post('/update/{invoice?}', [InvoiceController::class, 'update'])->name('update');
+        });
+    });
     Route::get('/payments', [PaymentController::class, 'index'])->name('payment.index');
 });
 
