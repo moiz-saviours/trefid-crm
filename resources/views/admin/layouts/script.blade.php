@@ -522,11 +522,12 @@
         function closeCustomForm(formContainer, manageForm) {
             $(document).on('click', function (event) {
                 if (
-                    (!$(event.target).closest('#formContainer').length &&
-                        !$(event.target).is('#formContainer') &&
+                    (!$(event.target).closest('.form-container').length &&
+                        !$(event.target).is('.form-container') &&
                         !$(event.target).closest('.open-form-btn').length &&
-                        !$(event.target).is('.editBtn') ||
-                    !$(event.target).is('.changePwdBtn')) ||
+                        !$(event.target).is('.editBtn') &&
+                        !$(event.target).is('.changePwdBtn')
+                    ) ||
                     $(event.target).is('.form-container .close-btn')
                 ) {
                     // Close the form

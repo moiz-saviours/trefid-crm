@@ -349,3 +349,13 @@
         });
     });
 </script>
+
+<script>
+    $(document).ready(function () {
+        $('.generatePassword').click(function () {
+            const closestPasswordInput = $(this).closest('form').find('input[name="password"]');
+            const randomPassword = generateRandomPassword(12);
+            closestPasswordInput.val(randomPassword);
+        });
+    });
+</script>

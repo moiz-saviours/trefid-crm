@@ -17,6 +17,7 @@
             margin-bottom: 15px;
 
         }
+
         .generatePassword:hover {
             color: var(--bs-primary);
             background-color: var(--bs-light);
@@ -125,9 +126,10 @@
                 </div>
 
                 <div class="form-group mb-3">
-                    <label for="password" class="form-label">Password</label>
+                    <label for="createPassword" class="form-label">Password</label>
                     <div class="d-flex align-items-center">
-                        <input type="text" id="password" class="form-control" placeholder="Generated Password">
+                        <input type="text" id="createPassword" name="password" class="form-control"
+                               placeholder="Generated Password">
                         <i id="generatePassword" class="generatePassword fa fa-key ms-2" title="Generate Password"></i>
                     </div>
                     @error('password')
@@ -155,14 +157,3 @@
         </div>
     </form>
 </div>
-
-@push('script')
-    <script>
-        $(document).ready(function () {
-            $('.generatePassword').click(function () {
-                const randomPassword = generateRandomPassword(12);
-                $('#password').val(randomPassword);
-            });
-        });
-    </script>
-@endpush
