@@ -7,20 +7,20 @@ use function Pest\Laravel\get;
 
 trait ActivityLoggable
 {
-    public static $defaultLogEvents = ['created', 'updated', 'deleted'];
+//    public static $defaultLogEvents = ['created', 'updated', 'deleted'];
 
     /**
      * Boot the trait and listen to the events of the model.
      */
     protected static function bootActivityLoggable()
     {
-        $events = property_exists(static::class, 'logEvents') ? static::$logEvents : static::$defaultLogEvents;
-
-        foreach ($events as $event) {
-            static::$event(function ($model) use ($event) {
-                $model->logActivity($event);
-            });
-        }
+//        $events = property_exists(static::class, 'logEvents') ? static::$logEvents : static::$defaultLogEvents;
+//
+//        foreach ($events as $event) {
+//            static::$event(function ($model) use ($event) {
+//                $model->logActivity($event);
+//            });
+//        }
 
 
         static::created(function ($model) {

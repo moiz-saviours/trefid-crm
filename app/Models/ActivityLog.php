@@ -19,15 +19,15 @@ class ActivityLog extends Model
         return $model && isset($model->name) ? $model->name : 'Unknown';
     }
 
-    // Polymorphic relation to the loggable model
-    public function loggable()
-    {
-        return $this->morphTo();
-    }
-
-    // Relation to the actor (Admin/User)
-    public function actor()
-    {
-        return $this->morphTo(null, 'actor_type', 'actor_id');
-    }
+//    // Polymorphic relation to the loggable model
+//    public function loggable()
+//    {
+//        return $this->morphTo();
+//    }
+//
+//    // Relation to the actor (Admin/User)
+//    public function actor()
+//    {
+//        return $this->morphTo(null, 'actor_type', 'actor_id');
+//    }
 }
