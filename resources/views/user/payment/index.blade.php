@@ -251,7 +251,7 @@
                 <header class="custm_header">
                     <div class="new_head">
                         <h1 class="page-title mb-2">Payments <i class="fa fa-caret-down" aria-hidden="true"></i></h1>
-                        <h2 id="record-count" class="h6"> {{count ($all_payments)}}records</h2>
+                        <h2 id="record-count" class="h6"> {{count ($payments)}}records</h2>
                     </div>
                     <div class="filters">
                         <div class="actions">
@@ -260,7 +260,7 @@
                             <button class="header_btn">Actions <i class="fa fa-caret-down" aria-hidden="true"></i>
                             </button>
                             <button class="header_btn">Import</button>
-                            <button class="create-contact open-form-btn void">Create New Payment</button>
+                            <button class="create-contact open-form-btn void">Create New</button>
                         </div>
                     </div>
                 </header>
@@ -271,7 +271,7 @@
                 <div class="container">
                     <div class="custom-tabs">
                         <ul class="tab-nav">
-                            <li class="tab-item active" data-tab="home">Payments
+                            <li class="tab-item active" data-tab="home">All Payments
                                 <i class="fa fa-times close-icon" aria-hidden="true"></i></li>
                             <li class="tab-item " data-tab="menu1">My Payments <i class="fa fa-times close-icon"
                                                                                   aria-hidden="true"></i></li>
@@ -329,7 +329,7 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        @foreach($all_payments as $payment)
+                                        @foreach($payments as $payment)
                                             <tr id="tr-{{$payment->id}}">
                                                 <td class="align-middle text-center text-nowrap"></td>
                                                 <td class="align-middle text-center text-nowrap">{{$loop->iteration}}</td>
@@ -343,7 +343,7 @@
                                                 <td class="align-middle text-center text-nowrap">{{optional($payment->brand)->name ?? "---"}}</td>
                                                 <td class="align-middle text-center text-nowrap">{{optional($payment->team)->name ?? "---"}}</td>
                                                 <td class="align-middle text-center text-nowrap">{{optional($payment->agent)->name ?? "---"}}</td>
-                                                <td class="align-middle text-center text-nowrap">{{optional($payment->customer_contact)->name ?? "---"}}</td>
+                                                <td class="align-middle text-center text-nowrap">{{optional($payment->customer)->name ?? "---"}}</td>
                                                 <td class="align-middle text-center text-nowrap">${{$payment->amount}}</td>
                                                 <td class="align-middle text-center text-nowrap">
                                                     @if($payment->status == 0)
@@ -364,6 +364,7 @@
                                                         GMT+5
                                                     @endif
                                                 </td>
+
                                             </tr>
 
                                         @endforeach
