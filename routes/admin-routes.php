@@ -82,12 +82,8 @@ Route::middleware(['auth:admin', 'verified:admin', 'throttle:60,1'])->prefix('ad
     Route::name('team-target.')->group(function () {
         Route::get('/team-targets', [AdminTeamTargetController::class, 'index'])->name('index');
         Route::prefix('team-target')->group(function () {
-            Route::get('/create', [AdminTeamTargetController::class, 'create'])->name('create');
-            Route::post('/store', [AdminTeamTargetController::class, 'store'])->name('store');
-            Route::get('/edit/{team?}', [AdminTeamTargetController::class, 'edit'])->name('edit');
             Route::post('/update/{team_key}/{month}/{year}', [AdminTeamTargetController::class, 'update'])->name('update');
-            Route::get('/change-status/{team?}', [AdminTeamTargetController::class, 'change_status'])->name('change.status');
-            Route::delete('/delete/{team?}', [AdminTeamTargetController::class, 'delete'])->name('delete');
+            Route::get('/logs/{team?}', [AdminTeamTargetController::class, 'log_index'])->name('log.index');
         });
     });
 

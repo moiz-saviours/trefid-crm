@@ -1,5 +1,5 @@
 @extends('admin.layouts.app')
-@section('title','Team Targets')
+@section('title','Teams')
 @section('datatable', true)
 @section('content')
     @push('style')
@@ -10,16 +10,14 @@
             <div class="content__wrap">
                 <header class="custm_header">
                     <div class="new_head">
-                        <h1 class="page-title mb-2">Team Targets <i class="fa fa-caret-down" aria-hidden="true"></i></h1>
-                        <h2 id="record-count" class="h6">{{count($teams)}} records</h2>
+                        <h1 class="page-title mb-2">Teams <i class="fa fa-caret-down" aria-hidden="true"></i></h1>
+                        <h2 id="record-count" class="h6">{{count($logs)}} records</h2>
                     </div>
                     <div class="filters">
                         <div class="actions">
                             <h1><i class="fa fa-lock" aria-hidden="true"></i> Data Quality</h1>
                             <button class="header_btn">Actions <i class="fa fa-caret-down" aria-hidden="true"></i>
                             </button>
-                            <button class="header_btn">Import</button>
-{{--                            <button class="create-contact open-form-btn">Create New</button>--}}
                         </div>
                     </div>
                 </header>
@@ -30,7 +28,7 @@
                 <div class="container">
                     <div class="custom-tabs">
                         <ul class="tab-nav">
-                            <li class="tab-item active" data-tab="home">Team Targets
+                            <li class="tab-item active" data-tab="home">Teams
                                 <i class="fa fa-times close-icon" aria-hidden="true"></i></li>
                         </ul>
                     </div>
@@ -63,33 +61,49 @@
                                     </div>
                                 </div>
                                 <div class="card-body">
-                                    <table id="allTeamTargetsTable" class="table table-striped datatable-exportable
+                                    <table id="allTeamTargetLogsTable" class="table table-striped datatable-exportable
                             stripe row-border order-column nowrap
                             initTable
                             ">
                                         <thead>
+
                                         <tr>
-                                            <th>Team</th>
-                                            @for($i = 1; $i < 13; $i++)
-                                                <th>{{ \Carbon\Carbon::create()->month($i)->format('F') }}</th>
-                                            @endfor
+                                            <th><input type="checkbox"></th>
+                                            <th class="align-middle text-center text-nowrap">CREATOR</th>
+                                            <th class="align-middle text-center text-nowrap">MODEL</th>
+                                            <th class="align-middle text-center text-nowrap">Name</th>
+                                            <th class="align-middle text-center text-nowrap">Description</th>
+                                            <th class="align-middle text-center text-nowrap">Assigned Brands</th>
+                                            <th class="align-middle text-center text-nowrap">Lead</th>
+                                            <th class="align-middle text-center text-nowrap">Status</th>
+                                            <th class="align-middle text-center text-nowrap">Action</th>
                                         </tr>
                                         </thead>
                                         <tbody>
                                         @foreach($teams as $team)
-                                            <tr data-team-key="{{ $team->team_key }}">
-                                                <td>{{ $team->name }}</td>
-                                                @for($i = 1; $i < 13; $i++)
-                                                    <td class="editable" data-month="{{ $i }}" data-year="{{ date('Y') }}">
-                                                        @php
-                                                            $target = $team->targets()->where('month', $i)->where('year', date('Y'))->first();
-                                                        @endphp
-                                                        <span class="target-value">
-                                                            {{ $target ? number_format($target->target_amount) : 0 }}
-                                                        </span>
-                                                        <input type="number" class="target-input" value="{{ $target ? $target->target_amount : 0 }}" style="display:none;">
-                                                    </td>
-                                                @endfor
+                                            <tr id="tr-{{$team->id}}">
+                                                <td class="align-middle text-center text-nowrap"></td>
+                                                <td class="align-middle text-center text-nowrap">{{$loop->iteration}}</td>
+                                                <td class="align-middle text-center text-nowrap">{{ $team->team_key }}</td>
+                                                <td class="align-middle text-center text-nowrap">{{ $team->name }}</td>
+                                                <td class="align-middle text-center text-nowrap">{{ $team->description }}</td>
+                                                <td class="align-middle text-center text-nowrap" style="max-width: 200px; overflow: hidden; text-overflow: ellipsis;" title="{{ implode(', ', $team->brands->pluck('name')->toArray()) }}">
+                                                    {{ implode(', ', $team->brands->pluck('name')->toArray()) }}
+                                                </td>
+                                                <td class="align-middle text-center text-nowrap">{{ optional($team->lead)->name }}</td>
+                                                <td class="align-middle text-center text-nowrap">
+                                                    <input type="checkbox" class="status-toggle change-status"
+                                                           data-id="{{ $team->id }}"
+                                                           {{ $team->status == 1 ? 'checked' : '' }} data-bs-toggle="toggle">
+                                                </td>
+                                                <td class="align-middle text-center table-actions">
+                                                    <button type="button" class="btn btn-sm btn-primary editBtn"
+                                                            data-id="{{ $team->id }}" title="Edit"><i
+                                                            class="fas fa-edit"></i></button>
+                                                    <button type="button" class="btn btn-sm btn-danger deleteBtn"
+                                                            data-id="{{ $team->id }}" title="Delete"><i
+                                                            class="fas fa-trash"></i></button>
+                                                </td>
                                             </tr>
                                         @endforeach
                                         </tbody>
@@ -98,53 +112,11 @@
                             </div>
                         </div>
                     </div>
-{{--                    @include('admin.team-targets.custom-form')--}}
                 </div>
             </div>
         </div>
     </section>
     <!-- Modal -->
     @push('script')
-{{--        @include('admin.team-targets.script')--}}
-        <script>
-            $(document).ready(function() {
-                // Double-click to edit target
-                $('.editable').dblclick(function() {
-                    var currentCell = $(this);
-                    currentCell.find('.target-value').hide();
-                    currentCell.find('.target-input').show().focus();
-                });
-
-                // Save on blur or Enter
-                $('.target-input').blur(function() {
-                    var currentInput = $(this);
-                    var targetAmount = currentInput.val();
-                    var team_key = currentInput.closest('tr').data('team-key');
-                    var month = currentInput.parent('td.editable').data('month');
-                    var year = currentInput.parent('td.editable').data('year');
-
-                    // Send update request via AJAX
-                    $.ajax({
-                        url: '/admin/team-target/update/' + team_key + '/' + month + '/' + year,
-                        method: 'POST',
-                        data: {
-                            target_amount: targetAmount,
-                            _token: '{{ csrf_token() }}'
-                        },
-                        success: function(response) {
-                            currentInput.hide();
-                            currentInput.siblings('.target-value').text(targetAmount).show();
-                        }
-                    });
-                });
-
-                // Save on Enter key press
-                $('.target-input').keypress(function(e) {
-                    if (e.which == 13) {
-                        $(this).blur();
-                    }
-                });
-            });
-        </script>
     @endpush
 @endsection

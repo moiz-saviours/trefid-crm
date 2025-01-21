@@ -245,6 +245,26 @@
                     </li>
                     <li class="nav-item has-sub">
                         <a href="javascript:void(0)"
+                           class="mininav-toggle nav-link collapsed {{ request()->is('admin/team-target*') ? 'active' : '' }}"><i
+                                class="demo-pli-add-user fs-5 me-2"></i>
+                            <span class="nav-label ms-1">Team Targets</span>
+                        </a>
+                        <!-- Ui Elements submenu list -->
+                        <ul class="mininav-content nav collapse">
+                            <li data-popper-arrow class="arrow"></li>
+                            <div class="navigate-heading">
+                                <i class="demo-pli-add-user"></i>
+                                <h3>Team Targets</h3>
+                            </div>
+                            <li class="nav-item">
+                                <a href="{{ route('admin.team-target.index') }}"
+                                   class="nav-link {{ request()->is('admin/team-target*') ? 'active' : '' }}">Lists</a>
+                            </li>
+                        </ul>
+                        <!-- END : Ui Elements submenu list -->
+                    </li>
+                    <li class="nav-item has-sub">
+                        <a href="javascript:void(0)"
                            class="mininav-toggle nav-link collapsed {{ request()->is('admin/contact*') ? 'active' : '' }}"><i
                                 class="demo-pli-address-book fs-5 me-2"></i>
                             <span class="nav-label ms-1">Customers</span>

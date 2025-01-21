@@ -13,9 +13,7 @@ class TeamTarget extends Model
 
     protected $table = 'team_targets';
     protected $primaryKey = 'id';
-
-
-
+    public static array $logEvents = ['created', 'updated', 'deleted'];
     /**
      * The attributes that are mass assignable.
      *

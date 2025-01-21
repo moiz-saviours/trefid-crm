@@ -94,10 +94,5 @@ class Brand extends Model
     {
         return $this->hasMany(CustomerContact::class, 'brand_key');
     }
-//
-//    public function logs(): \Illuminate\Database\Eloquent\Relations\HasMany
-//    {
-//        return $this->morp
-//    }
 }
 

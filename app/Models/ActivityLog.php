@@ -3,31 +3,36 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 class ActivityLog extends Model
 {
-    protected $fillable = ['action', 'model_type', 'model_id', 'actor_type', 'actor_id', 'user_id', 'details'];
-
+    protected $fillable = ['action', 'model_type', 'model_id', 'actor_type', 'actor_id', 'description', 'details', 'ip_address'];
+//    public function getEntityNameAttribute()
+//    {
+//        $model = app($this->model_type)->withTrashed()->find($this->model_id);
+//        return $model && isset($model->name) ? $model->name : 'Unknown';
+//    }
+    /** Scopes Start **/
+    public function scopeForModel($query, string $modelClass)
+    {
+        return $query->whereHasMorph('model', [$modelClass]);
+    }
+    /** Scopes End **/
+    /** Relation Start **/
     public function user()
     {
         return $this->belongsTo(User::class);
     }
 
-    public function getEntityNameAttribute()
+    public function model(): MorphTo
     {
-        $model = app($this->model_type)->withTrashed()->find($this->model_id);
-        return $model && isset($model->name) ? $model->name : 'Unknown';
+        return $this->morphTo('model');
     }
 
-//    // Polymorphic relation to the loggable model
-//    public function loggable()
-//    {
-//        return $this->morphTo();
-//    }
-//
-//    // Relation to the actor (Admin/User)
-//    public function actor()
-//    {
-//        return $this->morphTo(null, 'actor_type', 'actor_id');
-//    }
+    public function actor(): MorphTo
+    {
+        return $this->morphTo('actor');
+    }
+    /** Relation End **/
 }

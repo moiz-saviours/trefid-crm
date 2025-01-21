@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\ActivityLog;
 use App\Models\Team;
 use App\Models\TeamTarget;
 use Illuminate\Http\Request;
@@ -61,7 +62,7 @@ class TeamTargetController extends Controller
             ['target_amount' => $request->target_amount]
         );
 
-        return response()->json(['success' => true]);
+        return response()->json(['success' => true,'target' => $target]);
     }
 
     /**
@@ -70,5 +71,14 @@ class TeamTargetController extends Controller
     public function destroy(TeamTarget $teamTarget)
     {
         //
+    }
+
+    /**
+     * Display a listing of the resource logs.
+     */
+    public function log_index()
+    {
+        $logs = ActivityLog::forModel(TeamTarget::class)->latest()->paginate(10);
+        return view('admin.team-targets.logs-index', compact('logs'));
     }
 }
