@@ -47,6 +47,7 @@ class InvoiceController extends Controller
      */
     public function store(Request $request)
     {
+        DB::beginTransaction();
         try {
             $request->validate([
                 'brand_key' => 'required|integer|exists:brands,brand_key',
@@ -184,10 +185,12 @@ class InvoiceController extends Controller
 //                $data['agent_type'] = get_class(auth()->user());
 //            }
             $invoice = Invoice::create($data);
+            DB::commit();
             $invoice->loadMissing('customer_contact', 'brand', 'team', 'agent');
             $invoice->date = "Today at " . $invoice->created_at->timezone('GMT+5')->format('g:i A') . "GMT + 5";
             return response()->json(['data' => $invoice, 'success' => 'Record created successfully!']);
         } catch (\Exception $e) {
+            DB::rollBack();
             return response()->json(['error' => 'An error occurred while creating the record', 'message' => $e->getMessage()], 500);
         }
     }
