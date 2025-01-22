@@ -22,8 +22,10 @@
 
         .image-checkbox-container {
             position: relative;
-            width: 50px;
-            height: 50px;
+            min-width: 50px;
+           min-height: 50px;
+            /*width: 50px;*/
+            /*height: 50px;*/
             cursor: pointer;
         }
 
@@ -74,7 +76,7 @@
         }
 
         .image-checkbox-container img.user-image {
-            position: absolute;
+            /*position: absolute;*/
         }
 
         .assign-brands select[multiple] option:checked, .assign-brands select[multiple]:focus option:checked {
@@ -131,28 +133,65 @@
                     <span class="text-danger">{{ $message }}</span>
                     @enderror
                 </div>
+                <style>
+                    .main-images-wrapper{
+                        display: flex;
+                        justify-content: left;
+                        gap: 7px;
+                        flex-wrap: wrap;
+                        align-items: center;
+                    }
+                    .main-img-box{
+                       text-align: center;
+                    }
+                </style>
 
                 <div class="form-group mb-3">
                     <label for="user" class="form-label">Team Members</label>
+
+                    <div class="main-images-wrapper">
+
+                           @foreach($users as $user)
+
+                                  <div class="main-img-box">
+                                      <div class="image-checkbox-container">
+                                          <input type="checkbox" name="employees[]" value="{{ $user->id }}"
+                                                 id="user-{{ $user->id }}"
+                                                 {{ in_array($user->id, old('employees', [])) ? 'checked' : '' }}
+                                                 class="select-user-checkbox">
+                                          <img
+                                              src="{{ $user->image && file_exists(public_path('assets/images/employees/'.$user->image)) ? asset('assets/images/employees/'.$user->image) : asset('assets/img/team-1.jpg') }}"
+                                              alt="{{ $user->name }}" title="{{ $user->email }}"
+                                              class="rounded-circle user-image">
+                                          <div class="checkmark-overlay">✔</div>
+                                      </div>
+                                      <div>
+                                          <strong class="employee-name">{{ $user->name }}</strong>
+                                      </div>
+                                  </div>
+
+                           @endforeach
+
+                    </div>
                     <div class="row">
-                        @foreach($users as $user)
-                            <div class="col-md-2">
-                                <div class="image-checkbox-container">
-                                    <input type="checkbox" name="employees[]" value="{{ $user->id }}"
-                                           id="user-{{ $user->id }}"
-                                           {{ in_array($user->id, old('employees', [])) ? 'checked' : '' }}
-                                           class="select-user-checkbox">
-                                    <img
-                                        src="{{ $user->image && file_exists(public_path('assets/images/employees/'.$user->image)) ? asset('assets/images/employees/'.$user->image) : asset('assets/img/team-1.jpg') }}"
-                                        alt="{{ $user->name }}" title="{{ $user->email }}"
-                                        class="rounded-circle user-image" width="30" height="30">
-                                    <div class="checkmark-overlay">✔</div>
-                                </div>
-                                <div>
-                                    <strong class="employee-name">{{ $user->name }}</strong>
-                                </div>
-                            </div>
-                        @endforeach
+{{--                        @foreach($users as $user)--}}
+{{--                            <div class="col-md-2">--}}
+{{--                                <div class="image-checkbox-container">--}}
+{{--                                    <input type="checkbox" name="employees[]" value="{{ $user->id }}"--}}
+{{--                                           id="user-{{ $user->id }}"--}}
+{{--                                           {{ in_array($user->id, old('employees', [])) ? 'checked' : '' }}--}}
+{{--                                           class="select-user-checkbox">--}}
+{{--                                    <img--}}
+{{--                                        src="{{ $user->image && file_exists(public_path('assets/images/employees/'.$user->image)) ? asset('assets/images/employees/'.$user->image) : asset('assets/img/team-1.jpg') }}"--}}
+{{--                                        alt="{{ $user->name }}" title="{{ $user->email }}"--}}
+{{--                                        class="rounded-circle user-image" width="30" height="30">--}}
+{{--                                    <div class="checkmark-overlay">✔</div>--}}
+{{--                                </div>--}}
+{{--                                <div>--}}
+{{--                                    <strong class="employee-name">{{ $user->name }}</strong>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                        @endforeach--}}
                     </div>
                     @error('employees.*')
                     <span class="text-danger">{{ $message }}</span>
@@ -169,7 +208,7 @@
                                 <!-- Select All Toggle Section -->
                             <div class="d-flex justify-content-between align-items-center mb-3">
                                 <h5 class="font-weight-bold mb-0 text-center">Brands</h5>
-                                <div class="form-check form-check-inline">
+                                <div class="form-check form-check-update d-flex align-items-center form-check-inline">
                                     <input type="checkbox" id="select-all-brands"
                                            class="form-check-input" {{ $allBrandsSelected ? 'checked' : '' }}>
                                     <label class="form-check-label" for="select-all-brands">

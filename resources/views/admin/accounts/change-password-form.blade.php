@@ -1,21 +1,33 @@
 @push('style')
     <style>
-        .generatePassword {
-            padding: 8px;
-            cursor: pointer;
-            font-size: 18px;
-            background-color: var(--bs-primary);
-            border-radius: 5px;
-            height: 35px;
-            width: 35px;
-            color: var(--bs-light);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-left: 5px;
-            transition: background-color 0.3s ease;
-            margin-bottom: 15px;
+        /*.generatePassword {*/
+        /*    padding: 8px;*/
+        /*    cursor: pointer;*/
+        /*    font-size: 18px;*/
+        /*    background-color: var(--bs-primary);*/
+        /*    border-radius: 5px;*/
+        /*    height: 35px;*/
+        /*    width: 35px;*/
+        /*    color: var(--bs-light);*/
+        /*    display: flex;*/
+        /*    align-items: center;*/
+        /*    justify-content: center;*/
+        /*    margin-left: 5px;*/
+        /*    transition: background-color 0.3s ease;*/
+        /*    margin-bottom: 15px;*/
 
+        /*}*/
+        .generatePassword-update{
+            background: #2D3F4F;
+            color: #fff;
+            font-size: 12px;
+            padding: 8px 21px;
+            border-radius: 5px;
+            margin: 0 auto;
+            display: block;
+            width: 50%;
+            text-align: center;
+            cursor: pointer;
         }
         .generatePassword:hover {
             color: var(--bs-primary);
@@ -40,7 +52,7 @@
                     <label for="changePassword" class="form-label">Password</label>
                     <div class="d-fldex align-items-center">
                         <input type="text" id="changePassword" name="password" class="form-control" placeholder="Generated Password">
-                        <i id="generatePassword" class="generatePassword  ms-2" title="Change Password">Generate Password</i>
+                        <i id="generatePassword" class="generatePassword generatePassword-update " title="Change Password">Generate Password</i>
                     </div>
                     @error('password')
                     <span class="text-danger">{{ $message }}</span>

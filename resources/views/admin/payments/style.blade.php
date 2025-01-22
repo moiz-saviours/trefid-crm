@@ -130,6 +130,16 @@
 
     }
 
+    .payment-selection{
+
+        margin: 0;
+        padding: 0;
+        display: flex
+    ;
+        gap: 10px;
+        cursor: pointer;
+    }
+
     .tab-item.active i {
         float: right;
         font-size: 14px;
@@ -217,11 +227,21 @@
         overflow-y: scroll;
     }
 
+    /*.custom-form .form-body label {*/
+    /*    display: block;*/
+    /*    margin-bottom: 5px;*/
+    /*    font-weight: 500;*/
+    /*    color: var(--bs-heading-color);*/
+    /*}*/
     .custom-form .form-body label {
-        display: block;
-        margin-bottom: 5px;
+        display: flex ;
+        /* margin-bottom: 5px; */
         font-weight: 500;
         color: var(--bs-heading-color);
+        margin: 10px 0px;
+        padding: 0;
+        align-items: center;
+        gap: 7px;
     }
 
     .custom-form .form-body input {
@@ -285,14 +305,26 @@
         cursor: pointer;
         position: relative;
     }
+    /*.custom-form .form-body input[type="radio"]  {*/
+    /*    margin-right: 10px;*/
+    /*    appearance: none;*/
+    /*    width: auto;*/
+    /*    border-radius: 50%;*/
+    /*    cursor: pointer;*/
+    /*    position: relative;*/
+    /*}*/
     .custom-form .form-body input[type="radio"] {
-        margin-right: 10px;
-        appearance: none;
+        /* margin-right: 10px; */
+        /* appearance: none; */
         width: auto;
         border-radius: 50%;
         cursor: pointer;
         position: relative;
+        /* opacity: 5; */
+        margin: 0 !important;
+        padding: 0 !important;
     }
+
     .fh-checkbox input[type="checkbox"]:checked,
     .fh-radiobox input[type="radio"]:checked{
         background: var(--nf-header-bg);

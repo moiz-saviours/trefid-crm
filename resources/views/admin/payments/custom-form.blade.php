@@ -39,7 +39,7 @@
                     @enderror
                 </div>
                 <div class="form-group mb-3">
-                    <label for="agent_id" class="form-label">Agent</label>
+                    <label for="agent_id" class="form-label ">Agent</label>
                     <select class="form-control" id="agent_id" name="agent_id" required>
                         <option value="">Select Agent</option>
                         @foreach($agents as $agent)
@@ -53,7 +53,7 @@
                     @enderror
                 </div>
                 <div class="form-group mb-3">
-                    <label for="payment_type" class="form-label">Payment Type</label>
+                    <label for="payment_type" class="form-label payment-selection">Payment Type</label>
                     <div>
                         <label>
                             <input type="radio" name="payment_type" value="fresh" required
