@@ -16,8 +16,8 @@ return new class extends Migration
             Schema::create('activity_logs', function (Blueprint $table) {
                 $table->id();
                 $table->string('action')->nullable()->default(null);
-                $table->morphs('model');
-                $table->morphs('actor');
+                $table->morphs('model')->nullable();
+                $table->morphs('actor')->nullable();
                 $table->string('description')->nullable()->default(null);
                 $table->longText('details')->nullable()->default(null);
                 $table->string('ip_address')->nullable()->default(null);
