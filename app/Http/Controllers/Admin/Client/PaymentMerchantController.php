@@ -109,8 +109,7 @@ class PaymentMerchantController extends Controller
 
         ]);
         if ($validator->fails()) {
-
-            return response()->json(['errors' => $validator->errors()->all()]);
+            return response()->json(['errors' => $validator->errors()],422);
         }
 
         $client_account->update($request->all());

@@ -252,7 +252,7 @@
                             const fieldWithPrefix = isUpdate ? `#edit_${field}` : `#${field}`;
 
                             const errorMessages = response.errors[field];
-                            errorMessages.forEach(message => {
+                            errorMessages.each(message => {
                                 $(fieldWithPrefix).after(`<span class="text-danger">${message}</span>`);
                             });
 

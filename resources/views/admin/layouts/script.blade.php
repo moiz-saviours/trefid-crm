@@ -188,6 +188,13 @@
                         icon: 'error',
                         confirmButtonText: 'OK'
                     });
+                } else if (jqXHR.status === 422) {
+                    // Swal.fire({
+                    //     title: 'Error',
+                    //     text: `An error occurred: ${jqXHR.status} - ${jqXHR.statusText}`,
+                    //     icon: 'error',
+                    //     confirmButtonText: 'OK'
+                    // });
                 } else {
                     Swal.fire({
                         title: 'Error',
@@ -214,6 +221,11 @@
 
     });
     $(document).ajaxError(function myErrorHandler(event, jqXHR, ajaxOptions, thrownError) {
+        if (jqXHR.status === 422 || (jqXHR.responseJSON && jqXHR.responseJSON.errors)) {
+            return;
+        }
+        resetFields();
+
         const formContainer = $('.form-container');
         if (formContainer.length > 0) {
             formContainer.removeClass('open')
@@ -267,6 +279,7 @@
             });
         }
     });
+
     function AjaxDeleteRequestPromise(url, data, method = 'DELETE', options = {}) {
         method = method.toUpperCase();
         options = {
@@ -398,21 +411,45 @@
                     if (jqXHR.status === 422 && response && response.errors) {
                         const isUpdate = url.includes('update');
 
-                        for (let field in response.errors) {
-                            const fieldWithPrefix = isUpdate ? `#edit_${field}` : `#${field}`;
-
-                            const errorMessages = response.errors[field];
-                            errorMessages.forEach(message => {
-                                $(fieldWithPrefix).after(`<span class="text-danger">${message}</span>`);
+                        if (response.errors && Array.isArray(response.errors)) {
+                            let errorMessages = '';
+                            response.errors.forEach(message => {
+                                errorMessages += `<p>${message}</p>`;
                             });
-
-                            $(fieldWithPrefix).addClass('is-invalid');
-
+                            $('.error-messages').html(`<div class="alert alert-danger text-danger">${errorMessages}</div>`).show();
                             setTimeout(function () {
-                                $(fieldWithPrefix).removeClass('is-invalid');
-                                $(fieldWithPrefix).siblings('.text-danger').fadeOut();
+                                $('.error-messages').fadeOut();
                             }, 5000);
+                        } else if (response.errors) {
+                            for (let field in response.errors) {
+
+                                const prefixedSelector = `#edit_${field}`;
+                                const unprefixedSelector = `#${field}`;
+                                const fieldWithPrefix = isUpdate ? `#edit_${field}` : `#${field}`;
+
+                                const fieldSelector = $(fieldWithPrefix).length > 0 ? prefixedSelector : unprefixedSelector;
+
+                                const errorMessages = response.errors[field];
+
+                                $(fieldSelector).next('.text-danger').remove();
+
+                                if (Array.isArray(errorMessages)) {
+                                    errorMessages.forEach(message => {
+                                        $(fieldSelector).after(`<span class="text-danger">${message}</span>`);
+                                    });
+                                } else {
+                                    $(fieldSelector).after(`<span class="text-danger">${errorMessages}</span>`);
+                                }
+
+                                $(fieldSelector).addClass('is-invalid');
+
+                                setTimeout(function () {
+                                    $(fieldSelector).removeClass('is-invalid');
+                                    $(fieldSelector).siblings('.text-danger').fadeOut();
+                                }, 10000);
+                            }
                         }
+
                     }
                     /** Show generic error with SweetAlert */
                     if (options.useSwal) {
@@ -443,7 +480,9 @@
                     }
                     /** Show generic error with toastr */
                     if (options.useToastr) {
-                        toastr['error'](message);
+                        if (jqXHR.status !== 422 || !jqXHR.responseJSON.errors) {
+                            toastr['error'](message);
+                        }
                         if (options.useToastrReload) {
                             setTimeout(() => location.reload(), 5000);
                         } else if (options.useRedirect && options.redirectLocation) {
@@ -453,10 +492,11 @@
 
                     reject(textStatus);
                 },
-                complete: function () {
-                    $(".modal").modal('hide');
-                    $('.form-container').removeClass('open');
-                    // $('#loading').hide();
+                complete: function (jqXHR, textStatus) {
+                    if (jqXHR.status !== 422 || !jqXHR.responseJSON.errors) {
+                        $(".modal").modal('hide');
+                        $('.form-container').removeClass('open');
+                    }
                 }
             });
         });
@@ -482,6 +522,18 @@
         return password;
     }
 
+    function resetFields(){
+        $('.second-fields').fadeOut(() => {
+            $('.first-fields').fadeIn();
+            $('.first-field-inputs').prop('required', true);
+            $('.second-field-inputs').prop('required', false);
+        });
+        $('.first-fields').fadeOut(() => {
+            $('.second-fields').fadeIn();
+            $('.second-field-inputs').prop('required', true);
+            $('.first-field-inputs').prop('required', false);
+        });
+    }
     $(document).ready(function () {
         const formContainer = $('#formContainer');
         const manageForm = $('.custom-form form')

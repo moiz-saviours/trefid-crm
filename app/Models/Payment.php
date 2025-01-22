@@ -32,6 +32,8 @@ class Payment extends Model
         'response',
         'transaction_response',
         'amount',
+        'payment_type',
+        'payment_method',
         'card_name',
         'card_type',
         'card_number',

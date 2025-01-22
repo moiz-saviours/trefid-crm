@@ -120,7 +120,7 @@
                 url: `{{route('admin.payment.edit')}}/` + id,
                 type: 'GET',
                 success: function (response) {
-                    setDataAndShowEdit(response.data);
+                    setDataAndShowEdit(response);
                 },
                 error: function () {
                     console.log(jqXHR, textStatus, errorThrown);
@@ -131,18 +131,18 @@
 
 
         function setDataAndShowEdit(data) {
-            let payment = data;
+            let payment = data.payment;
             $('#manage-form').data('id', payment.id);
 
             $('#brand_key').val(payment.brand_key);
             $('#team_key').val(payment.team_key);
             $('#agent_id').val(payment.agent_id);
             $('#payment_type').val(payment.payment_type).trigger('change');
-            $('#client_name').val(payment.client_name);
-            $('#client_email').val(payment.client_email);
-            $('#client_phone').val(payment.client_phone);
             $('#address').val(payment.address);
-            $('#client_key').val(payment.client_key);
+            $('#customer_contact_name').val(payment.customer_contact?.name);
+            $('#customer_contact_email').val(payment.customer_contact?.email);
+            $('#customer_contact_phone').val(payment.customer_contact?.phone);
+            $('#cus_contact_key').val(payment.customer_contact?.special_key);
             $('#amount').val(payment.amount);
             $('#description').val(payment.description);
             $('#payment_method').val(payment.payment_method);

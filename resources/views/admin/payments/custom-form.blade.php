@@ -8,6 +8,7 @@
             </div>
             <!-- Form Body -->
             <div class="form-body">
+                <div class="error-messages"></div>
                 <div class="form-group mb-3">
                     <label for="brand_key" class="form-label">Brand</label>
                     <select class="form-control" id="brand_key" name="brand_key" required>
@@ -52,45 +53,66 @@
                     <span class="text-danger">{{ $message }}</span>
                     @enderror
                 </div>
+
+
                 <div class="form-group mb-3">
-                    <label for="payment_type" class="form-label payment-selection">Payment Type</label>
-                    <div>
-                        <label>
-                            <input type="radio" name="payment_type" value="fresh" required
-                                {{ old('payment_type') == 'fresh' ? 'checked' : '' }}> Fresh
-                        </label>
-                        <label>
-                            <input type="radio" name="payment_type" value="upsale"
-                                {{ old('payment_type') == 'upsale' ? 'checked' : '' }}> Upsale
-                        </label>
+                    <label for="type" class="form-label">Customer Type</label>
+                    <select class="form-control" id="type" name="type" title="Please select customer type" required>
+                        <option value="0" {{ old('type') == 0 ? 'selected' : '' }}>
+                            Fresh
+                        </option>
+                        @if($customer_contacts->count() > 0)
+                            <option value="1" {{ old('type') == 1 ? 'selected' : '' }}>
+                                Upsale
+                            </option>
+                        @endif
+                    </select>
+                    @error('type')
+                    <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
+                <div id="fresh-customer-contact-fields" class="form-group mb-3 first-fields">
+                    <div class="form-group mb-3">
+                        <label for="customer_contact_name" class="form-label">Customer Contact Name</label>
+                        <input type="text" class="form-control first-field-inputs" id="customer_contact_name"
+                               name="customer_contact_name"
+                               value="{{ old('customer_contact_name') }}">
+                        @error('customer_contact_name')
+                        <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label for="customer_contact_email" class="form-label">Customer Contact Email</label>
+                        <input type="email" class="form-control first-field-inputs" id="customer_contact_email"
+                               name="customer_contact_email"
+                               value="{{ old('customer_contact_email') }}">
+                        @error('customer_contact_email')
+                        <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="customer_contact_phone" class="form-label">Customer Contact Phone</label>
+                        <input type="text" class="form-control first-field-inputs" id="customer_contact_phone"
+                               name="customer_contact_phone"
+                               value="{{ old('customer_contact_phone') }}">
+                        @error('customer_contact_phone')
+                        <span class="text-danger">{{ $message }}</span>
+                        @enderror
                     </div>
                 </div>
-                <div class="fresh-fields form-group mb-3"
-                     style="display: {{ old('payment_type') == 'fresh' ? 'block' : 'none' }}">
-                    <label for="client_name" class="form-label">Client Name</label>
-                    <input type="text" class="form-control" id="client_name" name="client_name"
-                           value="{{ old('client_name') }}">
-                    @error('client_name')
-                    <span class="text-danger">{{ $message }}</span>
-                    @enderror
-                </div>
-
-                <div class="fresh-fields form-group mb-3"
-                     style="display: {{ old('payment_type') == 'fresh' ? 'block' : 'none' }}">
-                    <label for="client_email" class="form-label">Client Email</label>
-                    <input type="email" class="form-control" id="client_email" name="client_email"
-                           value="{{ old('client_email') }}">
-                    @error('client_email')
-                    <span class="text-danger">{{ $message }}</span>
-                    @enderror
-                </div>
-
-                <div class="fresh-fields form-group mb-3"
-                     style="display: {{ old('payment_type') == 'fresh' ? 'block' : 'none' }}">
-                    <label for="client_phone" class="form-label">Client Phone</label>
-                    <input type="text" class="form-control" id="client_phone" name="client_phone"
-                           value="{{ old('client_phone') }}">
-                    @error('client_phone')
+                <div id="upsale-customer-contact-fields" class="form-group mb-3 second-fields">
+                    <label for="cus_contact_key" class="form-label">Select Customer Contact</label>
+                    <select class="form-control second-field-inputs" id="cus_contact_key" name="cus_contact_key">
+                        <option value="">Select Customer Contact</option>
+                        @foreach($customer_contacts as $customer_contact)
+                            <option
+                                value="{{ $customer_contact->special_key }}" {{ old('cus_contact_key') == $customer_contact->special_key ? 'selected' : '' }}>
+                                {{ $customer_contact->name }} ({{ $customer_contact->email }})
+                            </option>
+                        @endforeach
+                    </select>
+                    @error('cus_contact_key')
                     <span class="text-danger">{{ $message }}</span>
                     @enderror
                 </div>
@@ -99,23 +121,6 @@
                     <label for="address" class="form-label">Address</label>
                     <textarea class="form-control" id="address" name="address" rows="3"></textarea>
                     @error('address')
-                    <span class="text-danger">{{ $message }}</span>
-                    @enderror
-                </div>
-
-                <div class="upsale-fields form-group mb-3"
-                     style="display: {{ old('payment_type') == 'upsale' ? 'block' : 'none' }}">
-                    <label for="client_key" class="form-label">Select Client</label>
-                    <select class="form-control" id="client_key" name="client_key">
-                        <option value="">Select Client</option>
-                        @foreach($clients as $client)
-                            <option
-                                value="{{ $client->client_key }}" {{ old('client_key') == $client->client_key ? 'selected' : '' }}>
-                                {{ $client->name }}
-                            </option>
-                        @endforeach
-                    </select>
-                    @error('client_key')
                     <span class="text-danger">{{ $message }}</span>
                     @enderror
                 </div>
@@ -142,6 +147,12 @@
                     <label for="payment_method" class="form-label">Payment Method</label>
                     <select class="form-control" id="payment_method" name="payment_method" required>
                         <option value="">Select Payment Method</option>
+                        <option value="authorize" {{ old('payment_method') == 'authorize' ? 'selected' : '' }}>
+                            Authorize
+                        </option>
+                        <option value="stripe" {{ old('payment_method') == 'stripe' ? 'selected' : '' }}>
+                            Stripe
+                        </option>
                         <option value="credit_card" {{ old('payment_method') == 'credit_card' ? 'selected' : '' }}>
                             Credit Card
                         </option>
@@ -175,19 +186,28 @@
     </form>
 </div>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-    $(document).ready(function() {
-        $('input[name="payment_type"]').on('change', function() {
-            if ($(this).val() == 'fresh') {
-                $('.fresh-fields').show();
-                $('.upsale-fields').hide();
-            } else if ($(this).val() == 'upsale') {
-                $('.fresh-fields').hide();
-                $('.upsale-fields').show();
-            }
+@push('script')
+    <!------- CUSTOM FORM -------->
+    <script>
+        $(document).ready(function () {
+            $('#type').on('change', function () {
+                const type = $(this).val();
+                if (type == 0) {
+                    $('#upsale-customer-contact-fields').fadeOut(() => {
+                        $('#fresh-customer-contact-fields').fadeIn();
+                        $('#customer_contact_name, #customer_contact_email, #customer_contact_phone').prop('required', true);
+                        $('#cus_contact_key').prop('required', false);
+                    });
+                } else if (type == 1) {
+                    $('#fresh-customer-contact-fields').fadeOut(() => {
+                        $('#upsale-customer-contact-fields').fadeIn();
+                        $('#cus_contact_key').prop('required', true);
+                        $('#customer_contact_name, #customer_contact_email, #customer_contact_phone').prop('required', false);
+                    });
+                }
+            }).trigger('change');
         });
 
-        $('input[name="payment_type"]:checked').trigger('change');
-    });
-</script>
+    </script>
+    <!------- CUSTOM FORM -------->
+@endpush

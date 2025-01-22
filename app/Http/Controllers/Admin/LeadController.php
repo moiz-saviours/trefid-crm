@@ -89,7 +89,7 @@ class LeadController extends Controller
                 'type.in' => 'The type field must be fresh or upsale.',
             ]);
             if ($validator->fails()) {
-                return response()->json(['errors' => $validator->errors()->all()]);
+                return response()->json(['errors' => $validator->errors()],422);
             }
             $client = $request->input('type') == 0
                 ? CustomerContact::firstOrCreate(
@@ -182,7 +182,7 @@ class LeadController extends Controller
                 'status' => 'required|in:0,1',
             ]);
             if ($validator->fails()) {
-                return response()->json(['errors' => $validator->errors()->all()]);
+                return response()->json(['errors' => $validator->errors()],422);
             }
             $lead->update($request->all());
             $lead->loadMissing('customer');

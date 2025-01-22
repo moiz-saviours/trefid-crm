@@ -138,6 +138,15 @@
             });
         });
 
+
+        function updateTotalAmount() {
+            const amount = parseFloat($('#amount').val());
+            const taxAmount = parseFloat($('#tax_amount').val()) || 0;
+            const totalAmount = amount + taxAmount;
+
+            $('#total_amount').val(totalAmount.toFixed(2));
+        }
+
         function setDataAndShowEdit(data) {
             const invoice = data?.invoice;
 
@@ -149,11 +158,27 @@
             $('#customer_contact_name').val(invoice.customer_contact?.name);
             $('#customer_contact_email').val(invoice.customer_contact?.email);
             $('#customer_contact_phone').val(invoice.customer_contact?.phone);
-            $('#cus_contact_key').val(invoice.customer_contact.special_key);
+            $('#cus_contact_key').val(invoice.customer_contact?.special_key);
             $('#agent_id').val(invoice.agent_id);
             $('#amount').val(invoice.amount);
+            $('#total_amount').val(invoice.total_amount);
             $('#description').val(invoice.description);
             $('#status').val(invoice.status);
+
+            $('#taxable').prop('checked', invoice.taxable);
+            if (invoice.taxable) {
+                $('#tax-fields').slideDown();
+                $('#tax_type').val(invoice.tax_type);
+                $('#tax_value').val(invoice.tax_value);
+                $('#tax_amount').val((parseFloat(invoice.tax_amount) || 0).toFixed(2));
+            } else {
+                $('#tax-fields').slideUp();
+                $('#tax_type').val('');
+                $('#tax_value').val('');
+                $('#tax_amount').val(0);
+            }
+
+            updateTotalAmount();
 
             $('#manage-form').attr('action', `{{route('admin.invoice.update')}}/` + invoice.id);
             $('#formContainer').addClass('open');
@@ -174,14 +199,31 @@
                 AjaxRequestPromise(`{{ route("admin.invoice.store") }}`, formData, 'POST', {useToastr: true})
                     .then(response => {
                         if (response?.data) {
-                            const {id, invoice_number, invoice_key, brand, team, customer_contact, agent, amount, status, date} = response.data;
+                            const {
+                                id,
+                                invoice_number,
+                                invoice_key,
+                                brand,
+                                team,
+                                customer_contact,
+                                agent,
+                                amount,
+                                tax_type,
+                                tax_value,
+                                tax_amount,
+                                total_amount,
+                                currency,
+                                status,
+                                date
+                            } = response.data;
+
                             const index = table.rows().count() + 1;
                             const columns = `
                         <td class="align-middle text-center text-nowrap"></td>
                         <td class="align-middle text-center text-nowrap">${index}</td>
                         <td class="align-middle text-center text-nowrap text-sm invoice-cell">
-                                                    <span class="invoice-number">${invoice_number }</span><br>
-                                                    <span class="invoice-key">${invoice_key }</span>
+                                                    <span class="invoice-number">${invoice_number}</span><br>
+                                                    <span class="invoice-key">${invoice_key}</span>
                                                 </td>
                         <td class="align-middle text-center text-nowrap">
                             ${brand ? `<a href="/admin/brand/edit/${brand.id}">${brand.name}</a><br> ${brand.brand_key}` : '---'}
@@ -189,18 +231,32 @@
                         <td class="align-middle text-center text-nowrap">${team ? `<a href="/admin/team/edit/${team.id}">${team.name}</a><br> ${team.team_key}` : '---'}</td>
                         <td class="align-middle text-center text-nowrap">${customer_contact ? `<a href="/admin/contact/edit/${customer_contact.id}">${customer_contact.name}</a>` : '---'}</td>
                         <td class="align-middle text-center text-nowrap">${agent ? `<a href="/admin/employee/edit/${agent.id}">${agent.name}</a>` : '---'}</td>
-                        <td class="align-middle text-center text-nowrap">${amount}</td>
+                        <td class="align-middle space-between text-nowrap" style="text-align: left;">
+                            <div style="display: flex; justify-content: space-between; gap: 10px;">
+                                <span style="width: 120px;">Amount:</span>
+                                <span>${currency} ${parseFloat(amount).toFixed(2)}</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; gap: 10px;">
+                                <span style="width: 120px;">Tax:</span>
+                                <span>${tax_type === 'percentage' ? '%' : (tax_type === 'fixed' ? currency : '')} ${tax_value}</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; gap: 10px;">
+                                <span style="width: 120px;">Tax Amount:</span>
+                                <span>${currency} ${parseFloat(tax_amount).toFixed(2)}</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; gap: 10px;">
+                                <span style="width: 120px;">Total Amount:</span>
+                                <span>${currency} ${parseFloat(total_amount).toFixed(2)}</span>
+                            </div>
+                        </td>
                         <td class="align-middle text-center text-nowrap">
                             ${status == 0 ? '<span class="badge bg-warning text-dark">Due</span>' : status == 1 ? '<span class="badge bg-success">Paid</span>' : status == 2 ? '<span class="badge bg-danger">Refund</span>' : ''}
                         </td>
                         <td class="align-middle text-center text-nowrap">${date}</td>
                         <td class="align-middle text-center table-actions">
-                            <button type="button" class="btn btn-sm btn-primary editBtn" data-id="${id}" title="Edit">
-                                <i class="fas fa-edit"></i>
-                            </button>
-                            <button type="button" class="btn btn-sm btn-danger deleteBtn" data-id="${id}" title="Delete">
-                                <i class="fas fa-trash"></i>
-                            </button>
+                            ${status != 1 ? '<button type="button" class="btn btn-sm btn-primary editBtn" data-id="${id}" title="Edit"><i class = "fas fa-edit" > </i></button>' +
+                                '<button type="button" class="btn btn-sm btn-danger deleteBtn" data-id="${id}" title="Delete"><i class="fas fa-trash"></i></button>'
+                                : ''}
                         </td>`;
 
                             table.row.add($('<tr>', {id: `tr-${id}`}).append(columns)).draw(false);
@@ -215,7 +271,19 @@
                 AjaxRequestPromise(url, formData, 'POST', {useToastr: true})
                     .then(response => {
                         if (response?.data) {
-                            const {id, invoice_number, invoice_key, brand, team, customer_contact, agent, amount, status, date} = response.data;
+                            const {
+                                id,
+                                invoice_number,
+                                invoice_key,
+                                brand,
+                                team,
+                                customer_contact,
+                                agent,
+                                amount, tax_type, tax_value,
+                                tax_amount, total_amount, currency,
+                                status,
+                                date
+                            } = response.data;
                             const index = table.row($('#tr-' + id)).index();
                             const rowData = table.row(index).data();
 
@@ -242,16 +310,33 @@
                             if (decodeHtml(rowData[5]) !== `${customer_contact ? `<a href="/admin/contact/edit/${customer_contact.id}">${customer_contact.name}</a>` : '---'}`) {
                                 table.cell(index, 5).data(`${customer_contact ? `<a href="/admin/contact/edit/${customer_contact.id}">${customer_contact.name}</a>` : '---'}`).draw();
                             }
-
                             // Column 7: Agent
                             if (decodeHtml(rowData[6]) !== `${agent ? `<a href="/admin/employee/edit/${agent.id}">${agent.name}</a>` : '---'}`) {
                                 table.cell(index, 6).data(`${agent ? `<a href="/admin/employee/edit/${agent.id}">${agent.name}</a>` : '---'}`).draw();
                             }
 
+                            const newContent = `
+                                <div style="display: flex; justify-content: space-between; gap: 10px;">
+                                    <span style="width: 120px;">Amount:</span>
+                                    <span>${currency} ${parseFloat(amount).toFixed(2)}</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; gap: 10px;">
+                                    <span style="width: 120px;">Tax:</span>
+                                    <span>${tax_type === 'percentage' ? '%' : (tax_type === 'fixed' ? currency : '')} ${tax_value}</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; gap: 10px;">
+                                    <span style="width: 120px;">Tax Amount:</span>
+                                    <span>${currency} ${parseFloat(tax_amount).toFixed(2)}</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; gap: 10px;">
+                                    <span style="width: 120px;">Total Amount:</span>
+                                    <span>${currency} ${parseFloat(total_amount).toFixed(2)}</span>
+                                </div>`;
                             // Column 8: Amount
-                            if (decodeHtml(rowData[7]) !== amount) {
-                                table.cell(index, 7).data(amount).draw();
+                            if (decodeHtml(rowData[7]) !== newContent) {
+                                table.cell(index, 7).data(newContent).draw();
                             }
+
                             // Column 9: Status
 
                             const statusHtml = status == 0 ? '<span class="badge bg-warning text-dark">Due</span>' : status == 1 ? '<span class="badge bg-success">Paid</span>' : status == 2 ? '<span class="badge bg-danger">Refund</span>' : '';

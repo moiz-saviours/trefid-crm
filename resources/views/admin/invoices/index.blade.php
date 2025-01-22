@@ -90,7 +90,8 @@
                                                 <td class="align-middle text-center text-nowrap"></td>
                                                 <td class="align-middle text-center text-nowrap">{{$loop->iteration}}</td>
                                                 <td class="align-middle text-center text-nowrap text-sm invoice-cell">
-                                                    <span class="invoice-number">{{ $invoice->invoice_number }}</span><br>
+                                                    <span
+                                                        class="invoice-number">{{ $invoice->invoice_number }}</span><br>
                                                     <span class="invoice-key">{{ $invoice->invoice_key }}</span>
                                                 </td>
                                                 <td class="align-middle text-center text-nowrap">
@@ -124,7 +125,29 @@
                                                         ---
                                                     @endif
                                                 </td>
-                                                <td class="align-middle text-center text-nowrap">{{ number_format($invoice->amount, 2) }}</td>
+                                                <td class="align-middle space-between text-nowrap"
+                                                    style="text-align: left;">
+                                                    <div
+                                                        style="display: flex; justify-content: space-between; gap: 10px;">
+                                                        <span style="width: 120px; ">Amount:</span>
+                                                        <span>{{ $invoice->currency ." ". number_format($invoice->amount, 2) }}</span>
+                                                    </div>
+                                                    <div
+                                                        style="display: flex; justify-content: space-between; gap: 10px;">
+                                                        <span style="width: 120px; ">Tax:</span>
+                                                        <span>{{ $invoice->tax_type == 'percentage' ? '%' : ($invoice->tax_type == 'fixed' ? $invoice->currency : '') }} {{ $invoice->tax_value }}</span>
+                                                    </div>
+                                                    <div
+                                                        style="display: flex; justify-content: space-between; gap: 10px;">
+                                                        <span style="width: 120px; ">Tax Amount:</span>
+                                                        <span>{{ $invoice->currency ." ". number_format($invoice->tax_amount, 2) }}</span>
+                                                    </div>
+                                                    <div
+                                                        style="display: flex; justify-content: space-between; gap: 10px;">
+                                                        <span style="width: 120px; ">Total Amount:</span>
+                                                        <span>{{ $invoice->currency ." ". number_format($invoice->total_amount, 2) }}</span>
+                                                    </div>
+                                                </td>
                                                 <td class="align-middle text-center text-nowrap">
                                                     @if($invoice->status == 0)
                                                         <span class="badge bg-warning text-dark">Due</span>
@@ -145,12 +168,14 @@
                                                     @endif
                                                 </td>
                                                 <td class="align-middle text-center table-actions">
-                                                    <button type="button" class="btn btn-sm btn-primary editBtn"
-                                                            data-id="{{ $invoice->id }}" title="Edit"><i
+                                                    @if($invoice->status != 1)
+                                                        <button type="button" class="btn btn-sm btn-primary editBtn"
+                                                                data-id="{{ $invoice->id }}" title="Edit"><i
                                                                 class="fas fa-edit"></i></button>
-                                                    <button type="button" class="btn btn-sm btn-danger deleteBtn"
-                                                            data-id="{{ $invoice->id }}" title="Delete"><i
+                                                        <button type="button" class="btn btn-sm btn-danger deleteBtn"
+                                                                data-id="{{ $invoice->id }}" title="Delete"><i
                                                                 class="fas fa-trash"></i></button>
+                                                    @endif
                                                 </td>
                                             </tr>
                                         @endforeach
