@@ -284,6 +284,7 @@
         appearance: none;
         cursor: pointer;
         position: relative;
+        margin: 0;
     }
     .custom-form .form-body input[type="radio"] {
         margin-right: 10px;

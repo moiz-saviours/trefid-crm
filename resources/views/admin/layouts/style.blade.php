@@ -444,7 +444,8 @@ Detailed information and more samples can be found in the documentation.
     }
 
     .dt-buttons .btn.btn-secondary:hover {
-        background-color: #8392ab;
+        background-color: transparent;
+        /*background-color: #8392ab;*/
     }
 
     .dt-buttons .btn.btn-secondary span:hover {
@@ -478,7 +479,7 @@ Detailed information and more samples can be found in the documentation.
     .dt-buttons button {
         border: none;
         padding: 0;
-        left: 150px;
+        /*left: 150px;*/
     }
 
     .card-header:has(.fltr-sec) {
