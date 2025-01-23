@@ -130,7 +130,7 @@
                                                     <div
                                                         style="display: flex; justify-content: space-between; gap: 10px;">
                                                         <span style="width: 120px; ">Amount:</span>
-                                                        <span>{{ $invoice->currency ." ". number_format($invoice->amount, 2) }}</span>
+                                                        <span>{{ $invoice->currency ." ". number_format($invoice->amount, 2, '.', '') }}</span>
                                                     </div>
                                                     <div
                                                         style="display: flex; justify-content: space-between; gap: 10px;">
@@ -140,12 +140,12 @@
                                                     <div
                                                         style="display: flex; justify-content: space-between; gap: 10px;">
                                                         <span style="width: 120px; ">Tax Amount:</span>
-                                                        <span>{{ $invoice->currency ." ". number_format($invoice->tax_amount, 2) }}</span>
+                                                        <span>{{ $invoice->currency ." ". number_format($invoice->tax_amount, 2, '.', '') }}</span>
                                                     </div>
                                                     <div
                                                         style="display: flex; justify-content: space-between; gap: 10px;">
                                                         <span style="width: 120px; ">Total Amount:</span>
-                                                        <span>{{ $invoice->currency ." ". number_format($invoice->total_amount, 2) }}</span>
+                                                        <span>{{ $invoice->currency ." ". number_format($invoice->total_amount, 2, '.', '') }}</span>
                                                     </div>
                                                 </td>
                                                 <td class="align-middle text-center text-nowrap">
