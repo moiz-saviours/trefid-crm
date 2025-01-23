@@ -66,7 +66,8 @@ class InvoiceController extends Controller
             'currency' => 'nullable|in:USD,GBP,AUD,CAD',
             'tax_amount' => 'nullable|numeric|min:0',
             'total_amount' => 'required|numeric|min:1|max:' . config('invoice.max_amount'),
-            'type' => 'required|integer|in:0,1',/** 0 = fresh, 1 = upsale */
+            'type' => 'required|integer|in:0,1', /** 0 = fresh, 1 = upsale */
+            'due_date' => 'required|date|after_or_equal:' . now()->format('Y-m-d') . '|before_or_equal:' . now()->addYear()->format('Y-m-d'),
         ], [
             'brand_key.required' => 'The brand field is required.',
             'brand_key.integer' => 'The brand must be a valid integer.',
@@ -158,7 +159,7 @@ class InvoiceController extends Controller
                 'tax_value' => $tax_value,
                 'tax_amount' => $tax_amount,
                 'total_amount' => $total_amount,
-                'currency' => $request->input('currency','USD'),
+                'currency' => $request->input('currency', 'USD'),
                 'due_date' => $request->input('due_date'),
                 'type' => $request->input('type'),
                 'status' => 0,
@@ -235,6 +236,8 @@ class InvoiceController extends Controller
             'tax_amount' => 'nullable|numeric|min:0',
             'total_amount' => 'required|numeric|min:1|max:' . config('invoice.max_amount'),
             'type' => 'required|integer|in:0,1',/** 0 = fresh, 1 = upsale */
+            'due_date' => 'required|date|after_or_equal:' . now()->format('Y-m-d') . '|before_or_equal:' . now()->addYear()->format('Y-m-d'),
+            
         ], [
             'brand_key.required' => 'The brand field is required.',
             'brand_key.integer' => 'The brand must be a valid integer.',
