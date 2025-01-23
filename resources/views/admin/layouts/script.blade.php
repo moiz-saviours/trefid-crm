@@ -10,15 +10,16 @@
     src="{{asset('assets/themes/nifty/assets/pages/dashboard-1.min.b651fbd1a6f6a43e11bc01617b4481ab0edc4ba4582106c466d7ae2a9a9ac178.js')}}"></script>
 <script src="{{asset('assets/js/jquery.min.js')}}"></script>
 <!-- New -->
-<link
-    href="https://cdn.datatables.net/v/bs4/jszip-3.10.1/dt-2.1.8/b-3.2.0/b-colvis-3.2.0/b-html5-3.2.0/b-print-3.2.0/cr-2.0.4/date-1.5.4/fc-5.0.4/fh-4.0.1/sc-2.4.3/sp-2.3.3/sl-2.1.0/datatables.min.css"
-    rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
-<script
-    src="https://cdn.datatables.net/v/bs5/jszip-3.10.1/dt-2.1.8/b-3.2.0/b-colvis-3.2.0/b-html5-3.2.0/b-print-3.2.0/cr-2.0.4/date-1.5.4/fc-5.0.4/fh-4.0.1/sc-2.4.3/sp-2.3.3/sl-2.1.0/datatables.min.js"></script>
-<script type="text/javascript" charset="utf-8"
-        src="https://cdn.datatables.net/1.10.25/extensions/Editor/js/dataTables.editor.min.js"></script>
+{{--https://cdn.datatables.net/v/bs4/jszip-3.10.1/dt-2.1.8/b-3.2.0/b-colvis-3.2.0/b-html5-3.2.0/b-print-3.2.0/cr-2.0.4/date-1.5.4/fc-5.0.4/fh-4.0.1/sc-2.4.3/sp-2.3.3/sl-2.1.0/datatables.min.css--}}
+<link href="{{asset('assets/css/datatable/new/datatables.min.css')}}" rel="stylesheet">
+{{--https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js--}}
+<script src="{{asset('assets/js/plugins/datatable/new/pdfmake.min.js')}}"></script>
+{{--https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js--}}
+<script src="{{asset('assets/js/plugins/datatable/new/vfs_fonts.js')}}"></script>
+{{--https://cdn.datatables.net/v/bs5/jszip-3.10.1/dt-2.1.8/b-3.2.0/b-colvis-3.2.0/b-html5-3.2.0/b-print-3.2.0/cr-2.0.4/date-1.5.4/fc-5.0.4/fh-4.0.1/sc-2.4.3/sp-2.3.3/sl-2.1.0/datatables.min.js--}}
+<script src="{{asset('assets/js/plugins/datatable/new/datatables.min.js')}}"></script>
+{{--<script type="text/javascript" charset="utf-8"--}}
+{{--        src="https://cdn.datatables.net/1.10.25/extensions/Editor/js/dataTables.editor.min.js"></script>--}}
 <!-- New -->
 
 <!-- SweetAlert2 -->
