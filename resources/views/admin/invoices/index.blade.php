@@ -80,6 +80,7 @@
                                             <th class="align-middle text-center text-nowrap">AGENT</th>
                                             <th class="align-middle text-center text-nowrap">AMOUNT</th>
                                             <th class="align-middle text-center text-nowrap">STATUS</th>
+                                            <th class="align-middle text-center text-nowrap">DUE DATE</th>
                                             <th class="align-middle text-center text-nowrap">CREATE DATE</th>
                                             <th class="align-middle text-center text-nowrap">ACTION</th>
                                         </tr>
@@ -157,6 +158,7 @@
                                                         <span class="badge bg-danger">Refund</span>
                                                     @endif
                                                 </td>
+                                                <td class="align-middle text-center text-nowrap">{{Carbon\Carbon::parse($invoice->due_date)->format('Y-m-d')}}</td>
                                                 <td class="align-middle text-center text-nowrap">
                                                     @if ($invoice->created_at->isToday())
                                                         Today
