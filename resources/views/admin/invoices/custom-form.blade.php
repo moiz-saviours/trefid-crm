@@ -59,10 +59,10 @@
                     <span class="text-danger">{{ $message }}</span>
                     @enderror
                 </div>
-                <div id="fresh-customer-contact-fields" class="form-group mb-3 d-none">
+                <div id="fresh-customer-contact-fields" class="form-group mb-3 first-fields">
                     <div class="form-group mb-3">
                         <label for="customer_contact_name" class="form-label">Customer Contact Name</label>
-                        <input type="text" class="form-control" id="customer_contact_name"
+                        <input type="text" class="form-control first-field-inputs" id="customer_contact_name"
                                name="customer_contact_name"
                                value="{{ old('customer_contact_name') }}">
                         @error('customer_contact_name')
@@ -72,7 +72,7 @@
 
                     <div class="form-group mb-3">
                         <label for="customer_contact_email" class="form-label">Customer Contact Email</label>
-                        <input type="email" class="form-control" id="customer_contact_email"
+                        <input type="email" class="form-control first-field-inputs" id="customer_contact_email"
                                name="customer_contact_email"
                                value="{{ old('customer_contact_email') }}">
                         @error('customer_contact_email')
@@ -81,7 +81,7 @@
                     </div>
                     <div class="form-group mb-3">
                         <label for="customer_contact_phone" class="form-label">Customer Contact Phone</label>
-                        <input type="text" class="form-control" id="customer_contact_phone"
+                        <input type="text" class="form-control first-field-inputs" id="customer_contact_phone"
                                name="customer_contact_phone"
                                value="{{ old('customer_contact_phone') }}">
                         @error('customer_contact_phone')
@@ -89,9 +89,9 @@
                         @enderror
                     </div>
                 </div>
-                <div id="upsale-customer-contact-fields" class="form-group mb-3 d-none">
+                <div id="upsale-customer-contact-fields" class="form-group mb-3 second-fields">
                     <label for="cus_contact_key" class="form-label">Select Customer Contact</label>
-                    <select class="form-control" id="cus_contact_key" name="cus_contact_key">
+                    <select class="form-control second-field-inputs" id="cus_contact_key" name="cus_contact_key">
                         <option value="">Select Customer Contact</option>
                         @foreach($customer_contacts as $customer_contact)
                             <option
@@ -104,6 +104,7 @@
                     <span class="text-danger">{{ $message }}</span>
                     @enderror
                 </div>
+
                 <div class="form-group mb-3">
                     <label for="agent_id" class="form-label">Agent</label>
                     <select class="form-control searchable" id="agent_id" name="agent_id" title="Please select agent">
@@ -160,10 +161,10 @@
                     @enderror
                 </div>
 
-                <div class="form-group mb-3" id="tax-fields" style="display: none;">
+                <div class="form-group mb-3 second-fields" id="tax-fields" style="display: none" >
                     <div>
                         <label for="tax_type" class="form-label">Tax Type</label>
-                        <select class="form-control" id="tax_type" name="tax_type">
+                        <select class="form-control second-field-inputs" id="tax_type" name="tax_type">
                             <option value="" disabled selected>Select Tax Type</option>
                             <option value="percentage" {{ old('tax_type') == 'percentage' ? 'selected' : '' }}>
                                 Percentage
@@ -177,7 +178,7 @@
 
                     <div class="mt-3">
                         <label for="tax_value" class="form-label">Tax Value</label>
-                        <input type="number" class="form-control" id="tax_value" name="tax_value" min="1"
+                        <input type="number" class="form-control second-field-inputs" id="tax_value" name="tax_value" min="1"
                                value="{{ old('tax_value') }}">
                         @error('tax_value')
                         <span class="text-danger">{{ $message }}</span>
@@ -186,7 +187,7 @@
 
                     <div class="mt-3">
                         <label for="tax_amount" class="form-label">Tax Amount</label>
-                        <input type="number" class="form-control" id="tax_amount" name="tax_amount" step="0.01" min="1"
+                        <input type="number" class="form-control second-field-inputs" id="tax_amount" name="tax_amount" step="0.01" min="1"
                                readonly
                                value="{{ old('tax_amount') }}">
                         @error('tax_amount')
@@ -229,10 +230,19 @@
             $(document).ready(function () {
                 $('#type').on('change', function () {
                     const type = $(this).val();
-                    $('#fresh-customer-contact-fields').toggleClass('d-none', type != 0);
-                    $('#customer_contact_name, #customer_contact_email, #customer_contact_phone').prop('required', type == 0);
-                    $('#upsale-customer-contact-fields').toggleClass('d-none', type != 1);
-                    $('#cus_contact_key').prop('required', type == 1);
+                    if (type == 0) {
+                        $('#upsale-customer-contact-fields').fadeOut(() => {
+                            $('#fresh-customer-contact-fields').fadeIn();
+                            $('#customer_contact_name, #customer_contact_email, #customer_contact_phone').prop('required', true);
+                            $('#cus_contact_key').prop('required', false);
+                        });
+                    } else if (type == 1) {
+                        $('#fresh-customer-contact-fields').fadeOut(() => {
+                            $('#upsale-customer-contact-fields').fadeIn();
+                            $('#cus_contact_key').prop('required', true);
+                            $('#customer_contact_name, #customer_contact_email, #customer_contact_phone').prop('required', false);
+                        });
+                    }
                 }).trigger('change');
             });
 
