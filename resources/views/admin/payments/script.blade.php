@@ -304,6 +304,14 @@
                     .catch(error => console.error('An error occurred while updating the record.', error));
             }
         });
+        function ucwords(str) {
+            if (!str) return '';
+            return str
+                .toLowerCase()
+                .replace(/\b[a-z]/g, function (char) {
+                    return char.toUpperCase();
+                });
+        }
 
         function getStatusBadge(status) {
             if (status == 0) return '<span class="badge bg-warning text-dark">Due</span>';
