@@ -160,6 +160,7 @@
             $('#customer_contact_phone').val(invoice.customer_contact?.phone);
             $('#cus_contact_key').val(invoice.customer_contact?.special_key);
             $('#agent_id').val(invoice.agent_id);
+            $('#due_date').val(invoice.due_date);
             $('#amount').val(invoice.amount);
             $('#total_amount').val(invoice.total_amount);
             $('#description').val(invoice.description);
@@ -214,6 +215,7 @@
                                 total_amount,
                                 currency,
                                 status,
+                                due_date,
                                 date
                             } = response.data;
 
@@ -222,9 +224,9 @@
                         <td class="align-middle text-center text-nowrap"></td>
                         <td class="align-middle text-center text-nowrap">${index}</td>
                         <td class="align-middle text-center text-nowrap text-sm invoice-cell">
-                                                    <span class="invoice-number">${invoice_number}</span><br>
-                                                    <span class="invoice-key">${invoice_key}</span>
-                                                </td>
+                            <span class="invoice-number">${invoice_number}</span><br>
+                            <span class="invoice-key">${invoice_key}</span>
+                        </td>
                         <td class="align-middle text-center text-nowrap">
                             ${brand ? `<a href="/admin/brand/edit/${brand.id}">${brand.name}</a><br> ${brand.brand_key}` : '---'}
                         </td>
@@ -253,6 +255,7 @@
                             ${status == 0 ? '<span class="badge bg-warning text-dark">Due</span>' : status == 1 ? '<span class="badge bg-success">Paid</span>' : status == 2 ? '<span class="badge bg-danger">Refund</span>' : ''}
                         </td>
                         <td class="align-middle text-center text-nowrap">${date}</td>
+                        <td class="align-middle text-center text-nowrap">${due_date}</td>
                         <td class="align-middle text-center table-actions">
                             ${status != 1 ? '<button type="button" class="btn btn-sm btn-primary editBtn" data-id="'+id+'" title="Edit"><i class = "fas fa-edit" > </i></button>' +
                                 '<button type="button" class="btn btn-sm btn-danger deleteBtn" data-id="'+id+'" title="Delete"><i class="fas fa-trash"></i></button>'
@@ -282,6 +285,7 @@
                                 amount, tax_type, tax_value,
                                 tax_amount, total_amount, currency,
                                 status,
+                                due_date,
                                 date
                             } = response.data;
                             const index = table.row($('#tr-' + id)).index();
@@ -345,8 +349,12 @@
                             }
 
                             // Column 10: Date
-                            if (decodeHtml(rowData[9]) !== date) {
-                                table.cell(index, 9).data(date).draw();
+                            if (decodeHtml(rowData[9]) !== due_date) {
+                                table.cell(index, 9).data(due_date).draw();
+                            }
+                            // Column 11: Date
+                            if (decodeHtml(rowData[10]) !== date) {
+                                table.cell(index, 10).data(date).draw();
                             }
                             $('#manage-form')[0].reset();
                             $('#formContainer').removeClass('open')

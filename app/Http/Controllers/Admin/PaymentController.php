@@ -61,7 +61,7 @@ class PaymentController extends Controller
             'customer_contact_name' => 'required_if:type,0|nullable|string|max:255',
             'customer_contact_email' => 'required_if:type,0|nullable|email|max:255|unique:customer_contacts,email',
             'customer_contact_phone' => 'required_if:type,0|nullable|string|max:15',
-            'payment_method' => 'required|string|in:authorize,stripe,credit_card,bank_transfer,paypal,cash,other',
+            'payment_method' => 'required|string|in:authorize,stripe,credit card,bank transfer,paypal,cash,other',
         ], [
             'brand_key.required' => 'The brand field is required.',
             'brand_key.integer' => 'The brand must be a valid integer.',
@@ -146,7 +146,7 @@ class PaymentController extends Controller
             }
             $payment = Payment::create($paymentData);
             DB::commit();
-            $payment->loadMissing('customer_contact', 'brand', 'team', 'agent');
+            $payment->loadMissing('invoice','customer_contact', 'brand', 'team', 'agent');
             $payment->date = "Today at " . $payment->created_at->timezone('GMT+5')->format('g:i A') . "GMT + 5";
             return response()->json(['data' => $payment, 'success' => 'Record created successfully!']);
             return response()->json(['success' => 'Payment Created Successfully.']);
@@ -209,7 +209,7 @@ class PaymentController extends Controller
             'customer_contact_name' => 'required_if:type,0|nullable|string|max:255',
             'customer_contact_email' => 'required_if:type,0|nullable|email|max:255|unique:customer_contacts,email,' . $payment->cus_contact_key . ',special_key',
             'customer_contact_phone' => 'required_if:type,0|nullable|string|max:15',
-            'payment_method' => 'required|string|in:authorize,stripe,credit_card,bank_transfer,paypal,cash,other',
+            'payment_method' => 'required|string|in:authorize,stripe,credit card,bank transfer,paypal,cash,other',
         ], [
             'brand_key.required' => 'The brand field is required.',
             'team_key.required' => 'The team field is required.',
@@ -275,7 +275,7 @@ class PaymentController extends Controller
                 'payment_method' => $request->input('payment_method'),
             ]);
             DB::commit();
-            $payment->loadMissing('customer_contact', 'brand', 'team', 'agent');
+            $payment->loadMissing('invoice','customer_contact', 'brand', 'team', 'agent');
             if ($payment->created_at->isToday()) {
                 $date = "Today at " . $payment->created_at->timezone('GMT+5')->format('g:i A') . "GMT + 5";
             } else {

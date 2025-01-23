@@ -522,17 +522,17 @@
         return password;
     }
 
-    function resetFields(){
-        $('.second-fields').fadeOut(() => {
-            $('.first-fields').fadeIn();
-            $('.first-field-inputs').prop('required', true);
-            $('.second-field-inputs').prop('required', false);
-        });
-        $('.first-fields').fadeOut(() => {
-            $('.second-fields').fadeIn();
-            $('.second-field-inputs').prop('required', true);
-            $('.first-field-inputs').prop('required', false);
-        });
+    function resetFields() {
+        $('.second-fields').fadeOut();
+        $('.first-fields').fadeIn();
+        $('.first-field-inputs').prop('required', true);
+        $('.second-field-inputs').prop('required', false);
+
+        // $('.first-fields').fadeOut(() => {
+        //     $('.second-fields').fadeIn();
+        //     $('.second-field-inputs').prop('required', true);
+        //     $('.first-field-inputs').prop('required', false);
+        // });
     }
     $(document).ready(function () {
         const formContainer = $('#formContainer');
@@ -559,7 +559,7 @@
             $('.open-form-btn, .editBtn').click(function () {
                 manageForm[0].reset();
                 manageForm.removeData('id');
-
+                resetFields();
                 // Show message if no access
                 if ($(this).hasClass('void')) {
                     $(this).attr('title', "You don't have access to create a company.")
@@ -585,6 +585,7 @@
                     // Close the form
                     formContainer.removeClass('open');
                     $('.form-container').removeClass('open');
+                    resetFields();
 
                     // Reset the form if available
                     if (manageForm.length > 0) {

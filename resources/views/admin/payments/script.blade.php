@@ -128,8 +128,6 @@
             });
         });
 
-
-
         function setDataAndShowEdit(data) {
             let payment = data.payment;
             $('#manage-form').data('id', payment.id);
@@ -148,8 +146,6 @@
             $('#payment_method').val(payment.payment_method);
             $('#transaction_id').val(payment.transaction_id);
 
-
-
             $('#manage-form').attr('action', `{{route('admin.payment.update')}}/` + payment.id);
             $('#formContainer').addClass('open')
         }
@@ -164,93 +160,184 @@
             e.preventDefault();
             var dataId = $('#manage-form').data('id');
             var formData = new FormData(this);
+
             if (!dataId) {
+                // Add New Record
                 AjaxRequestPromise(`{{ route("admin.payment.store") }}`, formData, 'POST', {useToastr: true})
                     .then(response => {
                         if (response?.data) {
-                            const {id, brand_key, team_key, agent_id, payment_type, client_name, client_email,client_phone,address,client_key,amount,description,payment_method,transaction_id} = response.data;
-                            const index = table.rows().count() + 1;
-                            const columns = `
-                                <td class="align-middle text-center text-nowrap"></td>
-                                <td class="align-middle text-center text-nowrap">${index}</td>
-                                <td class="align-middle text-center text-nowrap">${brand_key}</td>
-                                <td class="align-middle text-center text-nowrap">${team_key}</td>
-                                <td class="align-middle text-center text-nowrap">${agent_id}</td>
-                                <td class="align-middle text-center text-nowrap">${payment_type}</td>
-                                <td class="align-middle text-center text-nowrap">${client_name}</td>
-                                <td class="align-middle text-center text-nowrap">${client_email}</td>
-                                <td class="align-middle text-center text-nowrap">${client_phone}</td>
-                                <td class="align-middle text-center text-nowrap">${address}</td>
-                                <td class="align-middle text-center text-nowrap">${client_key}</td>
-                                <td class="align-middle text-center text-nowrap">${amount}</td>
-                                <td class="align-middle text-center text-nowrap">${description}</td>
-                                <td class="align-middle text-center text-nowrap">${payment_method}</td>
-                                <td class="align-middle text-center text-nowrap">${transaction_id}</td>
+                            const {
+                                id,
+                                invoice,
+                                payment_gateway,
+                                payment_method,
+                                transaction_id,
+                                brand,
+                                team,
+                                agent,
+                                customer_contact,
+                                amount,
+                                status,
+                                created_at
+                            } = response.data;
 
-                                <td class="align-middle text-center text-nowrap">
-                                    <input type="checkbox" class="status-toggle change-status" data-id="${id}" ${status == 1 ? 'checked' : ''} data-bs-toggle="toggle">
-                                </td>
-                                <td class="align-middle text-center table-actions">
-                                    <button type="button" class="btn btn-sm btn-primary editBtn" data-id="${id}" title="Edit">
-                                        <i class="fas fa-edit"></i>
-                                    </button>
-                                    <button type="button" class="btn btn-sm btn-danger deleteBtn" data-id="${id}" title="Delete">
-                                        <i class="fas fa-trash"></i>
-                                    </button>
-                                </td>
-                        `;
+                            const index = table.rows().count() + 1;
+                            const statusBadge = getStatusBadge(status); // Function to get status HTML
+                            const formattedDate = formatDate(created_at); // Function to format the date
+
+                            const columns = `
+                        <td class="align-middle text-center text-nowrap"></td>
+                        <td class="align-middle text-center text-nowrap">${index}</td>
+                        <td class="align-middle text-center text-nowrap">
+                            <span class="invoice-number">${invoice?.invoice_number ?? "---"}</span><br>
+                            <span class="invoice-key">${invoice?.invoice_key ?? "---"}</span>
+                        </td>
+                        <td class="align-middle text-center text-nowrap">${payment_gateway?.name ?? ucwords(payment_method)}</td>
+                        <td class="align-middle text-center text-nowrap">${payment_gateway?.descriptor ?? "---"}</td>
+                        <td class="align-middle text-center text-nowrap">${transaction_id ?? "---"}</td>
+                        <td class="align-middle text-center text-nowrap">${brand?.name ?? "---"}</td>
+                        <td class="align-middle text-center text-nowrap">${team?.name ?? "---"}</td>
+                        <td class="align-middle text-center text-nowrap">${agent?.name ?? "---"}</td>
+                        <td class="align-middle text-center text-nowrap">${customer_contact?.name ?? "---"}</td>
+                        <td class="align-middle text-center text-nowrap">$${amount ?? "0.00"}</td>
+                        <td class="align-middle text-center text-nowrap">${statusBadge}</td>
+                        <td class="align-middle text-center text-nowrap">${formattedDate}</td>
+                        <td class="align-middle text-center table-actions">
+                            <button type="button" class="btn btn-sm btn-primary editBtn" data-id="${id}" title="Edit">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                        </td>
+                    `;
                             table.row.add($('<tr>', {id: `tr-${id}`}).append(columns)).draw(false);
                             $('#manage-form')[0].reset();
-                            $('#formContainer').removeClass('open')
+                            $('#formContainer').removeClass('open');
                         }
                     })
-                    .catch(error => console.log('An error occurred while updating the record.'));
+                    .catch(error => console.error('An error occurred while adding the record.', error));
             } else {
+                // Update Existing Record
                 const url = $(this).attr('action');
                 AjaxRequestPromise(url, formData, 'POST', {useToastr: true})
                     .then(response => {
                         if (response?.data) {
-                            const {id, image, name, email, designation, team_name, status} = response.data;
-                            const imageUrl = isValidUrl(image) ? image : (image ? `{{ asset('assets/images/employees/') }}/${image}` : `{{ asset("assets/images/no-image-available.png") }}`);
-                            const index = table.row($('#tr-' + id)).index();
+                            const {
+                                id,
+                                invoice,
+                                payment_gateway,
+                                payment_method,
+                                transaction_id,
+                                brand,
+                                team,
+                                agent,
+                                customer_contact,
+                                amount,
+                                status,
+                                created_at
+                            } = response.data;
+
+                            const index = table.row($(`#tr-${id}`)).index();
                             const rowData = table.row(index).data();
-                            // Column 2: Image
-                            const imageHtml = imageUrl ? `<object data="${imageUrl}" class="avatar avatar-sm me-3" title="${name}"><img src="${imageUrl}" alt="${name}" class="avatar avatar-sm me-3" title="${name}"></object>` : '';
-                            if (decodeHtml(rowData[2]) !== imageHtml) {
-                                table.cell(index, 2).data(imageUrl ? `<object data="${imageUrl}" class="avatar avatar-sm me-3" title="${name}">
-                                                            <img src="${imageUrl}" alt="${name}" class="avatar avatar-sm me-3" title="${name}">
-                                                        </object>` : '').draw();
+                            const statusBadge = getStatusBadge(status);
+                            const formattedDate = formatDate(created_at);
+
+                            // Column 3: Invoice Number & Invoice Key
+                            if (decodeHtml(rowData[2]) !== `${invoice?.invoice_number}<br>${invoice?.invoice_key}`) {
+                                table.cell(index, 2).data(`
+                                    <span class="invoice-number">${invoice?.invoice_number}</span><br>
+                                    <span class="invoice-key">${invoice?.invoice_key}</span>
+                                `).draw();
                             }
-                            /** Column 3: Name */
-                            if (decodeHtml(rowData[3]) !== name) {
-                                table.cell(index, 3).data(name).draw();
+                            // Column 4: Payment Gateway / Method
+                            if (decodeHtml(rowData[3]) !== (payment_gateway?.name ?? ucwords(payment_method))) {
+                                table.cell(index, 3).data(payment_gateway?.name ?? ucwords(payment_method)).draw();
                             }
-                            // Column 4: Email
-                            if (decodeHtml(rowData[4]) !== email) {
-                                table.cell(index, 4).data(email).draw();
+
+                            // Column 5: Payment Gateway Descriptor
+                            if (decodeHtml(rowData[4]) !== (payment_gateway?.descriptor ?? "---")) {
+                                table.cell(index, 4).data(payment_gateway?.descriptor ?? "---").draw();
                             }
-                            // Column 5: Designation
-                            if (decodeHtml(rowData[5]) !== designation) {
-                                table.cell(index, 5).data(designation).draw();
+
+                            // Column 6: Transaction ID
+                            if (decodeHtml(rowData[5]) !== transaction_id) {
+                                table.cell(index, 5).data(transaction_id ?? "---").draw();
                             }
-                            // Column 6: Team
-                            if (decodeHtml(rowData[6]) !== team_name) {
-                                table.cell(index, 6).data(team_name).draw();
+
+                            // Column 7: Brand Name
+                            if (decodeHtml(rowData[6]) !== brand?.name) {
+                                table.cell(index, 6).data(brand?.name ?? "---").draw();
                             }
-                            // Column 7: Status
-                            const statusHtml = `<input type="checkbox" class="status-toggle change-status" data-id="${id}" ${status == 1 ? "checked" : ""} data-bs-toggle="toggle">`;
-                            if (decodeHtml(rowData[7]) !== statusHtml) {
-                                table.cell(index, 7).data(statusHtml).draw();
+
+                            // Column 8: Team Name
+                            if (decodeHtml(rowData[7]) !== team?.name) {
+                                table.cell(index, 7).data(team?.name ?? "---").draw();
                             }
+
+                            // Column 9: Agent Name
+                            if (decodeHtml(rowData[8]) !== agent?.name) {
+                                table.cell(index, 8).data(agent?.name ?? "---").draw();
+                            }
+
+                            // Column 10: Customer Name
+                            if (decodeHtml(rowData[9]) !== customer_contact?.name) {
+                                table.cell(index, 9).data(customer_contact?.name ?? "---").draw();
+                            }
+
+                            // Column 11: Amount
+                            if (decodeHtml(rowData[10]) !== `$${amount ?? "0.00"}`) {
+                                table.cell(index, 10).data(`$${amount ?? "0.00"}`).draw();
+                            }
+
+                            // Column 12: Status
+                            if (decodeHtml(rowData[11]) !== statusBadge) {
+                                table.cell(index, 11).data(statusBadge).draw();
+                            }
+
+                            // Column 13: Created At
+                            if (decodeHtml(rowData[12]) !== formattedDate) {
+                                table.cell(index, 12).data(formattedDate).draw();
+                            }
+
                             $('#manage-form')[0].reset();
-                            $('#image-display').attr('src', null);
-                            $('#formContainer').removeClass('open')
+                            $('#formContainer').removeClass('open');
                         }
                     })
-                    .catch(error => console.log(error));
+                    .catch(error => console.error('An error occurred while updating the record.', error));
             }
         });
+        function ucwords(str) {
+            if (!str) return '';
+            return str
+                .toLowerCase()
+                .replace(/\b[a-z]/g, function (char) {
+                    return char.toUpperCase();
+                });
+        }
 
+        function getStatusBadge(status) {
+            if (status == 0) return '<span class="badge bg-warning text-dark">Due</span>';
+            if (status == 1) return '<span class="badge bg-success">Paid</span>';
+            if (status == 2) return '<span class="badge bg-danger">Refund</span>';
+            return '<span class="badge bg-secondary">Unknown</span>';
+        }
+
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            const today = new Date();
+            if (
+                date.toDateString() === today.toDateString()
+            ) {
+                return `Today at ${date.toLocaleTimeString('en-US', {
+                    hour: 'numeric',
+                    minute: 'numeric',
+                    hour12: true
+                })} GMT+5`;
+            } else {
+                return date.toLocaleDateString('en-US', {month: 'short', day: 'numeric', year: 'numeric'}) +
+                    ' ' +
+                    date.toLocaleTimeString('en-US', {hour: 'numeric', minute: 'numeric', hour12: true}) +
+                    ' GMT+5';
+            }
+        }
 
     });
 </script>
