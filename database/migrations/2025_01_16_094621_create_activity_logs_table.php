@@ -25,7 +25,6 @@ return new class extends Migration
                 $table->string('ip_address')->nullable()->default(null);
                 $table->softDeletes();
                 $table->timestamps();
-
             });
         }
     }

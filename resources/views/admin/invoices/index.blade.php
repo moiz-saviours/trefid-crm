@@ -135,7 +135,7 @@
                                                     <div
                                                         style="display: flex; justify-content: space-between; gap: 10px;">
                                                         <span style="width: 120px; ">Tax:</span>
-                                                        <span>{{ $invoice->tax_type == 'percentage' ? '%' : ($invoice->tax_type == 'fixed' ? $invoice->currency : '') }} {{ $invoice->tax_value }}</span>
+                                                        <span>{{ $invoice->tax_type == 'percentage' ? '%' : ($invoice->tax_type == 'fixed' ? $invoice->currency : '') }} {{ $invoice->tax_value ?? 0 }}</span>
                                                     </div>
                                                     <div
                                                         style="display: flex; justify-content: space-between; gap: 10px;">

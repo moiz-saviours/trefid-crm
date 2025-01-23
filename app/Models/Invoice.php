@@ -46,6 +46,7 @@ class Invoice extends Model
         'tax_value',
         'tax_amount',
         'total_amount',
+        'type',
         'status',
     ];
 

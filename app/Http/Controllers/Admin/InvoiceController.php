@@ -157,6 +157,8 @@ class InvoiceController extends Controller
                 'tax_value' => $tax_value,
                 'tax_amount' => $tax_amount,
                 'total_amount' => $total_amount,
+                'currency' => $request->input('currency','USD'),
+                'due_date' => $request->input('due_date'),
                 'type' => $request->input('type'),
                 'status' => 0,
             ];
@@ -283,7 +285,6 @@ class InvoiceController extends Controller
             if (!$customer_contact || !$customer_contact->special_key) {
                 return response()->json(['error' => 'The selected customer contact does not exist.']);
             }
-
             $taxable = $request->input('taxable', false);
             $tax_type = $request->input('tax_type', 'none');
             $tax_value = $request->input('tax_value', 0);

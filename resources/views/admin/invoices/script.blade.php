@@ -238,7 +238,7 @@
                             </div>
                             <div style="display: flex; justify-content: space-between; gap: 10px;">
                                 <span style="width: 120px;">Tax:</span>
-                                <span>${tax_type === 'percentage' ? '%' : (tax_type === 'fixed' ? currency : '')} ${tax_value}</span>
+                                <span>${tax_type === 'percentage' ? '%' : (tax_type === 'fixed' ? currency : '')} ${tax_value??0}</span>
                             </div>
                             <div style="display: flex; justify-content: space-between; gap: 10px;">
                                 <span style="width: 120px;">Tax Amount:</span>
@@ -254,8 +254,8 @@
                         </td>
                         <td class="align-middle text-center text-nowrap">${date}</td>
                         <td class="align-middle text-center table-actions">
-                            ${status != 1 ? '<button type="button" class="btn btn-sm btn-primary editBtn" data-id="${id}" title="Edit"><i class = "fas fa-edit" > </i></button>' +
-                                '<button type="button" class="btn btn-sm btn-danger deleteBtn" data-id="${id}" title="Delete"><i class="fas fa-trash"></i></button>'
+                            ${status != 1 ? '<button type="button" class="btn btn-sm btn-primary editBtn" data-id="'+id+'" title="Edit"><i class = "fas fa-edit" > </i></button>' +
+                                '<button type="button" class="btn btn-sm btn-danger deleteBtn" data-id="'+id+'" title="Delete"><i class="fas fa-trash"></i></button>'
                                 : ''}
                         </td>`;
 
@@ -322,7 +322,7 @@
                                 </div>
                                 <div style="display: flex; justify-content: space-between; gap: 10px;">
                                     <span style="width: 120px;">Tax:</span>
-                                    <span>${tax_type === 'percentage' ? '%' : (tax_type === 'fixed' ? currency : '')} ${tax_value}</span>
+                                    <span>${tax_type === 'percentage' ? '%' : (tax_type === 'fixed' ? currency : '')} ${tax_value??0}</span>
                                 </div>
                                 <div style="display: flex; justify-content: space-between; gap: 10px;">
                                     <span style="width: 120px;">Tax Amount:</span>
