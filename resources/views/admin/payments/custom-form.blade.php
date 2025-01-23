@@ -153,10 +153,10 @@
                         <option value="stripe" {{ old('payment_method') == 'stripe' ? 'selected' : '' }}>
                             Stripe
                         </option>
-                        <option value="credit_card" {{ old('payment_method') == 'credit_card' ? 'selected' : '' }}>
+                        <option value="credit card" {{ old('payment_method') == 'credit card' ? 'selected' : '' }}>
                             Credit Card
                         </option>
-                        <option value="bank_transfer" {{ old('payment_method') == 'bank_transfer' ? 'selected' : '' }}>
+                        <option value="bank transfer" {{ old('payment_method') == 'bank transfer' ? 'selected' : '' }}>
                             Bank Transfer
                         </option>
                         <option value="paypal" {{ old('payment_method') == 'paypal' ? 'selected' : '' }}>PayPal</option>

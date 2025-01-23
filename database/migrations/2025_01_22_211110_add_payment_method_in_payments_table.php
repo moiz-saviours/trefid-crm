@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::table('payments', function (Blueprint $table) {
             if (!Schema::hasColumn('payments' , 'payment_method')) {
-                $table->enum('payment_method', ['authorize', 'stripe', 'credit_card', 'bank_transfer', 'paypal', 'cash', 'other'])->default('other')->after('payment_type');
+                $table->enum('payment_method', ['authorize', 'stripe', 'credit card', 'bank transfer', 'paypal', 'cash', 'other'])->default('other')->after('payment_type');
             }
         });
     }

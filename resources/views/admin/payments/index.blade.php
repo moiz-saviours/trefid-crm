@@ -98,7 +98,7 @@
                                                     <span
                                                         class="invoice-key">{{ optional($payment->invoice)->invoice_key }}</span>
                                                 </td>
-                                                <td class="align-middle text-center text-nowrap">{{isset($payment->payment_gateway) ? optional($payment->payment_gateway)->name : ucfirst($payment->payment_method)}}</td>
+                                                <td class="align-middle text-center text-nowrap">{{isset($payment->payment_gateway) ? optional($payment->payment_gateway)->name : ucwords($payment->payment_method)}}</td>
                                                 <td class="align-middle text-center text-nowrap">{{optional($payment->payment_gateway)->descriptor}}</td>
                                                 <td class="align-middle text-center text-nowrap">{{$payment->transaction_id}}</td>
                                                 <td class="align-middle text-center text-nowrap">{{optional($payment->brand)->name ?? "---"}}</td>

@@ -237,7 +237,7 @@ class InvoiceController extends Controller
             'total_amount' => 'required|numeric|min:1|max:' . config('invoice.max_amount'),
             'type' => 'required|integer|in:0,1',/** 0 = fresh, 1 = upsale */
             'due_date' => 'required|date|after_or_equal:' . now()->format('Y-m-d') . '|before_or_equal:' . now()->addYear()->format('Y-m-d'),
-            
+
         ], [
             'brand_key.required' => 'The brand field is required.',
             'brand_key.integer' => 'The brand must be a valid integer.',
