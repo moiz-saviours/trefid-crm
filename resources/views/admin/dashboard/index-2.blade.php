@@ -66,7 +66,7 @@
             justify-content: space-between;
             align-items: center;
             /*padding: 12px 10px;*/
-            margin-top: -34px;
+            margin-top: -90px;
         }
 
         .main-dashboard-heading {

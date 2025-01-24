@@ -455,6 +455,9 @@ Detailed information and more samples can be found in the documentation.
     span.dt-column-title {
         color: var(--bs-primary);
     }
+    .custm-filtr{
+        padding: 0;
+    }
 
     ul.custm-filtr li {
         color: var(--bs-primary);
@@ -466,6 +469,10 @@ Detailed information and more samples can be found in the documentation.
     .table.dataTable.table > tbody > tr.selected > * {
         box-shadow: inset 0 0 0 9999px var(--bs-primary);
         color: var(--bs-primary-color);
+    }
+    .right-icon {
+        display: flex;
+        justify-content: end;
     }
 
     .dt-search {
