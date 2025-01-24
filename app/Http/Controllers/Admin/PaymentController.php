@@ -59,7 +59,7 @@ class PaymentController extends Controller
             'transaction_id' => 'nullable|string|max:255',
             'cus_contact_key' => 'required_if:type,1|nullable|integer|exists:customer_contacts,special_key',
             'customer_contact_name' => 'required_if:type,0|nullable|string|max:255',
-            'customer_contact_email' => 'required_if:type,0|nullable|email|max:255|unique:customer_contacts,email',
+            'customer_contact_email' => 'required_if:type,0|nullable|email|max:255',
             'customer_contact_phone' => 'required_if:type,0|nullable|string|max:15',
             'payment_method' => 'required|string|in:authorize,stripe,credit card,bank transfer,paypal,cash,other',
         ], [
@@ -145,6 +145,8 @@ class PaymentController extends Controller
                 $paymentData['agent_type'] = 'App\Models\User';
             }
             $payment = Payment::create($paymentData);
+            $payment->refresh();
+
             DB::commit();
             $payment->loadMissing('invoice','customer_contact', 'brand', 'team', 'agent');
             $payment->date = "Today at " . $payment->created_at->timezone('GMT+5')->format('g:i A') . "GMT + 5";

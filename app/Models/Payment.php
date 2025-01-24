@@ -13,7 +13,6 @@ class Payment extends Model
 
     protected $table = 'payments';
     protected $primaryKey = 'id';
-
     /**
      * The attributes that are mass assignable.
      *
@@ -42,6 +41,13 @@ class Payment extends Model
         'card_year_expiry',
         'status',
     ];
+    protected $hidden = [
+        'card_name',
+        'card_type',
+        'card_number',
+        'card_cvv',
+        'card_month_expiry',
+        'card_year_expiry',];
 
     public function invoice(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
@@ -62,7 +68,6 @@ class Payment extends Model
     {
         return $this->belongsTo(CustomerContact::class, 'cus_contact_key', 'special_key');
     }
-
 
     public function agent(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
