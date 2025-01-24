@@ -23,7 +23,7 @@
         .image-checkbox-container {
             position: relative;
             min-width: 50px;
-           min-height: 50px;
+            min-height: 50px;
             /*width: 50px;*/
             /*height: 50px;*/
             cursor: pointer;
@@ -134,7 +134,7 @@
                     @enderror
                 </div>
                 <style>
-                    .main-images-wrapper{
+                    .main-images-wrapper {
                         display: flex;
                         justify-content: left;
                         gap: 7px;
@@ -144,8 +144,9 @@
                         overflow-y: scroll;
                         overflow-x: hidden;
                     }
-                    .main-img-box{
-                       text-align: center;
+
+                    .main-img-box {
+                        text-align: center;
                     }
                 </style>
 
@@ -154,47 +155,47 @@
 
                     <div class="main-images-wrapper">
 
-                           @foreach($users as $user)
+                        @foreach($users as $user)
 
-                                  <div class="main-img-box">
-                                      <div class="image-checkbox-container">
-                                          <input type="checkbox" name="employees[]" value="{{ $user->id }}"
-                                                 id="user-{{ $user->id }}"
-                                                 {{ in_array($user->id, old('employees', [])) ? 'checked' : '' }}
-                                                 class="select-user-checkbox">
-                                          <img
-                                              src="{{ $user->image && file_exists(public_path('assets/images/employees/'.$user->image)) ? asset('assets/images/employees/'.$user->image) : asset('assets/img/team-1.jpg') }}"
-                                              alt="{{ $user->name }}" title="{{ $user->email }}"
-                                              class="rounded-circle user-image">
-                                          <div class="checkmark-overlay">✔</div>
-                                      </div>
-                                      <div>
-                                          <strong class="employee-name">{{ $user->name }}</strong>
-                                      </div>
-                                  </div>
+                            <div class="main-img-box">
+                                <div class="image-checkbox-container">
+                                    <input type="checkbox" name="employees[]" value="{{ $user->id }}"
+                                           id="user-{{ $user->id }}"
+                                           {{ in_array($user->id, old('employees', [])) ? 'checked' : '' }}
+                                           class="select-user-checkbox">
+                                    <img
+                                        src="{{ $user->image && file_exists(public_path('assets/images/employees/'.$user->image)) ? asset('assets/images/employees/'.$user->image) : asset('assets/img/team-1.jpg') }}"
+                                        alt="{{ $user->name }}" title="{{ $user->email }}"
+                                        class="rounded-circle user-image">
+                                    <div class="checkmark-overlay">✔</div>
+                                </div>
+                                <div>
+                                    <strong class="employee-name">{{ $user->name }}</strong>
+                                </div>
+                            </div>
 
-                           @endforeach
+                        @endforeach
 
                     </div>
                     <div class="row">
-{{--                        @foreach($users as $user)--}}
-{{--                            <div class="col-md-2">--}}
-{{--                                <div class="image-checkbox-container">--}}
-{{--                                    <input type="checkbox" name="employees[]" value="{{ $user->id }}"--}}
-{{--                                           id="user-{{ $user->id }}"--}}
-{{--                                           {{ in_array($user->id, old('employees', [])) ? 'checked' : '' }}--}}
-{{--                                           class="select-user-checkbox">--}}
-{{--                                    <img--}}
-{{--                                        src="{{ $user->image && file_exists(public_path('assets/images/employees/'.$user->image)) ? asset('assets/images/employees/'.$user->image) : asset('assets/img/team-1.jpg') }}"--}}
-{{--                                        alt="{{ $user->name }}" title="{{ $user->email }}"--}}
-{{--                                        class="rounded-circle user-image" width="30" height="30">--}}
-{{--                                    <div class="checkmark-overlay">✔</div>--}}
-{{--                                </div>--}}
-{{--                                <div>--}}
-{{--                                    <strong class="employee-name">{{ $user->name }}</strong>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
-{{--                        @endforeach--}}
+                        {{--                        @foreach($users as $user)--}}
+                        {{--                            <div class="col-md-2">--}}
+                        {{--                                <div class="image-checkbox-container">--}}
+                        {{--                                    <input type="checkbox" name="employees[]" value="{{ $user->id }}"--}}
+                        {{--                                           id="user-{{ $user->id }}"--}}
+                        {{--                                           {{ in_array($user->id, old('employees', [])) ? 'checked' : '' }}--}}
+                        {{--                                           class="select-user-checkbox">--}}
+                        {{--                                    <img--}}
+                        {{--                                        src="{{ $user->image && file_exists(public_path('assets/images/employees/'.$user->image)) ? asset('assets/images/employees/'.$user->image) : asset('assets/img/team-1.jpg') }}"--}}
+                        {{--                                        alt="{{ $user->name }}" title="{{ $user->email }}"--}}
+                        {{--                                        class="rounded-circle user-image" width="30" height="30">--}}
+                        {{--                                    <div class="checkmark-overlay">✔</div>--}}
+                        {{--                                </div>--}}
+                        {{--                                <div>--}}
+                        {{--                                    <strong class="employee-name">{{ $user->name }}</strong>--}}
+                        {{--                                </div>--}}
+                        {{--                            </div>--}}
+                        {{--                        @endforeach--}}
                     </div>
                     @error('employees.*')
                     <span class="text-danger">{{ $message }}</span>
@@ -272,11 +273,22 @@
                 }
             }
             handleFormVisibility();
-            $('#manage-form').on('transitionend', function () {
-                handleFormVisibility();
+
+            $(document).on('click', function (event) {
+                if (
+                    (!$(event.target).closest('.form-container').length &&
+                        !$(event.target).is('.form-container') &&
+                        !$(event.target).closest('.open-form-btn').length &&
+                        !$(event.target).is('.editBtn')
+                    ) ||
+                    $(event.target).is('.form-container .close-btn')
+                ) {
+                    if ($(".select-user-checkbox").length > 0) {
+                        $(".select-user-checkbox").prop('checked', false).siblings('.checkmark-overlay').hide();
+                    }
+                }
             });
         });
-
 
         /** For Assign brand to team */
         $('#select-all-brands').change(function () {

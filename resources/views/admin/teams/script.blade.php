@@ -275,6 +275,7 @@
 <script>
     /** For Select Employee through Image */
 
+    /** Best for Edit page */
     $('.select-user-checkbox').each(function() {
         var checkbox = $(this);
         if (checkbox.is(':checked')) {
