@@ -3,7 +3,7 @@
         <div class="form-container" id="formContainer">
             <!-- Form Header -->
             <div class="form-header fh-1">
-                Manage Brand
+                Manage Client Company
                 <button type="button" class="close-btn">×</button>
             </div>
             <!-- Form Body -->

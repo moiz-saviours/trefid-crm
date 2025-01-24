@@ -3,7 +3,7 @@
         <div class="form-container" id="formContainer">
             <!-- Form Header -->
             <div class="form-header fh-1">
-                <span id="custom-form-heading">Manage Client</span>
+                <span id="custom-form-heading">Manage Client Account</span>
                 <button type="button" class="close-btn">×</button>
             </div>
             <!-- Form Body -->
