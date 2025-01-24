@@ -137,7 +137,14 @@
             data.assign_user_ids.forEach(id => {
                 $(`#user-${id}`).prop('checked', true).siblings('.checkmark-overlay').show();
             });
+
             $('#brands').val(data.assign_brand_keys);
+            if (data.assign_brand_keys.length === $('#brands option').length) {
+                $('#select-all-brands').prop('checked', true);
+            } else {
+                $('#select-all-brands').prop('checked', false);
+            }
+
             $('#status').val(data.status);
 
             $('#manage-form').attr('action', `{{route('admin.team.update')}}/` + data.id);
