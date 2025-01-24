@@ -356,9 +356,15 @@
         margin-right: 10px;
     }
     .form-container img {
+        /*max-width: 50px;*/
+        /*max-height: 43px;*/
+        /*display: block;*/
+        /*margin: 0 AUTO;*/
         max-width: 50px;
-        max-height: 43px;
+        max-height: 50px;
         display: block;
         margin: 0 AUTO;
+        width: 50px;
+        height: 50px;
     }
 </style>

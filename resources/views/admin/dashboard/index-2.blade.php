@@ -65,7 +65,8 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 12px 10px;
+            /*padding: 12px 10px;*/
+            margin-top: -90px;
         }
 
         .main-dashboard-heading {
@@ -84,8 +85,8 @@
         }
 
         .tabular-main-box {
-            padding: 12px 20px;
-            box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+            padding: 9px 0px;
+            /*box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;*/
             background-color: #b6bbc200;
             margin: 12px 0px;
             border-radius: 8px;
@@ -103,12 +104,12 @@
 
         .sales-total-heading {
             color: var(--bs-primary);
-            font-size: 15px;
+            font-size: 14px;
         }
 
-        .sales-number-div > p {
+        .sales-number-div p {
             margin: 0;
-            font-size: 14px;
+            font-size: 13px;
             color: #000;
         }
 
@@ -166,9 +167,8 @@
         }
 
         .sales-record-table-container {
-            height: 390px !important;
+            height: 388px !important;
             overflow-y: scroll !important;
-
         }
 
         .sales-record-table-container::-webkit-scrollbar {
@@ -199,16 +199,16 @@
         }
 
         .sales-record-table-row {
-            box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+            /*box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;*/
             /* box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgb(14 30 37 / 29%) 0px 2px 16px 0px; */
         }
 
         .sales-record-table {
-            background-color: #fff;
+            /*background-color: #fff;*/
             border: none !important;
-            border-collapse: separate;
-            border-spacing: 0 10px;
-            padding: 9px 6px;
+            /*border-collapse: separate;*/
+            /*border-spacing: 0 10px;*/
+            /*padding: 9px 6px;*/
             border-radius: 7px;
         }
 
@@ -216,6 +216,8 @@
         }
 
         .monthly-sales-record-table {
+            box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+            /*box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;*/
         }
 
         .monthly-sales-record-table tr:nth-child(even) {
@@ -319,7 +321,7 @@
                                                 </style>
                                                 <div class="progress-bar-wrapper">
                                                     <div>
-                                                        <div class="progress" style="width: 160px;">
+                                                        <div class="progress" style="width: 150px;">
                                                             <div class="progress-bar progress-bar-animated bg-primary"
                                                                  role="progressbar" style="width: 40%"
                                                                  aria-valuenow="35"
@@ -402,10 +404,11 @@
 
                                 </div>
                                 <div class="col-lg-7 col-md-12">
-                                    <div class="sales-record-table-container">
-                                        <table class="table sales-record-table text-center">
+{{--                                    <div class="sales-record-table-container">--}}
+                                    <div class="sales-record-table-container monthly-sales-record-table">
+                                        <table class="table sales-record-table ">
                                             <thead>
-                                            <tr>
+                                            <tr class="monthly-sales-record-table-row ">
                                                 <th class="table-headings">Name</th>
                                                 <th class="table-headings">Target</th>
                                                 <th class="table-headings">Sales</th>

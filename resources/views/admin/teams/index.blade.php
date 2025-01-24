@@ -58,7 +58,7 @@
                                                     </div>
                                                 </ul>
                                             </div>
-                                            <div class="col-md-4 right-icon" id="right-icon-0"></div>
+                                            <div class="col-md-4 right-icon text-end" id="right-icon-0"></div>
                                         </div>
                                     </div>
                                 </div>

@@ -140,6 +140,9 @@
                         gap: 7px;
                         flex-wrap: wrap;
                         align-items: center;
+                        height: 150px;
+                        overflow-y: scroll;
+                        overflow-x: hidden;
                     }
                     .main-img-box{
                        text-align: center;

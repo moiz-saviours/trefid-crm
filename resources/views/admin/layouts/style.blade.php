@@ -444,7 +444,8 @@ Detailed information and more samples can be found in the documentation.
     }
 
     .dt-buttons .btn.btn-secondary:hover {
-        background-color: #8392ab;
+        background-color: transparent;
+        /*background-color: #8392ab;*/
     }
 
     .dt-buttons .btn.btn-secondary span:hover {
@@ -453,6 +454,9 @@ Detailed information and more samples can be found in the documentation.
 
     span.dt-column-title {
         color: var(--bs-primary);
+    }
+    .custm-filtr{
+        padding: 0;
     }
 
     ul.custm-filtr li {
@@ -466,6 +470,10 @@ Detailed information and more samples can be found in the documentation.
         box-shadow: inset 0 0 0 9999px var(--bs-primary);
         color: var(--bs-primary-color);
     }
+    .right-icon {
+        display: flex;
+        justify-content: end;
+    }
 
     .dt-search {
         float: right;
@@ -478,7 +486,7 @@ Detailed information and more samples can be found in the documentation.
     .dt-buttons button {
         border: none;
         padding: 0;
-        left: 150px;
+        /*left: 150px;*/
     }
 
     .card-header:has(.fltr-sec) {
