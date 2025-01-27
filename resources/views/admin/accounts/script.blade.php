@@ -145,7 +145,7 @@
                 });
             }
             $('.manage-form').trigger('reset');
-            
+
             $('#manage-form-2').data('id', id);
             $('#manage-form-2').attr('action', `{{route('admin.account.update.password')}}/` + id);
             $('#formContainerChangePassword').addClass('open');
