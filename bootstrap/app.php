@@ -11,6 +11,7 @@ use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use Laravel\Sanctum\Http\Middleware\CheckAbilities;
 use Laravel\Sanctum\Http\Middleware\CheckForAnyAbility;
+use Symfony\Component\HttpFoundation\Response;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -20,7 +21,7 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        $middleware->web(append: [LastSeen::class,Cooldown::class]);
+        $middleware->web(append: [LastSeen::class, Cooldown::class]);
         $middleware->alias([
             'guest' => RedirectIfAuthenticated::class,
             'auth' => Authenticate::class,
@@ -30,7 +31,14 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
-        //
+        $exceptions->respond(function (Response $response) {
+            if ($response->getStatusCode() === 419) {
+                return back()->with([
+                    'message' => 'Your session expired, please try again.',
+                ]);
+            }
+            return $response;
+        });
     })->withSchedule(function (Schedule $schedule) {
 //        $schedule->command('sanctum:prune-expired --hours=24')->daily();
     })->create();
