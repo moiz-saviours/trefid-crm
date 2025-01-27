@@ -271,6 +271,25 @@
                 icon: 'error',
                 confirmButtonText: 'OK'
             });
+        } else if (jqXHR.status === 401) {
+            Swal.fire({
+                title: 'Unauthorized',
+                text: 'Your session has expired or you are not authorized to perform this action. Please log in again.',
+                icon: 'warning',
+                confirmButtonText: 'Login',
+                allowOutsideClick: false
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = '/admin/login';
+                }
+            });
+        } else if (jqXHR.status === 403) {
+            Swal.fire({
+                title: 'Forbidden',
+                text: 'You do not have permission to perform this action.',
+                icon: 'error',
+                confirmButtonText: 'OK'
+            });
         } else {
             Swal.fire({
                 title: 'Error',

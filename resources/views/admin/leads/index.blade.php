@@ -71,21 +71,22 @@
                                         <tr>
                                             <th><input type="checkbox"></th>
                                             <th class="align-middle text-center text-nowrap">SNO.</th>
-                                            <th class="align-middle text-center text-nowrap">Brand</th>
-                                            <th class="align-middle text-center text-nowrap">Customer</th>
-                                            <th class="align-middle text-center text-nowrap">Name</th>
-                                            <th class="align-middle text-center text-nowrap">Email</th>
-                                            <th class="align-middle text-center text-nowrap">Phone Number</th>
-                                            <th class="align-middle text-center text-nowrap">Address</th>
-                                            <th class="align-middle text-center text-nowrap">City</th>
-                                            <th class="align-middle text-center text-nowrap">State</th>
-                                            <th class="align-middle text-center text-nowrap">Zipcode</th>
-                                            <th class="align-middle text-center text-nowrap">Country</th>
-                                            <th class="align-middle text-center text-nowrap">Lead Status</th>
-                                            <th class="align-middle text-center text-nowrap">Note</th>
-                                            <th class="align-middle text-center text-nowrap">Created Date</th>
-                                            <th class="align-middle text-center text-nowrap">Status</th>
-                                            <th class="align-middle text-center text-nowrap">Action</th>
+                                            <th class="align-middle text-center text-nowrap">BRAND</th>
+                                            <th class="align-middle text-center text-nowrap">TEAM</th>
+                                            <th class="align-middle text-center text-nowrap">CUSTOMER CONTACT</th>
+                                            <th class="align-middle text-center text-nowrap">NAME</th>
+                                            <th class="align-middle text-center text-nowrap">EMAIL</th>
+                                            <th class="align-middle text-center text-nowrap">PHONE NUMBER</th>
+                                            <th class="align-middle text-center text-nowrap">ADDRESS</th>
+                                            <th class="align-middle text-center text-nowrap">CITY</th>
+                                            <th class="align-middle text-center text-nowrap">STATE</th>
+                                            <th class="align-middle text-center text-nowrap">ZIPCODE</th>
+                                            <th class="align-middle text-center text-nowrap">COUNTRY</th>
+                                            <th class="align-middle text-center text-nowrap">LEAD STATUS</th>
+                                            <th class="align-middle text-center text-nowrap">NOTE</th>
+                                            <th class="align-middle text-center text-nowrap">CREATED DATE</th>
+                                            <th class="align-middle text-center text-nowrap">STATUS</th>
+                                            <th class="align-middle text-center text-nowrap">ACTION</th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -94,8 +95,30 @@
                                             <tr id="tr-{{$lead->id}}">
                                                 <td class="align-middle text-center text-nowrap"></td>
                                                 <td class="align-middle text-center text-nowrap">{{$loop->iteration}}</td>
-                                                <td class="align-middle text-center text-nowrap">{{optional($lead->brand)->name ?? "---"}}</td>
-                                                <td class="align-middle text-center text-nowrap">{{optional($lead->customer)->name ?? "---"}}</td>
+                                                <td class="align-middle text-center text-nowrap">
+                                                    @if(isset($lead->brand))
+                                                        <a href="{{route('admin.brand.edit',[$lead->brand->id])}}">{{ $lead->brand->name }}</a>
+                                                        <br> {{ $lead->brand->brand_key }}
+                                                    @else
+                                                        ---
+                                                    @endif
+                                                </td>
+                                                <td class="align-middle text-center text-nowrap">
+                                                    @if(isset($lead->team))
+                                                        <a href="{{route('admin.team.edit',[$lead->team->id])}}">{{ $lead->team->name }}</a>
+                                                        <br> {{ $lead->team->team_key }}
+                                                    @else
+                                                        ---
+                                                    @endif
+                                                </td>
+                                                <td class="align-middle text-center text-nowrap">
+                                                    @if(isset($lead->customer_contact))
+                                                        <a href="{{route('admin.customer.contact.edit',[$lead->customer_contact->id])}}">{{ $lead->customer_contact->name }}</a>
+{{--                                                        <br> {{ $lead->customer_contact->special_key }}--}}
+                                                    @else
+                                                        ---
+                                                    @endif
+                                                </td>
                                                 <td class="align-middle text-center text-nowrap">{{$lead->name}}</td>
                                                 <td class="align-middle text-center text-nowrap">{{$lead->email}}</td>
                                                 <td class="align-middle text-center text-nowrap">{{$lead->phone}}</td>

@@ -63,7 +63,7 @@ class AccountController extends Controller
             } else if ($request->image_url) {
                 $admin->image = $request->image_url;
             }
-            if ($request->has('password')) {
+            if ($request->has('password') && !empty($request->input('password'))) {
                 $admin->password = Hash::make($request->input('password'));
             } else {
                 $admin->password = Hash::make(12345678);
@@ -132,7 +132,7 @@ class AccountController extends Controller
             } else if ($request->image_url) {
                 $admin->image = $request->image_url;
             }
-            if ($request->has('password')) {
+            if ($request->has('password') && !empty($request->input('password'))) {
                 $admin->password = Hash::make($request->input('password'));
             }
             $admin->save();

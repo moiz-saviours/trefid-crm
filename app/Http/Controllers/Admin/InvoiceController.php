@@ -178,6 +178,7 @@ class InvoiceController extends Controller
 //            }
             $invoice = Invoice::create($data);
             DB::commit();
+            $invoice->refresh();
             $invoice->loadMissing('customer_contact', 'brand', 'team', 'agent');
             $invoice->date = "Today at " . $invoice->created_at->timezone('GMT+5')->format('g:i A') . "GMT + 5";
             $invoice->due_date = Carbon::parse($invoice->due_date)->format('Y-m-d');

@@ -27,9 +27,9 @@ class LeadController extends Controller
     {
         $brands = Brand::where('status', 1)->get();
         $teams = Team::where('status', 1)->get();
-        $clients = CustomerContact::where('status', 1)->get();
-        $leads = Lead::with('customer')->get();
-        return view('admin.leads.index', compact('leads', 'brands', 'teams', 'clients'));
+        $customer_contacts = CustomerContact::where('status', 1)->get();
+        $leads = Lead::with('customer_contact')->get();
+        return view('admin.leads.index', compact('leads', 'brands', 'teams', 'customer_contacts'));
     }
 
     /**
@@ -41,8 +41,8 @@ class LeadController extends Controller
 //        $teams = Cache::remember('teams_list', config('cache.durations.short_lived'), fn() => Team::where('status', 1)->get());
         $teams = Team::where('status', 1)->get();
         $brands = Brand::where('status', 1)->get();
-        $clients = CustomerContact::where('status', 1)->get();
-        return view('admin.leads.create', compact('brands', 'teams', 'clients'));
+        $customer_contacts = CustomerContact::where('status', 1)->get();
+        return view('admin.leads.create', compact('brands', 'teams', 'customer_contacts'));
     }
 
     /**
@@ -56,11 +56,9 @@ class LeadController extends Controller
                 'brand_key' => 'required|integer|exists:brands,brand_key',
                 'team_key' => 'nullable|integer|exists:teams,team_key',
                 'lead_status_id' => 'required|integer|exists:lead_statuses,id',
-                'cus_contact_key' => 'required_if:type,1|nullable|integer|exists:customer_contacts,special_key',
-                'name' => 'required_if:type,0|nullable|string|max:255',
-                'email' => 'required_if:type,0|nullable|email|max:255|unique:customer_contacts,email',
-                'phone' => 'required_if:type,0|nullable|string|max:15',
-                'type' => 'required|integer|in:0,1', /** 0 = new, 1 = existing */
+                'name' => 'required||string|max:255',
+                'email' => 'required|email|max:255',
+                'phone' => 'required|string|max:15',
                 'note' => 'nullable|string',
             ], [
                 'brand_key.required' => 'The brand field is required.',
@@ -72,9 +70,6 @@ class LeadController extends Controller
                 'lead_status_id.required' => 'The lead status field is required.',
                 'lead_status_id.integer' => 'The lead status must be a valid integer.',
                 'lead_status_id.exists' => 'The selected lead status does not exist.',
-                'cus_contact_key.integer' => 'The client must be a valid integer.',
-                'cus_contact_key.exists' => 'The selected client does not exist.',
-                'cus_contact_key.required' => 'The client key field is required when type is upsale.',
                 'name.required' => 'The client name is required for fresh clients.',
                 'name.string' => 'The client name must be a valid string.',
                 'name.max' => 'The client name cannot exceed 255 characters.',
@@ -85,49 +80,53 @@ class LeadController extends Controller
                 'phone.required' => 'The client phone number is required for fresh clients.',
                 'phone.string' => 'The client phone number must be a valid string.',
                 'phone.max' => 'The client phone number cannot exceed 15 characters.',
-                'type.required' => 'The invoice type is required.',
-                'type.in' => 'The type field must be fresh or upsale.',
             ]);
             if ($validator->fails()) {
-                return response()->json(['errors' => $validator->errors()],422);
+                return response()->json(['errors' => $validator->errors()], 422);
             }
-            $client = $request->input('type') == 0
-                ? CustomerContact::firstOrCreate(
-                    ['email' => $request->input('email')],
-                    [
-                        'brand_key' => $request->input('brand_key'),
-                        'team_key' => $request->input('team_key'),
-                        'name' => $request->input('name'),
-                        'phone' => $request->input('phone'),
-                        'address' => $request->input('client_address'),
-                        'city' => $request->input('client_city'),
-                        'state' => $request->input('client_state'),
-                        'country' => $request->input('client_country'),
-                        'zipcode' => $request->input('client_zipcode'),
-                        'ip_address' => $request->input('ip_address'),
-                    ]
-                )
-                : CustomerContact::where('special_key', $request->input('cus_contact_key'))->first();
-            if (!$client) {
+            $customer_contact = CustomerContact::firstOrCreate(
+                ['email' => $request->input('email')],
+                [
+                    'brand_key' => $request->input('brand_key'),
+                    'team_key' => $request->input('team_key'),
+                    'name' => $request->input('name'),
+                    'phone' => $request->input('phone'),
+                    'address' => $request->input('address'),
+                    'city' => $request->input('city'),
+                    'state' => $request->input('state'),
+                    'country' => $request->input('country'),
+                    'zipcode' => $request->input('zipcode'),
+                    'ip_address' => $request->input('ip_address'),
+                ]
+            );
+            if (!$customer_contact) {
                 return response()->json(['errors' => 'The Customer key does not exist.']);
             }
             $lead = Lead::create([
                 'brand_key' => $request->input('brand_key'),
                 'team_key' => $request->input('team_key'),
-                'cus_contact_key' => $client->cus_contact_key,
+                'cus_contact_key' => $customer_contact->special_key,
                 'lead_status_id' => $request->input('lead_status_id'),
-                'name' => $client->name,
-                'email' => $client->email,
-                'phone' => $client->phone,
-                'address' => $client->address,
-                'city' => $client->city,
-                'state' => $client->state,
-                'country' => $client->country,
-                'zipcode' => $client->zipcode,
+                'name' => $request->input('name'),
+                'email' => $request->input('email'),
+                'phone' => $request->input('phone'),
+                'address' => $request->input('address'),
+                'city' => $request->input('city'),
+                'state' => $request->input('state'),
+                'country' => $request->input('country'),
+                'zipcode' => $request->input('zipcode'),
+//                'ip_address' => $request->input('ip_address'),
                 'note' => $request->input('note'),
             ]);
             DB::commit();
-            $lead->loadMissing('customer');
+            $lead->refresh();
+            $lead->loadMissing('customer_contact','brand','team','leadStatus');
+            if ($lead->created_at->isToday()) {
+                $date = "Today at " . $lead->created_at->timezone('GMT+5')->format('g:i A') . "GMT + 5";
+            } else {
+                $date = $lead->created_at->timezone('GMT+5')->format('M d, Y g:i A') . "GMT + 5";
+            }
+            $lead->date = $date;
             return response()->json(['data' => $lead, 'success' => 'Record created successfully!']);
         } catch (\Exception $e) {
             DB::rollBack();
@@ -153,10 +152,8 @@ class LeadController extends Controller
         //$teams = Cache::remember('teams_list', config('cache.durations.short_lived'), fn() => Team::where('status', 1)->get());
         $brands = Brand::where('status', 1)->get();
         $teams = Team::where('status', 1)->get();
-        $clients = CustomerContact::where('status', 1)->get();
-        $lead->loadMissing('customer');
-        return response()->json(['lead' => $lead, 'brands' => $brands, 'teams' => $teams, 'clients' => $clients]);
-        // return view('admin.leads.edit', compact('lead', 'brands', 'teams', 'clients'));
+        $customer_contacts = CustomerContact::where('status', 1)->get();
+        return response()->json(['lead' => $lead, 'brands' => $brands, 'teams' => $teams, 'customer_contacts' => $customer_contacts]);
     }
 
     /**
@@ -169,9 +166,8 @@ class LeadController extends Controller
             $validator = Validator::make($request->all(), [
                 'brand_key' => 'nullable|integer',
                 'team_key' => 'nullable|integer',
-                'cus_contact_key' => 'nullable|integer|exists:customer_contacts,special_key',
                 'name' => 'required|string|max:255',
-                'email' => 'required|email|max:255|unique:leads,email,' . $lead->id,
+                'email' => 'required|email|max:255',
                 'phone' => 'nullable|string|max:15',
                 'address' => 'nullable|string|max:255',
                 'city' => 'nullable|string|max:255',
@@ -182,18 +178,55 @@ class LeadController extends Controller
                 'status' => 'required|in:0,1',
             ]);
             if ($validator->fails()) {
-                return response()->json(['errors' => $validator->errors()],422);
+                return response()->json(['errors' => $validator->errors()], 422);
             }
-            $lead->update($request->all());
-            $lead->loadMissing('customer');
+            $customer_contact = CustomerContact::firstOrCreate(
+                ['email' => $request->input('email')],
+                [
+                    'brand_key' => $request->input('brand_key'),
+                    'team_key' => $request->input('team_key'),
+                    'name' => $request->input('name'),
+                    'phone' => $request->input('phone'),
+                    'address' => $request->input('address'),
+                    'city' => $request->input('city'),
+                    'state' => $request->input('state'),
+                    'country' => $request->input('country'),
+                    'zipcode' => $request->input('zipcode'),
+                    'ip_address' => $request->input('ip_address'),
+                ]
+            );
+            if (!$customer_contact) {
+                return response()->json(['errors' => 'The Customer key does not exist.']);
+            }
+            $lead->update([
+                'brand_key' => $request->input('brand_key'),
+                'team_key' => $request->input('team_key'),
+//                'cus_contact_key' => $customer_contact->special_key,
+                'lead_status_id' => $request->input('lead_status_id'),
+                'name' => $request->input('name'),
+//                'email' => $request->input('email'),
+                'phone' => $request->input('phone'),
+                'address' => $request->input('address'),
+                'city' => $request->input('city'),
+                'state' => $request->input('state'),
+                'country' => $request->input('country'),
+                'zipcode' => $request->input('zipcode'),
+//                'ip_address' => $request->input('ip_address'),
+                'note' => $request->input('note'),
+            ]);
             DB::commit();
-            $lead->loadMissing('customer');
+            $lead->loadMissing('customer_contact','brand','team','leadStatus');
+            if ($lead->created_at->isToday()) {
+                $date = "Today at " . $lead->created_at->timezone('GMT+5')->format('g:i A') . "GMT + 5";
+            } else {
+                $date = $lead->created_at->timezone('GMT+5')->format('M d, Y g:i A') . "GMT + 5";
+            }
+            $lead->date = $date;
             return response()->json(['data' => $lead, 'success' => 'Record created successfully!']);
         } catch (\Exception $e) {
             DB::rollBack();
             return response()->json(['error' => 'An error occurred while creating the record', 'message' => $e->getMessage()], 500);
         }
-//return redirect()->route('admin.lead.index')->with('success', 'Lead updated successfully.');
     }
 
     /**
@@ -202,7 +235,6 @@ class LeadController extends Controller
     public function delete(Lead $lead)
     {
         try {
-
             if ($lead->delete()) {
                 return response()->json(['success' => 'The record has been deleted successfully.']);
             }

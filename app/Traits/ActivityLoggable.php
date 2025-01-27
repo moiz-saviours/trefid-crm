@@ -67,7 +67,15 @@ trait ActivityLoggable
                 $changedFields = collect($changes)->keys()->implode(', ');
                 return "{$userName} updated {$modelName}: Changed fields - {$changedFields}";
             case 'deleted':
-                return "{$userName} deleted {$modelName}: {$this->name}";
+                $deleteType = $this->trashed() ? 'deleted' : 'force deleted';
+                return "{$userName} {$deleteType} {$modelName} " .
+                    ($this->trashed()
+                        ? ": Ref-Id = {$this->id}"
+                        : ($this->email
+                            ? "with email: {$this->email}"
+                            : ($this->name
+                                ? "with name: {$this->name}"
+                                : '')));
             default:
                 return "{$userName} performed {$event} on {$modelName}";
         }

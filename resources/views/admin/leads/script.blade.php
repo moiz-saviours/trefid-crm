@@ -119,10 +119,10 @@
             $.ajax({
                 url: `{{route('admin.lead.edit')}}/` + id,
                 type: 'GET',
-                success: function (data) {
-                    setDataAndShowEdit(data);
+                success: function (response) {
+                    setDataAndShowEdit(response);
                 },
-                error: function () {
+                error: function (jqXHR, textStatus, errorThrown) {
                     console.log(jqXHR, textStatus, errorThrown);
                 }
             });
@@ -130,15 +130,13 @@
 
         function setDataAndShowEdit(data) {
             let lead = data?.lead;
-            let lead_client = data?.lead?.client;
             $('#manage-form').data('id', lead.id);
 
             $('#brand_key').val(lead.brand_key);
             $('#team_key').val(lead.team_key);
-            $('#client_type').val(lead_client.type);
             $('#name').val(lead.name)
-            $('#email').val(lead_client.email);
-            $('#phone').val(lead_client.phone);
+            $('#email').val(lead.email);
+            $('#phone').val(lead.phone);
             $('#lead_status_id').val(lead.lead_status_id);
             $('#note').val(lead.note);
             $('#status').val(lead.status);
@@ -164,9 +162,9 @@
                         if (response?.data) {
                             const {
                                 id,
-                                brand_key,
-                                team_key,
-                                client_type,
+                                brand,
+                                team,
+                                customer_contact,
                                 name,
                                 email,
                                 phone,
@@ -175,19 +173,23 @@
                                 state,
                                 zipcode,
                                 country,
-                                lead_status_id,
+                                lead_status,
                                 note,
+                                date,
                                 status
-                            } = response.data;
+                            } = Object.fromEntries(
+                                Object.entries(response.data).map(([key, value]) => [key, value === null ? '' : value])
+                            );
 
                             const index = table.rows().count() + 1;
                             const columns = `
                                 <td class="align-middle text-center text-nowrap"></td>
                                 <td class="align-middle text-center text-nowrap">${index}</td>
-
-                                <td class="align-middle text-center text-nowrap">${brand_key}</td>
-                                <td class="align-middle text-center text-nowrap">${team_key}</td>
-                                <td class="align-middle text-center text-nowrap">${client_type}</td>
+                                <td class="align-middle text-center text-nowrap">
+                                    ${brand ? `<a href="/admin/brand/edit/${brand.id}">${brand.name}</a><br> ${brand.brand_key}` : '---'}
+                                </td>
+                                <td class="align-middle text-center text-nowrap">${team ? `<a href="/admin/team/edit/${team.id}">${team.name}</a><br> ${team.team_key}` : '---'}</td>
+                                <td class="align-middle text-center text-nowrap">${customer_contact ? `<a href="/admin/contact/edit/${customer_contact.id}">${customer_contact.name}</a>` : '---'}</td>
                                 <td class="align-middle text-center text-nowrap">${name}</td>
                                 <td class="align-middle text-center text-nowrap">${email}</td>
                                 <td class="align-middle text-center text-nowrap">${phone}</td>
@@ -196,10 +198,12 @@
                                 <td class="align-middle text-center text-nowrap">${state}</td>
                                 <td class="align-middle text-center text-nowrap">${zipcode}</td>
                                 <td class="align-middle text-center text-nowrap">${country}</td>
-                                <td class="align-middle text-center text-nowrap">${lead_status_id}</td>
+                                <td class="align-middle text-center text-nowrap">${lead_status ? lead_status?.name : ""}</td>
                                 <td class="align-middle text-center text-nowrap">${note}</td>
-                                <td class="align-middle text-center text-nowrap">${status}</td>
-
+                                <td class="align-middle text-center text-nowrap">${date}</td>
+                                <td class="align-middle text-center text-nowrap">
+                                    <input type="checkbox" class="status-toggle change-status" data-id="${id}" ${status == 1 ? 'checked' : ''} data-bs-toggle="toggle">
+                                </td>
                                 <td class="align-middle text-center table-actions">
                                     <button type="button" class="btn btn-sm btn-primary editBtn" data-id="${id}" title="Edit">
                                         <i class="fas fa-edit"></i>
@@ -220,37 +224,104 @@
                 AjaxRequestPromise(url, formData, 'POST', {useToastr: true})
                     .then(response => {
                         if (response?.data) {
-                            const {id, name, email, designation, team_name, status} = response.data;
-                            const imageUrl = isValidUrl(image) ? image : (image ? `{{ asset('assets/images/employees/') }}/${image}` : `{{ asset("assets/images/no-image-available.png") }}`);
+                            const {
+                                id,
+                                brand,
+                                team,
+                                customer_contact,
+                                name,
+                                email,
+                                phone,
+                                address,
+                                city,
+                                state,
+                                zipcode,
+                                country,
+                                lead_status,
+                                note,
+                                date,
+                                status
+                            } = Object.fromEntries(
+                                Object.entries(response.data).map(([key, value]) => [key, value === null ? '' : value])
+                            );
+
                             const index = table.row($('#tr-' + id)).index();
                             const rowData = table.row(index).data();
-                            // Column 2: Image
-                            const imageHtml = imageUrl ? `<object data="${imageUrl}" class="avatar avatar-sm me-3" title="${name}"><img src="${imageUrl}" alt="${name}" class="avatar avatar-sm me-3" title="${name}"></object>` : '';
-                            if (decodeHtml(rowData[2]) !== imageHtml) {
-                                table.cell(index, 2).data(imageUrl ? `<object data="${imageUrl}" class="avatar avatar-sm me-3" title="${name}">
-                                                            <img src="${imageUrl}" alt="${name}" class="avatar avatar-sm me-3" title="${name}">
-                                                        </object>` : '').draw();
+
+                            // Column 3: Brand
+                            if (decodeHtml(rowData[2]) !== `${brand ? `<a href="/admin/brand/edit/${brand.id}">${brand.name}</a><br> ${brand.brand_key}` : '---'}`) {
+                                table.cell(index, 2).data(`${brand ? `<a href="/admin/brand/edit/${brand.id}">${brand.name}</a><br> ${brand.brand_key}` : '---'}`).draw();
                             }
-                            /** Column 3: Name */
-                            if (decodeHtml(rowData[3]) !== name) {
-                                table.cell(index, 3).data(name).draw();
+
+                            // Column 4: Team
+                            if (decodeHtml(rowData[3]) !== `${team ? `<a href="/admin/team/edit/${team.id}">${team.name}</a><br> ${team.team_key}` : '---'}`) {
+                                table.cell(index, 3).data(`${team ? `<a href="/admin/team/edit/${team.id}">${team.name}</a><br> ${team.team_key}` : '---'}`).draw();
                             }
-                            // Column 4: Email
-                            if (decodeHtml(rowData[4]) !== email) {
-                                table.cell(index, 4).data(email).draw();
+
+                            // Column 5: Customer Contact
+                            if (decodeHtml(rowData[4]) !== `${customer_contact ? `<a href="/admin/contact/edit/${customer_contact.id}">${customer_contact.name}</a>` : '---'}`) {
+                                table.cell(index, 4).data(`${customer_contact ? `<a href="/admin/contact/edit/${customer_contact.id}">${customer_contact.name}</a>` : '---'}`).draw();
                             }
-                            // Column 5: Designation
-                            if (decodeHtml(rowData[5]) !== designation) {
-                                table.cell(index, 5).data(designation).draw();
+
+                            // Column 6: Name
+                            if (decodeHtml(rowData[5]) !== name) {
+                                table.cell(index, 5).data(name).draw();
                             }
-                            // Column 6: Team
-                            if (decodeHtml(rowData[6]) !== team_name) {
-                                table.cell(index, 6).data(team_name).draw();
+
+                            // Column 7: Email
+                            if (decodeHtml(rowData[6]) !== email) {
+                                table.cell(index, 6).data(email).draw();
                             }
-                            // Column 7: Status
+
+                            // Column 8: Phone
+                            if (decodeHtml(rowData[7]) !== phone) {
+                                table.cell(index, 7).data(phone).draw();
+                            }
+
+                            // Column 9: Address
+                            if (decodeHtml(rowData[8]) !== address) {
+                                table.cell(index, 8).data(address).draw();
+                            }
+
+                            // Column 10: City
+                            if (decodeHtml(rowData[9]) !== city) {
+                                table.cell(index, 9).data(city).draw();
+                            }
+
+                            // Column 11: State
+                            if (decodeHtml(rowData[10]) !== state) {
+                                table.cell(index, 10).data(state).draw();
+                            }
+
+                            // Column 12: Zipcode
+                            if (decodeHtml(rowData[11]) !== zipcode) {
+                                table.cell(index, 11).data(zipcode).draw();
+                            }
+
+                            // Column 13: Country
+                            if (decodeHtml(rowData[12]) !== country) {
+                                table.cell(index, 12).data(country).draw();
+                            }
+
+                            // Column 14: Lead Status
+                            if (decodeHtml(rowData[13]) !== lead_status.name) {
+                                table.cell(index, 13).data(lead_status.name).draw();
+                            }
+
+                            // Column 15: Note
+                            if (decodeHtml(rowData[14]) !== note) {
+                                table.cell(index, 14).data(note).draw();
+                            }
+
+                            // Column 16: Created Date
+                            if (decodeHtml(rowData[15]) !== date) {
+                                table.cell(index, 15).data(date).draw();
+                            }
+
+                            // Column 17: Status
                             const statusHtml = `<input type="checkbox" class="status-toggle change-status" data-id="${id}" ${status == 1 ? "checked" : ""} data-bs-toggle="toggle">`;
-                            if (decodeHtml(rowData[7]) !== statusHtml) {
-                                table.cell(index, 7).data(statusHtml).draw();
+                            if (decodeHtml(rowData[16]) !== statusHtml) {
+                                table.cell(index, 16).data(statusHtml).draw();
                             }
                             $('#manage-form')[0].reset();
                             $('#image-display').attr('src', null);

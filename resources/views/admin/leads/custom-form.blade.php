@@ -41,20 +41,7 @@
                     @enderror
                 </div>
                 <div class="form-group mb-3">
-                    <label for="type" class="form-label">Customer Type</label>
-                    <select class="form-control" id="type" name="type" required>
-
-                        <option value="0" {{ old('type') == 0 ? 'selected' : '' }}>New</option>
-                        @if($clients->count() > 0)
-                            <option value="1" {{ old('type') == 1 ? 'selected' : '' }}>Existing</option>
-                        @endif
-                    </select>
-                    @error('type')
-                    <span class="text-danger">{{ $message }}</span>
-                    @enderror
-                </div>
-                <div class="form-group mb-3">
-                    <label for="name" class="form-label">Client Name</label>
+                    <label for="name" class="form-label">Name</label>
                     <input type="text" class="form-control" id="name" name="name"
                            value="{{ old('name') }}">
                     @error('name')
@@ -62,7 +49,7 @@
                     @enderror
                 </div>
                 <div class="form-group mb-3">
-                    <label for="client_email" class="form-label">Client Email</label>
+                    <label for="email" class="form-label">Email</label>
                     <input type="email" class="form-control" id="email"
                            name="email" value="{{ old('email') }}">
                     @error('email')
@@ -70,7 +57,7 @@
                     @enderror
                 </div>
                 <div class="form-group mb-3">
-                    <label for="phone" class="form-label">Client Phone</label>
+                    <label for="phone" class="form-label">Phone</label>
                     <input type="text" class="form-control" id="phone"
                            name="phone" value="{{ old('phone') }}">
                     @error('phone')

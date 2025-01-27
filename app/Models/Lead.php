@@ -46,7 +46,7 @@ class Lead extends Model
         return $this->belongsTo(Team::class, 'team_key', 'team_key');
     }
 
-    public function customer(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function customer_contact(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(CustomerContact::class, 'cus_contact_key', 'special_key');
     }
