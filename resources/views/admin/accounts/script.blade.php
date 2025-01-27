@@ -237,7 +237,7 @@
                             table.row.add($('<tr>', {id: `tr-${id}`}).append(columns)).draw(false);
                             $('#manage-form')[0].reset();
                             $('#image-display').attr('src', null);
-                            $('#formContainer').removeClass('open')
+                            // $('#formContainer').removeClass('open')
                         }
                     })
                     .catch(error => console.log('An error occurred while updating the record.'));
@@ -296,7 +296,7 @@
                             // table.row($('#tr-' + id)).data(columns).draw();
                             $('#manage-form')[0].reset();
                             $('#image-display').attr('src', null);
-                            $('#formContainer').removeClass('open')
+                            // $('#formContainer').removeClass('open')
                         }
                     })
                     .catch(error => console.log(error));

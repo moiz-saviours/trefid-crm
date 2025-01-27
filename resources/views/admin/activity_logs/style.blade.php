@@ -232,7 +232,7 @@
         color: var(--bs-heading-color);
     }
 
-    .custom-form .form-body input {
+    .custom-form .form-body input:not(.is-invalid) {
         width: 100%;
         padding: 8px;
         margin-bottom: 15px;
@@ -286,14 +286,14 @@
         width: 100%;
     }
 
-    .custom-form .form-body input[type="checkbox"]{
+    .custom-form .form-body input:not(.is-invalid)[type="checkbox"]{
         width: 2%;
         margin-right: 10px;
         appearance: none;
         cursor: pointer;
         position: relative;
     }
-    .custom-form .form-body input[type="radio"] {
+    .custom-form .form-body input:not(.is-invalid)[type="radio"] {
         margin-right: 10px;
         appearance: none;
         width: auto;

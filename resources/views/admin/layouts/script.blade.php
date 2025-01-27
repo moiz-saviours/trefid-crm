@@ -424,11 +424,7 @@
                         } else if (response.errors) {
                             for (let field in response.errors) {
 
-                                const prefixedSelector = `#edit_${field}`;
-                                const unprefixedSelector = `#${field}`;
-                                const fieldWithPrefix = isUpdate ? `#edit_${field}` : `#${field}`;
-
-                                const fieldSelector = $(fieldWithPrefix).length > 0 ? prefixedSelector : unprefixedSelector;
+                                const fieldSelector = $(isUpdate ? `#edit_${field}` : `#edit_${field}`).length > 0 ? `#edit_${field}` : `#${field}`;
 
                                 const errorMessages = response.errors[field];
 

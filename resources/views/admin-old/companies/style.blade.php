@@ -217,7 +217,7 @@
         font-weight: 500;
     }
 
-    .custom-form .form-body input {
+    .custom-form .form-body input:not(.is-invalid) {
         width: 100%;
         padding: 8px;
         margin-bottom: 15px;
