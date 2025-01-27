@@ -197,7 +197,7 @@
                 </div>
 
                 <div class="form-group mb-3">
-                    <label for="total_amount" class="form-label">Total Amount</label>
+                    <label for="total_amount" class="form-label">Total Amount  <small class="float-end">Max Limit : ( {{config('invoice.max_amount')}} )</small></label>
                     <input type="number" class="form-control" id="total_amount" name="total_amount" step="0.01"
                            min="1"
                            readonly
@@ -247,6 +247,8 @@
             });
 
             $(document).ready(function () {
+
+                const maxAmount = parseFloat(`{{config('invoice.max_amount')}}`);
                 $('#taxable').on('change', function () {
                     if ($(this).is(':checked')) {
                         $('#tax-fields').slideDown();
@@ -262,31 +264,59 @@
                 });
 
                 $('#tax_type, #tax_value, #amount').on('input change', function () {
+                    const amount = parseFloat($('#amount').val());
+                    if (amount > maxAmount) {
+                        $('#amount').val(maxAmount);
+                    }
                     updateTaxAmount();
                     updateTotalAmount();
                 });
 
                 function updateTaxAmount() {
                     const taxType = $('#tax_type').val();
-                    const taxValue = parseFloat($('#tax_value').val());
+                    let taxValue = parseFloat($('#tax_value').val());
                     const amount = parseFloat($('#amount').val());
 
                     let taxAmount = 0;
+                    if (amount >= maxAmount) {
+                        $('#tax_value').val(0);
+                        $('#tax_amount').val(0);
+                        return;
+                    }
 
                     if (taxType === 'percentage' && !isNaN(taxValue) && !isNaN(amount)) {
+                        if (taxValue > 100) {
+                            taxValue = 100;
+                            $('#tax_value').val(100);
+                        }
+
                         taxAmount = (amount * taxValue) / 100;
+                        if (amount + taxAmount > maxAmount) {
+                            taxAmount = maxAmount - amount;
+                            $('#tax_value').val(((taxAmount / amount) * 100).toFixed(2));
+                        }
                     } else if (taxType === 'fixed' && !isNaN(taxValue)) {
+                        const maxFixedTax = maxAmount - amount;
+                        if (taxValue > maxFixedTax) {
+                            taxValue = maxFixedTax;
+                            $('#tax_value').val(maxFixedTax.toFixed(2));
+                        }
                         taxAmount = taxValue;
                     }
 
                     $('#tax_amount').val(taxAmount.toFixed(2));
                 }
-
                 function updateTotalAmount() {
                     const amount = parseFloat($('#amount').val());
                     const taxAmount = parseFloat($('#tax_amount').val()) || 0;
-                    const totalAmount = amount + taxAmount;
+                    let totalAmount = amount + taxAmount;
 
+                    if (totalAmount > maxAmount) {
+                        // totalAmount = maxAmount;
+
+                        const adjustedTaxAmount = totalAmount - amount;
+                        $('#tax_amount').val(adjustedTaxAmount.toFixed(2));
+                    }
                     $('#total_amount').val(totalAmount.toFixed(2));
                 }
             });
