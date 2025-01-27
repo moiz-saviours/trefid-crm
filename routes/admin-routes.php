@@ -40,6 +40,7 @@ Route::middleware(['auth:admin', 'verified:admin', 'throttle:60,1'])->prefix('ad
             Route::post('/store', [AdminAccountController::class, 'store'])->name('store');
             Route::get('/edit/{admin?}', [AdminAccountController::class, 'edit'])->name('edit');
             Route::post('/update/{admin?}', [AdminAccountController::class, 'update'])->name('update');
+            Route::post('/update-password/{admin?}', [AdminAccountController::class, 'update_password'])->name('update.password');
             Route::get('/change-status/{admin?}', [AdminAccountController::class, 'change_status'])->name('change.status');
             Route::delete('/delete/{admin?}', [AdminAccountController::class, 'delete'])->name('delete');
         });

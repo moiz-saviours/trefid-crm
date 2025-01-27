@@ -1,5 +1,5 @@
 <div class="custom-form">
-    <form id="manage-form" method="POST" enctype="multipart/form-data" class="m-0">
+    <form id="manage-form" class="manage-form" method="POST" enctype="multipart/form-data" class="m-0">
         <div class="form-container" id="formContainer">
             <!-- Form Header -->
             <div class="form-header fh-1">

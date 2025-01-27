@@ -38,11 +38,11 @@
 @endpush
 
 <div class="custom-form">
-    <form id="manage-form-2" method="POST" enctype="multipart/form-data" class="manage-form">
+    <form id="manage-form-2" class="manage-form">
         <div class="form-container" id="formContainerChangePassword">
             <!-- Form Header -->
             <div class="form-header fh-1">
-                <span id="custom-form-heading">Manage Account</span>
+                <span id="custom-form-heading">Manage Password</span>
                 <button type="button" class="close-btn">×</button>
             </div>
             <!-- Form Body -->

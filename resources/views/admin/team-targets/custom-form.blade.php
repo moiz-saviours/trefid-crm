@@ -93,7 +93,7 @@
 @endpush
 <div class="custom-form">
 
-    <form id="manage-form">
+    <form id="manage-form" class="manage-form">
         <label for="team">Select Team:</label>
         <select name="team_id" id="team">
             <option value="1">Team 1</option>

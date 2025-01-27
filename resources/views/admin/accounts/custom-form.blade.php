@@ -27,7 +27,7 @@
 @endpush
 
 <div class="custom-form">
-    <form id="manage-form" method="POST" enctype="multipart/form-data">
+    <form id="manage-form" class="manage-form" method="POST" enctype="multipart/form-data" class="manage-form">
         <div class="form-container" id="formContainer">
             <!-- Form Header -->
             <div class="form-header fh-1">

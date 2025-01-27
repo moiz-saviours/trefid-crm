@@ -144,8 +144,11 @@
                     }
                 });
             }
-            $('#manage-form')[0].reset();
-            $('#formContainerChangePassword').addClass('open')
+            $('.manage-form').trigger('reset');
+            
+            $('#manage-form-2').data('id', id);
+            $('#manage-form-2').attr('action', `{{route('admin.account.update.password')}}/` + id);
+            $('#formContainerChangePassword').addClass('open');
         });
 
         var $defaultImage;
@@ -302,6 +305,23 @@
                     .catch(error => console.log(error));
             }
         });
+        /** Manage Passowrd */
+        $('#manage-form-2').on('submit', function (e) {
+            e.preventDefault();
+            var dataId = $(this).data('id');
+            var formData = new FormData(this);
+            if (dataId) {
+                const url = $(this).attr('action');
+                AjaxRequestPromise(url, formData, 'POST', {useToastr: true})
+                    .then(response => {
+                        if (response?.data) {
+                            $(this)[0].reset();
+                        }
+                    })
+                    .catch(error => console.log(error));
+            }
+        });
+
         /** Change Status*/
         $('tbody').on('change', '.change-status', function () {
             const statusCheckbox = $(this);

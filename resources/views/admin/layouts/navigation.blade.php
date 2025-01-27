@@ -309,7 +309,7 @@
                         </ul>
                         <!-- END : Ui Elements submenu list -->
                     </li>
-                    
+
                     <li class="nav-item has-sub">
                         <a href="javascript:void(0)"
                            class="mininav-toggle nav-link collapsed {{ request()->is('admin/lead*') ? 'active' : '' }}"><i

@@ -47,6 +47,7 @@ class AccountController extends Controller
             'about' => 'nullable|string',
             'status' => 'required|in:0,1',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'password' => 'nullable|string|max:255',
         ]);
         try {
             $admin = new Admin($request->only([
@@ -105,6 +106,7 @@ class AccountController extends Controller
             'email' => 'required|email|max:255|unique:admins,email,' . $admin->id,
             'designation' => 'nullable|string|max:255',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'password' => 'nullable|string|max:255',
             'status' => 'required|in:0,1',
         ]);
         try {
@@ -129,6 +131,9 @@ class AccountController extends Controller
                 $admin->image = $originalFileName;
             } else if ($request->image_url) {
                 $admin->image = $request->image_url;
+            }
+            if ($request->has('password')) {
+                $admin->password = Hash::make($request->input('password'));
             }
             $admin->save();
             return response()->json(['data' => $admin, 'message' => 'Record updated successfully.']);
