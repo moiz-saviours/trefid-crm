@@ -83,7 +83,7 @@ Route::middleware(['auth:admin', 'verified:admin', 'throttle:60,1'])->prefix('ad
     Route::name('team-target.')->group(function () {
         Route::get('/team-targets', [AdminTeamTargetController::class, 'index'])->name('index');
         Route::prefix('team-target')->group(function () {
-            Route::post('/update/{team_key}/{month}/{year}', [AdminTeamTargetController::class, 'update'])->name('update');
+            Route::post('/update/{team_key?}/{month?}/{year?}', [AdminTeamTargetController::class, 'update'])->name('update');
             Route::get('/logs/{team?}', [AdminTeamTargetController::class, 'log_index'])->name('log.index');
         });
     });

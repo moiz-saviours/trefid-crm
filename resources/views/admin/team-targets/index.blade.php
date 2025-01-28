@@ -10,7 +10,8 @@
             <div class="content__wrap">
                 <header class="custm_header">
                     <div class="new_head">
-                        <h1 class="page-title mb-2">Team Targets <i class="fa fa-caret-down" aria-hidden="true"></i></h1>
+                        <h1 class="page-title mb-2">Team Targets <i class="fa fa-caret-down" aria-hidden="true"></i>
+                        </h1>
                         <h2 id="record-count" class="h6">{{count($teams)}} records</h2>
                     </div>
                     <div class="filters">
@@ -19,7 +20,7 @@
                             <button class="header_btn">Actions <i class="fa fa-caret-down" aria-hidden="true"></i>
                             </button>
                             <button class="header_btn">Import</button>
-{{--                            <button class="create-contact open-form-btn">Create New</button>--}}
+                            {{--                            <button class="create-contact open-form-btn">Create New</button>--}}
                         </div>
                     </div>
                 </header>
@@ -80,14 +81,17 @@
                                             <tr data-team-key="{{ $team->team_key }}">
                                                 <td>{{ $team->name }}</td>
                                                 @for($i = 1; $i < 13; $i++)
-                                                    <td class="editable" data-month="{{ $i }}" data-year="{{ date('Y') }}">
+                                                    <td class="editable" data-month="{{ $i }}"
+                                                        data-year="{{ date('Y') }}">
                                                         @php
                                                             $target = $team->targets()->where('month', $i)->where('year', date('Y'))->first();
                                                         @endphp
                                                         <span class="target-value">
-                                                            {{ $target ? number_format($target->target_amount) : 0 }}
+                                                            {{ $target ? number_format($target->target_amount, 2, '.', '') : 0 }}
                                                         </span>
-                                                        <input type="number" class="target-input" value="{{ $target ? $target->target_amount : 0 }}" style="display:none;">
+                                                        <input type="number" class="target-input"
+                                                               value="{{ $target ? $target->target_amount : 0 }}"
+                                                               style="display:none;">
                                                     </td>
                                                 @endfor
                                             </tr>
@@ -98,7 +102,7 @@
                             </div>
                         </div>
                     </div>
-{{--                    @include('admin.team-targets.custom-form')--}}
+                    {{--                    @include('admin.team-targets.custom-form')--}}
                 </div>
             </div>
         </div>
@@ -107,39 +111,56 @@
     @push('script')
         @include('admin.team-targets.script')
         <script>
-            $(document).ready(function() {
+            $(document).ready(function () {
                 // Double-click to edit target
-                $('.editable').dblclick(function() {
+                $('.editable').dblclick(function () {
                     var currentCell = $(this);
                     currentCell.find('.target-value').hide();
                     currentCell.find('.target-input').show().focus();
                 });
 
                 // Save on blur or Enter
-                $('.target-input').blur(function() {
-                    var currentInput = $(this);
-                    var targetAmount = currentInput.val();
-                    var team_key = currentInput.closest('tr').data('team-key');
-                    var month = currentInput.parent('td.editable').data('month');
-                    var year = currentInput.parent('td.editable').data('year');
+                $('.target-input').on('blur', function (e) {
+                    // Check if the event is blur or Enter key press (keyCode 13)
+                    if (e.type === 'blur') {
+                        var currentInput = $(this);
+                        var targetAmount = currentInput.val().trim();
 
-                    // Send update request via AJAX
-                    $.ajax({
-                        url: `{{route('admin.team-target.update')}}/` + team_key + '/' + month + '/' + year,
-                        method: 'POST',
-                        data: {
-                            target_amount: targetAmount,
-                            _token: '{{ csrf_token() }}'
-                        },
-                        success: function(response) {
-                            currentInput.hide();
-                            currentInput.siblings('.target-value').text(targetAmount).show();
+                        // Basic validation
+                        if (!targetAmount) {
+                            targetAmount
                         }
-                    });
-                });
 
+                        var team_key = currentInput.closest('tr').data('team-key');
+                        var month = currentInput.parent('td.editable').data('month');
+                        var year = currentInput.parent('td.editable').data('year');
+
+                        // Send update request via AJAX
+                        let url = `{{ route('admin.team-target.update') }}/${team_key}/${month}/${year}`;
+                        $.ajax({
+                            url: url,
+                            method: 'POST',
+                            data: {
+                                target_amount: targetAmount,
+                                _token: '{{ csrf_token() }}'
+                            },
+                            success: function (response) {
+                                currentInput.hide();
+                                currentInput.siblings('.target-value').text(targetAmount).show();
+                            },
+                            error: function (xhr, status, error) {
+                                alert('An error occurred while updating the target.');
+                                console.error(error);
+                            }
+                        });
+
+                        if (e.type === 'keypress' && e.which === 13) {
+                            e.preventDefault();
+                        }
+                    }
+                });
                 // Save on Enter key press
-                $('.target-input').keypress(function(e) {
+                $('.target-input').keypress(function (e) {
                     if (e.which == 13) {
                         $(this).blur();
                     }
