@@ -162,6 +162,7 @@ Route::middleware(['auth:admin', 'verified:admin', 'throttle:60,1'])->prefix('ad
     Route::name('client.contact.')->group(function () {
         Route::get('/client/contacts', [AdminClientContactController::class, 'index'])->name('index');
         Route::prefix('client/contact')->group(function () {
+            Route::get('/companies/{client_contact?}', [AdminClientContactController::class, 'companies'])->name('companies');
             Route::get('/create', [AdminClientContactController::class, 'create'])->name('create');
             Route::post('/store', [AdminClientContactController::class, 'store'])->name('store');
             Route::get('/edit/{client_contact?}', [AdminClientContactController::class, 'edit'])->name('edit');

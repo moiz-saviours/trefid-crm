@@ -510,8 +510,10 @@
                 },
                 complete: function (jqXHR, textStatus) {
                     if (jqXHR.status !== 422 || !jqXHR.responseJSON.errors) {
-                        $(".modal").modal('hide');
-                        $('.form-container').removeClass('open');
+                        if (url.includes('create') || url.includes('update')) {
+                            $(".modal").modal('hide');
+                            $('.form-container').removeClass('open');
+                        }
                     }
                 }
             });

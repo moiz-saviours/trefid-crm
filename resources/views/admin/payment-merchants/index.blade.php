@@ -10,7 +10,8 @@
             <div class="content__wrap">
                 <header class="custm_header">
                     <div class="new_head">
-                        <h1 class="page-title mb-2">Client Accounts <i class="fa fa-caret-down" aria-hidden="true"></i></h1>
+                        <h1 class="page-title mb-2">Client Accounts <i class="fa fa-caret-down" aria-hidden="true"></i>
+                        </h1>
                         <h2 id="record-count" class="h6">{{count($payment_merchants)}} records</h2>
                     </div>
                     <div class="filters">
@@ -71,7 +72,8 @@
                                         <tr>
                                             <th><input type="checkbox"></th>
                                             <th class="align-middle text-center text-nowrap">SNO.</th>
-                                            <th class="align-middle text-center text-nowrap">BRAND</th>
+                                            <th class="align-middle text-center text-nowrap">CLIENT CONTACT</th>
+                                            <th class="align-middle text-center text-nowrap">CLIENT COMPANY</th>
                                             <th class="align-middle text-center text-nowrap">CLIENT NAME</th>
                                             <th class="align-middle text-center text-nowrap">DESCRIPTOR</th>
                                             <th class="align-middle text-center text-nowrap">VENDOR NAME</th>
@@ -79,6 +81,7 @@
                                             <th class="align-middle text-center text-nowrap">LOGIN ID</th>
                                             <th class="align-middle text-center text-nowrap">TRANSACTION KEY</th>
                                             <th class="align-middle text-center text-nowrap">LIMIT</th>
+                                            <th class="align-middle text-center text-nowrap">CAPACITY</th>
                                             <th class="align-middle text-center text-nowrap">ENVIRONMENT</th>
                                             <th class="align-middle text-center text-nowrap">STATUS</th>
                                             <th class="align-middle text-center text-nowrap">ACTION</th>
@@ -90,8 +93,8 @@
                                             <tr id="tr-{{$payment_merchant->id}}">
                                                 <td class="align-middle text-center text-nowrap"></td>
                                                 <td class="align-middle text-center text-nowrap">{{$loop->iteration}}</td>
-
-                                                <td class="align-middle text-center text-nowrap">{{optional($payment_merchant->brand)->name ?? "---"}}</td>
+                                                <td class="align-middle text-center text-nowrap">{{optional($payment_merchant->client_contact)->name}}</td>
+                                                <td class="align-middle text-center text-nowrap">{{optional($payment_merchant->client_company)->name}}</td>
                                                 <td class="align-middle text-center text-nowrap">{{ $payment_merchant->name }}</td>
                                                 <td class="align-middle text-center text-nowrap">{{ $payment_merchant->descriptor }}</td>
                                                 <td class="align-middle text-center text-nowrap">{{ $payment_merchant->vendor_name }}</td>
@@ -99,6 +102,7 @@
                                                 <td class="align-middle text-center text-nowrap">{{ $payment_merchant->login_id }}</td>
                                                 <td class="align-middle text-center text-nowrap">{{ $payment_merchant->transaction_key }}</td>
                                                 <td class="align-middle text-center text-nowrap">{{ $payment_merchant->limit }}</td>
+                                                <td class="align-middle text-center text-nowrap">{{ $payment_merchant->capacity }}</td>
                                                 <td class="align-middle text-center text-nowrap">{{ $payment_merchant->environment }}</td>
                                                 <td class="align-middle text-center text-nowrap">
                                                     <input type="checkbox" class="status-toggle change-status"

@@ -122,7 +122,7 @@
                 success: function (data) {
                     setDataAndShowEdit(data);
                 },
-                error: function () {
+                error: function (jqXHR, textStatus, errorThrown) {
                     console.log(jqXHR, textStatus, errorThrown);
                 }
             });
@@ -133,6 +133,8 @@
             $('#manage-form').data('id', data.id);
 
             $('#brand_key').val(data.brand_key);
+            $('#client_contact').val(data.c_contact_key);
+            $('#client_company').val(data.c_company_key);
             $('#name').val(data.name);
             $('#descriptor').val(data.descriptor);
             $('#vendor_name').val(data.vendor_name);
@@ -140,9 +142,9 @@
             $('#login_id').val(data.login_id);
             $('#transaction_key').val(data.transaction_key);
             $('#limit').val(data.limit);
+            $('#capacity').val(data.capacity);
             $('#environment').val(data.environment);
             $('#status').val(data.status);
-
 
             $('#manage-form').attr('action', `{{route('admin.client.account.update')}}/` + data.id);
             $('#formContainer').addClass('open')
@@ -165,7 +167,8 @@
                         if (response?.data) {
                             const {
                                 id,
-                                brand_key,
+                                client_contact,
+                                client_company,
                                 name,
                                 descriptor,
                                 vendor_name,
@@ -173,6 +176,7 @@
                                 login_id,
                                 transaction_key,
                                 limit,
+                                capacity,
                                 environment,
                                 status
                             } = response.data;
@@ -180,7 +184,8 @@
                             const columns = `
                                 <td class="align-middle text-center text-nowrap"></td>
                                 <td class="align-middle text-center text-nowrap">${index}</td>
-                                <td class="align-middle text-center text-nowrap">${brand_key}</td>
+                                <td class="align-middle text-center text-nowrap">${client_contact ? client_contact.name : '---'}</td>
+                                <td class="align-middle text-center text-nowrap">${client_company ? client_company.name : '---'}</td>
                                 <td class="align-middle text-center text-nowrap">${name}</td>
                                 <td class="align-middle text-center text-nowrap">${descriptor}</td>
                                 <td class="align-middle text-center text-nowrap">${vendor_name}</td>
@@ -188,6 +193,7 @@
                                 <td class="align-middle text-center text-nowrap">${login_id}</td>
                                 <td class="align-middle text-center text-nowrap">${transaction_key}</td>
                                 <td class="align-middle text-center text-nowrap">${limit}</td>
+                                <td class="align-middle text-center text-nowrap">${capacity}</td>
                                 <td class="align-middle text-center text-nowrap">${environment}</td>
                                  <td class="align-middle text-center text-nowrap">
                                         <input type="checkbox" class="status-toggle change-status" data-id="${id}" ${status == "active" ? 'checked' : ''} data-bs-toggle="toggle">
@@ -214,7 +220,8 @@
                         if (response?.data) {
                             const {
                                 id,
-                                brand_key,
+                                client_contact,
+                                client_company,
                                 name,
                                 descriptor,
                                 vendor_name,
@@ -222,51 +229,61 @@
                                 login_id,
                                 transaction_key,
                                 limit,
+                                capacity,
                                 environment,
                                 status
                             } = response.data;
                             const index = table.row($('#tr-' + id)).index();
                             const rowData = table.row(index).data();
-                            // Column 2: Brand
-                            if (decodeHtml(rowData[2]) !== brand_key) {
-                                table.cell(index, 2).data(brand_key).draw();
+
+                            // Column 2: Client Contact
+                            if (decodeHtml(rowData[2]) !== `${client_contact ? client_contact.name : '---'}`) {
+                                table.cell(index, 2).data(`${client_contact ? client_contact.name : '---'}`).draw();
                             }
-                            // Column 3: Name
-                            if (decodeHtml(rowData[3]) !== name) {
-                                table.cell(index, 3).data(name).draw();
+                            // Column 3: Client Company
+                            if (decodeHtml(rowData[3]) !== `${client_company ? client_company.name : '---'}`) {
+                                table.cell(index, 3).data(`${client_company ? client_company.name : '---'}`).draw();
                             }
-                            // Column 4: descriptor
-                            if (decodeHtml(rowData[4]) !== descriptor) {
-                                table.cell(index, 4).data(descriptor).draw();
+                            // Column 4: Name
+                            if (decodeHtml(rowData[4]) !== name) {
+                                table.cell(index, 4).data(name).draw();
                             }
-                            // Column 5: Vendor name
-                            if (decodeHtml(rowData[5]) !== vendor_name) {
-                                table.cell(index, 5).data(vendor_name).draw();
+                            // Column 5: descriptor
+                            if (decodeHtml(rowData[5]) !== descriptor) {
+                                table.cell(index, 5).data(descriptor).draw();
                             }
-                            // Column 6: email
-                            if (decodeHtml(rowData[6]) !== email) {
-                                table.cell(index, 6).data(email).draw();
+                            // Column 6: Vendor name
+                            if (decodeHtml(rowData[6]) !== vendor_name) {
+                                table.cell(index, 6).data(vendor_name).draw();
                             }
-                            // Column 7: login_id
-                            if (decodeHtml(rowData[7]) !== login_id) {
-                                table.cell(index, 7).data(login_id).draw();
+                            // Column 7: email
+                            if (decodeHtml(rowData[7]) !== email) {
+                                table.cell(index, 7).data(email).draw();
                             }
-                            // Column 8: transaction_key
-                            if (decodeHtml(rowData[8]) !== transaction_key) {
-                                table.cell(index, 8).data(transaction_key).draw();
+                            // Column 8: login_id
+                            if (decodeHtml(rowData[8]) !== login_id) {
+                                table.cell(index, 8).data(login_id).draw();
                             }
-                            // Column 9: limit
-                            if (decodeHtml(rowData[9]) !== limit) {
-                                table.cell(index, 9).data(limit).draw();
+                            // Column 9: transaction_key
+                            if (decodeHtml(rowData[9]) !== transaction_key) {
+                                table.cell(index, 9).data(transaction_key).draw();
                             }
-                            // Column 10: environment
-                            if (decodeHtml(rowData[10]) !== environment) {
-                                table.cell(index, 10).data(environment).draw();
+                            // Column 10: limit
+                            if (decodeHtml(rowData[10]) !== limit) {
+                                table.cell(index, 10).data(limit).draw();
                             }
-                            // Column 10: Status
+                            // Column 11: capacity
+                            if (decodeHtml(rowData[11]) !== capacity) {
+                                table.cell(index, 11).data(capacity).draw();
+                            }
+                            // Column 12: environment
+                            if (decodeHtml(rowData[12]) !== environment) {
+                                table.cell(index, 12).data(environment).draw();
+                            }
+                            // Column 13: Status
                             const statusHtml = `<input type="checkbox" class="status-toggle change-status" data-id="${id}" ${status == "active" ? "checked" : ""} data-bs-toggle="toggle">`;
-                            if (decodeHtml(rowData[11]) !== statusHtml) {
-                                table.cell(index, 11).data(statusHtml).draw();
+                            if (decodeHtml(rowData[13]) !== statusHtml) {
+                                table.cell(index, 13).data(statusHtml).draw();
                             }
 
                             $('#manage-form')[0].reset();
@@ -278,51 +295,51 @@
         });
     });
 
-        /** Change Status*/
-        $('tbody').on('change', '.change-status', function () {
-            const statusCheckbox = $(this);
-            const status = +statusCheckbox.is(':checked');
-            const rowId = statusCheckbox.data('id');
-            AjaxRequestPromise(`{{ route('admin.client.account.change.status') }}/${rowId}?status=${status}`, null, 'GET', {useToastr: true})
-                .then(response => {
-                    const rowIndex = table.row($('#tr-' + rowId)).index();
-                    const statusHtml = `<input type="checkbox" class="status-toggle change-status" data-id="${rowId}" ${status ? "checked" : ""} data-bs-toggle="toggle">`;
-                    table.cell(rowIndex, 11).data(statusHtml).draw();
-                })
-                .catch(() => {
-                    statusCheckbox.prop('checked', !status);
-                });
-        });
-
-        /** Delete Record */
-        $(document).on('click', '.deleteBtn', function () {
-            const id = $(this).data('id');
-            AjaxDeleteRequestPromise(`{{ route("admin.client.account.delete", "") }}/${id}`, null, 'DELETE', {
-                useDeleteSwal: true,
-                useToastr: true,
+    /** Change Status*/
+    $('tbody').on('change', '.change-status', function () {
+        const statusCheckbox = $(this);
+        const status = +statusCheckbox.is(':checked');
+        const rowId = statusCheckbox.data('id');
+        AjaxRequestPromise(`{{ route('admin.client.account.change.status') }}/${rowId}?status=${status}`, null, 'GET', {useToastr: true})
+            .then(response => {
+                const rowIndex = table.row($('#tr-' + rowId)).index();
+                const statusHtml = `<input type="checkbox" class="status-toggle change-status" data-id="${rowId}" ${status ? "checked" : ""} data-bs-toggle="toggle">`;
+                table.cell(rowIndex, 11).data(statusHtml).draw();
             })
-                .then(response => {
-                    table.row(`#tr-${id}`).remove().draw();
-                })
-                .catch(error => {
-                    if (error.isConfirmed === false) {
-                        Swal.fire({
-                            title: 'Action Canceled',
-                            text: error?.message || 'The deletion has been canceled.',
-                            icon: 'info',
-                            confirmButtonText: 'OK'
-                        });
-                        console.error('Record deletion was canceled:', error?.message);
-                    } else {
-                        Swal.fire({
-                            title: 'Error!',
-                            text: 'An error occurred while deleting the record.',
-                            icon: 'error',
-                            confirmButtonText: 'Try Again'
-                        });
-                        console.error('An error occurred while deleting the record:', error);
-                    }
-                });
-        });
+            .catch(() => {
+                statusCheckbox.prop('checked', !status);
+            });
+    });
+
+    /** Delete Record */
+    $(document).on('click', '.deleteBtn', function () {
+        const id = $(this).data('id');
+        AjaxDeleteRequestPromise(`{{ route("admin.client.account.delete", "") }}/${id}`, null, 'DELETE', {
+            useDeleteSwal: true,
+            useToastr: true,
+        })
+            .then(response => {
+                table.row(`#tr-${id}`).remove().draw();
+            })
+            .catch(error => {
+                if (error.isConfirmed === false) {
+                    Swal.fire({
+                        title: 'Action Canceled',
+                        text: error?.message || 'The deletion has been canceled.',
+                        icon: 'info',
+                        confirmButtonText: 'OK'
+                    });
+                    console.error('Record deletion was canceled:', error?.message);
+                } else {
+                    Swal.fire({
+                        title: 'Error!',
+                        text: 'An error occurred while deleting the record.',
+                        icon: 'error',
+                        confirmButtonText: 'Try Again'
+                    });
+                    console.error('An error occurred while deleting the record:', error);
+                }
+            });
+    });
 
 </script>

@@ -9,17 +9,26 @@
             <!-- Form Body -->
             <div class="form-body">
                 <div class="form-group mb-3">
-                    <label for="brand_key" class="form-label">Brand</label>
-                    <select class="form-control" id="brand_key" name="brand_key">
-                        <option value="">Select Brand</option>
-                        @foreach($brands as $brand)
+                    <label for="client_contact" class="form-label">Client Contact</label>
+                    <select class="form-control" id="client_contact" name="c_contact_key" required>
+                        <option value="" selected>Select Client Contact</option>
+                        @foreach($client_contacts as $client_contact)
                             <option
-                                value="{{ $brand->brand_key }}" {{ old('brand_key') == $brand->brand_key ? 'selected' : '' }}>
-                                {{ $brand->name }}
+                                value="{{ $client_contact->special_key }}" {{ old('client_contact') == $client_contact->special_key ? 'selected' : '' }}>
+                                {{ $client_contact->name }}
                             </option>
                         @endforeach
                     </select>
-                    @error('brand_key')
+                    @error('c_contact_key')
+                    <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
+                <div class="form-group mb-3">
+                    <label for="client_company" class="form-label">Client Company</label>
+                    <select class="form-control" id="client_company" name="c_company_key" required>
+                        <option value="" disabled selected>Select Client Company</option>
+                    </select>
+                    @error('c_company_key')
                     <span class="text-danger">{{ $message }}</span>
                     @enderror
                 </div>
@@ -88,6 +97,16 @@
                 </div>
 
                 <div class="form-group mb-3">
+                    <label for="capacity" class="form-label">Capacity</label>
+                    <input type="number" class="form-control" id="capacity" name="capacity" step="1"
+                           min="1"
+                           value="{{ old('capacity') }}" required>
+                    @error('capacity')
+                    <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
+
+                <div class="form-group mb-3">
                     <label for="environment" class="form-label">Environment</label>
                     <select class="form-control" id="environment" name="environment" required>
                         <option
@@ -133,3 +152,38 @@
         </div>
     </form>
 </div>
+
+@push('script')
+    <script>
+        $(document).ready(function () {
+            $(document).on('change', '#client_contact', function (e) {
+                e.preventDefault();
+                const id = $(this).val();
+                const $companyDropdown = $('#client_company');
+                $companyDropdown.html('<option value="">Loading...</option>');
+                if (id) {
+                    AjaxRequestPromise(`{{ route('admin.client.contact.companies') }}/${id}`, null, 'GET')
+                        .then(response => {
+                            $companyDropdown.empty();
+                            $companyDropdown.append('<option value="" disabled>Select Client Company</option>');
+                            if (response.client_companies && response.client_companies.length > 0) {
+                                response.client_companies.forEach(company => {
+                                    $companyDropdown.append(`<option value="${company.special_key}">${company.name}</option>`);
+                                });
+                            } else {
+                                $companyDropdown.empty();
+                                $companyDropdown.html('<option value="" disabled>No Companies Found. Please add some.</option>');
+                                toastr.error('No Companies Found. Please add some.');
+                            }
+                        })
+                        .catch(() => {
+                            toastr.error('Failed to load companies. Please try again later.');
+                        });
+                } else {
+                    $companyDropdown.html('<option value="" disabled>Select Client Company</option>');
+                }
+            });
+        });
+    </script>
+@endpush
+

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin\Client;
 
 use App\Http\Controllers\Controller;
+use App\Models\ClientCompany;
 use App\Models\ClientContact;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
@@ -20,6 +21,18 @@ class ContactController extends Controller
     }
 
     /**
+     * Showing companies of specified resource.
+     */
+    public function companies($client_contact)
+    {
+        if (!$client_contact) {
+            return response()->json(['error' => 'Oops! Contact not found.'], 404);
+        }
+        $client_companies = ClientCompany::where('c_contact_key', $client_contact)->where('status', 1)->get();
+        return response()->json(['client_companies' => $client_companies]);
+    }
+
+    /**
      * Show the form for creating a new resource.
      */
     public function create()
@@ -27,7 +40,6 @@ class ContactController extends Controller
         $countries = Cache::rememberForever('countries_list', fn() => config('countries'));
         return view('admin.clients.contacts.create', compact('countries'));
     }
-
 
     /**
      * Store a newly created resource in storage.
@@ -46,14 +58,11 @@ class ContactController extends Controller
             'ip_address' => 'nullable|string|max:45',
             'status' => 'required|in:0,1',
         ]);
-
         $client_contact = new ClientContact($request->only([
                 'name', 'email', 'phone', 'address', 'city', 'state',
                 'country', 'zipcode', 'ip_address', 'status',
             ]) + ['special_key' => ClientContact::generateSpecialKey()]);
-
         $client_contact->save();
-
         return response()->json(['client_contact' => $client_contact, 'success' => 'Record created successfully!']);
     }
 
@@ -70,11 +79,10 @@ class ContactController extends Controller
      */
     public function edit(ClientContact $client_contact)
     {
-        if (!$client_contact){
+        if (!$client_contact) {
             return response()->json(['error' => 'Record not found!'], 404);
         }
         $countries = config('countries');
-
         return response()->json(['client_contact' => $client_contact, 'countries' => $countries]);
     }
 
@@ -82,7 +90,6 @@ class ContactController extends Controller
      * Update the specified resource in storage.
      */
     public function update(Request $request, ClientContact $client_contact)
-
     {
         $request->validate([
             'name' => 'required|string|max:255',
@@ -96,12 +103,10 @@ class ContactController extends Controller
             'ip_address' => 'nullable|string|max:45',
             'status' => 'required|in:0,1',
         ]);
-
         $client_contact->fill($request->only([
             'special_key', 'name', 'email', 'phone', 'address', 'city',
             'state', 'country', 'zipcode', 'ip_address', 'status',
         ]));
-
         $client_contact->save();
         return response()->json(['success' => 'Record updated successfully!']);
     }
