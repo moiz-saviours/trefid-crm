@@ -117,4 +117,3 @@
 @stack('script')
 </body>
 </html>
-@php session()->flush() @endphp
