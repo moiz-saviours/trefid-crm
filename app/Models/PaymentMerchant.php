@@ -21,6 +21,8 @@ class PaymentMerchant extends Model
      */
     protected $fillable = [
         'brand_key',
+        'c_contact_key',
+        'c_company_key',
         'name',
         'descriptor',
         'vendor_name',
@@ -30,6 +32,7 @@ class PaymentMerchant extends Model
         'test_login_id',
         'test_transaction_key',
         'limit',
+        'capacity',
         'environment',
         'status',
     ];
@@ -37,5 +40,20 @@ class PaymentMerchant extends Model
     public function brand(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(Brand::class, 'brand_key', 'brand_key');
+    }
+
+    public function client_contact(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(ClientContact::class, 'c_contact_key', 'special_key');
+    }
+
+    public function client_company(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(ClientCompany::class, 'c_company_key', 'special_key');
+    }
+
+    public function brands()
+    {
+        return $this->morphToMany(Brand::class, 'assignable', AssignBrandAccount::class);
     }
 }
