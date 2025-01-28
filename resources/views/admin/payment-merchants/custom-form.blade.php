@@ -156,6 +156,21 @@
 @push('script')
     <script>
         $(document).ready(function () {
+            var $formContainer = $('.form-container');
+            var observer = new MutationObserver(function (mutations) {
+                mutations.forEach(function (mutation) {
+                    if (mutation.attributeName === 'class') {
+                        if (!$formContainer.hasClass('open')) {
+                            const $companyDropdown = $('#client_company');
+                            $companyDropdown.empty();
+                            $companyDropdown.append('<option value="" selected disabled>Select Client Company</option>');
+                        }
+                    }
+                });
+            });
+            observer.observe($formContainer[0], {
+                attributes: true
+            });
             $(document).on('change', '#client_contact', function (e) {
                 e.preventDefault();
                 const id = $(this).val();
@@ -165,7 +180,7 @@
                     AjaxRequestPromise(`{{ route('admin.client.contact.companies') }}/${id}`, null, 'GET')
                         .then(response => {
                             $companyDropdown.empty();
-                            $companyDropdown.append('<option value="" disabled>Select Client Company</option>');
+                            $companyDropdown.append('<option value="" selected disabled>Select Client Company</option>');
                             if (response.client_companies && response.client_companies.length > 0) {
                                 response.client_companies.forEach(company => {
                                     $companyDropdown.append(`<option value="${company.special_key}">${company.name}</option>`);
@@ -180,7 +195,7 @@
                             toastr.error('Failed to load companies. Please try again later.');
                         });
                 } else {
-                    $companyDropdown.html('<option value="" disabled>Select Client Company</option>');
+                    $companyDropdown.html('<option value="" selected disabled>Select Client Company</option>');
                 }
             });
         });
