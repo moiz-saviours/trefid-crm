@@ -105,7 +105,7 @@
     </section>
     <!-- Modal -->
     @push('script')
-{{--        @include('admin.team-targets.script')--}}
+        @include('admin.team-targets.script')
         <script>
             $(document).ready(function() {
                 // Double-click to edit target

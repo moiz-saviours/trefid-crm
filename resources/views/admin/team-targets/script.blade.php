@@ -80,17 +80,17 @@
                 scrollY: 300,
                 scrollCollapse: true,
                 paging: true,
-                columnDefs: [
-                    {
-                        orderable: false,
-                        className: 'select-checkbox',
-                        targets: 0
-                    },
-                ],
-                select: {
-                    style: 'os',
-                    selector: 'td:first-child'
-                },
+                // columnDefs: [
+                //     {
+                //         orderable: false,
+                //         className: 'select-checkbox',
+                //         targets: 0
+                //     },
+                // ],
+                // select: {
+                //     style: 'os',
+                //     selector: 'td:first-child'
+                // },
                 fixedColumns: {
                     start: 0
                 },
@@ -99,147 +99,147 @@
         }
 
         /** Edit */
-        $(document).on('click', '.editBtn', function () {
-            const id = $(this).data('id');
-            if (!id) {
-                Swal.fire({
-                    title: 'Error!',
-                    text: 'Record not found. Do you want to reload the page?',
-                    icon: 'error',
-                    showCancelButton: true,
-                    confirmButtonText: 'Reload',
-                    cancelButtonText: 'Cancel'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        location.reload();
-                    }
-                });
-            }
-            $('#manage-form')[0].reset();
-            $.ajax({
-                url: `{{route('admin.team.edit')}}/` + id,
-                type: 'GET',
-                success: function (response) {
-                    setDataAndShowEdit(response.data);
-                },
-                error: function () {
-                    console.log(jqXHR, textStatus, errorThrown);
-                }
-            });
-        });
+        {{--$(document).on('click', '.editBtn', function () {--}}
+        {{--    const id = $(this).data('id');--}}
+        {{--    if (!id) {--}}
+        {{--        Swal.fire({--}}
+        {{--            title: 'Error!',--}}
+        {{--            text: 'Record not found. Do you want to reload the page?',--}}
+        {{--            icon: 'error',--}}
+        {{--            showCancelButton: true,--}}
+        {{--            confirmButtonText: 'Reload',--}}
+        {{--            cancelButtonText: 'Cancel'--}}
+        {{--        }).then((result) => {--}}
+        {{--            if (result.isConfirmed) {--}}
+        {{--                location.reload();--}}
+        {{--            }--}}
+        {{--        });--}}
+        {{--    }--}}
+        {{--    $('#manage-form')[0].reset();--}}
+        {{--    $.ajax({--}}
+        {{--        url: `{{route('admin.team.edit')}}/` + id,--}}
+        {{--        type: 'GET',--}}
+        {{--        success: function (response) {--}}
+        {{--            setDataAndShowEdit(response.data);--}}
+        {{--        },--}}
+        {{--        error: function () {--}}
+        {{--            console.log(jqXHR, textStatus, errorThrown);--}}
+        {{--        }--}}
+        {{--    });--}}
+        {{--});--}}
 
-        function setDataAndShowEdit(data) {
-            $('#manage-form').data('id', data.id);
+        {{--function setDataAndShowEdit(data) {--}}
+        {{--    $('#manage-form').data('id', data.id);--}}
 
-            $('#name').val(data.name);
-            $('#description').val(data.description);
-            $('#lead_id').val(data.lead_id);
-            data.assign_user_ids.forEach(id => {
-                $(`#user-${id}`).prop('checked', true).siblings('.checkmark-overlay').show();
-            });
-            $('#brands').val(data.assign_brand_keys);
-            $('#status').val(data.status);
+        {{--    $('#name').val(data.name);--}}
+        {{--    $('#description').val(data.description);--}}
+        {{--    $('#lead_id').val(data.lead_id);--}}
+        {{--    data.assign_user_ids.forEach(id => {--}}
+        {{--        $(`#user-${id}`).prop('checked', true).siblings('.checkmark-overlay').show();--}}
+        {{--    });--}}
+        {{--    $('#brands').val(data.assign_brand_keys);--}}
+        {{--    $('#status').val(data.status);--}}
 
-            $('#manage-form').attr('action', `{{route('admin.team.update')}}/` + data.id);
-            $('#formContainer').addClass('open')
-        }
+        {{--    $('#manage-form').attr('action', `{{route('admin.team.update')}}/` + data.id);--}}
+        {{--    $('#formContainer').addClass('open')--}}
+        {{--}--}}
         const decodeHtml = (html) => {
             const txt = document.createElement("textarea");
             txt.innerHTML = html;
             return txt.value;
         };
 
-        /** Manage Record */
-        $('#manage-form').on('submit', function (e) {
-            e.preventDefault();
-            var dataId = $('#manage-form').data('id');
-            var formData = new FormData(this);
-            if (!dataId) {
-                AjaxRequestPromise(`{{ route("admin.team.store") }}`, formData, 'POST', {useToastr: true})
-                    .then(response => {
-                        if (response?.data) {
-                            const {id, team_key, name, description, assign_brands, lead, status} = response.data;
-                            const index = table.rows().count() + 1;
-                            const columns = `
-                                <td class="align-middle text-center text-nowrap"></td>
-                                <td class="align-middle text-center text-nowrap">${index}</td>
-                                <td class="align-middle text-center text-nowrap">${team_key}</td>
-                                <td class="align-middle text-center text-nowrap">${name}</td>
-                                <td class="align-middle text-center text-nowrap">${description}</td>
-                                <td class="align-middle text-center text-nowrap" style="max-width: 200px; overflow: hidden; text-overflow: ellipsis;" title="${assign_brands}">
-                                    ${assign_brands}
-                                </td>
-                                <td class="align-middle text-center text-nowrap">${lead}</td>
-                                <td class="align-middle text-center text-nowrap">
-                                    <input type="checkbox" class="status-toggle change-status" data-id="${id}" ${status == 1 ? 'checked' : ''} data-bs-toggle="toggle">
-                                </td>
-                                <td class="align-middle text-center table-actions">
-                                    <button type="button" class="btn btn-sm btn-primary editBtn" data-id="${id}" title="Edit">
-                                        <i class="fas fa-edit"></i>
-                                    </button>
-                                    <button type="button" class="btn btn-sm btn-danger deleteBtn" data-id="${id}" title="Delete">
-                                        <i class="fas fa-trash"></i>
-                                    </button>
-                                </td>
-                        `;
-                            table.row.add($('<tr>', {id: `tr-${id}`}).append(columns)).draw(false);
-                            $('#manage-form')[0].reset();
-                            $('#formContainer').removeClass('open')
-                        }
-                    })
-                    .catch(error => console.log('An error occurred while updating the record.'));
-            } else {
-                const url = $(this).attr('action');
-                AjaxRequestPromise(url, formData, 'POST', {useToastr: true})
-                    .then(response => {
-                        if (response?.data) {
-                            const {id, name, description, assign_brands, lead, status} = response.data;
-                            const index = table.row($('#tr-' + id)).index();
-                            const rowData = table.row(index).data();
+        {{--/** Manage Record */--}}
+        {{--$('#manage-form').on('submit', function (e) {--}}
+        {{--    e.preventDefault();--}}
+        {{--    var dataId = $('#manage-form').data('id');--}}
+        {{--    var formData = new FormData(this);--}}
+        {{--    if (!dataId) {--}}
+        {{--        AjaxRequestPromise(`{{ route("admin.team.store") }}`, formData, 'POST', {useToastr: true})--}}
+        {{--            .then(response => {--}}
+        {{--                if (response?.data) {--}}
+        {{--                    const {id, team_key, name, description, assign_brands, lead, status} = response.data;--}}
+        {{--                    const index = table.rows().count() + 1;--}}
+        {{--                    const columns = `--}}
+        {{--                        <td class="align-middle text-center text-nowrap"></td>--}}
+        {{--                        <td class="align-middle text-center text-nowrap">${index}</td>--}}
+        {{--                        <td class="align-middle text-center text-nowrap">${team_key}</td>--}}
+        {{--                        <td class="align-middle text-center text-nowrap">${name}</td>--}}
+        {{--                        <td class="align-middle text-center text-nowrap">${description}</td>--}}
+        {{--                        <td class="align-middle text-center text-nowrap" style="max-width: 200px; overflow: hidden; text-overflow: ellipsis;" title="${assign_brands}">--}}
+        {{--                            ${assign_brands}--}}
+        {{--                        </td>--}}
+        {{--                        <td class="align-middle text-center text-nowrap">${lead}</td>--}}
+        {{--                        <td class="align-middle text-center text-nowrap">--}}
+        {{--                            <input type="checkbox" class="status-toggle change-status" data-id="${id}" ${status == 1 ? 'checked' : ''} data-bs-toggle="toggle">--}}
+        {{--                        </td>--}}
+        {{--                        <td class="align-middle text-center table-actions">--}}
+        {{--                            <button type="button" class="btn btn-sm btn-primary editBtn" data-id="${id}" title="Edit">--}}
+        {{--                                <i class="fas fa-edit"></i>--}}
+        {{--                            </button>--}}
+        {{--                            <button type="button" class="btn btn-sm btn-danger deleteBtn" data-id="${id}" title="Delete">--}}
+        {{--                                <i class="fas fa-trash"></i>--}}
+        {{--                            </button>--}}
+        {{--                        </td>--}}
+        {{--                `;--}}
+        {{--                    table.row.add($('<tr>', {id: `tr-${id}`}).append(columns)).draw(false);--}}
+        {{--                    $('#manage-form')[0].reset();--}}
+        {{--                    $('#formContainer').removeClass('open')--}}
+        {{--                }--}}
+        {{--            })--}}
+        {{--            .catch(error => console.log('An error occurred while updating the record.'));--}}
+        {{--    } else {--}}
+        {{--        const url = $(this).attr('action');--}}
+        {{--        AjaxRequestPromise(url, formData, 'POST', {useToastr: true})--}}
+        {{--            .then(response => {--}}
+        {{--                if (response?.data) {--}}
+        {{--                    const {id, name, description, assign_brands, lead, status} = response.data;--}}
+        {{--                    const index = table.row($('#tr-' + id)).index();--}}
+        {{--                    const rowData = table.row(index).data();--}}
 
-                            /** Column 3: Name */
-                            if (decodeHtml(rowData[3]) !== name) {
-                                table.cell(index, 3).data(name).draw();
-                            }
-                            // Column 4: Email
-                            if (decodeHtml(rowData[4]) !== description) {
-                                table.cell(index, 4).data(description).draw();
-                            }
-                            // Column 5: Designation
-                            if (decodeHtml(rowData[5]) !== assign_brands) {
-                                table.cell(index, 5).data(assign_brands).draw();
-                            }
-                            // Column 6: Team
-                            if (decodeHtml(rowData[6]) !== lead) {
-                                table.cell(index, 6).data(lead).draw();
-                            }
-                            // Column 7: Status
-                            const statusHtml = `<input type="checkbox" class="status-toggle change-status" data-id="${id}" ${status == 1 ? "checked" : ""} data-bs-toggle="toggle">`;
-                            if (decodeHtml(rowData[7]) !== statusHtml) {
-                                table.cell(index, 7).data(statusHtml).draw();
-                            }
-                            $('#manage-form')[0].reset();
-                            $('#formContainer').removeClass('open')
-                        }
-                    })
-                    .catch(error => console.log(error));
-            }
-        });
-        /** Change Status*/
-        $('tbody').on('change', '.change-status', function () {
-            const statusCheckbox = $(this);
-            const status = +statusCheckbox.is(':checked');
-            const rowId = statusCheckbox.data('id');
-            AjaxRequestPromise(`{{ route('admin.team.change.status') }}/${rowId}?status=${status}`, null, 'GET', {useToastr: true})
-                .then(response => {
-                    const rowIndex = table.row($('#tr-' + rowId)).index();
-                    const statusHtml = `<input type="checkbox" class="status-toggle change-status" data-id="${rowId}" ${status ? "checked" : ""} data-bs-toggle="toggle">`;
-                    table.cell(rowIndex, 7).data(statusHtml).draw();
-                })
-                .catch(() => {
-                    statusCheckbox.prop('checked', !status);
-                });
-        });
+        {{--                    /** Column 3: Name */--}}
+        {{--                    if (decodeHtml(rowData[3]) !== name) {--}}
+        {{--                        table.cell(index, 3).data(name).draw();--}}
+        {{--                    }--}}
+        {{--                    // Column 4: Email--}}
+        {{--                    if (decodeHtml(rowData[4]) !== description) {--}}
+        {{--                        table.cell(index, 4).data(description).draw();--}}
+        {{--                    }--}}
+        {{--                    // Column 5: Designation--}}
+        {{--                    if (decodeHtml(rowData[5]) !== assign_brands) {--}}
+        {{--                        table.cell(index, 5).data(assign_brands).draw();--}}
+        {{--                    }--}}
+        {{--                    // Column 6: Team--}}
+        {{--                    if (decodeHtml(rowData[6]) !== lead) {--}}
+        {{--                        table.cell(index, 6).data(lead).draw();--}}
+        {{--                    }--}}
+        {{--                    // Column 7: Status--}}
+        {{--                    const statusHtml = `<input type="checkbox" class="status-toggle change-status" data-id="${id}" ${status == 1 ? "checked" : ""} data-bs-toggle="toggle">`;--}}
+        {{--                    if (decodeHtml(rowData[7]) !== statusHtml) {--}}
+        {{--                        table.cell(index, 7).data(statusHtml).draw();--}}
+        {{--                    }--}}
+        {{--                    $('#manage-form')[0].reset();--}}
+        {{--                    $('#formContainer').removeClass('open')--}}
+        {{--                }--}}
+        {{--            })--}}
+        {{--            .catch(error => console.log(error));--}}
+        {{--    }--}}
+        {{--});--}}
+        {{--/** Change Status*/--}}
+        {{--$('tbody').on('change', '.change-status', function () {--}}
+        {{--    const statusCheckbox = $(this);--}}
+        {{--    const status = +statusCheckbox.is(':checked');--}}
+        {{--    const rowId = statusCheckbox.data('id');--}}
+        {{--    AjaxRequestPromise(`{{ route('admin.team.change.status') }}/${rowId}?status=${status}`, null, 'GET', {useToastr: true})--}}
+        {{--        .then(response => {--}}
+        {{--            const rowIndex = table.row($('#tr-' + rowId)).index();--}}
+        {{--            const statusHtml = `<input type="checkbox" class="status-toggle change-status" data-id="${rowId}" ${status ? "checked" : ""} data-bs-toggle="toggle">`;--}}
+        {{--            table.cell(rowIndex, 7).data(statusHtml).draw();--}}
+        {{--        })--}}
+        {{--        .catch(() => {--}}
+        {{--            statusCheckbox.prop('checked', !status);--}}
+        {{--        });--}}
+        {{--});--}}
         /** Delete Record */
         $(document).on('click', '.deleteBtn', function () {
             const id = $(this).data('id');
@@ -272,31 +272,3 @@
         });
     });
 </script>
-<script>
-    /** For Select Employee through Image */
-
-    $('.select-user-checkbox').each(function() {
-        var checkbox = $(this);
-        if (checkbox.is(':checked')) {
-            checkbox.siblings('.checkmark-overlay').css('display', 'flex');
-        } else {
-            checkbox.siblings('.checkmark-overlay').css('display', 'none');
-        }
-    });
-
-    $('.select-user-checkbox').on('change', function() {
-        var checkmarkOverlay = $(this).siblings('.checkmark-overlay');
-        if ($(this).is(':checked')) {
-            checkmarkOverlay.css('display', 'flex');
-        } else {
-            checkmarkOverlay.css('display', 'none');
-        }
-    });
-
-    $('.user-image').on('click', function() {
-        const checkbox = $(this).closest('.image-checkbox-container').find('.select-user-checkbox');
-        checkbox.prop('checked', !checkbox.prop('checked')).trigger('change');
-    });
-
-</script>
-
