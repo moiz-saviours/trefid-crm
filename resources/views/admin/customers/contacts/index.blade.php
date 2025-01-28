@@ -118,7 +118,7 @@
                                                 <td class="align-middle text-center text-nowrap">{{ $customer_contact->address }}</td>
                                                 <td class="align-middle text-center text-nowrap">{{ $customer_contact->city }}</td>
                                                 <td class="align-middle text-center text-nowrap">{{ $customer_contact->state }}</td>
-                                                <td class="align-middle text-center text-nowrap">{{ $customer_contact->address }}</td>
+                                                <td class="align-middle text-center text-nowrap">{{ $customer_contact->country }}</td>
                                                 <td class="align-middle text-center text-nowrap">{{ $customer_contact->zipcode }}</td>
                                                 <td class="align-middle text-center text-nowrap">
                                                     <input type="checkbox" class="status-toggle change-status"
