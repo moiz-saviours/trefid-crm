@@ -125,7 +125,7 @@
 
                     // Send update request via AJAX
                     $.ajax({
-                        url: '/admin/team-target/update/' + team_key + '/' + month + '/' + year,
+                        url: `{{route('admin.team-target.update')}}/` + team_key + '/' + month + '/' + year,
                         method: 'POST',
                         data: {
                             target_amount: targetAmount,
