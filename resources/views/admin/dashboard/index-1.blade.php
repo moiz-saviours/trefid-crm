@@ -65,15 +65,15 @@
             <div class="content__wrap">
                 <div class="row">
                    <div class="col-md-3">
-                       <div class="card text-white mb-3 mb-xl-3" style="background-color: #2d3e50;">
+                       <div class="card text-white mb-3 mb-xl-3" style="background-color: var(--bs-primary);">
                            <div class="card-body py-3">
                                <div class="d-flex align-items-center mb-3">
                                    <div class="flex-shrink-0">
                                        <i class="d-flex align-items-center justify-content-center demo-pli-add-user-star display-6"></i>
                                    </div>
                                    <div class="flex-grow-1 ms-4">
-                                       <h5 class=" text-white h2 mb-0">314,675</h5>
-                                       <p class="text-white text-opacity-75 mb-0">Visit Today</p>
+                                       <h5 class=" text-white h2 mb-0">{{count($active_admins)}}</h5>
+                                       <p class="text-white text-opacity-75 mb-0">Active Admins</p>
                                    </div>
                                </div>
 
@@ -85,15 +85,15 @@
                        </div>
                    </div>
                     <div class="col-md-3">
-                        <div class="card text-white mb-3 mb-xl-3" style="background-color: #ff5722">
+                        <div class="card text-white mb-3 mb-xl-3" style="background-color: var(--bs-primary);">
                             <div class="card-body py-3">
                                 <div class="d-flex align-items-center mb-3">
                                     <div class="flex-shrink-0">
                                         <i class="d-flex align-items-center justify-content-center demo-pli-male-female display-6"></i>
                                     </div>
                                     <div class="flex-grow-1 ms-4">
-                                        <h5 class="text-white h2 mb-0">314,675</h5>
-                                        <p class="text-white text-opacity-75 mb-0">Total Customers</p>
+                                        <h5 class="text-white h2 mb-0">{{count($active_users)}}</h5>
+                                        <p class="text-white text-opacity-75 mb-0">Active Users</p>
                                     </div>
                                 </div>
 
@@ -105,40 +105,44 @@
                         </div>
                     </div>
                     <div class="col-md-3">
-                        <div class="card bg-indigo text-white mb-3 mb-xl-3">
+                        <div class="card text-white mb-3 mb-xl-3" style="background-color: var(--bs-primary);">
                             <div class="card-body py-3">
                                 <div class="d-flex align-items-center mb-3">
                                     <div class="flex-shrink-0">
-                                        <i class="d-flex align-items-center justify-content-center demo-pli-folder-zip display-6"></i>
+                                        <i class="d-flex align-items-center justify-content-center demo-pli-cart-coin display-6"></i>
                                     </div>
                                     <div class="flex-grow-1 ms-4">
-                                        <h5 class="h2 mb-0">314,675</h5>
-                                        <p class="text-white text-opacity-75 mb-0">Total Projects</p>
+                                        <h5 class=" text-white h2 mb-0">{{count($fresh_invoices)}}</h5>
+                                        <p class="text-white text-opacity-75 mb-0">Fresh Invoices</p>
                                     </div>
                                 </div>
 
                                 <div class="progress progress-md mb-2">
-                                    <div class="progress-bar bg-white" role="progressbar" style="width: 55%;" aria-valuenow="55" aria-valuemin="0" aria-valuemax="100"></div>
+                                    <div class="progress-bar bg-white" role="progressbar" style="width: {{ count($fresh_invoices) > 0 ? (count($fresh_invoices) / max(count($fresh_invoices) + count($upsale_invoices), 1)) * 100 : 0 }}%;"
+                                         aria-valuenow="{{ count($fresh_invoices) }}" aria-valuemin="0" aria-valuemax="{{ count($fresh_invoices) + count($upsale_invoices) }}">
+                                    </div>
                                 </div>
 
                             </div>
                         </div>
                     </div>
                     <div class="col-md-3">
-                        <div class="card bg-success text-white mb-3 mb-xl-3">
+                        <div class="card text-white mb-3 mb-xl-3" style="background-color: var(--bs-primary);">
                             <div class="card-body py-3">
                                 <div class="d-flex align-items-center mb-3">
                                     <div class="flex-shrink-0">
-                                        <i class="d-flex align-items-center justify-content-center demo-pli-file-pictures display-6"></i>
+                                        <i class="d-flex align-items-center justify-content-center demo-pli-cart-coin display-6"></i>
                                     </div>
                                     <div class="flex-grow-1 ms-4">
-                                        <h5 class="h2 mb-0">314,675</h5>
-                                        <p class="text-white text-opacity-75 mb-0">Total Tasks</p>
+                                        <h5 class=" text-white h2 mb-0">{{count($upsale_invoices)}}</h5>
+                                        <p class="text-white text-opacity-75 mb-0">Upsale Invoices</p>
                                     </div>
                                 </div>
 
                                 <div class="progress progress-md mb-2">
-                                    <div class="progress-bar bg-white" role="progressbar" style="width: 55%;" aria-valuenow="55" aria-valuemin="0" aria-valuemax="100"></div>
+                                    <div class="progress-bar bg-white" role="progressbar" style="width: {{ count($upsale_invoices) > 0 ? (count($upsale_invoices) / max(count($fresh_invoices) + count($upsale_invoices), 1)) * 100 : 0 }}%;"
+                                         aria-valuenow="{{ count($upsale_invoices) }}" aria-valuemin="0" aria-valuemax="{{ count($fresh_invoices) + count($upsale_invoices) }}">
+                                    </div>
                                 </div>
 
                             </div>

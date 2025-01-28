@@ -16,10 +16,17 @@ class LastSeen
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (Auth::check()) {
-            Auth::user()->update(['last_seen' => now()]);
+        if (Auth::guard('web')->check()) {
+            $user = Auth::guard('web')->user();
+            $user->last_seen = now();
+            $user->saveQuietly();
         }
 
+        if (Auth::guard('admin')->check()) {
+            $admin = Auth::guard('admin')->user();
+            $admin->last_seen = now();
+            $admin->saveQuietly();
+        }
         return $next($request);
     }
 }

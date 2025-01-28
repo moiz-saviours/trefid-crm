@@ -3,14 +3,31 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Admin;
+use App\Models\ClientContact;
+use App\Models\CustomerContact;
 use App\Models\Invoice;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Log;
 
 class DashboardController extends Controller
 {
+    public function __construct()
+    {
+        $activeTime = Carbon::now()->subMinutes(5);
+        view()->share('active_users', User::where('last_seen', '>=', $activeTime)->get());
+        view()->share('active_admins', Admin::where('last_seen', '>=', $activeTime)->get());
+        view()->share('fresh_invoices', Invoice::where('type', 0)->get());
+        view()->share('upsale_invoices', Invoice::where('type', 1)->get());
+//        view()->share('total_customers', CustomerContact::where('status', 1)->get());
+//        view()->share('total_clients', ClientContact::where('status', 1)->get());
+    }
+
     public function index_1()
     {
+
         return view('admin.dashboard.index-1');
     }
 
@@ -25,11 +42,9 @@ class DashboardController extends Controller
             $totalSales = Invoice::where('status', Invoice::STATUS_PAID)->sum('total_amount');
             $refunded = Invoice::where('status', Invoice::STATUS_REFUNDED)->sum('total_amount');
             $chargeBack = Invoice::where('status', Invoice::STATUS_CHARGEBACK)->sum('total_amount');
-
             $totalSalesFormatted = '$' . number_format($totalSales);
             $refundedFormatted = '$' . number_format($refunded);
             $chargeBackFormatted = '$' . number_format($chargeBack);
-
             $netSales = $totalSales - ($refunded + $chargeBack);
             $netSalesFormatted = '$' . number_format($netSales, 2);
             if ($totalSales > 0) {
