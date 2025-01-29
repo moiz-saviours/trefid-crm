@@ -5,7 +5,6 @@
             color: var(--bs-primary-color);
         }
     </style>
-
 @endpush
 <div class="custom-form">
     <form id="manage-form" class="manage-form" enctype="multipart/form-data">

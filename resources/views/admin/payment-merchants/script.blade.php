@@ -132,7 +132,14 @@
 
             $('#manage-form').data('id', data.id);
 
-            $('#brand_key').val(data.brand_key);
+
+            $('#brands').val(data.assign_brand_keys);
+            if (data.assign_brand_keys.length === $('#brands option').length) {
+                $('#select-all-brands').prop('checked', true);
+            } else {
+                $('#select-all-brands').prop('checked', false);
+            }
+
             $('#client_contact').val(data.c_contact_key);
             $('#client_company').val(data.c_company_key);
             $('#name').val(data.name);

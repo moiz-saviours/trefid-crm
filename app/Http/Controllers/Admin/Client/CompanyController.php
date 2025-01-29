@@ -106,7 +106,7 @@ class CompanyController extends Controller
         $request->validate([
             'brands' => 'nullable|array',
             'brands.*' => 'exists:brands,brand_key',
-            'c_contact_key' => 'required:exists:client_contacts,special_key',
+            'c_contact_key' => 'required|exists:client_contacts,special_key',
             'name' => 'required|max:255',
             'logo' => 'nullable|mimes:jpeg,png,jpg,gif|max:2048',
             'url' => 'nullable|url',
@@ -118,18 +118,27 @@ class CompanyController extends Controller
             'brands.*.exists' => 'One or more selected brands are invalid.',
         ]);
         try {
-            $client_company->fill($request->only(['name', 'email', 'description', 'status', 'c_contact_key', 'url']));
-            if ($request->hasFile('logo')) {
-                $originalFileName = time() . '_' . $request->file('logo')->getClientOriginalName();
-                $publicPath = public_path('assets/images/clients/companies/logos/');
-                $request->file('logo')->move($publicPath, $originalFileName);
-                $client_company->logo = $originalFileName;
-            }
+
             DB::transaction(function () use ($request, $client_company) {
+                $client_company->fill($request->only(['name', 'email', 'description', 'status', 'c_contact_key', 'url']));
+                if ($request->hasFile('logo')) {
+                    $originalFileName = time() . '_' . $request->file('logo')->getClientOriginalName();
+                    $publicPath = public_path('assets/images/clients/companies/logos/');
+                    if (!file_exists($publicPath)) {
+                        mkdir($publicPath, 0777, true);
+                    }
+                    $request->file('logo')->move($publicPath, $originalFileName);
+                    $client_company->logo = $originalFileName;
+                }
                 $client_company->save();
-                if ($request->has('brands') && !empty($request->brands)) {
-                    foreach ($request->brands as $brandKey) {
-                        AssignBrandAccount::create([
+                if ($request->has('brands')) {
+                    $brandKeys = $request->brands;
+                    AssignBrandAccount::where('assignable_type', ClientCompany::class)
+                        ->where('assignable_id', $client_company->special_key)
+                        ->whereNotIn('brand_key', $brandKeys)
+                        ->delete();
+                    foreach ($brandKeys as $brandKey) {
+                        AssignBrandAccount::firstOrCreate([
                             'brand_key' => $brandKey,
                             'assignable_type' => ClientCompany::class,
                             'assignable_id' => $client_company->special_key,

@@ -52,8 +52,16 @@ class PaymentMerchant extends Model
         return $this->belongsTo(ClientCompany::class, 'c_company_key', 'special_key');
     }
 
-    public function brands()
+    public function brands(): \Illuminate\Database\Eloquent\Relations\MorphToMany
     {
-        return $this->morphToMany(Brand::class, 'assignable', AssignBrandAccount::class);
+        return $this->morphToMany(
+            Brand::class,          // Related model
+            'assignable',          // Morph name
+            AssignBrandAccount::class,
+            'assignable_id',       // Foreign key on pivot table
+            'brand_key',            // Related model key on pivot table
+            'id',                  // Local model key
+            'brand_key'                   // Related model key
+        );
     }
 }
