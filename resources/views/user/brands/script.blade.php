@@ -124,7 +124,7 @@
                 success: function (data) {
                     setDataAndShowEdit(data);
                 },
-                error: function () {
+                error: function (jqXHR, textStatus, errorThrown) {
                     console.log(jqXHR, textStatus, errorThrown);
                 }
             });

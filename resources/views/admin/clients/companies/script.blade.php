@@ -120,7 +120,7 @@
                 success: function (data) {
                     setDataAndShowEdit(data);
                 },
-                error: function () {
+                error: function (jqXHR, textStatus, errorThrown) {
                     console.log(jqXHR, textStatus, errorThrown);
                 }
             });
@@ -152,6 +152,14 @@
             let client_company = data?.client_company;
 
             $('#manage-form').data('id', client_company.id);
+
+            $('#brands').val(data.assign_brand_keys);
+            if (data.assign_brand_keys.length === $('#brands option').length) {
+                $('#select-all-brands').prop('checked', true);
+            } else {
+                $('#select-all-brands').prop('checked', false);
+            }
+
             $('#c_contact_key').val(client_company.c_contact_key);
             $('#name').val(client_company.name);
             $('#email').val(client_company.email);

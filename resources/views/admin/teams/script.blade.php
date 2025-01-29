@@ -122,7 +122,7 @@
                 success: function (response) {
                     setDataAndShowEdit(response.data);
                 },
-                error: function () {
+                error: function (jqXHR, textStatus, errorThrown) {
                     console.log(jqXHR, textStatus, errorThrown);
                 }
             });

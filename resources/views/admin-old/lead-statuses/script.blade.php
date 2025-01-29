@@ -109,7 +109,7 @@
                 success: function (data) {
                     setDataAndShowEditModel(data);
                 },
-                error: function () {
+                error: function (jqXHR, textStatus, errorThrown) {
                     console.log(jqXHR, textStatus, errorThrown);
                 }
             });

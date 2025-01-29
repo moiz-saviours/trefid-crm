@@ -13,7 +13,6 @@ class ClientContact extends Model
 
     protected $table = 'client_contacts';
     protected $primaryKey = 'id';
-
     /**
      * The attributes that are mass assignable.
      *
@@ -45,7 +44,6 @@ class ClientContact extends Model
         do {
             $specialKey = str_pad(rand(0, 999999), 6, '0', STR_PAD_LEFT);
         } while (self::where('special_key', $specialKey)->exists());
-
         return $specialKey;
     }
 
@@ -63,8 +61,34 @@ class ClientContact extends Model
             }
         });
     }
-    public function client_company(): \Illuminate\Database\Eloquent\Relations\HasMany
+
+    public function brands(): \Illuminate\Database\Eloquent\Relations\MorphToMany
     {
-        return $this->hasMany(ClientCompany::class, 'c_contact_key','special_key');
+        return $this->morphToMany(
+            Brand::class,          // Related model
+            'assignable',          // Morph name
+            AssignBrandAccount::class,
+            'assignable_id',       // Foreign key on pivot table
+            'brand_key',            // Related model key on pivot table
+            'special_key',                  // Local model key
+            'brand_key'                   // Related model key
+        );
     }
+
+//    public function client_companies(): \Illuminate\Database\Eloquent\Relations\HasMany
+//    {
+//        return $this->hasMany(ClientCompany::class, 'c_contact_key', 'special_key');
+//    }
+//
+//    public function client_accounts(): \Illuminate\Database\Eloquent\Relations\HasManyThrough
+//    {
+//        return $this->hasManyThrough(
+//            PaymentMerchant::class,  // The related model (distant model)
+//            ClientCompany::class,    // The intermediary model (middle model)
+//            'special_key',           // Foreign key on the intermediate model (ClientCompany) referencing the parent model (ClientContact)
+//            'c_contact_key',                     // Local key on the intermediate model (ClientCompany)
+//            'special_key',                    // Local key on the parent model (ClientContact)
+//            'c_company_key'         // Foreign key on the distant model (PaymentMerchant) referencing the intermediate model (ClientCompany)
+//        );
+//    }
 }

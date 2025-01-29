@@ -65,6 +65,7 @@ class TeamController extends Controller
 
             'employees.array' => 'Team members must be selected as an array.',
             'employees.*.exists' => 'One or more selected team members are invalid.',
+
             'brands.array' => 'Brands must be selected as an array.',
             'brands.*.exists' => 'One or more selected brands are invalid.',
         ]);

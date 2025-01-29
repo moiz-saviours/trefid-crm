@@ -3,10 +3,13 @@
 namespace App\Http\Controllers\Admin\Client;
 
 use App\Http\Controllers\Controller;
+use App\Models\AssignBrandAccount;
+use App\Models\Brand;
 use App\Models\ClientCompany;
 use App\Models\ClientContact;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 
 class ContactController extends Controller
 {
@@ -15,9 +18,9 @@ class ContactController extends Controller
      */
     public function index()
     {
-        $countries = config('countries');
+        $brands = Brand::where('status', 1)->get();
         $client_contacts = ClientContact::all();
-        return view('admin.clients.contacts.index', compact('client_contacts', 'countries'));
+        return view('admin.clients.contacts.index', compact('client_contacts', 'brands'));
     }
 
     /**
@@ -47,6 +50,8 @@ class ContactController extends Controller
     public function store(Request $request)
     {
         $request->validate([
+            'brands' => 'nullable|array',
+            'brands.*' => 'exists:brands,brand_key',
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255|unique:client_contacts,email',
             'phone' => 'nullable|string|max:15',
@@ -57,12 +62,26 @@ class ContactController extends Controller
             'zipcode' => 'nullable|string|max:10',
             'ip_address' => 'nullable|string|max:45',
             'status' => 'required|in:0,1',
+        ], [
+            'brands.array' => 'Brands must be selected as an array.',
+            'brands.*.exists' => 'One or more selected brands are invalid.',
         ]);
         $client_contact = new ClientContact($request->only([
                 'name', 'email', 'phone', 'address', 'city', 'state',
                 'country', 'zipcode', 'ip_address', 'status',
             ]) + ['special_key' => ClientContact::generateSpecialKey()]);
-        $client_contact->save();
+        DB::transaction(function () use ($request, $client_contact) {
+            $client_contact->save();
+            if ($request->has('brands') && !empty($request->brands)) {
+                foreach ($request->brands as $brandKey) {
+                    AssignBrandAccount::create([
+                        'brand_key' => $brandKey,
+                        'assignable_type' => ClientContact::class,
+                        'assignable_id' => $client_contact->special_key,
+                    ]);
+                }
+            }
+        });
         return response()->json(['client_contact' => $client_contact, 'success' => 'Record created successfully!']);
     }
 
@@ -82,8 +101,8 @@ class ContactController extends Controller
         if (!$client_contact) {
             return response()->json(['error' => 'Record not found!'], 404);
         }
-        $countries = config('countries');
-        return response()->json(['client_contact' => $client_contact, 'countries' => $countries]);
+        $assign_brand_keys = $client_contact->brands()->pluck('assign_brand_accounts.brand_key')->toArray();
+        return response()->json(['client_contact' => $client_contact, 'assign_brand_keys' => $assign_brand_keys]);
     }
 
     /**
@@ -92,6 +111,8 @@ class ContactController extends Controller
     public function update(Request $request, ClientContact $client_contact)
     {
         $request->validate([
+            'brands' => 'nullable|array',
+            'brands.*' => 'exists:brands,brand_key',
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255|unique:client_contacts,email,' . $client_contact->id,
             'phone' => 'nullable|string|max:15',
@@ -102,12 +123,30 @@ class ContactController extends Controller
             'zipcode' => 'nullable|string|max:10',
             'ip_address' => 'nullable|string|max:45',
             'status' => 'required|in:0,1',
+        ], [
+            'brands.array' => 'Brands must be selected as an array.',
+            'brands.*.exists' => 'One or more selected brands are invalid.',
         ]);
-        $client_contact->fill($request->only([
-            'special_key', 'name', 'email', 'phone', 'address', 'city',
-            'state', 'country', 'zipcode', 'ip_address', 'status',
-        ]));
-        $client_contact->save();
+        DB::transaction(function () use ($request, $client_contact) {
+            $client_contact->update($request->only([
+                'name', 'email', 'phone', 'address', 'city', 'state',
+                'country', 'zipcode', 'ip_address', 'status',
+            ]));
+            if ($request->has('brands')) {
+                $brandKeys = $request->brands;
+                AssignBrandAccount::where('assignable_type', ClientContact::class)
+                    ->where('assignable_id', $client_contact->special_key)
+                    ->whereNotIn('brand_key', $brandKeys)
+                    ->delete();
+                foreach ($brandKeys as $brandKey) {
+                    AssignBrandAccount::firstOrCreate([
+                        'brand_key' => $brandKey,
+                        'assignable_type' => ClientContact::class,
+                        'assignable_id' => $client_contact->special_key,
+                    ]);
+                }
+            }
+        });
         return response()->json(['success' => 'Record updated successfully!']);
     }
 

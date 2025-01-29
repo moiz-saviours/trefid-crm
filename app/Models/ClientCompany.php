@@ -17,13 +17,12 @@ class ClientCompany extends Model
      */
     protected $table = 'client_companies';
     protected $primaryKey = 'id';
-
     /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
      */
-    protected $fillable = ['special_key', 'c_contact_key','name', 'logo', 'email', 'url','description', 'status'];
+    protected $fillable = ['special_key', 'c_contact_key', 'name', 'logo', 'email', 'url', 'description', 'status'];
 
     /**
      * Generate a unique special key.
@@ -35,7 +34,6 @@ class ClientCompany extends Model
         do {
             $specialKey = str_pad(rand(0, 999999), 6, '0', STR_PAD_LEFT);
         } while (self::where('special_key', $specialKey)->exists());
-
         return $specialKey;
     }
 
@@ -54,8 +52,26 @@ class ClientCompany extends Model
         });
     }
 
+    public function brands(): \Illuminate\Database\Eloquent\Relations\MorphToMany
+    {
+        return $this->morphToMany(
+            Brand::class,          // Related model
+            'assignable',          // Morph name
+            AssignBrandAccount::class,
+            'assignable_id',       // Foreign key on pivot table
+            'brand_key',            // Related model key on pivot table
+            'special_key',                  // Local model key
+            'brand_key'                   // Related model key
+        );
+    }
+
     public function client_contact(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(ClientContact::class, 'c_contact_key', 'special_key');
     }
+
+//    public function client_accounts(): \Illuminate\Database\Eloquent\Relations\HasMany
+//    {
+//        return $this->hasMany(PaymentMerchant::class, 'c_company_key', 'special_key');
+//    }
 }
