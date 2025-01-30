@@ -74,7 +74,7 @@
                                             <th class="align-middle text-center text-nowrap">SNO.</th>
                                             <th class="align-middle text-center text-nowrap">CLIENT CONTACT</th>
                                             <th class="align-middle text-center text-nowrap">CLIENT COMPANY</th>
-                                            <th class="align-middle text-center text-nowrap">CLIENT NAME</th>
+                                            <th class="align-middle text-center text-nowrap">NAME</th>
                                             <th class="align-middle text-center text-nowrap">DESCRIPTOR</th>
                                             <th class="align-middle text-center text-nowrap">VENDOR NAME</th>
                                             <th class="align-middle text-center text-nowrap">EMAIL</th>

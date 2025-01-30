@@ -91,11 +91,12 @@ class CompanyController extends Controller
      */
     public function edit(Request $request, ClientCompany $client_company)
     {
-        if ($request->ajax()) {
-            return response()->json(['client_company' => $client_company]);
-        }
+
         $assign_brand_keys = $client_company->brands()->pluck('assign_brand_accounts.brand_key')->toArray();
-        return view('admin.client.companies.edit', compact('client_company'));
+        if ($request->ajax()) {
+            return response()->json(['client_company' => $client_company, 'assign_brand_keys' => $assign_brand_keys]);
+        }
+        return view('admin.client.companies.edit', compact('client_company','assign_brand_keys'));
     }
 
     /**

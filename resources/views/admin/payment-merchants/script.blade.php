@@ -129,31 +129,36 @@
         });
 
         function setDataAndShowEdit(data) {
+            const client_account = data?.client_account;
+            if (!client_account) {
+                toastr.error('Client account data is missing.')
+                return false;
+            }
 
-            $('#manage-form').data('id', data.id);
-
+            $('#manage-form').data('id', client_account.id);
 
             $('#brands').val(data.assign_brand_keys);
-            if (data.assign_brand_keys.length === $('#brands option').length) {
+            if (Array.isArray(data.assign_brand_keys) && data.assign_brand_keys.length === $('#brands option').length) {
                 $('#select-all-brands').prop('checked', true);
             } else {
                 $('#select-all-brands').prop('checked', false);
             }
 
-            $('#client_contact').val(data.c_contact_key);
-            $('#client_company').val(data.c_company_key);
-            $('#name').val(data.name);
-            $('#descriptor').val(data.descriptor);
-            $('#vendor_name').val(data.vendor_name);
-            $('#email').val(data.email);
-            $('#login_id').val(data.login_id);
-            $('#transaction_key').val(data.transaction_key);
-            $('#limit').val(data.limit);
-            $('#capacity').val(data.capacity);
-            $('#environment').val(data.environment);
-            $('#status').val(data.status);
+            var storedCompanyKey = client_account.c_contact_key;
+            $('#client_contact').val(client_account.c_contact_key).trigger('change');
+            $('#client_company').val(storedCompanyKey).trigger('change');
+            $('#name').val(client_account.name);
+            $('#descriptor').val(client_account.descriptor);
+            $('#vendor_name').val(client_account.vendor_name);
+            $('#email').val(client_account.email);
+            $('#login_id').val(client_account.login_id);
+            $('#transaction_key').val(client_account.transaction_key);
+            $('#limit').val(client_account.limit);
+            $('#capacity').val(client_account.capacity);
+            $('#environment').val(client_account.environment);
+            $('#status').val(client_account.status);
 
-            $('#manage-form').attr('action', `{{route('admin.client.account.update')}}/` + data.id);
+            $('#manage-form').attr('action', `{{route('admin.client.account.update')}}/` + client_account.id);
             $('#formContainer').addClass('open')
         }
 

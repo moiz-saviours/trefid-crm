@@ -6,6 +6,7 @@ use App\Constants\PaymentMerchantConstants;
 use App\Http\Controllers\Controller;
 use App\Models\AssignBrandAccount;
 use App\Models\Brand;
+use App\Models\ClientCompany;
 use App\Models\ClientContact;
 use App\Models\PaymentMerchant;
 use Illuminate\Http\Request;
@@ -121,7 +122,6 @@ class PaymentMerchantController extends Controller
                 return response()->json(['error' => 'Record not found!'], 404);
             }
             return response()->json(['client_account' => $client_account, 'assign_brand_keys' => $assign_brand_keys]);
-
         }
         return view('admin.payment-merchants.edit', compact('client_account'));
     }
@@ -178,7 +178,6 @@ class PaymentMerchantController extends Controller
                     ->where('assignable_id', $client_account->id)
                     ->whereNotIn('brand_key', $brandKeys)
                     ->delete();
-
                 if (!empty($request->brands)) {
                     foreach ($request->brands as $brandKey) {
                         AssignBrandAccount::create([

@@ -7,7 +7,7 @@
     </style>
 @endpush
 <div class="custom-form">
-    <form id="manage-form" class="manage-form" method="POST" enctype="multipart/form-data" class="m-0">
+    <form id="manage-form" class="manage-form m-0" method="POST" enctype="multipart/form-data">
         <div class="form-container" id="formContainer">
             <!-- Form Header -->
             <div class="form-header fh-1">
@@ -86,7 +86,7 @@
                     @enderror
                 </div>
                 <div class="form-group mb-3">
-                    <label for="name" class="form-label">Client Name</label>
+                    <label for="name" class="form-label">Name</label>
                     <input type="text" class="form-control" id="name" name="name"
                            value="{{ old('name') }}"
                            required>
@@ -254,6 +254,11 @@
                                 response.client_companies.forEach(company => {
                                     $companyDropdown.append(`<option value="${company.special_key}">${company.name}</option>`);
                                 });
+                                var storedCompanyKey = $('.manage-form').data('id') && storedCompanyKey ? storedCompanyKey : null;
+                                if (storedCompanyKey && response.client_companies.some(company => company.special_key === storedCompanyKey)) {
+                                    $companyDropdown.val(storedCompanyKey).trigger('change');
+                                    storedCompanyKey = null;
+                                }
                             } else {
                                 $companyDropdown.empty();
                                 $companyDropdown.html('<option value="" disabled>No Companies Found. Please add some.</option>');

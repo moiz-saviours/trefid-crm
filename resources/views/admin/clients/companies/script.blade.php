@@ -154,7 +154,7 @@
             $('#manage-form').data('id', client_company.id);
 
             $('#brands').val(data.assign_brand_keys);
-            if (data.assign_brand_keys.length === $('#brands option').length) {
+            if (Array.isArray(data.assign_brand_keys) && data.assign_brand_keys.length === $('#brands option').length) {
                 $('#select-all-brands').prop('checked', true);
             } else {
                 $('#select-all-brands').prop('checked', false);
