@@ -305,53 +305,54 @@
                     .catch(error => console.log(error));
             }
         });
-    });
 
-    /** Change Status*/
-    $('tbody').on('change', '.change-status', function () {
-        const statusCheckbox = $(this);
-        const status = +statusCheckbox.is(':checked');
-        const rowId = statusCheckbox.data('id');
-        AjaxRequestPromise(`{{ route('admin.client.account.change.status') }}/${rowId}?status=${status}`, null, 'GET', {useToastr: true})
-            .then(response => {
-                const rowIndex = table.row($('#tr-' + rowId)).index();
-                const statusHtml = `<input type="checkbox" class="status-toggle change-status" data-id="${rowId}" ${status ? "checked" : ""} data-bs-toggle="toggle">`;
-                table.cell(rowIndex, 11).data(statusHtml).draw();
+        /** Change Status*/
+        $('tbody').on('change', '.change-status', function () {
+            const statusCheckbox = $(this);
+            const status = +statusCheckbox.is(':checked');
+            const rowId = statusCheckbox.data('id');
+            AjaxRequestPromise(`{{ route('admin.client.account.change.status') }}/${rowId}?status=${status}`, null, 'GET', {useToastr: true})
+                .then(response => {
+                    const rowIndex = table.row($('#tr-' + rowId)).index();
+                    const statusHtml = `<input type="checkbox" class="status-toggle change-status" data-id="${rowId}" ${status ? "checked" : ""} data-bs-toggle="toggle">`;
+                    table.cell(rowIndex, 13).data(statusHtml).draw();
+                })
+                .catch((error) => {
+                    console.log(error);
+                    statusCheckbox.prop('checked', !status);
+                });
+        });
+
+        /** Delete Record */
+        $(document).on('click', '.deleteBtn', function () {
+            const id = $(this).data('id');
+            AjaxDeleteRequestPromise(`{{ route("admin.client.account.delete", "") }}/${id}`, null, 'DELETE', {
+                useDeleteSwal: true,
+                useToastr: true,
             })
-            .catch(() => {
-                statusCheckbox.prop('checked', !status);
-            });
-    });
+                .then(response => {
+                    table.row(`#tr-${id}`).remove().draw();
+                })
+                .catch(error => {
+                    if (error.isConfirmed === false) {
+                        Swal.fire({
+                            title: 'Action Canceled',
+                            text: error?.message || 'The deletion has been canceled.',
+                            icon: 'info',
+                            confirmButtonText: 'OK'
+                        });
+                        console.error('Record deletion was canceled:', error?.message);
+                    } else {
+                        Swal.fire({
+                            title: 'Error!',
+                            text: 'An error occurred while deleting the record.',
+                            icon: 'error',
+                            confirmButtonText: 'Try Again'
+                        });
+                        console.error('An error occurred while deleting the record:', error);
+                    }
+                });
+        });
 
-    /** Delete Record */
-    $(document).on('click', '.deleteBtn', function () {
-        const id = $(this).data('id');
-        AjaxDeleteRequestPromise(`{{ route("admin.client.account.delete", "") }}/${id}`, null, 'DELETE', {
-            useDeleteSwal: true,
-            useToastr: true,
-        })
-            .then(response => {
-                table.row(`#tr-${id}`).remove().draw();
-            })
-            .catch(error => {
-                if (error.isConfirmed === false) {
-                    Swal.fire({
-                        title: 'Action Canceled',
-                        text: error?.message || 'The deletion has been canceled.',
-                        icon: 'info',
-                        confirmButtonText: 'OK'
-                    });
-                    console.error('Record deletion was canceled:', error?.message);
-                } else {
-                    Swal.fire({
-                        title: 'Error!',
-                        text: 'An error occurred while deleting the record.',
-                        icon: 'error',
-                        confirmButtonText: 'Try Again'
-                    });
-                    console.error('An error occurred while deleting the record:', error);
-                }
-            });
     });
-
 </script>
