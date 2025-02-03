@@ -334,16 +334,16 @@
                                                 <td class="align-middle text-center text-nowrap"></td>
                                                 <td class="align-middle text-center text-nowrap">{{$loop->iteration}}</td>
                                                 <td class="align-middle text-center text-nowrap">
-                                                    <span class="invoice-number">{{ optional($payment->invoice)->invoice_number }}</span><br>
+                                                    <span class="invoice-number">{{ optional($payment->invoice)->invoice_number ?? "---"}}</span><br>
                                                     <span class="invoice-key">{{ optional($payment->invoice)->invoice_key }}</span>
                                                 </td>
-                                                <td class="align-middle text-center text-nowrap">{{optional($payment->payment_gateway)->name}}</td>
-                                                <td class="align-middle text-center text-nowrap">{{optional($payment->payment_gateway)->descriptor}}</td>
+                                                <td class="align-middle text-center text-nowrap">{{$payment->payment_method}}</td>
+                                                <td class="align-middle text-center text-nowrap">{{optional($payment->payment_gateway)->descriptor ?? "---"}}</td>
                                                 <td class="align-middle text-center text-nowrap">{{$payment->transaction_id}}</td>
                                                 <td class="align-middle text-center text-nowrap">{{optional($payment->brand)->name ?? "---"}}</td>
                                                 <td class="align-middle text-center text-nowrap">{{optional($payment->team)->name ?? "---"}}</td>
                                                 <td class="align-middle text-center text-nowrap">{{optional($payment->agent)->name ?? "---"}}</td>
-                                                <td class="align-middle text-center text-nowrap">{{optional($payment->customer)->name ?? "---"}}</td>
+                                                <td class="align-middle text-center text-nowrap">{{optional($payment->customer_contact)->name ?? "---"}}</td>
                                                 <td class="align-middle text-center text-nowrap">${{$payment->amount}}</td>
                                                 <td class="align-middle text-center text-nowrap">
                                                     @if($payment->status == 0)
