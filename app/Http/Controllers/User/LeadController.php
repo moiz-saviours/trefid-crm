@@ -14,9 +14,9 @@ class LeadController extends Controller
     public function index()
     {
         $all_leads = Lead::whereIn('brand_key', Auth::user()->teams()->with('brands')->get()->pluck('brands.*.brand_key')->flatten())->with(['brand', 'customer_contact', 'leadStatus'])->get();
-        $leads = Lead::all();
+        //$leads = Lead::all();
         $lead_statuses = LeadStatus::where('status', 1)->get();
-        return view('user.leads.index', compact('all_leads', 'lead_statuses', 'leads'));
+        return view('user.leads.index', compact('all_leads', 'lead_statuses'));
     }
     /**
      * Change the specified resource status from storage.

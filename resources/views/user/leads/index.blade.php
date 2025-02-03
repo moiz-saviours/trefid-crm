@@ -257,7 +257,7 @@
                 <header class="custm_header">
                     <div class="new_head">
                         <h1 class="page-title mb-2">Leads <i class="fa fa-caret-down" aria-hidden="true"></i></h1>
-                        <h2 id="record-count" class="h6">{{ count ($leads)}} records</h2>
+                        <h2 id="record-count" class="h6">{{ count($all_leads) }} records</h2>
                     </div>
                     <div class="filters">
                         <div class="actions">
@@ -279,8 +279,8 @@
                         <ul class="tab-nav">
                             <li class="tab-item active" data-tab="home">Leads
                                 <i class="fa fa-times close-icon" aria-hidden="true"></i></li>
-                            <li class="tab-item " data-tab="allleads">All Leads
-                                <i class="fa fa-times close-icon" aria-hidden="true"></i></li>
+{{--                            <li class="tab-item " data-tab="allleads">All Leads--}}
+{{--                                <i class="fa fa-times close-icon" aria-hidden="true"></i></li>--}}
                         </ul>
                     </div>
                     <div class="tab-content">
@@ -396,65 +396,65 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="card-body">
-                                    <table id="allLeadsTable" class="table table-striped datatable-exportable
-                            stripe row-border order-column nowrap
-                            initTable
-                            ">
-                                        <thead>
-                                        <tr>
-                                            <th><input type="checkbox"></th>
-                                            <th class="align-middle text-center text-nowrap">SNO.</th>
-                                            <th class="align-middle text-center text-nowrap">Brand</th>
-                                            <th class="align-middle text-center text-nowrap">Customer</th>
-                                            <th class="align-middle text-center text-nowrap">Name</th>
-                                            <th class="align-middle text-center text-nowrap">Email</th>
-                                            <th class="align-middle text-center text-nowrap">Phone Number</th>
-                                            <th class="align-middle text-center text-nowrap">Address</th>
-                                            <th class="align-middle text-center text-nowrap">City</th>
-                                            <th class="align-middle text-center text-nowrap">State</th>
-                                            <th class="align-middle text-center text-nowrap">Zipcode</th>
-                                            <th class="align-middle text-center text-nowrap">Country</th>
-                                            <th class="align-middle text-center text-nowrap">Lead Status</th>
-                                            <th class="align-middle text-center text-nowrap">Note</th>
-                                            <th class="align-middle text-center text-nowrap">Created Date</th>
+{{--                                <div class="card-body">--}}
+{{--                                    <table id="allLeadsTable" class="table table-striped datatable-exportable--}}
+{{--                                        stripe row-border order-column nowrap--}}
+{{--                                        initTable--}}
+{{--                                        ">--}}
+{{--                                        <thead>--}}
+{{--                                        <tr>--}}
+{{--                                            <th><input type="checkbox"></th>--}}
+{{--                                            <th class="align-middle text-center text-nowrap">SNO.</th>--}}
+{{--                                            <th class="align-middle text-center text-nowrap">Brand</th>--}}
+{{--                                            <th class="align-middle text-center text-nowrap">Customer</th>--}}
+{{--                                            <th class="align-middle text-center text-nowrap">Name</th>--}}
+{{--                                            <th class="align-middle text-center text-nowrap">Email</th>--}}
+{{--                                            <th class="align-middle text-center text-nowrap">Phone Number</th>--}}
+{{--                                            <th class="align-middle text-center text-nowrap">Address</th>--}}
+{{--                                            <th class="align-middle text-center text-nowrap">City</th>--}}
+{{--                                            <th class="align-middle text-center text-nowrap">State</th>--}}
+{{--                                            <th class="align-middle text-center text-nowrap">Zipcode</th>--}}
+{{--                                            <th class="align-middle text-center text-nowrap">Country</th>--}}
+{{--                                            <th class="align-middle text-center text-nowrap">Lead Status</th>--}}
+{{--                                            <th class="align-middle text-center text-nowrap">Note</th>--}}
+{{--                                            <th class="align-middle text-center text-nowrap">Created Date</th>--}}
 
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        @foreach($leads as $lead)
-                                            <tr id="tr-{{$lead->id}}">
-                                                <td class="align-middle text-center text-nowrap"></td>
-                                                <td class="align-middle text-center text-nowrap">{{$loop->iteration}}</td>
-                                                <td class="align-middle text-center text-nowrap">{{optional($lead->brand)->name ?? "---"}}</td>
-                                                <td class="align-middle text-center text-nowrap">{{optional($lead->customer)->name ?? "---"}}</td>
-                                                <td class="align-middle text-center text-nowrap">{{$lead->name}}</td>
-                                                <td class="align-middle text-center text-nowrap">{{$lead->email}}</td>
-                                                <td class="align-middle text-center text-nowrap">{{$lead->phone}}</td>
-                                                <td class="align-middle text-center text-nowrap">{{$lead->address}}</td>
-                                                <td class="align-middle text-center text-nowrap">{{$lead->city}}</td>
-                                                <td class="align-middle text-center text-nowrap">{{$lead->state}}</td>
-                                                <td class="align-middle text-center text-nowrap">{{$lead->zipcode}}</td>
-                                                <td class="align-middle text-center text-nowrap">{{$lead->country}}</td>
-                                                <td class="align-middle text-center text-nowrap editable"
-                                                    data-id="{{ $lead->id }}"
-                                                    data-field="leadStatus">{{optional($lead->leadStatus)->name}}</td>
-                                                <td class="align-middle text-center text-nowrap">{{htmlspecialchars($lead->note)}}</td>
-                                                <td class="align-middle text-center text-nowrap">
-                                                    @if ($lead->created_at->isToday())
-                                                        Today
-                                                        at {{ $lead->created_at->timezone('GMT+5')->format('g:i A') }}
-                                                        GMT+5
-                                                    @else
-                                                        {{ $lead->created_at->timezone('GMT+5')->format('M d, Y g:i A') }}
-                                                        GMT+5
-                                                    @endif
-                                                </td>
-                                            </tr>
-                                        @endforeach
-                                        </tbody>
-                                    </table>
-                                </div>
+{{--                                        </tr>--}}
+{{--                                        </thead>--}}
+{{--                                        <tbody>--}}
+{{--                                        @foreach($leads as $lead)--}}
+{{--                                            <tr id="tr-{{$lead->id}}">--}}
+{{--                                                <td class="align-middle text-center text-nowrap"></td>--}}
+{{--                                                <td class="align-middle text-center text-nowrap">{{$loop->iteration}}</td>--}}
+{{--                                                <td class="align-middle text-center text-nowrap">{{optional($lead->brand)->name ?? "---"}}</td>--}}
+{{--                                                <td class="align-middle text-center text-nowrap">{{optional($lead->customer)->name ?? "---"}}</td>--}}
+{{--                                                <td class="align-middle text-center text-nowrap">{{$lead->name}}</td>--}}
+{{--                                                <td class="align-middle text-center text-nowrap">{{$lead->email}}</td>--}}
+{{--                                                <td class="align-middle text-center text-nowrap">{{$lead->phone}}</td>--}}
+{{--                                                <td class="align-middle text-center text-nowrap">{{$lead->address}}</td>--}}
+{{--                                                <td class="align-middle text-center text-nowrap">{{$lead->city}}</td>--}}
+{{--                                                <td class="align-middle text-center text-nowrap">{{$lead->state}}</td>--}}
+{{--                                                <td class="align-middle text-center text-nowrap">{{$lead->zipcode}}</td>--}}
+{{--                                                <td class="align-middle text-center text-nowrap">{{$lead->country}}</td>--}}
+{{--                                                <td class="align-middle text-center text-nowrap editable"--}}
+{{--                                                    data-id="{{ $lead->id }}"--}}
+{{--                                                    data-field="leadStatus">{{optional($lead->leadStatus)->name}}</td>--}}
+{{--                                                <td class="align-middle text-center text-nowrap">{{htmlspecialchars($lead->note)}}</td>--}}
+{{--                                                <td class="align-middle text-center text-nowrap">--}}
+{{--                                                    @if ($lead->created_at->isToday())--}}
+{{--                                                        Today--}}
+{{--                                                        at {{ $lead->created_at->timezone('GMT+5')->format('g:i A') }}--}}
+{{--                                                        GMT+5--}}
+{{--                                                    @else--}}
+{{--                                                        {{ $lead->created_at->timezone('GMT+5')->format('M d, Y g:i A') }}--}}
+{{--                                                        GMT+5--}}
+{{--                                                    @endif--}}
+{{--                                                </td>--}}
+{{--                                            </tr>--}}
+{{--                                        @endforeach--}}
+{{--                                        </tbody>--}}
+{{--                                    </table>--}}
+{{--                                </div>--}}
                             </div>
                         </div>
                     </div>
