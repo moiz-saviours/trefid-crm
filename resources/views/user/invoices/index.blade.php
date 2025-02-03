@@ -203,7 +203,6 @@
                                             <th class="align-middle text-center text-nowrap">AMOUNT</th>
                                             <th class="align-middle text-center text-nowrap">STATUS</th>
                                             <th class="align-middle text-center text-nowrap">CREATE DATE</th>
-                                            <th class="align-middle text-center text-nowrap">ACTION</th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -218,7 +217,8 @@
                                                     <span class="invoice-key">{{ $invoice->invoice_key }}</span>
                                                 </td>
                                                 <td class="align-middle text-center text-nowrap">{{optional($invoice->brand)->name ?? "---"}}</td>
-                                                <td class="align-middle text-center text-nowrap">{{optional($invoice->client)->name ?? "---"}}</td>
+                                                <td class="align-middle text-center text-nowrap">{{optional($invoice->team)->name ?? "---"}}</td>
+                                                <td class="align-middle text-center text-nowrap">{{optional($invoice->customer_contact)->name ?? "---"}}</td>
                                                 <td class="align-middle text-center text-nowrap">{{optional($invoice->agent)->name ?? "---"}}</td>
                                                 <td class="align-middle text-center text-nowrap">${{$invoice->amount}}</td>
                                                 <td class="align-middle text-center text-nowrap">
@@ -238,6 +238,7 @@
                                                         GMT+5
                                                     @endif
                                                 </td>
+
                                             </tr>
                                         @endforeach
                                         </tbody>
