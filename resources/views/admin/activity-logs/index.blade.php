@@ -1,11 +1,10 @@
-@extends('admin.layouts.app');
+@extends('admin.layouts.app')
 @section('title','Activity Logs')
 @section('datatable', true)
 @section('content')
     @push('style')
         @include('admin.activity-logs.style')
     @endpush
-
     <section id="content" class="content">
         <div class="content__header content__boxed overlapping">
             <div class="content__wrap">
@@ -109,6 +108,6 @@
     </section>
 
     @push('script')
-        @include('admin.activity-logs.script');
+        @include('admin.activity-logs.script')
     @endpush
 @endsection
