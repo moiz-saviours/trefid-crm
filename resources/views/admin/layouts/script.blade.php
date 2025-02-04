@@ -547,6 +547,7 @@
         $('.first-fields').fadeIn();
         $('.first-field-inputs').prop('required', true);
         $('.second-field-inputs').prop('required', false);
+        $('.image-div').css('display', 'none');
 
         // $('.first-fields').fadeOut(() => {
         //     $('.second-fields').fadeIn();

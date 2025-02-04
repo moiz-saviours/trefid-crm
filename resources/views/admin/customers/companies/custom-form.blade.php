@@ -64,7 +64,7 @@
 
                     <div class="d-flex align-items-start">
                         <!-- Image Upload Section (Left) -->
-                        <div class="me-3" id="image-div" style="display: none">
+                        <div class="me-3 image-div" id="image-div" style="display: none">
                             <label for="image">
                                 <img id="image-display" src="" alt="Preview"
                                      class="img-thumbnail"
