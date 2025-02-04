@@ -196,7 +196,8 @@
                                                 <td class="align-middle text-center text-nowrap">{{$contact->email}}</td>
                                                 <td class="align-middle text-center text-nowrap">{{$contact->phone_number}}</td>
                                                 <td class="align-middle text-center text-nowrap">{{optional($contact->loggable)->name}}</td>
-                                                <td class="align-middle text-center text-nowrap">{{optional($contact->company->first())->name}}</td>
+                                                <td class="align-middle text-center text-nowrap">{{optional($contact->company)->name}}</td>
+
                                                 <td class="align-middle text-center text-nowrap">
                                                     @if ($contact->created_at->isToday())
                                                         Today
