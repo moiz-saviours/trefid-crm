@@ -62,7 +62,7 @@ class PaymentMerchantController extends Controller
                 ],
                 'status' => [
                     'required',
-                    Rule::in([PaymentMerchantConstants::STATUS_ACTIVE, PaymentMerchantConstants::STATUS_INACTIVE]),
+                    Rule::in([PaymentMerchantConstants::STATUS_ACTIVE, PaymentMerchantConstants::STATUS_INACTIVE, PaymentMerchantConstants::STATUS_SUSPENDED]),
                 ],
             ], [
                 'brands.array' => 'Brands must be selected as an array.',
@@ -152,7 +152,7 @@ class PaymentMerchantController extends Controller
                 ],
                 'status' => [
                     'required',
-                    Rule::in([PaymentMerchantConstants::STATUS_ACTIVE, PaymentMerchantConstants::STATUS_INACTIVE]),
+                    Rule::in([PaymentMerchantConstants::STATUS_ACTIVE, PaymentMerchantConstants::STATUS_INACTIVE, PaymentMerchantConstants::STATUS_SUSPENDED]),
                 ],
             ], [
                 'brands.array' => 'Brands must be selected as an array.',
