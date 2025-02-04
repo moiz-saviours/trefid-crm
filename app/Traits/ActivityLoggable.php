@@ -34,13 +34,12 @@ trait ActivityLoggable
     protected function logActivity(string $event): void
     {
         $user = Auth::user();
-        $guard = Auth::getDefaultDriver();
         $description = $this->generateDescription($event, $user);
         ActivityLog::create([
             'action' => $event,
             'model_type' => get_class($this),
             'model_id' => $this->getKey(),
-            'actor_type' => $guard,
+            'actor_type' => get_class($user),
             'actor_id' => $user?->id,
             'description' => $description,
             'details' => json_encode($this->getLogDetails($event)),
