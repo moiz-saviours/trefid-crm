@@ -587,31 +587,32 @@
                 }
             });
         }
-
+        $(document).on('click', function (event) {
+            if (
+                (!$(event.target).closest('.form-container').length &&
+                    !$(event.target).is('.form-container') &&
+                    !$(event.target).closest('.open-form-btn').length &&
+                    !$(event.target).is('.editBtn') &&
+                    !$(event.target).is('.changePwdBtn')
+                ) ||
+                $(event.target).is('.form-container .close-btn')
+            ) {
+                closeCustomForm(formContainer, manageForm);
+            }
+        });
         // Function to close the form and reset form fields
         function closeCustomForm(formContainer, manageForm) {
-            $(document).on('click', function (event) {
-                if (
-                    (!$(event.target).closest('.form-container').length &&
-                        !$(event.target).is('.form-container') &&
-                        !$(event.target).closest('.open-form-btn').length &&
-                        !$(event.target).is('.editBtn') &&
-                        !$(event.target).is('.changePwdBtn')
-                    ) ||
-                    $(event.target).is('.form-container .close-btn')
-                ) {
-                    // Close the form
-                    formContainer.removeClass('open');
-                    $('.form-container').removeClass('open');
-                    resetFields();
+            // Close the form
+            formContainer.removeClass('open');
+            $('.form-container').removeClass('open');
+            resetFields();
 
-                    // Reset the form if available
-                    if (manageForm.length > 0) {
-                        manageForm[0].reset();
-                        manageForm.removeData('id');
-                    }
-                }
-            });
+            // Reset the form if available
+            if (manageForm.length > 0) {
+                manageForm[0].reset();
+                manageForm.removeData('id');
+            }
+
         }
         $(".tab-item").on("click", function () {
             $(".tab-item").removeClass("active");
