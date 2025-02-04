@@ -213,6 +213,7 @@ class LeadController extends Controller
                 'zipcode' => $request->input('zipcode'),
 //                'ip_address' => $request->input('ip_address'),
                 'note' => $request->input('note'),
+                'status' => $request->input('status'),
             ]);
             DB::commit();
             $lead->loadMissing('customer_contact','brand','team','leadStatus');
