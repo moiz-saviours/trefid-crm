@@ -44,7 +44,7 @@
                 </div>
 
                 <div class="form-group mb-3">
-                    <label for="type" class="form-label">Customer Type</label>
+                    <label for="type" class="form-label">Type</label>
                     <select class="form-control" id="type" name="type" title="Please select customer type" required>
                         <option value="0" {{ old('type') == 0 ? 'selected' : '' }}>
                             Fresh
