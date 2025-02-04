@@ -34,6 +34,10 @@ trait ActivityLoggable
     protected function logActivity(string $event): void
     {
         $user = Auth::user();
+        if (!$user) {
+            return;
+        }
+
         $description = $this->generateDescription($event, $user);
         ActivityLog::create([
             'action' => $event,
