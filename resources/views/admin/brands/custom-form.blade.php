@@ -220,6 +220,7 @@
                     @enderror
                 </div>
 
+                @if(isset($clientContacts[0]->client_companies[0]->client_accounts))
                 <div class="form-control mt-5">
                     <div class="button-container">
                         <button type="button" id="toggleCollapseExpandButton" class="btn-primary">Collapse All</button>
@@ -250,6 +251,7 @@
                         @endforeach
                     </ul>
                 </div>
+                @endif
                 {{--                <div id="category-tree">--}}
                 {{--                    <ul>--}}
                 {{--                        <li>--}}
