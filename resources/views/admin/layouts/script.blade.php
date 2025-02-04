@@ -513,6 +513,8 @@
                         if (url.includes('store') || url.includes('update')) {
                             $(".modal").modal('hide');
                             $('.form-container').removeClass('open');
+                            resetFields();
+                            $('.custom-form form')[0].reset();
                         }
                     }
                 }
