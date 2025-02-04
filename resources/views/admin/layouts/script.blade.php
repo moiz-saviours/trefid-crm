@@ -510,7 +510,7 @@
                 },
                 complete: function (jqXHR, textStatus) {
                     if (jqXHR.status !== 422 || !jqXHR.responseJSON.errors) {
-                        if (url.includes('create') || url.includes('update')) {
+                        if (url.includes('store') || url.includes('update')) {
                             $(".modal").modal('hide');
                             $('.form-container').removeClass('open');
                         }
