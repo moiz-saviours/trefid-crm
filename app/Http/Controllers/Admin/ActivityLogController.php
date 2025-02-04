@@ -10,6 +10,6 @@ class ActivityLogController extends Controller
     public function index()
     {
         $logs = ActivityLog::with('user')->latest()->get();
-        return view('admin.activity_logs.index', compact('logs'));
+        return view('admin.activity-logs.index', compact('logs'));
     }
 }

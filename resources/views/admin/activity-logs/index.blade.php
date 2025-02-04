@@ -1,10 +1,9 @@
-
 @extends('admin.layouts.app');
 @section('title','Activity Logs')
 @section('datatable', true)
 @section('content')
     @push('style')
-        @include('admin.activity_logs.style')
+        @include('admin.activity-logs.style')
     @endpush
 
     <section id="content" class="content">
@@ -12,7 +11,8 @@
             <div class="content__wrap">
                 <header class="custm_header">
                     <div class="new_head">
-                        <h1 class="page-title mb-2">Activity Logs <i class="fa fa-caret-down" aria-hidden="true"></i></h1>
+                        <h1 class="page-title mb-2">Activity Logs <i class="fa fa-caret-down" aria-hidden="true"></i>
+                        </h1>
                         <h2 id="record-count" class="h6">{{count($logs)}}records</h2>
                     </div>
                     <div class="filters">
@@ -87,7 +87,7 @@
                                                 <td class="align-middle text-center text-nowrap"></td>
                                                 <td class="align-middle text-center text-nowrap">{{$loop->iteration}}</td>
 
-                                                <td class="align-middle text-center text-nowrap">{{ $log->user->name }}</td>
+                                                <td class="align-middle text-center text-nowrap">{{ optional($log->actor)->name }}</td>
                                                 <td class="align-middle text-center text-nowrap">{{ $log->action === 'create' ? 'created a new' :($log->action === 'updated' ? 'updated' : 'deleted') }}
                                                     {{ class_basename($log->model_type) }}: {{ $log->entity_name }}
                                                 </td>
@@ -109,6 +109,6 @@
     </section>
 
     @push('script')
-        @include('admin.activity_logs.script');
+        @include('admin.activity-logs.script');
     @endpush
 @endsection
