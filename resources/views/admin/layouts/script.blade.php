@@ -514,7 +514,10 @@
                             $(".modal").modal('hide');
                             $('.form-container').removeClass('open');
                             resetFields();
-                            $('.custom-form form')[0].reset();
+                            const manageForm = $('.custom-form form')
+                            if (manageForm.length > 0) {
+                                manageForm[0].reset();
+                            }
                         }
                     }
                 }
@@ -556,6 +559,30 @@
         // });
     }
     $(document).ready(function () {
+
+        const formContainerClass = document.querySelector('.form-container');
+        if (!formContainerClass) {
+            return;
+        }
+        const toggleInputs = () => {
+            const isDisabled = formContainerClass.classList.contains('open');
+            const searchInputs = document.querySelectorAll('input[type="search"]');
+            const selectInputs = document.querySelectorAll('.dt-container select');
+            const checkboxInputs = document.querySelectorAll('.dt-container input[type="checkbox"]');
+            searchInputs.forEach(input => input.disabled = isDisabled);
+            selectInputs.forEach(input => input.disabled = isDisabled);
+            checkboxInputs.forEach(input => input.disabled = isDisabled);
+        };
+
+        const observer = new MutationObserver(toggleInputs);
+
+        observer.observe(formContainerClass, {
+            attributes: true,
+            attributeFilter: ['class'],
+        });
+
+        toggleInputs();
+
         const formContainer = $('#formContainer');
         const manageForm = $('.custom-form form')
 

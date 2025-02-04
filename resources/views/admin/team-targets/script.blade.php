@@ -241,34 +241,34 @@
         {{--        });--}}
         {{--});--}}
         /** Delete Record */
-        $(document).on('click', '.deleteBtn', function () {
-            const id = $(this).data('id');
-            AjaxDeleteRequestPromise(`{{ route("admin.team.delete", "") }}/${id}`, null, 'DELETE', {
-                useDeleteSwal: true,
-                useToastr: true,
-            })
-                .then(response => {
-                    table.row(`#tr-${id}`).remove().draw();
-                })
-                .catch(error => {
-                    if (error.isConfirmed === false) {
-                        Swal.fire({
-                            title: 'Action Canceled',
-                            text: error?.message || 'The deletion has been canceled.',
-                            icon: 'info',
-                            confirmButtonText: 'OK'
-                        });
-                        console.error('Record deletion was canceled:', error?.message);
-                    } else {
-                        Swal.fire({
-                            title: 'Error!',
-                            text: 'An error occurred while deleting the record.',
-                            icon: 'error',
-                            confirmButtonText: 'Try Again'
-                        });
-                        console.error('An error occurred while deleting the record:', error);
-                    }
-                });
-        });
+        {{--$(document).on('click', '.deleteBtn', function () {--}}
+        {{--    const id = $(this).data('id');--}}
+        {{--    AjaxDeleteRequestPromise(`{{ route("admin.team.delete", "") }}/${id}`, null, 'DELETE', {--}}
+        {{--        useDeleteSwal: true,--}}
+        {{--        useToastr: true,--}}
+        {{--    })--}}
+        {{--        .then(response => {--}}
+        {{--            table.row(`#tr-${id}`).remove().draw();--}}
+        {{--        })--}}
+        {{--        .catch(error => {--}}
+        {{--            if (error.isConfirmed === false) {--}}
+        {{--                Swal.fire({--}}
+        {{--                    title: 'Action Canceled',--}}
+        {{--                    text: error?.message || 'The deletion has been canceled.',--}}
+        {{--                    icon: 'info',--}}
+        {{--                    confirmButtonText: 'OK'--}}
+        {{--                });--}}
+        {{--                console.error('Record deletion was canceled:', error?.message);--}}
+        {{--            } else {--}}
+        {{--                Swal.fire({--}}
+        {{--                    title: 'Error!',--}}
+        {{--                    text: 'An error occurred while deleting the record.',--}}
+        {{--                    icon: 'error',--}}
+        {{--                    confirmButtonText: 'Try Again'--}}
+        {{--                });--}}
+        {{--                console.error('An error occurred while deleting the record:', error);--}}
+        {{--            }--}}
+        {{--        });--}}
+        {{--});--}}
     });
 </script>

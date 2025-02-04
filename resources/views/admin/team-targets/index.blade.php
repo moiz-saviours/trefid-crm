@@ -112,30 +112,39 @@
         @include('admin.team-targets.script')
         <script>
             $(document).ready(function () {
-                // Double-click to edit target
                 $('.editable').dblclick(function () {
                     var currentCell = $(this);
                     currentCell.find('.target-value').hide();
                     currentCell.find('.target-input').show().focus();
                 });
 
-                // Save on blur or Enter
                 $('.target-input').on('blur', function (e) {
-                    // Check if the event is blur or Enter key press (keyCode 13)
                     if (e.type === 'blur') {
                         var currentInput = $(this);
                         var targetAmount = currentInput.val().trim();
+                        targetAmount = targetAmount === '' ? 0.00 : parseFloat(targetAmount);
+                        targetAmount = (targetAmount % 1 === 0) ? targetAmount.toFixed(2) : targetAmount.toFixed(2);
 
-                        // Basic validation
+                        var originalValue = parseFloat(currentInput.siblings('.target-value').text().replace(/,/g, '')) || 0;
+                        originalValue = (originalValue % 1 === 0) ? originalValue.toFixed(2) : originalValue.toFixed(2);
                         if (!targetAmount) {
-                            targetAmount
+                            currentInput.val(originalValue);
+                            currentInput.hide();
+                            currentInput.siblings('.target-value').show();
+                            return;
+                        }
+                        if (!isValidDecimal(targetAmount)) {
+                            toastr.error('Invalid input. Please enter a number with up to 16 digits and 2 decimal places.');
+                            currentInput.val(originalValue);
+                            currentInput.hide();
+                            currentInput.siblings('.target-value').show();
+                            return;
                         }
 
                         var team_key = currentInput.closest('tr').data('team-key');
                         var month = currentInput.parent('td.editable').data('month');
                         var year = currentInput.parent('td.editable').data('year');
 
-                        // Send update request via AJAX
                         let url = `{{ route('admin.team-target.update') }}/${team_key}/${month}/${year}`;
                         $.ajax({
                             url: url,
@@ -151,6 +160,9 @@
                             error: function (xhr, status, error) {
                                 alert('An error occurred while updating the target.');
                                 console.error(error);
+                                currentInput.val(originalValue);
+                                currentInput.hide();
+                                currentInput.siblings('.target-value').show();
                             }
                         });
 
@@ -159,12 +171,16 @@
                         }
                     }
                 });
-                // Save on Enter key press
                 $('.target-input').keypress(function (e) {
                     if (e.which == 13) {
+                        e.preventDefault();
                         $(this).blur();
                     }
                 });
+                function isValidDecimal(value) {
+                    const decimalRegex = /^\d{1,14}(\.\d{1,2})?$/;
+                    return decimalRegex.test(value);
+                }
             });
         </script>
     @endpush

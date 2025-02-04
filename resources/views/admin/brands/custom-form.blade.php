@@ -608,15 +608,21 @@
             }
         }
 
-        document.getElementById('toggleCollapseExpandButton').addEventListener('click', () => {
-            const isCollapse = !document.querySelector('.multi-hierarchy-tree ul.collapsed');
-            toggleCollapseExpand(isCollapse);
-        });
 
-        document.getElementById('toggleCheckUncheckButton').addEventListener('click', () => {
-            const isCheck = !document.querySelector('.multi-hierarchy-tree input[type="checkbox"]:checked');
-            toggleCheckUncheck(isCheck);
-        });
+        const toggleCollapseExpandButton = document.getElementById('toggleCollapseExpandButton');
+        if (toggleCollapseExpandButton) {
+            toggleCollapseExpandButton.addEventListener('click', () => {
+                const isCollapse = !document.querySelector('.multi-hierarchy-tree ul.collapsed');
+                toggleCollapseExpand(isCollapse);
+            });
+        }
+        const toggleCheckUncheckButton = document.getElementById('toggleCheckUncheckButton');
+        if (toggleCheckUncheckButton) {
+            toggleCheckUncheckButton.addEventListener('click', () => {
+                const isCheck = !document.querySelector('.multi-hierarchy-tree input[type="checkbox"]:checked');
+                toggleCheckUncheck(isCheck);
+            });
+        }
 
         const toggleIcons = document.querySelectorAll('.multi-hierarchy-tree .toggle-icon');
         toggleIcons.forEach(icon => {
