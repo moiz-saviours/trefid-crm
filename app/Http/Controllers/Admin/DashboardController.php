@@ -73,7 +73,6 @@ class DashboardController extends Controller
         $annualPayments = [];
         $years = range(Carbon::now()->subYears(10)->year, Carbon::now()->year + 1);
         $months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-
         foreach ($years as $year) {
             $monthlyPayments = [];
             foreach ($months as $index => $month) {
@@ -84,8 +83,6 @@ class DashboardController extends Controller
             }
             $annualPayments[] = $monthlyPayments;
         }
-
-
 
         return view('admin.dashboard.index-1', [
             'totalInvoices' => $totalInvoices,
@@ -100,7 +97,6 @@ class DashboardController extends Controller
             'dailyPayments' => $dailyPayments,
             'dailyLabels' => $dailyLabels,
             'annualPayments' => $annualPayments,
-            'months' => $months,
         ]);
     }
 

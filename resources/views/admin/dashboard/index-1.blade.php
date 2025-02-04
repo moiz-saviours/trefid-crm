@@ -504,13 +504,15 @@
 
 
                 const annualPayments = @json($annualPayments);
-                const monthlyLabels = @json($months);
+                const monthlyLabels = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+                const currentYear = @json(Carbon\Carbon::now()->year);
+                const years = Array.from({ length: annualPayments.length }, (_, index) => currentYear - index);
                 var areaOptions = {
-                    series: [{
-                        name: 'Total Payments',
+                    series: annualPayments.map((yearData, index) => ({
+                        name: 'Year ' + years[index],
                         type: 'area',
-                        data: annualPayments,
-                    }],
+                        data: yearData,
+                    })),
                     chart: {
                         height: 350,
                         type: 'area',
