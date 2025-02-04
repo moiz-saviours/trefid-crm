@@ -1,5 +1,4 @@
 <script>
-
     $(document).ready(function () {
         /** Valid Url */
         function isValidUrl(url) {
@@ -35,7 +34,9 @@
             return decodeHtmlEntities(data);
         };
 
-        const exportButtons = ['copy', 'excel', 'csv', 'pdf', 'print'].map(type => ({
+        const exportButtons = ['copy', 'excel', 'csv'
+            //, 'pdf'
+            , 'print'].map(type => ({
             extend: type,
             text: type == "copy"
                 ? '<i class="fas fa-copy"></i>'
@@ -281,7 +282,7 @@
                             }
                             $('#manage-form')[0].reset();
                             $('#image-display').attr('src', null);
-                            $('#formContainer').removeClass('open')
+                            $('#formContainer').removeClass('open');
                         }
                     })
                     .catch(error => console.log(error));
