@@ -273,9 +273,11 @@
             $('#customer_contact_name').val(invoice.customer_contact?.name);
             $('#customer_contact_email').val(invoice.customer_contact?.email);
             $('#customer_contact_phone').val(invoice.customer_contact?.phone);
-            $('#cus_contact_key').val(invoice.customer_contact.special_key);
+            $('#cus_contact_key').val(invoice.customer_contact?.special_key);
             $('#agent_id').val(invoice.agent_id);
+            $('#due_date').val(invoice.due_date);
             $('#amount').val(invoice.amount);
+            $('#total_amount').val(invoice.total_amount);
             $('#description').val(invoice.description);
             $('#status').val(invoice.status);
 
@@ -308,11 +310,11 @@
                                                     <span class="invoice-key">${invoice_key }</span>
                                                 </td>
                         <td class="align-middle text-center text-nowrap">
-                            ${brand ? `<a href="/admin/brand/edit/${brand.id}">${brand.name}</a><br> ${brand.brand_key}` : '---'}
+                            ${brand ? `<a href="">${brand.name}</a><br> ${brand.brand_key}` : '---'}
                         </td>
-                        <td class="align-middle text-center text-nowrap">${team ? `<a href="/admin/team/edit/${team.id}">${team.name}</a><br> ${team.team_key}` : '---'}</td>
+                        <td class="align-middle text-center text-nowrap">${team ? `<a href="">${team.name}</a><br> ${team.team_key}` : '---'}</td>
                         <td class="align-middle text-center text-nowrap">${customer_contact ? `<a href="/admin/contact/edit/${customer_contact.id}">${customer_contact.name}</a>` : '---'}</td>
-                        <td class="align-middle text-center text-nowrap">${agent ? `<a href="/admin/employee/edit/${agent.id}">${agent.name}</a>` : '---'}</td>
+                        <td class="align-middle text-center text-nowrap">${agent ? `<a href="">${agent.name}</a>` : '---'}</td>
                         <td class="align-middle text-center text-nowrap">${amount}</td>
                         <td class="align-middle text-center text-nowrap">
                             ${status == 0 ? '<span class="badge bg-warning text-dark">Due</span>' : status == 1 ? '<span class="badge bg-success">Paid</span>' : status == 2 ? '<span class="badge bg-danger">Refund</span>' : ''}
@@ -353,13 +355,13 @@
                             }
 
                             // Column 4: Brand
-                            if (decodeHtml(rowData[3]) !== `${brand ? `<a href="/admin/brand/edit/${brand.id}">${brand.name}</a><br> ${brand.brand_key}` : '---'}`) {
-                                table.cell(index, 3).data(`${brand ? `<a href="/admin/brand/edit/${brand.id}">${brand.name}</a><br> ${brand.brand_key}` : '---'}`).draw();
+                            if (decodeHtml(rowData[3]) !== `${brand ? `<a href="">${brand.name}</a><br> ${brand.brand_key}` : '---'}`) {
+                                table.cell(index, 3).data(`${brand ? `<a href="">${brand.name}</a><br> ${brand.brand_key}` : '---'}`).draw();
                             }
 
                             // Column 5: Team
-                            if (decodeHtml(rowData[4]) !== `${team ? `<a href="/admin/team/edit/${team.id}">${team.name}</a><br> ${team.team_key}` : '---'}`) {
-                                table.cell(index, 4).data(`${team ? `<a href="/admin/team/edit/${team.id}">${team.name}</a><br> ${team.team_key}` : '---'}`).draw();
+                            if (decodeHtml(rowData[4]) !== `${team ? `<a href="">${team.name}</a><br> ${team.team_key}` : '---'}`) {
+                                table.cell(index, 4).data(`${team ? `<a href="">${team.name}</a><br> ${team.team_key}` : '---'}`).draw();
                             }
 
                             // Column 6: Customer Contact
@@ -368,8 +370,8 @@
                             }
 
                             // Column 7: Agent
-                            if (decodeHtml(rowData[6]) !== `${agent ? `<a href="/admin/employee/edit/${agent.id}">${agent.name}</a>` : '---'}`) {
-                                table.cell(index, 6).data(`${agent ? `<a href="/admin/employee/edit/${agent.id}">${agent.name}</a>` : '---'}`).draw();
+                            if (decodeHtml(rowData[6]) !== `${agent ? `<a href="">${agent.name}</a>` : '---'}`) {
+                                table.cell(index, 6).data(`${agent ? `<a href="">${agent.name}</a>` : '---'}`).draw();
                             }
 
                             // Column 8: Amount

@@ -196,7 +196,7 @@ class InvoiceController extends Controller
             $request->validate([
                 'brand_key' => 'required|integer|exists:brands,brand_key',
                 'team_key' => 'required|integer|exists:teams,team_key',
-                'special_key' => 'required_if:type,1|nullable|integer|exists:customer_contacts,special_key',
+                'cus_contact_key' => 'required_if:type,1|nullable|integer|exists:customer_contacts,special_key',
                 'customer_contact_name' => 'required_if:type,0|nullable|string|max:255',
                 'customer_contact_email' => 'required_if:type,0|nullable|email|max:255|unique:customer_contacts,email,' . $invoice->cus_contact_key . ',special_key',
                 'customer_contact_phone' => 'required_if:type,0|nullable|string|max:15',
