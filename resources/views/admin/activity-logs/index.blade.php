@@ -87,9 +87,7 @@
                                                 <td class="align-middle text-center text-nowrap">{{$loop->iteration}}</td>
 
                                                 <td class="align-middle text-center text-nowrap">{{ optional($log->actor)->name }}</td>
-                                                <td class="align-middle text-center text-nowrap">{{ $log->action === 'create' ? 'created a new' :($log->action === 'updated' ? 'updated' : 'deleted') }}
-                                                    {{ class_basename($log->model_type) }}: {{ $log->entity_name }}
-                                                </td>
+                                                <td class="align-middle text-center text-nowrap">{{ htmlspecialchars($log->description) }}</td>
                                                 <td class="align-middle text-center text-nowrap">{{ $log->created_at->timezone('Asia/Karachi')->diffForHumans() }}
                                                 </td>
 
