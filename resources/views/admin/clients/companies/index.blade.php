@@ -174,17 +174,7 @@
                                                     @php
                                                         $logoUrl = filter_var($client_company->logo, FILTER_VALIDATE_URL) ? $client_company->logo : asset('assets/images/clients/companies/logos/'.$client_company->logo);
                                                     @endphp
-                                                    <object
-                                                        data="{{ $logoUrl }}"
-                                                        class="avatar avatar-sm me-3"
-                                                        style="width: 100px; height: 50px;"
-                                                        title="{{ $client_company->name }}" >
-                                                        <img
-                                                            src="{{ $logoUrl }}"
-                                                            alt="{{ $client_company->name }}"
-                                                            class="avatar avatar-sm me-3"
-                                                            title="{{ $client_company->name }}">
-                                                    </object>
+                                                    <object data="{{ $logoUrl }}" class="avatar avatar-sm me-3" title="{{ $client_company->name }}" ><img src="{{ $logoUrl }}" alt="{{ $client_company->name }}" class="avatar avatar-sm me-3" title="{{ $client_company->name }}"></object>
                                                 </td>
                                                 <td class="align-middle text-center text-nowrap">{{$client_company->name}}
                                                 </td>

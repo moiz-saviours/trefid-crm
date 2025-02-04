@@ -240,16 +240,16 @@
                 AjaxRequestPromise(url, formData, 'POST', {useToastr: true})
                     .then(response => {
                         if (response?.data) {
-                            const {id,c_contact_key, logo, name,email,url,description,status} = response.data;
+                            const {id,client_contact, logo, name,email,url,description,status} = response.data;
                             const logoUrl = isValidUrl(logo) ? logo : (logo ? `{{ asset('assets/images/clients/companies/logos') }}/${logo}` : `{{ asset("assets/images/no-image-available.png") }}`);
                             const index = table.row($('#tr-' + id)).index();
                             const rowData = table.row(index).data();
                             // Column 2: Contact Name
-                            if (decodeHtml(rowData[2]) !== c_contact_key.name) {
-                                table.cell(index, 2).data(c_contact_key.name).draw();
+                            if (decodeHtml(rowData[2]) !== client_contact?.name) {
+                                table.cell(index, 2).data(client_contact?.name).draw();
                             }
                             // Column 3: Image
-                            const imageHtml = logoUrl ? `<object data="${logoUrl}" class="avatar avatar-sm me-3" title="${name}"><img src="${logoUrl}" alt="${name}" class="avatar avatar-sm me-3"  title="${name}"></object>` : '';
+                            const imageHtml = logoUrl ? `<object data="${logoUrl}" class="avatar avatar-sm me-3" title="${name}"><img src="${logoUrl}" alt="${name}" class="avatar avatar-sm me-3" title="${name}"></object>` : '';
                             if (decodeHtml(rowData[3]) !== imageHtml) {
                                 table.cell(index, 3).data(logoUrl ? `<object data="${logoUrl}" class="avatar avatar-sm me-3" title="${name}">
                                                             <img src="${logoUrl}" alt="${name}" class="avatar avatar-sm me-3" title="${name}">

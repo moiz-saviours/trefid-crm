@@ -210,6 +210,7 @@
     <script>
         $(document).ready(function () {
 
+            var storedCompanyKey;
             /** For Assign brand to team */
             $('#select-all-brands').change(function () {
                 const isChecked = this.checked;
@@ -254,9 +255,10 @@
                                 response.client_companies.forEach(company => {
                                     $companyDropdown.append(`<option value="${company.special_key}">${company.name}</option>`);
                                 });
-                                var storedCompanyKey = $('.manage-form').data('id') && storedCompanyKey ? storedCompanyKey : null;
+                                storedCompanyKey = $(this).data('company_key') ?? null;
                                 if (storedCompanyKey && response.client_companies.some(company => company.special_key === storedCompanyKey)) {
                                     $companyDropdown.val(storedCompanyKey).trigger('change');
+                                    $(this).removeData('company_key');
                                     storedCompanyKey = null;
                                 }
                             } else {
@@ -265,7 +267,8 @@
                                 toastr.error('No Companies Found. Please add some.');
                             }
                         })
-                        .catch(() => {
+                        .catch((error) => {
+                            console.log(error);
                             toastr.error('Failed to load companies. Please try again later.');
                         });
                 } else {

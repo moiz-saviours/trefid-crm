@@ -4,7 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Brand;
+use App\Models\ClientCompany;
+use App\Models\ClientContact;
+use App\Models\PaymentMerchant;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 
 class BrandController extends Controller
@@ -14,9 +18,10 @@ class BrandController extends Controller
      */
     public function index(Request $request)
     {
-        $brands = Brand::get();
+        $brands = Brand::with(['client_contacts', 'client_companies', 'client_accounts'])->get();
+        $clientContacts = ClientContact::where('status', 1)->get();
         $edit_brand = session()->has('edit_brand') ? session()->get('edit_brand') : null;
-        return view('admin.brands.index', compact('brands', 'edit_brand'));
+        return view('admin.brands.index', compact('brands', 'edit_brand', 'clientContacts'));
     }
 
     /**
@@ -42,7 +47,6 @@ class BrandController extends Controller
         ]);
         try {
             $brand = new Brand($request->only(['name', 'url', 'email', 'description', 'status']));
-
             if ($request->hasFile('logo')) {
                 $originalFileName = time() . '_' . $request->file('logo')->getClientOriginalName();
                 $publicPath = public_path('assets/images/brand-logos');
@@ -52,7 +56,17 @@ class BrandController extends Controller
                 $brand->logo = $request->logo_url;
             }
             $brand->save();
-//            $brand->update(['brand_key' => $brand->generateBrandKey($brand->id)]);
+            DB::transaction(function () use ($request, $brand) {
+                if ($request->has('client_contacts')) {
+                    $brand->client_contacts()->sync($request->input('client_contacts'));
+                }
+                if ($request->has('client_companies')) {
+                    $brand->client_companies()->sync($request->input('client_companies'));
+                }
+                if ($request->has('client_accounts')) {
+                    $brand->client_accounts()->sync($request->input('client_accounts'));
+                }
+            });
             return response()->json(['data' => $brand, 'message' => 'Record created successfully.']);
 
         } catch (\Exception $e) {
@@ -74,6 +88,7 @@ class BrandController extends Controller
     public function edit(Request $request, Brand $brand)
     {
         if ($request->ajax()) {
+            $brand->load(['client_contacts', 'client_companies', 'client_accounts']);
             return response()->json($brand);
         }
         session(['edit_brand' => $brand]);
@@ -97,7 +112,6 @@ class BrandController extends Controller
         ]);
         try {
             $brand->fill($request->only(['name', 'email', 'description', 'status', 'url']));
-
             if ($request->hasFile('logo')) {
                 $originalFileName = time() . '_' . $request->file('logo')->getClientOriginalName();
                 $publicPath = public_path('assets/images/brand-logos');
@@ -107,6 +121,17 @@ class BrandController extends Controller
                 $brand->logo = $request->logo_url;
             }
             $brand->save();
+            DB::transaction(function () use ($request, $brand) {
+                if ($request->has('client_contacts')) {
+                    $brand->client_contacts()->sync($request->input('client_contacts'));
+                }
+                if ($request->has('client_companies')) {
+                    $brand->client_companies()->sync($request->input('client_companies'));
+                }
+                if ($request->has('client_accounts')) {
+                    $brand->client_accounts()->sync($request->input('client_accounts'));
+                }
+            });
             return response()->json(['data' => $brand, 'message' => 'Record updated successfully.']);
         } catch (\Exception $e) {
             return response()->json(['error' => ' Internal Server Error', 'message' => $e->getMessage(), 'line' => $e->getLine()], 500);

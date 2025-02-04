@@ -426,6 +426,19 @@
                 $imageDisplay.attr('alt', data.name);
                 $imageDiv.show();
             }
+
+            data.client_contacts.forEach(function(data) {
+                $('#client_contact_' + data.id).prop('checked', true);
+            });
+
+            data.client_companies.forEach(function(data) {
+                $('#client_company_' + data.id).prop('checked', true);
+            });
+
+            data.client_accounts.forEach(function(data) {
+                $('#client_account_' + data.id).prop('checked', true);
+            });
+
             $('#manage-form').attr('action', `{{route('admin.brand.update')}}/` + data.id);
             $('#formContainer').addClass('open')
         }

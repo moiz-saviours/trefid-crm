@@ -217,8 +217,8 @@
     </section>
 
     <!-- Modal -->
-    @include('admin.brands.create-modal')
-    @include('admin.brands.edit-modal')
+{{--    @include('admin.brands.create-modal')--}}
+{{--    @include('admin.brands.edit-modal')--}}
 
     @push('script')
         @include('admin.brands.script')

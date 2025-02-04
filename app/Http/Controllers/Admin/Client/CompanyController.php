@@ -147,6 +147,7 @@ class CompanyController extends Controller
                     }
                 }
             });
+            $client_company->loadMissing('client_contact');
             return response()->json(['data' => $client_company, 'message' => 'Record updated successfully.']);
         } catch (\Exception $e) {
             return response()->json(['error' => ' Internal Server Error', 'message' => $e->getMessage(), 'line' => $e->getLine()], 500);

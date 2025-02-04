@@ -43,11 +43,11 @@ class ClientCompany extends Model
      */
     protected static function booted(): void
     {
-        static::creating(function ($client_contact) {
-            $client_contact->special_key = self::generateSpecialKey();
+        static::creating(function ($client_company) {
+            $client_company->special_key = self::generateSpecialKey();
             if (auth()->check()) {
-                $client_contact->creator_type = get_class(auth()->user());
-                $client_contact->creator_id = auth()->user()->id;
+                $client_company->creator_type = get_class(auth()->user());
+                $client_company->creator_id = auth()->user()->id;
             }
         });
     }
@@ -70,8 +70,8 @@ class ClientCompany extends Model
         return $this->belongsTo(ClientContact::class, 'c_contact_key', 'special_key');
     }
 
-//    public function client_accounts(): \Illuminate\Database\Eloquent\Relations\HasMany
-//    {
-//        return $this->hasMany(PaymentMerchant::class, 'c_company_key', 'special_key');
-//    }
+    public function client_accounts(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(PaymentMerchant::class, 'c_company_key', 'special_key');
+    }
 }

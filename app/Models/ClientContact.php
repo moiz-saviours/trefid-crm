@@ -75,20 +75,20 @@ class ClientContact extends Model
         );
     }
 
-//    public function client_companies(): \Illuminate\Database\Eloquent\Relations\HasMany
-//    {
-//        return $this->hasMany(ClientCompany::class, 'c_contact_key', 'special_key');
-//    }
-//
-//    public function client_accounts(): \Illuminate\Database\Eloquent\Relations\HasManyThrough
-//    {
-//        return $this->hasManyThrough(
-//            PaymentMerchant::class,  // The related model (distant model)
-//            ClientCompany::class,    // The intermediary model (middle model)
-//            'special_key',           // Foreign key on the intermediate model (ClientCompany) referencing the parent model (ClientContact)
-//            'c_contact_key',                     // Local key on the intermediate model (ClientCompany)
-//            'special_key',                    // Local key on the parent model (ClientContact)
-//            'c_company_key'         // Foreign key on the distant model (PaymentMerchant) referencing the intermediate model (ClientCompany)
-//        );
-//    }
+    public function client_companies(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(ClientCompany::class, 'c_contact_key', 'special_key');
+    }
+
+    public function client_accounts(): \Illuminate\Database\Eloquent\Relations\HasManyThrough
+    {
+        return $this->hasManyThrough(
+            PaymentMerchant::class,  // The related model (distant model)
+            ClientCompany::class,    // The intermediary model (middle model)
+            'special_key',           // Foreign key on the intermediate model (ClientCompany) referencing the parent model (ClientContact)
+            'c_contact_key',                     // Local key on the intermediate model (ClientCompany)
+            'special_key',                    // Local key on the parent model (ClientContact)
+            'c_company_key'         // Foreign key on the distant model (PaymentMerchant) referencing the intermediate model (ClientCompany)
+        );
+    }
 }
