@@ -21,7 +21,6 @@ class Brand extends Model
      * @var array<int, string>
      */
     protected $fillable = ['brand_key', 'name', 'url', 'logo', 'email', 'description', 'status'];
-
 //    public function generateBrandKey($id)
 //    {
 //        $idStr = (string)$id;
@@ -36,7 +35,6 @@ class Brand extends Model
 //        $shuffledBrandKey = implode('', $brandKeyArray);
 //        return str_pad($shuffledBrandKey, 6, '0', STR_PAD_LEFT);
 //    }
-
     /**
      * Generate a unique special key.
      *
@@ -100,22 +98,44 @@ class Brand extends Model
 //    {
 //        return $this->hasMany(AssignBrandAccount::class, 'brand_key', 'brand_key');
 //    }
-//    /** Define inverse relationship for ClientContact */
-//    public function client_contacts(): \Illuminate\Database\Eloquent\Relations\MorphToMany
-//    {
-//        return $this->morphedByMany(ClientContact::class, 'assignable', AssignBrandAccount::class);
-//    }
-//
-//    /** Define inverse relationship for ClientCompany */
-//    public function client_companies(): \Illuminate\Database\Eloquent\Relations\MorphToMany
-//    {
-//        return $this->morphedByMany(ClientCompany::class, 'assignable', AssignBrandAccount::class);
-//    }
-//
-//    /** Define inverse relationship for ClientAccount */
-//    public function client_accounts(): \Illuminate\Database\Eloquent\Relations\MorphToMany
-//    {
-//        return $this->morphedByMany(PaymentMerchant::class, 'assignable', AssignBrandAccount::class);
-//    }
+    /** Define inverse relationship for ClientContact */
+    public function client_contacts(): \Illuminate\Database\Eloquent\Relations\MorphToMany
+    {
+        return $this->morphedByMany(
+            ClientContact::class,          // Related model
+            'assignable',                  // Morph name
+            AssignBrandAccount::class,     // Pivot table
+            'brand_key',                   // Foreign key on pivot table (refers to Brand)
+            'assignable_id',               // Foreign key on pivot table (refers to ClientContact)
+            'brand_key',                   // Local key on Brand model
+            'special_key'                  // Related key on ClientContact model
+        );
+    }
+    /** Define inverse relationship for ClientCompany */
+    public function client_companies(): \Illuminate\Database\Eloquent\Relations\MorphToMany
+    {
+        return $this->morphedByMany(
+            ClientCompany::class,          // Related model
+            'assignable',                  // Morph name
+            AssignBrandAccount::class,     // Pivot table
+            'brand_key',                   // Foreign key on pivot table (refers to Brand)
+            'assignable_id',               // Foreign key on pivot table (refers to ClientCompany)
+            'brand_key',                   // Local key on Brand model
+            'special_key'                  // Related key on ClientCompany model
+        );
+    }
+    /** Define inverse relationship for ClientAccount */
+    public function client_accounts(): \Illuminate\Database\Eloquent\Relations\MorphToMany
+    {
+        return $this->morphedByMany(
+            PaymentMerchant::class,          // Related model
+            'assignable',                  // Morph name
+            AssignBrandAccount::class,     // Pivot table
+            'brand_key',                   // Foreign key on pivot table (refers to Brand)
+            'assignable_id',               // Foreign key on pivot table (refers to PaymentMerchant)
+            'brand_key',                   // Local key on Brand model
+            'id'                  // Related key on PaymentMerchant model
+        );
+    }
 }
 

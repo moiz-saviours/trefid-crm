@@ -127,7 +127,6 @@
                 }
             });
         });
-
         function setDataAndShowEdit(data) {
             const client_account = data?.client_account;
             if (!client_account) {
@@ -144,9 +143,10 @@
                 $('#select-all-brands').prop('checked', false);
             }
 
-            var storedCompanyKey = client_account.c_contact_key;
-            $('#client_contact').val(client_account.c_contact_key).trigger('change');
-            $('#client_company').val(storedCompanyKey).trigger('change');
+            $('#client_contact')
+                .val(client_account.c_contact_key)
+                .data('company_key', client_account.c_company_key) // Store the company key temporarily
+                .trigger('change');
             $('#name').val(client_account.name);
             $('#descriptor').val(client_account.descriptor);
             $('#vendor_name').val(client_account.vendor_name);
@@ -161,7 +161,6 @@
             $('#manage-form').attr('action', `{{route('admin.client.account.update')}}/` + client_account.id);
             $('#formContainer').addClass('open')
         }
-
         const decodeHtml = (html) => {
             const txt = document.createElement("textarea");
             txt.innerHTML = html;

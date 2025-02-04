@@ -289,7 +289,7 @@
     .custom-form .form-body input:not(.is-invalid)[type="checkbox"]{
         width: 2%;
         margin-right: 10px;
-        appearance: none;
+        /*appearance: none;*/
         cursor: pointer;
         position: relative;
     }

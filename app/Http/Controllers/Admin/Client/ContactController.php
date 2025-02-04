@@ -147,7 +147,7 @@ class ContactController extends Controller
                 }
             }
         });
-        return response()->json(['success' => 'Record updated successfully!']);
+        return response()->json(['data' => $client_contact, 'success' => 'Record updated successfully!']);
     }
 
     /**
