@@ -257,10 +257,10 @@
                         <div class="actions">
                             <h1><i class="fa fa-lock" aria-hidden="true"></i> Data Quality</h1>
 
-                            <button class="header_btn">Actions <i class="fa fa-caret-down" aria-hidden="true"></i>
+                            <button class="header_btn" disabled>Actions <i class="fa fa-caret-down" aria-hidden="true"></i>
                             </button>
-                            <button class="header_btn">Import</button>
-                            <button class="create-contact open-form-btn void">Create Companies</button>
+                            <button class="header_btn" disabled>Import</button>
+                            <button class="create-contact open-form-btn void">Create New</button>
                         </div>
                     </div>
                 </header>
@@ -284,22 +284,22 @@
                                     <div class="container">
                                         <div class="row fltr-sec">
                                             <div class="col-md-8">
-                                                <ul class="custm-filtr">
-                                                    <div class="table-li">
-                                                        <li class="">Company Owner <i class="fa fa-caret-down"
-                                                                                      aria-hidden="true"></i></li>
-                                                        <li class="">Create date <i class="fa fa-caret-down"
-                                                                                    aria-hidden="true"></i></li>
-                                                        <li class="">Last activity date <i class="fa fa-caret-down"
-                                                                                           aria-hidden="true"></i>
-                                                        </li>
-                                                        <li class="">Lead status <i class="fa fa-caret-down"
-                                                                                    aria-hidden="true"></i></li>
-                                                        <li class=""><i class="fa fa-bars" aria-hidden="true"></i> All
-                                                            filters
-                                                        </li>
-                                                    </div>
-                                                </ul>
+{{--                                                <ul class="custm-filtr">--}}
+{{--                                                    <div class="table-li">--}}
+{{--                                                        <li class="">Company Owner <i class="fa fa-caret-down"--}}
+{{--                                                                                      aria-hidden="true"></i></li>--}}
+{{--                                                        <li class="">Create date <i class="fa fa-caret-down"--}}
+{{--                                                                                    aria-hidden="true"></i></li>--}}
+{{--                                                        <li class="">Last activity date <i class="fa fa-caret-down"--}}
+{{--                                                                                           aria-hidden="true"></i>--}}
+{{--                                                        </li>--}}
+{{--                                                        <li class="">Lead status <i class="fa fa-caret-down"--}}
+{{--                                                                                    aria-hidden="true"></i></li>--}}
+{{--                                                        <li class=""><i class="fa fa-bars" aria-hidden="true"></i> All--}}
+{{--                                                            filters--}}
+{{--                                                        </li>--}}
+{{--                                                    </div>--}}
+{{--                                                </ul>--}}
                                             </div>
                                             <div class="col-md-4 right-icon" id="right-icon-0"></div>
                                         </div>
