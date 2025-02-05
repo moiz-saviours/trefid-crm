@@ -126,7 +126,29 @@
                                                         ---
                                                     @endif
                                                 </td>
-                                                <td class="align-middle text-center text-nowrap">{{ number_format($invoice->amount, 2) }}</td>
+                                                <td class="align-middle space-between text-nowrap"
+                                                    style="text-align: left;">
+                                                    <div
+                                                        style="display: flex; justify-content: space-between; gap: 10px;">
+                                                        <span style="width: 120px; ">Amount:</span>
+                                                        <span>{{ $invoice->currency ." ". number_format($invoice->amount, 2, '.', '') }}</span>
+                                                    </div>
+                                                    <div
+                                                        style="display: flex; justify-content: space-between; gap: 10px;">
+                                                        <span style="width: 120px; ">Tax:</span>
+                                                        <span>{{ $invoice->tax_type == 'percentage' ? '%' : ($invoice->tax_type == 'fixed' ? $invoice->currency : '') }} {{ $invoice->tax_value ?? 0 }}</span>
+                                                    </div>
+                                                    <div
+                                                        style="display: flex; justify-content: space-between; gap: 10px;">
+                                                        <span style="width: 120px; ">Tax Amount:</span>
+                                                        <span>{{ $invoice->currency ." ". number_format($invoice->tax_amount, 2, '.', '') }}</span>
+                                                    </div>
+                                                    <div
+                                                        style="display: flex; justify-content: space-between; gap: 10px;">
+                                                        <span style="width: 120px; ">Total Amount:</span>
+                                                        <span>{{ $invoice->currency ." ". number_format($invoice->total_amount, 2, '.', '') }}</span>
+                                                    </div>
+                                                </td>
                                                 <td class="align-middle text-center text-nowrap">
                                                     @if($invoice->status == 0)
                                                         <span class="badge bg-warning text-dark">Due</span>
@@ -147,10 +169,11 @@
                                                     @endif
                                                 </td>
                                                 <td class="align-middle text-center table-actions">
-                                                    <button type="button" class="btn btn-sm btn-primary editBtn"
-                                                            data-id="{{ $invoice->id }}" title="Edit"><i
-                                                            class="fas fa-edit"></i></button>
-
+                                                    @if($invoice->status != 1)
+                                                        <button type="button" class="btn btn-sm btn-primary editBtn"
+                                                                data-id="{{ $invoice->id }}" title="Edit"><i
+                                                                class="fas fa-edit"></i></button>
+                                                    @endif
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -220,7 +243,29 @@
                                                 <td class="align-middle text-center text-nowrap">{{optional($invoice->team)->name ?? "---"}}</td>
                                                 <td class="align-middle text-center text-nowrap">{{optional($invoice->customer_contact)->name ?? "---"}}</td>
                                                 <td class="align-middle text-center text-nowrap">{{optional($invoice->agent)->name ?? "---"}}</td>
-                                                <td class="align-middle text-center text-nowrap">${{$invoice->amount}}</td>
+                                                <td class="align-middle space-between text-nowrap"
+                                                    style="text-align: left;">
+                                                    <div
+                                                        style="display: flex; justify-content: space-between; gap: 10px;">
+                                                        <span style="width: 120px; ">Amount:</span>
+                                                        <span>{{ $invoice->currency ." ". number_format($invoice->amount, 2, '.', '') }}</span>
+                                                    </div>
+                                                    <div
+                                                        style="display: flex; justify-content: space-between; gap: 10px;">
+                                                        <span style="width: 120px; ">Tax:</span>
+                                                        <span>{{ $invoice->tax_type == 'percentage' ? '%' : ($invoice->tax_type == 'fixed' ? $invoice->currency : '') }} {{ $invoice->tax_value ?? 0 }}</span>
+                                                    </div>
+                                                    <div
+                                                        style="display: flex; justify-content: space-between; gap: 10px;">
+                                                        <span style="width: 120px; ">Tax Amount:</span>
+                                                        <span>{{ $invoice->currency ." ". number_format($invoice->tax_amount, 2, '.', '') }}</span>
+                                                    </div>
+                                                    <div
+                                                        style="display: flex; justify-content: space-between; gap: 10px;">
+                                                        <span style="width: 120px; ">Total Amount:</span>
+                                                        <span>{{ $invoice->currency ." ". number_format($invoice->total_amount, 2, '.', '') }}</span>
+                                                    </div>
+                                                </td>
                                                 <td class="align-middle text-center text-nowrap">
                                                     @if($invoice->status == 0)
                                                         <span class="badge bg-warning text-dark">Due</span>

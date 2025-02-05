@@ -88,7 +88,7 @@
                                             <th class="align-middle text-center text-nowrap">STATE</th>
                                             <th class="align-middle text-center text-nowrap">COUNTRY</th>
                                             <th class="align-middle text-center text-nowrap">POSTAL CODE</th>
-                                            <th class="align-middle text-center text-nowrap">ACTION</th>
+{{--                                            <th class="align-middle text-center text-nowrap">ACTION</th>--}}
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -125,12 +125,12 @@
                                                 <td class="align-middle text-center text-nowrap">{{ $contact->address }}</td>
                                                 <td class="align-middle text-center text-nowrap">{{ $contact->zipcode }}</td>
 
-                                                <td class="align-middle text-center table-actions">
-                                                    <button type="button" class="btn btn-sm btn-primary editBtn"
-                                                            data-id="{{ $contact->id }}" title="Edit"><i
-                                                            class="fas fa-edit"></i></button>
+{{--                                                <td class="align-middle text-center table-actions">--}}
+{{--                                                    <button type="button" class="btn btn-sm btn-primary editBtn"--}}
+{{--                                                            data-id="{{ $contact->id }}" title="Edit"><i--}}
+{{--                                                            class="fas fa-edit"></i></button>--}}
 
-                                                </td>
+{{--                                                </td>--}}
                                             </tr>
                                         @endforeach
                                         </tbody>

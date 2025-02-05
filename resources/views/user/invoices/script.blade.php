@@ -262,6 +262,14 @@
         });
     });
 
+        function updateTotalAmount() {
+            const amount = parseFloat($('#amount').val());
+            const taxAmount = parseFloat($('#tax_amount').val()) || 0;
+            const totalAmount = amount + taxAmount;
+
+            $('#total_amount').val(totalAmount.toFixed(2));
+        }
+
         function setDataAndShowEdit(data) {
             const invoice = data?.invoice;
 
@@ -280,6 +288,21 @@
             $('#total_amount').val(invoice.total_amount);
             $('#description').val(invoice.description);
             $('#status').val(invoice.status);
+
+            $('#taxable').prop('checked', invoice.taxable);
+            if (invoice.taxable) {
+                $('#tax-fields').slideDown();
+                $('#tax_type').val(invoice.tax_type);
+                $('#tax_value').val(invoice.tax_value);
+                $('#tax_amount').val((parseFloat(invoice.tax_amount) || 0).toFixed(2));
+            } else {
+                $('#tax-fields').slideUp();
+                $('#tax_type').val('');
+                $('#tax_value').val('');
+                $('#tax_amount').val(0);
+            }
+
+            updateTotalAmount();
 
             $('#manage-form').attr('action', `{{route('invoice.update')}}/` + invoice.id);
             $('#formContainer').addClass('open');
@@ -300,7 +323,22 @@
                 AjaxRequestPromise(`{{ route("invoice.store") }}`, formData, 'POST', {useToastr: true})
                     .then(response => {
                         if (response?.data) {
-                            const {id, invoice_number, invoice_key, brand, team, customer_contact, agent, amount, status, date} = response.data;
+                            const {id,
+                                invoice_number,
+                                invoice_key,
+                                brand,
+                                team,
+                                customer_contact,
+                                agent,
+                                amount,
+                                tax_type,
+                                tax_value,
+                                tax_amount,
+                                total_amount,
+                                currency,
+                                status,
+                                due_date,
+                                date } = response.data;
                             const index = table.rows().count() + 1;
                             const columns = `
                         <td class="align-middle text-center text-nowrap"></td>
@@ -313,20 +351,35 @@
                             ${brand ? `<a href="">${brand.name}</a><br> ${brand.brand_key}` : '---'}
                         </td>
                         <td class="align-middle text-center text-nowrap">${team ? `<a href="">${team.name}</a><br> ${team.team_key}` : '---'}</td>
-                        <td class="align-middle text-center text-nowrap">${customer_contact ? `<a href="/admin/contact/edit/${customer_contact.id}">${customer_contact.name}</a>` : '---'}</td>
+                        <td class="align-middle text-center text-nowrap">${customer_contact ? `<a href="/user/contact/edit/${customer_contact.id}">${customer_contact.name}</a>` : '---'}</td>
                         <td class="align-middle text-center text-nowrap">${agent ? `<a href="">${agent.name}</a>` : '---'}</td>
-                        <td class="align-middle text-center text-nowrap">${amount}</td>
+                        <td class="align-middle space-between text-nowrap" style="text-align: left;">
+                            <div style="display: flex; justify-content: space-between; gap: 10px;">
+                                <span style="width: 120px;">Amount:</span>
+                                <span>${currency} ${parseFloat(amount).toFixed(2)}</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; gap: 10px;">
+                                <span style="width: 120px;">Tax:</span>
+                                <span>${tax_type === 'percentage' ? '%' : (tax_type === 'fixed' ? currency : '')} ${tax_value??0}</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; gap: 10px;">
+                                <span style="width: 120px;">Tax Amount:</span>
+                                <span>${currency} ${parseFloat(tax_amount).toFixed(2)}</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; gap: 10px;">
+                                <span style="width: 120px;">Total Amount:</span>
+                                <span>${currency} ${parseFloat(total_amount).toFixed(2)}</span>
+                            </div>
+                        </td>
                         <td class="align-middle text-center text-nowrap">
                             ${status == 0 ? '<span class="badge bg-warning text-dark">Due</span>' : status == 1 ? '<span class="badge bg-success">Paid</span>' : status == 2 ? '<span class="badge bg-danger">Refund</span>' : ''}
                         </td>
                         <td class="align-middle text-center text-nowrap">${date}</td>
+                        <td class="align-middle text-center text-nowrap">${due_date}</td>
                         <td class="align-middle text-center table-actions">
-                            <button type="button" class="btn btn-sm btn-primary editBtn" data-id="${id}" title="Edit">
-                                <i class="fas fa-edit"></i>
-                            </button>
-                            <button type="button" class="btn btn-sm btn-danger deleteBtn" data-id="${id}" title="Delete">
-                                <i class="fas fa-trash"></i>
-                            </button>
+                            ${status != 1 ? '<button type="button" class="btn btn-sm btn-primary editBtn" data-id="'+id+'" title="Edit"><i class = "fas fa-edit" > </i></button>' +
+                                '<button type="button" class="btn btn-sm btn-danger deleteBtn" data-id="'+id+'" title="Delete"><i class="fas fa-trash"></i></button>'
+                                : ''}
                         </td>`;
 
                             table.row.add($('<tr>', {id: `tr-${id}`}).append(columns)).draw(false);
@@ -341,7 +394,18 @@
                 AjaxRequestPromise(url, formData, 'POST', {useToastr: true})
                     .then(response => {
                         if (response?.data) {
-                            const {id, invoice_number, invoice_key, brand, team, customer_contact, agent, amount, status, date} = response.data;
+                            const {id,
+                                invoice_number,
+                                invoice_key,
+                                brand,
+                                team,
+                                customer_contact,
+                                agent,
+                                amount, tax_type, tax_value,
+                                tax_amount, total_amount, currency,
+                                status,
+                                due_date,
+                                date } = response.data;
                             const index = table.row($('#tr-' + id)).index();
                             const rowData = table.row(index).data();
 
@@ -375,8 +439,26 @@
                             }
 
                             // Column 8: Amount
-                            if (decodeHtml(rowData[7]) !== amount) {
-                                table.cell(index, 7).data(amount).draw();
+                            const newContent = `
+                                <div style="display: flex; justify-content: space-between; gap: 10px;">
+                                    <span style="width: 120px;">Amount:</span>
+                                    <span>${currency} ${parseFloat(amount).toFixed(2)}</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; gap: 10px;">
+                                    <span style="width: 120px;">Tax:</span>
+                                    <span>${tax_type === 'percentage' ? '%' : (tax_type === 'fixed' ? currency : '')} ${tax_value??0}</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; gap: 10px;">
+                                    <span style="width: 120px;">Tax Amount:</span>
+                                    <span>${currency} ${parseFloat(tax_amount).toFixed(2)}</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; gap: 10px;">
+                                    <span style="width: 120px;">Total Amount:</span>
+                                    <span>${currency} ${parseFloat(total_amount).toFixed(2)}</span>
+                                </div>`;
+                            // Column 8: Amount
+                            if (decodeHtml(rowData[7]) !== newContent) {
+                                table.cell(index, 7).data(newContent).draw();
                             }
                             // Column 9: Status
 
@@ -386,8 +468,13 @@
                             }
 
                             // Column 10: Date
-                            if (decodeHtml(rowData[9]) !== date) {
-                                table.cell(index, 9).data(date).draw();
+                            if (decodeHtml(rowData[9]) !== due_date) {
+                                table.cell(index, 9).data(due_date).draw();
+                            }
+
+                            // Column 11: Date
+                            if (decodeHtml(rowData[10]) !== date) {
+                                table.cell(index, 10).data(date).draw();
                             }
                             $('#manage-form')[0].reset();
                             $('#formContainer').removeClass('open')
