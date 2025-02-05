@@ -117,13 +117,13 @@
                     @enderror
                 </div>
 
-                <div class="form-group mb-3">
-                    <label for="address" class="form-label">Address</label>
-                    <textarea class="form-control" id="address" name="address" rows="3"></textarea>
-                    @error('address')
-                    <span class="text-danger">{{ $message }}</span>
-                    @enderror
-                </div>
+{{--                <div class="form-group mb-3">--}}
+{{--                    <label for="address" class="form-label">Address</label>--}}
+{{--                    <textarea class="form-control" id="address" name="address" rows="3"></textarea>--}}
+{{--                    @error('address')--}}
+{{--                    <span class="text-danger">{{ $message }}</span>--}}
+{{--                    @enderror--}}
+{{--                </div>--}}
 
                 <div class="form-group mb-3">
                     <label for="amount" class="form-label">Amount</label>
@@ -134,14 +134,14 @@
                     @enderror
                 </div>
 
-                <div class="form-group mb-3">
-                    <label for="description" class="form-label">Description</label>
-                    <textarea class="form-control" id="description" name="description"
-                              rows="3">{{ old('description') }}</textarea>
-                    @error('description')
-                    <span class="text-danger">{{ $message }}</span>
-                    @enderror
-                </div>
+{{--                <div class="form-group mb-3">--}}
+{{--                    <label for="description" class="form-label">Description</label>--}}
+{{--                    <textarea class="form-control" id="description" name="description"--}}
+{{--                              rows="3">{{ old('description') }}</textarea>--}}
+{{--                    @error('description')--}}
+{{--                    <span class="text-danger">{{ $message }}</span>--}}
+{{--                    @enderror--}}
+{{--                </div>--}}
 
                 <div class="form-group mb-3">
                     <label for="payment_method" class="form-label">Payment Method</label>
