@@ -54,13 +54,10 @@ class DashboardController extends Controller
         foreach ($leadStatuses as $status) {
             $leadCounts[$status->name] = Lead::where('lead_status_id', $status->id)->count();
         }
-
-
         $dailyPayments = [];
         $dailyLabels = [];
         $currentMonth = Carbon::now()->month;
         $currentYear = Carbon::now()->year;
-
         for ($day = 1; $day <= Carbon::now()->daysInMonth; $day++) {
             $totalPayments = Payment::whereYear('created_at', $currentYear)
                 ->whereMonth('created_at', $currentMonth)
@@ -69,21 +66,15 @@ class DashboardController extends Controller
             $dailyPayments[] = $totalPayments;
             $dailyLabels[] = Carbon::createFromDate($currentYear, $currentMonth, $day)->format('d');
         }
-
-        $annualPayments = [];
-        $years = range(Carbon::now()->subYears(10)->year, Carbon::now()->year + 1);
+        $year = Carbon::now()->year;
         $months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-        foreach ($years as $year) {
-            $monthlyPayments = [];
-            foreach ($months as $index => $month) {
-                $totalPayments = Payment::whereYear('created_at', $year)
-                    ->whereMonth('created_at', $index + 1)
-                    ->sum('amount');
-                $monthlyPayments[] = $totalPayments;
-            }
-            $annualPayments[] = $monthlyPayments;
+        $annualPayments = [];
+        foreach ($months as $index => $month) {
+            $totalPayments = Payment::whereYear('created_at', $year)
+                ->whereMonth('created_at', $index + 1)
+                ->sum('amount');
+            $annualPayments[] = $totalPayments;
         }
-
         return view('admin.dashboard.index-1', [
             'totalInvoices' => $totalInvoices,
             'dueInvoices' => $invoiceCounts->due_invoices,

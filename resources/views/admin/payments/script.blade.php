@@ -144,6 +144,10 @@
             $('#amount').val(payment.amount);
             $('#description').val(payment.description);
             $('#payment_method').val(payment.payment_method);
+            if (payment.payment_date) {
+                let formattedDate = payment.payment_date.split(' ')[0];
+                $('#payment_date').val(formattedDate);
+            }
             $('#transaction_id').val(payment.transaction_id);
 
             $('#manage-form').attr('action', `{{route('admin.payment.update')}}/` + payment.id);

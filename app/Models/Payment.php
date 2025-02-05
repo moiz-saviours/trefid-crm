@@ -33,6 +33,7 @@ class Payment extends Model
         'amount',
         'payment_type',
         'payment_method',
+        'payment_date',
         'card_name',
         'card_type',
         'card_number',
@@ -40,6 +41,10 @@ class Payment extends Model
         'card_month_expiry',
         'card_year_expiry',
         'status',
+    ];
+
+    protected $casts = [
+        'payment_date' => 'date:Y-m-d',
     ];
     protected $hidden = [
         'card_name',

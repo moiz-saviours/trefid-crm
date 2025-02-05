@@ -356,7 +356,7 @@
                                         <div class="col-lg-6  mt-3">
                                             <div class="sales-number-div">
                                                 <h2 class="mtd-hedaing">Accounts</h2>
-                                                <p class="total-sales-count"> $234538
+                                                <p class="total-sales-count"> 234
                                                 </p>
                                             </div>
                                         </div>

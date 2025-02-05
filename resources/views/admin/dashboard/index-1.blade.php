@@ -503,16 +503,14 @@
                 barChart.render();
 
 
-                const annualPayments = @json($annualPayments);
-                const monthlyLabels = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-                const currentYear = @json(Carbon\Carbon::now()->year);
-                const years = Array.from({ length: annualPayments.length }, (_, index) => currentYear - index);
+                const annualPayments = @json(array_values($annualPayments)); // Extract values only
+                const currentYear = new Date().getFullYear();
+                const monthlyLabels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'].map((month, index) => `${month} ${currentYear}`);
                 var areaOptions = {
-                    series: annualPayments.map((yearData, index) => ({
-                        name: 'Year ' + years[index],
-                        type: 'area',
-                        data: yearData,
-                    })),
+                    series: [{
+                        name: 'Total Payments',
+                        data: annualPayments,
+                    }],
                     chart: {
                         height: 350,
                         type: 'area',
@@ -525,7 +523,16 @@
                         opacity: [0.35],
                     },
                     colors: ['#2d3e50'],
-                    labels: monthlyLabels,
+                    xaxis: {
+                        categories: monthlyLabels,
+                        labels: {
+                            rotate: 0,
+                            style: {
+                                fontSize: '12px',
+                                fontWeight: 'bold',
+                            }
+                        },
+                    },
                     tooltip: {
                         shared: true,
                         intersect: false,
