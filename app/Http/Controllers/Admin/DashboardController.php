@@ -48,6 +48,19 @@ class DashboardController extends Controller
             'refund' => ($invoiceCounts->refund_invoices / $totalInvoices) * 100,
             'chargeback' => ($invoiceCounts->chargeback_invoices / $totalInvoices) * 100
         ] : ['due' => 0, 'paid' => 0, 'refund' => 0, 'chargeback' => 0];
+
+        $totalPayments = Payment::count();
+        $paymentCounts = Payment::selectRaw("
+            COUNT(CASE WHEN status = 1 THEN 1 END) as paid,
+            COUNT(CASE WHEN status = 2 THEN 1 END) as refund,
+            COUNT(CASE WHEN status = 3 THEN 1 END) as chargeback
+        ")->first();
+        $paymentsProgress = $totalPayments > 0 ? [
+            'paid' => ($paymentCounts->paid / $totalPayments) * 100,
+            'refund' => ($paymentCounts->refund / $totalPayments) * 100,
+            'chargeback' => ($paymentCounts->chargeback / $totalPayments) * 100
+        ] : ['paid' => 0, 'refund' => 0, 'chargeback' => 0];
+
         $recentPayments = Payment::latest()->limit(5)->get();
         $leadStatuses = LeadStatus::all();
         $leadCounts = [];
@@ -88,6 +101,9 @@ class DashboardController extends Controller
             'dailyPayments' => $dailyPayments,
             'dailyLabels' => $dailyLabels,
             'annualPayments' => $annualPayments,
+            'totalPayments' => $totalPayments,
+            'paymentsProgress' => $paymentsProgress,
+            'paymentCounts' => $paymentCounts,
         ]);
     }
 

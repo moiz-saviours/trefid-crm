@@ -24,11 +24,11 @@ class PaymentController extends Controller
         $brands = Brand::where('status', 1)->get();
         $teams = Team::where('status', 1)->get();
         $agents = User::where('status', 1)->get();
-        $all_payments = Payment::where('status', 1)->get();
+//        $all_payments = Payment::where('status', 1)->get();
         $payments = Payment::with(['brand', 'team', 'agent'])->get();
         $customer_contacts = CustomerContact::where('status', 1)->get();
         $users = User::where('status', 1)->get();
-        return view('admin.payments.index', compact('payments', 'brands', 'teams', 'agents', 'all_payments', 'customer_contacts', 'users'));
+        return view('admin.payments.index', compact('payments', 'brands', 'teams', 'agents', 'customer_contacts', 'users'));
     }
 
     /**

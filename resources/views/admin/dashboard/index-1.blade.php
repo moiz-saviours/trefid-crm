@@ -170,7 +170,7 @@
                     @php
                         $invoiceData = [
                             ['title' => 'Paid', 'count' => $paidInvoices, 'progress' => $invoicesProgress['paid'], 'color' => 'success'],
-                            ['title' => 'Unpaid', 'count' => $dueInvoices, 'progress' => $invoicesProgress['due'], 'color' => 'danger'],
+                            ['title' => 'Due', 'count' => $dueInvoices, 'progress' => $invoicesProgress['due'], 'color' => 'danger'],
                             ['title' => 'Refunded', 'count' => $refundInvoices, 'progress' => $invoicesProgress['refund'], 'color' => 'warning'],
                             ['title' => 'Chargeback', 'count' => $chargebackInvoices, 'progress' => $invoicesProgress['chargeback'], 'color' => 'dark']
                         ];
@@ -336,7 +336,7 @@
                         <div class="card">
                             <div class="card-header toolbar">
                                 <div class="toolbar-start">
-                                    <h5 class="m-0">Fifth Chart</h5>
+                                    <h5 class="m-0">OverAll CRM</h5>
                                 </div>
                                 <div class="toolbar-end">
                                     <button type="button" class="btn btn-icon btn-minimize btn-xs"
@@ -502,9 +502,8 @@
                 var barChart = new ApexCharts(document.querySelector(".barchart"), barOptions);
                 barChart.render();
 
-
-                const annualPayments = @json(array_values($annualPayments)); // Extract values only
-                const currentYear = new Date().getFullYear();
+                const annualPayments = @json(array_values($annualPayments));
+                const currentYear = new Date().getFullYear().toString().slice(-2);
                 const monthlyLabels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'].map((month, index) => `${month} ${currentYear}`);
                 var areaOptions = {
                     series: [{
@@ -528,15 +527,43 @@
                         labels: {
                             rotate: 0,
                             style: {
-                                fontSize: '12px',
+                                fontSize: '10px',
                                 fontWeight: 'bold',
-                            }
+                            },
+                            show: true,
+                        },
+                        tickAmount: 12,
+                    },
+                    yaxis: {
+                        labels: {
+                            formatter: function (value) {
+                                return value.toFixed(2);
+                            },
                         },
                     },
                     tooltip: {
                         shared: true,
                         intersect: false,
                     },
+                    dataLabels: {
+                        enabled: false,
+                    },
+                    markers: {
+                        size: 0,
+                    },
+                    responsive: [{
+                        breakpoint: 480,
+                        options: {
+                            xaxis: {
+                                labels: {
+                                    show: false,
+                                }
+                            },
+                            tooltip: {
+                                enabled: false,
+                            }
+                        }
+                    }]
                 };
 
                 var areaChart = new ApexCharts(document.querySelector(".areachart"), areaOptions);
@@ -546,7 +573,8 @@
             document.addEventListener("DOMContentLoaded", function () {
                 const labels = @json($leadStatuses->pluck('name')) || [];
                 const data = @json($leadCounts) || {};
-                const colors = @json($leadStatuses->pluck('color')) || [];
+                const colors = @json($leadStatuses->pluck('color')) ||
+                [];
 
                 const series = labels.map(status => data[status] || 0);
 
@@ -563,7 +591,6 @@
                     legend: {
                         position: 'right',
                     },
-
                     responsive: [{
                         breakpoint: 480,
                         options: {
@@ -581,43 +608,45 @@
                 pieChart.render();
             });
 
-            if ($(".pieChart").length > 0) {
-                //Pie Chart
-                var options = {
-                    series: [44, 55, 60],
-                    chart: {
-                        type: 'pie',
-                        toolbar: {
-                            show: true,
-                        },
-                    },
-                    colors: ['#2d3e50', '#ff5722', '#98a3b0'],
-                    labels: ['Team A', 'Team B', 'Team C'],
-                    legend: {
-                        position: 'right',
-                    },
+            // if ($(".pieChart").length > 0) {
+            //     //Pie Chart
+            //     var options = {
+            //         series: [44, 55, 60],
+            //         chart: {
+            //             type: 'pie',
+            //             toolbar: {
+            //                 show: true,
+            //             },
+            //         },
+            //         colors: ['#2d3e50', '#ff5722', '#98a3b0'],
+            //         labels: ['Team A', 'Team B', 'Team C'],
+            //         legend: {
+            //             position: 'right',
+            //         },
+            //
+            //         responsive: [{
+            //             breakpoint: 480,
+            //             options: {
+            //                 chart: {
+            //                     width: 300
+            //                 },
+            //                 legend: {
+            //                     position: 'bottom'
+            //                 }
+            //             }
+            //         }]
+            //     };
+            //
+            //     var pieChart = new ApexCharts($(".pieChart")[0], options);
+            //     pieChart.render();
+            //     //Pie Chart
 
-                    responsive: [{
-                        breakpoint: 480,
-                        options: {
-                            chart: {
-                                width: 300
-                            },
-                            legend: {
-                                position: 'bottom'
-                            }
-                        }
-                    }]
-                };
+            // }
 
-                var pieChart = new ApexCharts($(".pieChart")[0], options);
-                pieChart.render();
-                //Pie Chart
 
-            }
             //Donut Chart
             var options = {
-                series: @json(array_values($invoicesProgress)),
+                series: @json(array_values($paymentsProgress)),
                 chart: {
                     type: 'donut',
                     toolbar: {
@@ -625,8 +654,8 @@
                     },
                 },
 
-                colors: ['#885300', '#2d3e50', '#ff5722', '#98a3b0'],
-                labels: @json(array_keys($invoicesProgress)),
+                colors: ['#28a745', '#ffc107', '#dc3545'],
+                labels: ['Paid', 'Refund', 'Chargeback'],
 
                 legend: {
                     position: 'right',
@@ -645,19 +674,26 @@
                 plotOptions: {
                     pie: {
                         donut: {
+                            size: '75%',
                             labels: {
                                 show: true,
                                 total: {
                                     show: true,
-                                    label: 'Total Invoices',
+                                    label: 'Total Payments',
                                     formatter: function (w) {
-                                        return {{ $totalInvoices }}
+                                        return {{ $totalPayments }};
+                                    }
+                                },value: {
+                                    formatter: function (val,chart) {
+                                        let valPercent = val/chart.config.series.reduce((a, b) => a + b, 0)*100;
+                                        return valPercent.toFixed(2) + "%";
                                     }
                                 }
+
                             }
-                        }
+                        },
                     }
-                }
+                },
             };
 
             var donutchart = new ApexCharts($(".donutchart")[0], options);
