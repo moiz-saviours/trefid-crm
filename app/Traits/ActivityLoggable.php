@@ -38,12 +38,20 @@ trait ActivityLoggable
             return;
         }
 
+        $actorType = get_class($user);
+        if ($actorType == 'admin') {
+            $actorType = 'App\Models\Admin';
+        } elseif ($actorType == 'user') {
+            $actorType = 'App\Models\User';
+        }
+
         $description = $this->generateDescription($event, $user);
         ActivityLog::create([
             'action' => $event,
             'model_type' => get_class($this),
             'model_id' => $this->getKey(),
-            'actor_type' => get_class($user),
+//            'actor_type' => get_class($user),
+            'actor_type' => $actorType,
             'actor_id' => $user?->id,
             'description' => $description,
             'details' => json_encode($this->getLogDetails($event)),
