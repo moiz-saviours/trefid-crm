@@ -314,7 +314,7 @@
                         <div class="card">
                             <div class="card-header toolbar">
                                 <div class="toolbar-start">
-                                    <h5 class="m-0">Fourth Chart</h5>
+                                    <h5 class="m-0">Payment Progress</h5>
                                 </div>
                                 <div class="toolbar-end">
                                     <button type="button" class="btn btn-icon btn-minimize btn-xs"
@@ -617,7 +617,7 @@
             }
             //Donut Chart
             var options = {
-                series: [44, 55, 60],
+                series: @json(array_values($invoicesProgress)),
                 chart: {
                     type: 'donut',
                     toolbar: {
@@ -625,8 +625,8 @@
                     },
                 },
 
-                colors: ['#2d3e50', '#ff5722', '#98a3b0'],
-                labels: ['Team A', 'Team B', 'Team C'],
+                colors: ['#885300', '#2d3e50', '#ff5722', '#98a3b0'],
+                labels: @json(array_keys($invoicesProgress)),
 
                 legend: {
                     position: 'right',
@@ -641,7 +641,23 @@
                             position: 'bottom'
                         }
                     }
-                }]
+                }],
+                plotOptions: {
+                    pie: {
+                        donut: {
+                            labels: {
+                                show: true,
+                                total: {
+                                    show: true,
+                                    label: 'Total Invoices',
+                                    formatter: function (w) {
+                                        return {{ $totalInvoices }}
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             };
 
             var donutchart = new ApexCharts($(".donutchart")[0], options);
