@@ -61,6 +61,8 @@ class DashboardController extends Controller
             'chargeback' => ($paymentCounts->chargeback / $totalPayments) * 100
         ] : ['paid' => 0, 'refund' => 0, 'chargeback' => 0];
 
+        $totalLeads = Lead::count();
+        $totalCustomers = CustomerContact::count();
         $recentPayments = Payment::latest()->limit(5)->get();
         $leadStatuses = LeadStatus::all();
         $leadCounts = [];
@@ -72,21 +74,21 @@ class DashboardController extends Controller
         $currentMonth = Carbon::now()->month;
         $currentYear = Carbon::now()->year;
         for ($day = 1; $day <= Carbon::now()->daysInMonth; $day++) {
-            $totalPayments = Payment::whereYear('created_at', $currentYear)
+            $DayPaymentsQuery = Payment::whereYear('created_at', $currentYear)
                 ->whereMonth('created_at', $currentMonth)
                 ->whereDay('created_at', $day)
                 ->sum('amount');
-            $dailyPayments[] = $totalPayments;
+            $dailyPayments[] = $DayPaymentsQuery;
             $dailyLabels[] = Carbon::createFromDate($currentYear, $currentMonth, $day)->format('d');
         }
         $year = Carbon::now()->year;
         $months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
         $annualPayments = [];
         foreach ($months as $index => $month) {
-            $totalPayments = Payment::whereYear('created_at', $year)
+            $MonthPaymentsQuery = Payment::whereYear('created_at', $year)
                 ->whereMonth('created_at', $index + 1)
                 ->sum('amount');
-            $annualPayments[] = $totalPayments;
+            $annualPayments[] = $MonthPaymentsQuery;
         }
         return view('admin.dashboard.index-1', [
             'totalInvoices' => $totalInvoices,
@@ -104,6 +106,8 @@ class DashboardController extends Controller
             'totalPayments' => $totalPayments,
             'paymentsProgress' => $paymentsProgress,
             'paymentCounts' => $paymentCounts,
+            'totalLeads' => $totalLeads,
+            'totalCustomers' => $totalCustomers,
         ]);
     }
 

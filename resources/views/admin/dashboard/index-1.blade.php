@@ -571,8 +571,12 @@
             });
 
             document.addEventListener("DOMContentLoaded", function () {
-                const labels = @json($leadStatuses->pluck('name')) || [];
-                const data = @json($leadCounts) || {};
+                const labels = @json($leadStatuses->pluck('name')) ||
+                [];
+                const data = @json($leadCounts) ||
+                {
+                }
+                ;
                 const colors = @json($leadStatuses->pluck('color')) ||
                 [];
 
@@ -642,11 +646,13 @@
             //     //Pie Chart
 
             // }
-
-
             //Donut Chart
             var options = {
-                series: @json(array_values($paymentsProgress)),
+                series: [
+                    {{ $paymentCounts->paid }},
+                    {{ $paymentCounts->refund }},
+                    {{ $paymentCounts->chargeback }},
+                ],
                 chart: {
                     type: 'donut',
                     toolbar: {
@@ -683,10 +689,9 @@
                                     formatter: function (w) {
                                         return {{ $totalPayments }};
                                     }
-                                },value: {
-                                    formatter: function (val,chart) {
-                                        let valPercent = val/chart.config.series.reduce((a, b) => a + b, 0)*100;
-                                        return valPercent.toFixed(2) + "%";
+                                }, value: {
+                                    formatter: function (val, chart) {
+                                        return val
                                     }
                                 }
 
@@ -694,6 +699,16 @@
                         },
                     }
                 },
+                tooltip: {
+                    y: {
+                        formatter: function (val) {
+                            let total = [{{$paymentCounts->paid}},{{$paymentCounts->refund}},{{$paymentCounts->chargeback}}].
+                            reduce((a, b) => a + b, 0);
+                            let percentage = (val / total) * 100;
+                            return percentage.toFixed(2) + "%";
+                        }
+                    }
+                }
             };
 
             var donutchart = new ApexCharts($(".donutchart")[0], options);
@@ -702,18 +717,22 @@
 
             //Radial Chart
             var options = {
-                series: [50, 55, 75], // Restricting to 3 values
+                series: [
+                    {{ $totalLeads }},
+                    {{ $totalCustomers }},
+                    {{ $totalInvoices }},
+                    {{ $totalPayments }}
+                ], // 4 dynamic values
                 chart: {
-
                     type: 'radialBar',
                     toolbar: {
-                        show: true, // Toolbar enabled for download
+                        show: true,
                         tools: {
-                            download: true // Allow chart download
+                            download: true
                         }
                     },
                 },
-                colors: ['#2d3e50', '#ff5722', '#98a3b0'], // Custom colors
+                colors: ['#28a745', '#ffc107', '#dc3545', '#007bff'],
                 plotOptions: {
                     radialBar: {
                         hollow: {
@@ -724,24 +743,37 @@
                         },
                         dataLabels: {
                             name: {
-                                fontSize: '22px',
+                                show: true,
+                                fontSize: '16px',
+                                fontWeight: 'bold',
+                                color: '#333',
+                                offsetY: -10,
+                                formatter: function (val) {
+                                    return val;
+                                }
                             },
                             value: {
-                                fontSize: '16px',
+                                fontSize: '24px',
+                                fontWeight: 'bold',
+                                color: '#333',
+                                offsetY: 10,
+                                formatter: function (val) {
+                                    return val;
+                                }
                             },
                             total: {
                                 show: true,
                                 label: 'Total',
                                 formatter: function (w) {
-                                    return 166; // Total of 3 series values
+                                    return w.globals.seriesTotals.reduce((a, b) => a + b, 0);
                                 }
                             }
                         }
                     }
                 },
-                labels: ['Apples', 'Oranges', 'Bananas'], // Only 3 labels
-
+                labels: ['Leads', 'Customers', 'Invoices', 'Payments'],
             };
+
             var radialchart = new ApexCharts($(".radialchart")[0], options);
             radialchart.render();
             //Radial Chart
