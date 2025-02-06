@@ -1,9 +1,9 @@
 @extends('admin.layouts.app')
-@section('title','CustomerContact Companies')
+@section('title','Client Contact Companies')
 @section('datatable', true)
 @push('breadcrumb')
-    <li class="breadcrumb-item text-sm active" aria-current="page"><a href="{{route('admin.brand.index')}}">Brand</a>
-    </li>
+{{--    <li class="breadcrumb-item text-sm active" aria-current="page"><a href="{{route('admin.brand.index')}}">Brand</a>--}}
+{{--    </li>--}}
 @endpush
 @section('content')
     @push('style')
