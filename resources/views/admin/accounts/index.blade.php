@@ -10,7 +10,7 @@
             <div class="content__wrap">
                 <header class="custm_header">
                     <div class="new_head">
-                        <h1 class="page-title mb-2">Admin Accounts <i class="fa fa-caret-down" aria-hidden="true"></i></h1>
+                        <h1 class="page-title mb-2">Admin Accountss <i class="fa fa-caret-down" aria-hidden="true"></i></h1>
 {{--                        <h2 id="record-count" class="h6">{{count($admins)}} records</h2>--}}
                     </div>
                     <div class="filters">
