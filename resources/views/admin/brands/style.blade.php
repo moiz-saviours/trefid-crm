@@ -106,9 +106,9 @@
     }
 
     .custom-tabs {
-        margin: 10px 0px;
-        display: flex;
-    }
+                margin: 0px 0px 4px 0px;
+                display: flex;
+            }
 
     .tab-nav {
         display: flex;
