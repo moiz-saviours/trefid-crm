@@ -12,7 +12,7 @@
                     <div class="new_head">
                         <h1 class="page-title mb-2">Activity Logs <i class="fa fa-caret-down" aria-hidden="true"></i>
                         </h1>
-                        <h2 id="record-count" class="h6">{{count($logs)}} records</h2>
+{{--                        <h2 id="record-count" class="h6">{{count($logs)}} records</h2>--}}
                     </div>
                     <div class="filters">
                         <div class="actions">
