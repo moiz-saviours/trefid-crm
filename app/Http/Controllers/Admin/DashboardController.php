@@ -27,7 +27,7 @@ class DashboardController extends Controller
         $freshInvoices = Invoice::where('type', 0)->count();
         $upsaleInvoices = Invoice::where('type', 1)->count();
         $adminProgress = $totalAdmins > 0 ? ($activeAdmins / $totalAdmins) * 100 : 0;
-        $userProgress = $totalAdmins > 0 ? ($activeUsers / $totalUsers) * 100 : 0;
+        $userProgress = $totalUsers > 0 ? ($activeUsers / $totalUsers) * 100 : 0;
         $invoiceProgress = ($freshInvoices + $upsaleInvoices) > 0 ? ($freshInvoices / ($freshInvoices + $upsaleInvoices)) * 100 : 0;
         $upsaleProgress = ($freshInvoices + $upsaleInvoices) > 0 ? ($upsaleInvoices / ($freshInvoices + $upsaleInvoices)) * 100 : 0;
         view()->share(compact('activeUsers', 'totalUsers', 'userProgress', 'activeAdmins', 'totalAdmins', 'adminProgress', 'freshInvoices', 'upsaleInvoices', 'invoiceProgress', 'upsaleProgress'));
