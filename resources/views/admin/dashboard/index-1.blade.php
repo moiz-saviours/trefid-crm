@@ -129,11 +129,11 @@
                                 </div>
                                 <div class="progress progress-md">
                                     <div class="progress-bar bg-white" role="progressbar"
-                                         style="width: {{ $invoiceProgress }}%;"
-                                         aria-valuenow="{{ $invoiceProgress }}" aria-valuemin="0" aria-valuemax="100">
+                                         style="width: {{ $freshInvoiceProgress }}%;"
+                                         aria-valuenow="{{ $freshInvoiceProgress }}" aria-valuemin="0" aria-valuemax="100">
                                     </div>
                                 </div>
-                                <small>{{ round($invoiceProgress, 2) }}% of Total Invoices</small>
+                                <small>{{ round($freshInvoiceProgress, 2) }}% of Total Invoices</small>
                             </div>
                         </div>
                     </div>
@@ -151,11 +151,11 @@
                                 </div>
                                 <div class="progress progress-md">
                                     <div class="progress-bar bg-white" role="progressbar"
-                                         style="width: {{ $upsaleProgress }}%;"
-                                         aria-valuenow="{{ $upsaleProgress }}" aria-valuemin="0" aria-valuemax="100">
+                                         style="width: {{ $upsalInvoiceProgress }}%;"
+                                         aria-valuenow="{{ $upsalInvoiceProgress }}" aria-valuemin="0" aria-valuemax="100">
                                     </div>
                                 </div>
-                                <small>{{ round($upsaleProgress, 2) }}% of Total Invoices</small>
+                                <small>{{ round($upsalInvoiceProgress, 2) }}% of Total Invoices</small>
                             </div>
                         </div>
                     </div>

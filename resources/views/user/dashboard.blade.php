@@ -62,86 +62,95 @@
         <div class="content__boxed">
             <div class="content__wrap">
                 <div class="row">
+
+                    <!-- Total Sales -->
                     <div class="col-md-3">
-                        <div class="card text-white mb-3 mb-xl-3" style="background-color: #2d3e50;">
-                            <div class="card-body py-3">
-                                <div class="d-flex align-items-center mb-3">
-                                    <div class="flex-shrink-0">
-                                        <i class="d-flex align-items-center justify-content-center demo-pli-add-user-star display-6"></i>
-                                    </div>
-                                    <div class="flex-grow-1 ms-4">
-                                        <h5 class=" text-white h2 mb-0">314,675</h5>
-                                        <p class="text-white text-opacity-75 mb-0">Visit Today</p>
+                        <div class="card text-white" style="background-color: var(--bs-primary);">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center mb-2">
+                                    <i class="demo-pli-cart-coin display-6"></i>
+                                    <div class="ms-4">
+                                        <h5 class="text-white h2 mb-0">${{ $totalSalesAmount }}</h5>
+                                        <p class="text-white text-opacity-75 mb-0">Total Sales</p>
                                     </div>
                                 </div>
-
-                                <div class="progress progress-md mb-2">
-                                    <div class="progress-bar bg-white" role="progressbar" style="width: 55%;" aria-valuenow="55" aria-valuemin="0" aria-valuemax="100"></div>
+                                <div class="progress progress-md">
+                                    <div class="progress-bar bg-white" role="progressbar"
+                                         style="width: {{ $targetAchieved }}%;"
+                                         aria-valuenow="{{ $targetAchieved }}" aria-valuemin="0" aria-valuemax="100">
+                                    </div>
                                 </div>
-
+                                <small>{{ round($targetAchieved, 2) }}% Active</small>
                             </div>
                         </div>
                     </div>
+
+                    <!-- Target -->
                     <div class="col-md-3">
-                        <div class="card text-white mb-3 mb-xl-3" style="background-color: #ff5722">
-                            <div class="card-body py-3">
-                                <div class="d-flex align-items-center mb-3">
-                                    <div class="flex-shrink-0">
-                                        <i class="d-flex align-items-center justify-content-center demo-pli-male-female display-6"></i>
-                                    </div>
-                                    <div class="flex-grow-1 ms-4">
-                                        <h5 class="text-white h2 mb-0">314,675</h5>
-                                        <p class="text-white text-opacity-75 mb-0">Total Customers</p>
+                        <div class="card text-white" style="background-color: var(--bs-primary);">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center mb-2">
+                                    <i class="demo-pli-cart-coin display-6"></i>
+                                    <div class="ms-4">
+                                        <h5 class="text-white h2 mb-0">${{ $userTarget }}</h5>
+                                        <p class="text-white text-opacity-75 mb-0">Target</p>
                                     </div>
                                 </div>
-
-                                <div class="progress progress-md mb-2">
-                                    <div class="progress-bar bg-white" role="progressbar" style="width: 55%;" aria-valuenow="55" aria-valuemin="0" aria-valuemax="100"></div>
+                                <div class="progress progress-md">
+                                    <div class="progress-bar bg-white" role="progressbar"
+                                         style="width: {{ $targetAchieved }}%;"
+                                         aria-valuenow="{{ $targetAchieved }}" aria-valuemin="0" aria-valuemax="100">
+                                    </div>
                                 </div>
-
+                                <small>{{ round($targetAchieved, 2) }}% Active</small>
                             </div>
                         </div>
                     </div>
+
+                    <!-- Fresh Invoices -->
                     <div class="col-md-3">
-                        <div class="card bg-indigo text-white mb-3 mb-xl-3">
-                            <div class="card-body py-3">
-                                <div class="d-flex align-items-center mb-3">
-                                    <div class="flex-shrink-0">
-                                        <i class="d-flex align-items-center justify-content-center demo-pli-folder-zip display-6"></i>
-                                    </div>
-                                    <div class="flex-grow-1 ms-4">
-                                        <h5 class="h2 mb-0">314,675</h5>
-                                        <p class="text-white text-opacity-75 mb-0">Total Projects</p>
+                        <div class="card text-white" style="background-color: var(--bs-primary);">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center mb-2">
+                                    <i class="demo-pli-cart-coin display-6"></i>
+                                    <div class="ms-4">
+                                        <h5 class="text-white h2 mb-0">${{ $freshInvoices }}</h5>
+                                        <p class="text-white text-opacity-75 mb-0">Fresh Sales</p>
                                     </div>
                                 </div>
-
-                                <div class="progress progress-md mb-2">
-                                    <div class="progress-bar bg-white" role="progressbar" style="width: 55%;" aria-valuenow="55" aria-valuemin="0" aria-valuemax="100"></div>
+                                <div class="progress progress-md">
+                                    <div class="progress-bar bg-white" role="progressbar"
+                                         style="width: {{ $freshInvoiceProgress }}%;"
+                                         aria-valuenow="{{ $freshInvoiceProgress }}" aria-valuemin="0" aria-valuemax="100">
+                                    </div>
                                 </div>
-
+                                <small>{{ round($freshInvoiceProgress, 2) }}% of Fresh Invoices</small>
                             </div>
                         </div>
                     </div>
+
+                    <!-- Upsale Invoices -->
                     <div class="col-md-3">
-                        <div class="card bg-success text-white mb-3 mb-xl-3">
-                            <div class="card-body py-3">
-                                <div class="d-flex align-items-center mb-3">
-                                    <div class="flex-shrink-0">
-                                        <i class="d-flex align-items-center justify-content-center demo-pli-file-pictures display-6"></i>
-                                    </div>
-                                    <div class="flex-grow-1 ms-4">
-                                        <h5 class="h2 mb-0">314,675</h5>
-                                        <p class="text-white text-opacity-75 mb-0">Total Tasks</p>
+                        <div class="card text-white" style="background-color: var(--bs-primary);">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center mb-2">
+                                    <i class="demo-pli-cart-coin display-6"></i>
+                                    <div class="ms-4">
+                                        <h5 class="text-white h2 mb-0">${{ $upsaleInvoices }}</h5>
+                                        <p class="text-white text-opacity-75 mb-0">UpSales</p>
                                     </div>
                                 </div>
-
-                                <div class="progress progress-md mb-2">
-                                    <div class="progress-bar bg-white" role="progressbar" style="width: 55%;" aria-valuenow="55" aria-valuemin="0" aria-valuemax="100"></div>
+                                <div class="progress progress-md">
+                                    <div class="progress-bar bg-white" role="progressbar"
+                                         style="width: {{ $upsaleInvoiceProgress }}%;"
+                                         aria-valuenow="{{ $upsaleInvoiceProgress }}" aria-valuemin="0" aria-valuemax="100">
+                                    </div>
                                 </div>
-
+                                <small>{{ round($upsaleInvoiceProgress, 2) }}% of Upsale Invoices</small>
                             </div>
                         </div>
                     </div>
+
                 </div>
             </div>
         </div>
@@ -165,7 +174,7 @@
                     <div class="col-md-3">
                         <div class="card">
                             <div class="card-body">
-                                <h5 class="card-title">Un Paid</h5>
+                                <h5 class="card-title">Due</h5>
                                 <div class="d-flex flex-column gap-3">
                                     <div class="progress progress-lg">
                                         <div class="progress-bar bg-danger" role="progressbar" style="width: 35%" aria-valuenow="35" aria-valuemin="0" aria-valuemax="100">10</div>
@@ -178,7 +187,7 @@
                     <div class="col-md-3">
                         <div class="card">
                             <div class="card-body">
-                                <h5 class="card-title">Partially Paid</h5>
+                                <h5 class="card-title">Refund</h5>
                                 <div class="d-flex flex-column gap-3">
                                     <div class="progress progress-lg">
                                         <div class="progress-bar bg-warning" role="progressbar" style="width: 35%" aria-valuenow="35" aria-valuemin="0" aria-valuemax="100">5</div>
@@ -191,7 +200,7 @@
                     <div class="col-md-3">
                         <div class="card">
                             <div class="card-body">
-                                <h5 class="card-title">Over Due</h5>
+                                <h5 class="card-title">Chargeback</h5>
                                 <div class="d-flex flex-column gap-3">
                                     <div class="progress progress-lg">
                                         <div class="progress-bar " role="progressbar" style="width: 35%" aria-valuenow="35" aria-valuemin="0" aria-valuemax="100">6</div>

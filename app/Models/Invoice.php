@@ -111,4 +111,8 @@ class Invoice extends Model
     {
         return $this->morphTo();
     }
+    public function payment()
+    {
+        return $this->hasOne(Payment::class, 'invoice_key', 'invoice_key');
+    }
 }
