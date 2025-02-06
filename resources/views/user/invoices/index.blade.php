@@ -17,11 +17,11 @@
                     </div>
                     <div class="filters">
                         <div class="actions">
-                            <h1><i class="fa fa-lock" aria-hidden="true"></i> Data Quality</h1>
+                            {{--                            <h1><i class="fa fa-lock" aria-hidden="true"></i> Data Quality</h1>--}}
 
-                            <button class="header_btn">Actions <i class="fa fa-caret-down" aria-hidden="true"></i>
-                            </button>
-                            <button class="header_btn">Import</button>
+{{--                            <button class="header_btn">Actions <i class="fa fa-caret-down" aria-hidden="true"></i>--}}
+{{--                            </button>--}}
+{{--                            <button class="header_btn">Import</button>--}}
                             <button class="create-contact open-form-btn">Create New</button>
                         </div>
                     </div>
