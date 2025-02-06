@@ -67,7 +67,7 @@ class ContactController extends Controller
                 'creator_id', 'status',
             ]) + ['special_key' => CustomerContact::generateSpecialKey()]);
         $customer_contact->save();
-        $customer_contact->loadMissing('team', 'brand','companies');
+        $customer_contact->loadMissing('team', 'brand','company');
         return response()->json(['data' => $customer_contact, 'success' => 'Contact Created Successfully!']);
     }
 
@@ -124,7 +124,8 @@ class ContactController extends Controller
             'country', 'zipcode', 'ip_address', 'status',
         ]));
         $customer_contact->save();
-        return response()->json(['success' => 'Contact Updated Successfully!']);
+        $customer_contact->loadMissing('team', 'brand','company');
+        return response()->json(['data' => $customer_contact,'success' => 'Contact Updated Successfully!']);
     }
 
     /**

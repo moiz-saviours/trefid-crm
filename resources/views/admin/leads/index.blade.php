@@ -97,7 +97,7 @@
                                                 <td class="align-middle text-center text-nowrap">{{$loop->iteration}}</td>
                                                 <td class="align-middle text-center text-nowrap">
                                                     @if(isset($lead->brand))
-                                                        <a href="{{route('admin.brand.edit',[$lead->brand->id])}}">{{ $lead->brand->name }}</a>
+                                                        <a href="{{route('admin.brand.index')}}">{{ $lead->brand->name }}</a>
                                                         <br> {{ $lead->brand->brand_key }}
                                                     @else
                                                         ---
@@ -105,7 +105,7 @@
                                                 </td>
                                                 <td class="align-middle text-center text-nowrap">
                                                     @if(isset($lead->team))
-                                                        <a href="{{route('admin.team.edit',[$lead->team->id])}}">{{ $lead->team->name }}</a>
+                                                        <a href="{{route('admin.team.index')}}">{{ $lead->team->name }}</a>
                                                         <br> {{ $lead->team->team_key }}
                                                     @else
                                                         ---

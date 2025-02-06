@@ -169,8 +169,8 @@
                                 const columns = `
                                     <td class="align-middle text-center text-nowrap"></td>
                                     <td class="align-middle text-center text-nowrap">${index}</td>
-                                    <td class="align-middle text-center text-nowrap">${brand ? `<a href="/admin/brand/edit/${brand.id}">${brand.name}</a><br> ${brand.brand_key}` : '---'}</td>
-                                    <td class="align-middle text-center text-nowrap">${team ? `<a href="/admin/team/edit/${team.id}">${team.name}</a><br> ${team.team_key}` : '---'}</td>
+                                    <td class="align-middle text-center text-nowrap">${brand ? `<a href="{{route('admin.brand.index')}}">${brand.name}</a><br> ${brand.brand_key}` : '---'}</td>
+                                    <td class="align-middle text-center text-nowrap">${team ? `<a href="{{route('admin.team.index')}}">${team.name}</a><br> ${team.team_key}` : '---'}</td>
                                     <td class="align-middle text-center text-nowrap"><a href="/admin/contact/edit/${id}" title="${company ? company.name : 'No associated company'}" >${name}</a></td>
                                     <td class="align-middle text-center text-nowrap">${email}</td>
                                     <td class="align-middle text-center text-nowrap">${phone}</td>
@@ -206,19 +206,22 @@
                     AjaxRequestPromise(url, formData, 'POST', {useToastr: true})
                         .then(response => {
                             if (response?.data) {
-                                const {id, brand_key, team_key, cus_company_key, name, email, phone,address,city,state,status } = response.data;
+                                const {id, brand, team, company, name, email, phone,address,city,state,status } = response.data;
                                 const index = table.row($('#tr-' + id)).index();
                                 const rowData = table.row(index).data();
+
                                 // Column 2: Brand
-                                if (decodeHtml(rowData[2]) !== brand_key) {
-                                    table.cell(index, 2).data(brand_key).draw();
+                                if (decodeHtml(rowData[2]) !== `${brand ? `<a href="{{route('admin.brand.index')}}">${brand.name}</a><br> ${brand.brand_key}` : '---'}`) {
+                                    table.cell(index, 2).data(`${brand ? `<a href="{{route('admin.brand.index')}}">${brand.name}</a><br> ${brand.brand_key}` : '---'}`).draw();
                                 }
-                                /** Column 3: Team */
-                                if (decodeHtml(rowData[3]) !== team_key) {
-                                    table.cell(index, 3).data(team_key).draw();
+
+                                // Column 3: Team
+                                if (decodeHtml(rowData[3]) !== `${team ? `<a href="{{route('admin.team.index')}}">${team.name}</a><br> ${team.team_key}` : '---'}`) {
+                                    table.cell(index, 3).data(`${team ? `<a href="{{route('admin.team.index')}}">${team.name}</a><br> ${team.team_key}` : '---'}`).draw();
                                 }
+
                                 // Column 4: name
-                                if (decodeHtml(rowData[4]) !== name) {
+                                if (decodeHtml(rowData[4]) !== `<a href="/admin/contact/edit/${id}" title="${company ? company.name : 'No associated company'}" >${name}</a>`) {
                                     table.cell(index, 4).data(name).draw();
                                 }
                                 // Column 5: email

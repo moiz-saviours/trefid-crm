@@ -82,7 +82,7 @@ class ContactController extends Controller
                 }
             }
         });
-        return response()->json(['client_contact' => $client_contact, 'success' => 'Record created successfully!']);
+        return response()->json(['data' => $client_contact, 'success' => 'Record created successfully!']);
     }
 
     /**
@@ -147,7 +147,7 @@ class ContactController extends Controller
                 }
             }
         });
-        return response()->json(['client_contact' => $client_contact, 'success' => 'Record updated successfully!']);
+        return response()->json(['data' => $client_contact, 'success' => 'Record updated successfully!']);
     }
 
     /**

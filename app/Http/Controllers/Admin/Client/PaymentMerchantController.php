@@ -95,7 +95,7 @@ class PaymentMerchantController extends Controller
             DB::commit();
             $client_account->refresh();
             $client_account->loadMissing('client_contact', 'client_company');
-            return response()->json(['client_account' => $client_account, 'success' => 'Record Created Successfully.']);
+            return response()->json(['data' => $client_account, 'success' => 'Record Created Successfully.']);
         } catch (\Exception $e) {
             DB::rollBack();
             return response()->json(['error' => ' Internal Server Error', 'message' => $e->getMessage(), 'line' => $e->getLine()], 500);
@@ -191,7 +191,7 @@ class PaymentMerchantController extends Controller
             DB::commit();
             $client_account->refresh();
             $client_account->loadMissing('client_contact', 'client_company');
-            return response()->json(['client_account' => $client_account, 'success' => 'Record Updated Successfully.']);
+            return response()->json(['data' => $client_account, 'success' => 'Record Updated Successfully.']);
         } catch (\Exception $e) {
             DB::rollBack();
             return response()->json(['error' => 'Internal Server Error', 'message' => $e->getMessage(), 'line' => $e->getLine()], 500);

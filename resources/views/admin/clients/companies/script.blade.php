@@ -199,7 +199,7 @@
                 AjaxRequestPromise(`{{ route("admin.client.company.store") }}`, formData, 'POST', {useToastr: true})
                     .then(response => {
                         if (response?.data) {
-                            const {id,c_contact_key, logo, name,email,url,description,status} = response.client_company;
+                            const {id,c_contact_key, logo, name,email,url,description,status} = response.data;
                             const logoUrl = isValidUrl(logo) ? logo : (logo ? `{{ asset('assets/images/clients/companies/logos') }}/${logo}` : '{{ asset("assets/images/no-image-available.png") }}');
                             const index = table.rows().count() + 1;
                             const columns = `
@@ -240,7 +240,7 @@
                 AjaxRequestPromise(url, formData, 'POST', {useToastr: true})
                     .then(response => {
                         if (response?.data) {
-                            const {id,client_contact, logo, name,email,url,description,status} = response.client_company;
+                            const {id,client_contact, logo, name,email,url,description,status} = response.data;
                             const logoUrl = isValidUrl(logo) ? logo : (logo ? `{{ asset('assets/images/clients/companies/logos') }}/${logo}` : `{{ asset("assets/images/no-image-available.png") }}`);
                             const index = table.row($('#tr-' + id)).index();
                             const rowData = table.row(index).data();

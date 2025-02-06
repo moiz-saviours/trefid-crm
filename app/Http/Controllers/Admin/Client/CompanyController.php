@@ -71,7 +71,7 @@ class CompanyController extends Controller
                     }
                 }
             });
-            return response()->json(['client_company' => $client_company, 'message' => 'Record created successfully.']);
+            return response()->json(['data' => $client_company, 'message' => 'Record created successfully.']);
 
         } catch (\Exception $e) {
             return response()->json(['error' => ' Internal Server Error', 'message' => $e->getMessage(), 'line' => $e->getLine()], 500);
@@ -148,7 +148,7 @@ class CompanyController extends Controller
                 }
             });
             $client_company->loadMissing('client_contact');
-            return response()->json(['client_company' => $client_company, 'message' => 'Record updated successfully.']);
+            return response()->json(['data' => $client_company, 'message' => 'Record updated successfully.']);
         } catch (\Exception $e) {
             return response()->json(['error' => ' Internal Server Error', 'message' => $e->getMessage(), 'line' => $e->getLine()], 500);
         }

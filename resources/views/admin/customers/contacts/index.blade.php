@@ -95,7 +95,7 @@
 
                                                 <td class="align-middle text-center text-nowrap">
                                                     @if(isset($customer_contact->brand))
-                                                        <a href="{{route('admin.brand.index',[$customer_contact->brand->id])}}">{{ $customer_contact->brand->name }}</a>
+                                                        <a href="{{route('admin.brand.index')}}">{{ $customer_contact->brand->name }}</a>
                                                         <br> {{ $customer_contact->brand->brand_key }}
                                                     @else
                                                         ---
@@ -103,7 +103,7 @@
                                                 </td>
                                                 <td class="align-middle text-center text-nowrap">
                                                     @if(isset($customer_contact->team))
-                                                        <a href="{{route('admin.team.index',[$customer_contact->team->id])}}">{{ $customer_contact->team->name }}</a>
+                                                        <a href="{{route('admin.team.index')}}">{{ $customer_contact->team->name }}</a>
                                                         <br> {{ $customer_contact->team->team_key }}
                                                     @else
                                                         ---

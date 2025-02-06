@@ -170,7 +170,7 @@
                     AjaxRequestPromise(`{{ route("admin.client.contact.store") }}`, formData, 'POST', {useToastr: true})
                         .then(response => {
                             if (response?.data) {
-                                const {id, name, email, phone, address, city,state,status} = response.client_contact;
+                                const {id, name, email, phone, address, city,state,status} = response.data;
                                 const index = table.rows().count() + 1;
                                 const columns = `
                                     <td class="align-middle text-center text-nowrap"></td>
@@ -208,7 +208,7 @@
                     AjaxRequestPromise(url, formData, 'POST', {useToastr: true})
                         .then(response => {
                             if (response?.data) {
-                                const {id, name, email, phone, address, city,state,status} = response.client_contact;
+                                const {id, name, email, phone, address, city,state,status} = response.data;
                                 const index = table.row($('#tr-' + id)).index();
                                 const rowData = table.row(index).data();
                                 // Column 2: Name
