@@ -140,7 +140,7 @@
                 </div>
 
                 <div class="form-group mb-3">
-                    <label for="limit" class="form-label">Limit</label>
+                    <label for="limit" class="form-label">Max Transaction</label>
                     <input type="number" class="form-control" id="limit" name="limit" step="1"
                            min="1"
                            value="{{ old('limit') }}" required>
@@ -150,7 +150,7 @@
                 </div>
 
                 <div class="form-group mb-3">
-                    <label for="capacity" class="form-label">Capacity</label>
+                    <label for="capacity" class="form-label">Monthly Volume</label>
                     <input type="number" class="form-control" id="capacity" name="capacity" step="1"
                            min="1"
                            value="{{ old('capacity') }}" required>
