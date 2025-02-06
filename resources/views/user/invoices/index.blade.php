@@ -44,22 +44,22 @@
                                     <div class="container">
                                         <div class="row fltr-sec">
                                             <div class="col-md-8">
-                                                <ul class="custm-filtr">
-                                                    <div class="table-li">
-                                                        <li class="">Company Owner <i class="fa fa-caret-down"
-                                                                                      aria-hidden="true"></i></li>
-                                                        <li class="">Create date <i class="fa fa-caret-down"
-                                                                                    aria-hidden="true"></i></li>
-                                                        <li class="">Last activity date <i class="fa fa-caret-down"
-                                                                                           aria-hidden="true"></i>
-                                                        </li>
-                                                        <li class="">Lead status <i class="fa fa-caret-down"
-                                                                                    aria-hidden="true"></i></li>
-                                                        <li class=""><i class="fa fa-bars" aria-hidden="true"></i> All
-                                                            filters
-                                                        </li>
-                                                    </div>
-                                                </ul>
+{{--                                                <ul class="custm-filtr">--}}
+{{--                                                    <div class="table-li">--}}
+{{--                                                        <li class="">Company Owner <i class="fa fa-caret-down"--}}
+{{--                                                                                      aria-hidden="true"></i></li>--}}
+{{--                                                        <li class="">Create date <i class="fa fa-caret-down"--}}
+{{--                                                                                    aria-hidden="true"></i></li>--}}
+{{--                                                        <li class="">Last activity date <i class="fa fa-caret-down"--}}
+{{--                                                                                           aria-hidden="true"></i>--}}
+{{--                                                        </li>--}}
+{{--                                                        <li class="">Lead status <i class="fa fa-caret-down"--}}
+{{--                                                                                    aria-hidden="true"></i></li>--}}
+{{--                                                        <li class=""><i class="fa fa-bars" aria-hidden="true"></i> All--}}
+{{--                                                            filters--}}
+{{--                                                        </li>--}}
+{{--                                                    </div>--}}
+{{--                                                </ul>--}}
                                             </div>
                                             <div class="col-md-4 right-icon" id="right-icon-0"></div>
                                         </div>
@@ -188,22 +188,22 @@
                                     <div class="container">
                                         <div class="row fltr-sec">
                                             <div class="col-md-8">
-                                                <ul class="custm-filtr">
-                                                    <div class="table-li">
-                                                        <li class="">Company Owner <i class="fa fa-caret-down"
-                                                                                      aria-hidden="true"></i></li>
-                                                        <li class="">Create date <i class="fa fa-caret-down"
-                                                                                    aria-hidden="true"></i></li>
-                                                        <li class="">Last activity date <i class="fa fa-caret-down"
-                                                                                           aria-hidden="true"></i>
-                                                        </li>
-                                                        <li class="">Lead status <i class="fa fa-caret-down"
-                                                                                    aria-hidden="true"></i></li>
-                                                        <li class=""><i class="fa fa-bars" aria-hidden="true"></i> All
-                                                            filters
-                                                        </li>
-                                                    </div>
-                                                </ul>
+{{--                                                <ul class="custm-filtr">--}}
+{{--                                                    <div class="table-li">--}}
+{{--                                                        <li class="">Company Owner <i class="fa fa-caret-down"--}}
+{{--                                                                                      aria-hidden="true"></i></li>--}}
+{{--                                                        <li class="">Create date <i class="fa fa-caret-down"--}}
+{{--                                                                                    aria-hidden="true"></i></li>--}}
+{{--                                                        <li class="">Last activity date <i class="fa fa-caret-down"--}}
+{{--                                                                                           aria-hidden="true"></i>--}}
+{{--                                                        </li>--}}
+{{--                                                        <li class="">Lead status <i class="fa fa-caret-down"--}}
+{{--                                                                                    aria-hidden="true"></i></li>--}}
+{{--                                                        <li class=""><i class="fa fa-bars" aria-hidden="true"></i> All--}}
+{{--                                                            filters--}}
+{{--                                                        </li>--}}
+{{--                                                    </div>--}}
+{{--                                                </ul>--}}
                                             </div>
                                             <div class="col-md-4 right-icon" id="right-icon-1"></div>
                                         </div>
