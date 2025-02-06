@@ -44,22 +44,22 @@
                                     <div class="container">
                                         <div class="row fltr-sec">
                                             <div class="col-md-8">
-                                                <ul class="custm-filtr">
-                                                    <div class="table-li">
-                                                        <li class="">Company Owner <i class="fa fa-caret-down"
-                                                                                      aria-hidden="true"></i></li>
-                                                        <li class="">Create date <i class="fa fa-caret-down"
-                                                                                    aria-hidden="true"></i></li>
-                                                        <li class="">Last activity date <i class="fa fa-caret-down"
-                                                                                           aria-hidden="true"></i>
-                                                        </li>
-                                                        <li class="">Lead status <i class="fa fa-caret-down"
-                                                                                    aria-hidden="true"></i></li>
-                                                        <li class=""><i class="fa fa-bars" aria-hidden="true"></i> All
-                                                            filters
-                                                        </li>
-                                                    </div>
-                                                </ul>
+{{--                                                <ul class="custm-filtr">--}}
+{{--                                                    <div class="table-li">--}}
+{{--                                                        <li class="">Company Owner <i class="fa fa-caret-down"--}}
+{{--                                                                                      aria-hidden="true"></i></li>--}}
+{{--                                                        <li class="">Create date <i class="fa fa-caret-down"--}}
+{{--                                                                                    aria-hidden="true"></i></li>--}}
+{{--                                                        <li class="">Last activity date <i class="fa fa-caret-down"--}}
+{{--                                                                                           aria-hidden="true"></i>--}}
+{{--                                                        </li>--}}
+{{--                                                        <li class="">Lead status <i class="fa fa-caret-down"--}}
+{{--                                                                                    aria-hidden="true"></i></li>--}}
+{{--                                                        <li class=""><i class="fa fa-bars" aria-hidden="true"></i> All--}}
+{{--                                                            filters--}}
+{{--                                                        </li>--}}
+{{--                                                    </div>--}}
+{{--                                                </ul>--}}
                                             </div>
                                             <div class="col-md-4 right-icon" id="right-icon-0"></div>
                                         </div>
@@ -97,7 +97,7 @@
                                                 </td>
                                                 <td class="align-middle text-center text-nowrap">
                                                     @if(isset($invoice->brand))
-                                                        <a href="{{route('admin.brand.edit',[$invoice->brand->id])}}">{{ $invoice->brand->name }}</a>
+                                                        <a href="">{{ $invoice->brand->name }}</a>
                                                         <br> {{ $invoice->brand->brand_key }}
                                                     @else
                                                         ---
@@ -105,7 +105,7 @@
                                                 </td>
                                                 <td class="align-middle text-center text-nowrap">
                                                     @if(isset($invoice->team))
-                                                        <a href="{{route('admin.team.edit',[$invoice->team->id])}}">{{ $invoice->team->name }}</a>
+                                                        <a href="">{{ $invoice->team->name }}</a>
                                                         <br> {{ $invoice->team->team_key }}
                                                     @else
                                                         ---
@@ -113,7 +113,7 @@
                                                 </td>
                                                 <td class="align-middle text-center text-nowrap">
                                                     @if(isset($invoice->customer_contact))
-                                                        <a href="{{route('admin.customer.contact.edit',[$invoice->customer_contact->id])}}">{{ $invoice->customer_contact->name }}</a>
+                                                        <a href="{{route('customer.contact.edit',[$invoice->customer_contact->id])}}">{{ $invoice->customer_contact->name }}</a>
                                                         <br> {{ $invoice->customer_contact->special_key }}
                                                     @else
                                                         ---
@@ -121,7 +121,7 @@
                                                 </td>
                                                 <td class="align-middle text-center text-nowrap">
                                                     @if(isset($invoice->agent_id , $invoice->agent_type ,$invoice->agent ))
-                                                        <a href="{{route('admin.employee.edit',[$invoice->agent->id])}}">{{ $invoice->agent->name }}</a>
+                                                        <a href="">{{ $invoice->agent->name }}</a>
                                                     @else
                                                         ---
                                                     @endif
@@ -188,22 +188,22 @@
                                     <div class="container">
                                         <div class="row fltr-sec">
                                             <div class="col-md-8">
-                                                <ul class="custm-filtr">
-                                                    <div class="table-li">
-                                                        <li class="">Company Owner <i class="fa fa-caret-down"
-                                                                                      aria-hidden="true"></i></li>
-                                                        <li class="">Create date <i class="fa fa-caret-down"
-                                                                                    aria-hidden="true"></i></li>
-                                                        <li class="">Last activity date <i class="fa fa-caret-down"
-                                                                                           aria-hidden="true"></i>
-                                                        </li>
-                                                        <li class="">Lead status <i class="fa fa-caret-down"
-                                                                                    aria-hidden="true"></i></li>
-                                                        <li class=""><i class="fa fa-bars" aria-hidden="true"></i> All
-                                                            filters
-                                                        </li>
-                                                    </div>
-                                                </ul>
+{{--                                                <ul class="custm-filtr">--}}
+{{--                                                    <div class="table-li">--}}
+{{--                                                        <li class="">Company Owner <i class="fa fa-caret-down"--}}
+{{--                                                                                      aria-hidden="true"></i></li>--}}
+{{--                                                        <li class="">Create date <i class="fa fa-caret-down"--}}
+{{--                                                                                    aria-hidden="true"></i></li>--}}
+{{--                                                        <li class="">Last activity date <i class="fa fa-caret-down"--}}
+{{--                                                                                           aria-hidden="true"></i>--}}
+{{--                                                        </li>--}}
+{{--                                                        <li class="">Lead status <i class="fa fa-caret-down"--}}
+{{--                                                                                    aria-hidden="true"></i></li>--}}
+{{--                                                        <li class=""><i class="fa fa-bars" aria-hidden="true"></i> All--}}
+{{--                                                            filters--}}
+{{--                                                        </li>--}}
+{{--                                                    </div>--}}
+{{--                                                </ul>--}}
                                             </div>
                                             <div class="col-md-4 right-icon" id="right-icon-1"></div>
                                         </div>

@@ -19,9 +19,9 @@
                         <div class="actions">
                             <h1><i class="fa fa-lock" aria-hidden="true"></i> Data Quality</h1>
 
-                            <button class="header_btn">Actions <i class="fa fa-caret-down" aria-hidden="true"></i>
+                            <button class="header_btn" disabled>Actions <i class="fa fa-caret-down" aria-hidden="true"></i>
                             </button>
-                            <button class="header_btn">Import</button>
+                            <button class="header_btn" disabled>Import</button>
                             <button class="create-contact open-form-btn ">Create New</button>
                         </div>
                     </div>
@@ -50,22 +50,22 @@
                                     <div class="container">
                                         <div class="row fltr-sec">
                                             <div class="col-md-8">
-                                                <ul class="custm-filtr">
-                                                    <div class="table-li">
-                                                        <li class="">Company Owner <i class="fa fa-caret-down"
-                                                                                       aria-hidden="true"></i></li>
-                                                        <li class="">Create date <i class="fa fa-caret-down"
-                                                                                    aria-hidden="true"></i></li>
-                                                        <li class="">Last activity date <i class="fa fa-caret-down"
-                                                                                           aria-hidden="true"></i>
-                                                        </li>
-                                                        <li class="">Lead status <i class="fa fa-caret-down"
-                                                                                    aria-hidden="true"></i></li>
-                                                        <li class=""><i class="fa fa-bars" aria-hidden="true"></i> All
-                                                            filters
-                                                        </li>
-                                                    </div>
-                                                </ul>
+{{--                                                <ul class="custm-filtr">--}}
+{{--                                                    <div class="table-li">--}}
+{{--                                                        <li class="">Company Owner <i class="fa fa-caret-down"--}}
+{{--                                                                                       aria-hidden="true"></i></li>--}}
+{{--                                                        <li class="">Create date <i class="fa fa-caret-down"--}}
+{{--                                                                                    aria-hidden="true"></i></li>--}}
+{{--                                                        <li class="">Last activity date <i class="fa fa-caret-down"--}}
+{{--                                                                                           aria-hidden="true"></i>--}}
+{{--                                                        </li>--}}
+{{--                                                        <li class="">Lead status <i class="fa fa-caret-down"--}}
+{{--                                                                                    aria-hidden="true"></i></li>--}}
+{{--                                                        <li class=""><i class="fa fa-bars" aria-hidden="true"></i> All--}}
+{{--                                                            filters--}}
+{{--                                                        </li>--}}
+{{--                                                    </div>--}}
+{{--                                                </ul>--}}
                                             </div>
                                             <div class="col-md-4 right-icon" id="right-icon-0"></div>
                                         </div>
@@ -73,7 +73,7 @@
                                 </div>
                                 <div class="card-body">
                                     <table id="allContactsTable" class="table table-striped datatable-exportable
-                            stripe row-border order-column nowrap initTable ">
+                                        stripe row-border order-column nowrap initTable ">
                                         <thead>
                                         <tr>
                                             <th><input type="checkbox"></th>
@@ -144,22 +144,22 @@
                                     <div class="container">
                                         <div class="row fltr-sec">
                                             <div class="col-md-8">
-                                                <ul class="custm-filtr">
-                                                    <div class="table-li">
-                                                        <li class="">Company Owner <i class="fa fa-caret-down"
-                                                                                      aria-hidden="true"></i></li>
-                                                        <li class="">Create date <i class="fa fa-caret-down"
-                                                                                    aria-hidden="true"></i></li>
-                                                        <li class="">Last activity date <i class="fa fa-caret-down"
-                                                                                           aria-hidden="true"></i>
-                                                        </li>
-                                                        <li class="">Lead status <i class="fa fa-caret-down"
-                                                                                    aria-hidden="true"></i></li>
-                                                        <li class=""><i class="fa fa-bars" aria-hidden="true"></i> All
-                                                            filters
-                                                        </li>
-                                                    </div>
-                                                </ul>
+{{--                                                <ul class="custm-filtr">--}}
+{{--                                                    <div class="table-li">--}}
+{{--                                                        <li class="">Company Owner <i class="fa fa-caret-down"--}}
+{{--                                                                                      aria-hidden="true"></i></li>--}}
+{{--                                                        <li class="">Create date <i class="fa fa-caret-down"--}}
+{{--                                                                                    aria-hidden="true"></i></li>--}}
+{{--                                                        <li class="">Last activity date <i class="fa fa-caret-down"--}}
+{{--                                                                                           aria-hidden="true"></i>--}}
+{{--                                                        </li>--}}
+{{--                                                        <li class="">Lead status <i class="fa fa-caret-down"--}}
+{{--                                                                                    aria-hidden="true"></i></li>--}}
+{{--                                                        <li class=""><i class="fa fa-bars" aria-hidden="true"></i> All--}}
+{{--                                                            filters--}}
+{{--                                                        </li>--}}
+{{--                                                    </div>--}}
+{{--                                                </ul>--}}
                                             </div>
                                             <div class="col-md-4 right-icon" id="right-icon-1">
                                                 {{--                                        <div class="right-icon">--}}
@@ -172,19 +172,18 @@
                                     </div>
                                 </div>
                                 <div class="card-body">
-                                    <table id="myCompaniesTable" class="table table-striped datatable-exportable
-                            stripe row-border order-column nowrap
-                            initTable">
+                                    <table id="allContactsTable" class="table table-striped datatable-exportable
+                                        stripe row-border order-column nowrap initTable ">
                                         <thead>
                                         <tr>
                                             <th><input type="checkbox"></th>
-                                            <th>ID</th>
-                                            <th>NAME</th>
-                                            <th>EMAIL</th>
-                                            <th>PHONE NUMBER</th>
-                                            <th>CONTACT OWNER</th>
-                                            <th>PRIMARY COMPANY</th>
-                                            <th>CREATE DATE</th>
+                                            <th class="align-middle text-center text-nowrap">ID</th>
+                                            <th class="align-middle text-center text-nowrap">NAME</th>
+                                            <th class="align-middle text-center text-nowrap">EMAIL</th>
+                                            <th class="align-middle text-center text-nowrap">PHONE NUMBER</th>
+                                            <th class="align-middle text-center text-nowrap">CONTACT OWNER</th>
+                                            <th class="align-middle text-center text-nowrap">PRIMARY COMPANY</th>
+                                            <th class="align-middle text-center text-nowrap">CREATE DATE</th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -194,9 +193,9 @@
                                                 <td class="align-middle text-center text-nowrap">{{$loop->iteration}}</td>
                                                 <td class="align-middle text-center text-nowrap">{{$contact->name}}</td>
                                                 <td class="align-middle text-center text-nowrap">{{$contact->email}}</td>
-                                                <td class="align-middle text-center text-nowrap">{{$contact->phone_number}}</td>
-                                                <td class="align-middle text-center text-nowrap">{{optional($contact->loggable)->name}}</td>
-                                                <td class="align-middle text-center text-nowrap">{{optional($contact->company)->name}}</td>
+                                                <td class="align-middle text-center text-nowrap">{{$contact->phone_number ?? "---"}}</td>
+                                                <td class="align-middle text-center text-nowrap">{{optional($contact->loggable)->name  ?? "---"}}</td>
+                                                <td class="align-middle text-center text-nowrap">{{optional($contact->company)->name  ?? "---"}}</td>
 
                                                 <td class="align-middle text-center text-nowrap">
                                                     @if ($contact->created_at->isToday())

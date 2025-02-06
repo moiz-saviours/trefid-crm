@@ -20,9 +20,9 @@
                         <div class="actions">
                             <h1><i class="fa fa-lock" aria-hidden="true"></i> Data Quality</h1>
 
-                            <button class="header_btn">Actions <i class="fa fa-caret-down" aria-hidden="true"></i>
+                            <button class="header_btn" disabled>Actions <i class="fa fa-caret-down" aria-hidden="true"></i>
                             </button>
-                            <button class="header_btn">Import</button>
+                            <button class="header_btn" disabled>Import</button>
                             <button class="create-contact open-form-btn void">Create New</button>
                         </div>
                     </div>
@@ -40,10 +40,10 @@
                                         class="fa fa-times close-icon"
                                         aria-hidden="true"></i></li>
                             @endforeach
-                                <li class="tab-item"
-                                    data-tab="tab-pane-"><i
-                                        class="fa fa-times close-icon"
-                                        aria-hidden="true"></i></li>
+{{--                                <li class="tab-item"--}}
+{{--                                    data-tab="tab-pane-"><i--}}
+{{--                                        class="fa fa-times close-icon"--}}
+{{--                                        aria-hidden="true"></i></li>--}}
                         </ul>
                         {{--                        <div class="tab-buttons" >--}}
                         {{--                            <button class="btn btn-primary"><i class="fa fa-add"></i> Views (2/5)</button>--}}
@@ -89,7 +89,7 @@
                                                 <th class="align-middle text-center text-nowrap">Logo</th>
                                                 <th class="align-middle text-center text-nowrap">Name</th>
                                                 <th class="align-middle text-center text-nowrap">Url</th>
-                                                <th class="align-middle text-center text-nowrap">Action</th>
+{{--                                                <th class="align-middle text-center text-nowrap">Action</th>--}}
                                             </tr>
                                             </thead>
                                             <tbody>
@@ -117,11 +117,11 @@
                                                     </td>
                                                     <td class="align-middle text-center text-nowrap">{{$brand->name}} <br> {{$brand->brand_key}} </td>
                                                     <td class="align-middle text-center text-nowrap">{{$brand->url}}</td>
-                                                    <td class="align-middle text-center table-actions">
-                                                        <button type="button" class="btn btn-sm btn-primary editBtn"
-                                                                data-id="{{ $brand->id }}" title="Edit"><i
-                                                                class="fas fa-edit"></i></button>
-                                                    </td>
+{{--                                                    <td class="align-middle text-center table-actions">--}}
+{{--                                                        <button type="button" class="btn btn-sm btn-primary editBtn"--}}
+{{--                                                                data-id="{{ $brand->id }}" title="Edit"><i--}}
+{{--                                                                class="fas fa-edit"></i></button>--}}
+{{--                                                    </td>--}}
                                                 </tr>
                                             @endforeach
                                             </tbody>

@@ -93,7 +93,7 @@
                     selector: 'td:first-child'
                 },
                 fixedColumns: {
-                    start: 6
+                    start: 1
                 },
             });
             table.buttons().container().appendTo(`#right-icon-${index}`);

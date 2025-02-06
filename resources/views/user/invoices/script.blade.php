@@ -25,7 +25,9 @@
             return decodeHtmlEntities(data);
         };
 
-        const exportButtons = ['copy', 'excel', 'csv', 'pdf', 'print'].map(type => ({
+        const exportButtons = ['copy', 'excel', 'csv'
+            //, 'pdf'
+            , 'print'].map(type => ({
             extend: type,
             text: type == "copy"
                 ? '<i class="fas fa-copy"></i>'
@@ -92,7 +94,7 @@
                     selector: 'td:first-child'
                 },
                 fixedColumns: {
-                    start: 2
+                    start: 1
                 },
             })
             table.buttons().container().appendTo(`#right-icon-${index}`);
@@ -429,8 +431,8 @@
                             }
 
                             // Column 6: Customer Contact
-                            if (decodeHtml(rowData[5]) !== `${customer_contact ? `<a href="/admin/contact/edit/${customer_contact.id}">${customer_contact.name}</a>` : '---'}`) {
-                                table.cell(index, 5).data(`${customer_contact ? `<a href="/admin/contact/edit/${customer_contact.id}">${customer_contact.name}</a>` : '---'}`).draw();
+                            if (decodeHtml(rowData[5]) !== `${customer_contact ? `<a href="/user/contact/edit/${customer_contact.id}">${customer_contact.name}</a>` : '---'}`) {
+                                table.cell(index, 5).data(`${customer_contact ? `<a href="/user/contact/edit/${customer_contact.id}">${customer_contact.name}</a>` : '---'}`).draw();
                             }
 
                             // Column 7: Agent
