@@ -228,11 +228,11 @@
                             <span class="invoice-key">${invoice_key}</span>
                         </td>
                         <td class="align-middle text-center text-nowrap">
-                            ${brand ? `<a href="/admin/brand/edit/${brand.id}">${brand.name}</a><br> ${brand.brand_key}` : '---'}
+                            ${brand ? `<a href="{{route('admin.brand.index')}}">${brand.name}</a><br> ${brand.brand_key}` : '---'}
                         </td>
-                        <td class="align-middle text-center text-nowrap">${team ? `<a href="/admin/team/edit/${team.id}">${team.name}</a><br> ${team.team_key}` : '---'}</td>
+                        <td class="align-middle text-center text-nowrap">${team ? `<a href="{{route('admin.team.index')}}">${team.name}</a><br> ${team.team_key}` : '---'}</td>
                         <td class="align-middle text-center text-nowrap">${customer_contact ? `<a href="/admin/contact/edit/${customer_contact.id}">${customer_contact.name}</a>` : '---'}</td>
-                        <td class="align-middle text-center text-nowrap">${agent ? `<a href="/admin/employee/edit/${agent.id}">${agent.name}</a>` : '---'}</td>
+                        <td class="align-middle text-center text-nowrap">${agent ? `<a href="{{route('admin.employee.index')}}">${agent.name}</a>` : '---'}</td>
                         <td class="align-middle space-between text-nowrap" style="text-align: left;">
                             <div style="display: flex; justify-content: space-between; gap: 10px;">
                                 <span style="width: 120px;">Amount:</span>
@@ -301,13 +301,13 @@
                             }
 
                             // Column 4: Brand
-                            if (decodeHtml(rowData[3]) !== `${brand ? `<a href="/admin/brand/edit/${brand.id}">${brand.name}</a><br> ${brand.brand_key}` : '---'}`) {
-                                table.cell(index, 3).data(`${brand ? `<a href="/admin/brand/edit/${brand.id}">${brand.name}</a><br> ${brand.brand_key}` : '---'}`).draw();
+                            if (decodeHtml(rowData[3]) !== `${brand ? `<a href="{{route('admin.brand.index')}}">${brand.name}</a><br> ${brand.brand_key}` : '---'}`) {
+                                table.cell(index, 3).data(`${brand ? `<a href="{{route('admin.brand.index')}}">${brand.name}</a><br> ${brand.brand_key}` : '---'}`).draw();
                             }
 
                             // Column 5: Team
-                            if (decodeHtml(rowData[4]) !== `${team ? `<a href="/admin/team/edit/${team.id}">${team.name}</a><br> ${team.team_key}` : '---'}`) {
-                                table.cell(index, 4).data(`${team ? `<a href="/admin/team/edit/${team.id}">${team.name}</a><br> ${team.team_key}` : '---'}`).draw();
+                            if (decodeHtml(rowData[4]) !== `${team ? `<a href="{{route('admin.team.index')}}">${team.name}</a><br> ${team.team_key}` : '---'}`) {
+                                table.cell(index, 4).data(`${team ? `<a href="{{route('admin.team.index')}}">${team.name}</a><br> ${team.team_key}` : '---'}`).draw();
                             }
 
                             // Column 6: Customer Contact
@@ -315,8 +315,8 @@
                                 table.cell(index, 5).data(`${customer_contact ? `<a href="/admin/contact/edit/${customer_contact.id}">${customer_contact.name}</a>` : '---'}`).draw();
                             }
                             // Column 7: Agent
-                            if (decodeHtml(rowData[6]) !== `${agent ? `<a href="/admin/employee/edit/${agent.id}">${agent.name}</a>` : '---'}`) {
-                                table.cell(index, 6).data(`${agent ? `<a href="/admin/employee/edit/${agent.id}">${agent.name}</a>` : '---'}`).draw();
+                            if (decodeHtml(rowData[6]) !== `${agent ? `<a href="{{route('admin.employee.index')}}">${agent.name}</a>` : '---'}`) {
+                                table.cell(index, 6).data(`${agent ? `<a href="{{route('admin.employee.index')}}">${agent.name}</a>` : '---'}`).draw();
                             }
 
                             const newContent = `
