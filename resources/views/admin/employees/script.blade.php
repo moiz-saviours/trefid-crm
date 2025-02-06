@@ -158,6 +158,7 @@
             $('#designation').val(data.designation);
             $('#gender').val(data.gender);
             $('#phone_number').val(data.phone_number);
+            $('#target').val(data.target);
             $('#address').val(data.address);
             $('#status').val(data.status);
             if (data.image) {
@@ -192,7 +193,7 @@
                 AjaxRequestPromise(`{{ route("admin.employee.store") }}`, formData, 'POST', {useToastr: true})
                     .then(response => {
                         if (response?.data) {
-                            const {id, image, name, email, designation, team_name, status} = response.data;
+                            const {id, image, name, email, designation, team_name, target, status} = response.data;
                             const imageUrl = isValidUrl(image) ? image : (image ? `{{ asset('assets/images/employees/') }}/${image}` : '{{ asset("assets/images/no-image-available.png") }} ');
                             const index = table.rows().count() + 1;
                             const columns = `
@@ -208,6 +209,7 @@
                                 <td class="align-middle text-center text-nowrap">${email}</td>
                                 <td class="align-middle text-center text-nowrap">${designation}</td>
                                 <td class="align-middle text-center text-nowrap">${team_name??""}</td>
+                                <td class="align-middle text-center text-nowrap">${target}</td>
                                 <td class="align-middle text-center text-nowrap">
                                     <input type="checkbox" class="status-toggle change-status" data-id="${id}" ${status == 1 ? 'checked' : ''} data-bs-toggle="toggle">
                                 </td>
@@ -235,7 +237,7 @@
                 AjaxRequestPromise(url, formData, 'POST', {useToastr: true})
                     .then(response => {
                         if (response?.data) {
-                            const {id, image, name, email, designation, team_name, status} = response.data;
+                            const {id, image, name, email, designation, team_name, target, status} = response.data;
                             const imageUrl = isValidUrl(image) ? image : (image ? `{{ asset('assets/images/employees/') }}/${image}` : `{{ asset("assets/images/no-image-available.png") }}`);
                             const index = table.row($('#tr-' + id)).index();
                             const rowData = table.row(index).data();
@@ -262,10 +264,14 @@
                             if (decodeHtml(rowData[6]) !== team_name) {
                                 table.cell(index, 6).data(team_name).draw();
                             }
+                            // Column 6: Team
+                            if (decodeHtml(rowData[7]) !== target) {
+                                table.cell(index, 7).data(target).draw();
+                            }
                             // Column 7: Status
                             const statusHtml = `<input type="checkbox" class="status-toggle change-status" data-id="${id}" ${status == 1 ? "checked" : ""} data-bs-toggle="toggle">`;
-                            if (decodeHtml(rowData[7]) !== statusHtml) {
-                                table.cell(index, 7).data(statusHtml).draw();
+                            if (decodeHtml(rowData[8]) !== statusHtml) {
+                                table.cell(index, 8).data(statusHtml).draw();
                             }
                             $('#manage-form')[0].reset();
                             $('#image-display').attr('src', null);
@@ -284,7 +290,7 @@
                 .then(response => {
                     const rowIndex = table.row($('#tr-' + rowId)).index();
                     const statusHtml = `<input type="checkbox" class="status-toggle change-status" data-id="${rowId}" ${status ? "checked" : ""} data-bs-toggle="toggle">`;
-                    table.cell(rowIndex, 7).data(statusHtml).draw();
+                    table.cell(rowIndex, 8).data(statusHtml).draw();
                 })
                 .catch(() => {
                     statusCheckbox.prop('checked', !status);

@@ -78,15 +78,6 @@
                 </div>
 
                 <div class="form-group mb-3">
-                    <label for="address" class="form-label">Address</label>
-                    <textarea class="form-control" id="address" name="address" rows="3"></textarea>
-                    @error('address')
-                    <span class="text-danger">{{ $message }}</span>
-                    @enderror
-                </div>
-
-
-                <div class="form-group mb-3">
                     <label for="image" class="form-label d-block">Profile Image (Optional)</label>
 
                     <div class="d-flex align-items-start">
@@ -103,7 +94,8 @@
                         <!-- Input Fields (Right) -->
                         <div class="flex-grow-1">
                             <div class="">
-                                <input type="file" class="form-control" id="image" name="image" accept="image/*" aria-describedby="imageHelp">
+                                <input type="file" class="form-control" id="image" name="image" accept="image/*"
+                                       aria-describedby="imageHelp">
                             </div>
                             <div class="input-group">
                                 <input type="url" class="form-control" id="image_url" name="image_url"
@@ -123,6 +115,21 @@
                     </div>
                 </div>
 
+                <div class="form-group mb-3">
+                    <label for="target" class="form-label">Target</label>
+                    <input type="number" class="form-control" id="target" name="target" placeholder="25000"/>
+                    @error('target')
+                    <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
+
+                <div class="form-group mb-3">
+                    <label for="address" class="form-label">Address</label>
+                    <textarea class="form-control" id="address" name="address" rows="3"></textarea>
+                    @error('address')
+                    <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
 
                 <div class="form-group mb-3">
                     <label for="createPassword" class="form-label">Password</label>
