@@ -79,7 +79,7 @@
                 order: [[1, 'desc']],
                 responsive: false,
                 scrollX: true,
-                scrollY: 300,
+                scrollY: 400,
                 scrollCollapse: true,
                 paging: true,
                 columnDefs: [
