@@ -99,7 +99,7 @@
             }
 
             .custom-tabs {
-                margin: 10px 0px;
+                margin: 0px 0px 4px 0px;
                 display: flex;
             }
 
