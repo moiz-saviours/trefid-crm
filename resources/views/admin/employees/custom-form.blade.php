@@ -1,3 +1,30 @@
+@push('style')
+    <style>
+        .generatePassword {
+            padding: 8px;
+            cursor: pointer;
+            font-size: 18px;
+            background-color: var(--bs-primary);
+            border-radius: 5px;
+            height: 35px;
+            width: 35px;
+            color: var(--bs-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 5px;
+            transition: background-color 0.3s ease;
+            margin-bottom: 15px;
+
+        }
+
+        .generatePassword:hover {
+            color: var(--bs-primary);
+            background-color: var(--bs-light);
+            border: 1px solid var(--bs-primary);
+        }
+    </style>
+@endpush
 <div class="custom-form">
     <form id="manage-form" class="manage-form" method="POST" enctype="multipart/form-data">
         <div class="form-container" id="formContainer">
@@ -94,6 +121,19 @@
                             @enderror
                         </div>
                     </div>
+                </div>
+
+
+                <div class="form-group mb-3">
+                    <label for="createPassword" class="form-label">Password</label>
+                    <div class="d-flex align-items-center">
+                        <input type="text" id="createPassword" name="password" class="form-control"
+                               placeholder="Generated Password">
+                        <i id="generatePassword" class="generatePassword fa fa-key ms-2" title="Generate Password"></i>
+                    </div>
+                    @error('password')
+                    <span class="text-danger">{{ $message }}</span>
+                    @enderror
                 </div>
 
                 <div class="form-group mb-3">

@@ -46,8 +46,10 @@ class EmployeeController extends Controller
             'postal_code' => 'nullable|string|max:10',
             'dob' => 'nullable|date',
             'about' => 'nullable|string',
+            'target' => 'nullable|integer',
             'status' => 'required|in:0,1',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'password' => 'nullable|string|max:255',
         ]);
 
         try {
@@ -55,7 +57,7 @@ class EmployeeController extends Controller
             $user = new User($request->only([
                 'team_key', 'name', 'email', 'designation', 'gender',
                 'phone_number', 'address', 'city', 'country',
-                'postal_code', 'dob', 'about', 'status'
+                'postal_code', 'dob', 'about', 'target', 'status'
             ]));
 
             if ($request->hasFile('image')) {
@@ -65,7 +67,11 @@ class EmployeeController extends Controller
                 $user->image = $originalFileName;
             }
 
-            $user->password = Hash::make(12345678);
+            if ($request->has('password') && !empty($request->input('password'))) {
+                $user->password = Hash::make($request->input('password'));
+            } else {
+                $user->password = Hash::make(12345678);
+            }
             $user->save();
 
             return response()->json(['data' => $user, 'message' => 'Record created successfully.']);
@@ -104,13 +110,24 @@ class EmployeeController extends Controller
             'email' => 'required|email|max:255|unique:users,email,' . $user->id,
             'designation' => 'nullable|string|max:255',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'target' => 'nullable|integer',
             'status' => 'required|in:0,1',
+            'password' => 'nullable|string|max:255',
+
+            'gender' => 'nullable|string|max:10',
+            'phone_number' => 'nullable|string|max:15',
+            'address' => 'nullable|string|max:255',
+            'city' => 'nullable|string|max:255',
+            'country' => 'nullable|string|max:255',
+            'postal_code' => 'nullable|string|max:10',
+            'dob' => 'nullable|date',
+            'about' => 'nullable|string',
         ]);
 
         $user->fill($request->only([
             'team_key', 'name', 'email', 'designation', 'gender',
             'phone_number', 'address', 'city', 'country',
-            'postal_code', 'dob', 'about', 'status'
+            'postal_code', 'dob', 'about', 'target', 'status'
         ]));
 
         try {
@@ -131,6 +148,10 @@ class EmployeeController extends Controller
                 $user->image = $originalFileName;
             }
 
+
+            if ($request->has('password') && !empty($request->input('password'))) {
+                $user->password = Hash::make($request->input('password'));
+            }
             $user->save();
             $teamNames = $user->teams->pluck('name')->map('htmlspecialchars_decode')->implode(', ');
 
@@ -159,6 +180,23 @@ class EmployeeController extends Controller
             }
             return response()->json(['error' => 'An error occurred while deleting the record.']);
 
+        } catch (\Exception $e) {
+            return response()->json(['error' => ' Internal Server Error', 'message' => $e->getMessage(), 'line' => $e->getLine()], 500);
+        }
+    }
+
+    /**
+     * Update password of specified resource in storage.
+     */
+    public function update_password(Request $request, User $user)
+    {
+        $request->validate([
+            'password' => 'required|string|max:255',
+        ]);
+        try {
+            $user->password = Hash::make($request->input('password'));
+            $user->save();
+            return response()->json(['data' => $user, 'message' => 'Record password updated successfully.']);
         } catch (\Exception $e) {
             return response()->json(['error' => ' Internal Server Error', 'message' => $e->getMessage(), 'line' => $e->getLine()], 500);
         }

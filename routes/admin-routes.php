@@ -63,6 +63,7 @@ Route::middleware(['auth:admin', 'verified:admin', 'throttle:60,1'])->prefix('ad
             Route::post('/store', [AdminEmployeeController::class, 'store'])->name('store');
             Route::get('/edit/{user?}', [AdminEmployeeController::class, 'edit'])->name('edit');
             Route::post('/update/{user?}', [AdminEmployeeController::class, 'update'])->name('update');
+            Route::post('/update-password/{admin?}', [AdminEmployeeController::class, 'update_password'])->name('update.password');
             Route::get('/change-status/{user?}', [AdminEmployeeController::class, 'change_status'])->name('change.status');
             Route::delete('/delete/{user?}', [AdminEmployeeController::class, 'delete'])->name('delete');
         });

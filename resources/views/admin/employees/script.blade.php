@@ -212,6 +212,9 @@
                                     <input type="checkbox" class="status-toggle change-status" data-id="${id}" ${status == 1 ? 'checked' : ''} data-bs-toggle="toggle">
                                 </td>
                                 <td class="align-middle text-center table-actions">
+                                    <button type="button" class="btn btn-sm btn-primary changePwdBtn"
+                                            data-id="${id}" title="Change Password"><i
+                                            class="fas fa-key"></i></button>
                                     <button type="button" class="btn btn-sm btn-primary editBtn" data-id="${id}" title="Edit">
                                         <i class="fas fa-edit"></i>
                                     </button>
@@ -287,6 +290,30 @@
                     statusCheckbox.prop('checked', !status);
                 });
         });
+
+        /** Change Password Btn */
+        $(document).on('click', '.changePwdBtn', function () {
+            const id = $(this).data('id');
+            if (!id) {
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'Record not found. Do you want to reload the page?',
+                    icon: 'error',
+                    showCancelButton: true,
+                    confirmButtonText: 'Reload',
+                    cancelButtonText: 'Cancel'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        location.reload();
+                    }
+                });
+            }
+            $('.manage-form').trigger('reset');
+
+            $('#manage-form-2').data('id', id);
+            $('#manage-form-2').attr('action', `{{route('admin.employee.update.password')}}/` + id);
+            $('#formContainerChangePassword').addClass('open');
+        });
         /** Delete Record */
         $(document).on('click', '.deleteBtn', function () {
             const id = $(this).data('id');
@@ -316,6 +343,16 @@
                         console.error('An error occurred while deleting the record:', error);
                     }
                 });
+        });
+    });
+</script>
+
+<script>
+    $(document).ready(function () {
+        $('.generatePassword').click(function () {
+            const closestPasswordInput = $(this).closest('form').find('input[name="password"]');
+            const randomPassword = generateRandomPassword(12);
+            closestPasswordInput.val(randomPassword);
         });
     });
 </script>
