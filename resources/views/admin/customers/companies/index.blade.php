@@ -38,10 +38,10 @@
                     <div class="tab-content">
                         <div class="tab-pane active" id="home">
                             <div class="card">
-                                <div class="card-header">
-                                    <div class="container">
-                                        <div class="row fltr-sec">
-                                            <div class="col-md-8">
+{{--                                <div class="card-header">--}}
+{{--                                    <div class="container">--}}
+{{--                                        <div class="row fltr-sec">--}}
+{{--                                            <div class="col-md-8">--}}
 {{--                                                <ul class="custm-filtr">--}}
 {{--                                                    <div class="table-li">--}}
 {{--                                                        <li class="">Company Owner <i class="fa fa-caret-down"--}}
@@ -58,11 +58,11 @@
 {{--                                                        </li>--}}
 {{--                                                    </div>--}}
 {{--                                                </ul>--}}
-                                            </div>
-                                            <div class="col-md-4 right-icon" id="right-icon-0"></div>
-                                        </div>
-                                    </div>
-                                </div>
+{{--                                            </div>--}}
+{{--                                            <div class="col-md-4 right-icon" id="right-icon-0"></div>--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
                                 <div class="card-body">
                                     <table id="allEmployeesTable" class="table table-striped datatable-exportable
                             stripe row-border order-column nowrap
