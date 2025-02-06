@@ -80,8 +80,8 @@
                                             <th class="align-middle text-center text-nowrap">EMAIL</th>
                                             <th class="align-middle text-center text-nowrap">LOGIN ID</th>
                                             <th class="align-middle text-center text-nowrap">TRANSACTION KEY</th>
-                                            <th class="align-middle text-center text-nowrap">LIMIT</th>
-                                            <th class="align-middle text-center text-nowrap">CAPACITY</th>
+                                            <th class="align-middle text-center text-nowrap">MAX TRANSACTION</th>
+                                            <th class="align-middle text-center text-nowrap">MAX VOLUME</th>
                                             <th class="align-middle text-center text-nowrap">ENVIRONMENT</th>
                                             <th class="align-middle text-center text-nowrap">STATUS</th>
                                             <th class="align-middle text-center text-nowrap">ACTION</th>
