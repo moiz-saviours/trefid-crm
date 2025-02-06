@@ -190,7 +190,7 @@
                                 capacity,
                                 environment,
                                 status
-                            } = response.data;
+                            } = response.client_account;
                             const index = table.rows().count() + 1;
                             const columns = `
                                 <td class="align-middle text-center text-nowrap"></td>
@@ -243,7 +243,7 @@
                                 capacity,
                                 environment,
                                 status
-                            } = response.data;
+                            } = response.client_account;
                             const index = table.row($('#tr-' + id)).index();
                             const rowData = table.row(index).data();
 
