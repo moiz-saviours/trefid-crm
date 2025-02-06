@@ -29,8 +29,8 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     /** Companies Routes */
-    Route::prefix('companies')->name('customer.company.')->group(function () {
-        Route::get('/', [UserCustomerCompanyController::class, 'index'])->name('index');
+    Route::prefix('')->name('customer.company.')->group(function () {
+        Route::get('/customer/companies', [UserCustomerCompanyController::class, 'index'])->name('index');
     });
     /** Contacts Routes */
 //    Route::name('customer.contact.')->group(function () {
