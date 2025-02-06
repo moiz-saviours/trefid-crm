@@ -74,9 +74,9 @@
                 <div class="row">
                     <!-- Active Admins -->
                     <div class="col-md-3">
-                        <div class="card text-white mb-3" style="background-color: var(--bs-primary);">
+                        <div class="card text-white" style="background-color: var(--bs-primary);">
                             <div class="card-body">
-                                <div class="d-flex align-items-center mb-3">
+                                <div class="d-flex align-items-center mb-2">
                                     <i class="demo-pli-add-user-star display-6"></i>
                                     <div class="ms-4">
                                         <h5 class="text-white h2 mb-0">{{ $activeAdmins }}</h5>
@@ -96,9 +96,9 @@
 
                     <!-- Active Users -->
                     <div class="col-md-3">
-                        <div class="card text-white mb-3" style="background-color: var(--bs-primary);">
+                        <div class="card text-white" style="background-color: var(--bs-primary);">
                             <div class="card-body">
-                                <div class="d-flex align-items-center mb-3">
+                                <div class="d-flex align-items-center mb-2">
                                     <i class="demo-pli-male-female display-6"></i>
                                     <div class="ms-4">
                                         <h5 class="text-white h2 mb-0">{{ $activeUsers }}</h5>
@@ -118,9 +118,9 @@
 
                     <!-- Fresh Invoices -->
                     <div class="col-md-3">
-                        <div class="card text-white mb-3" style="background-color: var(--bs-primary);">
+                        <div class="card text-white" style="background-color: var(--bs-primary);">
                             <div class="card-body">
-                                <div class="d-flex align-items-center mb-3">
+                                <div class="d-flex align-items-center mb-2">
                                     <i class="demo-pli-cart-coin display-6"></i>
                                     <div class="ms-4">
                                         <h5 class="text-white h2 mb-0">{{ $freshInvoices }}</h5>
@@ -140,9 +140,9 @@
 
                     <!-- Upsale Invoices -->
                     <div class="col-md-3">
-                        <div class="card text-white mb-3" style="background-color: var(--bs-primary);">
+                        <div class="card text-white" style="background-color: var(--bs-primary);">
                             <div class="card-body">
-                                <div class="d-flex align-items-center mb-3">
+                                <div class="d-flex align-items-center mb-2">
                                     <i class="demo-pli-cart-coin display-6"></i>
                                     <div class="ms-4">
                                         <h5 class="text-white h2 mb-0">{{ $upsaleInvoices }}</h5>
@@ -180,8 +180,9 @@
                         <div class="col-md-3">
                             <div class="card">
                                 <div class="card-body">
-                                    <h5 class="card-title">{{ $invoice['title'] }}</h5>
-                                    <p class="text-muted">Total: {{ $invoice['count'] }}</p>
+                                    <div class="d-flex">
+                                        <h5 class="card-title">Total {{ $invoice['title'] }} : {{ $invoice['count'] }}</h5>
+                                    </div>
                                     <div class="d-flex flex-column gap-3">
                                         <div class="progress progress-lg">
                                             <div class="progress-bar bg-{{ $invoice['color'] }}"
