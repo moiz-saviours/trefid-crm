@@ -170,7 +170,7 @@
                     @php
                         $invoiceData = [
                             ['title' => 'Paid', 'count' => $paidInvoices, 'progress' => $invoicesProgress['paid'], 'color' => 'success'],
-                            ['title' => 'Unpaid', 'count' => $dueInvoices, 'progress' => $invoicesProgress['due'], 'color' => 'danger'],
+                            ['title' => 'Due', 'count' => $dueInvoices, 'progress' => $invoicesProgress['due'], 'color' => 'danger'],
                             ['title' => 'Refunded', 'count' => $refundInvoices, 'progress' => $invoicesProgress['refund'], 'color' => 'warning'],
                             ['title' => 'Chargeback', 'count' => $chargebackInvoices, 'progress' => $invoicesProgress['chargeback'], 'color' => 'dark']
                         ];
@@ -314,7 +314,7 @@
                         <div class="card">
                             <div class="card-header toolbar">
                                 <div class="toolbar-start">
-                                    <h5 class="m-0">Fourth Chart</h5>
+                                    <h5 class="m-0">Payment Progress</h5>
                                 </div>
                                 <div class="toolbar-end">
                                     <button type="button" class="btn btn-icon btn-minimize btn-xs"
@@ -336,7 +336,7 @@
                         <div class="card">
                             <div class="card-header toolbar">
                                 <div class="toolbar-start">
-                                    <h5 class="m-0">Fifth Chart</h5>
+                                    <h5 class="m-0">OverAll CRM</h5>
                                 </div>
                                 <div class="toolbar-end">
                                     <button type="button" class="btn btn-icon btn-minimize btn-xs"
@@ -502,17 +502,14 @@
                 var barChart = new ApexCharts(document.querySelector(".barchart"), barOptions);
                 barChart.render();
 
-
-                const annualPayments = @json($annualPayments);
-                const monthlyLabels = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-                const currentYear = @json(Carbon\Carbon::now()->year);
-                const years = Array.from({ length: annualPayments.length }, (_, index) => currentYear - index);
+                const annualPayments = @json(array_values($annualPayments));
+                const currentYear = new Date().getFullYear().toString().slice(-2);
+                const monthlyLabels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'].map((month, index) => `${month} ${currentYear}`);
                 var areaOptions = {
-                    series: annualPayments.map((yearData, index) => ({
-                        name: 'Year ' + years[index],
-                        type: 'area',
-                        data: yearData,
-                    })),
+                    series: [{
+                        name: 'Total Payments',
+                        data: annualPayments,
+                    }],
                     chart: {
                         height: 350,
                         type: 'area',
@@ -525,11 +522,48 @@
                         opacity: [0.35],
                     },
                     colors: ['#2d3e50'],
-                    labels: monthlyLabels,
+                    xaxis: {
+                        categories: monthlyLabels,
+                        labels: {
+                            rotate: 0,
+                            style: {
+                                fontSize: '10px',
+                                fontWeight: 'bold',
+                            },
+                            show: true,
+                        },
+                        tickAmount: 12,
+                    },
+                    yaxis: {
+                        labels: {
+                            formatter: function (value) {
+                                return value.toFixed(2);
+                            },
+                        },
+                    },
                     tooltip: {
                         shared: true,
                         intersect: false,
                     },
+                    dataLabels: {
+                        enabled: false,
+                    },
+                    markers: {
+                        size: 0,
+                    },
+                    responsive: [{
+                        breakpoint: 480,
+                        options: {
+                            xaxis: {
+                                labels: {
+                                    show: false,
+                                }
+                            },
+                            tooltip: {
+                                enabled: false,
+                            }
+                        }
+                    }]
                 };
 
                 var areaChart = new ApexCharts(document.querySelector(".areachart"), areaOptions);
@@ -537,9 +571,14 @@
             });
 
             document.addEventListener("DOMContentLoaded", function () {
-                const labels = @json($leadStatuses->pluck('name')) || [];
-                const data = @json($leadCounts) || {};
-                const colors = @json($leadStatuses->pluck('color')) || [];
+                const labels = @json($leadStatuses->pluck('name')) ||
+                [];
+                const data = @json($leadCounts) ||
+                {
+                }
+                ;
+                const colors = @json($leadStatuses->pluck('color')) ||
+                [];
 
                 const series = labels.map(status => data[status] || 0);
 
@@ -556,7 +595,6 @@
                     legend: {
                         position: 'right',
                     },
-
                     responsive: [{
                         breakpoint: 480,
                         options: {
@@ -574,43 +612,47 @@
                 pieChart.render();
             });
 
-            if ($(".pieChart").length > 0) {
-                //Pie Chart
-                var options = {
-                    series: [44, 55, 60],
-                    chart: {
-                        type: 'pie',
-                        toolbar: {
-                            show: true,
-                        },
-                    },
-                    colors: ['#2d3e50', '#ff5722', '#98a3b0'],
-                    labels: ['Team A', 'Team B', 'Team C'],
-                    legend: {
-                        position: 'right',
-                    },
+            // if ($(".pieChart").length > 0) {
+            //     //Pie Chart
+            //     var options = {
+            //         series: [44, 55, 60],
+            //         chart: {
+            //             type: 'pie',
+            //             toolbar: {
+            //                 show: true,
+            //             },
+            //         },
+            //         colors: ['#2d3e50', '#ff5722', '#98a3b0'],
+            //         labels: ['Team A', 'Team B', 'Team C'],
+            //         legend: {
+            //             position: 'right',
+            //         },
+            //
+            //         responsive: [{
+            //             breakpoint: 480,
+            //             options: {
+            //                 chart: {
+            //                     width: 300
+            //                 },
+            //                 legend: {
+            //                     position: 'bottom'
+            //                 }
+            //             }
+            //         }]
+            //     };
+            //
+            //     var pieChart = new ApexCharts($(".pieChart")[0], options);
+            //     pieChart.render();
+            //     //Pie Chart
 
-                    responsive: [{
-                        breakpoint: 480,
-                        options: {
-                            chart: {
-                                width: 300
-                            },
-                            legend: {
-                                position: 'bottom'
-                            }
-                        }
-                    }]
-                };
-
-                var pieChart = new ApexCharts($(".pieChart")[0], options);
-                pieChart.render();
-                //Pie Chart
-
-            }
+            // }
             //Donut Chart
             var options = {
-                series: [44, 55, 60],
+                series: [
+                    {{ $paymentCounts->paid }},
+                    {{ $paymentCounts->refund }},
+                    {{ $paymentCounts->chargeback }},
+                ],
                 chart: {
                     type: 'donut',
                     toolbar: {
@@ -618,8 +660,8 @@
                     },
                 },
 
-                colors: ['#2d3e50', '#ff5722', '#98a3b0'],
-                labels: ['Team A', 'Team B', 'Team C'],
+                colors: ['#28a745', '#ffc107', '#dc3545'],
+                labels: ['Paid', 'Refund', 'Chargeback'],
 
                 legend: {
                     position: 'right',
@@ -634,7 +676,39 @@
                             position: 'bottom'
                         }
                     }
-                }]
+                }],
+                plotOptions: {
+                    pie: {
+                        donut: {
+                            size: '75%',
+                            labels: {
+                                show: true,
+                                total: {
+                                    show: true,
+                                    label: 'Total Payments',
+                                    formatter: function (w) {
+                                        return {{ $totalPayments }};
+                                    }
+                                }, value: {
+                                    formatter: function (val, chart) {
+                                        return val
+                                    }
+                                }
+
+                            }
+                        },
+                    }
+                },
+                tooltip: {
+                    y: {
+                        formatter: function (val) {
+                            let total = [{{$paymentCounts->paid}},{{$paymentCounts->refund}},{{$paymentCounts->chargeback}}].
+                            reduce((a, b) => a + b, 0);
+                            let percentage = (val / total) * 100;
+                            return percentage.toFixed(2) + "%";
+                        }
+                    }
+                }
             };
 
             var donutchart = new ApexCharts($(".donutchart")[0], options);
@@ -643,18 +717,22 @@
 
             //Radial Chart
             var options = {
-                series: [50, 55, 75], // Restricting to 3 values
+                series: [
+                    {{ $totalLeads }},
+                    {{ $totalCustomers }},
+                    {{ $totalInvoices }},
+                    {{ $totalPayments }}
+                ], // 4 dynamic values
                 chart: {
-
                     type: 'radialBar',
                     toolbar: {
-                        show: true, // Toolbar enabled for download
+                        show: true,
                         tools: {
-                            download: true // Allow chart download
+                            download: true
                         }
                     },
                 },
-                colors: ['#2d3e50', '#ff5722', '#98a3b0'], // Custom colors
+                colors: ['#28a745', '#ffc107', '#dc3545', '#007bff'],
                 plotOptions: {
                     radialBar: {
                         hollow: {
@@ -665,24 +743,37 @@
                         },
                         dataLabels: {
                             name: {
-                                fontSize: '22px',
+                                show: true,
+                                fontSize: '16px',
+                                fontWeight: 'bold',
+                                color: '#333',
+                                offsetY: -10,
+                                formatter: function (val) {
+                                    return val;
+                                }
                             },
                             value: {
-                                fontSize: '16px',
+                                fontSize: '24px',
+                                fontWeight: 'bold',
+                                color: '#333',
+                                offsetY: 10,
+                                formatter: function (val) {
+                                    return val;
+                                }
                             },
                             total: {
                                 show: true,
                                 label: 'Total',
                                 formatter: function (w) {
-                                    return 166; // Total of 3 series values
+                                    return w.globals.seriesTotals.reduce((a, b) => a + b, 0);
                                 }
                             }
                         }
                     }
                 },
-                labels: ['Apples', 'Oranges', 'Bananas'], // Only 3 labels
-
+                labels: ['Leads', 'Customers', 'Invoices', 'Payments'],
             };
+
             var radialchart = new ApexCharts($(".radialchart")[0], options);
             radialchart.render();
             //Radial Chart

@@ -48,42 +48,48 @@ class DashboardController extends Controller
             'refund' => ($invoiceCounts->refund_invoices / $totalInvoices) * 100,
             'chargeback' => ($invoiceCounts->chargeback_invoices / $totalInvoices) * 100
         ] : ['due' => 0, 'paid' => 0, 'refund' => 0, 'chargeback' => 0];
+
+        $totalPayments = Payment::count();
+        $paymentCounts = Payment::selectRaw("
+            COUNT(CASE WHEN status = 1 THEN 1 END) as paid,
+            COUNT(CASE WHEN status = 2 THEN 1 END) as refund,
+            COUNT(CASE WHEN status = 3 THEN 1 END) as chargeback
+        ")->first();
+        $paymentsProgress = $totalPayments > 0 ? [
+            'paid' => ($paymentCounts->paid / $totalPayments) * 100,
+            'refund' => ($paymentCounts->refund / $totalPayments) * 100,
+            'chargeback' => ($paymentCounts->chargeback / $totalPayments) * 100
+        ] : ['paid' => 0, 'refund' => 0, 'chargeback' => 0];
+
+        $totalLeads = Lead::count();
+        $totalCustomers = CustomerContact::count();
         $recentPayments = Payment::latest()->limit(5)->get();
         $leadStatuses = LeadStatus::all();
         $leadCounts = [];
         foreach ($leadStatuses as $status) {
             $leadCounts[$status->name] = Lead::where('lead_status_id', $status->id)->count();
         }
-
-
         $dailyPayments = [];
         $dailyLabels = [];
         $currentMonth = Carbon::now()->month;
         $currentYear = Carbon::now()->year;
-
         for ($day = 1; $day <= Carbon::now()->daysInMonth; $day++) {
-            $totalPayments = Payment::whereYear('created_at', $currentYear)
+            $DayPaymentsQuery = Payment::whereYear('created_at', $currentYear)
                 ->whereMonth('created_at', $currentMonth)
                 ->whereDay('created_at', $day)
                 ->sum('amount');
-            $dailyPayments[] = $totalPayments;
+            $dailyPayments[] = $DayPaymentsQuery;
             $dailyLabels[] = Carbon::createFromDate($currentYear, $currentMonth, $day)->format('d');
         }
-
-        $annualPayments = [];
-        $years = range(Carbon::now()->subYears(10)->year, Carbon::now()->year + 1);
+        $year = Carbon::now()->year;
         $months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-        foreach ($years as $year) {
-            $monthlyPayments = [];
-            foreach ($months as $index => $month) {
-                $totalPayments = Payment::whereYear('created_at', $year)
-                    ->whereMonth('created_at', $index + 1)
-                    ->sum('amount');
-                $monthlyPayments[] = $totalPayments;
-            }
-            $annualPayments[] = $monthlyPayments;
+        $annualPayments = [];
+        foreach ($months as $index => $month) {
+            $MonthPaymentsQuery = Payment::whereYear('created_at', $year)
+                ->whereMonth('created_at', $index + 1)
+                ->sum('amount');
+            $annualPayments[] = $MonthPaymentsQuery;
         }
-
         return view('admin.dashboard.index-1', [
             'totalInvoices' => $totalInvoices,
             'dueInvoices' => $invoiceCounts->due_invoices,
@@ -97,6 +103,11 @@ class DashboardController extends Controller
             'dailyPayments' => $dailyPayments,
             'dailyLabels' => $dailyLabels,
             'annualPayments' => $annualPayments,
+            'totalPayments' => $totalPayments,
+            'paymentsProgress' => $paymentsProgress,
+            'paymentCounts' => $paymentCounts,
+            'totalLeads' => $totalLeads,
+            'totalCustomers' => $totalCustomers,
         ]);
     }
 

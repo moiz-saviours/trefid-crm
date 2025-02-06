@@ -117,13 +117,13 @@
                     @enderror
                 </div>
 
-{{--                <div class="form-group mb-3">--}}
-{{--                    <label for="address" class="form-label">Address</label>--}}
-{{--                    <textarea class="form-control" id="address" name="address" rows="3"></textarea>--}}
-{{--                    @error('address')--}}
-{{--                    <span class="text-danger">{{ $message }}</span>--}}
-{{--                    @enderror--}}
-{{--                </div>--}}
+                {{--                <div class="form-group mb-3">--}}
+                {{--                    <label for="address" class="form-label">Address</label>--}}
+                {{--                    <textarea class="form-control" id="address" name="address" rows="3"></textarea>--}}
+                {{--                    @error('address')--}}
+                {{--                    <span class="text-danger">{{ $message }}</span>--}}
+                {{--                    @enderror--}}
+                {{--                </div>--}}
 
                 <div class="form-group mb-3">
                     <label for="amount" class="form-label">Amount</label>
@@ -134,14 +134,14 @@
                     @enderror
                 </div>
 
-{{--                <div class="form-group mb-3">--}}
-{{--                    <label for="description" class="form-label">Description</label>--}}
-{{--                    <textarea class="form-control" id="description" name="description"--}}
-{{--                              rows="3">{{ old('description') }}</textarea>--}}
-{{--                    @error('description')--}}
-{{--                    <span class="text-danger">{{ $message }}</span>--}}
-{{--                    @enderror--}}
-{{--                </div>--}}
+                {{--                <div class="form-group mb-3">--}}
+                {{--                    <label for="description" class="form-label">Description</label>--}}
+                {{--                    <textarea class="form-control" id="description" name="description"--}}
+                {{--                              rows="3">{{ old('description') }}</textarea>--}}
+                {{--                    @error('description')--}}
+                {{--                    <span class="text-danger">{{ $message }}</span>--}}
+                {{--                    @enderror--}}
+                {{--                </div>--}}
 
                 <div class="form-group mb-3">
                     <label for="payment_method" class="form-label">Payment Method</label>
@@ -169,9 +169,18 @@
                 </div>
 
                 <div class="form-group mb-3">
+                    <label for="payment_date" class="form-label">Payment Date</label>
+                    <input type="date" class="form-control" id="payment_date" name="payment_date"
+                           value="{{ old('payment_date') }}" required>
+                    @error('payment_date')
+                    <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
+
+                <div class="form-group mb-3">
                     <label for="transaction_id" class="form-label">Transaction ID</label>
                     <input type="text" class="form-control" id="transaction_id" name="transaction_id"
-                           value="{{ old('transaction_id') }}">
+                           value="{{ old('transaction_id') }}" required>
                     @error('transaction_id')
                     <span class="text-danger">{{ $message }}</span>
                     @enderror

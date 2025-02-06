@@ -24,11 +24,11 @@ class PaymentController extends Controller
         $brands = Brand::where('status', 1)->get();
         $teams = Team::where('status', 1)->get();
         $agents = User::where('status', 1)->get();
-        $all_payments = Payment::where('status', 1)->get();
+//        $all_payments = Payment::where('status', 1)->get();
         $payments = Payment::with(['brand', 'team', 'agent'])->get();
         $customer_contacts = CustomerContact::where('status', 1)->get();
         $users = User::where('status', 1)->get();
-        return view('admin.payments.index', compact('payments', 'brands', 'teams', 'agents', 'all_payments', 'customer_contacts', 'users'));
+        return view('admin.payments.index', compact('payments', 'brands', 'teams', 'agents', 'customer_contacts', 'users'));
     }
 
     /**
@@ -56,12 +56,13 @@ class PaymentController extends Controller
             'amount' => 'required|numeric|min:1|max:' . config('invoice.max_amount'),
             'description' => 'nullable|string|max:500',
             'type' => 'required|integer|in:0,1',
-            'transaction_id' => 'nullable|string|max:255',
+            'transaction_id' => 'required|string|max:255',
             'cus_contact_key' => 'required_if:type,1|nullable|integer|exists:customer_contacts,special_key',
             'customer_contact_name' => 'required_if:type,0|nullable|string|max:255',
             'customer_contact_email' => 'required_if:type,0|nullable|email|max:255',
             'customer_contact_phone' => 'required_if:type,0|nullable|string|max:15',
             'payment_method' => 'required|string|in:authorize,stripe,credit card,bank transfer,paypal,cash,other',
+            'payment_date' => 'required|date',
         ], [
             'brand_key.required' => 'The brand field is required.',
             'brand_key.integer' => 'The brand must be a valid integer.',
@@ -139,6 +140,7 @@ class PaymentController extends Controller
                 'transaction_id' => $request->transaction_id,
                 'payment_type' => $request->input('type'),
                 'payment_method' => $request->input('payment_method'),
+                'payment_date' => $request->input('payment_date'),
             ];
             if ($request->has('agent_id')) {
                 $paymentData['agent_id'] = $request->input('agent_id');
@@ -206,12 +208,13 @@ class PaymentController extends Controller
             'amount' => 'required|numeric|min:1|max:' . config('invoice.max_amount'),
             'description' => 'nullable|string|max:500',
             'type' => 'required|integer|in:0,1', /** 0 = fresh, 1 = upsale */
-            'transaction_id' => 'nullable|string|max:255',
+            'transaction_id' => 'required|string|max:255',
             'cus_contact_key' => 'required_if:type,1|nullable|integer|exists:customer_contacts,special_key',
             'customer_contact_name' => 'required_if:type,0|nullable|string|max:255',
             'customer_contact_email' => 'required_if:type,0|nullable|email|max:255|unique:customer_contacts,email,' . $payment->cus_contact_key . ',special_key',
             'customer_contact_phone' => 'required_if:type,0|nullable|string|max:15',
             'payment_method' => 'required|string|in:authorize,stripe,credit card,bank transfer,paypal,cash,other',
+            'payment_date' => 'required|date',
         ], [
             'brand_key.required' => 'The brand field is required.',
             'team_key.required' => 'The team field is required.',
@@ -275,6 +278,7 @@ class PaymentController extends Controller
                 'transaction_id' => $request->transaction_id,
                 'payment_type' => $request->input('type'),
                 'payment_method' => $request->input('payment_method'),
+                'payment_date' => $request->input('payment_date'),
             ]);
             DB::commit();
             $payment->loadMissing('invoice','customer_contact', 'brand', 'team', 'agent');
