@@ -88,7 +88,7 @@
                 order: [[1, 'desc']],
                 responsive: false,
                 scrollX: true,
-                scrollY: 400,
+                scrollY: 450,
                 scrollCollapse: true,
                 paging: true,
                 columnDefs: [
@@ -103,7 +103,8 @@
                     selector: 'td:first-child'
                 },
                 fixedColumns: {
-                    start: 0
+                    start: 0,
+                    end: 1
                 },
             });
             table.buttons().container().appendTo(`#right-icon-${index}`);

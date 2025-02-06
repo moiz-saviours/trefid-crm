@@ -79,7 +79,7 @@
                 order: [[1, 'desc']],
                 responsive: false,
                 scrollX: true,
-                scrollY: 400,
+                scrollY: 450,
                 scrollCollapse: true,
                 paging: true,
                 columnDefs: [
@@ -95,7 +95,7 @@
                 },
                 fixedColumns: {
                     start: 0,
-                    end: 0
+                    end: 1
                 },
             });
             table.buttons().container().appendTo(`#right-icon-${index}`);
@@ -171,8 +171,8 @@
                                 const columns = `
                                     <td class="align-middle text-center text-nowrap"></td>
                                     <td class="align-middle text-center text-nowrap">${index}</td>
-                                    <td class="align-middle text-center text-nowrap">${brand ? `<a href="{{route('admin.brand.index')}}">${brand.name}</a><br> ${brand.brand_key}` : '---'}</td>
-                                    <td class="align-middle text-center text-nowrap">${team ? `<a href="{{route('admin.team.index')}}">${team.name}</a><br> ${team.team_key}` : '---'}</td>
+                                    <td class="align-middle text-center text-nowrap">${brand ? `<a href="{{route('admin.brand.index')}}">${brand.name}</a>` : '---'}</td>
+                                    <td class="align-middle text-center text-nowrap">${team ? `<a href="{{route('admin.team.index')}}">${team.name}</a>` : '---'}</td>
                                     <td class="align-middle text-center text-nowrap"><a href="/admin/contact/edit/${id}" title="${company ? company.name : 'No associated company'}" >${name}</a></td>
                                     <td class="align-middle text-center text-nowrap">${email}</td>
                                     <td class="align-middle text-center text-nowrap">${phone}</td>
@@ -213,13 +213,13 @@
                                 const rowData = table.row(index).data();
 
                                 // Column 2: Brand
-                                if (decodeHtml(rowData[2]) !== `${brand ? `<a href="{{route('admin.brand.index')}}">${brand.name}</a><br> ${brand.brand_key}` : '---'}`) {
-                                    table.cell(index, 2).data(`${brand ? `<a href="{{route('admin.brand.index')}}">${brand.name}</a><br> ${brand.brand_key}` : '---'}`).draw();
+                                if (decodeHtml(rowData[2]) !== `${brand ? `<a href="{{route('admin.brand.index')}}">${brand.name}</a>` : '---'}`) {
+                                    table.cell(index, 2).data(`${brand ? `<a href="{{route('admin.brand.index')}}">${brand.name}</a>` : '---'}`).draw();
                                 }
 
                                 // Column 3: Team
-                                if (decodeHtml(rowData[3]) !== `${team ? `<a href="{{route('admin.team.index')}}">${team.name}</a><br> ${team.team_key}` : '---'}`) {
-                                    table.cell(index, 3).data(`${team ? `<a href="{{route('admin.team.index')}}">${team.name}</a><br> ${team.team_key}` : '---'}`).draw();
+                                if (decodeHtml(rowData[3]) !== `${team ? `<a href="{{route('admin.team.index')}}">${team.name}</a>` : '---'}`) {
+                                    table.cell(index, 3).data(`${team ? `<a href="{{route('admin.team.index')}}">${team.name}</a>` : '---'}`).draw();
                                 }
 
                                 // Column 4: name

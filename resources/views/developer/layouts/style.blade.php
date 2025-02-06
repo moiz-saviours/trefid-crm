@@ -164,8 +164,8 @@
 
     /** Status */
     .status-toggle {
-        width: 40px;
-        height: 20px;
+        width: 35px;
+        height: 15px;
         appearance: none;
         -webkit-appearance: none;
         background-color: #ccc;
@@ -183,8 +183,8 @@
 
     .status-toggle::before {
         content: '';
-        width: 18px;
-        height: 18px;
+        width: 14px;
+        height: 14px;
         background-color: white;
         border-radius: 50%;
         position: absolute;
@@ -205,5 +205,12 @@
     }
     .table a:hover {
         text-decoration: underline;
+    }
+
+    .table > :not(caption) > * > * {
+        /*padding: .5rem .5rem;*/
+    }
+    button.btn.btn-sm {
+        /*padding: 0px;*/
     }
 </style>

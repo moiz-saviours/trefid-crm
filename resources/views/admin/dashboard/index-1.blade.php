@@ -381,7 +381,7 @@
                     order: [[1, 'desc']],
                     responsive: false,
                     scrollX: true,
-                    scrollY: 400,
+                    scrollY: 450,
                     scrollCollapse: true,
                     paging: true,
                 });
