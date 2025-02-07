@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\StripePaymentController;
 use App\Http\Controllers\User\{BrandController,
     Customer\CompanyController as UserCustomerCompanyController,
@@ -14,6 +15,7 @@ use App\Http\Controllers\User\{BrandController,
     TeamMemberController,
 };
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -76,8 +78,6 @@ Route::middleware('auth')->group(function () {
         });
     });
     Route::get('/lead-status', [LeadStatusController::class, 'index'])->name('lead-status.index');
-
-
     /** Invoices Routes */
     Route::name('invoice.')->group(function () {
         Route::get('/invoices', [InvoiceController::class, 'index'])->name('index');
@@ -153,3 +153,4 @@ Route::fallback(function () {
     }
     return redirect('/login');
 });
+Route::get('checkout', [CheckoutController::class,'index'])->name('checkout');
