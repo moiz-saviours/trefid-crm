@@ -207,7 +207,7 @@
                                 <td class="align-middle text-center text-nowrap">${index}</td>
                                 <td class="align-middle text-center text-nowrap">
                                     ${logoUrl ? `<object data="${logoUrl}" class="avatar avatar-sm me-3" title="${name}">
-                                        <img src="${logoUrl}" alt="${name}" class="avatar avatar-sm me-3" title="${name}"style="width: 100px; height: 50px;">
+                                        <img src="${logoUrl}" alt="${name}" class="avatar avatar-sm me-3" title="${name}">
                                     </object>`
                                 : null}
                                 </td>
@@ -243,7 +243,7 @@
                             const index = table.row($('#tr-' + id)).index();
                             const rowData = table.row(index).data();
                             // Column 2: Image
-                            const imageHtml = logoUrl ? `<object data="${logoUrl}" class="avatar avatar-sm me-3" title="${name}"><img src="${logoUrl}" alt="${name}" class="avatar avatar-sm me-3" style="width: 100px; height: 50px;" title="${name}"></object>` : '';
+                            const imageHtml = logoUrl ? `<object data="${logoUrl}" class="avatar avatar-sm me-3" title="${name}"><img src="${logoUrl}" alt="${name}" class="avatar avatar-sm me-3"  title="${name}"></object>` : '';
                             if (decodeHtml(rowData[2]) !== imageHtml) {
                                 table.cell(index, 2).data(logoUrl ? `<object data="${logoUrl}" class="avatar avatar-sm me-3" title="${name}">
                                                             <img src="${logoUrl}" alt="${name}" class="avatar avatar-sm me-3" title="${name}">

@@ -416,7 +416,7 @@
                                                     src="{{ $imageUrl }}"
                                                     alt="{{ $user->name }}"
                                                     class="avatar avatar-sm me-3"
-                                                    style="width: 100px; height: 50px;"
+
                                                     title="{{ $user->name }}">
                                             </object>
                                         </td>
