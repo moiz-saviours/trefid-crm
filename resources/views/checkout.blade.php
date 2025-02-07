@@ -91,8 +91,8 @@ $countries = ['US' => 'United States', 'AF' => 'Afghanistan', 'AL' => 'Albania',
                                 <div class="col-md-6 col-4">
                                     <div class="brand-logo">
                                         <img
-                                            src="<?= htmlspecialchars($brandData['logo'] ?? '', ENT_QUOTES, 'UTF-8') ?>"
-                                            class="img-fluid" class="images">
+                                                src="<?= htmlspecialchars($brandData['logo'] ?? '', ENT_QUOTES, 'UTF-8') ?>"
+                                                class="img-fluid" class="images">
                                     </div>
                                 </div>
                                 <div class="col-md-6 col-8 text-right ">
@@ -131,8 +131,8 @@ $countries = ['US' => 'United States', 'AF' => 'Afghanistan', 'AL' => 'Albania',
                                 <!--                            </div>-->
 
                                 <div
-                                    class="col-md-6 <?= $invoiceDetails['invoice']['status'] == 1 ? '' : 'd-none' ?>"
-                                    style="display: flex;justify-content: flex-end;">
+                                        class="col-md-6 <?= $invoiceDetails['invoice']['status'] == 1 ? '' : 'd-none' ?>"
+                                        style="display: flex;justify-content: flex-end;">
                                     <img src="./images/pngwing.com.png" alt="" class="paid mr-5">
                                 </div>
                             </div>
@@ -262,7 +262,7 @@ $countries = ['US' => 'United States', 'AF' => 'Afghanistan', 'AL' => 'Albania',
                     </div>
                 </div>
             </div>
-            <div class="col-lg-6 col-12 d-none <?= $invoiceDetails['invoice']['status'] == 1 ? 'd-none' : '' ?>">
+            <div class="col-lg-6 col-12 <?= $invoiceDetails['invoice']['status'] == 1 ? 'd-none' : '' ?>">
                 <div class="box-shade-2">
                     <div class="row">
                         <div class="col-12 col-md-12">
@@ -276,7 +276,7 @@ $countries = ['US' => 'United States', 'AF' => 'Afghanistan', 'AL' => 'Albania',
                                     <!-- <div class="nav  nav-pills side-bar" id="v-pills-tab" role="tablist"
                                         aria-orientation="vertical"> -->
                                     <?php if (in_array('credit_card', $invoiceDetails['invoice']['payment_methods'])): ?>
-                                        <!-- <button class="nav-link active" id="v-pills-credit-card-tab" data-toggle="pill"
+                                            <!-- <button class="nav-link active" id="v-pills-credit-card-tab" data-toggle="pill"
                                                 data-target="#v-pills-credit-card" type="button" role="tab"
                                                 aria-controls="v-pills-credit-card"
                                                 aria-selected="false">Credit Card
@@ -295,7 +295,7 @@ $countries = ['US' => 'United States', 'AF' => 'Afghanistan', 'AL' => 'Albania',
                                             <img src="./images/paypal.png"  class="img-fluid payment-imgs">
                                     </button> -->
                                     <?php endif; ?>
-                                        <!--  <button class="nav-link" id="v-pills-Venmo-tab" data-toggle="pill" data-target="#v-pills-Venmo" type="button" role="tab" aria-controls="v-pills-Venmo" aria-selected="false">Venmo</button> -->
+                                            <!--  <button class="nav-link" id="v-pills-Venmo-tab" data-toggle="pill" data-target="#v-pills-Venmo" type="button" role="tab" aria-controls="v-pills-Venmo" aria-selected="false">Venmo</button> -->
 
                                     <?php if (in_array('stripe', $invoiceDetails['invoice']['payment_methods'])): ?>
                                     {{--                                    <button class="stripe-payment-btn">--}}
@@ -324,86 +324,91 @@ $countries = ['US' => 'United States', 'AF' => 'Afghanistan', 'AL' => 'Albania',
                                             we do not store your card details on our server.</p>
                                     </div> -->
 
-                                    <form>
+                                    <form id="paymentForm" method="post" action="{{ route('api.authorize.process-payment') }}">
+                                        <!-- Card Number -->
                                         <div class="form-group">
-                                            <label for="inputAddress2">Card number</label>
-                                            <input type="text" class="form-control" id="inputAddress2"
-                                                   placeholder="1234 1234 1234 1234">
+                                            <label for="card_number">Card number</label>
+                                            <input type="text" class="form-control" id="card_number" name="card_number" placeholder="1234 1234 1234 1234" maxlength="19">
+                                            <span id="card_type_logo" class="cctype"></span>
+                                            <small id="card_number_error" class="text-danger"></small>
                                         </div>
+
+                                        <!-- CVV and Expiry -->
                                         <div class="form-row">
                                             <div class="form-group col-md-6">
-                                                <label for="inputCity">CVV</label>
-                                                <input type="text" class="form-control" id="inputCity"
-                                                       placeholder="CVC">
+                                                <label for="cvv">CVV</label>
+                                                <input type="text" class="form-control" id="cvv" name="cvv" placeholder="CVC">
+                                                <small id="cvv_error" class="text-danger"></small>
                                             </div>
-
                                             <div class="form-group col-md-6">
-                                                <label for="inputZip">Expires on</label>
-                                                <input type="text" class="form-control" id="inputZip"
-                                                       placeholder="MM/YY">
+                                                <label for="expiry">Expires on</label>
+                                                <input type="text" class="form-control" id="expiry" name="expiry" placeholder="MM/YY">
+                                                <small id="expiry_error" class="text-danger"></small>
                                             </div>
                                         </div>
 
+                                        <!-- First Name and Last Name -->
                                         <div class="form-row">
                                             <div class="form-group col-md-6">
-                                                <label for="inputFirstName" id="txt-blk">First Name</label>
-                                                <input type="text" class="form-control" id="inputCity" placeholder="">
+                                                <label for="first_name">First Name</label>
+                                                <input type="text" class="form-control" id="first_name" name="first_name" placeholder="">
+                                                <small id="first_name_error" class="text-danger"></small>
                                             </div>
-
                                             <div class="form-group col-md-6">
-                                                <label for="inputLastName " id="txt-blk">Last Name</label>
-                                                <input type="text" class="form-control" id="inputZip" placeholder="">
+                                                <label for="last_name">Last Name</label>
+                                                <input type="text" class="form-control" id="last_name" name="last_name" placeholder="">
+                                                <small id="last_name_error" class="text-danger"></small>
                                             </div>
                                         </div>
+
+                                        <!-- Email and Phone -->
                                         <div class="form-row">
                                             <div class="form-group col-md-6">
-                                                <label for="inputEmail" id="txt-blk">Email</label>
-                                                <input type="email" class="form-control" id="inputCity" placeholder="">
+                                                <label for="email">Email</label>
+                                                <input type="email" class="form-control" id="email" name="email" placeholder="">
+                                                <small id="email_error" class="text-danger"></small>
                                             </div>
-
                                             <div class="form-group col-md-6">
-                                                <label for="inputNumber " id="txt-blk">Phone Number</label>
-                                                <input type="number" class="form-control" id="inputZip" placeholder="">
+                                                <label for="phone">Phone Number</label>
+                                                <input type="text" class="form-control" id="phone" name="phone" placeholder="">
+                                                <small id="phone_error" class="text-danger"></small>
                                             </div>
                                         </div>
 
-                                        <div class="form-txt" id="form">
-                                            <h1>Billing address</h1>
-                                            <p>the billing address entered here must match the billing address of card
-                                                holder.</p>
-                                        </div>
+                                        <!-- Billing Address -->
                                         <div class="form-group">
-                                            <label for="inputAddress">Country</label>
-                                            <select id="inputCountry" class="form-control">
+                                            <label for="country">Country</label>
+                                            <select id="country" class="form-control">
                                                 <?php foreach ($countries as $code => $country): ?>
-                                                <option value="<?= htmlspecialchars($code) ?>">
-                                                        <?= htmlspecialchars($country) ?>
-                                                </option>
+                                                <option value="<?= htmlspecialchars($code) ?>"><?= htmlspecialchars($country) ?></option>
                                                 <?php endforeach; ?>
                                             </select>
+                                            <small id="country_error" class="text-danger"></small>
                                         </div>
                                         <div class="form-group">
-                                            <label for="inputAddress2">Address </label>
-                                            <input type="text" class="form-control" id="inputAddress2" placeholder="">
+                                            <label for="address">Address</label>
+                                            <input type="text" class="form-control" id="address" name="address" placeholder="">
+                                            <small id="address_error" class="text-danger"></small>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="city">City</label>
+                                            <input type="text" class="form-control" id="city" name="city" placeholder="">
+                                            <small id="city_error" class="text-danger"></small>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="zip">Postal/Zip Code</label>
+                                            <input type="text" class="form-control" id="zip" name="zip" placeholder="">
+                                            <small id="zip_error" class="text-danger"></small>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="state">State</label>
+                                            <input type="text" class="form-control" id="state" name="state" placeholder="">
+                                            <small id="state_error" class="text-danger"></small>
                                         </div>
 
-                                        <div class="form-group ">
-                                            <label for="inputCity">City</label>
-                                            <input type="text" class="form-control" id="inputCity">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="inputZip">Postal/Zip Code</label>
-                                            <input type="text" class="form-control" id="inputZip">
-                                        </div>
-                                        <div class="form-group ">
-                                            <label for="inputState">State</label>
-                                            <input type="text" class="form-control" id="inputState">
-                                        </div>
+                                        <!-- Submit Button -->
                                         <div class="payment-btn-wrapper">
-                                            <button type="submit" class="btn btn-primary make-payment-btn">Make
-                                                payment
-                                            </button>
-
+                                            <button type="submit" class="btn btn-primary make-payment-btn">Make payment</button>
                                         </div>
                                     </form>
                                 </div>
@@ -474,7 +479,7 @@ $countries = ['US' => 'United States', 'AF' => 'Afghanistan', 'AL' => 'Albania',
     }
 
 </script>
-
+<script src="{{asset('assets/js/checkout.js')}}"></script>
 </body>
 
 </html>

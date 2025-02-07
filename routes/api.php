@@ -31,9 +31,9 @@ Route::post('login', function (Request $request) {
         'message' => 'Invalid credentials',
     ], 401);
 });
-Route::middleware(['auth:sanctum', 'abilities:create,update,read'])->group(function () {
-    Route::post('process-payment', [ApiAuthorizePaymentController::class, 'processPayment']);
-});
+//Route::middleware(['auth:sanctum', 'abilities:create,update,read'])->group(function () {
+    Route::post('process-payment', [ApiAuthorizePaymentController::class, 'processPayment'])->name('api.authorize.process-payment');
+//});
 Route::post('stripe-process-payment', [ApiStripePaymentController::class, 'processPayment']);
 Route::get('fetch-invoice/{invoice?}', [ApiInvoiceController::class, 'fetch_invoice'])->missing(function (Request $request) {
     return response()->json(['error' => 'Invalid url.'], 404);

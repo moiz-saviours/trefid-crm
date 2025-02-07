@@ -843,3 +843,69 @@ box-shadow: rgb(35 35 41 / 20%) 2px 20px 29px 6px;
         transform: translateY(-20px);
     }
 }
+.cctype {
+    height: 50px;
+    width: 50px;
+    position: absolute;
+    background-size: contain;
+    background-repeat: no-repeat;
+    display: none;
+}
+
+.visa {
+    max-height: 50px;
+    max-width: 50px;
+    right: 35px;
+    top: 46px;
+    background-image: url(../images/other/visa.png);
+}
+
+.mastercard {
+    max-height: 50px;
+    max-width: 40px;
+    right: 35px;
+    top: 38px;
+    background-image: url(../images/other/mastercard.png);
+}
+
+.amex {
+    max-height: 40px;
+    max-width: 35px;
+    right: 35px;
+    top: 37px;
+    background-image: url(../images/other/amex.png);
+}
+
+.discover {
+    max-height: 50px;
+    width: 55px;
+    max-width: 55px;
+    right: 35px;
+    top: 49px;
+    background-image: url(../images/other/discover.png);
+}
+
+.diners {
+    max-height: 50px;
+    width: 70px;
+    max-width: 70px;
+    right: 35px;
+    top: 45px;
+    background-image: url(../images/other/diners.png);
+}
+
+.jcb {
+    max-height: 40px;
+    max-width: 40px;
+    right: 31px;
+    top: 38px;
+    background-image: url(../images/other/jcb.png);
+}
+
+.razorpay {
+    max-height: 50px;
+    max-width: 50px;
+    right: 35px;
+    top: 42px;
+    background-image: url(../images/other/razorpay.png);
+}
