@@ -62,7 +62,7 @@ class InvoiceController extends Controller
             'amount' => 'required|numeric|min:1|max:' . config('invoice.max_amount'),
             'taxable' => 'nullable|boolean',
             'tax_type' => 'nullable|in:none,percentage,fixed',
-            'tax_value' => 'nullable|integer|min:0',
+            'tax_value' => 'nullable|numeric|min:0',
             'currency' => 'nullable|in:USD,GBP,AUD,CAD',
             'tax_amount' => 'nullable|numeric|min:0',
             'total_amount' => 'required|numeric|min:1|max:' . config('invoice.max_amount'),
