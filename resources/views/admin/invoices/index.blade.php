@@ -171,11 +171,14 @@
                                                 </td>
                                                 <td class="align-middle text-center table-actions">
                                                     @if($invoice->status != 1)
+                                                        <button type="button" class="btn btn-sm btn-primary copyBtn"
+                                                                data-id="{{ $invoice->id }}" title="Copy"><i
+                                                                class="fas fa-copy"></i></button>
                                                         <button type="button" class="btn btn-sm btn-primary editBtn"
                                                                 data-id="{{ $invoice->id }}" title="Edit"><i
                                                                 class="fas fa-edit"></i></button>
                                                         <button type="button" class="btn btn-sm btn-danger deleteBtn"
-                                                                data-id="{{ $invoice->id }}" title="Delete"><i
+                                                                data-id="{{ $invoice->id }}" title="Delet   e"><i
                                                                 class="fas fa-trash"></i></button>
                                                     @endif
                                                 </td>
