@@ -420,11 +420,11 @@
             if (data.logo) {
                 var isValidUrl = data.logo.match(/^(https?:\/\/|\/|\.\/)/);
                 if (isValidUrl) {
-                    $logoUrl.val(data.logo);
+                    // $logoUrl.val(data.logo);
                     $defaultImage = data.logo;
                     updateImage(data.logo)
                 } else {
-                    $logoUrl.val(`{{asset('assets/images/brand-logos/')}}/` + data.logo);
+                    // $logoUrl.val(`{{asset('assets/images/brand-logos/')}}/` + data.logo);
                     $defaultImage = `{{asset('assets/images/brand-logos/')}}/` + data.logo;
                     updateImage(`{{asset('assets/images/brand-logos/')}}/` + data.logo)
                 }
