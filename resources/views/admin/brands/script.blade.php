@@ -406,7 +406,33 @@
             if (!$imageInput.val()) updateImage($(this).val());
         });
         updateImage();
+        function updateParentCheckboxes() {
+            $('.multi-hierarchy-tree input[type="checkbox"]').each(function () {
+                let $this = $(this);
 
+                // Check if it's a client account (lowest level)
+                if ($this.attr('name') === 'client_accounts[]') {
+                    let companyCheckbox = $this.closest('ul').prev('label').find('input[type="checkbox"]');
+
+                    if ($this.closest('ul').find('input[type="checkbox"]:not(:checked)').length === 0) {
+                        companyCheckbox.prop('checked', true);
+                    } else {
+                        companyCheckbox.prop('checked', false);
+                    }
+                }
+
+                // Check if it's a client company
+                if ($this.attr('name') === 'client_companies[]') {
+                    let contactCheckbox = $this.closest('ul').prev('label').find('input[type="checkbox"]');
+
+                    if ($this.closest('ul').find('input[type="checkbox"]:not(:checked)').length === 0) {
+                        contactCheckbox.prop('checked', true);
+                    } else {
+                        contactCheckbox.prop('checked', false);
+                    }
+                }
+            });
+        }
         function setDataAndShowEdit(data) {
 
             $('#manage-form').data('id', data.id);
@@ -443,7 +469,7 @@
             data.client_accounts.forEach(function(data) {
                 $('#client_account_' + data.id).prop('checked', true);
             });
-
+            updateParentCheckboxes();
             $('#manage-form').attr('action', `{{route('admin.brand.update')}}/` + data.id);
             $('#formContainer').addClass('open')
         }

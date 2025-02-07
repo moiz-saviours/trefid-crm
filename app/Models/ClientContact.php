@@ -77,7 +77,7 @@ class ClientContact extends Model
 
     public function client_companies(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
-        return $this->hasMany(ClientCompany::class, 'c_contact_key', 'special_key');
+        return $this->hasMany(ClientCompany::class, 'c_contact_key', 'special_key')->where('status', 1);
     }
 
     public function client_accounts(): \Illuminate\Database\Eloquent\Relations\HasManyThrough
@@ -89,6 +89,6 @@ class ClientContact extends Model
             'c_contact_key',                     // Local key on the intermediate model (ClientCompany)
             'special_key',                    // Local key on the parent model (ClientContact)
             'c_company_key'         // Foreign key on the distant model (PaymentMerchant) referencing the intermediate model (ClientCompany)
-        );
+        )->where('payment_merchants.status', 'active');
     }
 }

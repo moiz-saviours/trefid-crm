@@ -109,7 +109,7 @@ class Brand extends Model
             'assignable_id',               // Foreign key on pivot table (refers to ClientContact)
             'brand_key',                   // Local key on Brand model
             'special_key'                  // Related key on ClientContact model
-        );
+        )->where('client_contacts.status', 1);
     }
     /** Define inverse relationship for ClientCompany */
     public function client_companies(): \Illuminate\Database\Eloquent\Relations\MorphToMany
@@ -122,7 +122,7 @@ class Brand extends Model
             'assignable_id',               // Foreign key on pivot table (refers to ClientCompany)
             'brand_key',                   // Local key on Brand model
             'special_key'                  // Related key on ClientCompany model
-        );
+        )->where('client_companies.status', 1);
     }
     /** Define inverse relationship for ClientAccount */
     public function client_accounts(): \Illuminate\Database\Eloquent\Relations\MorphToMany
@@ -135,7 +135,7 @@ class Brand extends Model
             'assignable_id',               // Foreign key on pivot table (refers to PaymentMerchant)
             'brand_key',                   // Local key on Brand model
             'id'                  // Related key on PaymentMerchant model
-        );
+        )->where('payment_merchants.status', 'active');
     }
 }
 
