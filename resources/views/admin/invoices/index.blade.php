@@ -174,7 +174,7 @@
                                                     <button type="button" class="btn btn-sm btn-primary copyBtn"
                                                             data-id="{{ $invoice->id }}"
                                                             data-invoice-key="{{ $invoice->invoice_key }}"
-                                                            data-invoice-url="{{ url('?InvoiceID=' . $invoice->invoice_key) }}"
+                                                            data-invoice-url="{{ url('checkout?InvoiceID=' . $invoice->invoice_key) }}"
                                                             title="Copy Invoice Url"><i
                                                             class="fas fa-copy"></i></button>
                                                     @endif
