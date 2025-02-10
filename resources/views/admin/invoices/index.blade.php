@@ -11,15 +11,15 @@
                 <header class="custm_header">
                     <div class="new_head">
                         <h1 class="page-title mb-2">Invoices <i class="fa fa-caret-down" aria-hidden="true"></i></h1>
-{{--                        <h2 id="record-count" class="h6">{{count($invoices)}} records</h2>--}}
+                        {{--                        <h2 id="record-count" class="h6">{{count($invoices)}} records</h2>--}}
                     </div>
                     <div class="filters">
                         <div class="actions">
                             {{--                            <h1><i class="fa fa-lock" aria-hidden="true"></i> Data Quality</h1>--}}
 
-{{--                            <button class="header_btn" disabled>Actions <i class="fa fa-caret-down" aria-hidden="true"></i>--}}
-{{--                            </button>--}}
-{{--                            <button class="header_btn" disabled>Import</button>--}}
+                            {{--                            <button class="header_btn" disabled>Actions <i class="fa fa-caret-down" aria-hidden="true"></i>--}}
+                            {{--                            </button>--}}
+                            {{--                            <button class="header_btn" disabled>Import</button>--}}
                             <button class="create-contact open-form-btn">Create New</button>
                         </div>
                     </div>
@@ -38,31 +38,31 @@
                     <div class="tab-content">
                         <div class="tab-pane active" id="home">
                             <div class="card">
-{{--                                <div class="card-header">--}}
-{{--                                    <div class="container">--}}
-{{--                                        <div class="row fltr-sec">--}}
-{{--                                            <div class="col-md-8">--}}
-{{--                                                <ul class="custm-filtr">--}}
-{{--                                                    <div class="table-li">--}}
-{{--                                                        <li class="">Company Owner <i class="fa fa-caret-down"--}}
-{{--                                                                                      aria-hidden="true"></i></li>--}}
-{{--                                                        <li class="">Create date <i class="fa fa-caret-down"--}}
-{{--                                                                                    aria-hidden="true"></i></li>--}}
-{{--                                                        <li class="">Last activity date <i class="fa fa-caret-down"--}}
-{{--                                                                                           aria-hidden="true"></i>--}}
-{{--                                                        </li>--}}
-{{--                                                        <li class="">Lead status <i class="fa fa-caret-down"--}}
-{{--                                                                                    aria-hidden="true"></i></li>--}}
-{{--                                                        <li class=""><i class="fa fa-bars" aria-hidden="true"></i> All--}}
-{{--                                                            filters--}}
-{{--                                                        </li>--}}
-{{--                                                    </div>--}}
-{{--                                                </ul>--}}
-{{--                                            </div>--}}
-{{--                                            <div class="col-md-4 right-icon" id="right-icon-0"></div>--}}
-{{--                                        </div>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
+                                {{--                                <div class="card-header">--}}
+                                {{--                                    <div class="container">--}}
+                                {{--                                        <div class="row fltr-sec">--}}
+                                {{--                                            <div class="col-md-8">--}}
+                                {{--                                                <ul class="custm-filtr">--}}
+                                {{--                                                    <div class="table-li">--}}
+                                {{--                                                        <li class="">Company Owner <i class="fa fa-caret-down"--}}
+                                {{--                                                                                      aria-hidden="true"></i></li>--}}
+                                {{--                                                        <li class="">Create date <i class="fa fa-caret-down"--}}
+                                {{--                                                                                    aria-hidden="true"></i></li>--}}
+                                {{--                                                        <li class="">Last activity date <i class="fa fa-caret-down"--}}
+                                {{--                                                                                           aria-hidden="true"></i>--}}
+                                {{--                                                        </li>--}}
+                                {{--                                                        <li class="">Lead status <i class="fa fa-caret-down"--}}
+                                {{--                                                                                    aria-hidden="true"></i></li>--}}
+                                {{--                                                        <li class=""><i class="fa fa-bars" aria-hidden="true"></i> All--}}
+                                {{--                                                            filters--}}
+                                {{--                                                        </li>--}}
+                                {{--                                                    </div>--}}
+                                {{--                                                </ul>--}}
+                                {{--                                            </div>--}}
+                                {{--                                            <div class="col-md-4 right-icon" id="right-icon-0"></div>--}}
+                                {{--                                        </div>--}}
+                                {{--                                    </div>--}}
+                                {{--                                </div>--}}
                                 <div class="card-body">
                                     <table id="allInvoicesTable" class="table table-striped datatable-exportable
                             stripe row-border order-column nowrap
@@ -114,7 +114,7 @@
                                                 <td class="align-middle text-center text-nowrap">
                                                     @if(isset($invoice->customer_contact))
                                                         <a href="{{route('admin.customer.contact.edit',[$invoice->customer_contact->id])}}">{{ $invoice->customer_contact->name }}</a>
-{{--                                                        <br> {{ $invoice->customer_contact->special_key }}--}}
+                                                        {{--                                                        <br> {{ $invoice->customer_contact->special_key }}--}}
                                                     @else
                                                         ---
                                                     @endif
@@ -170,6 +170,14 @@
                                                     @endif
                                                 </td>
                                                 <td class="align-middle text-center table-actions">
+                                                    @if(isset($invoice->brand))
+                                                    <button type="button" class="btn btn-sm btn-primary copyBtn"
+                                                            data-id="{{ $invoice->id }}"
+                                                            data-invoice-key="{{ $invoice->invoice_key }}"
+                                                            data-invoice-url="{{ url('invoice?InvoiceID=' . $invoice->invoice_key) }}"
+                                                            title="Copy Invoice Url"><i
+                                                            class="fas fa-copy"></i></button>
+                                                    @endif
                                                     @if($invoice->status != 1)
                                                         <button type="button" class="btn btn-sm btn-primary editBtn"
                                                                 data-id="{{ $invoice->id }}" title="Edit"><i

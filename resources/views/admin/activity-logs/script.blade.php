@@ -227,7 +227,7 @@
         {{--                        <td class="align-middle text-center text-nowrap"></td>--}}
         {{--                        <td class="align-middle text-center text-nowrap">${index}</td>--}}
         {{--                        <td class="align-middle text-center text-nowrap">--}}
-        {{--                            <object data="${logoUrl}" class="avatar avatar-sm me-3" style="width: 100px; height: 50px;" title="${name}">--}}
+        {{--                            <object data="${logoUrl}" class="avatar avatar-sm me-3"  title="${name}">--}}
         {{--                                <img src="${logoUrl}" alt="${name}" class="avatar avatar-sm me-3" title="${name}">--}}
         {{--                            </object>--}}
         {{--                        </td>--}}
@@ -329,7 +329,7 @@
         {{--                const columns = [--}}
         {{--                    null,--}}
         {{--                    index,--}}
-        {{--                    `<object data="${logoUrl}" class="avatar avatar-sm me-3" style="width: 100px; height: 50px;" title="${name}">--}}
+        {{--                    `<object data="${logoUrl}" class="avatar avatar-sm me-3"  title="${name}">--}}
         {{--                                <img src="${logoUrl}" alt="${name}" class="avatar avatar-sm me-3" title="${name}">--}}
         {{--                            </object>`,--}}
         {{--                    brand_key,--}}

@@ -118,7 +118,7 @@ class BrandController extends Controller
                 $request->file('logo')->move($publicPath, $originalFileName);
                 $brand->logo = $originalFileName;
             } else if ($request->logo_url) {
-                $brand->logo = $request->logo_url;
+                $brand->logo = rawurlencode($request->logo_url);
             }
             $brand->save();
             DB::transaction(function () use ($request, $brand) {

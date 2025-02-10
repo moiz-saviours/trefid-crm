@@ -211,7 +211,7 @@
                                 <td class="align-middle text-center text-nowrap">${c_contact_key.name}</td>
                                 <td class="align-middle text-center text-nowrap">
                                     ${logoUrl ? `<object data="${logoUrl}" class="avatar avatar-sm me-3" title="${name}">
-                                        <img src="${logoUrl}" alt="${name}" class="avatar avatar-sm me-3" title="${name}"style="width: 100px; height: 50px;">
+                                        <img src="${logoUrl}" alt="${name}" class="avatar avatar-sm me-3" title="${name}">
                                     </object>`
                                 : null}
                                 </td>

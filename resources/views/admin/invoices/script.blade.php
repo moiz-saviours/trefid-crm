@@ -141,7 +141,6 @@
             });
         });
 
-
         function updateTotalAmount() {
             const amount = parseFloat($('#amount').val());
             const taxAmount = parseFloat($('#tax_amount').val()) || 0;
@@ -243,7 +242,7 @@
                             </div>
                             <div style="display: flex; justify-content: space-between; gap: 10px;">
                                 <span style="width: 120px;">Tax:</span>
-                                <span>${tax_type === 'percentage' ? '%' : (tax_type === 'fixed' ? currency : '')} ${tax_value??0}</span>
+                                <span>${tax_type === 'percentage' ? '%' : (tax_type === 'fixed' ? currency : '')} ${tax_value ?? 0}</span>
                             </div>
                             <div style="display: flex; justify-content: space-between; gap: 10px;">
                                 <span style="width: 120px;">Tax Amount:</span>
@@ -260,8 +259,14 @@
                         <td class="align-middle text-center text-nowrap">${date}</td>
                         <td class="align-middle text-center text-nowrap">${due_date}</td>
                         <td class="align-middle text-center table-actions">
-                            ${status != 1 ? '<button type="button" class="btn btn-sm btn-primary editBtn" data-id="'+id+'" title="Edit"><i class = "fas fa-edit" > </i></button>' +
-                                '<button type="button" class="btn btn-sm btn-danger deleteBtn" data-id="'+id+'" title="Delete"><i class="fas fa-trash"></i></button>'
+                        <button type="button" class="btn btn-sm btn-primary copyBtn"
+                                                            data-id="${id}"
+                                                            data-invoice-key="${invoice_key}"
+                                                            data-invoice-url="${brand.url + 'checkout?InvoiceID=' + invoice_key}"
+                                                            title="Copy Invoice Url"><i
+                                                            class="fas fa-copy"></i></button>
+                            ${status != 1 ? '<button type="button" class="btn btn-sm btn-primary editBtn" data-id="' + id + '" title="Edit"><i class = "fas fa-edit" > </i></button>' +
+                                '<button type="button" class="btn btn-sm btn-danger deleteBtn" data-id="' + id + '" title="Delete"><i class="fas fa-trash"></i></button>'
                                 : ''}
                         </td>`;
 
@@ -329,7 +334,7 @@
                                 </div>
                                 <div style="display: flex; justify-content: space-between; gap: 10px;">
                                     <span style="width: 120px;">Tax:</span>
-                                    <span>${tax_type === 'percentage' ? '%' : (tax_type === 'fixed' ? currency : '')} ${tax_value??0}</span>
+                                    <span>${tax_type === 'percentage' ? '%' : (tax_type === 'fixed' ? currency : '')} ${tax_value ?? 0}</span>
                                 </div>
                                 <div style="display: flex; justify-content: space-between; gap: 10px;">
                                     <span style="width: 120px;">Tax Amount:</span>
@@ -396,6 +401,18 @@
                         console.error('An error occurred while deleting the record:', error);
                     }
                 });
+        });
+        $(document).ready(function () {
+            $('.copyBtn').click(async function () {
+                try {
+                    let invoiceUrl = $(this).data('invoice-url');
+                    await navigator.clipboard.writeText(invoiceUrl);
+                    toastr.success('Invoice URL copied to clipboard!', 'Success');
+                } catch (err) {
+                    toastr.error('Failed to copy. Please try again.', 'Error');
+                    console.error('Clipboard copy failed:', err);
+                }
+            });
         });
     });
 </script>

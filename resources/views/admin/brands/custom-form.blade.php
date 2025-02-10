@@ -199,11 +199,11 @@
                     <label for="logo" class="form-label">Logo (Optional)</label>
                     <div class="input-group">
                         <input type="file" class="form-control" id="logo" name="logo" accept="image/*">
-                        <input type="url" class="form-control" id="logo_url" name="logo_url"
-                               placeholder="https://example.com/logo.png">
+{{--                        <input type="url" class="form-control" id="logo_url" name="logo_url"--}}
+{{--                               placeholder="https://example.com/logo.png">--}}
                     </div>
-                    <small class="form-text text-muted">You can either upload an image or provide a valid image
-                        URL.</small>
+{{--                    <small class="form-text text-muted">You can either upload an image or provide a valid image--}}
+{{--                        URL.</small>--}}
                     @error('logo')
                     <span class="text-danger">{{ $message }}</span>
                     @enderror

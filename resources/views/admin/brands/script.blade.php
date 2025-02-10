@@ -231,7 +231,7 @@
         {{--                        <td class="align-middle text-center text-nowrap"></td>--}}
         {{--                        <td class="align-middle text-center text-nowrap">${index}</td>--}}
         {{--                        <td class="align-middle text-center text-nowrap">--}}
-        {{--                            <object data="${logoUrl}" class="avatar avatar-sm me-3" style="width: 100px; height: 50px;" title="${name}">--}}
+        {{--                            <object data="${logoUrl}" class="avatar avatar-sm me-3"  title="${name}">--}}
         {{--                                <img src="${logoUrl}" alt="${name}" class="avatar avatar-sm me-3" title="${name}">--}}
         {{--                            </object>--}}
         {{--                        </td>--}}
@@ -333,7 +333,7 @@
         {{--                const columns = [--}}
         {{--                    null,--}}
         {{--                    index,--}}
-        {{--                    `<object data="${logoUrl}" class="avatar avatar-sm me-3" style="width: 100px; height: 50px;" title="${name}">--}}
+        {{--                    `<object data="${logoUrl}" class="avatar avatar-sm me-3"  title="${name}">--}}
         {{--                                <img src="${logoUrl}" alt="${name}" class="avatar avatar-sm me-3" title="${name}">--}}
         {{--                            </object>`,--}}
         {{--                    brand_key,--}}
@@ -406,7 +406,33 @@
             if (!$imageInput.val()) updateImage($(this).val());
         });
         updateImage();
+        function updateParentCheckboxes() {
+            $('.multi-hierarchy-tree input[type="checkbox"]').each(function () {
+                let $this = $(this);
 
+                // Check if it's a client account (lowest level)
+                if ($this.attr('name') === 'client_accounts[]') {
+                    let companyCheckbox = $this.closest('ul').prev('label').find('input[type="checkbox"]');
+
+                    if ($this.closest('ul').find('input[type="checkbox"]:not(:checked)').length === 0) {
+                        companyCheckbox.prop('checked', true);
+                    } else {
+                        companyCheckbox.prop('checked', false);
+                    }
+                }
+
+                // Check if it's a client company
+                if ($this.attr('name') === 'client_companies[]') {
+                    let contactCheckbox = $this.closest('ul').prev('label').find('input[type="checkbox"]');
+
+                    if ($this.closest('ul').find('input[type="checkbox"]:not(:checked)').length === 0) {
+                        contactCheckbox.prop('checked', true);
+                    } else {
+                        contactCheckbox.prop('checked', false);
+                    }
+                }
+            });
+        }
         function setDataAndShowEdit(data) {
 
             $('#manage-form').data('id', data.id);
@@ -420,11 +446,11 @@
             if (data.logo) {
                 var isValidUrl = data.logo.match(/^(https?:\/\/|\/|\.\/)/);
                 if (isValidUrl) {
-                    $logoUrl.val(data.logo);
+                    // $logoUrl.val(data.logo);
                     $defaultImage = data.logo;
                     updateImage(data.logo)
                 } else {
-                    $logoUrl.val(`{{asset('assets/images/brand-logos/')}}/` + data.logo);
+                    // $logoUrl.val(`{{asset('assets/images/brand-logos/')}}/` + data.logo);
                     $defaultImage = `{{asset('assets/images/brand-logos/')}}/` + data.logo;
                     updateImage(`{{asset('assets/images/brand-logos/')}}/` + data.logo)
                 }
@@ -443,7 +469,7 @@
             data.client_accounts.forEach(function(data) {
                 $('#client_account_' + data.id).prop('checked', true);
             });
-
+            updateParentCheckboxes();
             $('#manage-form').attr('action', `{{route('admin.brand.update')}}/` + data.id);
             $('#formContainer').addClass('open')
         }
@@ -470,7 +496,7 @@
                                 <td class="align-middle text-center text-nowrap">${index}</td>
                                 <td class="align-middle text-center text-nowrap">
                                     ${logoUrl ? `<object data="${logoUrl}" class="avatar avatar-sm me-3" title="${name}">
-                                        <img src="${logoUrl}" alt="${name}" class="avatar avatar-sm me-3" title="${name}"style="width: 100px; height: 50px;">
+                                        <img src="${logoUrl}" alt="${name}" class="avatar avatar-sm me-3" title="${name}">
                                     </object>`
                                 : null}
                                 </td>
@@ -506,7 +532,7 @@
                             const index = table.row($('#tr-' + id)).index();
                             const rowData = table.row(index).data();
                             // Column 2: Image
-                            const imageHtml = logoUrl ? `<object data="${logoUrl}" class="avatar avatar-sm me-3" title="${name}"><img src="${logoUrl}" alt="${name}" class="avatar avatar-sm me-3" style="width: 100px; height: 50px;" title="${name}"></object>` : '';
+                            const imageHtml = logoUrl ? `<object data="${logoUrl}" class="avatar avatar-sm me-3" title="${name}"><img src="${logoUrl}" alt="${name}" class="avatar avatar-sm me-3"  title="${name}"></object>` : '';
                             if (decodeHtml(rowData[2]) !== imageHtml) {
                                 table.cell(index, 2).data(logoUrl ? `<object data="${logoUrl}" class="avatar avatar-sm me-3" title="${name}">
                                                             <img src="${logoUrl}" alt="${name}" class="avatar avatar-sm me-3" title="${name}">

@@ -540,8 +540,8 @@ Detailed information and more samples can be found in the documentation.
 </style>
 <style>
     table object.avatar.avatar-sm.me-3 {
-        width: 50px;
-        height: 50px;
+        max-width: 50px;
+        max-height: 50px;
     }
 
     .mn--min .mininav-content h3 {

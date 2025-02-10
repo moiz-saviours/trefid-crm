@@ -74,7 +74,7 @@ class ApiInvoiceController extends Controller
             ];
             return response()->json(['success' => true, 'invoice' => $data,'current_date'=>Carbon::now()->format('jS F Y')]);
         } catch (ValidationException $exception) {
-            return response()->json(['success' => false, 'error' => 'Invalid invoice id format.', 'message' => $exception->getMessage(),], 422);
+            return response()->json(['success' => false, 'error' => $exception->getMessage()], 422);
         } catch (ModelNotFoundException $exception) {
             return response()->json(['success' => false, 'message' => 'Invoice not found.',], 404);
         } catch (\Exception $exception) {
@@ -88,17 +88,24 @@ class ApiInvoiceController extends Controller
      * @param string $invoice_key
      * @throws \Illuminate\Validation\ValidationException
      */
-    protected function validateInvoiceKey(string $invoice_key)
+    protected function validateInvoiceKey($invoice_key)
     {
-        $validator = Validator::make(
+        Validator::make(
             ['invoice_key' => $invoice_key],
-            ['invoice_key' => 'required|min:6|max:20'],
-            ['invoice_key.required' => 'The invoice id field is required.',
-                'invoice_key.min' => 'The invoice id must be at least :min characters.',
-                'invoice_key.max' => 'The invoice id may not be greater than :max characters.']
-        );
-        if ($validator->fails()) {
-            throw new ValidationException($validator, null, 'Invalid invoice ID format.');
-        }
+            [
+                'invoice_key' => [
+                    'required',
+                    'numeric',
+                    'digits_between:6,20',
+                    'exists:invoices,invoice_key',
+                ],
+            ],
+            [
+                'invoice_key.required' => 'The Invoice ID field is required.',
+                'invoice_key.numeric' => 'The Invoice ID should be numeric.',
+                'invoice_key.digits_between' => 'The Invoice ID must be between 6 and 20 digits.',
+                'invoice_key.exists' => 'The Invoice ID does not exist.',
+            ]
+        )->validate();
     }
 }

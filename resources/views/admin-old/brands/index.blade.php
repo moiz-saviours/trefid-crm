@@ -174,7 +174,7 @@
                                                     <object
                                                         data="{{ $logoUrl }}"
                                                         class="avatar avatar-sm me-3"
-                                                        style="width: 100px; height: 50px;"
+
                                                         title="{{ $brand->name }}"
                                                     >
                                                         <img

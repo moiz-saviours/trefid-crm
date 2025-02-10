@@ -1,0 +1,911 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+p {
+    font-size: 13px;
+    margin-bottom: 10px !important;
+
+
+}
+
+.invoice-balance-text {
+    text-align: right;
+}
+
+.brand-logo img {
+    height: 60px;
+}
+
+.brandname {
+    font-size: 28px;
+    text-transform: capitalize;
+    font-weight: 400;
+}
+
+.invoice-detail h1 {
+    font-size: 28px;
+    text-transform: uppercase;
+    font-weight: 400;
+}
+
+.invoice-detail h4 {
+    font-size: 13px;
+    line-height: 10px;
+}
+
+.invoice-detail h5 {
+    margin-top: 15px;
+    /* margin-bottom: 0; */
+    font-size: 15px;
+}
+
+.invoice-detail h6 {
+    font-size: 14px;
+}
+
+#toaster-container {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    z-index: 1000;
+}
+
+.toaster {
+    background-color: #333;
+    color: #fff;
+    padding: 10px 15px;
+    margin-top: 5px;
+    border-radius: 3px;
+    font-size: 14px;
+    animation: fadeinout 3s;
+}
+
+@keyframes fadeinout {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    10% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    90% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+}
+
+
+.col-width-1 {
+    width: 50%;
+}
+
+
+.col-width-2 {
+    width: 15%;
+}
+
+.col-width-3 {
+    width: 25%;
+}
+
+.sec-col {
+    padding-top: 14px;
+    padding-bottom: 7px
+}
+
+.sec-col h2 {
+    font-size: 23px;
+    text-transform: capitalize;
+    margin-bottom: 7px;
+}
+
+.sec-col p {
+    margin: 0 0 5px;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 19px;
+}
+
+table.custom-invoice-table {
+    font-size: 13px;
+}
+
+table.custom-invoice-table thead th {
+    padding: 7px 9px;
+    border: none;
+}
+
+.para P {
+    margin: 0;
+    line-height: 2;
+    text-transform: capitalize;
+    font-size: 14px;
+}
+
+.third-col {
+    padding-bottom: 15px;
+}
+
+.third-col h5 {
+    font-size: 14px;
+
+}
+
+.form-txt {
+    /* margin-top: 35px; */
+}
+
+#form-txt-1 {
+}
+
+#form {
+    margin-top: 40px;
+}
+
+.form-txt h1 {
+    margin-top: 10px;
+    font-size: 16px;
+    font-weight: 500;
+    text-transform: uppercase;
+    color: #3C3D3A;
+}
+
+.form-txt p {
+    font-size: 13px;
+    font-weight: 400;
+    color: #3C3D3A;
+}
+
+
+.btn {
+    border: solid;
+    border-radius: 0px;
+    text-transform: uppercase;
+    font-size: 12px;
+}
+
+.nav-pills .nav-link.active {
+    color: #000000 !important;
+    background-color: #b2d7ff !important;
+    border-radius: 31px;
+    font-weight: 500;
+    padding: 4px;
+}
+
+.upper-txt {
+    display: flex;
+    margin: 0;
+}
+
+.upper-txt p {
+    margin: 0;
+}
+
+.Upper-col {
+    margin-bottom: 10px;
+}
+
+.Upper-col h2 {
+    margin: 0;
+}
+
+.b-due {
+    color: orangered;
+}
+
+
+.icon img {
+    padding: 8px 12px;
+    background-color: #fff;
+    color: #333;
+    height: 35px;
+    width: 45px;
+    font-size: 16px;
+    box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+    border: 1px solid transparent;
+    margin-right: 6px;
+    border-radius: 1px;
+}
+
+.icon a {
+    padding: 6px 14px;
+    border-radius: 3px;
+    display: inline-block;
+    text-align: center;
+    vertical-align: middle;
+    user-select: none;
+    border: 1px solid transparent;
+    border-radius: .25rem;
+    font-size: 16px;
+    text-transform: capitalize;
+    background-color: #408dfb;
+    color: white;
+}
+
+.icon a:hover {
+    color: white;
+    background-color: #007bff;
+    text-decoration: none;
+}
+
+.icon {
+    /* padding: 40px 0;
+    align-items: baseline;
+    float: right;
+    margin-right: 11px; */
+    justify-content: end;
+    display: flex;
+    margin-bottom: 10px;
+}
+
+.para-1 p {
+    /* margin-bottom: 8px; */
+}
+
+.para-2 p {
+    /* margin-bottom: 5px; */
+
+}
+
+/* .para-1 {
+float: right;
+      }
+
+      .para-2 {
+        text-align-last: right;
+              }
+       */
+.para p {
+    font-size: 16px;
+
+}
+
+.upper-txt h6 {
+    font-size: 14px;
+}
+
+.upper-txt-2 {
+    margin-left: 30px;
+}
+
+.box-shade {
+    height: 100%;
+    margin: 0 15px;
+    box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+}
+
+
+.box-shade-2 {
+    /* height: 100%; */
+    padding-bottom: 10px 0;
+    border-radius: 3px;
+    box-shadow: 0 1px 8px 0 rgba(151, 178, 237, .5);
+    padding: 20px 30px;
+}
+
+
+.sec-btn {
+    margin-top: 45px;
+
+
+}
+
+.sec-btn a {
+    padding: 25px 160px;
+
+    margin-left: 150px;
+
+    background-size: contain;
+    background-image: url("../nextgen-invoice/images/paypal-color.svg");
+    background-repeat: no-repeat;
+
+}
+
+
+.form-group label {
+    margin: 0;
+    margin-bottom: 12px;
+    color: #b94a48;
+    font-size: 12px;
+    font-weight: 450;
+}
+
+.form-group label::after {
+    content: "*";
+}
+
+.invoice-template {
+    padding: 50px 50px;
+}
+
+
+.first-row {
+    /* background-color: #f9f9f9;
+    margin: 20px 0; */
+}
+
+#txt-blk {
+    color: #000000;
+}
+
+#txt-blk::after {
+    content: "";
+}
+
+#td {
+    /*font-size: 16px;*/
+    background-color: #f5f4f3;
+    border: none;
+    border-collapse: collapse;
+
+}
+
+td.amount {
+    text-align: end;
+}
+
+td.roww {
+    padding: .5rem;
+}
+
+.roww {
+    border: 1px solid white;
+    border-collapse: collapse;
+}
+
+.table {
+    font-size: 16px;
+    font-weight: 400;
+    text-transform: capitalize;
+    padding: 40px;
+
+}
+
+.side-bar-1 {
+    /* height: 100%; */
+    background-color: #F5F9FC;
+}
+
+
+.form-group {
+    margin-bottom: 0.25rem !important;
+}
+
+.side-bar {
+
+    flex-shrink: 0;
+    min-width: 130px;
+    padding: 20px 0px;
+    /* height: 73vh; */
+
+}
+
+.tab {
+    padding: 0 20px;
+    padding-bottom: 20px;
+    border: 0;
+}
+
+.invoice-info {
+    padding: 0px 20px;
+    padding-top: 20px;
+}
+
+.thanks {
+    text-align: center;
+}
+
+/**
+td  {
+  border: 1px solid white;
+  border-collapse: collapse;
+}
+th  {
+  border: 1px solid white;
+  border-collapse: collapse;
+}
+.offset-md-1.col-md-5.box-shade-2 {
+box-shadow: rgb(35 35 41 / 20%) 2px 20px 29px 6px;
+
+
+
+  .containeree::before{
+  content: '';
+  background: url("../nextgen-invoice/images/pngwing.com.png");
+  position: absolute;
+  opacity: 0.3;
+  top: -400px;
+  left: 30px;
+  bottom: px;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1;
+            background-repeat: no-repeat;
+}
+
+
+}  **/
+
+
+.paid {
+    height: 150px;
+    transform: rotate(15deg);
+}
+
+.tab-end {
+    /* padding-top: 50px; */
+    padding-bottom: 10px;
+    padding-left: 30px;
+}
+
+.tab-end p {
+
+    font-size: 13px;
+}
+
+
+.ribbon .ribbon-inner:before {
+    left: 0;
+    border-left: 2px solid transparent;
+    color: #2e8fda;
+}
+
+.ribbon .ribbon-inner:after,
+.ribbon .ribbon-inner:before {
+    content: "";
+    border-top: 5px solid transparent;
+    border-left: 5px solid;
+    border-left-color: inherit;
+    border-right: 5px solid transparent;
+    border-bottom: 5px solid;
+    border-bottom-color: inherit;
+    position: absolute;
+    top: 21px;
+    transform: rotate(-45deg);
+}
+
+.ribbon .ribbon-inner:after {
+    right: -9px;
+    left: 129px;
+    border-bottom: 3px solid transparent;
+    color: #2e8fda;
+}
+
+.ribbon .ribbon-inner:after,
+.ribbon .ribbon-inner:before {
+    content: "";
+    border-top: 5px solid transparent;
+    border-left: 5px solid;
+    border-left-color: inherit;
+    border-right: 5px solid transparent;
+    border-bottom: 5px solid;
+    border-bottom-color: inherit;
+    position: absolute;
+    top: 21px;
+    transform: rotate(-45deg);
+}
+
+.ribbon {
+    width: 96px;
+    height: 94px;
+    overflow: hidden;
+    position: absolute;
+    top: -4px;
+    left: 23px;
+    z-index: 9;
+}
+
+.ribbon .ribbon-cancelled,
+.ribbon .ribbon-declined,
+.ribbon .ribbon-overdue {
+    background: #dc3545;
+    border-color: #dc3545;
+
+}
+
+.ribbon .ribbon-unpaid {
+    background: #fab86e;
+    border-color: #fab86e;
+}
+
+.ribbon .ribbon-paid {
+    background: #28a745;
+    border-color: #28a745;
+}
+
+.ribbon .ribbon-inner {
+    text-align: center;
+    color: #fff;
+    top: 24px;
+    left: -31px;
+    width: 135px;
+    padding: 3px;
+    position: relative;
+    transform: rotate(-45deg);
+}
+
+.make-payment-btn {
+    background-color: #343a40 !important;
+    border: none !important;
+    color: #fff !important;
+    font-size: 14px !important;
+    padding: 9px 13px !important;
+}
+
+/* credit card btn css start */
+
+.payment-btn-wrapper {
+    padding-top: 10px;
+    text-align: right;
+}
+
+.paypal-payment-btn {
+    background: #ffbe46;
+    border-radius: 25px;
+    /* margin: 10px 0px; */
+    border: none;
+    padding: 3px 50px
+}
+
+.stripe-payment-btn {
+    background: #7c46ff;
+    border-radius: 25px;
+    margin: 0px 0px;
+    color: #fff;
+    border: none;
+    padding: 5px 42px;
+    text-transform: capitalize;
+    font-size: 13px;
+}
+
+.payment-imgs {
+    width: 66px;
+}
+
+.header-btns-div {
+    display: grid;
+    flex-wrap: wrap;
+    justify-content: left;
+    gap: 7px;
+    align-items: center;
+}
+
+.header-btns-heading-wrapper {
+    display: flex;
+    /* flex-wrap: wrap; */
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* credit card btn css end */
+
+
+@media screen and (min-width: 2100px) and (max-width: 2560px) {
+    .invoice-detail h1 {
+        font-size: 32px;
+    }
+
+    .brandname {
+        font-size: 32px;
+    }
+
+    .invoice-detail h4 {
+        font-size: 16px;
+        line-height: 21px;
+    }
+
+    .invoice-detail h5 {
+        font-size: 19px;
+    }
+
+    .invoice-detail h6 {
+        font-size: 16px;
+    }
+
+    p {
+        font-size: 17px;
+        line-height: 31px;
+    }
+
+    table.custom-invoice-table {
+        font-size: 17px;
+    }
+
+    .icon {
+        padding-bottom: 10px;
+    }
+
+    .form-txt h1 {
+        font-size: 25px;
+    }
+
+    .form-txt p {
+        font-size: 19px;
+    }
+
+    .form-group label {
+        font-size: 17px;
+    }
+
+    .nav-pills .nav-link {
+        font-size: 19px;
+    }
+
+    .tab-end p {
+        font-size: 19px;
+    }
+}
+
+
+@media (max-width: 1180px) {
+    .icon {
+        margin-bottom: 15px;
+    }
+
+    .invoice-detail h4 {
+        font-size: 11px;
+    }
+
+    .invoice-detail h1 {
+        font-size: 22px;
+    }
+
+    .brandname {
+        font-size: 22px;
+    }
+
+    .invoice-detail h5 {
+        font-size: 13px;
+    }
+
+    .invoice-detail h6 {
+        font-size: 12px;
+    }
+
+    .invoice-balance-text p {
+        font-size: 12px;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+    }
+
+    /*
+      .payment-imgs {
+        width: 60px;
+      } */
+    .paypal-payment-btn {
+        padding: 7px 41px;
+    }
+
+    .stripe-payment-btn {
+        padding: 7px 29px;
+        font-size: 13px;
+    }
+
+    p {
+        /* margin-bottom: 12px !important; */
+    }
+}
+
+@media (max-width: 991px) {
+    .box-shade-2 {
+
+        margin: 15px;
+    }
+
+}
+
+@media (max-width: 600px) {
+    .invoice-template {
+        padding: 30px 10px;
+    }
+
+    .header-btns-heading-wrapper {
+        flex-wrap: wrap;
+        flex-direction: column-reverse;
+    }
+
+    .side-bar {
+        height: 100%;
+    }
+
+    .make-payment-btn {
+        padding: 4px 12px !important;
+        font-size: 13px !important;
+    }
+
+    .brand-logo img {
+
+        margin-top: 25px;
+    }
+
+    .paid {
+        /* height: 93px; */
+        height: 93px;
+        position: absolute;
+        right: -21px;
+        /* top: -66px; */
+        bottom: -6px;
+
+    }
+
+    .invoice-detail h1 {
+        font-size: 18px;
+    }
+
+    .brandname {
+        font-size: 18px;
+    }
+
+    #form {
+        margin-top: 15px;
+    }
+
+    p {
+        /* text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap; */
+
+        font-size: 12px;
+    }
+
+    table.custom-invoice-table {
+
+        font-size: 12px;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+    }
+
+    .table.custom-invoice-table td,
+    th {
+        padding: 5px 14px;
+    }
+
+    .form-txt p {
+        font-size: 12px;
+
+    }
+
+    .form-txt h1 {
+        font-size: 14px;
+    }
+
+    .nav-pills .nav-link {
+        font-size: 13px;
+    }
+
+    .invoice-balance-text {
+        text-align: left;
+    }
+
+}
+
+#toaster-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+}
+
+.toaster {
+    background-color: #333;
+    color: #fff;
+    padding: 15px 25px;
+    margin-top: 10px;
+    border-radius: 10px;
+    font-size: 16px;
+    font-family: Arial, sans-serif;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    animation: fadeinout 4s ease-in-out;
+    display: inline-block;
+    max-width: 300px;
+    word-wrap: break-word;
+}
+
+.toaster.error {
+    background-color: #e74c3c; /* Red for errors */
+}
+
+.toaster.success {
+    background-color: #27ae60; /* Green for success */
+    border-left: 5px solid #1e8449;
+}
+
+.toaster.info {
+    background-color: #3498db; /* Blue for info */
+    border-left: 5px solid #2980b9;
+}
+
+@keyframes fadeinout {
+    0% {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    10% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+}
+.cctype {
+    height: 50px;
+    width: 50px;
+    position: absolute;
+    background-size: contain;
+    background-repeat: no-repeat;
+    display: none;
+}
+
+.visa {
+    max-height: 50px;
+    max-width: 50px;
+    right: 35px;
+    top: 46px;
+    background-image: url(../images/other/visa.png);
+}
+
+.mastercard {
+    max-height: 50px;
+    max-width: 40px;
+    right: 35px;
+    top: 38px;
+    background-image: url(../images/other/mastercard.png);
+}
+
+.amex {
+    max-height: 40px;
+    max-width: 35px;
+    right: 35px;
+    top: 37px;
+    background-image: url(../images/other/amex.png);
+}
+
+.discover {
+    max-height: 50px;
+    width: 55px;
+    max-width: 55px;
+    right: 35px;
+    top: 49px;
+    background-image: url(../images/other/discover.png);
+}
+
+.diners {
+    max-height: 50px;
+    width: 70px;
+    max-width: 70px;
+    right: 35px;
+    top: 45px;
+    background-image: url(../images/other/diners.png);
+}
+
+.jcb {
+    max-height: 40px;
+    max-width: 40px;
+    right: 31px;
+    top: 38px;
+    background-image: url(../images/other/jcb.png);
+}
+
+.razorpay {
+    max-height: 50px;
+    max-width: 50px;
+    right: 35px;
+    top: 42px;
+    background-image: url(../images/other/razorpay.png);
+}
