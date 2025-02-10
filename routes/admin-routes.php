@@ -196,5 +196,10 @@ Route::middleware(['auth:admin', 'verified:admin', 'throttle:60,1'])->prefix('ad
             Route::delete('/delete/{client_account?}', [AdminPaymentMerchantController::class, 'delete'])->name('delete');
         });
     });
-    Route::get('/activity-logs', [AdminActivityLogController::class, 'index']);
+
+    Route::prefix('activity-logs')->name('activity-log.')->group(function () {
+        Route::get('/', [AdminActivityLogController::class, 'index'])->name('index');
+    });
+
+
 });

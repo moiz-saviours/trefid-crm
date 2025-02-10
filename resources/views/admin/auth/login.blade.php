@@ -25,7 +25,7 @@
             <div class="row justify-content-end">
                 <div class="col-lg-4">
                     <div class="text-center">
-                        <img src="../assets/images/logo-dark.webp" class="img-fluid logo-h" >
+                        <img src="../assets/images/aim-logo.png" class="img-fluid logo-h" >
 {{--                        <h1 class="main-logo-heading">CRM</h1>--}}
 
                     </div>

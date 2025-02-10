@@ -400,6 +400,26 @@
                         </ul>
                         <!-- END : Ui Elements submenu list -->
                     </li>
+                    <li class="nav-item has-sub">
+                        <a href="javascript:void(0)"
+                           class="mininav-toggle nav-link collapsed {{ request()->is('admin/activity-logs*') ? 'active' : '' }}"><i
+                                class="demo-pli-calendar-4 fs-5 me-2"></i>
+                            <span class="nav-label ms-1">Activity Logs</span>
+                        </a>
+                        <!-- Ui Elements submenu list -->
+                        <ul class="mininav-content nav collapse">
+                            <li data-popper-arrow class="arrow"></li>
+                            <div class="navigate-heading">
+                                <i class="demo-pli-gears"></i>
+                                <h3>Lead Status</h3>
+                            </div>
+                            <li class="nav-item">
+                                    <a href="{{ route('admin.activity-log.index') }}"
+                                   class="nav-link {{ request()->is('admin/activity-logs*') ? 'active' : '' }}">Lists</a>
+                            </li>
+                        </ul>
+                        <!-- END : Ui Elements submenu list -->
+                    </li>
 
                     <!-- END : Link with submenu -->
                 </ul>

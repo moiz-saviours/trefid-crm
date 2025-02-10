@@ -1,8 +1,9 @@
 <style>
     .login-section {
-         background-image: linear-gradient(310deg, #5e72e4b0 0%, #825ee47a 100%);
+         /*background-image: linear-gradient(310deg, #5e72e4b0 0%, #825ee47a 100%);*/
 
-        background-image: linear-gradient(310deg, #0000002e 0%, #21252996 100%), url('../assets/images/bg.jpg');
+        /*background-image: linear-gradient(310deg, #0000002e 0%, #21252996 100%), url('../assets/images/crm-bg.jpg');*/
+        background-image: url("../assets/images/crm-bg.jpg") ;
         background-repeat: no-repeat;
         background-size: cover;
         background-position: center;
