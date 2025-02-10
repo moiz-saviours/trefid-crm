@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
     <title>Document</title>
     <link rel="stylesheet" href="{{asset('assets/css/checkout.css')}}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
@@ -10,6 +12,8 @@
           crossorigin="anonymous" referrerpolicy="no-referrer"/>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
           integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="{{asset('build/toaster/css/toastr.min.css')}}">
 
 
     <!-- pdf download links -->
@@ -324,12 +328,16 @@ $countries = ['US' => 'United States', 'AF' => 'Afghanistan', 'AL' => 'Albania',
                                             we do not store your card details on our server.</p>
                                     </div> -->
 
-                                    <form id="paymentForm" method="post" action="">
+                                    <form id="paymentForm">
+                                        @csrf
+                                        <input type="hidden" name="invoice_number"
+                                               value="{{$invoiceData['invoice_key']}}">
                                         <!-- Card Number -->
                                         <div class="form-group">
                                             <label for="card_number">Card number</label>
                                             <input type="text" class="form-control" id="card_number" name="card_number"
-                                                   placeholder="1234 1234 1234 1234" maxlength="19"
+                                                   value="4111111111111111"
+                                                   placeholder="1234-1234-1234-1234" maxlength="19"
                                                    autocomplete="false">
                                             <span id="card_type_logo" class="cctype"></span>
                                             <small id="card_number_error" class="text-danger"></small>
@@ -346,7 +354,7 @@ $countries = ['US' => 'United States', 'AF' => 'Afghanistan', 'AL' => 'Albania',
                                                             <div class="col-md-6">
                                                                 <select class="form-control" id="expiry_month"
                                                                         name="expiry_month">
-                                                                    <option value="">MM</option>
+                                                                    <option value="" disabled>MM</option>
                                                                     <option value="01">01</option>
                                                                     <option value="02">02</option>
                                                                     <option value="03">03</option>
@@ -358,7 +366,7 @@ $countries = ['US' => 'United States', 'AF' => 'Afghanistan', 'AL' => 'Albania',
                                                                     <option value="09">09</option>
                                                                     <option value="10">10</option>
                                                                     <option value="11">11</option>
-                                                                    <option value="12">12</option>
+                                                                    <option value="12" selected>12</option>
                                                                 </select>
                                                                 <small id="expiry_month_error"
                                                                        class="text-danger"></small>
@@ -366,7 +374,7 @@ $countries = ['US' => 'United States', 'AF' => 'Afghanistan', 'AL' => 'Albania',
                                                             <div class="col-md-6">
                                                                 <select class="form-control" id="expiry_year"
                                                                         name="expiry_year">
-                                                                    <option value="">YYYY</option>
+                                                                    <option value="" disabled>YYYY</option>
                                                                     <script>
                                                                         var currentYear = new Date().getFullYear();
                                                                         for (var i = 0; i < 31; i++) {
@@ -392,7 +400,9 @@ $countries = ['US' => 'United States', 'AF' => 'Afghanistan', 'AL' => 'Albania',
                                             <div class="form-group col-md-6">
                                                 <label for="cvv">CVV</label>
                                                 <input type="password" class="form-control" id="cvv" name="cvv"
-                                                       placeholder="CVC" maxlength="4" autocomplete="false"  oninput="restrictToDigits(event)">
+                                                       placeholder="CVC" maxlength="4" autocomplete="false"
+                                                    {{--                                                       oninput="restrictToDigits(event)"--}}
+                                                >
                                                 <small id="cvv_error" class="text-danger"></small>
                                             </div>
                                         </div>
@@ -426,7 +436,7 @@ $countries = ['US' => 'United States', 'AF' => 'Afghanistan', 'AL' => 'Albania',
                                                 <label for="phone">Phone Number</label>
                                                 <input type="text" class="form-control" id="phone" name="phone"
                                                        placeholder="" autocomplete="false"
-{{--                                                       oninput="validatePhone()"--}}
+                                                    {{--                                                       oninput="validatePhone()"--}}
                                                 >
                                                 <small id="phone_error" class="text-danger"></small>
                                             </div>
@@ -435,7 +445,8 @@ $countries = ['US' => 'United States', 'AF' => 'Afghanistan', 'AL' => 'Albania',
                                         <!-- Billing Address -->
                                         <div class="form-group">
                                             <label for="country">Country</label>
-                                            <select id="country" class="form-control" autocomplete="false">
+                                            <select id="country" name="country" class="form-control"
+                                                    autocomplete="false">
                                                 <?php foreach ($countries as $code => $country): ?>
                                                 <option
                                                     value="<?= htmlspecialchars($code) ?>"><?= htmlspecialchars($country) ?></option>
@@ -457,11 +468,11 @@ $countries = ['US' => 'United States', 'AF' => 'Afghanistan', 'AL' => 'Albania',
                                             <small id="city_error" class="text-danger"></small>
                                         </div>
                                         <div class="form-group">
-                                            <label for="zip">Postal/Zip Code</label>
-                                            <input type="text" class="form-control" id="zip" name="zip"
+                                            <label for="zipcode">Postal/Zip Code</label>
+                                            <input type="text" class="form-control" id="zipcode" name="zipcode"
                                                    placeholder=""
                                                    autocomplete="false">
-                                            <small id="zip_error" class="text-danger"></small>
+                                            <small id="zipcode_error" class="text-danger"></small>
                                         </div>
                                         <div class="form-group">
                                             <label for="state">State</label>
@@ -471,7 +482,8 @@ $countries = ['US' => 'United States', 'AF' => 'Afghanistan', 'AL' => 'Albania',
                                         </div>
 
                                         <div class="payment-btn-wrapper">
-                                            <button type="submit" class="btn btn-primary make-payment-btn">Make
+                                            <button type="submit" id="submit-btn"
+                                                    class="btn btn-primary make-payment-btn">Make
                                                 payment
                                             </button>
                                         </div>
@@ -509,12 +521,9 @@ $countries = ['US' => 'United States', 'AF' => 'Afghanistan', 'AL' => 'Albania',
         </div>
     </div>
 </section>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
-        integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
-        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-        crossorigin="anonymous"></script>
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct"
         crossorigin="anonymous"></script>
@@ -544,7 +553,130 @@ $countries = ['US' => 'United States', 'AF' => 'Afghanistan', 'AL' => 'Albania',
     }
 
 </script>
+
+<!-- Toaster -->
+<script src="{{asset('build/toaster/js/toastr.min.js')}}"></script>
+
+<script>
+    // Toastr options
+    toastr.options = {
+        "closeButton": true,
+        "debug": false,
+        "newestOnTop": false,
+        "progressBar": true,
+        "positionClass": "toast-top-right",
+        "preventDuplicates": false,
+        "onclick": null,
+        "showDuration": "500",
+        "hideDuration": "1000",
+        "timeOut": "3000", // 5 seconds
+        "extendedTimeOut": "1000",
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut"
+    };
+
+    @if(session('success'))
+    setTimeout(function () {
+        toastr.success("{{ session('success') }}");
+    }, 1500);
+    @php session()->forget('success'); @endphp
+    @endif
+
+    // Display error messages (multiple)
+    @if(session('errors') && session('errors')->any())
+    let errorMessages = {!! json_encode(session('errors')->all()) !!};
+    let displayedCount = 0;
+
+    setTimeout(function () {
+        errorMessages.forEach((message, index) => {
+            if (displayedCount < 5) {
+                toastr.error(message);
+                displayedCount++;
+            } else {
+                setTimeout(() => toastr.error(message), index * 1000);
+            }
+        });
+    }, 1500);
+
+    @php session()->forget('errors'); @endphp
+    @endif
+
+</script>
+
 <script src="{{asset('assets/js/checkout.js')}}"></script>
+<script>
+
+    $(document).ready(function () {
+        $('#paymentForm').on('submit', function (e) {
+            e.preventDefault();
+            const firstErrorField = validateForm();
+            if (firstErrorField) {
+                const errorMessage = $(`#${firstErrorField.id}_error`).text() || 'Please correct the errors in the form.';
+                toastr.error(errorMessage, 'Validation Error');
+                firstErrorField.scrollIntoView({behavior: 'smooth', block: 'center'});
+                return;
+            }
+            $('#submit-btn').prop('disabled', true).text('Processing...');
+            let formData = $(this).serializeArray();
+            formData = formData.map(field => {
+                if (field.name === 'card_number') {
+                    field.value = field.value.replace(/\D/g, '');
+                }
+                return field;
+            });
+            $.ajax({
+                url: `{{route('api.authorize.process-payment')}}`,
+                type: 'POST',
+                data: formData,
+                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                dataType: 'json',
+                success: function (response) {
+                    if (response.message) {
+                        toastr.success(response.message, 'Success');
+                    }
+                    location.reload();
+                },
+                error: function (xhr, status, error) {
+                    const response = xhr.responseJSON;
+                    const message = response?.message || response?.error || error || 'Something went wrong. Please try again.';
+                    if (xhr.status === 422 || response.errors) {
+                        $.each(response.errors, function (field, errorMessage) {
+                            $(`#${field}_error`).text(errorMessage);
+                        });
+                    }
+                    toastr.error(message, 'Error');
+                    console.log(error)
+                }
+            });
+        });
+    });
+    function validateForm() {
+        const fields = [
+            {id: 'card_number', isValid: validateCardNumber()},
+            {id: 'expiry_month', isValid: validateExpiryMonth()},
+            {id: 'expiry_year', isValid: validateExpiryYear()},
+            {id: 'cvv', isValid: validateCVV()},
+            {id: 'first_name', isValid: validateFirstName()},
+            {id: 'last_name', isValid: validateLastName()},
+            {id: 'email', isValid: validateEmail()},
+            {id: 'phone', isValid: validatePhone()},
+            {id: 'country', isValid: validateCountry()},
+            {id: 'address', isValid: validateAddress()},
+            {id: 'city', isValid: validateCity()},
+            {id: 'zipcode', isValid: validateZipcode()},
+            {id: 'state', isValid: validateState()}
+        ];
+
+        for (const field of fields) {
+            if (!field.isValid) {
+                return document.getElementById(field.id);
+            }
+        }
+        return null;
+    }
+</script>
 </body>
 
 </html>
