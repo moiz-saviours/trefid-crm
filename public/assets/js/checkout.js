@@ -37,7 +37,8 @@ document.getElementById('paymentForm').addEventListener('submit', function (e) {
     // Validate all fields
     const isValidCardNumber = validateCardNumber();
     const isValidCVV = validateCVV();
-    const isValidExpiry = validateExpiry();
+    const isValidExpiryMonth = validateExpiryMonth();
+    const isValidExpiryYear = validateExpiryYear();
     const isValidFirstName = validateFirstName();
     const isValidLastName = validateLastName();
     const isValidEmail = validateEmail();
@@ -52,7 +53,8 @@ document.getElementById('paymentForm').addEventListener('submit', function (e) {
     if (
         isValidCardNumber &&
         isValidCVV &&
-        isValidExpiry &&
+        isValidExpiryMonth &&
+        isValidExpiryYear &&
         isValidFirstName &&
         isValidLastName &&
         isValidEmail &&
@@ -97,12 +99,25 @@ function validateCVV() {
     }
 }
 
-function validateExpiry() {
-    const expiry = document.getElementById('expiry').value;
-    const errorElement = document.getElementById('expiry_error');
+function validateExpiryMonth() {
+    const expiryMonth = document.getElementById('expiry_month').value;
+    const errorElement = document.getElementById('expiry_month_error');
 
-    if (!/^(0[1-9]|1[0-2])\/\d{2}$/.test(expiry)) {
-        errorElement.textContent = 'Invalid expiry date. Use MM/YY format.';
+    if (!expiryMonth) {
+        errorElement.textContent = 'Please select a valid expiry month.';
+        return false;
+    } else {
+        errorElement.textContent = '';
+        return true;
+    }
+}
+
+function validateExpiryYear() {
+    const expiryYear = document.getElementById('expiry_year').value;
+    const errorElement = document.getElementById('expiry_year_error');
+
+    if (!expiryYear) {
+        errorElement.textContent = 'Please select a valid expiry year.';
         return false;
     } else {
         errorElement.textContent = '';
@@ -117,6 +132,10 @@ function validateFirstName() {
     if (!firstName.trim()) {
         errorElement.textContent = 'First name is required.';
         return false;
+    }
+    else if (/\d/.test(firstName)) {
+        errorElement.textContent = 'First name should not contain numbers.';
+        return false;
     } else {
         errorElement.textContent = '';
         return true;
@@ -129,6 +148,10 @@ function validateLastName() {
 
     if (!lastName.trim()) {
         errorElement.textContent = 'Last name is required.';
+        return false;
+    }
+    else if (/\d/.test(lastName)) {
+        errorElement.textContent = 'Last name should not contain numbers.';
         return false;
     } else {
         errorElement.textContent = '';
@@ -153,7 +176,9 @@ function validatePhone() {
     const phone = document.getElementById('phone').value;
     const errorElement = document.getElementById('phone_error');
 
-    if (!/^\d{10,15}$/.test(phone)) {
+    const digitsOnly = phone.replace(/\D/g, '');
+
+    if (!/^\d{10,15}$/.test(digitsOnly)) {
         errorElement.textContent = 'Invalid phone number. Must be 10 to 15 digits.';
         return false;
     } else {

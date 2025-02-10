@@ -336,14 +336,44 @@ $countries = ['US' => 'United States', 'AF' => 'Afghanistan', 'AL' => 'Albania',
                                         <!-- CVV and Expiry -->
                                         <div class="form-row">
                                             <div class="form-group col-md-6">
-                                                <label for="cvv">CVV</label>
-                                                <input type="text" class="form-control" id="cvv" name="cvv" placeholder="CVC" autocomplete="false">
-                                                <small id="cvv_error" class="text-danger"></small>
+                                                <label for="expiry_month">Expires on</label>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <select class="form-control" id="expiry_month" name="expiry_month">
+                                                            <option value="">MM</option>
+                                                            <option value="01">01</option>
+                                                            <option value="02">02</option>
+                                                            <option value="03">03</option>
+                                                            <option value="04">04</option>
+                                                            <option value="05">05</option>
+                                                            <option value="06">06</option>
+                                                            <option value="07">07</option>
+                                                            <option value="08">08</option>
+                                                            <option value="09">09</option>
+                                                            <option value="10">10</option>
+                                                            <option value="11">11</option>
+                                                            <option value="12">12</option>
+                                                        </select>
+                                                        <small id="expiry_month_error" class="text-danger"></small>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <select class="form-control" id="expiry_year" name="expiry_year">
+                                                            <option value="">YYYY</option>
+                                                            <script>
+                                                                var currentYear = new Date().getFullYear();
+                                                                for (var i = 0; i < 31; i++) {
+                                                                    document.write('<option value="' + (currentYear + i) + '">' + (currentYear + i) + '</option>');
+                                                                }
+                                                            </script>
+                                                        </select>
+                                                        <small id="expiry_year_error" class="text-danger"></small>
+                                                    </div>
+                                                </div>
                                             </div>
                                             <div class="form-group col-md-6">
-                                                <label for="expiry">Expires on</label>
-                                                <input type="text" class="form-control" id="expiry" name="expiry" placeholder="MM/YY" autocomplete="false">
-                                                <small id="expiry_error" class="text-danger"></small>
+                                                <label for="cvv">CVV</label>
+                                                <input type="password" class="form-control" id="cvv" name="cvv" placeholder="CVC" maxlength="4" autocomplete="false">
+                                                <small id="cvv_error" class="text-danger"></small>
                                             </div>
                                         </div>
 
@@ -406,7 +436,6 @@ $countries = ['US' => 'United States', 'AF' => 'Afghanistan', 'AL' => 'Albania',
                                             <small id="state_error" class="text-danger"></small>
                                         </div>
 
-                                        <!-- Submit Button -->
                                         <div class="payment-btn-wrapper">
                                             <button type="submit" class="btn btn-primary make-payment-btn">Make payment</button>
                                         </div>
