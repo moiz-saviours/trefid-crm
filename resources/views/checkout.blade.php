@@ -400,7 +400,7 @@ $countries = ['US' => 'United States', 'AF' => 'Afghanistan', 'AL' => 'Albania',
                                             </div>
                                             <div class="form-group col-md-6">
                                                 <label for="phone">Phone Number</label>
-                                                <input type="text" class="form-control" id="phone" name="phone" placeholder="" autocomplete="false">
+                                                <input type="text" class="form-control" id="phone" name="phone" placeholder="" autocomplete="false" oninput="validatePhone()">
                                                 <small id="phone_error" class="text-danger"></small>
                                             </div>
                                         </div>

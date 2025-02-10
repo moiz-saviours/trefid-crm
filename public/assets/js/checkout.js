@@ -119,10 +119,18 @@ function validateExpiryYear() {
     if (!expiryYear) {
         errorElement.textContent = 'Please select a valid expiry year.';
         return false;
-    } else {
-        errorElement.textContent = '';
-        return true;
     }
+    const currentYear = new Date().getFullYear();
+    const currentMonth = new Date().getMonth() + 1;
+    const selectedMonth = parseInt(document.getElementById('expiry_month').value, 10);
+
+    if (parseInt(expiryYear, 10) === currentYear && selectedMonth < currentMonth) {
+        errorElement.textContent = 'Card expiry date is invalid.';
+        return false;
+    }
+
+    errorElement.textContent = '';
+    return true;
 }
 
 function validateFirstName() {
@@ -132,9 +140,11 @@ function validateFirstName() {
     if (!firstName.trim()) {
         errorElement.textContent = 'First name is required.';
         return false;
-    }
-    else if (/\d/.test(firstName)) {
+    } else if (/\d/.test(firstName)) {
         errorElement.textContent = 'First name should not contain numbers.';
+        return false;
+    } else if (/[^a-zA-Z ]/.test(firstName)) {
+        errorElement.textContent = 'First name should not contain special characters.';
         return false;
     } else {
         errorElement.textContent = '';
@@ -149,9 +159,11 @@ function validateLastName() {
     if (!lastName.trim()) {
         errorElement.textContent = 'Last name is required.';
         return false;
-    }
-    else if (/\d/.test(lastName)) {
+    } else if (/\d/.test(lastName)) {
         errorElement.textContent = 'Last name should not contain numbers.';
+        return false;
+    } else if (/[^a-zA-Z ]/.test(lastName)) {
+        errorElement.textContent = 'Last name should not contain special characters.';
         return false;
     } else {
         errorElement.textContent = '';
@@ -166,6 +178,9 @@ function validateEmail() {
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
         errorElement.textContent = 'Invalid email address.';
         return false;
+    } else if (!/^\S+@\S+\.\S+$/.test(email)) {
+        errorElement.textContent = 'Invalid email format.';
+        return false;
     } else {
         errorElement.textContent = '';
         return true;
@@ -176,8 +191,11 @@ function validatePhone() {
     const phone = document.getElementById('phone').value;
     const errorElement = document.getElementById('phone_error');
 
+    if (/[a-zA-Z]/.test(phone)) {
+        errorElement.textContent = 'Phone number should not contain alphabets or invalid characters.';
+        return false;
+    }
     const digitsOnly = phone.replace(/\D/g, '');
-
     if (!/^\d{10,15}$/.test(digitsOnly)) {
         errorElement.textContent = 'Invalid phone number. Must be 10 to 15 digits.';
         return false;
