@@ -328,7 +328,7 @@ $countries = ['US' => 'United States', 'AF' => 'Afghanistan', 'AL' => 'Albania',
                                         <!-- Card Number -->
                                         <div class="form-group">
                                             <label for="card_number">Card number</label>
-                                            <input type="text" class="form-control" id="card_number" name="card_number" placeholder="1234 1234 1234 1234" maxlength="19">
+                                            <input type="text" class="form-control" id="card_number" name="card_number" placeholder="1234 1234 1234 1234" maxlength="19" autocomplete="false">
                                             <span id="card_type_logo" class="cctype"></span>
                                             <small id="card_number_error" class="text-danger"></small>
                                         </div>
@@ -337,12 +337,12 @@ $countries = ['US' => 'United States', 'AF' => 'Afghanistan', 'AL' => 'Albania',
                                         <div class="form-row">
                                             <div class="form-group col-md-6">
                                                 <label for="cvv">CVV</label>
-                                                <input type="text" class="form-control" id="cvv" name="cvv" placeholder="CVC">
+                                                <input type="text" class="form-control" id="cvv" name="cvv" placeholder="CVC" autocomplete="false">
                                                 <small id="cvv_error" class="text-danger"></small>
                                             </div>
                                             <div class="form-group col-md-6">
                                                 <label for="expiry">Expires on</label>
-                                                <input type="text" class="form-control" id="expiry" name="expiry" placeholder="MM/YY">
+                                                <input type="text" class="form-control" id="expiry" name="expiry" placeholder="MM/YY" autocomplete="false">
                                                 <small id="expiry_error" class="text-danger"></small>
                                             </div>
                                         </div>
@@ -351,12 +351,12 @@ $countries = ['US' => 'United States', 'AF' => 'Afghanistan', 'AL' => 'Albania',
                                         <div class="form-row">
                                             <div class="form-group col-md-6">
                                                 <label for="first_name">First Name</label>
-                                                <input type="text" class="form-control" id="first_name" name="first_name" placeholder="">
+                                                <input type="text" class="form-control" id="first_name" name="first_name" placeholder="" autocomplete="false">
                                                 <small id="first_name_error" class="text-danger"></small>
                                             </div>
                                             <div class="form-group col-md-6">
                                                 <label for="last_name">Last Name</label>
-                                                <input type="text" class="form-control" id="last_name" name="last_name" placeholder="">
+                                                <input type="text" class="form-control" id="last_name" name="last_name" placeholder="" autocomplete="false">
                                                 <small id="last_name_error" class="text-danger"></small>
                                             </div>
                                         </div>
@@ -365,12 +365,12 @@ $countries = ['US' => 'United States', 'AF' => 'Afghanistan', 'AL' => 'Albania',
                                         <div class="form-row">
                                             <div class="form-group col-md-6">
                                                 <label for="email">Email</label>
-                                                <input type="email" class="form-control" id="email" name="email" placeholder="">
+                                                <input type="email" class="form-control" id="email" name="email" placeholder="" autocomplete="false">
                                                 <small id="email_error" class="text-danger"></small>
                                             </div>
                                             <div class="form-group col-md-6">
                                                 <label for="phone">Phone Number</label>
-                                                <input type="text" class="form-control" id="phone" name="phone" placeholder="">
+                                                <input type="text" class="form-control" id="phone" name="phone" placeholder="" autocomplete="false">
                                                 <small id="phone_error" class="text-danger"></small>
                                             </div>
                                         </div>
@@ -378,7 +378,7 @@ $countries = ['US' => 'United States', 'AF' => 'Afghanistan', 'AL' => 'Albania',
                                         <!-- Billing Address -->
                                         <div class="form-group">
                                             <label for="country">Country</label>
-                                            <select id="country" class="form-control">
+                                            <select id="country" class="form-control" autocomplete="false">
                                                 <?php foreach ($countries as $code => $country): ?>
                                                 <option value="<?= htmlspecialchars($code) ?>"><?= htmlspecialchars($country) ?></option>
                                                 <?php endforeach; ?>
@@ -387,22 +387,22 @@ $countries = ['US' => 'United States', 'AF' => 'Afghanistan', 'AL' => 'Albania',
                                         </div>
                                         <div class="form-group">
                                             <label for="address">Address</label>
-                                            <input type="text" class="form-control" id="address" name="address" placeholder="">
+                                            <input type="text" class="form-control" id="address" name="address" placeholder="" autocomplete="false">
                                             <small id="address_error" class="text-danger"></small>
                                         </div>
                                         <div class="form-group">
                                             <label for="city">City</label>
-                                            <input type="text" class="form-control" id="city" name="city" placeholder="">
+                                            <input type="text" class="form-control" id="city" name="city" placeholder="" autocomplete="false">
                                             <small id="city_error" class="text-danger"></small>
                                         </div>
                                         <div class="form-group">
                                             <label for="zip">Postal/Zip Code</label>
-                                            <input type="text" class="form-control" id="zip" name="zip" placeholder="">
+                                            <input type="text" class="form-control" id="zip" name="zip" placeholder="" autocomplete="false">
                                             <small id="zip_error" class="text-danger"></small>
                                         </div>
                                         <div class="form-group">
                                             <label for="state">State</label>
-                                            <input type="text" class="form-control" id="state" name="state" placeholder="">
+                                            <input type="text" class="form-control" id="state" name="state" placeholder="" autocomplete="false">
                                             <small id="state_error" class="text-danger"></small>
                                         </div>
 
