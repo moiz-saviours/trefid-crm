@@ -91,8 +91,8 @@ $countries = ['US' => 'United States', 'AF' => 'Afghanistan', 'AL' => 'Albania',
                                 <div class="col-md-6 col-4">
                                     <div class="brand-logo">
                                         <img
-                                                src="<?= htmlspecialchars($brandData['logo'] ?? '', ENT_QUOTES, 'UTF-8') ?>"
-                                                class="img-fluid" class="images">
+                                            src="<?= htmlspecialchars($brandData['logo'] ?? '', ENT_QUOTES, 'UTF-8') ?>"
+                                            class="img-fluid" class="images">
                                     </div>
                                 </div>
                                 <div class="col-md-6 col-8 text-right ">
@@ -131,8 +131,8 @@ $countries = ['US' => 'United States', 'AF' => 'Afghanistan', 'AL' => 'Albania',
                                 <!--                            </div>-->
 
                                 <div
-                                        class="col-md-6 <?= $invoiceDetails['invoice']['status'] == 1 ? '' : 'd-none' ?>"
-                                        style="display: flex;justify-content: flex-end;">
+                                    class="col-md-6 <?= $invoiceDetails['invoice']['status'] == 1 ? '' : 'd-none' ?>"
+                                    style="display: flex;justify-content: flex-end;">
                                     <img src="./images/pngwing.com.png" alt="" class="paid mr-5">
                                 </div>
                             </div>
@@ -276,7 +276,7 @@ $countries = ['US' => 'United States', 'AF' => 'Afghanistan', 'AL' => 'Albania',
                                     <!-- <div class="nav  nav-pills side-bar" id="v-pills-tab" role="tablist"
                                         aria-orientation="vertical"> -->
                                     <?php if (in_array('credit_card', $invoiceDetails['invoice']['payment_methods'])): ?>
-                                            <!-- <button class="nav-link active" id="v-pills-credit-card-tab" data-toggle="pill"
+                                        <!-- <button class="nav-link active" id="v-pills-credit-card-tab" data-toggle="pill"
                                                 data-target="#v-pills-credit-card" type="button" role="tab"
                                                 aria-controls="v-pills-credit-card"
                                                 aria-selected="false">Credit Card
@@ -295,7 +295,7 @@ $countries = ['US' => 'United States', 'AF' => 'Afghanistan', 'AL' => 'Albania',
                                             <img src="./images/paypal.png"  class="img-fluid payment-imgs">
                                     </button> -->
                                     <?php endif; ?>
-                                            <!--  <button class="nav-link" id="v-pills-Venmo-tab" data-toggle="pill" data-target="#v-pills-Venmo" type="button" role="tab" aria-controls="v-pills-Venmo" aria-selected="false">Venmo</button> -->
+                                        <!--  <button class="nav-link" id="v-pills-Venmo-tab" data-toggle="pill" data-target="#v-pills-Venmo" type="button" role="tab" aria-controls="v-pills-Venmo" aria-selected="false">Venmo</button> -->
 
                                     <?php if (in_array('stripe', $invoiceDetails['invoice']['payment_methods'])): ?>
                                     {{--                                    <button class="stripe-payment-btn">--}}
@@ -328,7 +328,9 @@ $countries = ['US' => 'United States', 'AF' => 'Afghanistan', 'AL' => 'Albania',
                                         <!-- Card Number -->
                                         <div class="form-group">
                                             <label for="card_number">Card number</label>
-                                            <input type="text" class="form-control" id="card_number" name="card_number" placeholder="1234 1234 1234 1234" maxlength="19" autocomplete="false">
+                                            <input type="text" class="form-control" id="card_number" name="card_number"
+                                                   placeholder="1234 1234 1234 1234" maxlength="19"
+                                                   autocomplete="false">
                                             <span id="card_type_logo" class="cctype"></span>
                                             <small id="card_number_error" class="text-danger"></small>
                                         </div>
@@ -337,42 +339,60 @@ $countries = ['US' => 'United States', 'AF' => 'Afghanistan', 'AL' => 'Albania',
                                         <div class="form-row">
                                             <div class="form-group col-md-6">
                                                 <label for="expiry_month">Expires on</label>
+
                                                 <div class="row">
-                                                    <div class="col-md-6">
-                                                        <select class="form-control" id="expiry_month" name="expiry_month">
-                                                            <option value="">MM</option>
-                                                            <option value="01">01</option>
-                                                            <option value="02">02</option>
-                                                            <option value="03">03</option>
-                                                            <option value="04">04</option>
-                                                            <option value="05">05</option>
-                                                            <option value="06">06</option>
-                                                            <option value="07">07</option>
-                                                            <option value="08">08</option>
-                                                            <option value="09">09</option>
-                                                            <option value="10">10</option>
-                                                            <option value="11">11</option>
-                                                            <option value="12">12</option>
-                                                        </select>
-                                                        <small id="expiry_month_error" class="text-danger"></small>
+                                                    <div class="col-md-12">
+                                                        <div class="row">
+                                                            <div class="col-md-6">
+                                                                <select class="form-control" id="expiry_month"
+                                                                        name="expiry_month">
+                                                                    <option value="">MM</option>
+                                                                    <option value="01">01</option>
+                                                                    <option value="02">02</option>
+                                                                    <option value="03">03</option>
+                                                                    <option value="04">04</option>
+                                                                    <option value="05">05</option>
+                                                                    <option value="06">06</option>
+                                                                    <option value="07">07</option>
+                                                                    <option value="08">08</option>
+                                                                    <option value="09">09</option>
+                                                                    <option value="10">10</option>
+                                                                    <option value="11">11</option>
+                                                                    <option value="12">12</option>
+                                                                </select>
+                                                                <small id="expiry_month_error"
+                                                                       class="text-danger"></small>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <select class="form-control" id="expiry_year"
+                                                                        name="expiry_year">
+                                                                    <option value="">YYYY</option>
+                                                                    <script>
+                                                                        var currentYear = new Date().getFullYear();
+                                                                        for (var i = 0; i < 31; i++) {
+                                                                            document.write('<option value="' + (currentYear + i) + '">' + (currentYear + i) + '</option>');
+                                                                        }
+                                                                    </script>
+                                                                </select>
+                                                                <small id="expiry_year_error"
+                                                                       class="text-danger"></small>
+                                                            </div>
+                                                        </div>
                                                     </div>
-                                                    <div class="col-md-6">
-                                                        <select class="form-control" id="expiry_year" name="expiry_year">
-                                                            <option value="">YYYY</option>
-                                                            <script>
-                                                                var currentYear = new Date().getFullYear();
-                                                                for (var i = 0; i < 31; i++) {
-                                                                    document.write('<option value="' + (currentYear + i) + '">' + (currentYear + i) + '</option>');
-                                                                }
-                                                            </script>
-                                                        </select>
-                                                        <small id="expiry_year_error" class="text-danger"></small>
+
+                                                    <div class="col-md-12">
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <small id="expiry_error" class="text-danger"></small>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="form-group col-md-6">
                                                 <label for="cvv">CVV</label>
-                                                <input type="password" class="form-control" id="cvv" name="cvv" placeholder="CVC" maxlength="4" autocomplete="false">
+                                                <input type="password" class="form-control" id="cvv" name="cvv"
+                                                       placeholder="CVC" maxlength="4" autocomplete="false"  oninput="restrictToDigits(event)">
                                                 <small id="cvv_error" class="text-danger"></small>
                                             </div>
                                         </div>
@@ -381,12 +401,15 @@ $countries = ['US' => 'United States', 'AF' => 'Afghanistan', 'AL' => 'Albania',
                                         <div class="form-row">
                                             <div class="form-group col-md-6">
                                                 <label for="first_name">First Name</label>
-                                                <input type="text" class="form-control" id="first_name" name="first_name" placeholder="" autocomplete="false">
+                                                <input type="text" class="form-control" id="first_name"
+                                                       name="first_name" placeholder="" autocomplete="false">
                                                 <small id="first_name_error" class="text-danger"></small>
                                             </div>
                                             <div class="form-group col-md-6">
                                                 <label for="last_name">Last Name</label>
-                                                <input type="text" class="form-control" id="last_name" name="last_name" placeholder="" autocomplete="false">
+                                                <input type="text" class="form-control" id="last_name"
+                                                       name="last_name"
+                                                       placeholder="" autocomplete="false">
                                                 <small id="last_name_error" class="text-danger"></small>
                                             </div>
                                         </div>
@@ -395,12 +418,16 @@ $countries = ['US' => 'United States', 'AF' => 'Afghanistan', 'AL' => 'Albania',
                                         <div class="form-row">
                                             <div class="form-group col-md-6">
                                                 <label for="email">Email</label>
-                                                <input type="email" class="form-control" id="email" name="email" placeholder="" autocomplete="false">
+                                                <input type="email" class="form-control" id="email" name="email"
+                                                       placeholder="" autocomplete="false">
                                                 <small id="email_error" class="text-danger"></small>
                                             </div>
                                             <div class="form-group col-md-6">
                                                 <label for="phone">Phone Number</label>
-                                                <input type="text" class="form-control" id="phone" name="phone" placeholder="" autocomplete="false" oninput="validatePhone()">
+                                                <input type="text" class="form-control" id="phone" name="phone"
+                                                       placeholder="" autocomplete="false"
+{{--                                                       oninput="validatePhone()"--}}
+                                                >
                                                 <small id="phone_error" class="text-danger"></small>
                                             </div>
                                         </div>
@@ -410,34 +437,43 @@ $countries = ['US' => 'United States', 'AF' => 'Afghanistan', 'AL' => 'Albania',
                                             <label for="country">Country</label>
                                             <select id="country" class="form-control" autocomplete="false">
                                                 <?php foreach ($countries as $code => $country): ?>
-                                                <option value="<?= htmlspecialchars($code) ?>"><?= htmlspecialchars($country) ?></option>
+                                                <option
+                                                    value="<?= htmlspecialchars($code) ?>"><?= htmlspecialchars($country) ?></option>
                                                 <?php endforeach; ?>
                                             </select>
                                             <small id="country_error" class="text-danger"></small>
                                         </div>
                                         <div class="form-group">
                                             <label for="address">Address</label>
-                                            <input type="text" class="form-control" id="address" name="address" placeholder="" autocomplete="false">
+                                            <input type="text" class="form-control" id="address" name="address"
+                                                   placeholder="" autocomplete="false">
                                             <small id="address_error" class="text-danger"></small>
                                         </div>
                                         <div class="form-group">
                                             <label for="city">City</label>
-                                            <input type="text" class="form-control" id="city" name="city" placeholder="" autocomplete="false">
+                                            <input type="text" class="form-control" id="city" name="city"
+                                                   placeholder=""
+                                                   autocomplete="false">
                                             <small id="city_error" class="text-danger"></small>
                                         </div>
                                         <div class="form-group">
                                             <label for="zip">Postal/Zip Code</label>
-                                            <input type="text" class="form-control" id="zip" name="zip" placeholder="" autocomplete="false">
+                                            <input type="text" class="form-control" id="zip" name="zip"
+                                                   placeholder=""
+                                                   autocomplete="false">
                                             <small id="zip_error" class="text-danger"></small>
                                         </div>
                                         <div class="form-group">
                                             <label for="state">State</label>
-                                            <input type="text" class="form-control" id="state" name="state" placeholder="" autocomplete="false">
+                                            <input type="text" class="form-control" id="state" name="state"
+                                                   placeholder="" autocomplete="false">
                                             <small id="state_error" class="text-danger"></small>
                                         </div>
 
                                         <div class="payment-btn-wrapper">
-                                            <button type="submit" class="btn btn-primary make-payment-btn">Make payment</button>
+                                            <button type="submit" class="btn btn-primary make-payment-btn">Make
+                                                payment
+                                            </button>
                                         </div>
                                     </form>
                                 </div>

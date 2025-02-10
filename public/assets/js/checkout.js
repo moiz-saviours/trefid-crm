@@ -114,10 +114,11 @@ function validateExpiryMonth() {
 
 function validateExpiryYear() {
     const expiryYear = document.getElementById('expiry_year').value;
-    const errorElement = document.getElementById('expiry_year_error');
+    const errorElementYear = document.getElementById('expiry_year_error');
+    const errorElement = document.getElementById('expiry_error');
 
     if (!expiryYear) {
-        errorElement.textContent = 'Please select a valid expiry year.';
+        errorElementYear.textContent = 'Please select a valid expiry year.';
         return false;
     }
     const currentYear = new Date().getFullYear();
@@ -210,7 +211,7 @@ function validateCountry() {
     const errorElement = document.getElementById('country_error');
 
     if (!country) {
-        errorElement.textContent = 'Country is required.';
+        errorElement.textContent = 'Please select a country.';
         return false;
     } else {
         errorElement.textContent = '';
@@ -244,19 +245,65 @@ function validateCity() {
     }
 }
 
+// function validateZip() {
+//     const zip = document.getElementById('zip').value;
+//     const errorElement = document.getElementById('zip_error');
+//
+//     if (!/^[a-zA-Z0-9]{4,10}$/.test(zip)) {
+//         errorElement.textContent = 'Invalid ZIP code. Must be 4 to 10 digits.';
+//         return false;
+//     } else {
+//         errorElement.textContent = '';
+//         return true;
+//     }
+// }
 function validateZip() {
+    const country = document.getElementById('country').value;
     const zip = document.getElementById('zip').value;
     const errorElement = document.getElementById('zip_error');
 
-    if (!/^\d{5,10}$/.test(zip)) {
-        errorElement.textContent = 'Invalid ZIP code. Must be 5 to 10 digits.';
+    let isValid = false;
+    let errorMessage = '';
+
+    switch (country) {
+        case 'US':
+            isValid = /^\d{5}(-\d{4})?$/.test(zip);
+            errorMessage = 'Invalid US zip code. Must be 5 digits (e.g., 12345) or 9 digits (e.g., 12345-6789).';
+            break;
+
+        case 'CA':
+            isValid = /^[A-Za-z]\d[A-Za-z][ -]?\d[A-Za-z]\d$/.test(zip);
+            errorMessage = 'Invalid Canadian postal code. Must be in the format A1A 1A1.';
+            break;
+
+        case 'UK':
+            isValid = /^[A-Za-z]{1,2}\d{1,2}[A-Za-z]? \d[A-Za-z]{2}$/.test(zip);
+            errorMessage = 'Invalid UK postal code. Must be in the format A1 1AA, A11 1AA, AA1 1AA, or AA11 1AA.';
+            break;
+
+        case 'IN':
+            isValid = /^\d{6}$/.test(zip); // 123456
+            errorMessage = 'Invalid Indian postal code. Must be 6 digits.';
+            break;
+
+        case 'AU':
+            isValid = /^\d{4}$/.test(zip); // 1234
+            errorMessage = 'Invalid Australian postal code. Must be 4 digits.';
+            break;
+
+        default:
+            isValid = /^[A-Za-z0-9\s\-]{3,10}$/.test(zip);
+            errorMessage = 'Invalid postal code.';
+            break;
+    }
+    if (!isValid) {
+        errorElement.textContent = errorMessage;
         return false;
     } else {
         errorElement.textContent = '';
         return true;
     }
 }
-
 function validateState() {
     const state = document.getElementById('state').value;
     const errorElement = document.getElementById('state_error');
@@ -283,3 +330,123 @@ function luhnCheck(cardNumber) {
     }
     return sum % 10 === 0;
 }
+
+// function restrictToDigits(event) {
+//     const input = event.target;
+//     const value = input.value;
+//
+//     input.value = value.replace(/\D/g, '');
+//
+//     if (input.value.length > 4) {
+//         input.value = input.value.slice(0, 4);
+//     }
+// }
+
+document.addEventListener("DOMContentLoaded", function () {
+    document.getElementById('country').addEventListener('change', validateZip);
+
+    const form = document.getElementById("paymentForm");
+
+    form.querySelectorAll("input, select").forEach((field) => {
+        // field.addEventListener("input", validateField);
+        // field.addEventListener("change", validateField);
+        field.addEventListener("blur", validateField);
+        field.addEventListener("focus", clearError);
+    });
+
+    function validateField(event) {
+        const field = event.target;
+        const fieldName = field.name;
+        const errorElement = document.getElementById(`${fieldName}_error`);
+        if (!errorElement) return;
+        let value = field.value.trim();
+        let errorMessage = "";
+
+        if (value === "") {
+            errorElement.textContent = "";
+            return;
+        }
+        switch (fieldName) {
+            case "card_number":
+                const cardNumber = value.replace(/\s/g, ""); // Remove spaces
+                if (!/^\d{16,19}$/.test(cardNumber)) {
+                    errorMessage = "Enter a valid 16-19 digit card number.";
+                } else if (!luhnCheck(cardNumber)) {
+                    errorMessage = "Invalid card number. Please check again.";
+                }
+                break;
+
+            case "cvv":
+                if (!/^\d{3,4}$/.test(value)) {
+                    errorMessage = "CVV must be 3-4 digits.";
+                }
+                break;
+
+            case "first_name":
+            case "last_name":
+                if (/[^a-zA-Z ]/.test(value)) {
+                    errorMessage = "Only letters and spaces allowed.";
+                }
+                break;
+
+            case "email":
+                if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+                    errorMessage = "Enter a valid email address.";
+                }
+                break;
+
+            case "phone":
+                const digitsOnly = value.replace(/\D/g, "");
+                if (!/^\d{10,15}$/.test(digitsOnly)) {
+                    errorMessage = "Invalid phone number. Must be 10 to 15 digits.";
+                }
+                break;
+
+            case "expiry_month":
+            case "expiry_year":
+                validateExpiryDate();
+                return;
+
+            case "zip":
+            case "country":
+                if (!validateZip()) {
+                    return;
+                }
+                break;
+
+            case "address":
+            case "city":
+            case "state":
+                break;
+        }
+        errorElement.textContent = errorMessage;
+    }
+
+    function clearError(event) {
+        const field = event.target;
+        const errorElement = document.getElementById(`${field.name}_error`);
+        if (errorElement) {
+            errorElement.textContent = "";
+        }
+    }
+
+    function validateExpiryDate() {
+        const month = document.getElementById("expiry_month").value;
+        const year = document.getElementById("expiry_year").value;
+        const errorElement = document.getElementById("expiry_error");
+
+        if (!month || !year) {
+            errorElement.textContent = "Select a valid expiration date.";
+            return;
+        }
+
+        const currentYear = new Date().getFullYear();
+        const currentMonth = new Date().getMonth() + 1;
+
+        if (parseInt(year) < currentYear || (parseInt(year) === currentYear && parseInt(month) < currentMonth)) {
+            errorElement.textContent = "Card has expired.";
+        } else {
+            errorElement.textContent = "";
+        }
+    }
+});
