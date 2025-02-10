@@ -324,7 +324,7 @@ $countries = ['US' => 'United States', 'AF' => 'Afghanistan', 'AL' => 'Albania',
                                             we do not store your card details on our server.</p>
                                     </div> -->
 
-                                    <form id="paymentForm" method="post" action="{{ route('api.authorize.process-payment') }}">
+                                    <form id="paymentForm" method="post" action="">
                                         <!-- Card Number -->
                                         <div class="form-group">
                                             <label for="card_number">Card number</label>
