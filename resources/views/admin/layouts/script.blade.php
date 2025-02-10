@@ -569,9 +569,9 @@
             const searchInputs = document.querySelectorAll('input[type="search"]');
             const selectInputs = document.querySelectorAll('.dt-container select');
             const checkboxInputs = document.querySelectorAll('.dt-container input[type="checkbox"]');
-            searchInputs.forEach(input => input.disabled = isDisabled);
-            selectInputs.forEach(input => input.disabled = isDisabled);
-            checkboxInputs.forEach(input => input.disabled = isDisabled);
+            // searchInputs.forEach(input => input.disabled = isDisabled);
+            // selectInputs.forEach(input => input.disabled = isDisabled);
+            // checkboxInputs.forEach(input => input.disabled = isDisabled);
         };
 
         const observer = new MutationObserver(toggleInputs);
