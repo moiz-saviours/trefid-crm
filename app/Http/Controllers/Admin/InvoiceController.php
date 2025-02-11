@@ -55,7 +55,16 @@ class InvoiceController extends Controller
             'cus_contact_key' => 'required_if:type,1|nullable|integer|exists:customer_contacts,special_key',
             'customer_contact_name' => 'required_if:type,0|nullable|string|max:255',
             'customer_contact_email' => 'required_if:type,0|nullable|email|max:255|unique:customer_contacts,email',
-            'customer_contact_phone' => 'required_if:type,0|nullable|string|max:15',
+            'customer_contact_phone' => [
+                'required_if:type,0',
+                'nullable',
+                'string',
+                function ($attribute, $value, $fail) use ($request) {
+                    if ($request->input('type') == 0 && strlen($value) > 15) {
+                        $fail("The $attribute must not be greater than 15 characters when type is 0.");
+                    }
+                },
+            ],
             'agent_id' => 'nullable|integer',
 //            'agent_type' => 'required|string|in:admins,users',
             'description' => 'nullable|string|max:500',
