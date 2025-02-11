@@ -441,9 +441,13 @@
                                 $('.error-messages').fadeOut();
                             }, 5000);
                         } else if (response.errors) {
+                            let firstError = false;
                             for (let field in response.errors) {
-
+                                firstError = true;
                                 const fieldSelector = $(isUpdate ? `#edit_${field}` : `#edit_${field}`).length > 0 ? `#edit_${field}` : `#${field}`;
+                                if(firstError){
+                                    document.getElementById(field).scrollIntoView({behavior: 'smooth', block: 'center'});
+                                }
 
                                 const errorMessages = response.errors[field];
 
