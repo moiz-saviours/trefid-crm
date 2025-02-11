@@ -71,6 +71,7 @@ class CompanyController extends Controller
                     }
                 }
             });
+            $client_company->loadMissing('client_contact');
             return response()->json(['data' => $client_company, 'message' => 'Record created successfully.']);
 
         } catch (\Exception $e) {
