@@ -402,6 +402,52 @@
                     }
                 });
         });
+        $(document).on('click', '.view-transactions', function () {
+            let invoice_key = $(this).data('invoice-key');
+
+            $.ajax({
+                url: `{{ route('admin.payment-transaction-logs') }}`,
+                type: 'GET',
+                data: { invoice_key: invoice_key },
+                beforeSend: function () {
+                    $('#transactionLogs').html('<tr><td colspan="4" class="text-center">Loading...</td></tr>');
+                },
+                success: function (response) {
+                    if (response.status === 'success' && response.logs.length > 0) {
+                        let rows = '';
+                        response.logs.forEach((log, index) => {
+                            let formattedDate = new Date(log.created_at).toLocaleString('en-US', {
+                                year: 'numeric',
+                                month: 'short',
+                                day: '2-digit',
+                                hour: '2-digit',
+                                minute: '2-digit',
+                                second: '2-digit',
+                                hour12: true
+                            });
+                            rows += `
+                        <tr>
+                            <td>${index + 1}</td>
+                            <td>${log.gateway}</td>
+                            <td>${log.transaction_id}</td>
+                            <td>${log.amount}</td>
+                            <td>${log.status == 'success' ? log?.response_message : log?.error_message}</td>
+                            <td>${log.status == 'success' ? '<span class="text-success">Paid</span>' : '<span class="text-danger">Not Paid</span>'}</td>
+                            <td>${formattedDate}</td>
+                        </tr>`;
+                        });
+                        $('#transactionLogs').html(rows);
+                    } else {
+                        $('#transactionLogs').html('<tr><td colspan="12" class="text-center">No transactions found</td></tr>');
+                    }
+                    $('#transactionModal').modal('show');
+                },
+                error: function () {
+                    $('#transactionLogs').html('<tr><td colspan="12" class="text-center text-danger">Error fetching data</td></tr>');
+                }
+            });
+        });
+
         $(document).ready(function () {
             $('.copyBtn').click(async function () {
                 try {

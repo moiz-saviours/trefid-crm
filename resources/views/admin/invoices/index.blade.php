@@ -94,6 +94,8 @@
                                                     <span
                                                         class="invoice-number">{{ $invoice->invoice_number }}</span><br>
                                                     <span class="invoice-key">{{ $invoice->invoice_key }}</span>
+                                                    <span class="invoice-key view-transactions text-primary"
+                                                          style="cursor: pointer; text-decoration: underline;" data-invoice-key="{{ $invoice->invoice_key }}">{{ $invoice->invoice_key }}</span>
                                                 </td>
                                                 <td class="align-middle text-center text-nowrap">
                                                     @if(isset($invoice->brand))
@@ -202,6 +204,33 @@
             </div>
         </div>
     </section>
+    <div class="modal fade" id="transactionModal" tabindex="-1" aria-labelledby="transactionModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="transactionModalLabel">Payment Transaction Logs</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>Attempt #</th>
+                            <th>Gateway</th>
+                            <th>Transaction Id</th>
+                            <th>Amount</th>
+                            <th>Message</th>
+                            <th>Payment Status</th>
+                            <th>Created At</th>
+                        </tr>
+                        </thead>
+                        <tbody id="transactionLogs"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Modal -->
     @push('script')
         <!-- INDEX SCRIPT -->

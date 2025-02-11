@@ -14,6 +14,7 @@ use App\Http\Controllers\Admin\{
     InvoiceController as AdminInvoiceController,
     LeadController as AdminLeadController,
     LeadStatusController as AdminLeadStatusController,
+    PaymentTransactionLogController as AdminPaymentTransactionLogController,
     PaymentController as AdminPaymentController,
     ProfileController as AdminProfileController,
     TeamController as AdminTeamController,
@@ -159,6 +160,9 @@ Route::middleware(['auth:admin', 'verified:admin', 'throttle:60,1'])->prefix('ad
         Route::get('/edit/{payment?}', [AdminPaymentController::class, 'edit'])->name('edit');
         Route::post('/update/{payment?}', [AdminPaymentController::class, 'update'])->name('update');
     });
+    /** Payment Transaction Logs Route */
+    Route::get('payment-transaction-logs', [AdminPaymentTransactionLogController::class, 'getLogs'])->name('payment-transaction-logs');
+
     /** CustomerContact Contacts Routes */
     Route::name('client.contact.')->group(function () {
         Route::get('/client/contacts', [AdminClientContactController::class, 'index'])->name('index');

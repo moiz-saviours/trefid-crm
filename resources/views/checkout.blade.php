@@ -102,9 +102,9 @@ $countries = ['US' => 'United States', 'AF' => 'Afghanistan', 'AL' => 'Albania',
                                 <div class="col-md-6 col-8 text-right ">
                                     <div class="invoice-detail">
                                         <h1>Invoice</h1>
-                                        <h4>Invoice
-                                            Number# <?= htmlspecialchars($invoiceData['invoice_number'] ?? '', ENT_QUOTES, 'UTF-8') ?></h4>
-                                        <h4>Invoice Key
+                                        <h4>Invoice Number
+                                            # <?= htmlspecialchars($invoiceData['invoice_number'] ?? '', ENT_QUOTES, 'UTF-8') ?></h4>
+                                        <h4>Invoice Id
                                             # <?= htmlspecialchars($invoiceData['invoice_key'] ?? '', ENT_QUOTES, 'UTF-8') ?></h4>
                                         <?php
                                         if ($status != 1) {
@@ -137,7 +137,7 @@ $countries = ['US' => 'United States', 'AF' => 'Afghanistan', 'AL' => 'Albania',
                                 <div
                                     class="col-md-6 <?= $invoiceDetails['invoice']['status'] == 1 ? '' : 'd-none' ?>"
                                     style="display: flex;justify-content: flex-end;">
-                                    <img src="./images/pngwing.com.png" alt="" class="paid mr-5">
+                                    <img src="{{asset('assets/images/other/paid.png')}}" alt="" class="paid mr-5">
                                 </div>
                             </div>
                             <div class="row align-items-end third-col mt-3">
@@ -336,7 +336,6 @@ $countries = ['US' => 'United States', 'AF' => 'Afghanistan', 'AL' => 'Albania',
                                         <div class="form-group">
                                             <label for="card_number">Card number</label>
                                             <input type="text" class="form-control" id="card_number" name="card_number"
-                                                   value="4111111111111111"
                                                    placeholder="1234-1234-1234-1234" maxlength="19"
                                                    autocomplete="false">
                                             <span id="card_type_logo" class="cctype"></span>

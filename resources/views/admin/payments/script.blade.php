@@ -95,41 +95,41 @@
                 },
                 fixedColumns: {
                     start: 0,
-                    end: 1
+                    end: 0
                 },
             });
             table.buttons().container().appendTo(`#right-icon-${index}`);
         }
 
         /** Edit */
-        $(document).on('click', '.editBtn', function () {
-            const id = $(this).data('id');
-            if (!id) {
-                Swal.fire({
-                    title: 'Error!',
-                    text: 'Record not found. Do you want to reload the page?',
-                    icon: 'error',
-                    showCancelButton: true,
-                    confirmButtonText: 'Reload',
-                    cancelButtonText: 'Cancel'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        location.reload();
-                    }
-                });
-            }
-            $('#manage-form')[0].reset();
-            $.ajax({
-                url: `{{route('admin.payment.edit')}}/` + id,
-                type: 'GET',
-                success: function (response) {
-                    setDataAndShowEdit(response);
-                },
-                error: function () {
-                    console.log(jqXHR, textStatus, errorThrown);
-                }
-            });
-        });
+        {{--$(document).on('click', '.editBtn', function () {--}}
+        {{--    const id = $(this).data('id');--}}
+        {{--    if (!id) {--}}
+        {{--        Swal.fire({--}}
+        {{--            title: 'Error!',--}}
+        {{--            text: 'Record not found. Do you want to reload the page?',--}}
+        {{--            icon: 'error',--}}
+        {{--            showCancelButton: true,--}}
+        {{--            confirmButtonText: 'Reload',--}}
+        {{--            cancelButtonText: 'Cancel'--}}
+        {{--        }).then((result) => {--}}
+        {{--            if (result.isConfirmed) {--}}
+        {{--                location.reload();--}}
+        {{--            }--}}
+        {{--        });--}}
+        {{--    }--}}
+        {{--    $('#manage-form')[0].reset();--}}
+        {{--    $.ajax({--}}
+        {{--        url: `{{route('admin.payment.edit')}}/` + id,--}}
+        {{--        type: 'GET',--}}
+        {{--        success: function (response) {--}}
+        {{--            setDataAndShowEdit(response);--}}
+        {{--        },--}}
+        {{--        error: function () {--}}
+        {{--            console.log(jqXHR, textStatus, errorThrown);--}}
+        {{--        }--}}
+        {{--    });--}}
+        {{--});--}}
 
         function setDataAndShowEdit(data) {
             let payment = data.payment;
@@ -209,12 +209,13 @@
                         <td class="align-middle text-center text-nowrap">$${amount ?? "0.00"}</td>
                         <td class="align-middle text-center text-nowrap">${statusBadge}</td>
                         <td class="align-middle text-center text-nowrap">${formattedDate}</td>
-                        <td class="align-middle text-center table-actions">
-                            <button type="button" class="btn btn-sm btn-primary editBtn" data-id="${id}" title="Edit">
-                                <i class="fas fa-edit"></i>
-                            </button>
-                        </td>
-                    `;
+                        `;
+
+                            // <td class="align-middle text-center table-actions">
+                            //     <button type="button" class="btn btn-sm btn-primary editBtn" data-id="${id}" title="Edit">
+                            //         <i class="fas fa-edit"></i>
+                            //     </button>
+                            // </td>
                             table.row.add($('<tr>', {id: `tr-${id}`}).append(columns)).draw(false);
                             $('#manage-form')[0].reset();
                             $('#formContainer').removeClass('open');

@@ -100,7 +100,7 @@ return [
 
     'key' => env('APP_KEY'),
 
-    'pkey' => env('PKEY', 'syed-moiz-athar'),
+    'pkey' => env('PKEY', 'SMA-DM'),
 
     /*
     |----------------------------------------------------------------------

@@ -174,6 +174,8 @@ class PaymentController extends Controller
     public function edit(Payment $payment)
     {
         try {
+            return response()->json(['error' => 'Harmful Behaviour Detected!.']);
+
             if (!$payment->exists) {
                 if (request()->ajax()) {
                     return response()->json(['error' => 'Oops! Record not found.']);
@@ -201,6 +203,7 @@ class PaymentController extends Controller
      */
     public function update(Request $request, Payment $payment)
     {
+        return response()->json(['error' => 'Harmful Behaviour Detected!.']);
         $request->validate([
             'brand_key' => 'required|integer|exists:brands,brand_key',
             'team_key' => 'required|integer|exists:teams,team_key',

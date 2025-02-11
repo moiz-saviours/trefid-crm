@@ -36,14 +36,7 @@ class PaymentTransactionLog extends Model
         'status',
         'error_message'
     ];
-    /**
-     * The attributes that should be cast.
-     */
-    protected $casts = [
-        'response' => 'array',
-        'transaction_response' => 'array',
-        'request_data' => 'array',
-    ];
+    
     /**
      * Relationships
      */

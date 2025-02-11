@@ -84,7 +84,7 @@
                                             <th class="align-middle text-center text-nowrap">AMOUNT</th>
                                             <th class="align-middle text-center text-nowrap">STATUS</th>
                                             <th class="align-middle text-center text-nowrap">CREATE DATE</th>
-                                            <th class="align-middle text-center text-nowrap">ACTION</th>
+{{--                                            <th class="align-middle text-center text-nowrap">ACTION</th>--}}
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -126,12 +126,11 @@
                                                         GMT+5
                                                     @endif
                                                 </td>
-                                                <td class="align-middle text-center table-actions">
-                                                    <button type="button" class="btn btn-sm btn-primary editBtn"
-                                                            data-id="{{ $payment->id }}" title="Edit"><i
-                                                            class="fas fa-edit"></i></button>
-
-                                                </td>
+{{--                                                <td class="align-middle text-center table-actions">--}}
+{{--                                                    <button type="button" class="btn btn-sm btn-primary editBtn"--}}
+{{--                                                            data-id="{{ $payment->id }}" title="Edit"><i--}}
+{{--                                                            class="fas fa-edit"></i></button>--}}
+{{--                                                </td>--}}
                                             </tr>
 
                                         @endforeach
