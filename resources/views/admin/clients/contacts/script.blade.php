@@ -60,16 +60,17 @@
             }
         }));
 
+        var dataTables = [];
+
         /** Initializing Datatable */
         if ($('.initTable').length) {
             $('.initTable').each(function (index) {
-                initializeDatatable($(this), index)
+                dataTables[index] = initializeDatatable($(this), index)
             })
         }
-        var table;
 
         function initializeDatatable(table_div, index) {
-            table = table_div.DataTable({
+            let datatable = table_div.DataTable({
                 dom:
                 // "<'row'<'col-sm-12 col-md-6'B><'col-sm-12 col-md-6'>>" +
                     "<'row'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6'f>>" +
@@ -98,7 +99,8 @@
                     end: 1
                 },
             });
-            table.buttons().container().appendTo(`#right-icon-${index}`);
+            datatable.buttons().container().appendTo(`#right-icon-${index}`);
+            return datatable;
         }
 
             /** Edit */
@@ -166,8 +168,9 @@
             /** Manage Record */
             $('#manage-form').on('submit', function (e) {
                 e.preventDefault();
-                var dataId = $('#manage-form').data('id');
-                var formData = new FormData(this);
+                let dataId = $('#manage-form').data('id');
+                let formData = new FormData(this);
+                let table = dataTables[0];
                 if (!dataId) {
                     AjaxRequestPromise(`{{ route("admin.client.contact.store") }}`, formData, 'POST', {useToastr: true})
                         .then(response => {
