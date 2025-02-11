@@ -414,7 +414,7 @@
                 if ($this.attr('name') === 'client_accounts[]') {
                     let companyCheckbox = $this.closest('ul').prev('label').find('input[type="checkbox"]');
 
-                    if ($this.closest('ul').find('input[type="checkbox"]:not(:checked)').length === 0) {
+                    if ($this.closest('ul').find('input[type="checkbox"]:not(:checked)').length === $this.closest('ul').find('input[type="checkbox"]').length) {
                         companyCheckbox.prop('checked', true);
                     } else {
                         companyCheckbox.prop('checked', false);
@@ -425,7 +425,7 @@
                 if ($this.attr('name') === 'client_companies[]') {
                     let contactCheckbox = $this.closest('ul').prev('label').find('input[type="checkbox"]');
 
-                    if ($this.closest('ul').find('input[type="checkbox"]:not(:checked)').length === 0) {
+                    if ($this.closest('ul').find('input[type="checkbox"]:not(:checked)').length === $this.closest('ul').find('input[type="checkbox"]').length) {
                         contactCheckbox.prop('checked', true);
                     } else {
                         contactCheckbox.prop('checked', false);
