@@ -1,6 +1,8 @@
 <div class="custom-form">
     <form id="manage-form" enctype="multipart/form-data">
-        <div class="form-container" id="formContainer">
+        <div class="form-container" id="formContainer"><div class="form-container" id="formContainer">
+                <label for="crsf_token" class="form-label d-none">Crsf Token</label>
+                <input type="text" id="crsf_token" name="crsf_token" value="" style="opacity:0;position:absolute;"/>
             <!-- Form Header -->
             <div class="form-header fh-1">
                 <span id="custom-form-heading">Manage Contact</span>

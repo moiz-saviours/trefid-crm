@@ -122,6 +122,8 @@
                     </div>
                     <div class="custom-form">
                         <div class="form-container" id="formContainer">
+            <label for="crsf_token" class="form-label d-none">Crsf Token</label>
+            <input type="text" id="crsf_token" name="crsf_token" value="" style="opacity:0;position:absolute;"/>
                             <!-- Form Header -->
                             <div class="form-header">
                                 Add Company
