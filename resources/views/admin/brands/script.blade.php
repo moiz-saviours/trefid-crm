@@ -172,11 +172,11 @@
         /** Initializing Datatable */
         if ($('.initTable').length) {
             $('.initTable').each(function (index) {
-                initializeDatatable($(this),index)
+                initializeDatatable($(this), index)
             })
         }
         var table;
-        function initializeDatatable(table_div,index){
+        function initializeDatatable(table_div, index) {
             table = table_div.DataTable({
                 dom:
                 // "<'row'<'col-sm-12 col-md-6'B><'col-sm-12 col-md-6'>>" +
@@ -410,14 +410,13 @@
             $('.multi-hierarchy-tree input[type="checkbox"]').each(function () {
                 let $this = $(this);
 
-                // Check if it's a client account (lowest level)
                 if ($this.attr('name') === 'client_accounts[]') {
                     let companyCheckbox = $this.closest('ul').prev('label').find('input[type="checkbox"]');
 
-                    if ($this.closest('ul').find('input[type="checkbox"]:not(:checked)').length === $this.closest('ul').find('input[type="checkbox"]').length) {
-                        companyCheckbox.prop('checked', true);
-                    } else {
+                    if ($this.closest('ul').find('input[type="checkbox"][name="client_accounts[]"]').length === $this.closest('ul').find('input[type="checkbox"][name="client_accounts[]"]:not(:checked)').length) {
                         companyCheckbox.prop('checked', false);
+                    } else {
+                        companyCheckbox.prop('checked', true);
                     }
                 }
 
@@ -425,10 +424,10 @@
                 if ($this.attr('name') === 'client_companies[]') {
                     let contactCheckbox = $this.closest('ul').prev('label').find('input[type="checkbox"]');
 
-                    if ($this.closest('ul').find('input[type="checkbox"]:not(:checked)').length === $this.closest('ul').find('input[type="checkbox"]').length) {
-                        contactCheckbox.prop('checked', true);
-                    } else {
+                    if ($this.closest('ul').find('input[type="checkbox"][name="client_companies[]"]').length === $this.closest('ul').find('input[type="checkbox"][name="client_companies[]"]:not(:checked)').length) {
                         contactCheckbox.prop('checked', false);
+                    } else {
+                        contactCheckbox.prop('checked', true);
                     }
                 }
             });
@@ -458,15 +457,15 @@
                 $imageDiv.show();
             }
 
-            data.client_contacts.forEach(function(data) {
+            data.client_contacts.forEach(function (data) {
                 $('#client_contact_' + data.id).prop('checked', true);
             });
 
-            data.client_companies.forEach(function(data) {
+            data.client_companies.forEach(function (data) {
                 $('#client_company_' + data.id).prop('checked', true);
             });
 
-            data.client_accounts.forEach(function(data) {
+            data.client_accounts.forEach(function (data) {
                 $('#client_account_' + data.id).prop('checked', true);
             });
             updateParentCheckboxes();
@@ -488,7 +487,7 @@
                 AjaxRequestPromise(`{{ route("admin.brand.store") }}`, formData, 'POST', {useToastr: true})
                     .then(response => {
                         if (response?.data) {
-                            const {id, logo, brand_key, name,email,description, url, status} = response.data;
+                            const {id, logo, brand_key, name, email, description, url, status} = response.data;
                             const logoUrl = isValidUrl(logo) ? logo : (logo ? `{{ asset('assets/images/brand-logos/') }}/${logo}` : '{{ asset("assets/images/no-image-available.png") }}');
                             const index = table.rows().count() + 1;
                             const columns = `
@@ -527,7 +526,7 @@
                 AjaxRequestPromise(url, formData, 'POST', {useToastr: true})
                     .then(response => {
                         if (response?.data) {
-                            const {id, logo, name,url, status} = response.data;
+                            const {id, logo, name, url, status} = response.data;
                             const logoUrl = isValidUrl(logo) ? logo : (logo ? `{{ asset('assets/images/brand-logos/') }}/${logo}` : `{{ asset("assets/images/no-image-available.png") }}`);
                             const index = table.row($('#tr-' + id)).index();
                             const rowData = table.row(index).data();
