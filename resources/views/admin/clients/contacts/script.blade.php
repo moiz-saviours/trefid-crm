@@ -183,7 +183,6 @@
 
                                     <td class="align-middle text-center text-nowrap">${name}</td>
                                     <td class="align-middle text-center text-nowrap">${email}</td>
-                                    <td class="align-middle text-center text-nowrap">${name}</td>
                                     <td class="align-middle text-center text-nowrap">${phone}</td>
                                     <td class="align-middle text-center text-nowrap">${address}</td>
                                     <td class="align-middle text-center text-nowrap">${city}</td>
