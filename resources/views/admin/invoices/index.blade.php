@@ -94,8 +94,8 @@
                                                     <span
                                                         class="invoice-number">{{ $invoice->invoice_number }}</span><br>
                                                     <span class="invoice-key">{{ $invoice->invoice_key }}</span>
-                                                    <span class="invoice-key view-transactions text-primary"
-                                                          style="cursor: pointer; text-decoration: underline;" data-invoice-key="{{ $invoice->invoice_key }}">{{ $invoice->invoice_key }}</span>
+{{--                                                    <span class="invoice-key view-transactions text-primary"--}}
+{{--                                                          style="cursor: pointer; text-decoration: underline;" data-invoice-key="{{ $invoice->invoice_key }}">{{ $invoice->invoice_key }}</span>--}}
                                                 </td>
                                                 <td class="align-middle text-center text-nowrap">
                                                     @if(isset($invoice->brand))
