@@ -371,9 +371,9 @@ document.addEventListener("DOMContentLoaded", function () {
         }
         switch (fieldName) {
             case "card_number":
-                const cardNumber = value.replace(/\s/g, "");
-                if (!/^\d{16,19}$/.test(cardNumber)) {
-                    errorMessage = "Enter a valid 16-19 digit card number.";
+                const cardNumber = document.getElementById('card_number').value.replace(/-/g, '');
+                if (!/^\d{13,19}$/.test(cardNumber)) {
+                    errorMessage = "Enter a valid 13-19 digit card number.";
                 } else if (!luhnCheck(cardNumber)) {
                     errorMessage = "Invalid card number. Please check again.";
                 }
@@ -389,6 +389,8 @@ document.addEventListener("DOMContentLoaded", function () {
             case "last_name":
                 if (/[^a-zA-Z ]/.test(value)) {
                     errorMessage = "Only letters and spaces allowed.";
+                } else if (/\s/.test(value) && !/[a-zA-Z]/.test(value)) {
+                    errorMessage = "Please enter a valid name.";
                 }
                 break;
 
