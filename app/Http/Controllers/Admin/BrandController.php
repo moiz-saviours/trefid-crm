@@ -57,15 +57,24 @@ class BrandController extends Controller
             }
             $brand->save();
             DB::transaction(function () use ($request, $brand) {
-                if ($request->has('client_contacts')) {
-                    $brand->client_contacts()->sync($request->input('client_contacts'));
-                }
-                if ($request->has('client_companies')) {
-                    $brand->client_companies()->sync($request->input('client_companies'));
-                }
                 if ($request->has('client_accounts')) {
-                    $brand->client_accounts()->sync($request->input('client_accounts'));
+                    $selectedAccounts = $request->input('client_accounts');
+                    $relatedCompanies = ClientCompany::whereHas('client_accounts', function ($query) use ($selectedAccounts) {
+                        $query->whereIn('id', $selectedAccounts);
+                    })->pluck('special_key')->toArray();
+                    $relatedContacts = ClientContact::whereHas('client_companies', function ($query) use ($relatedCompanies) {
+                        $query->whereIn('c_contact_key', $relatedCompanies);
+                    })->pluck('special_key')->toArray();
+                } else {
+                    $selectedAccounts = [];
+                    $relatedCompanies = [];
+                    $relatedContacts = [];
                 }
+                $selectedCompanies = array_unique(array_merge($request->input('client_companies', []), $relatedCompanies));
+                $selectedContacts = array_unique(array_merge($request->input('client_contacts', []), $relatedContacts));
+                $brand->client_accounts()->sync($selectedAccounts);
+                $brand->client_companies()->sync($selectedCompanies);
+                $brand->client_contacts()->sync($selectedContacts);
             });
             return response()->json(['data' => $brand, 'message' => 'Record created successfully.']);
 
@@ -122,15 +131,24 @@ class BrandController extends Controller
             }
             $brand->save();
             DB::transaction(function () use ($request, $brand) {
-                if ($request->has('client_contacts')) {
-                    $brand->client_contacts()->sync($request->input('client_contacts'));
-                }
-                if ($request->has('client_companies')) {
-                    $brand->client_companies()->sync($request->input('client_companies'));
-                }
                 if ($request->has('client_accounts')) {
-                    $brand->client_accounts()->sync($request->input('client_accounts'));
+                    $selectedAccounts = $request->input('client_accounts');
+                    $relatedCompanies = ClientCompany::whereHas('client_accounts', function ($query) use ($selectedAccounts) {
+                        $query->whereIn('id', $selectedAccounts);
+                    })->pluck('special_key')->toArray();
+                    $relatedContacts = ClientContact::whereHas('client_companies', function ($query) use ($relatedCompanies) {
+                        $query->whereIn('c_contact_key', $relatedCompanies);
+                    })->pluck('special_key')->toArray();
+                } else {
+                    $selectedAccounts = [];
+                    $relatedCompanies = [];
+                    $relatedContacts = [];
                 }
+                $selectedCompanies = array_unique(array_merge($request->input('client_companies', []), $relatedCompanies));
+                $selectedContacts = array_unique(array_merge($request->input('client_contacts', []), $relatedContacts));
+                $brand->client_accounts()->sync($selectedAccounts);
+                $brand->client_companies()->sync($selectedCompanies);
+                $brand->client_contacts()->sync($selectedContacts);
             });
             return response()->json(['data' => $brand, 'message' => 'Record updated successfully.']);
         } catch (\Exception $e) {
