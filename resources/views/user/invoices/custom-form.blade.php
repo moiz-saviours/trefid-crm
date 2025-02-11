@@ -1,10 +1,8 @@
 <div class="custom-form">
     <form id="manage-form" method="POST" enctype="multipart/form-data" autocomplete="off">
         <label for="crsf_token" class="form-label d-none">Crsf Token</label>
-        <input type="text" id="crsf_token" name="crsf_token" value="" style="opacity:0;"/>
-        <div class="form-container" id="formContainer"><div class="form-container" id="formContainer">
-                <label for="crsf_token" class="form-label d-none">Crsf Token</label>
-                <input type="text" id="crsf_token" name="crsf_token" value="" style="opacity:0;position:absolute;"/>
+        <input type="text" id="crsf_token" name="crsf_token" value="" style="opacity:0;position:absolute;"/>
+        <div class="form-container" id="formContainer">
             <!-- Form Header -->
             <div class="form-header fh-1">
                 <span id="custom-form-heading">Manage Invoice</span>
@@ -48,13 +46,17 @@
                 <div class="form-group mb-3">
                     <label for="type" class="form-label">Customer Type</label>
                     <select class="form-control" id="type" name="type" title="Please select customer type" required>
-                        <option value="0" {{ old('type') == 0 ? 'selected' : '' }}>
-                            Fresh
-                        </option>
+{{--                        <option value="0" {{ old('type') == 0 ? 'selected' : '' }}>--}}
+{{--                            Fresh--}}
+{{--                        </option>--}}
+{{--                        @if($customer_contacts->count() > 0)--}}
+{{--                            <option value="1" {{ old('type') == 1 ? 'selected' : '' }}>--}}
+{{--                                Upsale--}}
+{{--                            </option>--}}
+{{--                        @endif--}}
+                        <option value="0" {{ old('type', 1) == 0 ? 'selected' : '' }}>Fresh</option>
                         @if($customer_contacts->count() > 0)
-                            <option value="1" {{ old('type') == 1 ? 'selected' : '' }}>
-                                Upsale
-                            </option>
+                            <option value="1" {{ old('type', 1) == 1 ? 'selected' : '' }}>Upsale</option>
                         @endif
                     </select>
                     @error('type')

@@ -60,23 +60,19 @@
                 <div class="form-group mb-3">
                     <label for="type" class="form-label">Customer Type</label>
                     <select class="form-control" id="type" name="type" title="Please select customer type" required>
-                        <option value="0" {{ old('type') == 0 ? 'selected' : '' }}>
-                            Fresh
-                        </option>
+                        <option value="0" {{ old('type', 1) == 0 ? 'selected' : '' }}>Fresh</option>
                         @if($customer_contacts->count() > 0)
-                            <option value="1" {{ old('type') == 1 ? 'selected' : '' }}>
-                                Upsale
-                            </option>
+                            <option value="1" {{ old('type', 1) == 1 ? 'selected' : '' }}>Upsale</option>
                         @endif
                     </select>
                     @error('type')
                     <span class="text-danger">{{ $message }}</span>
                     @enderror
                 </div>
-                <div id="fresh-customer-contact-fields" class="form-group mb-3 first-fields">
+                <div id="fresh-customer-contact-fields" class="form-group mb-3 second-fields">
                     <div class="form-group mb-3">
                         <label for="customer_contact_name" class="form-label">Customer Contact Name</label>
-                        <input type="text" class="form-control first-field-inputs" id="customer_contact_name"
+                        <input type="text" class="form-control second-field-inputs" id="customer_contact_name"
                                name="customer_contact_name"
                                value="{{ old('customer_contact_name') }}">
                         @error('customer_contact_name')
@@ -86,7 +82,7 @@
 
                     <div class="form-group mb-3">
                         <label for="customer_contact_email" class="form-label">Customer Contact Email</label>
-                        <input type="email" class="form-control first-field-inputs" id="customer_contact_email"
+                        <input type="email" class="form-control second-field-inputs" id="customer_contact_email"
                                name="customer_contact_email"
                                value="{{ old('customer_contact_email') }}">
                         @error('customer_contact_email')
@@ -95,7 +91,7 @@
                     </div>
                     <div class="form-group mb-3">
                         <label for="customer_contact_phone" class="form-label">Customer Contact Phone</label>
-                        <input type="text" class="form-control first-field-inputs" id="customer_contact_phone"
+                        <input type="text" class="form-control second-field-inputs" id="customer_contact_phone"
                                name="customer_contact_phone"
                                value="{{ old('customer_contact_phone') }}">
                         @error('customer_contact_phone')
@@ -103,9 +99,9 @@
                         @enderror
                     </div>
                 </div>
-                <div id="upsale-customer-contact-fields" class="form-group mb-3 second-fields">
+                <div id="upsale-customer-contact-fields" class="form-group mb-3 first-fields">
                     <label for="cus_contact_key" class="form-label">Select Customer Contact</label>
-                    <select class="form-control second-field-inputs" id="cus_contact_key" name="cus_contact_key">
+                    <select class="form-control first-field-inputs" id="cus_contact_key" name="cus_contact_key">
                         <option value="">Select Customer Contact</option>
                         @foreach($customer_contacts as $customer_contact)
                             <option
