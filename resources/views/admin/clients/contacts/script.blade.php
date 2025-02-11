@@ -259,6 +259,7 @@
             const statusCheckbox = $(this);
             const status = +statusCheckbox.is(':checked');
             const rowId = statusCheckbox.data('id');
+            let table = dataTables[0];
             AjaxRequestPromise(`{{ route('admin.client.contact.change.status') }}/${rowId}?status=${status}`, null, 'GET', {useToastr: true})
                 .then(response => {
                     const rowIndex = table.row($('#tr-' + rowId)).index();
@@ -272,6 +273,7 @@
         /** Delete Record */
         $(document).on('click', '.deleteBtn', function () {
             const id = $(this).data('id');
+            let table = dataTables[0];
             AjaxDeleteRequestPromise(`{{ route("admin.client.contact.delete", "") }}/${id}`, null, 'DELETE', {
                 useDeleteSwal: true,
                 useToastr: true,
