@@ -118,7 +118,7 @@
 
                 <div class="form-group mb-3">
                     <label for="due_date" class="form-label">Due Date</label>
-                    <input type="date" class="form-control" id="due_date" name="due_date" value="{{ old('due_date') }}" min="{{now()->format('Y-m-d')}}"  max="{{ now()->addYear()->format('Y-m-d') }}">
+                    <input type="date" class="form-control" id="due_date" name="due_date" value="{{ old('due_date', now()->addDays(5)->format('Y-m-d')) }}" min="{{now()->format('Y-m-d')}}" max="{{ now()->addYear()->format('Y-m-d') }}">
                     @error('due_date')
                     <span class="text-danger">{{ $message }}</span>
                     @enderror
