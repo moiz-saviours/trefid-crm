@@ -410,8 +410,8 @@
                         <ul class="mininav-content nav collapse">
                             <li data-popper-arrow class="arrow"></li>
                             <div class="navigate-heading">
-                                <i class="demo-pli-gears"></i>
-                                <h3>Lead Status</h3>
+                                <i class="demo-pli-calendar-4 fs-5 me-2"></i>
+                                <h3>Activity Logs</h3>
                             </div>
                             <li class="nav-item">
                                     <a href="{{ route('admin.activity-log.index') }}"
