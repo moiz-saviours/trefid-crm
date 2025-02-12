@@ -166,7 +166,7 @@
                                            {{ in_array($user->id, old('employees', [])) ? 'checked' : '' }}
                                            class="select-user-checkbox">
                                     <img
-                                        src="{{ $user->image && file_exists(public_path('assets/images/employees/'.$user->image)) ? asset('assets/images/employees/'.$user->image) : asset('assets/img/team-1.jpg') }}"
+                                        src="{{ $user->image && file_exists(public_path('assets/images/employees/'.$user->image)) ? asset('assets/images/employees/'.$user->image) : ($user->gender == 'male' ? asset('assets/img/team-4.jpg') : asset('assets/img/team-1.jpg')) }}"
                                         alt="{{ $user->name }}" title="{{ $user->email }}"
                                         class="rounded-circle user-image">
                                     <div class="checkmark-overlay">✔</div>
