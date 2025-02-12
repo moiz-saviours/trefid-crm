@@ -1,35 +1,35 @@
 @push('style')
-{{--    <style>--}}
-{{--        #category-tree ul {--}}
-{{--            list-style-type: none;--}}
-{{--            padding-left: 20px;--}}
-{{--        }--}}
+    {{--    <style>--}}
+    {{--        #category-tree ul {--}}
+    {{--            list-style-type: none;--}}
+    {{--            padding-left: 20px;--}}
+    {{--        }--}}
 
-{{--        #category-tree li {--}}
-{{--            margin-bottom: 5px;--}}
-{{--            cursor: pointer;--}}
-{{--        }--}}
+    {{--        #category-tree li {--}}
+    {{--            margin-bottom: 5px;--}}
+    {{--            cursor: pointer;--}}
+    {{--        }--}}
 
-{{--        #category-tree input[type="checkbox"] {--}}
-{{--            margin-right: 10px;--}}
-{{--        }--}}
+    {{--        #category-tree input[type="checkbox"] {--}}
+    {{--            margin-right: 10px;--}}
+    {{--        }--}}
 
-{{--        .toggle-symbol {--}}
-{{--            margin-right: 10px;--}}
-{{--            font-weight: bold;--}}
-{{--            cursor: pointer;--}}
-{{--        }--}}
+    {{--        .toggle-symbol {--}}
+    {{--            margin-right: 10px;--}}
+    {{--            font-weight: bold;--}}
+    {{--            cursor: pointer;--}}
+    {{--        }--}}
 
-{{--        .sub-categories, .child-categories {--}}
-{{--            margin-left: 20px;--}}
-{{--        }--}}
+    {{--        .sub-categories, .child-categories {--}}
+    {{--            margin-left: 20px;--}}
+    {{--        }--}}
 
-{{--        .sub-categories, .child-categories {--}}
-{{--            display: none;--}}
-{{--        }--}}
+    {{--        .sub-categories, .child-categories {--}}
+    {{--            display: none;--}}
+    {{--        }--}}
 
 
-{{--    </style>--}}
+    {{--    </style>--}}
     <style>
         /*!* Styling for the multi-hierarchy-tree *!*/
         /*.multi-hierarchy-tree {*/
@@ -201,11 +201,11 @@
                     <label for="logo" class="form-label">Logo (Optional)</label>
                     <div class="input-group">
                         <input type="file" class="form-control" id="logo" name="logo" accept="image/*">
-{{--                        <input type="url" class="form-control" id="logo_url" name="logo_url"--}}
-{{--                               placeholder="https://example.com/logo.png">--}}
+                        {{--                        <input type="url" class="form-control" id="logo_url" name="logo_url"--}}
+                        {{--                               placeholder="https://example.com/logo.png">--}}
                     </div>
-{{--                    <small class="form-text text-muted">You can either upload an image or provide a valid image--}}
-{{--                        URL.</small>--}}
+                    {{--                    <small class="form-text text-muted">You can either upload an image or provide a valid image--}}
+                    {{--                        URL.</small>--}}
                     @error('logo')
                     <span class="text-danger">{{ $message }}</span>
                     @enderror
@@ -223,36 +223,58 @@
                 </div>
 
                 @if(isset($clientContacts[0]->client_companies[0]->client_accounts))
-                <div class="form-control mt-5">
-                    <div class="button-container">
-                        <button type="button" id="toggleCollapseExpandButton" class="btn-primary">Collapse All</button>
-                        <button type="button" id="toggleCheckUncheckButton" class="btn-primary">Check All</button>
-                    </div>
+                    <div class="form-control mt-5">
+                        <div class="button-container">
+                            <button type="button" id="toggleCollapseExpandButton" class="btn-primary">Collapse All
+                            </button>
+                            <button type="button" id="toggleCheckUncheckButton" class="btn-primary">Check All</button>
+                        </div>
 
-                    <ul class="multi-hierarchy-tree">
-                        @foreach($clientContacts as $client_contact)
-                            <li>
-{{--                                <span class="toggle-icon">▶</span>--}}
-                                <label for="client_contact_{{ $client_contact->id }}"><input type="checkbox" id="client_contact_{{ $client_contact->id }}" name="client_contacts[]" value="{{ $client_contact->special_key }}" > {{ $client_contact->name }}</label>
-                                <ul>
-                                    @foreach($client_contact->client_companies as $client_company)
-                                        <li>
-{{--                                            <span class="toggle-icon">▶</span>--}}
-                                            <label for="client_company_{{ $client_company->id }}"><input type="checkbox" id="client_company_{{ $client_company->id }}" name="client_companies[]" value="{{ $client_company->special_key }}" > {{ $client_company->name }}</label>
-                                            <ul>
-                                                @foreach($client_company->client_accounts as $client_account)
+                        <ul class="multi-hierarchy-tree">
+                            @foreach($clientContacts as $client_contact)
+                                @if($client_contact->status == 1)
+                                    <li>
+                                        {{--                                <span class="toggle-icon">▶</span>--}}
+                                        <label for="client_contact_{{ $client_contact->id }}"><input type="checkbox"
+                                                                                                     id="client_contact_{{ $client_contact->id }}"
+                                                                                                     name="client_contacts[]"
+                                                                                                     value="{{ $client_contact->special_key }}"> {{ $client_contact->name }}
+                                        </label>
+                                        <ul>
+                                            @foreach($client_contact->client_companies as $client_company)
+                                                @if($client_company->status == 1)
                                                     <li>
-                                                        <label for="client_account_{{ $client_account->id }}"><input type="checkbox" id="client_account_{{ $client_account->id }}" name="client_accounts[]" value="{{ $client_account->id }}" > {{ $client_account->name }}</label>
+                                                        {{--                                            <span class="toggle-icon">▶</span>--}}
+                                                        <label for="client_company_{{ $client_company->id }}"><input
+                                                                type="checkbox"
+                                                                id="client_company_{{ $client_company->id }}"
+                                                                name="client_companies[]"
+                                                                value="{{ $client_company->special_key }}"> {{ $client_company->name }}
+                                                        </label>
+                                                        <ul>
+                                                            @foreach($client_company->client_accounts as $client_account)
+                                                                @if($client_account->status == 'active')
+                                                                    <li>
+                                                                        <label
+                                                                            for="client_account_{{ $client_account->id }}"><input
+                                                                                type="checkbox"
+                                                                                id="client_account_{{ $client_account->id }}"
+                                                                                name="client_accounts[]"
+                                                                                value="{{ $client_account->id }}"> {{ $client_account->name }}
+                                                                        </label>
+                                                                    </li>
+                                                                @endif
+                                                            @endforeach
+                                                        </ul>
                                                     </li>
-                                                @endforeach
-                                            </ul>
-                                        </li>
-                                    @endforeach
-                                </ul>
-                            </li>
-                        @endforeach
-                    </ul>
-                </div>
+                                                @endif
+                                            @endforeach
+                                        </ul>
+                                    </li>
+                                @endif
+                            @endforeach
+                        </ul>
+                    </div>
                 @endif
                 {{--                <div id="category-tree">--}}
                 {{--                    <ul>--}}
@@ -609,7 +631,6 @@
                 parentLi = parentLi.parentElement.closest('li');
             }
         }
-
 
         const toggleCollapseExpandButton = document.getElementById('toggleCollapseExpandButton');
         if (toggleCollapseExpandButton) {
