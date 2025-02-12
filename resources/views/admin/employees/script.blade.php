@@ -212,7 +212,7 @@
                                 <td class="align-middle text-center text-nowrap">${email}</td>
                                 <td class="align-middle text-center text-nowrap">${designation}</td>
                                 <td class="align-middle text-center text-nowrap">${team_name??""}</td>
-                                <td class="align-middle text-center text-nowrap">${target}</td>
+                                <td class="align-middle text-center text-nowrap">${target??""}</td>
                                 <td class="align-middle text-center text-nowrap">
                                     <input type="checkbox" class="status-toggle change-status" data-id="${id}" ${status == 1 ? 'checked' : ''} data-bs-toggle="toggle">
                                 </td>
