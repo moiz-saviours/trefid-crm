@@ -27,11 +27,9 @@
 @endpush
 <div class="custom-form">
     <form id="manage-form" class="manage-form" method="POST" enctype="multipart/form-data">
-        <label for="crsf_token" class="form-label d-none">Crsf Token</label>
-        <input type="text" id="crsf_token" name="crsf_token" value="" style="opacity:0;position:absolute;"/>
-        <div class="form-container" id="formContainer"><div class="form-container" id="formContainer">
-                <label for="crsf_token" class="form-label d-none">Crsf Token</label>
-                <input type="text" id="crsf_token" name="crsf_token" value="" style="opacity:0;position:absolute;"/>
+        <div class="form-container" id="formContainer">
+            <label for="crsf_token" class="form-label d-none">Crsf Token</label>
+            <input type="text" id="crsf_token" name="crsf_token" value="" style="opacity:0;position:absolute;"/>
             <!-- Form Header -->
             <div class="form-header fh-1">
                 <span id="custom-form-heading">Manage Employee</span>
