@@ -202,13 +202,13 @@
                 AjaxRequestPromise(`{{ route("admin.client.company.store") }}`, formData, 'POST', {useToastr: true})
                     .then(response => {
                         if (response?.data) {
-                            const {id,c_contact_key, logo, name,email,url,description,status} = response.data;
+                            const {id,client_contact, logo, name,email,url,description,status} = response.data;
                             const logoUrl = isValidUrl(logo) ? logo : (logo ? `{{ asset('assets/images/clients/companies/logos') }}/${logo}` : '{{ asset("assets/images/no-image-available.png") }}');
                             const index = table.rows().count() + 1;
                             const columns = `
                                 <td class="align-middle text-center text-nowrap"></td>
                                 <td class="align-middle text-center text-nowrap">${index}</td>
-                                <td class="align-middle text-center text-nowrap">${c_contact_key.name}</td>
+                                <td class="align-middle text-center text-nowrap">${client_contact?.name}</td>
                                 <td class="align-middle text-center text-nowrap">
                                     ${logoUrl ? `<object data="${logoUrl}" class="avatar avatar-sm me-3" title="${name}">
                                         <img src="${logoUrl}" alt="${name}" class="avatar avatar-sm me-3" title="${name}">
