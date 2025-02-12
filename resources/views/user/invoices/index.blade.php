@@ -34,7 +34,7 @@
                     <div class="custom-tabs">
                         <ul class="tab-nav">
                             <li class="tab-item active" data-tab="home">All Invoices <i class="fa fa-times close-icon" aria-hidden="true"></i></li>
-                            <li class="tab-item" data-tab="my-records">My Invoices <i class="fa fa-times close-icon" aria-hidden="true"></i></li>
+                            <li class="tab-item my" data-tab="home">My Invoices <i class="fa fa-times close-icon" aria-hidden="true"></i></li>
                         </ul>
                     </div>
                     <div class="tab-content">
@@ -97,31 +97,29 @@
                                                 </td>
                                                 <td class="align-middle text-center text-nowrap">
                                                     @if(isset($invoice->brand))
-                                                        <a href="">{{ $invoice->brand->name }}</a>
-                                                        <br> {{ $invoice->brand->brand_key }}
+                                                        {{ $invoice->brand->name }}
                                                     @else
                                                         ---
                                                     @endif
                                                 </td>
                                                 <td class="align-middle text-center text-nowrap">
                                                     @if(isset($invoice->team))
-                                                        <a href="">{{ $invoice->team->name }}</a>
-                                                        <br> {{ $invoice->team->team_key }}
+                                                        {{ $invoice->team->name }}
                                                     @else
                                                         ---
                                                     @endif
                                                 </td>
                                                 <td class="align-middle text-center text-nowrap">
                                                     @if(isset($invoice->customer_contact))
-                                                        <a href="{{route('customer.contact.edit',[$invoice->customer_contact->id])}}">{{ $invoice->customer_contact->name }}</a>
-                                                        <br> {{ $invoice->customer_contact->special_key }}
+{{--                                                        <a href="{{route('customer.contact.edit',[$invoice->customer_contact->id])}}">{{ $invoice->customer_contact->name }}</a>--}}
+                                                        {{ $invoice->customer_contact->name }}
                                                     @else
                                                         ---
                                                     @endif
                                                 </td>
                                                 <td class="align-middle text-center text-nowrap">
                                                     @if(isset($invoice->agent_id , $invoice->agent_type ,$invoice->agent ))
-                                                        <a href="">{{ $invoice->agent->name }}</a>
+                                                        {{ $invoice->agent->name }}
                                                     @else
                                                         ---
                                                     @endif
@@ -184,10 +182,10 @@
                         </div>
                         <div class="tab-pane" id="my-records">
                             <div class="card">
-                                <div class="card-header">
-                                    <div class="container">
-                                        <div class="row fltr-sec">
-                                            <div class="col-md-8">
+{{--                                <div class="card-header">--}}
+{{--                                    <div class="container">--}}
+{{--                                        <div class="row fltr-sec">--}}
+{{--                                            <div class="col-md-8">--}}
 {{--                                                <ul class="custm-filtr">--}}
 {{--                                                    <div class="table-li">--}}
 {{--                                                        <li class="">Company Owner <i class="fa fa-caret-down"--}}
@@ -204,15 +202,15 @@
 {{--                                                        </li>--}}
 {{--                                                    </div>--}}
 {{--                                                </ul>--}}
-                                            </div>
-                                            <div class="col-md-4 right-icon" id="right-icon-1"></div>
-                                        </div>
-                                    </div>
-                                </div>
+{{--                                            </div>--}}
+{{--                                            <div class="col-md-4 right-icon" id="right-icon-1"></div>--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
                                 <div class="card-body">
-                                    <table id="allInvoicesTable" class="table table-striped datatable-exportable
+                                    <table id="MyInvoicesTable" class="table table-striped datatable-exportable
                             stripe row-border order-column nowrap
-                            initTable
+{{--                            initTable--}}
                             ">
                                         <thead>
                                         <tr>
@@ -312,16 +310,6 @@
                     if (!$(event.target).closest('#formContainer').length && !$(event.target).is('#formContainer') && !$(event.target).closest('.open-form-btn').length) {
                         formContainer.removeClass('open')
                     }
-                });
-                $(".tab-item").on("click", function () {
-                    // Remove 'active' class from all tabs and panes
-                    $(".tab-item").removeClass("active");
-                    $(".tab-pane").removeClass("active");
-
-                    $(this).addClass("active");
-
-                    const targetPane = $(this).data("tab");
-                    $("#" + targetPane).addClass("active");
                 });
             });
 

@@ -15,7 +15,7 @@ class PaymentController extends Controller
         $my_payments = $all_payments->filter(function ($payment) {
             return $payment->agent_id === Auth::id();
         });
-
+        $my_payments=[];
         return view('user.payment.index', compact('all_payments', 'my_payments', 'payments'));
     }
 }

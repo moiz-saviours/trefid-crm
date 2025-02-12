@@ -273,7 +273,7 @@
                         <ul class="tab-nav">
                             <li class="tab-item active" data-tab="home">All Payments
                                 <i class="fa fa-times close-icon" aria-hidden="true"></i></li>
-                            <li class="tab-item " data-tab="menu1">My Payments <i class="fa fa-times close-icon"
+                            <li class="tab-item " data-tab="home">My Payments <i class="fa fa-times close-icon"
                                                                                   aria-hidden="true"></i></li>
                         </ul>
                     </div>
@@ -403,7 +403,8 @@
                                 <div class="card-body">
                                     <table id="myPaymentsTable" class="table table-striped datatable-exportable
                             stripe row-border order-column nowrap
-                            initTable">
+{{--                            initTable--}}
+                            ">
                                         <thead>
                                         <tr>
                                             <th class="align-middle text-center text-nowrap"><input type="checkbox">

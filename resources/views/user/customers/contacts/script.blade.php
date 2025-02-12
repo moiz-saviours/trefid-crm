@@ -82,7 +82,7 @@
                 responsive: false,
                 scrollX: true,
                 scrollY: 450,
-                scrollCollapse: true,
+                autoWidth: false,
                 paging: true,
                 columnDefs: [
                     {
@@ -96,11 +96,10 @@
                     selector: 'td:first-child'
                 },
                 fixedColumns: {
-                    start: 2,
-                    end: 1
+                    start: 0,
                 },
             });
-            table.buttons().container().appendTo(`#right-icon-${index}`);
+            // table.buttons().container().appendTo(`#right-icon-${index}`);
         }
 
     {{--    /** Create Record */--}}

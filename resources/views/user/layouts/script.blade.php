@@ -333,7 +333,7 @@
                 }
             }
         });
-        $(".tab-item").on("click", function () {
+        $(".tab-item").click(function () {
             $(".tab-item").removeClass("active");
             $(".tab-pane").removeClass("active");
 
@@ -341,6 +341,12 @@
 
             const targetPane = $(this).data("tab");
             $("#" + targetPane).addClass("active");
+
+            let tabId = $(this).attr("data-tab");
+            let targetTable = $("#" + tabId).find("table");
+            if ($.fn.DataTable.isDataTable(targetTable)) {
+                targetTable.DataTable().columns.adjust().draw();
+            }
         });
     });
 </script>

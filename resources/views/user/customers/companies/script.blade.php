@@ -97,7 +97,6 @@
                 },
                 fixedColumns: {
                     start: 0,
-                    end: 1
                 },
             });
             table.buttons().container().appendTo(`#right-icon-${index}`);

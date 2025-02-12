@@ -260,7 +260,7 @@
 {{--                            <button class="header_btn" disabled>Actions <i class="fa fa-caret-down" aria-hidden="true"></i>--}}
 {{--                            </button>--}}
 {{--                            <button class="header_btn" disabled>Import</button>--}}
-                            <button class="create-contact open-form-btn void">Create New</button>
+{{--                            <button class="create-contact open-form-btn void">Create New</button>--}}
                         </div>
                     </div>
                 </header>

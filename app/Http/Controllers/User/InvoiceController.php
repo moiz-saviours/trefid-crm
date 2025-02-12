@@ -23,9 +23,10 @@ class InvoiceController extends Controller
         $customer_contacts = CustomerContact::where('status', 1)->get();
         $users = User::where('status', 1)->get();
         $all_invoices = Invoice::whereIn('brand_key', Auth::user()->teams()->with('brands')->get()->pluck('brands.*.brand_key')->flatten()->unique())->with(['brand', 'customer_contact'])->get();
-        $my_invoices = $all_invoices->filter(function ($invoice) {
-            return $invoice->agent_type === get_class(Auth::user()) && $invoice->agent_id === Auth::id();
-        });
+//        $my_invoices = $all_invoices->filter(function ($invoice) {
+//            return $invoice->agent_type === get_class(Auth::user()) && $invoice->agent_id === Auth::id();
+//        });
+        $my_invoices = [];
         return view('user.invoices.index', compact('all_invoices', 'my_invoices','brands', 'teams', 'customer_contacts', 'users', 'invoices'));
     }
 

@@ -33,10 +33,10 @@
                 <div class="container">
                     <div class="custom-tabs">
                         <ul class="tab-nav">
-                            <li class="tab-item active" data-tab="home">All Contacts
+                            <li class="tab-item active" data-tab="home">Contacts
                                 <i class="fa fa-times close-icon" aria-hidden="true"></i></li>
-                            <li class="tab-item " data-tab="menu1">My Contacts <i class="fa fa-times close-icon"
-                                                                                  aria-hidden="true"></i></li>
+{{--                            <li class="tab-item " data-tab="menu1">My Contacts <i class="fa fa-times close-icon"--}}
+{{--                                                                                  aria-hidden="true"></i></li>--}}
                         </ul>
                         {{--                        <div class="tab-buttons" >--}}
                         {{--                            <button class="btn btn-primary"><i class="fa fa-add"></i> Views (2/5)</button>--}}
@@ -46,10 +46,10 @@
                     <div class="tab-content">
                         <div class="tab-pane active" id="home">
                             <div class="card">
-                                <div class="card-header">
-                                    <div class="container">
-                                        <div class="row fltr-sec">
-                                            <div class="col-md-8">
+{{--                                <div class="card-header">--}}
+{{--                                    <div class="container">--}}
+{{--                                        <div class="row fltr-sec">--}}
+{{--                                            <div class="col-md-8">--}}
 {{--                                                <ul class="custm-filtr">--}}
 {{--                                                    <div class="table-li">--}}
 {{--                                                        <li class="">Company Owner <i class="fa fa-caret-down"--}}
@@ -66,11 +66,11 @@
 {{--                                                        </li>--}}
 {{--                                                    </div>--}}
 {{--                                                </ul>--}}
-                                            </div>
-                                            <div class="col-md-4 right-icon" id="right-icon-0"></div>
-                                        </div>
-                                    </div>
-                                </div>
+{{--                                            </div>--}}
+{{--                                            <div class="col-md-4 right-icon" id="right-icon-0"></div>--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
                                 <div class="card-body">
                                     <table id="allContactsTable" class="table table-striped datatable-exportable
                                         stripe row-border order-column nowrap initTable ">
@@ -140,10 +140,10 @@
                         </div>
                         <div class="tab-pane" id="menu1">
                             <div class="card">
-                                <div class="card-header">
-                                    <div class="container">
-                                        <div class="row fltr-sec">
-                                            <div class="col-md-8">
+{{--                                <div class="card-header">--}}
+{{--                                    <div class="container">--}}
+{{--                                        <div class="row fltr-sec">--}}
+{{--                                            <div class="col-md-8">--}}
 {{--                                                <ul class="custm-filtr">--}}
 {{--                                                    <div class="table-li">--}}
 {{--                                                        <li class="">Company Owner <i class="fa fa-caret-down"--}}
@@ -160,17 +160,17 @@
 {{--                                                        </li>--}}
 {{--                                                    </div>--}}
 {{--                                                </ul>--}}
-                                            </div>
-                                            <div class="col-md-4 right-icon" id="right-icon-1">
+{{--                                            </div>--}}
+{{--                                            <div class="col-md-4 right-icon" id="right-icon-1">--}}
                                                 {{--                                        <div class="right-icon">--}}
                                                 {{--                                            <i class="fa fa-reply" aria-hidden="true"></i>--}}
                                                 {{--                                            <i class="fa fa-clone" aria-hidden="true"></i>--}}
                                                 {{--                                            <i class="fa fa-file-pdf-o" aria-hidden="true"></i>--}}
                                                 {{--                                        </div>--}}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+{{--                                            </div>--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
                                 <div class="card-body">
                                     <table id="allContactsTable" class="table table-striped datatable-exportable
                                         stripe row-border order-column nowrap initTable ">

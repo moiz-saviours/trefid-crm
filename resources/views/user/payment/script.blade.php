@@ -61,13 +61,16 @@
         //         scrollX: true,
         //     });
         // }
+        const dataTables = [];
+
+        /** Initializing Datatable */
         if ($('.initTable').length) {
             $('.initTable').each(function (index) {
-                initializeDatatable($(this),index)
+                dataTables[index] = initializeDatatable($(this), index)
             })
         }
         function initializeDatatable(table_div,index){
-            var table = table_div.DataTable({
+            let datatable = table_div.DataTable({
                 dom:
                 // "<'row'<'col-sm-12 col-md-6'B><'col-sm-12 col-md-6'>>" +
                     "<'row'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6'f>>" +
@@ -93,12 +96,15 @@
                 },
                 fixedColumns: {
                     start: 0,
-                    end: 1
+                    end: 0
                 },
             });
-            table.buttons().container().appendTo(`#right-icon-${index}`);
+            // datatable.buttons().container().appendTo(`#right-icon-${index}`);
+            return datatable;
         }
-
+        $('.my').on('click', function () {
+            dataTables[0].column(8).search(`{{auth()->user()->name}}`).draw();
+        });
     {{--    /** Create Record */--}}
     {{--    $('#create-form').on('submit', function (e) {--}}
     {{--        e.preventDefault();--}}
