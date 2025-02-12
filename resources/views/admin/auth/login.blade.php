@@ -26,7 +26,7 @@
             <div class="row justify-content-end">
                 <div class="col-lg-4">
                     <div class="text-center">
-                        <img src="../assets/images/aim-logo.png" class="img-fluid logo-h" >
+                        <img src="{{asset('assets/images/aim-logo.png')}}" class="img-fluid logo-h" >
 {{--                        <h1 class="main-logo-heading">CRM</h1>--}}
 
                     </div>
