@@ -1,5 +1,5 @@
 @extends('admin.layouts.app')
-@section('title','Clients')
+@section('title','Client Accounts')
 @section('datatable', true)
 @section('content')
     @push('style')
@@ -76,7 +76,8 @@
                                             <th class="align-middle text-center text-nowrap">CLIENT COMPANY</th>
                                             <th class="align-middle text-center text-nowrap">NAME</th>
                                             <th class="align-middle text-center text-nowrap">DESCRIPTOR</th>
-                                            <th class="align-middle text-center text-nowrap">VENDOR NAME</th>
+{{--                                            <th class="align-middle text-center text-nowrap">VENDOR NAME</th>--}}
+                                            <th class="align-middle text-center text-nowrap">PAYMENT METHOD</th>
                                             <th class="align-middle text-center text-nowrap">EMAIL</th>
                                             <th class="align-middle text-center text-nowrap">LOGIN ID</th>
                                             <th class="align-middle text-center text-nowrap">TRANSACTION KEY</th>
@@ -97,7 +98,8 @@
                                                 <td class="align-middle text-center text-nowrap">{{optional($payment_merchant->client_company)->name}}</td>
                                                 <td class="align-middle text-center text-nowrap">{{ $payment_merchant->name }}</td>
                                                 <td class="align-middle text-center text-nowrap">{{ $payment_merchant->descriptor }}</td>
-                                                <td class="align-middle text-center text-nowrap">{{ $payment_merchant->vendor_name }}</td>
+{{--                                                <td class="align-middle text-center text-nowrap">{{ $payment_merchant->vendor_name }}</td>--}}
+                                                <td class="align-middle text-center text-nowrap">{{ strtoupper($payment_merchant->payment_method) }}</td>
                                                 <td class="align-middle text-center text-nowrap">{{ $payment_merchant->email }}</td>
                                                 <td class="align-middle text-center text-nowrap">{{ $payment_merchant->login_id }}</td>
                                                 <td class="align-middle text-center text-nowrap">{{ $payment_merchant->transaction_key }}</td>

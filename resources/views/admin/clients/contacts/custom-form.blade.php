@@ -165,9 +165,9 @@
                 </div>
 
                 <div class="form-button">
-                    <button type="submit" class="btn-primary save-btn">Save</button>
-                    <button type="button" class="btn-secondary close-btn">Cancel</button>
-                </div>
+                <button type="submit" class="btn-primary save-btn"><i class="fas fa-save me-2"></i> Save</button>
+                <button type="button" class="btn-secondary close-btn"><i class="fas fa-times me-2"></i> Cancel</button>
+            </div>
             </div>
         </div>
 

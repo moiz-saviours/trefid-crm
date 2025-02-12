@@ -1,3 +1,31 @@
+@push('style')
+    <style>
+        .payment-gateway-card {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            padding: 10px;
+            background-color: #f9f9f9;
+            transition: all 0.3s ease;
+        }
+
+        .payment-gateway-card:hover {
+            border-color: #007bff;
+            box-shadow: 0 4px 8px rgba(0, 123, 255, 0.1);
+        }
+
+        .payment-gateway-card .form-check-label {
+            display: inline;
+            font-weight: 500;
+            margin-left: 25px;
+        }
+
+        .merchant-dropdown {
+            margin-top: 10px;
+            padding-left: 20px; /* Indent merchants below their type */
+        }
+    </style>
+@endpush
 <div class="custom-form">
     <form id="manage-form" class="manage-form" method="POST" enctype="multipart/form-data" autocomplete="off">
         <div class="form-container" id="formContainer">
@@ -14,12 +42,9 @@
                     <label for="brand_key" class="form-label">Brand</label>
                     <select class="form-control searchable" id="brand_key" name="brand_key"
                             title="Please select a brand" required autocomplete="off">
-                        <option value="" disabled>Please select brand</option>
+                        <option value="" selected disabled>Please select brand</option>
                         @foreach($brands as $brand)
-                            <option
-                                value="{{ $brand->brand_key }}" {{ old('brand_key') == $brand->brand_key ? 'selected' : '' }}>
-                                {{ $brand->name }}
-                            </option>
+                            <option value="{{ $brand->brand_key }}">{{ $brand->name }}</option>
                         @endforeach
                     </select>
                     @error('brand_key')
@@ -118,7 +143,9 @@
 
                 <div class="form-group mb-3">
                     <label for="due_date" class="form-label">Due Date</label>
-                    <input type="date" class="form-control" id="due_date" name="due_date" value="{{ old('due_date', now()->addDays(5)->format('Y-m-d')) }}" min="{{now()->format('Y-m-d')}}" max="{{ now()->addYear()->format('Y-m-d') }}">
+                    <input type="date" class="form-control" id="due_date" name="due_date"
+                           value="{{ old('due_date', now()->addDays(5)->format('Y-m-d')) }}"
+                           min="{{now()->format('Y-m-d')}}" max="{{ now()->addYear()->format('Y-m-d') }}">
                     @error('due_date')
                     <span class="text-danger">{{ $message }}</span>
                     @enderror
@@ -157,7 +184,7 @@
                     @enderror
                 </div>
 
-                <div class="form-group mb-3 second-fields" id="tax-fields" style="display: none" >
+                <div class="form-group mb-3 second-fields" id="tax-fields" style="display: none">
                     <div>
                         <label for="tax_type" class="form-label">Tax Type</label>
                         <select class="form-control second-field-inputs" id="tax_type" name="tax_type">
@@ -174,7 +201,8 @@
 
                     <div class="mt-3">
                         <label for="tax_value" class="form-label">Tax Value</label>
-                        <input type="number" class="form-control second-field-inputs" id="tax_value" name="tax_value" min="1"
+                        <input type="number" class="form-control second-field-inputs" id="tax_value" name="tax_value"
+                               min="1"
                                value="{{ old('tax_value') }}">
                         @error('tax_value')
                         <span class="text-danger">{{ $message }}</span>
@@ -183,7 +211,8 @@
 
                     <div class="mt-3">
                         <label for="tax_amount" class="form-label">Tax Amount</label>
-                        <input type="number" class="form-control second-field-inputs" id="tax_amount" name="tax_amount" step="0.01" min="1"
+                        <input type="number" class="form-control second-field-inputs" id="tax_amount" name="tax_amount"
+                               step="0.01" min="1"
                                readonly
                                value="{{ old('tax_amount') }}">
                         @error('tax_amount')
@@ -193,7 +222,8 @@
                 </div>
 
                 <div class="form-group mb-3">
-                    <label for="total_amount" class="form-label">Total Amount  <small class="float-end">Max Limit : ( {{config('invoice.max_amount')}} )</small></label>
+                    <label for="total_amount" class="form-label">Total Amount <small class="float-end">Max Limit :
+                            ( {{config('invoice.max_amount')}} )</small></label>
                     <input type="number" class="form-control" id="total_amount" name="total_amount" step="0.01"
                            min="1"
                            readonly
@@ -203,20 +233,24 @@
                     @enderror
                 </div>
                 <div class="form-group mb-3">
-                    <label for="description" class="form-label">Description</label>
+                    <div id="merchant-types-container">
+                    </div>
+                    @error('payment_method')
+                    <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
+                <div class="form-group mb-3">
+                    <label for="description" class="form-label">Customer Note</label>
                     <textarea class="form-control" id="description" name="description"
                               rows="3">{{ old('description') }}</textarea>
                     @error('description')
                     <span class="text-danger">{{ $message }}</span>
                     @enderror
                 </div>
-
-
             </div>
-
             <div class="form-button">
-                <button type="submit" class="btn-primary save-btn">Save</button>
-                <button type="button" class="btn-secondary close-btn">Cancel</button>
+                <button type="submit" class="btn-primary save-btn"><i class="fas fa-save me-2"></i> Save</button>
+                <button type="button" class="btn-secondary close-btn"><i class="fas fa-times me-2"></i> Cancel</button>
             </div>
         </div>
     </form>
@@ -241,8 +275,6 @@
                     }
                 }).trigger('change');
             });
-
-
 
             $(document).ready(function () {
 
@@ -316,6 +348,20 @@
                         $('#tax_amount').val(adjustedTaxAmount.toFixed(2));
                     }
                     $('#total_amount').val(totalAmount.toFixed(2));
+                }
+            });
+
+            $(document).on('click', function (event) {
+                if (
+                    (!$(event.target).closest('.form-container').length &&
+                        !$(event.target).is('.form-container') &&
+                        !$(event.target).closest('.open-form-btn').length &&
+                        !$(event.target).is('.editBtn') &&
+                        !$(event.target).is('.changePwdBtn')
+                    ) ||
+                    $(event.target).is('.form-container .close-btn')
+                ) {
+                    $('#merchant-types-container').empty();
                 }
             });
 

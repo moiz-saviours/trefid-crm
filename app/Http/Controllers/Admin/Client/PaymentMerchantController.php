@@ -8,6 +8,7 @@ use App\Models\AssignBrandAccount;
 use App\Models\Brand;
 use App\Models\ClientCompany;
 use App\Models\ClientContact;
+use App\Models\Payment;
 use App\Models\PaymentMerchant;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -56,6 +57,9 @@ class PaymentMerchantController extends Controller
                 'login_id' => 'nullable|string|max:255',
                 'transaction_key' => 'nullable|string|max:255',
                 'limit' => 'nullable|integer|min:1',
+                'capacity' => 'nullable|integer|min:1',
+                'payment_method' => 'required|string|in:authorize',
+//                'payment_method' => 'required|string|in:authorize,stripe,credit card,bank transfer,paypal,cash,other',
                 'environment' => [
                     'required',
                     Rule::in([PaymentMerchantConstants::ENVIRONMENT_SANDBOX, PaymentMerchantConstants::ENVIRONMENT_PRODUCTION]),
@@ -146,6 +150,8 @@ class PaymentMerchantController extends Controller
                 'transaction_key' => 'nullable|string|max:255',
                 'limit' => 'nullable|integer|min:1',
                 'capacity' => 'nullable|integer|min:1',
+                'payment_method' => 'required|string|in:authorize',
+//                'payment_method' => 'required|string|in:authorize,stripe,credit card,bank transfer,paypal,cash,other',
                 'environment' => [
                     'required',
                     Rule::in([PaymentMerchantConstants::ENVIRONMENT_SANDBOX, PaymentMerchantConstants::ENVIRONMENT_PRODUCTION]),
@@ -196,6 +202,31 @@ class PaymentMerchantController extends Controller
             DB::rollBack();
             return response()->json(['error' => 'Internal Server Error', 'message' => $e->getMessage(), 'line' => $e->getLine()], 500);
         }
+    }
+
+    /**
+     * Showing accounts of specified resource.
+     */
+    public function by_brand($brand_key)
+    {
+        if (!$brand_key) {
+            return response()->json(['error' => 'Oops! Brand not found.'], 404);
+        }
+        $brand = Brand::where('brand_key', $brand_key)->first();
+        if (!$brand) {
+            return response()->json(['error' => 'Oops! Brand not found.'], 404);
+        }
+        $brand->load('client_accounts');
+        $client_accounts = $brand->client_accounts;
+        $groupedAccounts = $client_accounts->groupBy('payment_method')->map(function ($accounts) {
+            return $accounts->map(function ($account) {
+                return [
+                    'id' => $account->id,
+                    'name' => $account->name,
+                ];
+            });
+        });
+        return response()->json(['data' => $groupedAccounts]);
     }
 
     public function change_status(Request $request, PaymentMerchant $client_account)

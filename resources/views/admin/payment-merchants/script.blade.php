@@ -95,7 +95,7 @@
                 },
                 fixedColumns: {
                     start: 0,
-                    end: 1
+                    end: 3
                 },
             });
             table.buttons().container().appendTo(`#right-icon-${index}`);
@@ -185,7 +185,7 @@
                                 client_company,
                                 name,
                                 descriptor,
-                                vendor_name,
+                                payment_method,
                                 email,
                                 login_id,
                                 transaction_key,
@@ -202,7 +202,7 @@
                                 <td class="align-middle text-center text-nowrap">${client_company ? client_company.name : '---'}</td>
                                 <td class="align-middle text-center text-nowrap">${name}</td>
                                 <td class="align-middle text-center text-nowrap">${descriptor}</td>
-                                <td class="align-middle text-center text-nowrap">${vendor_name}</td>
+                                <td class="align-middle text-center text-nowrap">${payment_method}</td>
                                 <td class="align-middle text-center text-nowrap">${email}</td>
                                 <td class="align-middle text-center text-nowrap">${login_id}</td>
                                 <td class="align-middle text-center text-nowrap">${transaction_key}</td>
@@ -238,7 +238,7 @@
                                 client_company,
                                 name,
                                 descriptor,
-                                vendor_name,
+                                payment_method,
                                 email,
                                 login_id,
                                 transaction_key,
@@ -267,8 +267,8 @@
                                 table.cell(index, 5).data(descriptor).draw();
                             }
                             // Column 6: Vendor name
-                            if (decodeHtml(rowData[6]) !== vendor_name) {
-                                table.cell(index, 6).data(vendor_name).draw();
+                            if (decodeHtml(rowData[6]) !== payment_method) {
+                                table.cell(index, 6).data(payment_method).draw();
                             }
                             // Column 7: email
                             if (decodeHtml(rowData[7]) !== email) {
@@ -355,6 +355,5 @@
                     }
                 });
         });
-
     });
 </script>

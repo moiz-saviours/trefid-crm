@@ -123,6 +123,25 @@
                 </div>
 
                 <div class="form-group mb-3">
+                    <label for="payment_method" class="form-label">Payment Method</label>
+                    <select class="form-control" id="payment_method" name="payment_method" required>
+                        <option value="" disabled>Select Payment Method</option>
+                        <option value="authorize" {{ old('payment_method','authorize') == 'authorize' ? 'selected' : '' }}>
+                            Authorize
+                        </option>
+{{--                        <option value="stripe" {{ old('payment_method') == 'stripe' ? 'selected' : '' }} disabled>Stripe</option>--}}
+{{--                        <option value="paypal" {{ old('payment_method') == 'paypal' ? 'selected' : '' }}disabled>PayPal</option>--}}
+{{--                        <option value="credit card" {{ old('payment_method') == 'credit card' ? 'selected' : '' }}>Credit Card</option>--}}
+{{--                        <option value="bank transfer" {{ old('payment_method') == 'bank transfer' ? 'selected' : '' }}>Bank Transfer</option>--}}
+{{--                        <option value="cash" {{ old('payment_method') == 'cash' ? 'selected' : '' }}>Cash</option>--}}
+{{--                        <option value="other" {{ old('payment_method') == 'other' ? 'selected' : '' }}>Other</option>--}}
+                    </select>
+                    @error('payment_method')
+                    <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
+
+                <div class="form-group mb-3">
                     <label for="login_id" class="form-label">Login ID</label>
                     <input type="text" class="form-control" id="login_id" name="login_id"
                            value="{{ old('login_id') }}" required>
@@ -201,8 +220,8 @@
             </div>
 
             <div class="form-button">
-                <button type="submit" class="btn-primary save-btn">Save</button>
-                <button type="button" class="btn-secondary close-btn">Cancel</button>
+                <button type="submit" class="btn-primary save-btn"><i class="fas fa-save me-2"></i> Save</button>
+                <button type="button" class="btn-secondary close-btn"><i class="fas fa-times me-2"></i> Cancel</button>
             </div>
         </div>
     </form>

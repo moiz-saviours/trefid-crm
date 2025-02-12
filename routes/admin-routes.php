@@ -197,6 +197,7 @@ Route::middleware(['auth:admin', 'verified:admin', 'throttle:60,1'])->prefix('ad
             Route::get('/edit/{client_account?}', [AdminPaymentMerchantController::class, 'edit'])->name('edit');
             Route::post('/update/{client_account?}', [AdminPaymentMerchantController::class, 'update'])->name('update');
             Route::get('/change-status/{client_account?}', [AdminPaymentMerchantController::class, 'change_status'])->name('change.status');
+            Route::get('/by-brand/{brand_key?}', [AdminPaymentMerchantController::class, 'by_brand'])->name('by.brand');
             Route::delete('/delete/{client_account?}', [AdminPaymentMerchantController::class, 'delete'])->name('delete');
         });
     });
