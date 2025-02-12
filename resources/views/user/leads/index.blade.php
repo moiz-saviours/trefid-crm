@@ -318,7 +318,7 @@
                             ">
                                         <thead>
                                         <tr>
-                                            <th><input type="checkbox"></th>
+                                            <th></th>
                                             <th class="align-middle text-center text-nowrap">ID</th>
                                             <th class="align-middle text-center text-nowrap">BRAND</th>
                                             <th class="align-middle text-center text-nowrap">CLIENT</th>
@@ -403,7 +403,7 @@
 {{--                                        ">--}}
 {{--                                        <thead>--}}
 {{--                                        <tr>--}}
-{{--                                            <th><input type="checkbox"></th>--}}
+{{--                                            <th></th>--}}
 {{--                                            <th class="align-middle text-center text-nowrap">SNO.</th>--}}
 {{--                                            <th class="align-middle text-center text-nowrap">Brand</th>--}}
 {{--                                            <th class="align-middle text-center text-nowrap">Customer</th>--}}

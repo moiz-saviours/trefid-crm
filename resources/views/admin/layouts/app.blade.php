@@ -4,6 +4,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
+    <link rel="icon" type="image/png" href="{{asset('assets/img/favicon.png')}}">
     <meta name="description"
           content="is a responsive admin dashboard template based on Bootstrap 5 framework. There are a lot of useful components.">
     <title>@yield('title')</title>

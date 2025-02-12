@@ -381,7 +381,7 @@
                                         <thead>
                                         <tr>
 
-                                            <th><input type="checkbox"></th>
+                                            <th></th>
                                             <th>Id</th>
                                             <th>Name</th>
                                             <th>Color</th>

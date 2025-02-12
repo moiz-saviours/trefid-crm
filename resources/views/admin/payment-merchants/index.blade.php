@@ -70,7 +70,7 @@
                                         <thead>
 
                                         <tr>
-                                            <th><input type="checkbox"></th>
+                                            <th></th>
                                             <th class="align-middle text-center text-nowrap">SNO.</th>
                                             <th class="align-middle text-center text-nowrap">CLIENT CONTACT</th>
                                             <th class="align-middle text-center text-nowrap">CLIENT COMPANY</th>

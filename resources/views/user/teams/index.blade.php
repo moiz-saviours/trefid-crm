@@ -316,7 +316,7 @@
                             ">
                                         <thead>
                                         <tr>
-                                            <th><input type="checkbox"></th>
+                                            <th></th>
                                             <th>Id</th>
                                             <th>Team Key</th>
                                             <th>Name</th>

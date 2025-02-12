@@ -67,7 +67,7 @@
                     "<'row'<'col-sm-12'tr>>" +
                     "<'row'<'col-sm-12 col-md-6'i><'col-sm-12 col-md-6'p>>",
                 buttons: exportButtons,
-                order: [[1, 'asc']],
+                order: [[1, 'desc']],
                 responsive: false,
                 scrollX: true,
                 scrollY: 450,
@@ -86,7 +86,7 @@
                 },
                 fixedColumns: {
                     start: 0,
-                    end: 0
+                    end: 1
                 },
             })
             // datatable.buttons().container().appendTo(`#right-icon-${index}`);
@@ -317,6 +317,7 @@
                 AjaxRequestPromise(`{{ route("invoice.store") }}`, formData, 'POST', {useToastr: true})
                     .then(response => {
                         if (response?.data) {
+                            let authUser = `{{auth()->user()}}`
                             const {
                                 id,
                                 invoice_number,
@@ -371,7 +372,13 @@
                         <td class="align-middle text-center text-nowrap">${date}</td>
                         <td class="align-middle text-center text-nowrap">${due_date}</td>
                         <td class="align-middle text-center table-actions">
-                            ${status != 1 ? '<button type="button" class="btn btn-sm btn-primary editBtn" data-id="' + id + '" title="Edit"><i class = "fas fa-edit" > </i></button>' +
+                        <button type="button" class="btn btn-sm btn-primary copyBtn"
+                                                            data-id="${id}"
+                                                            data-invoice-key="${invoice_key}"
+                                                            data-invoice-url="${brand.url + 'checkout?InvoiceID=' + invoice_key}"
+                                                            title="Copy Invoice Url"><i
+                                                            class="fas fa-copy"></i></button>
+                            ${status != 1 && authUser?.id === agent?.id ? '<button type="button" class="btn btn-sm btn-primary editBtn" data-id="' + id + '" title="Edit"><i class = "fas fa-edit" > </i></button>' +
                                 '<button type="button" class="btn btn-sm btn-danger deleteBtn" data-id="' + id + '" title="Delete"><i class="fas fa-trash"></i></button>'
                                 : ''}
                         </td>`;
@@ -475,7 +482,7 @@
                                 table.cell(index, 8).data(statusHtml).draw();
                             }
 
-                            // Column 10: Date
+                            // Column 10: Due Date
                             if (decodeHtml(rowData[9]) !== due_date) {
                                 table.cell(index, 9).data(due_date).draw();
                             }
@@ -490,6 +497,20 @@
                     })
                     .catch(error => console.log(error));
             }
+        });
+
+
+        $(document).ready(function () {
+            $('.copyBtn').click(async function () {
+                try {
+                    let invoiceUrl = $(this).data('invoice-url');
+                    await navigator.clipboard.writeText(invoiceUrl);
+                    toastr.success('Invoice URL copied to clipboard!', 'Success');
+                } catch (err) {
+                    toastr.error('Failed to copy. Please try again.', 'Error');
+                    console.error('Clipboard copy failed:', err);
+                }
+            });
         });
     });
 </script>

@@ -388,7 +388,7 @@
                             ">
                                         <thead>
                                         <tr>
-                                            <th><input type="checkbox"></th>
+                                            <th></th>
                                             <th class="align-middle text-center text-nowrap">Id</th>
                                             <th class="align-middle text-center text-nowrap">Image</th>
                                             <th class="align-middle text-center text-nowrap">Name</th>

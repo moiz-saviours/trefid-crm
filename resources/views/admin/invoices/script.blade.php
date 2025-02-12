@@ -256,8 +256,8 @@
                         <td class="align-middle text-center text-nowrap">
                             ${status == 0 ? '<span class="badge bg-warning text-dark">Due</span>' : status == 1 ? '<span class="badge bg-success">Paid</span>' : status == 2 ? '<span class="badge bg-danger">Refund</span>' : ''}
                         </td>
-                        <td class="align-middle text-center text-nowrap">${date}</td>
                         <td class="align-middle text-center text-nowrap">${due_date}</td>
+                        <td class="align-middle text-center text-nowrap">${date}</td>
                         <td class="align-middle text-center table-actions">
                         <button type="button" class="btn btn-sm btn-primary copyBtn"
                                                             data-id="${id}"
@@ -356,7 +356,7 @@
                                 table.cell(index, 8).data(statusHtml).draw();
                             }
 
-                            // Column 10: Date
+                            // Column 10: Due Date
                             if (decodeHtml(rowData[9]) !== due_date) {
                                 table.cell(index, 9).data(due_date).draw();
                             }
