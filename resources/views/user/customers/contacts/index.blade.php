@@ -99,23 +99,22 @@
 
                                                 <td class="align-middle text-center text-nowrap">
                                                     @if(isset($contact->brand))
-                                                        <a href="">{{ $contact->brand->name }}</a>
-                                                        <br> {{ $contact->brand->brand_key }}
+                                                        {{ $contact->brand->name }}
                                                     @else
                                                         ---
                                                     @endif
                                                 </td>
                                                 <td class="align-middle text-center text-nowrap">
                                                     @if(isset($contact->team))
-                                                        <a href="">{{ $contact->team->name }}</a>
-                                                        <br> {{ $contact->team->team_key }}
+                                                        {{ $contact->team->name }}
                                                     @else
                                                         ---
                                                     @endif
                                                 </td>
                                                 <td class="align-middle text-center text-nowrap">
-                                                    <a href="{{route('customer.contact.edit',[$contact->id])}}"
-                                                       title="{{isset($contact->company) ? $contact->company->name : 'No associated company'}}">{{ $contact->name }}</a>
+                                                    <span title="{{isset($contact->company) ? $contact->company->name : 'No associated company'}}">{{ $contact->name }}</span>
+{{--                                                    <a href="{{route('customer.contact.edit',[$contact->id])}}"--}}
+{{--                                                       title="{{isset($contact->company) ? $contact->company->name : 'No associated company'}}">{{ $contact->name }}</a>--}}
                                                 </td>
                                                 <td class="align-middle text-center text-nowrap">{{ $contact->email }}</td>
                                                 <td class="align-middle text-center text-nowrap">{{ $contact->phone }}</td>

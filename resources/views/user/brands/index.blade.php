@@ -14,16 +14,16 @@
                     <div class="new_head">
                         <h1 class="page-title mb-2">Brands <i class="fa fa-caret-down" aria-hidden="true"></i>
                         </h1>
-{{--                        <h2 id="record-count" class="h6">{{ count($teams) }} records</h2>--}}
+                        {{--                        <h2 id="record-count" class="h6">{{ count($teams) }} records</h2>--}}
                     </div>
                     <div class="filters">
                         <div class="actions">
                             {{--                            <h1><i class="fa fa-lock" aria-hidden="true"></i> Data Quality</h1>--}}
 
-{{--                            <button class="header_btn" disabled>Actions <i class="fa fa-caret-down" aria-hidden="true"></i>--}}
-{{--                            </button>--}}
-{{--                            <button class="header_btn" disabled>Import</button>--}}
-                            <button class="create-contact open-form-btn void">Create New</button>
+                            {{--                            <button class="header_btn" disabled>Actions <i class="fa fa-caret-down" aria-hidden="true"></i>--}}
+                            {{--                            </button>--}}
+                            {{--                            <button class="header_btn" disabled>Import</button>--}}
+{{--                            <button class="create-contact open-form-btn void">Create New</button>--}}
                         </div>
                     </div>
                 </header>
@@ -40,10 +40,10 @@
                                         class="fa fa-times close-icon"
                                         aria-hidden="true"></i></li>
                             @endforeach
-{{--                                <li class="tab-item"--}}
-{{--                                    data-tab="tab-pane-"><i--}}
-{{--                                        class="fa fa-times close-icon"--}}
-{{--                                        aria-hidden="true"></i></li>--}}
+                            {{--                                <li class="tab-item"--}}
+                            {{--                                    data-tab="tab-pane-"><i--}}
+                            {{--                                        class="fa fa-times close-icon"--}}
+                            {{--                                        aria-hidden="true"></i></li>--}}
                         </ul>
                         {{--                        <div class="tab-buttons" >--}}
                         {{--                            <button class="btn btn-primary"><i class="fa fa-add"></i> Views (2/5)</button>--}}
@@ -84,12 +84,12 @@
                             stripe row-border order-column nowrap initTable">
                                             <thead>
                                             <tr>
-                                                <th class="align-middle text-center text-nowrap"><input type="checkbox"></th>
-                                                <th class="align-middle text-center text-nowrap">ID</th>
-                                                <th class="align-middle text-center text-nowrap">Logo</th>
-                                                <th class="align-middle text-center text-nowrap">Name</th>
-                                                <th class="align-middle text-center text-nowrap">Url</th>
-{{--                                                <th class="align-middle text-center text-nowrap">Action</th>--}}
+                                                <th></th>
+                                                <th class="align-middle text-center text-nowrap">S.NO</th>
+                                                <th class="align-middle text-center text-nowrap">LOGO</th>
+                                                <th class="align-middle text-center text-nowrap">NAME</th>
+                                                <th class="align-middle text-center text-nowrap">URL</th>
+                                                {{--                                                <th class="align-middle text-center text-nowrap">Action</th>--}}
                                             </tr>
                                             </thead>
                                             <tbody>
@@ -97,31 +97,23 @@
                                                 <tr>
                                                     <td class="align-middle text-center text-nowrap"></td>
                                                     <td class="align-middle text-center text-nowrap">{{$loop->iteration}}</td>
-
                                                     <td class="align-middle text-center text-nowrap">
                                                         @php
                                                             $logoUrl = filter_var($brand->logo, FILTER_VALIDATE_URL) ? $brand->logo : asset('assets/images/brand-logos/'.$brand->logo);
                                                         @endphp
-                                                        <object
-                                                            data="{{ $logoUrl }}"
-                                                            class="avatar avatar-sm me-3"
-
-                                                            title="{{ $brand->name }}">
-
-                                                            <img
-                                                                src="{{ $logoUrl }}"
-                                                                alt="{{ $brand->name }}"
+                                                        <object data="{{ $logoUrl }}" class="avatar avatar-sm me-3"
+                                                                title="{{ $brand->name }}"><img
+                                                                src="{{ $logoUrl }}" alt="{{ $brand->name }}"
                                                                 class="avatar avatar-sm me-3"
-                                                                title="{{ $brand->name }}">
-                                                        </object>
+                                                                title="{{ $brand->name }}"></object>
                                                     </td>
-                                                    <td class="align-middle text-center text-nowrap">{{$brand->name}} <br> {{$brand->brand_key}} </td>
+                                                    <td class="align-middle text-center text-nowrap">{{$brand->name}}</td>
                                                     <td class="align-middle text-center text-nowrap">{{$brand->url}}</td>
-{{--                                                    <td class="align-middle text-center table-actions">--}}
-{{--                                                        <button type="button" class="btn btn-sm btn-primary editBtn"--}}
-{{--                                                                data-id="{{ $brand->id }}" title="Edit"><i--}}
-{{--                                                                class="fas fa-edit"></i></button>--}}
-{{--                                                    </td>--}}
+                                                    {{--                                                    <td class="align-middle text-center table-actions">--}}
+                                                    {{--                                                        <button type="button" class="btn btn-sm btn-primary editBtn"--}}
+                                                    {{--                                                                data-id="{{ $brand->id }}" title="Edit"><i--}}
+                                                    {{--                                                                class="fas fa-edit"></i></button>--}}
+                                                    {{--                                                    </td>--}}
                                                 </tr>
                                             @endforeach
                                             </tbody>
@@ -152,16 +144,6 @@
                     if (!$(event.target).closest('#formContainer').length && !$(event.target).is('#formContainer') && !$(event.target).closest('.open-form-btn').length) {
                         formContainer.removeClass('open')
                     }
-                });
-                $(".tab-item").on("click", function () {
-                    // Remove 'active' class from all tabs and panes
-                    $(".tab-item").removeClass("active");
-                    $(".tab-pane").removeClass("active");
-
-                    $(this).addClass("active");
-
-                    const targetPane = $(this).data("tab");
-                    $("#" + targetPane).addClass("active");
                 });
             });
 

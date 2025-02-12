@@ -253,16 +253,16 @@
                         <h1 class="page-title mb-2">Payments <i class="fa fa-caret-down" aria-hidden="true"></i></h1>
 {{--                        <h2 id="record-count" class="h6"> {{count ($payments)}}records</h2>--}}
                     </div>
-                    <div class="filters">
-                        <div class="actions">
+{{--                    <div class="filters">--}}
+{{--                        <div class="actions">--}}
                             {{--                            <h1><i class="fa fa-lock" aria-hidden="true"></i> Data Quality</h1>--}}
 
 {{--                            <button class="header_btn" disabled>Actions <i class="fa fa-caret-down" aria-hidden="true"></i>--}}
 {{--                            </button>--}}
 {{--                            <button class="header_btn" disabled>Import</button>--}}
-                            <button class="create-contact open-form-btn void">Create New</button>
-                        </div>
-                    </div>
+{{--                            <button class="create-contact open-form-btn void">Create New</button>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
                 </header>
             </div>
         </div>

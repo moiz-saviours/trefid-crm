@@ -95,10 +95,10 @@
                 },
                 fixedColumns: {
                     start: 2,
-                    end: 1
+                    end: 0
                 },
             });
-            table.buttons().container().appendTo(`#right-icon-${index}`);
+            // table.buttons().container().appendTo(`#right-icon-${index}`);
         }
 
     {{--    /** Create Record */--}}

@@ -254,16 +254,16 @@
                         </h1>
 {{--                        <h2 id="record-count" class="h6">{{ count($teams) }} records</h2>--}}
                     </div>
-                    <div class="filters">
-                        <div class="actions">
+{{--                    <div class="filters">--}}
+{{--                        <div class="actions">--}}
                             {{--                            <h1><i class="fa fa-lock" aria-hidden="true"></i> Data Quality</h1>--}}
 
 {{--                            <button class="header_btn">Actions <i class="fa fa-caret-down" aria-hidden="true"></i>--}}
 {{--                            </button>--}}
 {{--                            <button class="header_btn">Import</button>--}}
-                            <button class="create-contact open-form-btn void">Create Team</button>
-                        </div>
-                    </div>
+{{--                            <button class="create-contact open-form-btn void">Create Team</button>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
                 </header>
             </div>
         </div>
@@ -288,10 +288,10 @@
                         @foreach($teams as $index => $team)
                             <div class="tab-pane {{$loop->first ? "active":""}}" id="tab-pane-{{$team->team_key}}">
                                 <div class="card">
-                                    <div class="card-header">
-                                        <div class="container">
-                                            <div class="row fltr-sec">
-                                                <div class="col-md-8">
+{{--                                    <div class="card-header">--}}
+{{--                                        <div class="container">--}}
+{{--                                            <div class="row fltr-sec">--}}
+{{--                                                <div class="col-md-8">--}}
                                                     {{--                                                <ul class="custm-filtr">--}}
                                                     {{--                                                    <div class="table-li">--}}
                                                     {{--                                                        <li class="">CustomerCompany Owner <i class="fa fa-caret-down"--}}
@@ -308,11 +308,11 @@
                                                     {{--                                                        </li>--}}
                                                     {{--                                                    </div>--}}
                                                     {{--                                                </ul>--}}
-                                                </div>
-                                                <div class="col-md-4 right-icon" id="right-icon-{{ $index }}"></div>
-                                            </div>
-                                        </div>
-                                    </div>
+{{--                                                </div>--}}
+{{--                                                <div class="col-md-4 right-icon" id="right-icon-{{ $index }}"></div>--}}
+{{--                                            </div>--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
                                     <div class="card-body">
                                         <table id="{{$team->team_key}}-Table" class="table table-striped datatable-exportable
                             stripe row-border order-column nowrap
