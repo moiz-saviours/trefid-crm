@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('payment_merchants', function (Blueprint $table) {
-            if (!Schema::hasColumn('payment_merchants' , 'payment_method')) {
-                $table->enum('payment_method', ['authorize', 'stripe', 'credit card', 'bank transfer', 'paypal', 'cash', 'other'])->default('authorize')->after('brand_key');
-            }
-        });
+//        Schema::table('payment_merchants', function (Blueprint $table) {
+//            if (!Schema::hasColumn('payment_merchants' , 'payment_method')) {
+//                $table->enum('payment_method', ['authorize', 'stripe', 'credit card', 'bank transfer', 'paypal', 'cash', 'other'])->default('authorize')->after('name');
+//            }
+//        });
     }
 
     /**
