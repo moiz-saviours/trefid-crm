@@ -111,8 +111,12 @@ class Invoice extends Model
     {
         return $this->morphTo();
     }
-    public function payment()
+    public function payment(): \Illuminate\Database\Eloquent\Relations\HasOne
     {
         return $this->hasOne(Payment::class, 'invoice_key', 'invoice_key');
+    }
+    public function invoice_merchants(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(InvoiceMerchant::class, 'invoice_key', 'invoice_key' , 'invoice_key');
     }
 }

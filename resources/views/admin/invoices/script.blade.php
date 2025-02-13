@@ -149,11 +149,12 @@
             $('#total_amount').val(totalAmount.toFixed(2));
         }
 
+        let invoice;
         function setDataAndShowEdit(data) {
-            const invoice = data?.invoice;
+            invoice = data?.invoice;
 
             $('#manage-form').data('id', invoice.id);
-            $('#brand_key').val(invoice.brand_key);
+            $('#brand_key').val(invoice.brand_key).trigger('change');
             $('#team_key').val(invoice.team_key);
             $('#type').val(invoice.type).trigger('change');
 
@@ -458,6 +459,53 @@
             }
         });
 
+        {{--const groupedMerchants = @json($groupedMerchants);--}}
+        {{--$('#brand_key').on('change', function () {--}}
+        {{--    const selectedBrand = $(this).val();--}}
+        {{--    const merchantTypesContainer = $('#merchant-types-container');--}}
+        {{--    merchantTypesContainer.empty();--}}
+        {{--    if (selectedBrand) {--}}
+        {{--        const merchant_types = groupedMerchants[selectedBrand];--}}
+        {{--        Object.keys(merchant_types).forEach(type => {--}}
+        {{--            const checkboxId = `${type}_checkbox`;--}}
+        {{--            const checkboxHtml = `--}}
+        {{--                        <div class="payment-gateway-card" data-type="${type}">--}}
+        {{--                            <div class="form-check">--}}
+        {{--                                <input class="form-check-input merchant-type-checkbox" type="checkbox" id="${checkboxId}" value="${type}">--}}
+        {{--                                <label class="form-check-label" for="${checkboxId}">--}}
+        {{--                                    <i class="${getIconForType(type)} me-2"></i> ${type.charAt(0).toUpperCase() + type.slice(1)}--}}
+        {{--                                </label>--}}
+        {{--                            </div>--}}
+        {{--                            <div id="merchant_${type}" class="merchant-dropdown"></div>--}}
+        {{--                        </div>--}}
+        {{--                    `;--}}
+        {{--            merchantTypesContainer.append(checkboxHtml);--}}
+        {{--        });--}}
+
+        {{--        $('.payment-gateway-card .merchant-type-checkbox').on('change', function () {--}}
+        {{--            const type = $(this).val();--}}
+        {{--            const merchantDropdown = $(`#merchant_${type}`);--}}
+        {{--            if ($(this).is(':checked')) {--}}
+        {{--                const dropdownHtml = `--}}
+        {{--                            <div class="form-group mb-3">--}}
+        {{--                                <label for="merchant_select_${type}" class="form-label">Select Merchant</label>--}}
+        {{--                                <select class="form-control form-select" id="merchant_select_${type}" name="merchants[${type}]" title="Please select a ${type} merchant" required>--}}
+        {{--                                    <option value="" selected disabled>Please select a ${type} merchant</option>--}}
+        {{--                                    ${merchant_types[type].map(merchant => `--}}
+        {{--                                        <option value="${merchant.id}">${merchant.name}</option>--}}
+        {{--                                    `).join('')}--}}
+        {{--                                </select>--}}
+        {{--                            </div>--}}
+        {{--                        `;--}}
+        {{--                merchantDropdown.html(dropdownHtml);--}}
+        {{--            } else {--}}
+        {{--                merchantDropdown.empty();--}}
+        {{--            }--}}
+        {{--        });--}}
+        {{--    }--}}
+        {{--});--}}
+
+        /**Api Hit */
         $('#brand_key').on('change', function () {
             const selectedBrand = $(this).val();
             const merchantTypesContainer = $('#merchant-types-container');
@@ -472,7 +520,7 @@
                                 const checkboxHtml = `
                                 <div class="payment-gateway-card" data-type="${type}">
                                     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" id="${checkboxId}" value="${type}">
+                                        <input class="form-check-input merchant-type-checkbox" type="checkbox" id="${checkboxId}" value="${type}">
                                         <label class="form-check-label" for="${checkboxId}">
                                             <i class="${getIconForType(type)} me-2"></i> ${type.charAt(0).toUpperCase() + type.slice(1)}
                                         </label>
@@ -481,9 +529,15 @@
                                 </div>
                             `;
                                 merchantTypesContainer.append(checkboxHtml);
+
+                                if (invoice && invoice.merchant_types && invoice.merchant_types[type]) {
+                                    setTimeout(() => {
+                                        $(`#${checkboxId}`).prop('checked', true).trigger('change');
+                                    }, 50);
+                                }
                             });
 
-                            $('.form-check-input').on('change', function () {
+                            $('.payment-gateway-card .merchant-type-checkbox').on('change', function () {
                                 const type = $(this).val();
                                 const merchantDropdown = $(`#merchant_${type}`);
                                 if ($(this).is(':checked')) {
@@ -499,6 +553,11 @@
                                     </div>
                                 `;
                                     merchantDropdown.html(dropdownHtml);
+                                    if (invoice && invoice.merchant_types && invoice.merchant_types[type]) {
+                                        setTimeout(() => {
+                                            $(`#merchant_select_${type}`).val(invoice.merchant_types[type]).trigger('change');
+                                        }, 100);
+                                    }
                                 } else {
                                     merchantDropdown.empty();
                                 }

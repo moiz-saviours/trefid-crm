@@ -218,7 +218,11 @@ class PaymentMerchantController extends Controller
         }
         $brand->load('client_accounts');
         $client_accounts = $brand->client_accounts;
-        $groupedAccounts = $client_accounts->groupBy('payment_method')->map(function ($accounts) {
+        $groupedAccounts = $client_accounts
+            ->filter(function ($account) {
+                return $account->payment_method === 'authorize';
+            })
+            ->groupBy('payment_method')->map(function ($accounts) {
             return $accounts->map(function ($account) {
                 return [
                     'id' => $account->id,

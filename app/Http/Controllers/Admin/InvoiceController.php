@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Brand;
 use App\Models\CustomerContact;
 use App\Models\Invoice;
+use App\Models\InvoiceMerchant;
 use App\Models\Team;
 use App\Models\User;
 use Carbon\Carbon;
@@ -23,10 +24,26 @@ class InvoiceController extends Controller
     {
         $invoices = Invoice::all();
         $brands = Brand::where('status', 1)->get();
+        $groupedMerchants = [];
+        foreach ($brands as $brand) {
+            $client_accounts = $brand->client_accounts;
+            $groupedMerchants[$brand->brand_key] = $client_accounts
+                ->filter(function ($account) {
+                    return $account->payment_method === 'authorize';
+                })
+                ->groupBy('payment_method')->map(function ($accounts) {
+                    return $accounts->map(function ($account) {
+                        return [
+                            'id' => $account->id,
+                            'name' => $account->name,
+                        ];
+                    });
+                });
+        }
         $teams = Team::where('status', 1)->get();
         $customer_contacts = CustomerContact::where('status', 1)->get();
         $users = User::where('status', 1)->get();
-        return view('admin.invoices.index', compact('invoices', 'brands', 'teams', 'customer_contacts', 'users'));
+        return view('admin.invoices.index', compact('invoices', 'groupedMerchants', 'brands', 'teams', 'customer_contacts', 'users'));
     }
 
     /**
@@ -50,6 +67,8 @@ class InvoiceController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
+            'merchants' => ['nullable', 'array'],
+            'merchants.*' => ['required', 'numeric'],
             'brand_key' => 'required|integer|exists:brands,brand_key',
             'team_key' => 'nullable|integer|exists:teams,team_key',
             'cus_contact_key' => 'required_if:type,1|nullable|integer|exists:customer_contacts,special_key',
@@ -186,6 +205,16 @@ class InvoiceController extends Controller
 //                $data['agent_type'] = get_class(auth()->user());
 //            }
             $invoice = Invoice::create($data);
+            if ($request->has('merchants')) {
+                $merchants = $request->get('merchants', []);
+                foreach ($merchants as $type => $merchant_id) {
+                    InvoiceMerchant::create([
+                        'invoice_key' => $invoice->invoice_key,
+                        'merchant_type' => $type,
+                        'merchant_id' => $merchant_id,
+                    ]);
+                }
+            }
             DB::commit();
             $invoice->refresh();
             $invoice->loadMissing('customer_contact', 'brand', 'team', 'agent');
@@ -216,7 +245,12 @@ class InvoiceController extends Controller
         $teams = Team::where('status', 1)->get();
         $customer_contacts = CustomerContact::where('status', 1)->get();
         $users = User::where('status', 1)->get();
-        $invoice->loadMissing('customer_contact');
+        $invoice->loadMissing('customer_contact','invoice_merchants');
+        $invoiceMerchants = [];
+        foreach ($invoice->invoice_merchants as $merchant) {
+            $invoiceMerchants[$merchant->merchant_type] = $merchant->merchant_id;
+        }
+        $invoice->merchant_types = $invoiceMerchants;
         return response()->json(['invoice' => $invoice, 'brands' => $brands, 'teams' => $teams, 'customer_contacts' => $customer_contacts, 'users' => $users]);
     }
 
@@ -229,6 +263,8 @@ class InvoiceController extends Controller
             return response()->json(['error' => 'Oops! The Invoice is already paid.'], 400);
         }
         $validator = Validator::make($request->all(), [
+            'merchants' => ['nullable', 'array'],
+            'merchants.*' => ['required', 'numeric'],
             'brand_key' => 'required|integer|exists:brands,brand_key',
             'team_key' => 'nullable|integer|exists:teams,team_key',
             'cus_contact_key' => 'required_if:type,1|nullable|integer|exists:customer_contacts,special_key',
@@ -245,9 +281,8 @@ class InvoiceController extends Controller
             'currency' => 'nullable|in:USD,GBP,AUD,CAD',
             'tax_amount' => 'nullable|numeric|min:0',
             'total_amount' => 'required|numeric|min:1|max:' . config('invoice.max_amount'),
-            'type' => 'required|integer|in:0,1',/** 0 = fresh, 1 = upsale */
+            'type' => 'required|integer|in:0,1', /** 0 = fresh, 1 = upsale */
             'due_date' => 'required|date|after_or_equal:' . now()->format('Y-m-d') . '|before_or_equal:' . now()->addYear()->format('Y-m-d'),
-
         ], [
             'brand_key.required' => 'The brand field is required.',
             'brand_key.integer' => 'The brand must be a valid integer.',
@@ -339,6 +374,29 @@ class InvoiceController extends Controller
                 'total_amount' => $total_amount,
                 'type' => $request->input('type'),
             ]);
+            $existingMerchants = InvoiceMerchant::where('invoice_key', $invoice->invoice_key)
+                ->pluck('merchant_id', 'merchant_type')
+                ->toArray();
+            $newMerchants = [];
+            $merchants = $request->get('merchants', []);
+            $merchantsToDelete = array_diff_assoc($existingMerchants, $merchants);
+            foreach ($merchants as $type => $merchant_id) {
+                if (!isset($existingMerchants[$type]) || $existingMerchants[$type] != $merchant_id) {
+                    $newMerchants[] = [
+                        'invoice_key' => $invoice->invoice_key,
+                        'merchant_type' => $type,
+                        'merchant_id' => $merchant_id,
+                    ];
+                }
+            }
+            if (!empty($merchantsToDelete)) {
+                InvoiceMerchant::where('invoice_key', $invoice->invoice_key)
+                    ->whereIn('merchant_type', array_keys($merchantsToDelete))
+                    ->delete();
+            }
+            if (!empty($newMerchants)) {
+                InvoiceMerchant::insert($newMerchants);
+            }
             DB::commit();
             $invoice->loadMissing('customer_contact', 'brand', 'team', 'agent');
             if ($invoice->created_at->isToday()) {
