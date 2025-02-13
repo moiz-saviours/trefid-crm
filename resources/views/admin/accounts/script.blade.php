@@ -76,7 +76,7 @@
                     "<'row'<'col-sm-12'tr>>" +
                     "<'row'<'col-sm-12 col-md-6'i><'col-sm-12 col-md-6'p>>",
                 buttons: exportButtons,
-                order: [[1, 'desc']],
+                order: [[1, 'asc']],
                 responsive: false,
                 scrollX: true,
                 scrollY: 450,
