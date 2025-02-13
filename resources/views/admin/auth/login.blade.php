@@ -8,7 +8,7 @@
     <meta http-equiv="refresh" content="7199">
 
     <title>{{ config('app.name', 'Laravel') }}</title>
-    <link rel="stylesheet" href="./style.css/">
+{{--    <link rel="stylesheet" href="./style.css/">--}}
     <link rel="stylesheet" href="{{asset ('assets/css/bootstrap.min.css')}}">
     <link rel="stylesheet" href="{{asset('build/toaster/css/toastr.min.css')}}">
     <link rel="apple-touch-icon" sizes="76x76" href="{{asset('assets/img/apple-icon.png')}}">
