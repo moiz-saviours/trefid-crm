@@ -221,8 +221,14 @@
                                 due_date,
                                 date
                             } = response.data;
-                            const basePath = window.location.origin + window.location.pathname.split('/').slice(0, -1).join('/');
-
+                            let basePath = window.location.origin;
+                            let pathParts = window.location.pathname.split('/').filter(part => part !== "");
+                            if (pathParts.includes("admin")) {
+                                pathParts = pathParts.slice(0, pathParts.indexOf("admin"));
+                            }
+                            if (pathParts.length > 0) {
+                                basePath += "/" + pathParts.join('/');
+                            }
                             const index = table.rows().count() + 1;
                             const columns = `
                         <td class="align-middle text-center text-nowrap"></td>
