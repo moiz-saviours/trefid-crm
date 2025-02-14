@@ -36,7 +36,9 @@
         return decodeHtmlEntities(data);
     };
 
-    const exportButtons = ['copy', 'excel', 'csv', 'pdf', 'print'].map(type => ({
+    const exportButtons = [
+        //'copy', 'excel', 'csv', 'pdf', 'print'
+    ].map(type => ({
         extend: type,
         text: type == "copy"
             ? '<i class="fas fa-copy"></i>'
