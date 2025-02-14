@@ -263,7 +263,7 @@
                         <button type="button" class="btn btn-sm btn-primary copyBtn"
                                                             data-id="${id}"
                                                             data-invoice-key="${invoice_key}"
-                                                            data-invoice-url="${brand.url + 'checkout?InvoiceID=' + invoice_key}"
+                                                            data-invoice-url="${window.location.origin}/invoice?InvoiceID=${invoice_key}"
                                                             title="Copy Invoice Url"><i
                                                             class="fas fa-copy"></i></button>
                             ${status != 1 ? '<button type="button" class="btn btn-sm btn-primary editBtn" data-id="' + id + '" title="Edit"><i class = "fas fa-edit" > </i></button>' +
@@ -448,7 +448,7 @@
                 }
             });
         });
-        $('.copyBtn').click(async function () {
+        $(document).on('click', '.copyBtn', async function () {
             try {
                 let invoiceUrl = $(this).data('invoice-url');
                 await navigator.clipboard.writeText(invoiceUrl);
