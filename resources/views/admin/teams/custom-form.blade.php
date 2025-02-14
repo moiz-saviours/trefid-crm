@@ -118,7 +118,8 @@
                         <option value="" selected>Select Team Lead</option>
                         @foreach($users as $user)
                             <option
-                                value="{{ $user->id }}" {{ old('lead_id') == $user->id ? 'selected' : '' }}>
+                                value="{{ $user->id }}"
+                                {{ old('lead_id') == $user->id ? 'selected' : '' }}>
                                 {{ $user->name }}
                             </option>
                         @endforeach

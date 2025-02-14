@@ -380,6 +380,7 @@ class InvoiceController extends Controller
             $newMerchants = [];
             $merchants = $request->get('merchants', []);
             $merchantsToDelete = array_diff_assoc($existingMerchants, $merchants);
+
             foreach ($merchants as $type => $merchant_id) {
                 if (!isset($existingMerchants[$type]) || $existingMerchants[$type] != $merchant_id) {
                     $newMerchants[] = [

@@ -206,6 +206,13 @@
                             const {id, name, description, assign_brands, lead, status} = response.data;
                             const index = table.row($('#tr-' + id)).index();
                             const rowData = table.row(index).data();
+                            table.rows().every(function () {
+                                var rowIdx = this.index();
+                                var rowLead = decodeHtml(this.data()[6]);
+                                if (rowLead === lead && rowIdx !== index) {
+                                    table.cell(rowIdx, 6).data('').draw();
+                                }
+                            });
 
                             /** Column 3: Name */
                             if (decodeHtml(rowData[3]) !== name) {

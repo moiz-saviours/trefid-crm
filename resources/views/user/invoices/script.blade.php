@@ -296,7 +296,7 @@
             }
 
             updateTotalAmount();
-
+            getMerchants($('#brand_key'), invoice);
             $('#manage-form').attr('action', `{{route('invoice.update')}}/` + invoice.id);
             $('#formContainer').addClass('open');
         }
@@ -317,7 +317,6 @@
                 AjaxRequestPromise(`{{ route("invoice.store") }}`, formData, 'POST', {useToastr: true})
                     .then(response => {
                         if (response?.data) {
-                            let authUser = `{{auth()->user()}}`
                             const {
                                 id,
                                 invoice_number,
@@ -336,6 +335,14 @@
                                 due_date,
                                 date
                             } = response.data;
+                            let basePath = window.location.origin;
+                            let pathParts = window.location.pathname.split('/').filter(part => part !== "");
+                            if (pathParts.includes("admin")) {
+                                pathParts = pathParts.slice(0, pathParts.indexOf("admin"));
+                            }
+                            if (pathParts.length > 0) {
+                                basePath += "/" + pathParts.join('/');
+                            }
                             const index = table.rows().count() + 1;
                             const columns = `
                         <td class="align-middle text-center text-nowrap"></td>
@@ -375,10 +382,10 @@
                         <button type="button" class="btn btn-sm btn-primary copyBtn"
                                                             data-id="${id}"
                                                             data-invoice-key="${invoice_key}"
-                                                            data-invoice-url="${brand.url + 'checkout?InvoiceID=' + invoice_key}"
+                                                            data-invoice-url="${basePath}/invoice?InvoiceID=${invoice_key}"
                                                             title="Copy Invoice Url"><i
                                                             class="fas fa-copy"></i></button>
-                            ${status != 1 && authUser?.id === agent?.id ? '<button type="button" class="btn btn-sm btn-primary editBtn" data-id="' + id + '" title="Edit"><i class = "fas fa-edit" > </i></button>' +
+                            ${status != 1 ? '<button type="button" class="btn btn-sm btn-primary editBtn" data-id="' + id + '" title="Edit"><i class = "fas fa-edit" > </i></button>' +
                                 '<button type="button" class="btn btn-sm btn-danger deleteBtn" data-id="' + id + '" title="Delete"><i class="fas fa-trash"></i></button>'
                                 : ''}
                         </td>`;
@@ -498,19 +505,155 @@
                     .catch(error => console.log(error));
             }
         });
-
-
-        $(document).ready(function () {
-            $('.copyBtn').click(async function () {
-                try {
-                    let invoiceUrl = $(this).data('invoice-url');
-                    await navigator.clipboard.writeText(invoiceUrl);
-                    toastr.success('Invoice URL copied to clipboard!', 'Success');
-                } catch (err) {
-                    toastr.error('Failed to copy. Please try again.', 'Error');
-                    console.error('Clipboard copy failed:', err);
-                }
-            });
+        $(document).on('click', '.copyBtn', async function () {
+            try {
+                let invoiceUrl = $(this).data('invoice-url');
+                await navigator.clipboard.writeText(invoiceUrl);
+                toastr.success('Invoice URL copied to clipboard!', 'Success');
+            } catch (err) {
+                toastr.error('Failed to copy. Please try again.', 'Error');
+                console.error('Clipboard copy failed:', err);
+            }
         });
+        {{--const groupedMerchants = @json($groupedMerchants);--}}
+        {{--$('#brand_key').on('change', function () {--}}
+        {{--    const selectedBrand = $(this).val();--}}
+        {{--    const merchantTypesContainer = $('#merchant-types-container');--}}
+        {{--    merchantTypesContainer.empty();--}}
+        {{--    if (selectedBrand) {--}}
+        {{--        const merchant_types = groupedMerchants[selectedBrand];--}}
+        {{--        Object.keys(merchant_types).forEach(type => {--}}
+        {{--            const checkboxId = `${type}_checkbox`;--}}
+        {{--            const checkboxHtml = `--}}
+        {{--                        <div class="payment-gateway-card" data-type="${type}">--}}
+        {{--                            <div class="form-check">--}}
+        {{--                                <input class="form-check-input merchant-type-checkbox" type="checkbox" id="${checkboxId}" value="${type}">--}}
+        {{--                                <label class="form-check-label" for="${checkboxId}">--}}
+        {{--                                    <i class="${getIconForType(type)} me-2"></i> ${type.charAt(0).toUpperCase() + type.slice(1)}--}}
+        {{--                                </label>--}}
+        {{--                            </div>--}}
+        {{--                            <div id="merchant_${type}" class="merchant-dropdown"></div>--}}
+        {{--                        </div>--}}
+        {{--                    `;--}}
+        {{--            merchantTypesContainer.append(checkboxHtml);--}}
+        {{--        });--}}
+
+        {{--        $('.payment-gateway-card .merchant-type-checkbox').on('change', function () {--}}
+        {{--            const type = $(this).val();--}}
+        {{--            const merchantDropdown = $(`#merchant_${type}`);--}}
+        {{--            if ($(this).is(':checked')) {--}}
+        {{--                const dropdownHtml = `--}}
+        {{--                            <div class="form-group mb-3">--}}
+        {{--                                <label for="merchant_select_${type}" class="form-label">Select Merchant</label>--}}
+        {{--                                <select class="form-control form-select" id="merchant_select_${type}" name="merchants[${type}]" title="Please select a ${type} merchant" required>--}}
+        {{--                                    <option value="" selected disabled>Please select a ${type} merchant</option>--}}
+        {{--                                    ${merchant_types[type].map(merchant => `--}}
+        {{--                                        <option value="${merchant.id}">${merchant.name}</option>--}}
+        {{--                                    `).join('')}--}}
+        {{--                                </select>--}}
+        {{--                            </div>--}}
+        {{--                        `;--}}
+        {{--                merchantDropdown.html(dropdownHtml);--}}
+        {{--            } else {--}}
+        {{--                merchantDropdown.empty();--}}
+        {{--            }--}}
+        {{--        });--}}
+        {{--    }--}}
+        {{--});--}}
+
+        $(document).on('click', function (event) {
+            if (
+                (!$(event.target).closest('.form-container').length &&
+                    !$(event.target).is('.form-container')
+                )
+                || $(event.target).is('.form-container .close-btn')
+                || $(event.target).is('.editBtn')
+                || $(event.target).is('.open-form-btn')
+            ) {
+                $('#merchant-types-container').empty();
+            }
+        });
+        /**Api Hit */
+        $('#brand_key').on('change', function () {
+            invoice = null;
+            getMerchants($(this));
+        });
+
+        function getMerchants(brand, invoice = null) {
+            const selectedBrand = brand.val();
+            const merchantTypesContainer = $('#merchant-types-container');
+            merchantTypesContainer.empty();
+            if (selectedBrand) {
+                AjaxRequestPromise(`{{ route('admin.client.account.by.brand') }}/${selectedBrand}`, null, 'GET',)
+                    .then(response => {
+                        if (response.data) {
+                            const merchant_types = response.data;
+                            Object.keys(merchant_types).forEach(type => {
+                                const checkboxId = `${type}_checkbox`;
+                                const checkboxHtml = `
+                                <div class="payment-gateway-card" data-type="${type}">
+                                    <div class="form-check">
+                                        <input class="form-check-input merchant-type-checkbox" type="checkbox" id="${checkboxId}" value="${type}">
+                                        <label class="form-check-label" for="${checkboxId}">
+                                            <i class="${getIconForType(type)} me-2"></i> ${type.charAt(0).toUpperCase() + type.slice(1)}
+                                        </label>
+                                    </div>
+                                    <div id="merchant_${type}" class="merchant-dropdown"></div>
+                                </div>
+                            `;
+                                merchantTypesContainer.append(checkboxHtml);
+
+                                if (invoice && invoice.merchant_types && invoice.merchant_types[type]) {
+                                    setTimeout(() => {
+                                        $(`#${checkboxId}`).prop('checked', true).trigger('change');
+                                    }, 50);
+                                }
+                            });
+
+                            $('.payment-gateway-card .merchant-type-checkbox').on('change', function () {
+                                const type = $(this).val();
+                                const merchantDropdown = $(`#merchant_${type}`);
+                                if ($(this).is(':checked')) {
+                                    const dropdownHtml = `
+                                    <div class="form-group mb-3">
+                                        <label for="merchant_select_${type}" class="form-label">Select Merchant</label>
+                                        <select class="form-control form-select" id="merchant_select_${type}" name="merchants[${type}]" title="Please select a ${type} merchant" required>
+                                            <option value="" selected disabled>Please select a ${type} merchant</option>
+                                            ${merchant_types[type].map(merchant => `
+                                                <option value="${merchant.id}">${merchant.name}</option>
+                                            `).join('')}
+                                        </select>
+                                    </div>
+                                `;
+                                    merchantDropdown.html(dropdownHtml);
+                                    if (invoice && invoice.merchant_types && invoice.merchant_types[type]) {
+                                        setTimeout(() => {
+                                            $(`#merchant_select_${type}`).val(invoice.merchant_types[type]).trigger('change');
+                                        }, 100);
+                                    }
+                                } else {
+                                    merchantDropdown.empty();
+                                }
+                            });
+                        } else {
+                            console.error('Failed to fetch merchant data:', response.message);
+                        }
+                    }).catch((error) => {
+                    console.log(error);
+                });
+            }
+        }
+        function getIconForType(type) {
+            switch (type) {
+                case 'authorize':
+                    return 'fas fa-credit-card';
+                case 'stripe':
+                    return 'fab fa-stripe';
+                case 'paypal':
+                    return 'fab fa-paypal';
+                default:
+                    return 'fas fa-question-circle';
+            }
+        }
     });
 </script>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\AssignTeamMember;
 use App\Models\Brand;
 use App\Models\Team;
 use App\Models\User;
@@ -28,7 +29,7 @@ class TeamController extends Controller
     {
         try {
             $brands = Brand::where('status', 1)->get();
-            $users = User::where('status', 1)->get();
+            $users = User::where('status', 1)->with('teams')->get();
             return view('admin.teams.create', compact('brands', 'users'));
         } catch (\Exception $e) {
             return redirect()->route('admin.team.index')->with('error', $e->getMessage());
@@ -54,38 +55,43 @@ class TeamController extends Controller
             'name.required' => 'The team name is required.',
             'name.string' => 'The team name must be a valid string.',
             'name.max' => 'The team name may not be greater than 255 characters.',
-
             'description.string' => 'The description must be a valid string.',
-
             'status.required' => 'The team status is required.',
             'status.integer' => 'The team status must be an integer.',
             'status.in' => 'The team status must be either 0 (inactive) or 1 (active).',
-
             'lead_id.exists' => 'The selected team lead is invalid.',
-
             'employees.array' => 'Team members must be selected as an array.',
             'employees.*.exists' => 'One or more selected team members are invalid.',
-
             'brands.array' => 'Brands must be selected as an array.',
             'brands.*.exists' => 'One or more selected brands are invalid.',
         ]);
-
-
         $team = new Team($request->only(['name', 'description', 'status']));
         $team->save();
-
-        if ($request->has('lead_id')) {
-            $team->lead_id = $request->lead_id;
-            $team->save();
-        }
-        $team->update(['team_key' => $team->generateTeamKey($team->id)]);
-        if ($request->has('employees')) {
-            $team->users()->sync($request->employees);
-            if ($request->has('lead_id') && !in_array($request->lead_id, $request->employees)) {
-                $team->users()->attach($request->lead_id);
+//            TODO
+//        if ($request->has('lead_id')) {
+//            $team->lead_id = $request->lead_id;
+//            $team->save();
+//        }
+//        $team->update(['team_key' => $team->generateTeamKey($team->id)]);
+//        if ($request->has('employees')) {
+//            $team->users()->sync($request->employees);
+//            if ($request->has('lead_id') && !in_array($request->lead_id, $request->employees)) {
+//                $team->users()->attach($request->lead_id);
+//            }
+//        }
+        $employees = $request->input('employees', []);
+        if ($request->has('lead_id') && !empty($request->lead_id)) {
+            if (!in_array($request->lead_id, $employees)) {
+                $employees[] = $request->lead_id;
             }
+            Team::where('lead_id', $request->lead_id)
+                ->where('id', '!=', $team->id)
+                ->update(['lead_id' => null]);
         }
-
+        if (!empty($employees)) {
+            AssignTeamMember::whereIn('user_id', $employees)->delete();
+            $team->users()->sync($employees);
+        }
         if ($request->has('brands')) {
             $team->brands()->sync($request->brands);
         }
@@ -122,7 +128,6 @@ class TeamController extends Controller
             if (request()->ajax()) {
                 return response()->json(['data' => array_merge($team->toArray(), ['assign_user_ids' => $assign_user_ids], ['assign_brand_keys' => $assign_brand_keys]), 'message' => 'Record fetched successfully.']);
             }
-
             $brands = Brand::where('status', 1)->get();
             $users = User::where('status', 1)->get();
             return view('admin.teams.edit', compact('team', 'brands', 'users', 'assign_brand_keys', 'assign_user_ids'));
@@ -151,16 +156,28 @@ class TeamController extends Controller
             'brands' => 'nullable|array',
             'brands.*' => 'exists:brands,brand_key',
         ]);
-
-        $employees = $request->input('employees', []);
         $team->update($request->only(['name', 'description', 'status', 'lead_id']));
         $team->save();
-        if ($request->has('lead_id') && !empty($request->get('lead_id')) && !in_array($request->lead_id, $employees)) {
-            $employees[] = $request->lead_id;
+//        TODO
+//        $employees = $request->input('employees', []);
+//        if ($request->has('lead_id') && !empty($request->get('lead_id')) && !in_array($request->lead_id, $employees)) {
+//            $employees[] = $request->lead_id;
+//        }
+//        $team->users()->sync($employees);
+        $employees = $request->input('employees', []);
+        if ($request->has('lead_id') && !empty($request->lead_id)) {
+            if (!in_array($request->lead_id, $employees)) {
+                $employees[] = $request->lead_id;
+            }
+            Team::where('lead_id', $request->lead_id)
+                ->where('id', '!=', $team->id)
+                ->update(['lead_id' => null]);
         }
-        $team->users()->sync($employees);
+        if (!empty($employees)) {
+            AssignTeamMember::whereIn('user_id', $employees)->delete();
+            $team->users()->sync($employees);
+        }
         $team->brands()->sync($request->input('brands', []));
-
         if (request()->ajax()) {
             $lead = $team->lead()->value('users.name');
             $assign_brands = $team->brands()->pluck('brands.name')->map('htmlspecialchars_decode')->implode(', ');

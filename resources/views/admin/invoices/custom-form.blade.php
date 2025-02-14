@@ -168,7 +168,7 @@
                     <label for="amount" class="form-label">Amount</label>
                     <input type="number" class="form-control" id="amount" name="amount" step="1"
                            min="1"
-                           max="4999" value="{{ old('amount') }}" >
+                           max="4999" value="{{ old('amount') }}">
                     @error('amount')
                     <span class="text-danger">{{ $message }}</span>
                     @enderror
@@ -350,21 +350,6 @@
                     $('#total_amount').val(totalAmount.toFixed(2));
                 }
             });
-
-            $(document).on('click', function (event) {
-                if (
-                    (!$(event.target).closest('.form-container').length &&
-                        !$(event.target).is('.form-container') &&
-                        !$(event.target).closest('.open-form-btn').length &&
-                        !$(event.target).is('.editBtn') &&
-                        !$(event.target).is('.changePwdBtn')
-                    ) ||
-                    $(event.target).is('.form-container .close-btn')
-                ) {
-                    $('#merchant-types-container').empty();
-                }
-            });
-
         </script>
         <!------- CUSTOM FORM -------->
     @endpush

@@ -149,12 +149,11 @@
             $('#total_amount').val(totalAmount.toFixed(2));
         }
 
-        let invoice;
         function setDataAndShowEdit(data) {
-            invoice = data?.invoice;
+            const invoice = data?.invoice;
 
             $('#manage-form').data('id', invoice.id);
-            $('#brand_key').val(invoice.brand_key).trigger('change');
+            $('#brand_key').val(invoice.brand_key);
             $('#team_key').val(invoice.team_key);
             $('#type').val(invoice.type).trigger('change');
 
@@ -183,7 +182,7 @@
             }
 
             updateTotalAmount();
-
+            getMerchants($('#brand_key'), invoice);
             $('#manage-form').attr('action', `{{route('admin.invoice.update')}}/` + invoice.id);
             $('#formContainer').addClass('open');
         }
@@ -512,9 +511,26 @@
         {{--    }--}}
         {{--});--}}
 
+        $(document).on('click', function (event) {
+            if (
+                (!$(event.target).closest('.form-container').length &&
+                    !$(event.target).is('.form-container')
+                )
+                || $(event.target).is('.form-container .close-btn')
+                || $(event.target).is('.editBtn')
+                || $(event.target).is('.open-form-btn')
+            ) {
+                $('#merchant-types-container').empty();
+            }
+        });
         /**Api Hit */
         $('#brand_key').on('change', function () {
-            const selectedBrand = $(this).val();
+            invoice = null;
+            getMerchants($(this));
+        });
+
+        function getMerchants(brand, invoice = null) {
+            const selectedBrand = brand.val();
             const merchantTypesContainer = $('#merchant-types-container');
             merchantTypesContainer.empty();
             if (selectedBrand) {
@@ -576,7 +592,7 @@
                     console.log(error);
                 });
             }
-        });
+        }
         function getIconForType(type) {
             switch (type) {
                 case 'authorize':

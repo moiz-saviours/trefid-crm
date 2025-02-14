@@ -1,6 +1,9 @@
 <!-- Toastr CSS -->
 <link rel="stylesheet" href="{{asset('build/toaster/css/toastr.min.css')}}">
 
+<!-- Date Range Picker CSS -->
+<link rel="stylesheet" href="{{asset('assets/css/daterangepicker/daterangepicker.css')}}">
+
 <!-- Fonts [ OPTIONAL ] -->
 <!-- Font Awesome Icons -->
 <script src="{{asset('assets/fonts/fontawsome.js')}}"></script>
@@ -45,7 +48,7 @@
         font-family: Poppins;
         font-style: normal;
         font-weight: 400;
-        src: url('../assets/themes/nifty/assets/fonts/poppins/400-normal.woff2');
+        src: url('{{asset('assets/themes/nifty/assets/fonts/poppins/400-normal.woff2')}}');
         unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
         font-display: swap;
     }
@@ -108,7 +111,7 @@
         font-family: Poppins;
         font-style: normal;
         font-weight: 700;
-        src: url('../assets/themes/nifty/assets/fonts/poppins/700-normal.woff2');
+        src: url({{asset('assets/themes/nifty/assets/fonts/poppins/700-normal.woff2')}});
         unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
         font-display: swap;
     }
@@ -162,7 +165,7 @@
         font-family: Ubuntu;
         font-style: normal;
         font-weight: 400;
-        src: url('../assets/themes/nifty/assets/fonts/ubuntu/400-normal.woff2');
+        src: url({{asset('assets/themes/nifty/assets/fonts/ubuntu/400-normal.woff2')}});
         unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
         font-display: swap;
     }
@@ -180,7 +183,7 @@
         font-family: Ubuntu;
         font-style: normal;
         font-weight: 500;
-        src: url('../assets/themes/nifty/assets/fonts/ubuntu/500-normal.woff2');
+        src: url({{asset('assets/themes/nifty/assets/fonts/ubuntu/500-normal.woff2')}});
         unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
         font-display: swap;
     }
@@ -261,7 +264,7 @@
         font-family: Ubuntu;
         font-style: normal;
         font-weight: 700;
-        src: url('../assets/themes/nifty/assets/fonts/ubuntu/700-normal.woff2');
+        src: url({{asset('assets/themes/nifty/assets/fonts/ubuntu/700-normal.woff2')}});
         unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
         font-display: swap;
     }
@@ -284,9 +287,7 @@
       href="{{asset('assets/themes/nifty/assets/css/nifty.min.ef4dee33cb03225ab91107ec2905fe15f71a06ba22edcf1e480874b0fb882a31.css')}}">
 
 <!-- Favicons [ OPTIONAL ] -->
-<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+<link rel="manifest" href="{{asset('assets/themes/nifty/site.webmanifest')}}">
 <link rel="manifest" href="{{asset('assets/themes/nifty/site.webmanifest')}}">
 <!-- Spinkit [ OPTIONAL ] -->
 <link rel="stylesheet" href="{{asset('assets/themes/nifty/assets/pages/spinkit.css')}}">
@@ -296,6 +297,12 @@
 <style>
 
     /* Full-screen loader styles */
+
+    .loader-light {
+        background-color: rgba(255, 255, 255, 0.2) !important;
+    }
+
+
     #loader {
         position: fixed;
         top: 0;
@@ -322,6 +329,7 @@
     .load-spinner {
         display: none;
     }
+
 </style>
 <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -436,7 +444,8 @@ Detailed information and more samples can be found in the documentation.
     }
 
     .dt-buttons .btn.btn-secondary:hover {
-        background-color: #8392ab;
+        background-color: transparent;
+        /*background-color: #8392ab;*/
     }
 
     .dt-buttons .btn.btn-secondary span:hover {
@@ -445,6 +454,9 @@ Detailed information and more samples can be found in the documentation.
 
     span.dt-column-title {
         color: var(--bs-primary);
+    }
+    .custm-filtr{
+        padding: 0;
     }
 
     ul.custm-filtr li {
@@ -458,9 +470,11 @@ Detailed information and more samples can be found in the documentation.
         box-shadow: inset 0 0 0 9999px var(--bs-primary);
         color: var(--bs-primary-color);
     }
-    .table.dataTable.table > tbody > tr.selected td > * {
-        color: var(--bs-primary-color);
+    .right-icon {
+        display: flex;
+        justify-content: end;
     }
+
     .dt-search {
         float: right;
     }
@@ -472,7 +486,7 @@ Detailed information and more samples can be found in the documentation.
     .dt-buttons button {
         border: none;
         padding: 0;
-        left: 150px;
+        /*left: 150px;*/
     }
 
     .card-header:has(.fltr-sec) {
@@ -520,10 +534,39 @@ Detailed information and more samples can be found in the documentation.
         color: var(--bs-primary);
         font-weight: 600;
     }
-
     .table a:hover {
         text-decoration: underline;
     }
+</style>
+<style>
+    table object.avatar.avatar-sm.me-3 {
+        max-width: 50px;
+        max-height: 50px;
+    }
+
+    .mn--min .mininav-content h3 {
+        color: var(--nf-mainnav-submenu-active-color);
+        font-size: var(--nf-brand-size);
+        font-weight: 600;
+        font-family: var(--bs-body-font-family);
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        padding: var(--nf-mainnav-min-submenu-link-padding-y) var(--nf-mainnav-min-submenu-link-padding-x) 0;
+    }
+
+    .navigate-heading {
+        display: none;
+    }
+
+    .mn--min .navigate-heading {
+        margin-left: 5px;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: center;
+    }
+
 
     .table > :not(caption) > * > * {
         /*padding: .5rem .5rem;*/
@@ -531,10 +574,5 @@ Detailed information and more samples can be found in the documentation.
 
     button.btn.btn-sm {
         /*padding: 0px;*/
-    }
-
-    table object.avatar.avatar-sm.me-3 {
-        max-width: 50px;
-        max-height: 50px;
     }
 </style>

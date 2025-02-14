@@ -109,7 +109,11 @@ class Invoice extends Model
 
     public function agent(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
-        return $this->morphTo();
+        return $this->morphTo('agent');
+    }
+    public function creator(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->morphTo('creator');
     }
     public function payment(): \Illuminate\Database\Eloquent\Relations\HasOne
     {
@@ -117,6 +121,6 @@ class Invoice extends Model
     }
     public function invoice_merchants(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
-        return $this->hasMany(InvoiceMerchant::class, 'invoice_key', 'invoice_key' , 'invoice_key');
+        return $this->hasMany(InvoiceMerchant::class, 'invoice_key', 'invoice_key');
     }
 }

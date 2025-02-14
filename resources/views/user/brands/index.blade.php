@@ -54,10 +54,10 @@
                         @foreach($teams as $index => $team)
                             <div class="tab-pane {{$loop->first ? "active":""}}" id="tab-pane-{{$team->team_key}}">
                                 <div class="card">
-                                    <div class="card-header">
-                                        <div class="container">
-                                            <div class="row fltr-sec">
-                                                <div class="col-md-8">
+{{--                                    <div class="card-header">--}}
+{{--                                        <div class="container">--}}
+{{--                                            <div class="row fltr-sec">--}}
+{{--                                                <div class="col-md-8">--}}
                                                     {{--                                                <ul class="custm-filtr">--}}
                                                     {{--                                                    <div class="table-li">--}}
                                                     {{--                                                        <li class="">CustomerCompany Owner <i class="fa fa-caret-down"--}}
@@ -74,11 +74,11 @@
                                                     {{--                                                        </li>--}}
                                                     {{--                                                    </div>--}}
                                                     {{--                                                </ul>--}}
-                                                </div>
-                                                <div class="col-md-4 right-icon" id="right-icon-{{ $index }}"></div>
-                                            </div>
-                                        </div>
-                                    </div>
+{{--                                                </div>--}}
+{{--                                                <div class="col-md-4 right-icon" id="right-icon-{{ $index }}"></div>--}}
+{{--                                            </div>--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
                                     <div class="card-body">
                                         <table id="{{$team->team_key}}-Table" class="table table-striped datatable-exportable
                             stripe row-border order-column nowrap initTable">

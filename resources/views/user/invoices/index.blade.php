@@ -180,7 +180,7 @@
                                                                 title="Copy Invoice Url"><i
                                                                 class="fas fa-copy"></i></button>
                                                     @endif
-                                                    @if($invoice->status != 1 && isset($invoice->agent) && $invoice->agent->id === auth()->user()->id)
+                                                    @if($invoice->status != 1 && ((isset($invoice->agent) && $invoice->agent->id === auth()->user()->id) || (isset($invoice->creator) && $invoice->creator->id === auth()->user()->id)))
                                                         <button type="button" class="btn btn-sm btn-primary editBtn"
                                                                 data-id="{{ $invoice->id }}" title="Edit"><i
                                                                 class="fas fa-edit"></i></button>
@@ -313,20 +313,5 @@
 
     @push('script')
         @include('user.invoices.script')
-        <script>
-
-            $(document).ready(function () {
-                const formContainer = $('#formContainer');
-                $('.open-form-btn').click(function () {
-                    $(this).hasClass('void') ? $(this).attr('title', "You don't have access to create a company.").tooltip({placement: 'bottom'}).tooltip('show') : (formContainer.addClass('open'));
-                });
-                $(document).click(function (event) {
-                    if (!$(event.target).closest('#formContainer').length && !$(event.target).is('#formContainer') && !$(event.target).closest('.open-form-btn').length) {
-                        formContainer.removeClass('open')
-                    }
-                });
-            });
-
-        </script>
     @endpush
 @endsection

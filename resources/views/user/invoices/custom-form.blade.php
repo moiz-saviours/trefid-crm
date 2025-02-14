@@ -1,3 +1,31 @@
+@push('style')
+    <style>
+        .payment-gateway-card {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            padding: 10px;
+            background-color: #f9f9f9;
+            transition: all 0.3s ease;
+        }
+
+        .payment-gateway-card:hover {
+            border-color: #007bff;
+            box-shadow: 0 4px 8px rgba(0, 123, 255, 0.1);
+        }
+
+        .payment-gateway-card .form-check-label {
+            display: inline;
+            font-weight: 500;
+            margin-left: 25px;
+        }
+
+        .merchant-dropdown {
+            margin-top: 10px;
+            padding-left: 20px; /* Indent merchants below their type */
+        }
+    </style>
+@endpush
 <div class="custom-form">
     <form id="manage-form" method="POST" enctype="multipart/form-data" autocomplete="off">
         <div class="form-container" id="formContainer">
@@ -14,12 +42,9 @@
                     <label for="brand_key" class="form-label">Brand</label>
                     <select class="form-control searchable" id="brand_key" name="brand_key"
                             title="Please select a brand" required autocomplete="off">
-                        <option value="" disabled>Please select brand</option>
+                        <option value="" selected disabled>Please select brand</option>
                         @foreach($brands as $brand)
-                            <option
-                                value="{{ $brand->brand_key }}" {{ old('brand_key') == $brand->brand_key ? 'selected' : '' }}>
-                                {{ $brand->name }}
-                            </option>
+                            <option value="{{ $brand->brand_key }}">{{ $brand->name }}</option>
                         @endforeach
                     </select>
                     @error('brand_key')
@@ -44,16 +69,8 @@
                 </div>
 
                 <div class="form-group mb-3">
-                    <label for="type" class="form-label">Customer Type</label>
+                    <label for="type" class="form-label">Type</label>
                     <select class="form-control" id="type" name="type" title="Please select customer type" required>
-{{--                        <option value="0" {{ old('type') == 0 ? 'selected' : '' }}>--}}
-{{--                            Fresh--}}
-{{--                        </option>--}}
-{{--                        @if($customer_contacts->count() > 0)--}}
-{{--                            <option value="1" {{ old('type') == 1 ? 'selected' : '' }}>--}}
-{{--                                Upsale--}}
-{{--                            </option>--}}
-{{--                        @endif--}}
                         <option value="0" {{ old('type', 1) == 0 ? 'selected' : '' }}>Fresh</option>
                         @if($customer_contacts->count() > 0)
                             <option value="1" {{ old('type', 1) == 1 ? 'selected' : '' }}>Upsale</option>
@@ -63,10 +80,10 @@
                     <span class="text-danger">{{ $message }}</span>
                     @enderror
                 </div>
-                <div id="fresh-customer-contact-fields" class="form-group mb-3 d-none">
+                <div id="fresh-customer-contact-fields" class="form-group mb-3 second-fields">
                     <div class="form-group mb-3">
                         <label for="customer_contact_name" class="form-label">Customer Contact Name</label>
-                        <input type="text" class="form-control" id="customer_contact_name"
+                        <input type="text" class="form-control second-field-inputs" id="customer_contact_name"
                                name="customer_contact_name"
                                value="{{ old('customer_contact_name') }}">
                         @error('customer_contact_name')
@@ -76,7 +93,7 @@
 
                     <div class="form-group mb-3">
                         <label for="customer_contact_email" class="form-label">Customer Contact Email</label>
-                        <input type="email" class="form-control" id="customer_contact_email"
+                        <input type="email" class="form-control second-field-inputs" id="customer_contact_email"
                                name="customer_contact_email"
                                value="{{ old('customer_contact_email') }}">
                         @error('customer_contact_email')
@@ -85,7 +102,7 @@
                     </div>
                     <div class="form-group mb-3">
                         <label for="customer_contact_phone" class="form-label">Customer Contact Phone</label>
-                        <input type="text" class="form-control" id="customer_contact_phone"
+                        <input type="text" class="form-control second-field-inputs" id="customer_contact_phone"
                                name="customer_contact_phone"
                                value="{{ old('customer_contact_phone') }}">
                         @error('customer_contact_phone')
@@ -93,9 +110,9 @@
                         @enderror
                     </div>
                 </div>
-                <div id="upsale-customer-contact-fields" class="form-group mb-3 d-none">
+                <div id="upsale-customer-contact-fields" class="form-group mb-3 first-fields">
                     <label for="cus_contact_key" class="form-label">Select Customer Contact</label>
-                    <select class="form-control" id="cus_contact_key" name="cus_contact_key">
+                    <select class="form-control first-field-inputs" id="cus_contact_key" name="cus_contact_key">
                         <option value="">Select Customer Contact</option>
                         @foreach($customer_contacts as $customer_contact)
                             <option
@@ -113,7 +130,7 @@
                     <select class="form-control searchable" id="agent_id" name="agent_id" title="Please select agent">
                         <option value="" disabled>Select Agent</option>
                         @foreach($users as $user)
-                            <option value="{{ $user->id }}" {{ old('agent_id') == $user->id ? 'selected' : '' }}>
+                            <option value="{{ $user->id }}" {{ old('agent_id',auth()->user()->id) == $user->id ? 'selected' : '' }}>
                                 {{ $user->name }} ({{ $user->email }})
                             </option>
                         @endforeach
@@ -148,7 +165,7 @@
                     <label for="amount" class="form-label">Amount</label>
                     <input type="number" class="form-control" id="amount" name="amount" step="1"
                            min="1"
-                           max="4999" value="" required>
+                           max="4999" value="{{ old('amount') }}" required>
                     @error('amount')
                     <span class="text-danger">{{ $message }}</span>
                     @enderror
@@ -210,7 +227,14 @@
                     @enderror
                 </div>
                 <div class="form-group mb-3">
-                    <label for="description" class="form-label">Description</label>
+                    <div id="merchant-types-container">
+                    </div>
+                    @error('payment_method')
+                    <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
+                <div class="form-group mb-3">
+                    <label for="description" class="form-label">Customer Note</label>
                     <textarea class="form-control" id="description" name="description"
                               rows="3">{{ old('description') }}</textarea>
                     @error('description')
@@ -233,14 +257,25 @@
             $(document).ready(function () {
                 $('#type').on('change', function () {
                     const type = $(this).val();
-                    $('#fresh-customer-contact-fields').toggleClass('d-none', type != 0);
-                    $('#customer_contact_name, #customer_contact_email, #customer_contact_phone').prop('required', type == 0);
-                    $('#upsale-customer-contact-fields').toggleClass('d-none', type != 1);
-                    $('#cus_contact_key').prop('required', type == 1);
+                    if (type == 0) {
+                        $('#upsale-customer-contact-fields').fadeOut(() => {
+                            $('#fresh-customer-contact-fields').fadeIn();
+                            $('#customer_contact_name, #customer_contact_email, #customer_contact_phone').prop('required', true);
+                            $('#cus_contact_key').prop('required', false);
+                        });
+                    } else if (type == 1) {
+                        $('#fresh-customer-contact-fields').fadeOut(() => {
+                            $('#upsale-customer-contact-fields').fadeIn();
+                            $('#cus_contact_key').prop('required', true);
+                            $('#customer_contact_name, #customer_contact_email, #customer_contact_phone').prop('required', false);
+                        });
+                    }
                 }).trigger('change');
             });
 
             $(document).ready(function () {
+
+                const maxAmount = parseFloat(`{{config('invoice.max_amount')}}`);
                 $('#taxable').on('change', function () {
                     if ($(this).is(':checked')) {
                         $('#tax-fields').slideDown();
@@ -256,34 +291,77 @@
                 });
 
                 $('#tax_type, #tax_value, #amount').on('input change', function () {
+                    const amount = parseFloat($('#amount').val());
+                    if (amount > maxAmount) {
+                        $('#amount').val(maxAmount);
+                    }
                     updateTaxAmount();
                     updateTotalAmount();
                 });
 
                 function updateTaxAmount() {
                     const taxType = $('#tax_type').val();
-                    const taxValue = parseFloat($('#tax_value').val());
+                    let taxValue = parseFloat($('#tax_value').val());
                     const amount = parseFloat($('#amount').val());
 
                     let taxAmount = 0;
+                    if (amount >= maxAmount) {
+                        $('#tax_value').val(0);
+                        $('#tax_amount').val(0);
+                        return;
+                    }
 
                     if (taxType === 'percentage' && !isNaN(taxValue) && !isNaN(amount)) {
+                        if (taxValue > 100) {
+                            taxValue = 100;
+                            $('#tax_value').val(100);
+                        }
+
                         taxAmount = (amount * taxValue) / 100;
+                        if (amount + taxAmount > maxAmount) {
+                            taxAmount = maxAmount - amount;
+                            $('#tax_value').val(((taxAmount / amount) * 100).toFixed(2));
+                        }
                     } else if (taxType === 'fixed' && !isNaN(taxValue)) {
+                        const maxFixedTax = maxAmount - amount;
+                        if (taxValue > maxFixedTax) {
+                            taxValue = maxFixedTax;
+                            $('#tax_value').val(maxFixedTax.toFixed(2));
+                        }
                         taxAmount = taxValue;
                     }
 
                     $('#tax_amount').val(taxAmount.toFixed(2));
                 }
-
                 function updateTotalAmount() {
                     const amount = parseFloat($('#amount').val());
                     const taxAmount = parseFloat($('#tax_amount').val()) || 0;
-                    const totalAmount = amount + taxAmount;
+                    let totalAmount = amount + taxAmount;
 
+                    if (totalAmount > maxAmount) {
+                        // totalAmount = maxAmount;
+
+                        const adjustedTaxAmount = totalAmount - amount;
+                        $('#tax_amount').val(adjustedTaxAmount.toFixed(2));
+                    }
                     $('#total_amount').val(totalAmount.toFixed(2));
                 }
             });
+
+            $(document).on('click', function (event) {
+                if (
+                    (!$(event.target).closest('.form-container').length &&
+                        !$(event.target).is('.form-container') &&
+                        !$(event.target).closest('.open-form-btn').length &&
+                        !$(event.target).is('.editBtn') &&
+                        !$(event.target).is('.changePwdBtn')
+                    ) ||
+                    $(event.target).is('.form-container .close-btn')
+                ) {
+                    $('#merchant-types-container').empty();
+                }
+            });
+
 
         </script>
         <!------- CUSTOM FORM -------->

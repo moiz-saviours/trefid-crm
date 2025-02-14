@@ -114,7 +114,6 @@
 
     $(`#loader`).show();
     $(`.${randomLoader}`).removeClass('load-spinner');
-
     $(document).ready(function () {
         if (@json(View::hasSection('datatable'))) {
             setTimeout(() => {
@@ -126,7 +125,7 @@
             $(`.${randomLoader}`).toggleClass('load-spinner');
         }
 
-        $('#testTable').DataTable();
+        // $('#testTable').DataTable();
     });
     /** Loader End */
 
@@ -656,6 +655,12 @@
 
             const targetPane = $(this).data("tab");
             $("#" + targetPane).addClass("active");
+
+            let tabId = $(this).attr("data-tab");
+            let targetTable = $("#" + tabId).find("table");
+            if ($.fn.DataTable.isDataTable(targetTable)) {
+                targetTable.DataTable().columns.adjust().draw();
+            }
         });
     });
 </script>

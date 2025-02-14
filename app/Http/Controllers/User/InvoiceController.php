@@ -8,6 +8,7 @@ use App\Models\CustomerContact;
 use App\Models\Invoice;
 use App\Models\Team;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -18,8 +19,11 @@ class InvoiceController extends Controller
     public function index()
     {
         $invoices = Invoice::all();
-        $brands = Brand::where('status', 1)->get();
-        $teams = Team::where('status', 1)->get();
+        $user = Auth::user();
+        $teams = $user->teams()->with('brands')->get();
+        $brands = $teams->flatMap(function ($team) {
+            return $team->brands;
+        });
         $customer_contacts = CustomerContact::where('status', 1)->get();
         $users = User::where('status', 1)->get();
         $all_invoices = Invoice::whereIn('brand_key', Auth::user()->teams()->with('brands')->get()->pluck('brands.*.brand_key')->flatten()->unique())->with(['brand', 'customer_contact'])->get();
@@ -35,12 +39,23 @@ class InvoiceController extends Controller
         DB::beginTransaction();
         try {
             $request->validate([
+                'merchants' => ['nullable', 'array'],
+                'merchants.*' => ['required', 'numeric'],
                 'brand_key' => 'required|integer|exists:brands,brand_key',
                 'team_key' => 'nullable|integer|exists:teams,team_key',
                 'cus_contact_key' => 'required_if:type,1|nullable|integer|exists:customer_contacts,special_key',
                 'customer_contact_name' => 'required_if:type,0|nullable|string|max:255',
                 'customer_contact_email' => 'required_if:type,0|nullable|email|max:255|unique:customer_contacts,email',
-                'customer_contact_phone' => 'required_if:type,0|nullable|string|max:15',
+                'customer_contact_phone' => [
+                    'required_if:type,0',
+                    'nullable',
+                    'string',
+                    function ($attribute, $value, $fail) use ($request) {
+                        if ($request->input('type') == 0 && strlen($value) > 15) {
+                            $fail("The $attribute must not be greater than 15 characters when type is 0.");
+                        }
+                    },
+                ],
                 'agent_id' => 'nullable|integer',
 //            'agent_type' => 'required|string|in:admins,users',
                 'description' => 'nullable|string|max:500',
@@ -166,8 +181,10 @@ class InvoiceController extends Controller
 //            }
             $invoice = Invoice::create($data);
             DB::commit();
+            $invoice->refresh();
             $invoice->loadMissing('customer_contact', 'brand', 'team', 'agent');
             $invoice->date = "Today at " . $invoice->created_at->timezone('GMT+5')->format('g:i A') . "GMT + 5";
+            $invoice->due_date = Carbon::parse($invoice->due_date)->format('Y-m-d');
             return response()->json(['data' => $invoice, 'success' => 'Record created successfully!']);
         } catch (\Exception $e) {
             DB::rollBack();
@@ -180,7 +197,6 @@ class InvoiceController extends Controller
         if (!$invoice->id) return response()->json(['error' => 'Invoice does not exist.']);
         if ($invoice->status == 1) return response()->json(['error' => 'Oops! The Invoice is already paid.'], 400);
         if (!$invoice->agent || $invoice->agent->id !== auth()->user()->id) return response()->json(['error' => 'You do not have permission to perform this action.'], 400);
-
         $brands = Brand::where('status', 1)->get();
         $teams = Team::where('status', 1)->get();
         $customer_contacts = CustomerContact::where('status', 1)->get();
@@ -193,8 +209,7 @@ class InvoiceController extends Controller
     {
         if (!$invoice->id) return response()->json(['error' => 'Invoice does not exist.']);
         if ($invoice->status == 1) return response()->json(['error' => 'Oops! The Invoice is already paid.'], 400);
-        if (!$invoice->agent || $invoice->agent->id !== auth()->user()->id) return response()->json(['error' => 'You do not have permission to perform this action.'], 400);
-
+        if ((!$invoice->agent || $invoice->agent->id !== auth()->user()->id) || (!$invoice->creator || $invoice->creator->id !== auth()->user()->id) ) return response()->json(['error' => 'You do not have permission to perform this action.'], 400);
         $validator = Validator::make($request->all(), [
             'brand_key' => 'required|integer|exists:brands,brand_key',
             'team_key' => 'required|integer|exists:teams,team_key',

@@ -10,10 +10,10 @@ use App\Http\Controllers\User\{BrandController,
     LeadController,
     LeadStatusController,
     PaymentController,
+    PaymentMerchantController,
     ProfileController,
     TeamController,
-    TeamMemberController,
-};
+    TeamMemberController};
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Artisan;
@@ -88,6 +88,9 @@ Route::middleware('auth')->group(function () {
             Route::post('/update/{invoice?}', [InvoiceController::class, 'update'])->name('update');
         });
     });
+    /** Payment Merchant Routes */
+    Route::get('/by-brand/{brand_key?}', [PaymentMerchantController::class, 'by_brand'])->name('by.brand');
+
     Route::get('/payments', [PaymentController::class, 'index'])->name('payment.index');
 });
 require __DIR__ . '/admin-old-routes.php';

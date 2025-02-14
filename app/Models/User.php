@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Models;
-
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Traits\ActivityLoggable;
 use Database\Factories\UserFactory;
@@ -14,11 +13,10 @@ use Laravel\Sanctum\HasApiTokens;
 class User extends Authenticatable
 {
     /** @use HasFactory<UserFactory> */
-    use  HasApiTokens, HasFactory, Notifiable , SoftDeletes, ActivityLoggable;
+    use  HasApiTokens, HasFactory, Notifiable, SoftDeletes, ActivityLoggable;
 
     protected $primaryKey = 'id';
     protected $table = 'users';
-
     /**
      * The attributes that are mass assignable.
      *
@@ -43,7 +41,6 @@ class User extends Authenticatable
         'target',
         'image',
     ];
-
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -67,9 +64,9 @@ class User extends Authenticatable
         ];
     }
 
-    public function     teams(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    public function teams(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
-        return $this->belongsToMany(Team::class, AssignTeamMember::class,  'user_id', 'team_key', 'id', 'team_key')->withTimestamps();
+        return $this->belongsToMany(Team::class, AssignTeamMember::class, 'user_id', 'team_key', 'id', 'team_key')->withTimestamps();
     }
     public function invoices()
     {

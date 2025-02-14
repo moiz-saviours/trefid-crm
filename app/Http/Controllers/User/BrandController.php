@@ -14,10 +14,7 @@ class BrandController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $assign_teams = $user->teams()->with('brands')->get();
-        //dd($assign_teams);
-        $teams = Team::with('brands')->whereIn('team_key', $assign_teams->pluck('team_key'))->get();
-//        dd($teams);
+        $teams = $user->teams()->with('brands')->get();
         return view('user.brands.index', compact('teams'));
     }
 
