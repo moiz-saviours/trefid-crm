@@ -168,7 +168,7 @@
                     <label for="amount" class="form-label">Amount</label>
                     <input type="number" class="form-control" id="amount" name="amount" step="1"
                            min="1"
-                           max="4999" value="{{ old('amount') }}" required>
+                           max="4999" value="{{ old('amount') }}" >
                     @error('amount')
                     <span class="text-danger">{{ $message }}</span>
                     @enderror
