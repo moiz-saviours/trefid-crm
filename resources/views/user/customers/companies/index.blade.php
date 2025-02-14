@@ -410,24 +410,24 @@
                 });
 
                 // Handle tab close button
-                $(".close-icon").on("click", function (e) {
-                    e.stopPropagation(); // Prevent triggering tab click
-
-                    const parentTab = $(this).closest(".tab-item");
-                    const targetPane = parentTab.data("tab");
-
-                    // Remove the tab and its content
-                    parentTab.remove();
-                    $("#" + targetPane).remove();
-
-                    // If the closed tab was active, activate the first tab
-                    if (parentTab.hasClass("active")) {
-                        const firstTab = $(".tab-item").first();
-                        firstTab.addClass("active");
-                        const firstPane = firstTab.data("tab");
-                        $("#" + firstPane).addClass("active");
-                    }
-                });
+                // $(".close-icon").on("click", function (e) {
+                //     e.stopPropagation(); // Prevent triggering tab click
+                //
+                //     const parentTab = $(this).closest(".tab-item");
+                //     const targetPane = parentTab.data("tab");
+                //
+                //     // Remove the tab and its content
+                //     parentTab.remove();
+                //     $("#" + targetPane).remove();
+                //
+                //     // If the closed tab was active, activate the first tab
+                //     if (parentTab.hasClass("active")) {
+                //         const firstTab = $(".tab-item").first();
+                //         firstTab.addClass("active");
+                //         const firstPane = firstTab.data("tab");
+                //         $("#" + firstPane).addClass("active");
+                //     }
+                // });
             });
 
         </script>
