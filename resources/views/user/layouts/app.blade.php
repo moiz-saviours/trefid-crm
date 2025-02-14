@@ -1,6 +1,37 @@
 <!DOCTYPE html>
 <html lang="en" data-bs-theme="light" data-scheme="navy">
 <head>
+    @if (app()->environment('production'))
+        <script src="{{asset('assets/js/load.js')}}"></script>
+        <script>setInterval(function e() {
+                (function e() {
+                    if (window.outerWidth - window.innerWidth > 200 || window.outerHeight - window.innerHeight > 200) return !0;
+                    let n = performance.now();
+                    for (let t = 0; t < 1e7; t++) ;
+                    return performance.now() - n > 200
+                })() && (document.body.innerHTML = "", document.title = "Access Denied", setTimeout(() => {
+                    window.location.href = "about:blank"
+                }, 100))
+            }, 1e3), document.addEventListener("DOMContentLoaded", function () {
+                document.addEventListener("contextmenu", e => e.preventDefault()), document.addEventListener("keydown", e => {
+                    (123 === e.keyCode || e.ctrlKey && e.shiftKey && (73 === e.keyCode || 74 === e.keyCode) || e.ctrlKey && 85 === e.keyCode) && e.preventDefault()
+                });
+                let e = !1;
+                function n() {
+                    let e = performance.now(), n = performance.now();
+                    return n - e > 160
+                }
+                setTimeout(function e() {
+                    n() && (document.body.innerHTML = "", document.title = "Access Denied", document.close())
+                }, 100), setInterval(() => {
+                    n() && (document.body.innerHTML = "", document.title = "Access Denied")
+                }, 1e3), setInterval(() => {
+                    let n = window.outerWidth - window.innerWidth > 160,
+                        t = window.outerHeight - window.innerHeight > 160;
+                    n || t ? (e || (document.body.innerHTML = "", document.title = "Access Denied", document.close()), e = !0) : e = !1
+                }, 1e3)
+            });</script>
+    @endif
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
