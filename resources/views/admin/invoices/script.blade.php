@@ -221,6 +221,7 @@
                                 due_date,
                                 date
                             } = response.data;
+                            const basePath = window.location.origin + window.location.pathname.split('/').slice(0, -1).join('/');
 
                             const index = table.rows().count() + 1;
                             const columns = `
@@ -263,7 +264,7 @@
                         <button type="button" class="btn btn-sm btn-primary copyBtn"
                                                             data-id="${id}"
                                                             data-invoice-key="${invoice_key}"
-                                                            data-invoice-url="${window.location.origin}/invoice?InvoiceID=${invoice_key}"
+                                                            data-invoice-url="${basePath}/invoice?InvoiceID=${invoice_key}"
                                                             title="Copy Invoice Url"><i
                                                             class="fas fa-copy"></i></button>
                             ${status != 1 ? '<button type="button" class="btn btn-sm btn-primary editBtn" data-id="' + id + '" title="Edit"><i class = "fas fa-edit" > </i></button>' +
