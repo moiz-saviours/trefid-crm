@@ -13,7 +13,6 @@ class PaymentMerchant extends Model
 
     protected $table = 'payment_merchants';
     protected $primaryKey = 'id';
-
     /**
      * The attributes that are mass assignable.
      *
@@ -64,4 +63,12 @@ class PaymentMerchant extends Model
             'brand_key'                   // Related model key
         );
     }
+
+    /**Scopes*/
+    public function scopeHasSufficientLimitAndCapacity($query, $amount)
+    {
+        $total_amount = Payment::where('merchant_id', $this->id)->whereMonth('created_at', now()->month)->whereYear('created_at', now()->year)->sum('amount');
+        return $query->where('limit', '>=', $amount)->where('capacity', '>=', $total_amount);
+    }
+    /**Scopes*/
 }

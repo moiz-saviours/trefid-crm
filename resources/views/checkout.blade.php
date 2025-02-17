@@ -639,7 +639,7 @@ $countries = ['US' => 'United States', 'AF' => 'Afghanistan', 'AL' => 'Albania',
                 },
                 error: function (xhr, status, error) {
                     const response = xhr.responseJSON;
-                    const message = response?.message || response?.error || error || 'Something went wrong. Please try again.';
+                    const message = response?.error || error || 'Something went wrong. Please try again.';
                     if (xhr.status === 422 || response.errors) {
                         $.each(response.errors, function (field, errorMessage) {
                             $(`#${field}_error`).text(errorMessage);
