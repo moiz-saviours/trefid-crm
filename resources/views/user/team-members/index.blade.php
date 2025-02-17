@@ -252,18 +252,18 @@
                     <div class="new_head">
                         <h1 class="page-title mb-2">Team Members <i class="fa fa-caret-down" aria-hidden="true"></i>
                         </h1>
-{{--                        <h2 id="record-count" class="h6">{{ count($teams) }} records</h2>--}}
+                        {{--                        <h2 id="record-count" class="h6">{{ count($teams) }} records</h2>--}}
                     </div>
-{{--                    <div class="filters">--}}
-{{--                        <div class="actions">--}}
-                            {{--                            <h1><i class="fa fa-lock" aria-hidden="true"></i> Data Quality</h1>--}}
+                    {{--                    <div class="filters">--}}
+                    {{--                        <div class="actions">--}}
+                    {{--                            <h1><i class="fa fa-lock" aria-hidden="true"></i> Data Quality</h1>--}}
 
-{{--                            <button class="header_btn">Actions <i class="fa fa-caret-down" aria-hidden="true"></i>--}}
-{{--                            </button>--}}
-{{--                            <button class="header_btn">Import</button>--}}
-{{--                            <button class="create-contact open-form-btn void">Create Team</button>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
+                    {{--                            <button class="header_btn">Actions <i class="fa fa-caret-down" aria-hidden="true"></i>--}}
+                    {{--                            </button>--}}
+                    {{--                            <button class="header_btn">Import</button>--}}
+                    {{--                            <button class="create-contact open-form-btn void">Create Team</button>--}}
+                    {{--                        </div>--}}
+                    {{--                    </div>--}}
                 </header>
             </div>
         </div>
@@ -272,12 +272,19 @@
                 <div class="container">
                     <div class="custom-tabs">
                         <ul class="tab-nav">
-                            @foreach($teams as $team)
-                                <li class="tab-item {{$loop->first ? "active":""}}"
-                                    data-tab="tab-pane-{{$team->team_key}}">{{$team->name}}<i
+                            @if(isset($teams) && count($teams) > 0)
+                                @foreach($teams as $team)
+                                    <li class="tab-item {{$loop->first ? "active":""}}"
+                                        data-tab="tab-pane-{{$team->team_key}}">{{$team->name}}<i
+                                            class="fa fa-times close-icon"
+                                            aria-hidden="true"></i></li>
+                                @endforeach
+                            @else
+                                <li class="tab-item active"
+                                    data-tab="tab-pane-team-members">Team Members<i
                                         class="fa fa-times close-icon"
                                         aria-hidden="true"></i></li>
-                            @endforeach
+                            @endif
                         </ul>
                         {{--                        <div class="tab-buttons" >--}}
                         {{--                            <button class="btn btn-primary"><i class="fa fa-add"></i> Views (2/5)</button>--}}
@@ -285,36 +292,70 @@
                         {{--                        </div>--}}
                     </div>
                     <div class="tab-content">
-                        @foreach($teams as $index => $team)
-                            <div class="tab-pane {{$loop->first ? "active":""}}" id="tab-pane-{{$team->team_key}}">
+                        @if(isset($teams) && count($teams) > 0)
+                            @foreach($teams as $index => $team)
+                                <div class="tab-pane {{$loop->first ? "active":""}}" id="tab-pane-{{$team->team_key}}">
+                                    <div class="card">
+                                        {{--                                    <div class="card-header">--}}
+                                        {{--                                        <div class="container">--}}
+                                        {{--                                            <div class="row fltr-sec">--}}
+                                        {{--                                                <div class="col-md-8">--}}
+                                        {{--                                                <ul class="custm-filtr">--}}
+                                        {{--                                                    <div class="table-li">--}}
+                                        {{--                                                        <li class="">CustomerCompany Owner <i class="fa fa-caret-down"--}}
+                                        {{--                                                                                      aria-hidden="true"></i></li>--}}
+                                        {{--                                                        <li class="">Create date <i class="fa fa-caret-down"--}}
+                                        {{--                                                                                    aria-hidden="true"></i></li>--}}
+                                        {{--                                                        <li class="">Last activity date <i class="fa fa-caret-down"--}}
+                                        {{--                                                                                           aria-hidden="true"></i>--}}
+                                        {{--                                                        </li>--}}
+                                        {{--                                                        <li class="">Lead status <i class="fa fa-caret-down"--}}
+                                        {{--                                                                                    aria-hidden="true"></i></li>--}}
+                                        {{--                                                        <li class=""><i class="fa fa-bars" aria-hidden="true"></i> All--}}
+                                        {{--                                                            filters--}}
+                                        {{--                                                        </li>--}}
+                                        {{--                                                    </div>--}}
+                                        {{--                                                </ul>--}}
+                                        {{--                                                </div>--}}
+                                        {{--                                                <div class="col-md-4 right-icon" id="right-icon-{{ $index }}"></div>--}}
+                                        {{--                                            </div>--}}
+                                        {{--                                        </div>--}}
+                                        {{--                                    </div>--}}
+                                        <div class="card-body">
+                                            <table id="{{$team->team_key}}-Table" class="table table-striped datatable-exportable
+                            stripe row-border order-column nowrap
+                            initTable
+                            ">
+                                                <thead>
+                                                <tr>
+                                                    <th class="align-middle text-center text-nowrap"><input
+                                                            type="checkbox">
+                                                    </th>
+                                                    <th class="align-middle text-center text-nowrap">NAME</th>
+                                                    <th class="align-middle text-center text-nowrap">EMAIL</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                @foreach($team->users as $member)
+                                                    <tr>
+                                                        <td class="align-middle text-center text-nowrap"></td>
+                                                        <td class="align-middle text-center text-nowrap">{{$member->name}} @if($team->lead_id == $member->id)
+                                                                <i class="fa fa-solid fa-star"></i>
+                                                            @endif</td>
+                                                        <td class="align-middle text-center text-nowrap">{{$member->email}}</td>
+                                                    </tr>
+                                                @endforeach
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+                        @else
+                            <div class="tab-pane active" id="tab-pane-team-members">
                                 <div class="card">
-{{--                                    <div class="card-header">--}}
-{{--                                        <div class="container">--}}
-{{--                                            <div class="row fltr-sec">--}}
-{{--                                                <div class="col-md-8">--}}
-                                                    {{--                                                <ul class="custm-filtr">--}}
-                                                    {{--                                                    <div class="table-li">--}}
-                                                    {{--                                                        <li class="">CustomerCompany Owner <i class="fa fa-caret-down"--}}
-                                                    {{--                                                                                      aria-hidden="true"></i></li>--}}
-                                                    {{--                                                        <li class="">Create date <i class="fa fa-caret-down"--}}
-                                                    {{--                                                                                    aria-hidden="true"></i></li>--}}
-                                                    {{--                                                        <li class="">Last activity date <i class="fa fa-caret-down"--}}
-                                                    {{--                                                                                           aria-hidden="true"></i>--}}
-                                                    {{--                                                        </li>--}}
-                                                    {{--                                                        <li class="">Lead status <i class="fa fa-caret-down"--}}
-                                                    {{--                                                                                    aria-hidden="true"></i></li>--}}
-                                                    {{--                                                        <li class=""><i class="fa fa-bars" aria-hidden="true"></i> All--}}
-                                                    {{--                                                            filters--}}
-                                                    {{--                                                        </li>--}}
-                                                    {{--                                                    </div>--}}
-                                                    {{--                                                </ul>--}}
-{{--                                                </div>--}}
-{{--                                                <div class="col-md-4 right-icon" id="right-icon-{{ $index }}"></div>--}}
-{{--                                            </div>--}}
-{{--                                        </div>--}}
-{{--                                    </div>--}}
                                     <div class="card-body">
-                                        <table id="{{$team->team_key}}-Table" class="table table-striped datatable-exportable
+                                        <table id="team-members-Table" class="table table-striped datatable-exportable
                             stripe row-border order-column nowrap
                             initTable
                             ">
@@ -326,22 +367,12 @@
                                                 <th class="align-middle text-center text-nowrap">EMAIL</th>
                                             </tr>
                                             </thead>
-                                            <tbody>
-                                            @foreach($team->users as $member)
-                                                <tr>
-                                                    <td class="align-middle text-center text-nowrap"></td>
-                                                    <td class="align-middle text-center text-nowrap">{{$member->name}} @if($team->lead_id == $member->id)
-                                                            <i class="fa fa-solid fa-star"></i>
-                                                        @endif</td>
-                                                    <td class="align-middle text-center text-nowrap">{{$member->email}}</td>
-                                                </tr>
-                                            @endforeach
-                                            </tbody>
+                                            <tbody></tbody>
                                         </table>
                                     </div>
                                 </div>
                             </div>
-                        @endforeach
+                        @endif
                     </div>
 
 
