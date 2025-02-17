@@ -28,14 +28,26 @@ class InvoiceController extends Controller
         foreach ($brands as $brand) {
             $client_accounts = $brand->client_accounts;
             $groupedMerchants[$brand->brand_key] = $client_accounts
-                ->filter(function ($account) {
-                    return $account->payment_method === 'authorize';
-                })->unique('id')
                 ->map(function ($account) {
+                    $limit = min($account->limit, $account->capacity);
                     return [
                         'id' => $account->id,
                         'name' => $account->name,
+                        'limit' => $limit,
+                        'payment_method' => $account->payment_method,
+                        'capacity' => $account->capacity,
                     ];
+                })
+                ->unique('id')
+                ->groupBy('payment_method')
+                ->map(function ($group) {
+                    return $group->map(function ($account) {
+                        return [
+                            'id' => $account['id'],
+                            'name' => $account['name'],
+                            'limit' => $account['limit'],
+                        ];
+                    });
                 });
         }
         $teams = Team::where('status', 1)->get();
@@ -243,7 +255,7 @@ class InvoiceController extends Controller
         $teams = Team::where('status', 1)->get();
         $customer_contacts = CustomerContact::where('status', 1)->get();
         $users = User::where('status', 1)->get();
-        $invoice->loadMissing('customer_contact','invoice_merchants');
+        $invoice->loadMissing('customer_contact', 'invoice_merchants');
         $invoiceMerchants = [];
         foreach ($invoice->invoice_merchants as $merchant) {
             $invoiceMerchants[$merchant->merchant_type] = $merchant->merchant_id;
@@ -378,7 +390,6 @@ class InvoiceController extends Controller
             $newMerchants = [];
             $merchants = $request->get('merchants', []);
             $merchantsToDelete = array_diff_assoc($existingMerchants, $merchants);
-
             foreach ($merchants as $type => $merchant_id) {
                 if (!isset($existingMerchants[$type]) || $existingMerchants[$type] != $merchant_id) {
                     $newMerchants[] = [

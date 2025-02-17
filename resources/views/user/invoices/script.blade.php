@@ -669,7 +669,7 @@
                                         <select class="form-control form-select" id="merchant_select_${type}" name="merchants[${type}]" title="Please select a ${type} merchant" required>
                                             <option value="" selected disabled>Please select a ${type} merchant</option>
                                             ${merchant_types[type].map(merchant => `
-                                                <option value="${merchant.id}">${merchant.name}</option>
+                                                <option value="${merchant.id}">${merchant.name} ( Limit : ${merchant.limit} ) </option>
                                             `).join('')}
                                         </select>
                                     </div>
