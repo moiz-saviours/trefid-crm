@@ -338,9 +338,9 @@
                             @php
                                 $baseUrl = '';
                                 if (app()->environment('production')) {
-                                    $baseUrl = url('crm');
+                                    $baseUrl = url('');
                                 } elseif (app()->environment('development')) {
-                                    $baseUrl = url('crm-development');
+                                    $baseUrl = url('');
                                 } else {
                                     $baseUrl = url('');
                                 }
