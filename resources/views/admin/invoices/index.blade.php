@@ -93,10 +93,12 @@
                                                 <td class="align-middle text-center text-nowrap text-sm invoice-cell">
                                                     <span
                                                         class="invoice-number">{{ $invoice->invoice_number }}</span><br>
-{{--                                                    <span class="invoice-key">{{ $invoice->invoice_key }}</span>--}}
+                                                    {{--                                                    <span class="invoice-key">{{ $invoice->invoice_key }}</span>--}}
                                                     <span class="invoice-key view-transactions text-primary"
                                                           title="Show transaction logs"
-                                                          style="cursor: pointer;" data-invoice-key="{{ $invoice->invoice_key }}"><b style="color: var(--bs-primary);font-weight: 600;">{{ $invoice->invoice_key }}</b></span>
+                                                          style="cursor: pointer;"
+                                                          data-invoice-key="{{ $invoice->invoice_key }}"><b
+                                                            style="color: var(--bs-primary);font-weight: 600;">{{ $invoice->invoice_key }}</b></span>
                                                 </td>
                                                 <td class="align-middle text-center text-nowrap">
                                                     @if(isset($invoice->brand))
@@ -174,12 +176,22 @@
                                                 </td>
                                                 <td class="align-middle text-center table-actions">
                                                     @if(isset($invoice->brand))
-                                                    <button type="button" class="btn btn-sm btn-primary copyBtn"
-                                                            data-id="{{ $invoice->id }}"
-                                                            data-invoice-key="{{ $invoice->invoice_key }}"
-                                                            data-invoice-url="{{ url('invoice?InvoiceID=' . $invoice->invoice_key) }}"
-                                                            title="Copy Invoice Url"><i
-                                                            class="fas fa-copy"></i></button>
+                                                        <button type="button" class="btn btn-sm btn-primary copyBtn"
+                                                                data-id="{{ $invoice->id }}"
+                                                                data-invoice-key="{{ $invoice->invoice_key }}"
+                                                                @php
+                                                                    $baseUrl = '';
+                                                                    if (app()->environment('production')) {
+                                                                        $baseUrl = url('crm');
+                                                                    } elseif (app()->environment('development')) {
+                                                                        $baseUrl = url('crm-development');
+                                                                    } else {
+                                                                        $baseUrl = url('');
+                                                                    }
+                                                                @endphp
+                                                                data-invoice-url="{{ $baseUrl . '/invoice?InvoiceID=' . $invoice->invoice_key }}"
+                                                                title="Copy Invoice Url"><i
+                                                                class="fas fa-copy"></i></button>
                                                     @endif
                                                     @if($invoice->status != 1)
                                                         <button type="button" class="btn btn-sm btn-primary editBtn"
@@ -205,7 +217,8 @@
             </div>
         </div>
     </section>
-    <div class="modal fade" id="transactionModal" tabindex="-1" aria-labelledby="transactionModalLabel" aria-hidden="true">
+    <div class="modal fade" id="transactionModal" tabindex="-1" aria-labelledby="transactionModalLabel"
+         aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">

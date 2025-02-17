@@ -179,7 +179,17 @@
                                                         <button type="button" class="btn btn-sm btn-primary copyBtn"
                                                                 data-id="{{ $invoice->id }}"
                                                                 data-invoice-key="{{ $invoice->invoice_key }}"
-                                                                data-invoice-url="{{ url('invoice?InvoiceID=' . $invoice->invoice_key) }}"
+                                                                @php
+                                                                    $baseUrl = '';
+                                                                    if (app()->environment('production')) {
+                                                                        $baseUrl = url('crm');
+                                                                    } elseif (app()->environment('development')) {
+                                                                        $baseUrl = url('crm-development');
+                                                                    } else {
+                                                                        $baseUrl = url('');
+                                                                    }
+                                                                @endphp
+                                                                data-invoice-url="{{ $baseUrl . '/invoice?InvoiceID=' . $invoice->invoice_key }}"
                                                                 title="Copy Invoice Url"><i
                                                                 class="fas fa-copy"></i></button>
                                                     @endif

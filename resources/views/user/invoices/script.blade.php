@@ -335,14 +335,17 @@
                                 due_date,
                                 date
                             } = response.data;
-                            let basePath = window.location.origin;
-                            let pathParts = window.location.pathname.split('/').filter(part => part !== "");
-                            if (pathParts.includes("admin")) {
-                                pathParts = pathParts.slice(0, pathParts.indexOf("admin"));
-                            }
-                            if (pathParts.length > 0) {
-                                basePath += "/" + pathParts.join('/');
-                            }
+                            @php
+                                $baseUrl = '';
+                                if (app()->environment('production')) {
+                                    $baseUrl = url('crm');
+                                } elseif (app()->environment('development')) {
+                                    $baseUrl = url('crm-development');
+                                } else {
+                                    $baseUrl = url('');
+                                }
+                            @endphp
+                            let basePath = `{{$baseUrl}}`;
                             const index = table.rows().count() + 1;
                             const columns = `
                         <td class="align-middle text-center text-nowrap"></td>
