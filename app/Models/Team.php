@@ -40,7 +40,7 @@ class Team extends Model
     {
         do {
             $specialKey = str_pad(rand(0, 999999), 6, '0', STR_PAD_LEFT);
-        } while (self::where('brand_key', $specialKey)->exists());
+        } while (self::where('team_key', $specialKey)->exists());
         return $specialKey;
     }
 
