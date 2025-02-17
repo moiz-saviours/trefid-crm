@@ -33,14 +33,12 @@ class PaymentMerchantController extends Controller
         $groupedAccounts = $client_accounts
             ->filter(function ($account) {
                 return $account->payment_method === 'authorize';
-            })
-            ->map(function ($accounts) {
-                return $accounts->map(function ($account) {
-                    return [
-                        'id' => $account->id,
-                        'name' => $account->name,
-                    ];
-                });
+            })->unique('id')
+            ->map(function ($account) { // map on the individual account
+                return [
+                    'id' => $account->id,
+                    'name' => $account->name,
+                ];
             });
         return response()->json(['data' => $groupedAccounts]);
     }

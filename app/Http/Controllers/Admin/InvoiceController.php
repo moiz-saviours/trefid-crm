@@ -30,14 +30,12 @@ class InvoiceController extends Controller
             $groupedMerchants[$brand->brand_key] = $client_accounts
                 ->filter(function ($account) {
                     return $account->payment_method === 'authorize';
-                })
-                ->map(function ($accounts) {
-                    return $accounts->map(function ($account) {
-                        return [
-                            'id' => $account->id,
-                            'name' => $account->name,
-                        ];
-                    });
+                })->unique('id')
+                ->map(function ($account) {
+                    return [
+                        'id' => $account->id,
+                        'name' => $account->name,
+                    ];
                 });
         }
         $teams = Team::where('status', 1)->get();
