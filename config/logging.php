@@ -65,6 +65,12 @@ return [
             'replace_placeholders' => true,
         ],
 
+        'merchant' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/merchant-' . date('Y-m') . '.log'),
+            'level' => 'critical',
+        ],
+
         'daily' => [
             'driver' => 'daily',
             'path' => storage_path('logs/laravel.log'),

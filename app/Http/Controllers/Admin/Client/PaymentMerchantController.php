@@ -222,7 +222,7 @@ class PaymentMerchantController extends Controller
             ->filter(function ($account) {
                 return $account->payment_method === 'authorize';
             })
-            ->groupBy('payment_method')->map(function ($accounts) {
+            ->map(function ($accounts) {
             return $accounts->map(function ($account) {
                 return [
                     'id' => $account->id,
