@@ -11,6 +11,7 @@ use App\Http\Controllers\User\{BrandController,
     LeadStatusController,
     PaymentController,
     PaymentMerchantController,
+    PaymentTransactionLogController,
     ProfileController,
     TeamController,
     TeamMemberController};
@@ -92,6 +93,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/by-brand/{brand_key?}', [PaymentMerchantController::class, 'by_brand'])->name('by.brand');
 
     Route::get('/payments', [PaymentController::class, 'index'])->name('payment.index');
+
+    /** Payment Transaction Logs Route */
+    Route::get('payment-transaction-logs', [PaymentTransactionLogController::class, 'getLogs'])->name('payment-transaction-logs');
 });
 require __DIR__ . '/admin-old-routes.php';
 require __DIR__ . '/admin-routes.php';

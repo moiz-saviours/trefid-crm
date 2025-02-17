@@ -71,7 +71,7 @@
                                         <thead>
 
                                         <tr>
-                                            <th><input type="checkbox"></th>
+                                            <th></th>
                                             <th class="align-middle text-center text-nowrap">SNO.</th>
                                             <th class="align-middle text-center text-nowrap">INVOICE #</th>
                                             <th class="align-middle text-center text-nowrap">BRAND</th>
@@ -93,9 +93,10 @@
                                                 <td class="align-middle text-center text-nowrap text-sm invoice-cell">
                                                     <span
                                                         class="invoice-number">{{ $invoice->invoice_number }}</span><br>
-                                                    <span class="invoice-key">{{ $invoice->invoice_key }}</span>
-{{--                                                    <span class="invoice-key view-transactions text-primary"--}}
-{{--                                                          style="cursor: pointer; text-decoration: underline;" data-invoice-key="{{ $invoice->invoice_key }}">{{ $invoice->invoice_key }}</span>--}}
+{{--                                                    <span class="invoice-key">{{ $invoice->invoice_key }}</span>--}}
+                                                    <span class="invoice-key view-transactions text-primary"
+                                                          title="Show transaction logs"
+                                                          style="cursor: pointer;" data-invoice-key="{{ $invoice->invoice_key }}"><b style="color: var(--bs-primary);font-weight: 600;">{{ $invoice->invoice_key }}</b></span>
                                                 </td>
                                                 <td class="align-middle text-center text-nowrap">
                                                     @if(isset($invoice->brand))
@@ -215,13 +216,14 @@
                     <table class="table table-striped">
                         <thead>
                         <tr>
-                            <th>Attempt #</th>
-                            <th>Gateway</th>
-                            <th>Transaction Id</th>
-                            <th>Amount</th>
-                            <th>Message</th>
-                            <th>Payment Status</th>
-                            <th>Created At</th>
+                            <th class="align-middle text-center text-nowrap">Attempt #</th>
+                            <th class="align-middle text-center text-nowrap">Gateway</th>
+                            <th class="align-middle text-center text-nowrap">Last 4</th>
+                            <th class="align-middle text-center text-nowrap">Transaction Id</th>
+                            <th class="align-middle text-center text-nowrap">Amount</th>
+                            <th class="align-middle text-center text-nowrap">Message</th>
+                            <th class="align-middle text-center text-nowrap">Payment Status</th>
+                            <th class="align-middle text-center text-nowrap">Date</th>
                         </tr>
                         </thead>
                         <tbody id="transactionLogs"></tbody>

@@ -13,7 +13,7 @@
                 <header class="custm_header">
                     <div class="new_head">
                         <h1 class="page-title mb-2">Invoices <i class="fa fa-caret-down" aria-hidden="true"></i></h1>
-                        {{--                        <h2 id="record-count" class="h6">{{count ($invoices)}} records</h2>--}}
+                        {{--                        <h2 id="record-count" class="h6">{{count ($all_invoices)}} records</h2>--}}
                     </div>
                     <div class="filters">
                         <div class="actions">
@@ -90,14 +90,17 @@
                                         </thead>
                                         <tbody>
 
-                                        @foreach($invoices as $invoice)
+                                        @foreach($all_invoices as $invoice)
                                             <tr id="tr-{{$invoice->id}}">
                                                 <td class="align-middle text-center text-nowrap"></td>
                                                 <td class="align-middle text-center text-nowrap">{{$loop->iteration}}</td>
                                                 <td class="align-middle text-center text-nowrap text-sm invoice-cell">
                                                     <span
                                                         class="invoice-number">{{ $invoice->invoice_number }}</span><br>
-                                                    <span class="invoice-key">{{ $invoice->invoice_key }}</span>
+{{--                                                    <span class="invoice-key">{{ $invoice->invoice_key }}</span>--}}
+                                                    <span class="invoice-key view-transactions text-primary"
+                                                          title="Show transaction logs"
+                                                          style="cursor: pointer;" data-invoice-key="{{ $invoice->invoice_key }}"><b style="color: var(--bs-primary);font-weight: 600;">{{ $invoice->invoice_key }}</b></span>
                                                 </td>
                                                 <td class="align-middle text-center text-nowrap">
                                                     @if(isset($invoice->brand))
@@ -308,6 +311,34 @@
             </div>
         </div>
     </section>
+    <div class="modal fade" id="transactionModal" tabindex="-1" aria-labelledby="transactionModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="transactionModalLabel">Payment Transaction Logs</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th class="align-middle text-center text-nowrap">Attempt #</th>
+                            <th class="align-middle text-center text-nowrap">Gateway</th>
+                            <th class="align-middle text-center text-nowrap">Last 4</th>
+                            <th class="align-middle text-center text-nowrap">Transaction Id</th>
+                            <th class="align-middle text-center text-nowrap">Amount</th>
+                            <th class="align-middle text-center text-nowrap">Message</th>
+                            <th class="align-middle text-center text-nowrap">Payment Status</th>
+                            <th class="align-middle text-center text-nowrap">Date</th>
+                        </tr>
+                        </thead>
+                        <tbody id="transactionLogs"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Modal -->
     @include('user.invoices.custom-form')
 

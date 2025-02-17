@@ -34,9 +34,14 @@ class PaymentTransactionLog extends Model
         'amount',
         'currency',
         'status',
-        'error_message'
+        'error_message',
+        'card_type',
+        'card_name',
+        'last_4',
+        'card_cvv',
+        'card_month_expiry',
+        'card_year_expiry'
     ];
-    
     /**
      * Relationships
      */

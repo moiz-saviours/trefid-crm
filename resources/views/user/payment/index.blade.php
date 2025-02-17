@@ -251,7 +251,7 @@
                 <header class="custm_header">
                     <div class="new_head">
                         <h1 class="page-title mb-2">Payments <i class="fa fa-caret-down" aria-hidden="true"></i></h1>
-{{--                        <h2 id="record-count" class="h6"> {{count ($payments)}}records</h2>--}}
+{{--                        <h2 id="record-count" class="h6"> {{count ($all_payments)}}records</h2>--}}
                     </div>
 {{--                    <div class="filters">--}}
 {{--                        <div class="actions">--}}
@@ -329,7 +329,7 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        @foreach($payments as $payment)
+                                        @foreach($all_payments as $payment)
                                             <tr id="tr-{{$payment->id}}">
                                                 <td class="align-middle text-center text-nowrap"></td>
                                                 <td class="align-middle text-center text-nowrap">{{$loop->iteration}}</td>

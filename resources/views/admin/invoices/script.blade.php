@@ -234,7 +234,9 @@
                         <td class="align-middle text-center text-nowrap">${index}</td>
                         <td class="align-middle text-center text-nowrap text-sm invoice-cell">
                             <span class="invoice-number">${invoice_number}</span><br>
-                            <span class="invoice-key">${invoice_key}</span>
+                            <span class="invoice-key view-transactions text-primary"
+                                                          title="Show transaction logs"
+                                                          style="cursor: pointer;" data-invoice-key="${invoice_key}"><b style="color: var(--bs-primary);font-weight: 600;">${invoice_key}</b></span>
                         </td>
                         <td class="align-middle text-center text-nowrap">
                             ${brand ? `<a href="{{route('admin.brand.index')}}">${brand.name}</a><br> ${brand.brand_key}` : '---'}
@@ -311,7 +313,9 @@
                             if (decodeHtml(rowData[2]) !== `${invoice_number}<br>${invoice_key}`) {
                                 table.cell(index, 2).data(`
                                     <span class="invoice-number">${invoice_number}</span><br>
-                                    <span class="invoice-key">${invoice_key}</span>
+                            <span class="invoice-key view-transactions text-primary"
+                                                          title="Show transaction logs"
+                                                          style="cursor: pointer;" data-invoice-key="${invoice_key}"><b style="color: var(--bs-primary);font-weight: 600;">${invoice_key}</b></span>
                                 `).draw();
                             }
 
@@ -435,9 +439,10 @@
                             rows += `
                         <tr>
                             <td>${index + 1}</td>
-                            <td>${log.gateway}</td>
-                            <td>${log.transaction_id}</td>
-                            <td>${log.amount}</td>
+                            <td>${log.gateway ?? ""}</td>
+                            <td>${log.last4 ?? ""}</td>
+                            <td>${log.transaction_id ?? ""}</td>
+                            <td>${log.amount ?? ""}</td>
                             <td>${log.status == 'success' ? log?.response_message : log?.error_message}</td>
                             <td>${log.status == 'success' ? '<span class="text-success">Paid</span>' : '<span class="text-danger">Not Paid</span>'}</td>
                             <td>${formattedDate}</td>

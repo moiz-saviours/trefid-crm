@@ -349,8 +349,10 @@
                         <td class="align-middle text-center text-nowrap">${index}</td>
                         <td class="align-middle text-center text-nowrap text-sm invoice-cell">
                                                     <span class="invoice-number">${invoice_number}</span><br>
-                                                    <span class="invoice-key">${invoice_key}</span>
-                                                </td>
+                            <span class="invoice-key view-transactions text-primary"
+                                                          title="Show transaction logs"
+                                                          style="cursor: pointer;" data-invoice-key="${invoice_key}"><b style="color: var(--bs-primary);font-weight: 600;">${invoice_key}</b></span>
+                        </td>
                         <td class="align-middle text-center text-nowrap">${brand?.name}</td>
                         <td class="align-middle text-center text-nowrap">${team?.name}</td>
                         <td class="align-middle text-center text-nowrap">${customer_contact?.name}</td>
@@ -385,9 +387,7 @@
                                                             data-invoice-url="${basePath}/invoice?InvoiceID=${invoice_key}"
                                                             title="Copy Invoice Url"><i
                                                             class="fas fa-copy"></i></button>
-                            ${status != 1 ? '<button type="button" class="btn btn-sm btn-primary editBtn" data-id="' + id + '" title="Edit"><i class = "fas fa-edit" > </i></button>' +
-                                '<button type="button" class="btn btn-sm btn-danger deleteBtn" data-id="' + id + '" title="Delete"><i class="fas fa-trash"></i></button>'
-                                : ''}
+                            ${status != 1 ? '<button type="button" class="btn btn-sm btn-primary editBtn" data-id="' + id + '" title="Edit"><i class = "fas fa-edit" > </i></button>' : ''}
                         </td>`;
 
                             table.row.add($('<tr>', {id: `tr-${id}`}).append(columns)).draw(false);
@@ -424,7 +424,9 @@
                             if (decodeHtml(rowData[2]) !== `${invoice_number}<br>${invoice_key}`) {
                                 table.cell(index, 2).data(`
                                     <span class="invoice-number">${invoice_number}</span><br>
-                                    <span class="invoice-key">${invoice_key}</span>
+                            <span class="invoice-key view-transactions text-primary"
+                                                          title="Show transaction logs"
+                                                          style="cursor: pointer;" data-invoice-key="${invoice_key}"><b style="color: var(--bs-primary);font-weight: 600;">${invoice_key}</b></span>
                                 `).draw();
                             }
 
@@ -505,6 +507,53 @@
                     .catch(error => console.log(error));
             }
         });
+        $(document).on('click', '.view-transactions', function () {
+            let invoice_key = $(this).data('invoice-key');
+
+            $.ajax({
+                url: `{{ route('payment-transaction-logs') }}`,
+                type: 'GET',
+                data: {invoice_key: invoice_key},
+                beforeSend: function () {
+                    $('#transactionLogs').html('<tr><td colspan="4" class="text-center">Loading...</td></tr>');
+                },
+                success: function (response) {
+                    if (response.status === 'success' && response.logs.length > 0) {
+                        let rows = '';
+                        response.logs.forEach((log, index) => {
+                            let formattedDate = new Date(log.created_at).toLocaleString('en-US', {
+                                year: 'numeric',
+                                month: 'short',
+                                day: '2-digit',
+                                hour: '2-digit',
+                                minute: '2-digit',
+                                second: '2-digit',
+                                hour12: true
+                            });
+                            rows += `
+                        <tr>
+                            <td>${index + 1}</td>
+                            <td>${log.gateway ?? ""}</td>
+                            <td>${log.last4 ?? ""}</td>
+                            <td>${log.transaction_id ?? ""}</td>
+                            <td>${log.amount ?? ""}</td>
+                            <td>${log.status == 'success' ? log?.response_message : log?.error_message}</td>
+                            <td>${log.status == 'success' ? '<span class="text-success">Paid</span>' : '<span class="text-danger">Not Paid</span>'}</td>
+                            <td>${formattedDate}</td>
+                        </tr>`;
+                        });
+                        $('#transactionLogs').html(rows);
+                    } else {
+                        $('#transactionLogs').html('<tr><td colspan="12" class="text-center">No transactions found</td></tr>');
+                    }
+                    $('#transactionModal').modal('show');
+                },
+                error: function () {
+                    $('#transactionLogs').html('<tr><td colspan="12" class="text-center text-danger">Error fetching data</td></tr>');
+                }
+            });
+        });
+
         $(document).on('click', '.copyBtn', async function () {
             try {
                 let invoiceUrl = $(this).data('invoice-url');

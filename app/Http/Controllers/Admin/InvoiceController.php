@@ -396,7 +396,13 @@ class InvoiceController extends Controller
                     ->delete();
             }
             if (!empty($newMerchants)) {
-                InvoiceMerchant::insert($newMerchants);
+                foreach ($newMerchants as $newMerchant) {
+                    InvoiceMerchant::create([
+                        'invoice_key' => $newMerchant['invoice_key'],
+                        'merchant_type' => $newMerchant['merchant_type'],
+                        'merchant_id' => $newMerchant['merchant_id'],
+                    ]);
+                }
             }
             DB::commit();
             $invoice->loadMissing('customer_contact', 'brand', 'team', 'agent');

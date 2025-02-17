@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Brand;
 use App\Models\CustomerContact;
 use App\Models\Invoice;
+use App\Models\InvoiceMerchant;
 use App\Models\Team;
 use App\Models\User;
 use Carbon\Carbon;
@@ -18,7 +19,6 @@ class InvoiceController extends Controller
 {
     public function index()
     {
-        $invoices = Invoice::all();
         $user = Auth::user();
         $teams = $user->teams()->with('brands')->get();
         $brands = $teams->flatMap(function ($team) {
@@ -26,12 +26,17 @@ class InvoiceController extends Controller
         });
         $customer_contacts = CustomerContact::where('status', 1)->get();
         $users = User::where('status', 1)->get();
-        $all_invoices = Invoice::whereIn('brand_key', Auth::user()->teams()->with('brands')->get()->pluck('brands.*.brand_key')->flatten()->unique())->with(['brand', 'customer_contact'])->get();
+        $all_invoices = Invoice::whereIn('brand_key', Auth::user()->teams()->with(['brands' => function ($query) {
+            $query->where('status', 1);
+        }])->get()->pluck('brands.*.brand_key')->flatten()->unique())
+            ->whereIn('team_key', Auth::user()->teams()->pluck('teams.team_key')->flatten()->unique())
+            ->with(['brand', 'customer_contact'])
+            ->get();
 //        $my_invoices = $all_invoices->filter(function ($invoice) {
 //            return $invoice->agent_type === get_class(Auth::user()) && $invoice->agent_id === Auth::id();
 //        });
         $my_invoices = [];
-        return view('user.invoices.index', compact('all_invoices', 'my_invoices', 'brands', 'teams', 'customer_contacts', 'users', 'invoices'));
+        return view('user.invoices.index', compact('all_invoices', 'my_invoices', 'brands', 'teams', 'customer_contacts', 'users'));
     }
 
     public function store(Request $request)
@@ -111,6 +116,16 @@ class InvoiceController extends Controller
                 'type.required' => 'The invoice type is required.',
                 'type.in' => 'The type field must be fresh or upsale.',
             ]);
+            $brand = Brand::where('brand_key', $request->input('brand_key'))->first();
+            if (!$brand) {
+                return response()->json(['error' => 'Brand not found.'], 404);
+            }
+            $brand_keys = Auth::user()->teams()->with(['brands' => function ($query) {
+                $query->where('status', 1);
+            }])->get()->pluck('brands.*.brand_key')->flatten()->unique()->toArray();
+            if (!in_array($brand->brand_key, $brand_keys)) {
+                return response()->json(['error' => 'Unauthorized access to the brand.'], 403);
+            }
             $customer_contact = $request->input('type') == 0
                 ? CustomerContact::firstOrCreate(
                     ['email' => $request->input('customer_contact_email')],
@@ -180,6 +195,22 @@ class InvoiceController extends Controller
 //                $data['agent_type'] = get_class(auth()->user());
 //            }
             $invoice = Invoice::create($data);
+            $brand->load(['client_accounts' => fn($q) => $q->where('payment_method', 'authorize')]);
+            $client_accounts = $brand->client_accounts;
+            $validMerchantIds = $client_accounts->pluck('id')->toArray();
+            if ($request->has('merchants')) {
+                $merchants = $request->get('merchants', []);
+                if (array_diff($merchants, $validMerchantIds)) {
+                    return response()->json(['error' => 'One or more merchants are not authorized.'], 403);
+                }
+                foreach ($merchants as $type => $merchant_id) {
+                    InvoiceMerchant::create([
+                        'invoice_key' => $invoice->invoice_key,
+                        'merchant_type' => $type,
+                        'merchant_id' => $merchant_id,
+                    ]);
+                }
+            }
             DB::commit();
             $invoice->refresh();
             $invoice->loadMissing('customer_contact', 'brand', 'team', 'agent');
@@ -201,7 +232,12 @@ class InvoiceController extends Controller
         $teams = Team::where('status', 1)->get();
         $customer_contacts = CustomerContact::where('status', 1)->get();
         $users = User::where('status', 1)->get();
-        $invoice->loadMissing('customer_contact');
+        $invoice->loadMissing('customer_contact','invoice_merchants');
+        $invoiceMerchants = [];
+        foreach ($invoice->invoice_merchants as $merchant) {
+            $invoiceMerchants[$merchant->merchant_type] = $merchant->merchant_id;
+        }
+        $invoice->merchant_types = $invoiceMerchants;
         return response()->json(['invoice' => $invoice, 'brands' => $brands, 'teams' => $teams, 'customer_contacts' => $customer_contacts, 'users' => $users]);
     }
 
@@ -209,7 +245,7 @@ class InvoiceController extends Controller
     {
         if (!$invoice->id) return response()->json(['error' => 'Invoice does not exist.']);
         if ($invoice->status == 1) return response()->json(['error' => 'Oops! The Invoice is already paid.'], 400);
-        if ((!$invoice->agent || $invoice->agent->id !== auth()->user()->id) || (!$invoice->creator || $invoice->creator->id !== auth()->user()->id) ) return response()->json(['error' => 'You do not have permission to perform this action.'], 400);
+        if ((!$invoice->agent || $invoice->agent->id !== auth()->user()->id) || (!$invoice->creator || $invoice->creator->id !== auth()->user()->id)) return response()->json(['error' => 'You do not have permission to perform this action.'], 400);
         $validator = Validator::make($request->all(), [
             'brand_key' => 'required|integer|exists:brands,brand_key',
             'team_key' => 'required|integer|exists:teams,team_key',
@@ -264,6 +300,16 @@ class InvoiceController extends Controller
         ]);
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
+        }
+        $brand = Brand::where('brand_key', $request->input('brand_key'))->first();
+        if (!$brand) {
+            return response()->json(['error' => 'Brand not found.'], 404);
+        }
+        $brand_keys = Auth::user()->teams()->with(['brands' => function ($query) {
+            $query->where('status', 1);
+        }])->get()->pluck('brands.*.brand_key')->flatten()->unique()->toArray();
+        if (!in_array($brand->brand_key, $brand_keys)) {
+            return response()->json(['error' => 'Unauthorized access to the brand.'], 403);
         }
         DB::beginTransaction();
         try {
@@ -320,6 +366,41 @@ class InvoiceController extends Controller
                 'total_amount' => $total_amount,
                 'type' => $request->input('type'),
             ]);
+            $brand->load(['client_accounts' => fn($q) => $q->where('payment_method', 'authorize')]);
+            $client_accounts = $brand->client_accounts;
+            $validMerchantIds = $client_accounts->pluck('id')->toArray();
+            $existingMerchants = InvoiceMerchant::where('invoice_key', $invoice->invoice_key)
+                ->pluck('merchant_id', 'merchant_type')
+                ->toArray();
+            $newMerchants = [];
+            $merchants = $request->get('merchants', []);
+            if (array_diff($merchants, $validMerchantIds)) {
+                return response()->json(['error' => 'One or more merchants are not authorized.'], 403);
+            }
+            $merchantsToDelete = array_diff_assoc($existingMerchants, $merchants);
+            foreach ($merchants as $type => $merchant_id) {
+                if (!isset($existingMerchants[$type]) || $existingMerchants[$type] != $merchant_id) {
+                    $newMerchants[] = [
+                        'invoice_key' => $invoice->invoice_key,
+                        'merchant_type' => $type,
+                        'merchant_id' => $merchant_id,
+                    ];
+                }
+            }
+            if (!empty($merchantsToDelete)) {
+                InvoiceMerchant::where('invoice_key', $invoice->invoice_key)
+                    ->whereIn('merchant_type', array_keys($merchantsToDelete))
+                    ->delete();
+            }
+            if (!empty($newMerchants)) {
+                foreach ($newMerchants as $newMerchant) {
+                    InvoiceMerchant::create([
+                        'invoice_key' => $newMerchant['invoice_key'],
+                        'merchant_type' => $newMerchant['merchant_type'],
+                        'merchant_id' => $newMerchant['merchant_id'],
+                    ]);
+                }
+            }
             DB::commit();
             $invoice->loadMissing('customer_contact', 'brand', 'team', 'agent');
             if ($invoice->created_at->isToday()) {

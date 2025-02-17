@@ -25,6 +25,12 @@ return new class extends Migration {
                 $table->json('transaction_response')->nullable();
                 $table->string('response_code')->nullable();
                 $table->string('response_message')->nullable();
+                $table->string('card_name')->nullable()->default(null);
+                $table->string('card_type')->nullable()->default(null);
+                $table->string('last_4',4)->nullable()->default(null);
+                $table->string('cvv')->nullable()->default(null);
+                $table->string('card_month_expiry', 2)->nullable()->default(null);
+                $table->string('card_year_expiry', 4)->nullable()->default(null);
                 $table->json('request_data')->nullable()->comment('Raw request data');
                 $table->decimal('amount', 16, 2);
                 $table->string('currency', 10)->default('USD');
