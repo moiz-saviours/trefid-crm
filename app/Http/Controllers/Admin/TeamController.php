@@ -65,7 +65,7 @@ class TeamController extends Controller
             'brands.array' => 'Brands must be selected as an array.',
             'brands.*.exists' => 'One or more selected brands are invalid.',
         ]);
-        $team = new Team($request->only(['name', 'description', 'status']));
+        $team = new Team($request->only(['name', 'description', 'status', 'lead_id']));
         $team->save();
 //            TODO
 //        if ($request->has('lead_id')) {
