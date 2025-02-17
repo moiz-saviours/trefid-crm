@@ -644,8 +644,9 @@ $countries = ['US' => 'United States', 'AF' => 'Afghanistan', 'AL' => 'Albania',
                         $.each(response.errors, function (field, errorMessage) {
                             $(`#${field}_error`).text(errorMessage);
                         });
+                        toastr.error(message, 'Error');
                     }
-                    toastr.error(message, 'Error');
+                    toastr.error('Internal Server Error', 'Error');
                     console.log(error)
                 },
                 complete: function () {
