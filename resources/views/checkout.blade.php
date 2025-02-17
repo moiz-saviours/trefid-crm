@@ -647,6 +647,9 @@ $countries = ['US' => 'United States', 'AF' => 'Afghanistan', 'AL' => 'Albania',
                     }
                     toastr.error(message, 'Error');
                     console.log(error)
+                },
+                complete: function () {
+                    $('#submit-btn').prop('disabled', false).text('Submit');
                 }
             });
         });
