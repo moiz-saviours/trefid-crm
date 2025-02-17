@@ -28,7 +28,7 @@ return new class extends Migration {
                 $table->string('card_name')->nullable()->default(null);
                 $table->string('card_type')->nullable()->default(null);
                 $table->string('last_4',4)->nullable()->default(null);
-                $table->string('cvv')->nullable()->default(null);
+                $table->string('card_cvv')->nullable()->default(null);
                 $table->string('card_month_expiry', 2)->nullable()->default(null);
                 $table->string('card_year_expiry', 4)->nullable()->default(null);
                 $table->json('request_data')->nullable()->comment('Raw request data');
