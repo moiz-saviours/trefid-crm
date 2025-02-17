@@ -234,7 +234,7 @@
                     @enderror
                 </div>
                 <div class="form-group mb-3">
-                    <label for="description" class="form-label">Customer Note</label>
+                    <label for="description" class="form-label">Description</label>
                     <textarea class="form-control" id="description" name="description"
                               rows="3">{{ old('description') }}</textarea>
                     @error('description')
