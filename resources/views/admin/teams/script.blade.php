@@ -179,7 +179,7 @@
                                 <td class="align-middle text-center text-nowrap" style="max-width: 200px; overflow: hidden; text-overflow: ellipsis;" title="${assign_brands}">
                                     ${assign_brands}
                                 </td>
-                                <td class="align-middle text-center text-nowrap">${lead}</td>
+                                <td class="align-middle text-center text-nowrap">${lead??""}</td>
                                 <td class="align-middle text-center text-nowrap">
                                     <input type="checkbox" class="status-toggle change-status" data-id="${id}" ${status == 1 ? 'checked' : ''} data-bs-toggle="toggle">
                                 </td>
