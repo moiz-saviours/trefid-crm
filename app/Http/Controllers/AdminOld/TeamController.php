@@ -75,7 +75,7 @@ class TeamController extends Controller
             $team->lead_id = $request->lead_id;
             $team->save();
         }
-        $team->update(['team_key' => $team->generateTeamKey($team->id)]);
+//        $team->update(['team_key' => $team->generateTeamKey($team->id)]);
         if ($request->has('employees')) {
             $team->users()->sync($request->employees);
             if ($request->has('lead_id') && !in_array($request->lead_id, $request->employees)) {

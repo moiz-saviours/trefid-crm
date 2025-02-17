@@ -22,19 +22,26 @@ class Team extends Model
      */
     protected $fillable = ['team_key', 'lead_id', 'name', 'description', 'status'];
 
-    public function generateTeamKey($id)
+//    public function generateTeamKey($id)
+//    {
+//        $idStr = (string)$id;
+//        $digitsToAdd = 6 - strlen($idStr);
+//        $randomDigits = '';
+//        for ($i = 0; $i < $digitsToAdd; $i++) {
+//            $randomDigits .= rand(0, 9);
+//        }
+//        $teamKey = $idStr . $randomDigits;
+//        $teamKeyArray = str_split($teamKey);
+//        shuffle($teamKeyArray);
+//        $shuffledTeamKey = implode('', $teamKeyArray);
+//        return str_pad($shuffledTeamKey, 6, '0', STR_PAD_LEFT);
+//    }
+    public static function generateSpecialKey(): string
     {
-        $idStr = (string)$id;
-        $digitsToAdd = 6 - strlen($idStr);
-        $randomDigits = '';
-        for ($i = 0; $i < $digitsToAdd; $i++) {
-            $randomDigits .= rand(0, 9);
-        }
-        $teamKey = $idStr . $randomDigits;
-        $teamKeyArray = str_split($teamKey);
-        shuffle($teamKeyArray);
-        $shuffledTeamKey = implode('', $teamKeyArray);
-        return str_pad($shuffledTeamKey, 6, '0', STR_PAD_LEFT);
+        do {
+            $specialKey = str_pad(rand(0, 999999), 6, '0', STR_PAD_LEFT);
+        } while (self::where('brand_key', $specialKey)->exists());
+        return $specialKey;
     }
 
     public function users(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
@@ -60,22 +67,19 @@ class Team extends Model
     protected static function boot()
     {
         parent::boot();
-
-        static::created(function ($team) {
-            Cache::forget('teams_list');
-            Cache::remember('teams_list', config('cache.durations.short_lived'), function () {
-                return Team::all();
-            });
+        static::creating(function ($brand) {
+            $brand->team_key = self::generateSpecialKey();
         });
-
-        static::updated(function ($team) {
+        static::created(function () {
             Cache::forget('teams_list');
-            Cache::remember('teams_list', config('cache.durations.short_lived'), function () {
-                return Team::all();
-            });
         });
-
-        static::deleted(function ($team) {
+        static::updated(function () {
+            Cache::forget('teams_list');
+        });
+        static::deleted(function () {
+            Cache::forget('teams_list');
+        });
+        static::deleted(function () {
             Cache::forget('teams_list');
         });
     }
