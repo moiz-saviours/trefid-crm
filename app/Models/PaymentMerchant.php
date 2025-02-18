@@ -64,11 +64,29 @@ class PaymentMerchant extends Model
         );
     }
 
-    /**Scopes*/
-    public function scopeHasSufficientLimitAndCapacity($query, $amount)
+    public function payments(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
-        $total_amount = Payment::where('merchant_id', $this->id)->whereMonth('created_at', now()->month)->whereYear('created_at', now()->year)->sum('amount');
-        return $query->where('limit', '>=', $amount)->where('capacity', '>=', $total_amount);
+        return $this->hasMany(Payment::class, 'merchant_id');
+    }
+
+    /**Scopes*/
+    public function scopeHasSufficientLimitAndCapacity($query, $merchantId, $amount)
+    {
+        $total_amount = Payment::where('merchant_id', $merchantId)->whereMonth('created_at', now()->month)->whereYear('created_at', now()->year)->sum('amount');
+        $total_amount += $amount;
+        return $query->where('id', $merchantId)
+            ->where('limit', '>=', (float)$amount)
+            ->where('capacity', '>=', (float)$total_amount);
+    }
+
+    public function scopeWithMonthlyUsage($query)
+    {
+        return $query->with(['payments' => function ($query) {
+            $query->selectRaw('merchant_id, SUM(amount) as total_amount')
+                ->whereMonth('created_at', now()->month)
+                ->whereYear('created_at', now()->year)
+                ->groupBy('merchant_id');
+        }]);
     }
     /**Scopes*/
 }

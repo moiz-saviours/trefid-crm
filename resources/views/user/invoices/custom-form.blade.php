@@ -162,10 +162,17 @@
                     @enderror
                 </div>
                 <div class="form-group mb-3">
+                    <div id="merchant-types-container">
+                    </div>
+                    @error('payment_method')
+                    <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
+                <div class="form-group mb-3">
                     <label for="amount" class="form-label">Amount</label>
                     <input type="number" class="form-control" id="amount" name="amount" step="1"
                            min="1"
-                           max="4999" value="{{ old('amount') }}" required>
+                           max="{{config('invoice.max_amount')}}" value="{{ old('amount') }}" required>
                     @error('amount')
                     <span class="text-danger">{{ $message }}</span>
                     @enderror
@@ -221,15 +228,8 @@
                     <input type="number" class="form-control" id="total_amount" name="total_amount" step="0.01"
                            min="1"
                            readonly
-                           max="4999" value="{{ old('amount') }}" required>
+                           max="{{config('invoice.max_amount')}}" value="{{ old('amount') }}" required>
                     @error('amount')
-                    <span class="text-danger">{{ $message }}</span>
-                    @enderror
-                </div>
-                <div class="form-group mb-3">
-                    <div id="merchant-types-container">
-                    </div>
-                    @error('payment_method')
                     <span class="text-danger">{{ $message }}</span>
                     @enderror
                 </div>
@@ -306,8 +306,8 @@
 
                     let taxAmount = 0;
                     if (amount >= maxAmount) {
-                        $('#tax_value').val(0);
-                        $('#tax_amount').val(0);
+                        $('#tax_value').val('');
+                        $('#tax_amount').val('');
                         return;
                     }
 

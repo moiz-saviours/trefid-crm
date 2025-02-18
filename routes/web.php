@@ -90,7 +90,7 @@ Route::middleware('auth')->group(function () {
         });
     });
     /** Payment Merchant Routes */
-    Route::get('/by-brand/{brand_key?}', [PaymentMerchantController::class, 'by_brand'])->name('by.brand');
+    Route::get('/by-brand/{brand_key?}', [PaymentMerchantController::class, 'by_brand'])->name('client.account.by.brand');
 
     Route::get('/payments', [PaymentController::class, 'index'])->name('payment.index');
 

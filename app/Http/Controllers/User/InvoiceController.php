@@ -72,6 +72,7 @@ class InvoiceController extends Controller
                 'tax_amount' => 'nullable|numeric|min:0',
                 'total_amount' => 'required|numeric|min:1|max:' . config('invoice.max_amount'),
                 'type' => 'required|integer|in:0,1',/** 0 = fresh, 1 = upsale */
+                'due_date' => 'required|date|after_or_equal:' . now()->format('Y-m-d') . '|before_or_equal:' . now()->addYear()->format('Y-m-d'),
             ], [
                 'brand_key.required' => 'The brand field is required.',
                 'brand_key.integer' => 'The brand must be a valid integer.',
@@ -180,6 +181,7 @@ class InvoiceController extends Controller
                 'tax_amount' => $tax_amount,
                 'total_amount' => $total_amount,
                 'type' => $request->input('type'),
+                'due_date' => $request->input('due_date'),
                 'status' => 0,
             ];
             if ($request->has('agent_id')) {
@@ -198,17 +200,23 @@ class InvoiceController extends Controller
             $brand->load(['client_accounts' => fn($q) => $q->where('payment_method', 'authorize')]);
             $client_accounts = $brand->client_accounts;
             $validMerchantIds = $client_accounts->pluck('id')->toArray();
+            $merchantExcluded = [];
             if ($request->has('merchants')) {
                 $merchants = $request->get('merchants', []);
                 if (array_diff($merchants, $validMerchantIds)) {
                     return response()->json(['error' => 'One or more merchants are not authorized.'], 403);
                 }
                 foreach ($merchants as $type => $merchant_id) {
-                    InvoiceMerchant::create([
-                        'invoice_key' => $invoice->invoice_key,
-                        'merchant_type' => $type,
-                        'merchant_id' => $merchant_id,
-                    ]);
+                    $client_account = $client_accounts->firstWhere('id', $merchant_id);
+                    if (!$client_account || !$client_account->hasSufficientLimitAndCapacity($client_account->id,$invoice->total_amount)->exists()) {
+                        $merchantExcluded[] = $client_account ? $client_account->payment_method . " " . $client_account->name : "Unknown Merchant";
+                    } else {
+                        InvoiceMerchant::create([
+                            'invoice_key' => $invoice->invoice_key,
+                            'merchant_type' => $type,
+                            'merchant_id' => $merchant_id,
+                        ]);
+                    }
                 }
             }
             DB::commit();
@@ -216,7 +224,10 @@ class InvoiceController extends Controller
             $invoice->loadMissing('customer_contact', 'brand', 'team', 'agent');
             $invoice->date = "Today at " . $invoice->created_at->timezone('GMT+5')->format('g:i A') . "GMT + 5";
             $invoice->due_date = Carbon::parse($invoice->due_date)->format('Y-m-d');
-            return response()->json(['data' => $invoice, 'success' => 'Record created successfully!']);
+            return response()->json(['data' => $invoice, 'success' => "Record created successfully!" .
+                (!empty($merchantExcluded)
+                    ? " However, the following merchants were excluded due to insufficient limits: " . implode(', ', $merchantExcluded)
+                    : "")]);
         } catch (\Exception $e) {
             DB::rollBack();
             return response()->json(['error' => 'An error occurred while creating the record', 'message' => $e->getMessage()], 500);
@@ -232,7 +243,7 @@ class InvoiceController extends Controller
         $teams = Team::where('status', 1)->get();
         $customer_contacts = CustomerContact::where('status', 1)->get();
         $users = User::where('status', 1)->get();
-        $invoice->loadMissing('customer_contact','invoice_merchants');
+        $invoice->loadMissing('customer_contact', 'invoice_merchants');
         $invoiceMerchants = [];
         foreach ($invoice->invoice_merchants as $merchant) {
             $invoiceMerchants[$merchant->merchant_type] = $merchant->merchant_id;
@@ -365,18 +376,28 @@ class InvoiceController extends Controller
                 'tax_amount' => $tax_amount,
                 'total_amount' => $total_amount,
                 'type' => $request->input('type'),
+                'due_date' => $request->input('due_date'),
             ]);
             $brand->load(['client_accounts' => fn($q) => $q->where('payment_method', 'authorize')]);
-            $client_accounts = $brand->client_accounts;
+            $client_accounts = $brand->client_accounts->unique('id');
             $validMerchantIds = $client_accounts->pluck('id')->toArray();
             $existingMerchants = InvoiceMerchant::where('invoice_key', $invoice->invoice_key)
                 ->pluck('merchant_id', 'merchant_type')
                 ->toArray();
             $newMerchants = [];
+            $merchantExcluded = [];
             $merchants = $request->get('merchants', []);
             if (array_diff($merchants, $validMerchantIds)) {
                 return response()->json(['error' => 'One or more merchants are not authorized.'], 403);
             }
+            foreach ($merchants as $type => $merchant_id) {
+                $client_account = $client_accounts->firstWhere('id', $merchant_id);
+                if (!$client_account || !$client_account->hasSufficientLimitAndCapacity($client_account->id,$invoice->total_amount)->exists()) {
+                    $merchantExcluded[$type] = $client_account ? $client_account->payment_method . " " . $client_account->name : "Unknown Merchant";
+                    unset($merchants[$type]);
+                }
+            }
+
             $merchantsToDelete = array_diff_assoc($existingMerchants, $merchants);
             foreach ($merchants as $type => $merchant_id) {
                 if (!isset($existingMerchants[$type]) || $existingMerchants[$type] != $merchant_id) {
@@ -409,7 +430,11 @@ class InvoiceController extends Controller
                 $date = $invoice->created_at->timezone('GMT+5')->format('M d, Y g:i A') . "GMT + 5";
             }
             $invoice->date = $date;
-            return response()->json(['data' => $invoice, 'success' => 'Record updated successfully!']);
+            $message = "Record updated successfully!";
+            if (!empty($merchantExcluded)) {
+                $message .= " However, the following merchants were excluded due to insufficient limits: " . implode(', ', $merchantExcluded);
+            }
+            return response()->json(['data' => $invoice, 'success' => $message]);
         } catch (\Exception $e) {
             DB::rollBack();
             return response()->json(['error' => 'An error occurred while updating the record', 'message' => $e->getMessage()], 500);

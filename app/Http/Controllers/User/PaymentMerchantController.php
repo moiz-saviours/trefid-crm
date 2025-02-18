@@ -20,7 +20,6 @@ class PaymentMerchantController extends Controller
         $brands = $teams->flatMap(function ($team) {
             return $team->brands;
         });
-
         if (!$brands->contains('brand_key', $brand_key)) {
             return response()->json(['error' => 'Oops! Brand not found.'], 404);
         }
@@ -41,6 +40,9 @@ class PaymentMerchantController extends Controller
                     'capacity' => $account->capacity,
                 ];
             })
+            ->reject(function ($account) {
+                return $account['limit'] < 1;
+            })
             ->unique('id')
             ->groupBy('payment_method')
             ->map(function ($group) {
@@ -54,5 +56,4 @@ class PaymentMerchantController extends Controller
             });
         return response()->json(['data' => $groupedAccounts]);
     }
-
 }

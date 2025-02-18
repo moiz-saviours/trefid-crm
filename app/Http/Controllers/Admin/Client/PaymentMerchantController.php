@@ -22,9 +22,12 @@ class PaymentMerchantController extends Controller
      */
     public function index()
     {
-        $brands = Brand::where('status', 1)->get();
-        $payment_merchants = PaymentMerchant::get();
-        $client_contacts = ClientContact::where('status', 1)->get();
+        $brands = Brand::active()->get();
+        $payment_merchants = PaymentMerchant::withMonthlyUsage()->get();
+        $payment_merchants->each(function ($merchant) {
+            $merchant->usage = number_format($merchant->payments->sum('total_amount') ?? 0);
+        });
+        $client_contacts = ClientContact::active()->get();
         return view('admin.payment-merchants.index', compact('payment_merchants', 'client_contacts', 'brands'));
     }
 
@@ -98,6 +101,11 @@ class PaymentMerchantController extends Controller
             }
             DB::commit();
             $client_account->refresh();
+            $total_amount = Payment::where('merchant_id', $client_account->id)
+                ->whereMonth('created_at', now()->month)
+                ->whereYear('created_at', now()->year)
+                ->sum('amount');
+            $client_account->usage = number_format($total_amount);
             $client_account->loadMissing('client_contact', 'client_company');
             return response()->json(['data' => $client_account, 'success' => 'Record Created Successfully.']);
         } catch (\Exception $e) {
@@ -196,6 +204,11 @@ class PaymentMerchantController extends Controller
             }
             DB::commit();
             $client_account->refresh();
+            $total_amount = Payment::where('merchant_id', $client_account->id)
+                ->whereMonth('created_at', now()->month)
+                ->whereYear('created_at', now()->year)
+                ->sum('amount');
+            $client_account->usage = number_format($total_amount);
             $client_account->loadMissing('client_contact', 'client_company');
             return response()->json(['data' => $client_account, 'success' => 'Record Updated Successfully.']);
         } catch (\Exception $e) {
@@ -228,6 +241,9 @@ class PaymentMerchantController extends Controller
                     'payment_method' => $account->payment_method,
                     'capacity' => $account->capacity,
                 ];
+            })
+            ->reject(function ($account) {
+                return $account['limit'] < 1;
             })
             ->unique('id')
             ->groupBy('payment_method')

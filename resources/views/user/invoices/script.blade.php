@@ -636,7 +636,7 @@
             const merchantTypesContainer = $('#merchant-types-container');
             merchantTypesContainer.empty();
             if (selectedBrand) {
-                AjaxRequestPromise(`{{ route('admin.client.account.by.brand') }}/${selectedBrand}`, null, 'GET',)
+                AjaxRequestPromise(`{{ route('client.account.by.brand') }}/${selectedBrand}`, null, 'GET',)
                     .then(response => {
                         if (response.data) {
                             const merchant_types = response.data;

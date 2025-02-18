@@ -279,7 +279,7 @@
                 allowOutsideClick: false
             }).then((result) => {
                 if (result.isConfirmed) {
-                    window.location.href = `{{route('admin.login')}}`;
+                    window.location.href = `{{route('login')}}`;
                 }
             });
         } else if (jqXHR.status === 403) {

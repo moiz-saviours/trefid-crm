@@ -12,15 +12,15 @@
                     <div class="new_head">
                         <h1 class="page-title mb-2">Client Accounts <i class="fa fa-caret-down" aria-hidden="true"></i>
                         </h1>
-{{--                        <h2 id="record-count" class="h6">{{count($payment_merchants)}} records</h2>--}}
+                        {{--                        <h2 id="record-count" class="h6">{{count($payment_merchants)}} records</h2>--}}
                     </div>
                     <div class="filters">
                         <div class="actions">
                             {{--                            <h1><i class="fa fa-lock" aria-hidden="true"></i> Data Quality</h1>--}}
 
-{{--                            <button class="header_btn">Actions <i class="fa fa-caret-down" aria-hidden="true"></i>--}}
-{{--                            </button>--}}
-{{--                            <button class="header_btn">Import</button>--}}
+                            {{--                            <button class="header_btn">Actions <i class="fa fa-caret-down" aria-hidden="true"></i>--}}
+                            {{--                            </button>--}}
+                            {{--                            <button class="header_btn">Import</button>--}}
                             <button class="create-contact open-form-btn">Create New</button>
                         </div>
                     </div>
@@ -39,31 +39,31 @@
                     <div class="tab-content">
                         <div class="tab-pane active" id="home">
                             <div class="card">
-{{--                                <div class="card-header">--}}
-{{--                                    <div class="container">--}}
-{{--                                        <div class="row fltr-sec">--}}
-{{--                                            <div class="col-md-8">--}}
-{{--                                                <ul class="custm-filtr">--}}
-{{--                                                    <div class="table-li">--}}
-{{--                                                        <li class="">Company Owner <i class="fa fa-caret-down"--}}
-{{--                                                                                      aria-hidden="true"></i></li>--}}
-{{--                                                        <li class="">Create date <i class="fa fa-caret-down"--}}
-{{--                                                                                    aria-hidden="true"></i></li>--}}
-{{--                                                        <li class="">Last activity date <i class="fa fa-caret-down"--}}
-{{--                                                                                           aria-hidden="true"></i>--}}
-{{--                                                        </li>--}}
-{{--                                                        <li class="">Lead status <i class="fa fa-caret-down"--}}
-{{--                                                                                    aria-hidden="true"></i></li>--}}
-{{--                                                        <li class=""><i class="fa fa-bars" aria-hidden="true"></i> All--}}
-{{--                                                            filters--}}
-{{--                                                        </li>--}}
-{{--                                                    </div>--}}
-{{--                                                </ul>--}}
-{{--                                            </div>--}}
-{{--                                            <div class="col-md-4 right-icon" id="right-icon-0"></div>--}}
-{{--                                        </div>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
+                                {{--                                <div class="card-header">--}}
+                                {{--                                    <div class="container">--}}
+                                {{--                                        <div class="row fltr-sec">--}}
+                                {{--                                            <div class="col-md-8">--}}
+                                {{--                                                <ul class="custm-filtr">--}}
+                                {{--                                                    <div class="table-li">--}}
+                                {{--                                                        <li class="">Company Owner <i class="fa fa-caret-down"--}}
+                                {{--                                                                                      aria-hidden="true"></i></li>--}}
+                                {{--                                                        <li class="">Create date <i class="fa fa-caret-down"--}}
+                                {{--                                                                                    aria-hidden="true"></i></li>--}}
+                                {{--                                                        <li class="">Last activity date <i class="fa fa-caret-down"--}}
+                                {{--                                                                                           aria-hidden="true"></i>--}}
+                                {{--                                                        </li>--}}
+                                {{--                                                        <li class="">Lead status <i class="fa fa-caret-down"--}}
+                                {{--                                                                                    aria-hidden="true"></i></li>--}}
+                                {{--                                                        <li class=""><i class="fa fa-bars" aria-hidden="true"></i> All--}}
+                                {{--                                                            filters--}}
+                                {{--                                                        </li>--}}
+                                {{--                                                    </div>--}}
+                                {{--                                                </ul>--}}
+                                {{--                                            </div>--}}
+                                {{--                                            <div class="col-md-4 right-icon" id="right-icon-0"></div>--}}
+                                {{--                                        </div>--}}
+                                {{--                                    </div>--}}
+                                {{--                                </div>--}}
                                 <div class="card-body">
                                     <table id="allClientTable" class="table table-striped datatable-exportable
                             stripe row-border order-column nowrap initTable">
@@ -76,13 +76,16 @@
                                             <th class="align-middle text-center text-nowrap">CLIENT COMPANY</th>
                                             <th class="align-middle text-center text-nowrap">NAME</th>
                                             <th class="align-middle text-center text-nowrap">DESCRIPTOR</th>
-{{--                                            <th class="align-middle text-center text-nowrap">VENDOR NAME</th>--}}
+                                            {{--                                            <th class="align-middle text-center text-nowrap">VENDOR NAME</th>--}}
                                             <th class="align-middle text-center text-nowrap">PAYMENT METHOD</th>
                                             <th class="align-middle text-center text-nowrap">EMAIL</th>
                                             <th class="align-middle text-center text-nowrap">LOGIN ID</th>
                                             <th class="align-middle text-center text-nowrap">TRANSACTION KEY</th>
                                             <th class="align-middle text-center text-nowrap">MAX TRANSACTION</th>
                                             <th class="align-middle text-center text-nowrap">MAX VOLUME</th>
+                                            <th class="align-middle text-center text-nowrap">{{ \Carbon\Carbon::now()->format('F') }}
+                                                Usage
+                                            </th>
                                             <th class="align-middle text-center text-nowrap">ENVIRONMENT</th>
                                             <th class="align-middle text-center text-nowrap">STATUS</th>
                                             <th class="align-middle text-center text-nowrap">ACTION</th>
@@ -98,13 +101,14 @@
                                                 <td class="align-middle text-center text-nowrap">{{optional($payment_merchant->client_company)->name}}</td>
                                                 <td class="align-middle text-center text-nowrap">{{ $payment_merchant->name }}</td>
                                                 <td class="align-middle text-center text-nowrap">{{ $payment_merchant->descriptor }}</td>
-{{--                                                <td class="align-middle text-center text-nowrap">{{ $payment_merchant->vendor_name }}</td>--}}
+                                                {{--                                                <td class="align-middle text-center text-nowrap">{{ $payment_merchant->vendor_name }}</td>--}}
                                                 <td class="align-middle text-center text-nowrap">{{ strtoupper($payment_merchant->payment_method) }}</td>
                                                 <td class="align-middle text-center text-nowrap">{{ $payment_merchant->email }}</td>
                                                 <td class="align-middle text-center text-nowrap">{{ $payment_merchant->login_id }}</td>
                                                 <td class="align-middle text-center text-nowrap">{{ $payment_merchant->transaction_key }}</td>
                                                 <td class="align-middle text-center text-nowrap">{{ $payment_merchant->limit }}</td>
                                                 <td class="align-middle text-center text-nowrap">{{ $payment_merchant->capacity }}</td>
+                                                <td class="align-middle text-center text-nowrap">{{ $payment_merchant->usage }}</td>
                                                 <td class="align-middle text-center text-nowrap">{{ $payment_merchant->environment }}</td>
                                                 <td class="align-middle text-center text-nowrap">
                                                     <input type="checkbox" class="status-toggle change-status"

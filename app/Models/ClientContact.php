@@ -91,4 +91,11 @@ class ClientContact extends Model
             'c_company_key'         // Foreign key on the distant model (PaymentMerchant) referencing the intermediate model (ClientCompany)
         )->where('payment_merchants.status', 'active');
     }
+
+    /** Scope */
+    public function scopeActive($query)
+    {
+        return $query->where('status', 1);
+    }
+    /** Scope */
 }

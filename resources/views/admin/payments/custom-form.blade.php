@@ -125,7 +125,7 @@
 
                 <div class="form-group mb-3">
                     <label for="amount" class="form-label">Amount</label>
-                    <input type="number" class="form-control" id="amount" name="amount" step="0.01" min="1" max="4999"
+                    <input type="number" class="form-control" id="amount" name="amount" step="0.01" min="1"
                            value="{{ old('amount') }}" required>
                     @error('amount')
                     <span class="text-danger">{{ $message }}</span>

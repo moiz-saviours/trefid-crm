@@ -111,6 +111,7 @@ class Brand extends Model
             'special_key'                  // Related key on ClientContact model
         )->where('client_contacts.status', 1);
     }
+
     /** Define inverse relationship for ClientCompany */
     public function client_companies(): \Illuminate\Database\Eloquent\Relations\MorphToMany
     {
@@ -124,6 +125,7 @@ class Brand extends Model
             'special_key'                  // Related key on ClientCompany model
         )->where('client_companies.status', 1);
     }
+
     /** Define inverse relationship for ClientAccount */
     public function client_accounts(): \Illuminate\Database\Eloquent\Relations\MorphToMany
     {
@@ -137,5 +139,12 @@ class Brand extends Model
             'id'                  // Related key on PaymentMerchant model
         )->where('payment_merchants.status', 'active');
     }
+
+    /** Scope */
+    public function scopeActive($query)
+    {
+        return $query->where('status', 1);
+    }
+    /** Scope */
 }
 

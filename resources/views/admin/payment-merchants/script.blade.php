@@ -191,6 +191,7 @@
                                 transaction_key,
                                 limit,
                                 capacity,
+                                usage,
                                 environment,
                                 status
                             } = response.data;
@@ -208,6 +209,7 @@
                                 <td class="align-middle text-center text-nowrap">${transaction_key}</td>
                                 <td class="align-middle text-center text-nowrap">${limit}</td>
                                 <td class="align-middle text-center text-nowrap">${capacity}</td>
+                                <td class="align-middle text-center text-nowrap">${usage}</td>
                                 <td class="align-middle text-center text-nowrap">${environment}</td>
                                  <td class="align-middle text-center text-nowrap">
                                         <input type="checkbox" class="status-toggle change-status" data-id="${id}" ${status == "active" ? 'checked' : ''} data-bs-toggle="toggle">
@@ -244,6 +246,7 @@
                                 transaction_key,
                                 limit,
                                 capacity,
+                                usage,
                                 environment,
                                 status
                             } = response.data;
@@ -290,14 +293,18 @@
                             if (decodeHtml(rowData[11]) !== capacity) {
                                 table.cell(index, 11).data(capacity).draw();
                             }
-                            // Column 12: environment
-                            if (decodeHtml(rowData[12]) !== environment) {
-                                table.cell(index, 12).data(environment).draw();
+                            // Column 12: usage
+                            if (decodeHtml(rowData[12]) !== usage) {
+                                table.cell(index, 12).data(usage).draw();
                             }
-                            // Column 13: Status
+                            // Column 13: environment
+                            if (decodeHtml(rowData[13]) !== environment) {
+                                table.cell(index, 13).data(environment).draw();
+                            }
+                            // Column 14: Status
                             const statusHtml = `<input type="checkbox" class="status-toggle change-status" data-id="${id}" ${status == "active" ? "checked" : ""} data-bs-toggle="toggle">`;
-                            if (decodeHtml(rowData[13]) !== statusHtml) {
-                                table.cell(index, 13).data(statusHtml).draw();
+                            if (decodeHtml(rowData[14]) !== statusHtml) {
+                                table.cell(index, 14).data(statusHtml).draw();
                             }
 
                             $('#manage-form')[0].reset();
@@ -317,7 +324,7 @@
                 .then(response => {
                     const rowIndex = table.row($('#tr-' + rowId)).index();
                     const statusHtml = `<input type="checkbox" class="status-toggle change-status" data-id="${rowId}" ${status ? "checked" : ""} data-bs-toggle="toggle">`;
-                    table.cell(rowIndex, 13).data(statusHtml).draw();
+                    table.cell(rowIndex, 14).data(statusHtml).draw();
                 })
                 .catch((error) => {
                     console.log(error);
