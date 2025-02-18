@@ -201,6 +201,10 @@
                         text: `An error occurred: ${jqXHR.status} - ${jqXHR.statusText}`,
                         icon: 'error',
                         confirmButtonText: 'OK'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            location.reload();
+                        }
                     });
                 }
             }
@@ -295,6 +299,10 @@
                 text: `An error occurred: ${jqXHR.status} - ${jqXHR.statusText}`,
                 icon: 'error',
                 confirmButtonText: 'OK'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    location.reload();
+                }
             });
         }
     });

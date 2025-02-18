@@ -23,6 +23,11 @@
 
 </head>
 <body>
+<div class="loader-container loader-light" style="display: none">
+    <div class="loader"></div>
+    <div class="loading-text">Processing Payment...</div>
+    <div class="funny-message">Counting coins...</div>
+</div>
 <div id="toaster-container"></div>
 <?php
 if (!$invoiceDetails['success']) {
@@ -608,6 +613,40 @@ $countries = ['US' => 'United States', 'AF' => 'Afghanistan', 'AL' => 'Albania',
 <script>
 
     $(document).ready(function () {
+        const funnyMessages = [
+            "Counting coins...",
+            "Bribing the bank manager...",
+            "Convincing the payment gateway...",
+            "Training the payment pigeons...",
+            "Negotiating with the money tree...",
+            "Polishing the credit card...",
+            "Asking the ATM nicely...",
+            "Charging the payment lasers...",
+            "Summoning the payment wizard...",
+            "Calming the angry payment gods..."
+        ];
+
+        let messageIndex = 0;
+        let intervalId = null;
+        const loader = document.querySelector('.loader-container');
+        const funnyMessageElement = document.querySelector('.funny-message');
+
+        function changeFunnyMessage() {
+            funnyMessageElement.textContent = funnyMessages[messageIndex];
+            messageIndex = (messageIndex + 1) % funnyMessages.length;
+        }
+
+        function showLoader() {
+            loader.style.display = "flex";
+            intervalId = setInterval(changeFunnyMessage, 500);
+        }
+        hideLoader();
+
+        function hideLoader() {
+            loader.style.display = "none";
+            if (intervalId) clearInterval(intervalId);
+        }
+
         $('#paymentForm').on('submit', function (e) {
             e.preventDefault();
             const firstErrorField = validateForm();
@@ -618,6 +657,9 @@ $countries = ['US' => 'United States', 'AF' => 'Afghanistan', 'AL' => 'Albania',
                 return;
             }
             $('#submit-btn').prop('disabled', true).text('Processing...');
+
+            showLoader();
+
             let formData = $(this).serializeArray();
             formData = formData.map(field => {
                 if (field.name === 'card_number') {
@@ -647,6 +689,7 @@ $countries = ['US' => 'United States', 'AF' => 'Afghanistan', 'AL' => 'Albania',
                     }
                     toastr.error(message, 'Error');
                     console.log(error)
+                    hideLoader();
                 },
                 complete: function () {
                     $('#submit-btn').prop('disabled', false).text('Submit');

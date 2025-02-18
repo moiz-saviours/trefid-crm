@@ -58,7 +58,7 @@ class Invoice extends Model
     public static function generateInvoiceKey(): string
     {
         do {
-            $invoiceKey = str_pad(rand(0, 999999999), 9, '0', STR_PAD_LEFT);
+            $invoiceKey = str_pad(rand(100000000, 999999999), 9, '0', STR_PAD_LEFT);
         } while (self::where('invoice_key', $invoiceKey)->exists());
         return $invoiceKey;
     }

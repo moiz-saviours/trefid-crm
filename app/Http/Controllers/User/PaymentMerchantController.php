@@ -4,6 +4,7 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Models\Brand;
+use App\Models\PaymentMerchant;
 use Illuminate\Http\Request;
 
 class PaymentMerchantController extends Controller
@@ -31,11 +32,15 @@ class PaymentMerchantController extends Controller
         $client_accounts = $brand->client_accounts;
         $groupedAccounts = $client_accounts
             ->map(function ($account) {
-                $limit = min($account->limit, $account->capacity);
+                $payment_merchant = PaymentMerchant::where('id', $account->id)->withMonthlyUsage()->first();
+                $usage = number_format($payment_merchant->payments->sum('total_amount') ?? 0);
+                $capacity = max(0, (float)$account->capacity);
+                $limit = max(0, (float)$account->limit);
+                $availableLimit = min($limit, $capacity - $usage);
                 return [
                     'id' => $account->id,
                     'name' => $account->name,
-                    'limit' => $limit,
+                    'limit' => $availableLimit,
                     'payment_method' => $account->payment_method,
                     'capacity' => $account->capacity,
                 ];
