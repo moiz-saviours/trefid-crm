@@ -537,7 +537,7 @@
                         <tr>
                             <td>${index + 1}</td>
                             <td>${log.gateway ?? ""}</td>
-                            <td>${log.last4 ?? ""}</td>
+                            <td>${log.last_4 ?? ""}</td>
                             <td>${log.transaction_id ?? ""}</td>
                             <td>${log.amount ?? ""}</td>
                             <td>${log.status == 'success' ? log?.response_message : log?.error_message}</td>

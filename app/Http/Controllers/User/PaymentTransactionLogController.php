@@ -17,8 +17,8 @@ class PaymentTransactionLogController extends Controller
             $invoiceKey = $request->input('invoice_key');
             $invoice = Invoice::where('invoice_key', $invoiceKey)
                 ->whereIn('brand_key', Auth::user()->teams()->with(['brands' => function ($query) {
-            $query->where('status', 1);
-        }])->get()->pluck('brands.*.brand_key')->flatten()->unique())
+                    $query->where('status', 1);
+                }])->get()->pluck('brands.*.brand_key')->flatten()->unique())
                 ->whereIn('team_key', Auth::user()->teams()->pluck('teams.team_key')->flatten()->unique())
                 ->first();
             if (!$invoice) {
