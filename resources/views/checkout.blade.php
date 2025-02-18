@@ -512,7 +512,7 @@ $countries = ['US' => 'United States', 'AF' => 'Afghanistan', 'AL' => 'Albania',
     </div>
 </section>
 <section class="thanks">
-    <div class="container">
+    <div class="container" style="min-width: 100%;">
         <div class="row">
             <div class="col-md-4">
             </div>

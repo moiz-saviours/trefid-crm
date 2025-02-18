@@ -81,7 +81,7 @@
                 order: [[1, 'asc']],
                 responsive: false,
                 scrollX: true,
-                scrollY: 450,
+                scrollY:  ($(window).height() - 350),
                 autoWidth: false,
                 paging: true,
                 columnDefs: [

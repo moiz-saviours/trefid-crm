@@ -31,7 +31,7 @@
         </div>
         <div class="content__boxed">
             <div class="content__wrap">
-                <div class="container">
+                <div class="container" style="min-width: 100%;">
                     <div class="custom-tabs">
                         <ul class="tab-nav">
                             @if(isset($teams) && count($teams) > 0)
@@ -63,7 +63,7 @@
                             <div class="tab-pane {{$loop->first ? "active":""}}" id="tab-pane-{{$team->team_key}}">
                                 <div class="card">
                                     {{--                                    <div class="card-header">--}}
-                                    {{--                                        <div class="container">--}}
+                                    {{--                                        <div class="container" style="min-width: 100%;">--}}
                                     {{--                                            <div class="row fltr-sec">--}}
                                     {{--                                                <div class="col-md-8">--}}
                                     {{--                                                <ul class="custm-filtr">--}}

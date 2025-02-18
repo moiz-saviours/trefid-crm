@@ -268,7 +268,7 @@
         </div>
         <div class="content__boxed">
             <div class="content__wrap">
-                <div class="container">
+                <div class="container" style="min-width: 100%;">
                     <div class="custom-tabs">
                         <ul class="tab-nav">
                             <li class="tab-item active" data-tab="home">All Lead Status
@@ -285,7 +285,7 @@
                         <div class="tab-pane active" id="home">
                             <div class="card">
                                 <div class="card-header">
-                                    <div class="container">
+                                    <div class="container" style="min-width: 100%;">
                                         <div class="row fltr-sec">
                                             <div class="col-md-8">
                                                 <ul class="custm-filtr">
@@ -344,7 +344,7 @@
                         <div class="tab-pane" id="menu1">
                             <div class="card">
                                 <div class="card-header">
-                                    <div class="container">
+                                    <div class="container" style="min-width: 100%;">
                                         <div class="row fltr-sec">
                                             <div class="col-md-8">
                                                 <ul class="custm-filtr">

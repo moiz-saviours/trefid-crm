@@ -21,7 +21,7 @@
 <body>
 
 <section class="login-section">
-    <div class="container">
+    <div class="container" style="min-width: 100%;">
         <div class="main-login-row">
             <div class="row justify-content-end">
                 <div class="col-lg-4">
