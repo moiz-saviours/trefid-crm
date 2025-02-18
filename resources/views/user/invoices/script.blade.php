@@ -536,7 +536,7 @@
                             rows += `
                         <tr>
                             <td>${index + 1}</td>
-                            <td>${log.gateway ?? ""}</td>
+                            <td>${log.merchant ?? ""}</td>
                             <td>${log.last_4 ?? ""}</td>
                             <td>${log.transaction_id ?? ""}</td>
                             <td>${log.amount ?? ""}</td>
