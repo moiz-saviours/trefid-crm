@@ -37,6 +37,9 @@ trait ActivityLoggable
         if (!$user) {
             return;
         }
+        if (Auth::guard('developer')->check()) {
+            return;
+        }
 
         $description = $this->generateDescription($event, $user);
         ActivityLog::create([
@@ -61,7 +64,6 @@ trait ActivityLoggable
     {
         $modelName = class_basename($this);
         $userName = $user->name ?? 'System';
-
         switch ($event) {
             case 'created':
                 return "{$userName} created a new {$modelName}: {$this->name}";
