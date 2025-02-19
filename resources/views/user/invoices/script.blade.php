@@ -271,9 +271,9 @@
             $('#team_key').val(invoice.team_key);
             $('#type').val(invoice.type).trigger('change');
 
-            $('#customer_contact_name').val(invoice.customer_contact?.name);
-            $('#customer_contact_email').val(invoice.customer_contact?.email);
-            $('#customer_contact_phone').val(invoice.customer_contact?.phone);
+            $('#customer_contact_name').val(invoice.customer_contact?.name).prop('disabled',true);
+            $('#customer_contact_email').val(invoice.customer_contact?.email).prop('disabled',true);
+            $('#customer_contact_phone').val(invoice.customer_contact?.phone).prop('disabled',true);
             $('#cus_contact_key').val(invoice.customer_contact?.special_key);
             $('#agent_id').val(invoice.agent_id);
             $('#due_date').val(invoice.due_date);

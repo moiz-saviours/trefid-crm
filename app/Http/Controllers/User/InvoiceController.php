@@ -50,7 +50,7 @@ class InvoiceController extends Controller
                 'team_key' => 'nullable|integer|exists:teams,team_key',
                 'cus_contact_key' => 'required_if:type,1|nullable|integer|exists:customer_contacts,special_key',
                 'customer_contact_name' => 'required_if:type,0|nullable|string|max:255',
-                'customer_contact_email' => 'required_if:type,0|nullable|email|max:255|unique:customer_contacts,email',
+                'customer_contact_email' => 'required_if:type,0|nullable|email|max:255',
                 'customer_contact_phone' => [
                     'required_if:type,0',
                     'nullable',
@@ -262,7 +262,7 @@ class InvoiceController extends Controller
             'team_key' => 'required|integer|exists:teams,team_key',
             'cus_contact_key' => 'required_if:type,1|nullable|integer|exists:customer_contacts,special_key',
             'customer_contact_name' => 'required_if:type,0|nullable|string|max:255',
-            'customer_contact_email' => 'required_if:type,0|nullable|email|max:255|unique:customer_contacts,email,' . $invoice->cus_contact_key . ',special_key',
+            'customer_contact_email' => 'required_if:type,0|nullable|email|max:255',
             'customer_contact_phone' => 'required_if:type,0|nullable|string|max:15',
             'agent_id' => 'required|integer',
 //            'agent_type' => 'required|string|in:admins,users',
