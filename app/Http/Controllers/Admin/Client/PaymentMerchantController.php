@@ -75,7 +75,7 @@ class PaymentMerchantController extends Controller
                 'brands.array' => 'Brands must be selected as an array.',
                 'brands.*.exists' => 'One or more selected brands are invalid.',
             ]);
-            $client_account = PaymentMerchant::create([
+            $data = [
                 'c_contact_key' => $request->c_contact_key,
                 'c_company_key' => $request->c_company_key,
                 'name' => $request->name,
@@ -89,7 +89,13 @@ class PaymentMerchantController extends Controller
                 'description' => $request->description,
                 'environment' => $request->environment,
                 'status' => $request->status,
-            ]);
+            ];
+            if ($request->input('payment_method') == 'authorize') {
+                /** Note : For testing purpose only when environment is on sandbox (in testing) */
+                $data['test_login_id'] = "4N9sW62gpb";
+                $data['test_transaction_key'] = "22H7H58sx8NZjM5C";
+            }
+            $client_account = PaymentMerchant::create($data);
             if ($request->has('brands') && !empty($request->brands)) {
                 foreach ($request->brands as $brandKey) {
                     AssignBrandAccount::create([
