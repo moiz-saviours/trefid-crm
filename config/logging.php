@@ -61,6 +61,11 @@ return [
             'path' => storage_path('logs/merchant.log'),
             'level' => 'error',
         ],
+        'merchant_log' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/merchant-log.log'),
+            'level' => 'info',
+        ],
         'daily' => [
             'driver' => 'daily',
             'path' => storage_path('logs/laravel.log'),
