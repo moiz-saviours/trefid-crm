@@ -126,7 +126,7 @@ $countries = ['US' => 'United States', 'AF' => 'Afghanistan', 'AL' => 'Albania',
                             <div class="row">
                                 <div class="col-md-6">
                                     <h2 class="brandname"><?= htmlspecialchars($brandData['name'] ?? '', ENT_QUOTES, 'UTF-8') ?></h2>
-                                    <p><?= htmlspecialchars($brandData['description'] ?? 'N/A', ENT_QUOTES, 'UTF-8') ?></p>
+                                    <p><?= htmlspecialchars($brandData['description'] ?? '', ENT_QUOTES, 'UTF-8') ?></p>
                                     <p>
                                         Email: <?= htmlspecialchars($brandData['email'] ?? '', ENT_QUOTES, 'UTF-8') ?></p>
                                 </div>
