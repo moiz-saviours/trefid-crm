@@ -33,7 +33,7 @@ class PaymentMerchantController extends Controller
         $groupedAccounts = $client_accounts
             ->map(function ($account) {
                 $payment_merchant = PaymentMerchant::where('id', $account->id)->withMonthlyUsage()->first();
-                $usage = number_format($payment_merchant->payments->sum('total_amount') ?? 0);
+                $usage = number_format($payment_merchant->payments->sum('total_amount') ?? 0, 2, '.', '');
                 $capacity = max(0, (float)$account->capacity);
                 $limit = max(0, (float)$account->limit);
                 $availableLimit = min($limit, $capacity - $usage);
