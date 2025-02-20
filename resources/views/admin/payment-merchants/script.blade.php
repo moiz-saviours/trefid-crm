@@ -318,7 +318,7 @@
         /** Change Status*/
         $('tbody').on('change', '.change-status', function () {
             const statusCheckbox = $(this);
-            const status = +statusCheckbox.is(':checked');
+            const status = statusCheckbox.is(':checked') ? 'active' : 'inactive';
             const rowId = statusCheckbox.data('id');
             AjaxRequestPromise(`{{ route('admin.client.account.change.status') }}/${rowId}?status=${status}`, null, 'GET', {useToastr: true})
                 .then(response => {
