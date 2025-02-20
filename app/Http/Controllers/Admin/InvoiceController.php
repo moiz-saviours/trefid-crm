@@ -23,7 +23,6 @@ class InvoiceController extends Controller
      */
     public function index()
     {
-        
         $invoices = Invoice::all();
         $brands = Brand::where('status', 1)->get();
         $groupedMerchants = [];
