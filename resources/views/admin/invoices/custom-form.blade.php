@@ -258,6 +258,9 @@
         <!------- CUSTOM FORM -------->
         <script>
             $(document).ready(function () {
+                @if($customer_contacts->count() < 1)
+                $('#type').val(0).trigger('change')
+                @endif
                 $('#type').on('change', function () {
                     const type = $(this).val();
                     if (type == 0) {
