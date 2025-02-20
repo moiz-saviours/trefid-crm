@@ -88,7 +88,7 @@
                 order: [[1, 'desc']],
                 responsive: false,
                 scrollX: true,
-                scrollY:  ($(window).height() - 350),
+                scrollY: ($(window).height() - 350),
                 scrollCollapse: true,
                 paging: true,
                 columnDefs: [
@@ -157,9 +157,9 @@
             $('#team_key').val(invoice.team_key);
             $('#type').val(invoice.type).trigger('change');
 
-            $('#customer_contact_name').val(invoice.customer_contact?.name).prop('disabled',true);
-            $('#customer_contact_email').val(invoice.customer_contact?.email).prop('disabled',true);
-            $('#customer_contact_phone').val(invoice.customer_contact?.phone).prop('disabled',true);
+            $('#customer_contact_name').val(invoice.customer_contact?.name).prop('disabled', true);
+            $('#customer_contact_email').val(invoice.customer_contact?.email).prop('disabled', true);
+            $('#customer_contact_phone').val(invoice.customer_contact?.phone).prop('disabled', true);
             $('#cus_contact_key').val(invoice.customer_contact?.special_key);
             $('#agent_id').val(invoice.agent_id);
             $('#due_date').val(invoice.due_date);
@@ -446,7 +446,7 @@
                             <td>${log.last_4 ?? ""}</td>
                             <td>${log.transaction_id ?? ""}</td>
                             <td>${log.amount ?? ""}</td>
-                            <td>${log.status == 'success' ? log?.response_message : log?.error_message}</td>
+                            <td>${log.status == 'success' ? log?.response_message ?? "" : log?.error_message ?? ""}</td>
                             <td>${log.status == 'success' ? '<span class="text-success">Paid</span>' : '<span class="text-danger">Not Paid</span>'}</td>
                             <td>${formattedDate}</td>
                         </tr>`;

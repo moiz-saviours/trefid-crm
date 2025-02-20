@@ -540,7 +540,7 @@
                             <td>${log.last_4 ?? ""}</td>
                             <td>${log.transaction_id ?? ""}</td>
                             <td>${log.amount ?? ""}</td>
-                            <td>${log.status == 'success' ? log?.response_message : log?.error_message}</td>
+                            <td>${log.status == 'success' ? log?.response_message ?? "" : log?.error_message ?? ""}</td>
                             <td>${log.status == 'success' ? '<span class="text-success">Paid</span>' : '<span class="text-danger">Not Paid</span>'}</td>
                             <td>${formattedDate}</td>
                         </tr>`;
