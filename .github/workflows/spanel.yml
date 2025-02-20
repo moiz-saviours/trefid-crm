@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - main  # Deploy to live environment
-      - development   # Deploy to development environment
+      - development  # Deploy to development environment
 
 jobs:
   deploy:
@@ -14,17 +14,23 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
+      - name: Debug Branch Name
+        run: echo "Branch is $GITHUB_REF"
+
       - name: Determine environment
         id: env
         run: |
-          if [[ $GITHUB_REF == refs/heads/main ]]; then
-            echo "ENVIRONMENT=live" >> $GITHUB_ENV
-          elif [[ $GITHUB_REF == refs/heads/development ]]; then
-            echo "ENVIRONMENT=development" >> $GITHUB_ENV
+          BRANCH_NAME="${GITHUB_REF#refs/heads/}"
+          echo "Branch detected: $BRANCH_NAME"
+          
+          if [[ "$BRANCH_NAME" == "main" ]]; then
+            echo "environment=live" >> "$GITHUB_ENV"
+          elif [[ "$BRANCH_NAME" == "development" ]]; then
+            echo "environment=development" >> "$GITHUB_ENV"
           fi
 
       - name: Deploy to Live
-        if: env.ENVIRONMENT == 'live'
+        if: env.environment == 'live'
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.LIVE_SPANEL_FTP_SERVER }}
@@ -35,7 +41,7 @@ jobs:
           server-dir: ${{ secrets.LIVE_SPANEL_SERVER_DIR }}
 
       - name: Deploy to Development
-        if: env.ENVIRONMENT == 'development'
+        if: env.environment == 'development'
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.DEV_SPANEL_FTP_SERVER }}
