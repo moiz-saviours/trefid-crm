@@ -36,7 +36,7 @@ jobs:
 
       - name: Deploy to Development
         if: env.ENVIRONMENT == 'development'
-        uses: SamKirkland/FTP-Deploy-Action@v4
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.DEV_SPANEL_FTP_SERVER }}
           username: ${{ secrets.DEV_SPANEL_FTP_USERNAME }}
