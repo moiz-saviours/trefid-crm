@@ -323,7 +323,7 @@
             AjaxRequestPromise(`{{ route('admin.client.account.change.status') }}/${rowId}?status=${status}`, null, 'GET', {useToastr: true})
                 .then(response => {
                     const rowIndex = table.row($('#tr-' + rowId)).index();
-                    const statusHtml = `<input type="checkbox" class="status-toggle change-status" data-id="${rowId}" ${status ? "checked" : ""} data-bs-toggle="toggle">`;
+                    const statusHtml = `<input type="checkbox" class="status-toggle change-status" data-id="${rowId}" ${status == 'active' ? "checked" : ""} data-bs-toggle="toggle">`;
                     table.cell(rowIndex, 14).data(statusHtml).draw();
                 })
                 .catch((error) => {
