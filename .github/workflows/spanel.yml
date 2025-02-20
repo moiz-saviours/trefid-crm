@@ -23,6 +23,9 @@ jobs:
             echo "ENVIRONMENT=development" >> $GITHUB_ENV
           fi
 
+      - name: Debug ENVIRONMENT variable
+        run: echo "ENVIRONMENT is set to: $ENVIRONMENT"
+
       - name: Deploy to Live
         if: env.ENVIRONMENT == 'live'
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
