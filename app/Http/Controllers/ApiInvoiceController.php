@@ -43,7 +43,7 @@ class ApiInvoiceController extends Controller
                 'total_amount' => $invoice->total_amount,
                 "type" => $invoice->type,
                 "created_at" => $invoice->created_at->format('jS F Y'),
-                "due_date" => $invoice->created_at->format('jS F Y'),
+                "due_date" => carbon::parse($invoice->due_date)->format('jS F Y'),
                 "status" => $invoice->status,
                 "brand" => [
                     "name" => $brand->name,
