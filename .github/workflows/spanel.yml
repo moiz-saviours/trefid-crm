@@ -1,49 +1,49 @@
-1  name: Deploy to Spanel (Live and Dev)
-2
-3  on:
-4    push:
-5      branches:
-6        - main  # Deploy to live environment
-7        - development   # Deploy to development environment
-8
-9  jobs:
-10   deploy:
-11     runs-on: ubuntu-latest
-12
-13     steps:
-14       - name: Checkout code
-15         uses: actions/checkout@v3
-16
-17       - name: Determine environment
-18         id: env
-19         run: |
-20           if [[ $GITHUB_REF == refs/heads/main ]]; then
-21             echo "ENVIRONMENT=live" >> $GITHUB_ENV
-22           elif [[ $GITHUB_REF == refs/heads/development ]]; then
-23             echo "ENVIRONMENT=development" >> $GITHUB_ENV
-24           fi
-25
-26       - name: Debug ENVIRONMENT variable
-27         run: echo "ENVIRONMENT is set to: $ENVIRONMENT"
-28
-29       - name: Deploy to Live
-30         if: env.ENVIRONMENT == 'live'
-31         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-32         with:
-33           server: ${{ secrets.LIVE_SPANEL_FTP_SERVER }}
-34           username: ${{ secrets.LIVE_SPANEL_FTP_USERNAME }}
-35           password: ${{ secrets.LIVE_SPANEL_FTP_PASSWORD }}
-36           port: ${{ secrets.LIVE_SPANEL_FTP_PORT || 21 }}
-37           local-dir: ./
-38           server-dir: ${{ secrets.LIVE_SPANEL_SERVER_DIR }}
-39
-40       - name: Deploy to Development
-41         if: env.ENVIRONMENT == 'development'
-42         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-43         with:
-44           server: ${{ secrets.DEV_SPANEL_FTP_SERVER }}
-45           username: ${{ secrets.DEV_SPANEL_FTP_USERNAME }}
-46           password: ${{ secrets.DEV_SPANEL_FTP_PASSWORD }}
-47           port: ${{ secrets.DEV_SPANEL_FTP_PORT || 21 }}
-48           local-dir: ./
-49           server-dir: ${{ secrets.DEV_SPANEL_SERVER_DIR }}
+name: Deploy to Spanel (Live and Dev)
+
+on:
+  push:
+    branches:
+      - main  # Deploy to live environment
+      - development   # Deploy to development environment
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Determine environment
+        id: env
+        run: |
+          if [[ $GITHUB_REF == refs/heads/main ]]; then
+            echo "ENVIRONMENT=live" >> $GITHUB_ENV
+          elif [[ $GITHUB_REF == refs/heads/development ]]; then
+            echo "ENVIRONMENT=development" >> $GITHUB_ENV
+          fi
+
+      - name: Debug ENVIRONMENT variable
+        run: echo "ENVIRONMENT is set to: $ENVIRONMENT"
+
+      - name: Deploy to Live
+        if: env.ENVIRONMENT == 'live'
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.LIVE_SPANEL_FTP_SERVER }}
+          username: ${{ secrets.LIVE_SPANEL_FTP_USERNAME }}
+          password: ${{ secrets.LIVE_SPANEL_FTP_PASSWORD }}
+          port: ${{ secrets.LIVE_SPANEL_FTP_PORT || 21 }}
+          local-dir: ./
+          server-dir: ${{ secrets.LIVE_SPANEL_SERVER_DIR }}
+
+      - name: Deploy to Development
+        if: env.ENVIRONMENT == 'development'
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.DEV_SPANEL_FTP_SERVER }}
+          username: ${{ secrets.DEV_SPANEL_FTP_USERNAME }}
+          password: ${{ secrets.DEV_SPANEL_FTP_PASSWORD }}
+          port: ${{ secrets.DEV_SPANEL_FTP_PORT || 21 }}
+          local-dir: ./
+          server-dir: ${{ secrets.DEV_SPANEL_SERVER_DIR }}
