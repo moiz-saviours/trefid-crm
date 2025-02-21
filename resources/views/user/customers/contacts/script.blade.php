@@ -325,16 +325,6 @@
                                     <td class="align-middle text-center text-nowrap">${state}</td>
                                     <td class="align-middle text-center text-nowrap">${country}</td>
                                     <td class="align-middle text-center text-nowrap">${zipcode}</td>
-
-
-                                    <td class="align-middle text-center text-nowrap">
-                                        <input type="checkbox" class="status-toggle change-status" data-id="${id}" ${status == 1 ? 'checked' : ''} data-bs-toggle="toggle">
-                                    </td>
-                                    <td class="align-middle text-center table-actions">
-                                        <button type="button" class="btn btn-sm btn-danger deleteBtn" data-id="${id}" title="Delete">
-                                            <i class="fas fa-trash"></i>
-                                        </button>
-                                    </td>
                             `;
 
                             // <button type="button" class="btn btn-sm btn-primary editBtn" data-id="${id}" title="Edit">
@@ -402,12 +392,6 @@
                             // Column 10: zipcode
                             if (decodeHtml(rowData[10]) !== zipcode) {
                                 table.cell(index, 10).data(zipcode).draw();
-                            }
-
-                            // Column 11: Status
-                            const statusHtml = `<input type="checkbox" class="status-toggle change-status" data-id="${id}" ${status == 1 ? "checked" : ""} data-bs-toggle="toggle">`;
-                            if (decodeHtml(rowData[11]) !== statusHtml) {
-                                table.cell(index, 11).data(statusHtml).draw();
                             }
 
                             $('#manage-form')[0].reset();
