@@ -69,6 +69,13 @@
                             <button type="submit" class="login-btn">
                                 {{ __('Log in') }}
                             </button>
+                            <div class="float-end">
+                                <a href="{{ route('login') }}" class="" style="color: #fff;text-decoration: none;">
+                                    @if (Route::has('login'))
+                                        {{ __('Go to User Login') }} >
+                                    @endif
+                                </a>
+                            </div>
                         </form>
                     </div>
                 </div>

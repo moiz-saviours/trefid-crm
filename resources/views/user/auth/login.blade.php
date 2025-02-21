@@ -9,7 +9,7 @@
 
 
     <title>{{ config('app.name', 'Laravel') }}</title>
-{{--    <link rel="stylesheet" href="./style.css/">--}}
+    {{--    <link rel="stylesheet" href="./style.css/">--}}
     <link rel="stylesheet" href="{{asset ('assets/css/bootstrap.min.css')}}">
     <link rel="stylesheet" href="{{asset('build/toaster/css/toastr.min.css')}}">
     <link rel="apple-touch-icon" sizes="76x76" href="{{asset('assets/img/apple-icon.png')}}">
@@ -27,7 +27,7 @@
             <div class="row justify-content-end">
                 <div class="col-lg-4">
                     <div class="text-center">
-                        <img src="{{asset('assets/images/aim-logo.png')}}" class="img-fluid logo-h" >
+                        <img src="{{asset('assets/images/aim-logo.png')}}" class="img-fluid logo-h">
                         {{--                        <h1 class="main-logo-heading">CRM</h1>--}}
 
                     </div>
@@ -70,6 +70,13 @@
                             <button type="submit" class="login-btn">
                                 {{ __('Log in') }}
                             </button>
+                            <div class="float-end">
+                                <a href="{{ route('admin.login') }}" class="" style="color: #fff;text-decoration: none;">
+                                    @if (Route::has('admin.login'))
+                                        {{ __('Go to Admin Login') }} >
+                                    @endif
+                                </a>
+                            </div>
                         </form>
                     </div>
                 </div>

@@ -79,7 +79,6 @@
                                             <th></th>
                                             <th class="align-middle text-center text-nowrap">SNO.</th>
                                             <th class="align-middle text-center text-nowrap">BRAND</th>
-                                            <th class="align-middle text-center text-nowrap">TEAM</th>
                                             <th class="align-middle text-center text-nowrap">NAME</th>
                                             <th class="align-middle text-center text-nowrap">EMAIL</th>
                                             <th class="align-middle text-center text-nowrap">PHONE</th>
@@ -100,13 +99,6 @@
                                                 <td class="align-middle text-center text-nowrap">
                                                     @if(isset($contact->brand))
                                                         {{ $contact->brand->name }}
-                                                    @else
-                                                        ---
-                                                    @endif
-                                                </td>
-                                                <td class="align-middle text-center text-nowrap">
-                                                    @if(isset($contact->team))
-                                                        {{ $contact->team->name }}
                                                     @else
                                                         ---
                                                     @endif

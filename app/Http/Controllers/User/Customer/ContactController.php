@@ -16,8 +16,11 @@ class ContactController extends Controller
      */
     public function index()
     {
-        $brands = Brand::all();
-        $teams = Team::all();
+        $user = Auth::user();
+        $teams = $user->teams()->with('brands')->get();
+        $brands = $teams->flatMap(function ($team) {
+            return $team->brands;
+        });
         $countries = config('countries');
         $all_contacts = CustomerContact::whereIn('brand_key', Auth::user()->teams()->with(['brands' => function ($query) {
             $query->where('status', 1);
@@ -62,7 +65,7 @@ class ContactController extends Controller
                 'creator_id', 'status',
             ]) + ['special_key' => CustomerContact::generateSpecialKey()]);
         $customer_contact->save();
-        $customer_contact->loadMissing('team', 'brand','companies');
+        $customer_contact->loadMissing('brand','company');
         return response()->json(['data' => $customer_contact, 'success' => 'Contact Created Successfully!']);
     }
 
@@ -81,6 +84,7 @@ class ContactController extends Controller
      */
     public function update(Request $request, CustomerContact $customer_contact)
     {
+        return response()->json(['data' => $customer_contact, 'success' => 'Contact Updated Successfully!']);
         $request->validate([
             'brand_key' => 'required|integer|exists:brands,brand_key',
             'team_key' => 'nullable|integer|exists:teams,team_key',
@@ -108,7 +112,8 @@ class ContactController extends Controller
             'country', 'zipcode', 'ip_address', 'status',
         ]));
         $customer_contact->save();
-        return response()->json(['success' => 'Contact Updated Successfully!']);
+        $customer_contact->loadMissing('brand','company');
+        return response()->json(['data' => $customer_contact, 'success' => 'Contact Updated Successfully!']);
     }
 
 }

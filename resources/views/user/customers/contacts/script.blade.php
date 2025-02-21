@@ -270,7 +270,7 @@
             let customer_contact = data?.customer_contact;
             $('#manage-form').data('id', customer_contact.id);
             $('#brand_key').val(customer_contact.brand_key);
-            $('#team_key').val(customer_contact.team_key);
+            // $('#team_key').val(customer_contact.team_key);
             $('#name').val(customer_contact.name);
             $('#email').val(customer_contact.email);
             $('#phone').val(customer_contact.phone);
@@ -295,14 +295,13 @@
                 AjaxRequestPromise(`{{ route("customer.contact.store") }}`, formData, 'POST', {useToastr: true})
                     .then(response => {
                         if (response?.data) {
-                            const {id, brand, team, company, name, email, phone,address,city,state,status,country,zipcode } = response.data;
+                            const {id, brand, company, name, email, phone,address,city,state,status,country,zipcode } = response.data;
                             const index = table.rows().count() + 1;
                             const columns = `
                                     <td class="align-middle text-center text-nowrap"></td>
                                     <td class="align-middle text-center text-nowrap">${index}</td>
-                                    <td class="align-middle text-center text-nowrap">${brand ? `<a href="/admin/brand/edit/${brand.id}">${brand.name}</a><br> ${brand.brand_key}` : '---'}</td>
-                                    <td class="align-middle text-center text-nowrap">${team ? `<a href="/admin/team/edit/${team.id}">${team.name}</a><br> ${team.team_key}` : '---'}</td>
-                                    <td class="align-middle text-center text-nowrap"><a href="/admin/contact/edit/${id}" title="${company ? company.name : 'No associated company'}" >${name}</a></td>
+                                    <td class="align-middle text-center text-nowrap">${brand?.name}</td>
+                                    <td class="align-middle text-center text-nowrap"><span title="${company ? company.name : 'No associated company'}">${name}</span></td>
                                     <td class="align-middle text-center text-nowrap">${email}</td>
                                     <td class="align-middle text-center text-nowrap">${phone}</td>
                                     <td class="align-middle text-center text-nowrap">${address}</td>
@@ -337,55 +336,51 @@
                 AjaxRequestPromise(url, formData, 'POST', {useToastr: true})
                     .then(response => {
                         if (response?.data) {
-                            const {id, brand_key, team_key, cus_company_key, name, email, phone,address,city,state,status } = response.data;
+                            const {id, brand, company, name, email, phone,address,city,state,status } = response.data;
                             const index = table.row($('#tr-' + id)).index();
                             const rowData = table.row(index).data();
                             // Column 2: Brand
-                            if (decodeHtml(rowData[2]) !== brand_key) {
+                            if (decodeHtml(rowData[2]) !== brand?.name) {
                                 table.cell(index, 2).data(brand_key).draw();
                             }
-                            /** Column 3: Team */
-                            if (decodeHtml(rowData[3]) !== team_key) {
-                                table.cell(index, 3).data(team_key).draw();
+                            // Column 3: name
+                            if (decodeHtml(rowData[3]) !== `<span title="${company ? company.name : 'No associated company'}">${name}</span>`) {
+                                table.cell(index, 3).data(name).draw();
                             }
-                            // Column 4: name
-                            if (decodeHtml(rowData[4]) !== name) {
-                                table.cell(index, 4).data(name).draw();
+                            // Column 4: email
+                            if (decodeHtml(rowData[4]) !== email) {
+                                table.cell(index, 4).data(email).draw();
                             }
-                            // Column 5: email
-                            if (decodeHtml(rowData[5]) !== email) {
-                                table.cell(index, 5).data(email).draw();
+                            // Column 5: phone
+                            if (decodeHtml(rowData[5]) !== phone) {
+                                table.cell(index, 5).data(phone).draw();
                             }
-                            // Column 6: phone
-                            if (decodeHtml(rowData[6]) !== phone) {
-                                table.cell(index, 6).data(phone).draw();
-                            }
-                            // Column 7: address
-                            if (decodeHtml(rowData[7]) !== address) {
-                                table.cell(index, 7).data(address).draw();
+                            // Column 6: address
+                            if (decodeHtml(rowData[6]) !== address) {
+                                table.cell(index, 6).data(address).draw();
                             }
 
-                            // Column 8: city
-                            if (decodeHtml(rowData[8]) !== city) {
-                                table.cell(index, 8).data(city).draw();
+                            // Column 7: city
+                            if (decodeHtml(rowData[7]) !== city) {
+                                table.cell(index, 7).data(city).draw();
                             }
-                            // Column 9: state
-                            if (decodeHtml(rowData[9]) !== state) {
-                                table.cell(index, 9).data(state).draw();
+                            // Column 8: state
+                            if (decodeHtml(rowData[8]) !== state) {
+                                table.cell(index, 8).data(state).draw();
                             }
-                            // Column 10: country
-                            if (decodeHtml(rowData[10]) !== country) {
-                                table.cell(index, 10).data(country).draw();
+                            // Column 9: country
+                            if (decodeHtml(rowData[9]) !== country) {
+                                table.cell(index, 9).data(country).draw();
                             }
-                            // Column 11: zipcode
-                            if (decodeHtml(rowData[11]) !== zipcode) {
-                                table.cell(index, 11).data(zipcode).draw();
+                            // Column 10: zipcode
+                            if (decodeHtml(rowData[10]) !== zipcode) {
+                                table.cell(index, 10).data(zipcode).draw();
                             }
 
-                            // Column 10: Status
+                            // Column 11: Status
                             const statusHtml = `<input type="checkbox" class="status-toggle change-status" data-id="${id}" ${status == 1 ? "checked" : ""} data-bs-toggle="toggle">`;
-                            if (decodeHtml(rowData[12]) !== statusHtml) {
-                                table.cell(index, 12).data(statusHtml).draw();
+                            if (decodeHtml(rowData[11]) !== statusHtml) {
+                                table.cell(index, 11).data(statusHtml).draw();
                             }
 
 
