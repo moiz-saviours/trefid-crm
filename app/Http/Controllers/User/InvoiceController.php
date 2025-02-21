@@ -423,7 +423,7 @@ class InvoiceController extends Controller
                 }
             }
             DB::commit();
-            $invoice->loadMissing('customer_contact', 'brand', 'team', 'agent');
+            $invoice->loadMissing('customer_contact', 'brand', 'team', 'agent','creator');
             if ($invoice->created_at->isToday()) {
                 $date = "Today at " . $invoice->created_at->timezone('GMT+5')->format('g:i A') . "GMT + 5";
             } else {
