@@ -70,7 +70,7 @@
                 order: [[1, 'desc']],
                 responsive: false,
                 scrollX: true,
-                scrollY:  ($(window).height() - 350),
+                scrollY: ($(window).height() - 350),
                 scrollCollapse: true,
                 paging: true,
                 columnDefs: [
@@ -271,9 +271,9 @@
             $('#team_key').val(invoice.team_key);
             $('#type').val(invoice.type).trigger('change');
 
-            $('#customer_contact_name').val(invoice.customer_contact?.name).prop('readonly',true);
-            $('#customer_contact_email').val(invoice.customer_contact?.email).prop('readonly',true);
-            $('#customer_contact_phone').val(invoice.customer_contact?.phone).prop('readonly',true);
+            $('#customer_contact_name').val(invoice.customer_contact?.name).prop('readonly', true);
+            $('#customer_contact_email').val(invoice.customer_contact?.email).prop('readonly', true);
+            $('#customer_contact_phone').val(invoice.customer_contact?.phone).prop('readonly', true);
             $('#cus_contact_key').val(invoice.customer_contact?.special_key);
             $('#agent_id').val(invoice.agent_id);
             $('#due_date').val(invoice.due_date);
@@ -313,6 +313,17 @@
             const dataId = $('#manage-form').data('id');
             const formData = new FormData(this);
             let table = dataTables[0];
+            @php
+                $baseUrl = '';
+                if (app()->environment('production')) {
+                    $baseUrl = url('');
+                } elseif (app()->environment('development')) {
+                    $baseUrl = url('');
+                } else {
+                    $baseUrl = url('');
+                }
+            @endphp
+            let basePath = `{{$baseUrl}}`;
             if (!dataId) {
                 AjaxRequestPromise(`{{ route("invoice.store") }}`, formData, 'POST', {useToastr: true})
                     .then(response => {
@@ -335,17 +346,6 @@
                                 due_date,
                                 date
                             } = response.data;
-                            @php
-                                $baseUrl = '';
-                                if (app()->environment('production')) {
-                                    $baseUrl = url('');
-                                } elseif (app()->environment('development')) {
-                                    $baseUrl = url('');
-                                } else {
-                                    $baseUrl = url('');
-                                }
-                            @endphp
-                            let basePath = `{{$baseUrl}}`;
                             const index = table.rows().count() + 1;
                             const columns = `
                         <td class="align-middle text-center text-nowrap"></td>
@@ -412,6 +412,7 @@
                                 brand,
                                 team,
                                 customer_contact,
+                                creator,
                                 agent,
                                 amount, tax_type, tax_value,
                                 tax_amount, total_amount, currency,
@@ -502,6 +503,19 @@
                             // Column 11: Date
                             if (decodeHtml(rowData[10]) !== date) {
                                 table.cell(index, 10).data(date).draw();
+                            }
+
+                            // Column 12: Actions
+                            let actionsHtml = '';
+                            if (brand) {
+                                actionsHtml += `<button type="button" class="btn btn-sm btn-primary copyBtn" data-id="${id}" data-invoice-key="${invoice_key}" data-invoice-url="${basePath}/invoice?InvoiceID=${invoice_key}" title="Copy Invoice Url"><i class="fas fa-copy" aria-hidden="true"></i></button>`;
+                            }
+
+                            if (status != 1 && (agent?.id == {{auth()->user()->id}} || creator?.id == {{auth()->user()->id}})) {
+                                actionsHtml += `<button type="button" class="btn btn-sm btn-primary editBtn" data-id="${id}" title="Edit"><i class="fas fa-edit"></i></button>`;
+                            }
+                            if (decodeHtml(rowData[11]) !== actionsHtml) {
+                                table.cell(index, 11).data(actionsHtml).draw();
                             }
                             $('#manage-form')[0].reset();
                             $('#formContainer').removeClass('open')
