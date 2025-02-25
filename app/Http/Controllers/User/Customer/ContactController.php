@@ -27,7 +27,7 @@ class ContactController extends Controller
         }])->get()->pluck('brands.*.brand_key')->flatten())
             ->whereIn('team_key', Auth::user()->teams()->pluck('teams.team_key')->flatten()->unique())
             ->get();
-        $contacts = CustomerContact::all();
+//        $contacts = CustomerContact::all();
         $my_contacts = $all_contacts->filter(function ($contact) {
             return $contact->creator_type === get_class(Auth::user()) && $contact->creator_id === Auth::id();
 
