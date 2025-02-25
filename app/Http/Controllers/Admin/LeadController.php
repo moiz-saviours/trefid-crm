@@ -58,8 +58,9 @@ class LeadController extends Controller
                 'lead_status_id' => 'required|integer|exists:lead_statuses,id',
                 'name' => 'required||string|max:255',
                 'email' => 'required|email|max:255',
-                'phone' => 'required|string|max:15',
+                'phone' => 'required|string',
                 'note' => 'nullable|string',
+                'phone' => 'nullable|regex:/^(\+?\d{1,3})[\d\s().-]+$/|min:8|max:20'
             ], [
                 'brand_key.required' => 'The brand field is required.',
                 'brand_key.integer' => 'The brand must be a valid integer.',
@@ -168,7 +169,7 @@ class LeadController extends Controller
                 'team_key' => 'nullable|integer',
                 'name' => 'required|string|max:255',
                 'email' => 'required|email|max:255',
-                'phone' => 'nullable|string|max:15',
+                'phone' => 'nullable|string',
                 'address' => 'nullable|string|max:255',
                 'city' => 'nullable|string|max:255',
                 'state' => 'nullable|string|max:255',
@@ -176,6 +177,7 @@ class LeadController extends Controller
                 'zipcode' => 'nullable|string|max:10',
                 'note' => 'nullable|string',
                 'status' => 'required|in:0,1',
+                'phone' => 'nullable|regex:/^(\+?\d{1,3})[\d\s().-]+$/|min:8|max:20'
             ]);
             if ($validator->fails()) {
                 return response()->json(['errors' => $validator->errors()], 422);

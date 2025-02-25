@@ -38,7 +38,7 @@ class AccountController extends Controller
             'email' => 'required|email|max:255|unique:admins,email',
             'designation' => 'nullable|string|max:255',
             'gender' => 'nullable|string|max:10',
-            'phone_number' => 'nullable|string|max:15',
+            'phone_number' => 'nullable|string',
             'address' => 'nullable|string|max:255',
             'city' => 'nullable|string|max:255',
             'country' => 'nullable|string|max:255',
@@ -48,6 +48,7 @@ class AccountController extends Controller
             'status' => 'required|in:0,1',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'password' => 'nullable|string|max:255',
+            'phone_number' => 'nullable|regex:/^(\+?\d{1,3})[\d\s().-]+$/|min:8|max:20',
         ]);
         try {
             $admin = new Admin($request->only([
@@ -108,6 +109,7 @@ class AccountController extends Controller
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'password' => 'nullable|string|max:255',
             'status' => 'required|in:0,1',
+            'phone_number' => 'nullable|regex:/^(\+?\d{1,3})[\d\s().-]+$/|min:8|max:20',
         ]);
         try {
             $admin->fill($request->only([

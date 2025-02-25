@@ -39,7 +39,7 @@ class EmployeeController extends Controller
             'email' => 'required|email|max:255|unique:users,email',
             'designation' => 'nullable|string|max:255',
             'gender' => 'nullable|string|max:10',
-            'phone_number' => 'nullable|string|max:15',
+            'phone_number' => 'nullable|string',
             'address' => 'nullable|string|max:255',
             'city' => 'nullable|string|max:255',
             'country' => 'nullable|string|max:255',
@@ -50,6 +50,7 @@ class EmployeeController extends Controller
             'status' => 'required|in:0,1',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'password' => 'nullable|string|max:255',
+            'phone_number' => 'nullable|regex:/^(\+?\d{1,3})[\d\s().-]+$/|min:8|max:20'
         ]);
 
         try {
@@ -115,13 +116,14 @@ class EmployeeController extends Controller
             'password' => 'nullable|string|max:255',
 
             'gender' => 'nullable|string|max:10',
-            'phone_number' => 'nullable|string|max:15',
+            'phone_number' => 'nullable|string',
             'address' => 'nullable|string|max:255',
             'city' => 'nullable|string|max:255',
             'country' => 'nullable|string|max:255',
             'postal_code' => 'nullable|string|max:10',
             'dob' => 'nullable|date',
             'about' => 'nullable|string',
+            'phone_number' => 'nullable|regex:/^(\+?\d{1,3})[\d\s().-]+$/|min:8|max:20'
         ]);
 
         $user->fill($request->only([

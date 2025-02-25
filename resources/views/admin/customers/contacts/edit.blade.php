@@ -4,6 +4,14 @@
     @push('style')
         @include('admin.customers.contacts.style')
         <style>
+            /*body {*/
+            /*    font-family: Arial, sans-serif;*/
+            /*    margin: 0;*/
+            /*    padding: 0;*/
+            /*    display: flex;*/
+            /*    height: 100vh;*/
+            /*}*/
+
             .containerr {
                 display: flex;
                 width: 100%;
@@ -24,7 +32,7 @@
 
             .collpase-divider {
                 background-color: #ddd;
-                height: 2px;
+                height: 1px;
             }
 
             .collapse-header-box {
@@ -90,6 +98,10 @@
 
             }
 
+            .custom-btn-collapse:hover {
+                color: #0091AE;
+            }
+
             .custom-spacing {
                 padding: 0px 13px;
             }
@@ -98,28 +110,52 @@
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
-                padding: 10px 17px;
+                /* padding: 10px 0px; */
 
             }
 
             .sidebar-icons {
-                color: #808080;
-                background-color: #ddd;
-                padding: 10px;
+                background-color: #EAF0F6;
+                border: 1px solid #CBD6E2;
+                color: #506E91;
+                padding: 9px;
                 border-radius: 31px;
+                font-size: 9px;
             }
 
 
+            .main-left-sidebar-actions {
+                display: flex;
+                padding: 16px 16px;
+                justify-content: space-between;
+
+            }
+
 
             .sidebarr {
-                width: auto;
-                background-color: #f0f4f8;
-                padding: 20px 2px;
+                /*width: auto;*/
+                background-color: #fff;
+                padding: 0px 2px 20px;
                 box-sizing: border-box;
                 border-right: 1px solid #ddd;
-                overflow-y: auto;
+                /*overflow-y: scroll;*/
+                /*height: 850px;*/
+                overflow-y: auto !important;
+
                 height: 100%;
-                /* height: 100%; */
+                /*height: calc(-200px + 100vh);*/
+                /*flex-grow: 1;*/
+                border-radius: 20px 0px 0px 0px;
+
+            }
+
+            .view-subscription-link {
+
+                color: #0091ae !important;
+                font-weight: 600;
+                margin: 0px !important;
+                font-size: 12px;
+                padding-top: 11px;
 
             }
 
@@ -127,6 +163,32 @@
                 display: flex;
                 /* flex-direction: column; */
                 align-items: center;
+            }
+
+            /* .avatar-img-box {
+            width: 53px;
+            height: 43px;
+            } */
+
+            .avatar-img {
+                border-radius: 50%;
+                background: #F2F5F8;
+                /* padding-top: 10px; */
+                height: 58px;
+                width: 98px;
+                padding: 17px 0px 0px;
+            }
+
+            .avatar-icon {
+                border-radius: 50%;
+                background: #F2F5F8;
+                /* padding-top: 10px; */
+                height: 55px;
+                width: 55px;
+                padding: 10px 0px;
+                font-size: 30px;
+                text-align: center;
+                line-height: 0;
             }
 
             .searchbox .searchbox__input.bg-color {
@@ -157,8 +219,17 @@
                 background-color: rgb(255, 255, 255);
                 border: 1px solid rgb(223, 227, 235);
                 border-radius: 4px;
-                padding: 12px 16px 0px;
+                padding: 16px 21px;
                 margin-bottom: 20px;
+            }
+
+            .email-box-container-mail-box {
+                background-color: rgb(255, 255, 255);
+                border: 1px solid rgb(223, 227, 235);
+                border-radius: 4px;
+                padding: 16px 21px;
+                margin-bottom: 20px;
+                position: relative;
             }
 
             .customize-select {
@@ -172,29 +243,32 @@
 
             .contact-info h2 {
                 margin: 0;
-                font-size: 20px;
+                font-size: 24px;
                 text-align: left;
-                font-weight: 600;
+                font-weight: 400;
                 color: #2d3e50;
-                margin-bottom: -3px;
+                /* margin-bottom: -3px; */
             }
 
             .recent-filters {
                 color: rgb(81, 111, 144);
                 font-weight: 400;
-                font-size: 14px;
+                font-size: 12px;
                 line-height: 24px;
             }
 
             .contact-info p {
                 /* margin: 5px 0; */
-                font-size: 13px;
+                font-size: 12px;
+                font-weight: 400;
                 color: gray;
+                margin: 0;
+                line-break: anywhere;
             }
 
             .profile_actions p {
                 font-size: 10px;
-                margin: 0px 9px;
+                margin: 0px 8px;
                 color: gray;
             }
 
@@ -243,7 +317,7 @@
             }
 
             .collaborators {
-                margin-top: 20px;
+                /*margin-top: 20px;*/
             }
 
             .collaborators h3 {
@@ -287,9 +361,9 @@
             }
 
             .custom-collapse-cards {
-                padding: 13px;
+                padding: 0 19px;
                 box-shadow: none;
-                margin: 0px 15px 9px;
+                /*margin: 0px 15px 9px;*/
             }
 
             .custom-collapse-cards-two {
@@ -303,6 +377,66 @@
                 background: transparent;
                 box-shadow: none;
                 padding: 0px 12px 8px;
+            }
+
+            .contact-card-details-head {
+                font-size: 12px;
+                color: gray;
+                font-weight: 400;
+                margin: 0;
+            }
+
+            .custom-right-detail-column {
+            }
+
+            .contact-card-details-para {
+                font-weight: 500;
+                font-size: 12px;
+            }
+
+            .contact-details-input-fields {
+                width: 100%;
+                border: none;
+
+            }
+
+            .contact-details-input-fields:focus-visible {
+                outline: 0;
+                border-bottom: 1px solid #0091AE;
+                padding: 8px;
+            }
+
+            .custom-contact-detail-dropdown {
+                font-size: 12px !important;
+                color: gray !important;
+                font-weight: 400 !important;
+                margin: 0;
+                border: 0;
+                background: transparent;
+                padding: 0;
+                /*letter-spacing: 1px;*/
+            }
+
+            .custom-contact-detail-dropdown.dropdown-toggle::after {
+                color: #0091AE;
+            }
+
+            .dropdown-menu.custom-contact-detail-dropdown-show.show {
+                /* box-shadow: none; */
+                width: 100%;
+            }
+
+            Another action .contact-card-subscription-para {
+                font-size: 12px;
+                font-weight: 400;
+                line-height: 24px;
+                color: #33475B;
+                margin-bottom: 0;
+            }
+
+            .custom-contact-detail-dropdown:focus-visible {
+                outline: none;
+                border: none;
             }
 
             .collapsible-content {
@@ -382,13 +516,13 @@
             .data-row p {
                 margin: 0;
                 color: gray;
-                font-size: 12px;
+                font-size: 10px;
                 text-align: center;
             }
 
             .activity {
                 border: 1px solid #ddd;
-                padding: 15px;
+                padding: 21px 17px;
                 border-radius: 5px;
                 margin-bottom: 10px;
                 background-color: #fff;
@@ -397,7 +531,7 @@
             .recent-activities h2 {
                 text-align: left;
                 /* padding-left: 15px; */
-                font-size: 17px;
+                font-size: 14px;
                 color: #2d3e50;
                 padding-top: 10px;
             }
@@ -405,7 +539,21 @@
             .activities-seprater {
                 color: #0091ae !important;
                 font-weight: 600;
+                font-size: 12px;
                 margin: 0px !important;
+            }
+
+            .activities-addition-links {
+                color: #0091ae !important;
+                font-weight: 600;
+                font-size: 12px;
+                margin: 0px !important;
+                text-decoration: none;
+            }
+
+            .activities-addition-links:hover {
+                text-decoration: underline;
+
             }
 
             .add-coment-icon {
@@ -417,10 +565,10 @@
             }
 
             /* .email-child-wrapper {
-                color: #007bff;
-                padding: 10px 15px;
+            color: #007bff;
+            padding: 10px 15px;
 
-                font-size: 14px;
+            font-size: 14px;
             } */
 
             .comment-box {
@@ -446,7 +594,8 @@
 
             .right-sidebarr {
                 /* width: 25%; */
-                background-color: #f0f4f8;
+                background-color: #fff;
+                /*background-color: #f0f4f8;*/
                 padding: 20px 0px;
                 height: 100%;
                 box-sizing: border-box;
@@ -477,9 +626,10 @@
 
             .profile_box {
                 display: flex;
-                padding: 0px 13px;
+                padding: 12px 13px 0px;
                 /* align-items: center; */
                 gap: 9px;
+                /*align-items: center;*/
             }
 
             .profile_actions {
@@ -488,8 +638,8 @@
                 justify-content: center;
                 border-bottom: 1px solid #ddd;
                 /* padding-bottom: 30px; */
-                padding: 20px 0px;
-
+                padding: 20px 20px;
+                /*gap: 11px;*/
             }
 
 
@@ -500,9 +650,8 @@
 
             .data-highlights {
                 background: white;
-                text-align: center;
-                padding-bottom: 7px;
-                padding-top: 7px;
+                /* text-align: center; */
+                padding: 20px 17px;
                 margin-top: 20px;
                 border-radius: 3px;
                 box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
@@ -511,13 +660,13 @@
             .data-highlights h2 {
                 text-align: left;
                 /* padding-left: 15px;
-                                                        padding-bottom: 15px; */
-                font-size: 15px;
+                padding-bottom: 15px; */
+                font-size: 14px;
                 color: #2d3e50;
             }
 
             .data-row h5 {
-                font-size: 12px;
+                font-size: 11px;
                 font-weight: 500;
                 color: #2d3e50;
                 margin-bottom: 3px;
@@ -527,7 +676,7 @@
             .activ_head p {
                 color: gray;
                 margin: 0px;
-                font-size: 13px;
+                font-size: 12px;
             }
 
             span.user_name {
@@ -562,7 +711,79 @@
                 /* margin: 0 auto; */
             }
 
-            .your-comment-btn {}
+            .search-containers {
+                display: flex;
+                align-items: center;
+                position: relative;
+                overflow: hidden;
+                border: 1px solid #ccc;
+                /* border-radius: 20px; */
+                background-color: white;
+                transition: width 0.4s ease;
+                /* Initial small width */
+            }
+
+            .search-containers.expanded {
+                width: 300px;
+                /* Expanded width */
+            }
+
+            .search-inputs {
+                border: none;
+                outline: none;
+                padding: 6px 0;
+                padding-left: 14px;
+                font-size: 12px;
+                width: 136px;
+                /* width: 0; */
+                transition: width 0.4s ease;
+                opacity: 1;
+            }
+
+            .search-containers.expanded .search-inputs {
+                width: 240px;
+                /* Full width inside expanded container */
+                padding-left: 15px;
+                opacity: 1;
+            }
+
+            .search-btns {
+                background: none;
+                border: none;
+                outline: none;
+                padding: 8px;
+                cursor: pointer;
+                font-size: 12px;
+                color: #666;
+            }
+
+            .search-btns span {
+                font-size: 18px;
+            }
+
+            .new-activity-dropdown {
+                background-color: #dddddd;
+                border: 1px solid #ccc;
+                border-radius: 0;
+                padding: 8px 16px;
+                font-size: 13px;
+            }
+
+            .new-activity-dropdown:hover {
+                box-shadow: none;
+            }
+
+            .new-activity-dropdown:focus {
+                box-shadow: none;
+            }
+
+            .new-activity-dropdown.dropdown-menu.show {
+                box-shadow: none;
+                border: 1px solid #ddd;
+            }
+
+            .your-comment-btn {
+            }
 
             .toolbar {
                 background-color: #dddddda6;
@@ -606,7 +827,6 @@
             }
 
 
-
             .custom-drop-btn-design:hover {
                 background-color: transparent;
                 box-shadow: none;
@@ -632,6 +852,27 @@
 
             }
 
+            .user-email-template {
+                padding-left: 47px;
+
+            }
+
+            .contentdisplay {
+                display: none;
+
+            }
+
+            .new-profile-email-wrapper {
+                display: flex;
+                gap: 7px;
+            }
+
+            .new-profile-parent-wrapper {
+                display: flex;
+                justify-content: space-between;
+            }
+
+
             .user_profile_text p {
                 margin-bottom: -3px;
                 font-size: 11px;
@@ -652,18 +893,147 @@
                 color: gray;
             }
 
+
             .user_cont {
                 font-size: 12px;
                 color: gray;
+                margin: 0;
+                /* padding: 16px 6px; */
             }
 
-            .right_collab i {
+            .right_collab {
                 float: right;
                 /* background: #2d3e50; */
-                color: #2d3e50;
+                color: #0091ae;
+                /*color: #2d3e50;*/
                 padding: 5px;
                 border-radius: 5px;
                 font-size: 11px;
+                cursor: pointer;
+            }
+
+            .right_collab:hover {
+                text-decoration: underline;
+            }
+
+            .prof-edit-icons {
+                color: #0091ae !important;
+                font-size: 12px;
+            }
+
+            .edit-icons-kit {
+                opacity: 0;
+            }
+
+            .profile_box:hover .edit-icons-kit {
+                opacity: 1;
+            }
+
+            .edit-prof-head {
+                color: #33475b;
+                /*line-height: 24px;*/
+                font-weight: 500;
+                margin-bottom: 0px;
+                font-size: 14px;
+            }
+
+            .dropdown-menu.custom-edit-detail-dropdown-show.show {
+                /* box-shadow: none; */
+                width: 19%;
+                background: #FFF;
+                padding: 20px 24px;
+                transform: translate(440px, 133px) !important;
+            }
+
+            .edit-input-fields {
+                margin: 7px 0px 15px;
+                width: 100%;
+                font-size: 13px;
+                line-height: 22px;
+                text-align: left;
+                vertical-align: middle;
+                color: rgb(51, 71, 91);
+                background-color: rgb(245, 248, 250);
+                border: 1px solid rgb(203, 214, 226);
+                border-radius: 3px;
+                padding: 4px 10px;
+                height: auto;
+                resize: none;
+                display: inline-block;
+                font-weight: 400 !important;
+            }
+
+            .companies-add-forms {
+                background-color: #eaf0f6;
+                border-color: #cbd6e2;
+                color: #506e91;
+                font-size: 11px;
+                line-height: 14px;
+                padding: 5px 10px;
+                border-radius: 3px;
+                border-style: solid;
+                border-width: 1px;
+            }
+
+            .edit-input-fields:focus-visible {
+                outline: 0;
+                border: 1px solid #0091ae;
+            }
+
+            .main-edit-btn-box {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+            }
+
+            .edit-prof-btn {
+                background-color: #425b76;
+                border-color: #425b76;
+                border-radius: 3px;
+                border-style: solid;
+                border-width: 1px;
+                color: #fff;
+                font-size: 12px;
+                line-height: 14px;
+                padding: 6px 0px;
+                width: 35%;
+
+            }
+
+            .canel-edition-btn {
+                background-color: #eaf0f6;
+                border-color: #cbd6e2;
+                color: #506e91;
+            }
+
+            .create-contact {
+                font-size: 7px;
+            }
+
+            .main-payment-btn-wrapper {
+                text-align: center;
+                margin-left: 33px;
+                margin-top: 16px;
+                /*margin-bottom: 12px;*/
+            }
+
+            .set-payment-btn {
+                background-color: #eaf0f6;
+                border-color: #cbd6e2;
+                color: #506e91;
+                font-size: 12px;
+                font-weight: 400;
+                line-height: 14px;
+                padding: 6px 14px;
+                border-radius: 3px;
+                border-style: solid;
+                border-width: 1px;
+            }
+
+            .right_collaboratrs-box {
+                display: flex;
+                justify-content: space-between;
+                align-items: baseline;
             }
 
             .user_cont h4 {
@@ -698,18 +1068,70 @@
             }
         </style>
     @endpush
-    <section id="content" class="content">
-        <div class="container-fluid">
-            <div class="row">
+    <section id="content" class="content new-box-main-wrapper">
+
+        <div class="container-fluid p-0">
+            <div class="row ">
                 <div class="col-lg-3">
+
+
                     <div class="sidebarr">
+                        <div class="main-left-sidebar-actions">
+                            <a href="#" class="view-subscription-link">
+                                <span><i class="fa fa-angle-left " aria-hidden="true"></i> contacts</span>
+                            </a>
+                            <a href="#" class="view-subscription-link">
+                                <span>Actions</span>
+                            </a>
+
+                        </div>
                         <div>
                             <div class="profile_box">
-                                <div class="avatar">MM</div>
+                                <!-- <div class="avatar">MM</div> -->
+                                <div class="avatar-img-box">
+                                    {{--                                    <img class="img-fluid avatar-img" src="img/user.png">--}}
+                                    <img class="img-fluid avatar-img" src="{{asset ('assets/images/user.png')}}">
+                                </div>
                                 <div class="contact-info">
-                                    <h2>{{$customer_contact->name}}</h2>
-                                    <h5>{{$customer_contact->address}}</h5>
-                                    <p>{{$customer_contact->email}}</p>
+                                    <h2>Mr Malik</h2>
+                                    <!-- <h5>Business Development Executive</h5> -->
+                                    <p>seo.hannywebdeveloper14@outlook.com
+                                    </p>
+                                </div>
+                                <div>
+
+                                    <button class="custom-contact-detail-dropdown" type="button"
+                                            id="dropdownMenuButtonedit" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i class="fa fa-pencil prof-edit-icons edit-icons-kit"
+                                           aria-hidden="true"></i>
+                                    </button>
+                                    <ul class="dropdown-menu custom-edit-detail-dropdown-show"
+                                        aria-labelledby="dropdownMenuButtonedit">
+                                        <li>
+                                            <p class="edit-prof-head">First Name</p>
+                                            <input class="edit-input-fields " type="text" placeholder="Hanny">
+                                        </li>
+                                        <li>
+                                            <p class="edit-prof-head">Last Name</p>
+                                            <input class="edit-input-fields " type="text" placeholder="Hanny">
+                                        </li>
+                                        <li>
+                                            <p class="edit-prof-head">Job Title</p>
+                                            <input class="edit-input-fields " type="text" placeholder="Hanny">
+                                        </li>
+                                        <li>
+                                            <div class="main-edit-btn-box">
+                                                <button class="edit-prof-btn">
+                                                    Save
+                                                </button>
+                                                <button class="edit-prof-btn canel-edition-btn">
+                                                    Cancel
+                                                </button>
+                                            </div>
+                                        </li>
+
+                                    </ul>
+                                    <i class="fa fa-clone prof-edit-icons" aria-hidden="true"></i>
                                 </div>
                             </div>
                         </div>
@@ -725,27 +1147,30 @@
 
                                 <div class="text-center">
 
-                                    <i class="fa fa-envelope-o sidebar-icons" aria-hidden="true"></i>
+                                    <i class="fa fa-envelope sidebar-icons" aria-hidden="true"></i>
                                     <p> Email</p>
 
                                 </div>
 
                                 <div class="text-center">
 
-                                    <i class="fa fa-phone-square sidebar-icons" aria-hidden="true"></i>
+                                    <i class="fa fa-phone sidebar-icons" aria-hidden="true"></i>
                                     <p>Call</p>
                                 </div>
                                 <div class="text-center">
-                                    <i class="fa fa-list sidebar-icons" aria-hidden="true"></i>
-                                    <p>Task</p>
+                                    <i class="fa fa-calendar sidebar-icons" aria-hidden="true"></i>
+                                    <p>Meeting</p>
                                 </div>
                                 <div class="text-center">
                                     <i class="fa fa-list sidebar-icons" aria-hidden="true"></i>
                                     <p>Task</p>
                                 </div>
 
+
                                 <div class="text-center">
+
                                     <i class="fa fa-calendar-check-o sidebar-icons" aria-hidden="true"></i>
+
                                     <p>More</p>
                                 </div>
                             </div>
@@ -753,26 +1178,59 @@
 
                         <div class="sections">
                             <div class="collaborators">
-                                <div class="collapse-header-prent-box">
+
+
+                                <div class="collapse-header-prent-box mt-4">
                                     <div class="collapse-header-box">
                                         <i class="fa fa-caret-down" aria-hidden="true"></i>
                                         <button class="btn custom-btn-collapse" type="button"
                                                 data-bs-toggle="collapse" data-bs-target="#collapseExamplecontact"
                                                 aria-expanded="true" aria-controls="collapseExamplecontact">
-
                                             About this contact
                                         </button>
                                     </div>
                                 </div>
 
-                                <div class="collapse show" id="collapseExamplecontact" style="">
+                                <div class="collapse show" id="collapseExamplecontact">
                                     <div class="card custom-contact-cards card-body">
-                                        Some placeholder content for the collapse component. This panel is hidden by
-                                        default
-                                        but
-                                        revealed when the user activates the relevant trigger.
+                                        <div>
+                                            <p class="contact-card-details-head">Email</p>
+                                            <p class="contact-card-details-para">mmr840327@gmail.com</p>
+                                        </div>
+                                        <div class="mb-4">
+                                            <p class="contact-card-details-head">Phone</p>
+                                            <input class="contact-details-input-fields " type="number"
+                                                   placeholder="">
+                                        </div>
+                                        <div class="mb-4">
+                                            <p class="contact-card-details-head">Contact Owner</p>
+                                            <input class="contact-details-input-fields " type="text" placeholder="">
+                                        </div>
+                                        <div class="mb-4">
+                                            <p class="contact-card-details-head">Last contacted</p>
+                                            <input class="contact-details-input-fields " type="text" placeholder="">
+                                        </div>
+                                        <div class="mb-4">
+                                            <div class="">
+                                                <button class="custom-contact-detail-dropdown dropdown-toggle"
+                                                        type="button" id="dropdownMenuButtonlead"
+                                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                                    Lead
+                                                </button>
+                                                <ul class="dropdown-menu custom-contact-detail-dropdown-show"
+                                                    aria-labelledby="dropdownMenuButtonlead">
+                                                    <li><a class="dropdown-item" href="#">Action</a></li>
+                                                    <li><a class="dropdown-item" href="#">Another action</a></li>
+                                                    <li><a class="dropdown-item" href="#">Something else here</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
+
+                                <div class="collpase-divider mb-3 mt-3"></div>
+
 
                                 <div class="collapse-header-prent-box">
                                     <div class="collapse-header-box">
@@ -785,34 +1243,41 @@
                                     </div>
                                 </div>
 
-                                <div class="collapse show" id="collapseExamplesubscriptions" style="">
+                                <div class="collapse show" id="collapseExamplesubscriptions">
                                     <div class="card custom-contact-cards card-body">
-                                        Some placeholder content for the collapse component. This panel is hidden by
-                                        default
-                                        but
-                                        revealed when the user activates the relevant trigger.
+                                        <p class="contact-card-subscription-para">
+                                            Use subscription types to manage the communication this contact receives
+                                            from you
+                                        </p>
+                                        <a href="#" class="view-subscription-link">
+                                            <span>View Subscription</span>
+                                        </a>
                                     </div>
                                 </div>
 
+                                <div class="collpase-divider mb-3 mt-3"></div>
                                 <div class="collapse-header-prent-box">
                                     <div class="collapse-header-box">
                                         <i class="fa fa-caret-down" aria-hidden="true"></i>
                                         <button class="btn custom-btn-collapse" type="button"
-                                                data-bs-toggle="collapse" data-bs-target="#collapseExampleactivity"
-                                                aria-expanded="false" aria-controls="collapseExampleactivity">
-                                            Website activity
+                                                data-bs-toggle="collapse" data-bs-target="#collapseExampleweb"
+                                                aria-expanded="true" aria-controls="collapseExampleweb">
+                                            Website Activity
                                         </button>
                                     </div>
                                 </div>
 
-                                <div class="collapse" id="collapseExampleactivity">
+                                <div class="collapse show" id="collapseExampleweb">
                                     <div class="card custom-contact-cards card-body">
-                                        Some placeholder content for the collapse component. This panel is hidden by
-                                        default
-                                        but
-                                        revealed when the user activates the relevant trigger.
+                                        <p class="contact-card-subscription-para">
+                                            Use subscription types to manage the communication this contact receives
+                                            from you
+                                        </p>
+
                                     </div>
                                 </div>
+
+
                             </div>
                         </div>
                     </div>
@@ -824,12 +1289,14 @@
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link main-tabs-view active" id="home-tab" data-bs-toggle="tab"
                                         data-bs-target="#home" type="button" role="tab" aria-controls="home"
-                                        aria-selected="true">Overview</button>
+                                        aria-selected="true">Overview
+                                </button>
                             </li>
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link main-tabs-view" id="profile-tab" data-bs-toggle="tab"
                                         data-bs-target="#profile" type="button" role="tab" aria-controls="profile"
-                                        aria-selected="false" tabindex="-1">Activities</button>
+                                        aria-selected="false" tabindex="-1">Activities
+                                </button>
                             </li>
                         </ul>
                         <div class="tab-content" id="myTabContent">
@@ -840,7 +1307,7 @@
                                     <div class="data-highlights">
                                         <div class="data-top-heading-header">
                                             <h2>Data highlights</h2>
-                                            <p>12/03/2024 4:48 PM GMT+5</p>
+                                            <p class="contact-card-details-head">12/03/2024 4:48 PM GMT+5</p>
                                         </div>
                                         <div class="data-row">
                                             <div>
@@ -869,7 +1336,7 @@
                                             <div class="email-box-container">
                                                 <div class="activ_head" onclick="toggleContent('toggledContent1')">
                                                     <div class="email-child-wrapper">
-                                                        <i class="fa fa-caret-down" aria-hidden="true"></i>
+                                                        <i class="fa fa-caret-right" aria-hidden="true"></i>
                                                         <i class="fa fa-envelope-o new-sidebar-icons"
                                                            aria-hidden="true"></i>
 
@@ -880,6 +1347,8 @@
                                                     </div>
                                                     <p class="usre_date">Dec 3, 2024 at 4:48 PM GMT+5</p>
                                                 </div>
+
+                                                <div class="collpase-divider mt-2 mb-2"></div>
 
 
                                                 <div>
@@ -907,152 +1376,110 @@
                                                     </p>
                                                 </div>
 
-                                                <div class="comment-active_head" id="toggledContent1">
-                                                    <!-- <div class="email-child-wrapper" >
-                                                        <i class="fa fa-commenting-o add-coment-icon" aria-hidden="true"></i>
-                                                        <p class="activities-seprater">
-                                                            Add Comments
-                                                        </p>
-                                                    </div> -->
-                                                    <div>
 
-                                                        <div class="email-child-wrapper" id="toggleButton">
-                                                            <i class="fa fa-commenting-o add-coment-icon"
-                                                               aria-hidden="true"></i>
-                                                            <span class="activities-seprater">Add Comments</span>
-                                                        </div>
+                                                <div>
+                                                    <div class="comment-active_head" id="toggledContent1">
 
 
-                                                        <div id="contents" class="hidden comment-box">
-                                                            <div class="editor-container">
-                                                                <div class="avatarr">MM</div>
-                                                                <div>
-                                                                    <!-- Editable content area -->
-                                                                    <div class="editor" id="editor"
-                                                                         contenteditable="true">
-                                                                        <!-- <textarea class="editor"
-                                                                            placeholder="Leave comment..."></textarea> -->
-                                                                    </div>
-                                                                    <!-- Toolbar with buttons for text formatting -->
-                                                                    <div class="toolbar">
-                                                                        <button id="boldBtn"><b>B</b></button>
-                                                                        <button id="italicBtn"><i>I</i></button>
-                                                                        <button id="underlineBtn"><u>U</u></button>
-                                                                        <button id="strikeBtn"><s>S</s></button>
-                                                                        <!-- <button id="fontSizeBtn">Font Size</button> -->
-                                                                        <!-- <button id="linkBtn">Link</button> -->
-                                                                        <button id="alignLeftBtn">Left</button>
-                                                                        <button id="alignCenterBtn">Center</button>
-                                                                        <button id="alignRightBtn">Right</button>
-                                                                        <button id="unorderedListBtn">UL</button>
-                                                                        <button id="orderedListBtn">OL</button>
-                                                                    </div>
+                                                        <div>
 
-                                                                    <!-- Save content as .txt file -->
-                                                                    <div class="editor-container">
+                                                            <div class="email-child-wrapper" id="toggleButton">
+                                                                <i class="fa fa-commenting-o add-coment-icon"
+                                                                   aria-hidden="true"></i>
+                                                                <span class="activities-addition-links">Add
+                                                                        Comments</span>
+                                                            </div>
+
+
+                                                            <div id="contents" class="hidden comment-box">
+                                                                <div class="editor-container">
+                                                                    <div class="avatarr">MM</div>
+                                                                    <div>
+                                                                        <!-- editor -->
+
+                                                                        <!-- <div class="editor-container">
                                                                         <button
                                                                             class="your-create-contact create-contact">comment</button>
                                                                         <button
                                                                             class="your-comment-cancel">Cancel</button>
+                                                                    </div> -->
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-
-                                                    <!-- <div class="customize-select">
-                                                            <select class="btn custom-drop-btn-design selection-box">
-                                                                <option> Selected<span>0</span></option>
-                                                                <option> Carts <span>0</span></option>
-                                                                <option>Companies 0</option>
-                                                                <option> Leads <span>1</span></option>
-                                                                <option>Orders <span>1</span></option>
-                                                            </select>
-
-                                                        </div> -->
 
 
-                                                    <div class="dropdown">
-                                                        <div class="dropdown-toggle custom-drop-btn-design ">1
-                                                            Association </div>
-                                                        <div class="dropdown-content">
+                                                        <div class="dropdown">
+                                                            <div class="dropdown-toggle custom-drop-btn-design ">1
+                                                                Association
+                                                            </div>
+                                                            <div class="dropdown-content">
 
-                                                            <div class="dropdown-content-wraper">
-                                                                <ul class="nested-select-list">
-                                                                    <li class="checkbox-item">
+                                                                <div class="dropdown-content-wraper">
+                                                                    <ul class="nested-select-list">
+                                                                        <li class="checkbox-item">
 
-                                                                        <label>Companies 0</label>
-                                                                    </li>
-                                                                    <li class="checkbox-item">
+                                                                            <label>Companies 0</label>
+                                                                        </li>
+                                                                        <li class="checkbox-item">
 
-                                                                        <label>Carts 0</label>
-                                                                    </li>
-                                                                    <li class="checkbox-item">
+                                                                            <label>Carts 0</label>
+                                                                        </li>
+                                                                        <li class="checkbox-item">
 
-                                                                        <label>Contacts 0</label>
-                                                                    </li>
-                                                                    <li class="checkbox-item">
+                                                                            <label>Contacts 0</label>
+                                                                        </li>
+                                                                        <li class="checkbox-item">
 
-                                                                        <label>Leads 0</label>
-                                                                    </li>
-                                                                    <li class="checkbox-item">
+                                                                            <label>Leads 0</label>
+                                                                        </li>
+                                                                        <li class="checkbox-item">
 
-                                                                        <label>Deals 0</label>
-                                                                    </li>
-                                                                    <li class="checkbox-item">
+                                                                            <label>Deals 0</label>
+                                                                        </li>
+                                                                        <li class="checkbox-item">
 
-                                                                        <label>Orders 0</label>
-                                                                    </li>
-                                                                    <!-- Add more items as needed -->
-                                                                </ul>
-                                                                <div>
-                                                                    <div class="search-box-select">
-                                                                        <input type="text"
-                                                                               placeholder="Search current associations"
-                                                                               class="search-input">
+                                                                            <label>Orders 0</label>
+                                                                        </li>
+                                                                        <!-- Add more items as needed -->
+                                                                    </ul>
+                                                                    <div>
+                                                                        <div class="search-box-select">
+                                                                            <input type="text"
+                                                                                   placeholder="Search current associations"
+                                                                                   class="search-input">
+                                                                        </div>
+                                                                        <div class="select-contact-box-space">
+                                                                            <p class="select-contact">Contacts</p>
+
+                                                                            <input type="checkbox" id="contact2">
+                                                                            <label for="contact2">HoeoSQMLp
+                                                                                becelhmerthewatt@yahoo.com</label>
+                                                                        </div>
                                                                     </div>
-                                                                    <div class="select-contact-box-space">
-                                                                        <p class="select-contact">Contacts</p>
 
-                                                                        <input type="checkbox" id="contact2">
-                                                                        <label for="contact2">HoeoSQMLp
-                                                                            becelhmerthewatt@yahoo.com</label>
-                                                                    </div>
                                                                 </div>
-
                                                             </div>
                                                         </div>
+
+
                                                     </div>
-
-                                                    <!-- <div class="dropdown">
-                                                        <button class="btn custom-drop-btn-design dropdown-toggle"
-                                                            type="button" id="dropdownMenuButton1"
-                                                            data-bs-toggle="dropdown" aria-expanded="false">
-                                                            1 Association
-                                                        </button>
-
-                                                        <ul class="custom-drop-down-show-main custom-drop-down-show dropdown-menu"
-                                                            aria-labelledby="dropdownMenuButton1">
-                                                            <li>
-
-                                                            </li>
-                                                            <li>
-                                                                <div class="customize-select">
-
-                                                                </div>
-                                                            </li>
-                                                        </ul>
-                                                    </div> -->
+                                                    <div class="collpase-divider mt-2 mb-2"></div>
+                                                    <div class=" mt-2 mb-2">
+                                                        <a href="#" class="activities-addition-links">View full
+                                                            activity</a>
+                                                    </div>
                                                 </div>
 
                                             </div>
                                         </div>
 
+
                                         <div class="activity">
                                             <div class="association-activities-box">
                                                 <h2>Companies</h2>
                                                 <div>
-                                                    <i class="fa fa-plus create-contact open-form-btn"
+                                                    <i class="fa fa-plus companies-add-forms open-form-btn"
                                                        aria-hidden="true"> Add</i>
                                                 </div>
 
@@ -1064,63 +1491,74 @@
                                     </div>
                                 </div>
                             </div>
+
+
                             <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+
+                                <div class="activ_head mt-5">
+
+                                    <!-- Searchbox input -->
+                                    <div class="search-containers">
+                                        <form id="search-form" style="margin:0;">
+                                            <input type="text" class="search-inputs" placeholder="Search activities"
+                                                   name="query">
+                                            <button class="search-btns">
+                                                <i class="fa fa-search" aria-hidden="true"></i>
+                                            </button>
+                                        </form>
+                                    </div>
+
+                                    <!-- dropdown  -->
+                                    <div class="dropdown">
+                                        <button class="new-activity-dropdown btn-secondary dropdown-toggle"
+                                                type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown"
+                                                aria-expanded="false">
+                                            Collapse all
+                                        </button>
+                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                            <li><a class="dropdown-item" href="#">Action</a></li>
+                                            <li><a class="dropdown-item" href="#">Another action</a>
+                                            </li>
+                                            <li><a class="dropdown-item" href="#">Something else
+                                                    here</a></li>
+                                        </ul>
+                                    </div>
+
+
+                                </div>
 
                                 <div class="custom-tabs-row">
                                     <ul class="nav nav-tabs newtabs-space" id="myTab" role="tablist">
                                         <li class="nav-item" role="presentation">
                                             <button class="nav-link customize active" id="act-tab"
                                                     data-bs-toggle="tab" data-bs-target="#act" type="button" role="tab"
-                                                    aria-controls="act" aria-selected="true">Activity</button>
+                                                    aria-controls="act" aria-selected="true">Activity
+                                            </button>
                                         </li>
                                         <li class="nav-item" role="presentation">
                                             <button class="nav-link customize" id="notes-tab" data-bs-toggle="tab"
                                                     data-bs-target="#notes" type="button" role="tab"
-                                                    aria-controls="notes" aria-selected="false"
-                                                    tabindex="-1">Notes</button>
+                                                    aria-controls="notes" aria-selected="false" tabindex="-1">Notes
+                                            </button>
                                         </li>
                                         <li class="nav-item" role="presentation">
                                             <button class="nav-link customize" id="email-tab" data-bs-toggle="tab"
                                                     data-bs-target="#email" type="button" role="tab"
-                                                    aria-controls="email" aria-selected="false"
-                                                    tabindex="-1">Emails</button>
+                                                    aria-controls="email" aria-selected="false" tabindex="-1">Emails
+                                            </button>
                                         </li>
                                     </ul>
                                     <div class="tab-content" id="myTabContent">
                                         <div class="tab-pane fade show active" id="act" role="tabpanel"
                                              aria-labelledby="act-tab">
-                                            <div class="activ_head">
 
-                                                <!-- Searchbox input -->
-                                                <div class="search-containers">
-                                                    <form id="search-form" style="margin:0;">
-                                                        <input type="text" class="search-inputs"
-                                                               placeholder="Search activities" name="query">
-                                                        <button class="search-btns">
-                                                            <i class="fa fa-search" aria-hidden="true"></i>
-                                                        </button>
-                                                    </form>
-                                                </div>
-
-                                                <!-- dropdown  -->
-                                                <div class="dropdown">
-                                                    <button
-                                                        class="new-activity-dropdown btn-secondary dropdown-toggle"
-                                                        type="button" id="dropdownMenuButton1"
-                                                        data-bs-toggle="dropdown" aria-expanded="false">
-                                                        Collapse all
-                                                    </button>
-                                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                                        <li><a class="dropdown-item" href="#">Action</a></li>
-                                                        <li><a class="dropdown-item" href="#">Another action</a>
-                                                        </li>
-                                                        <li><a class="dropdown-item" href="#">Something else
-                                                                here</a></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
 
                                             <div>
+                                                <div>
+                                                    <p class="recent-filters"> Filter by:
+                                                        <span class="activities-seprater">7 activities</span>
+                                                    </p>
+                                                </div>
                                                 <p class="date-by-order"> May 2021</p>
                                                 <div class="data-highlights">
                                                     <div class="data-top-heading-header">
@@ -1129,80 +1567,125 @@
                                                     </div>
                                                     <p class="user_cont"> No associated objects of this
                                                         type
-                                                        exist or you don't have permission to view them.</p>
+                                                        exist or you don't have permission to view them.
+                                                        <span class="activities-seprater"> View detail <i
+                                                                class="fa fa-external-link" aria-hidden="true"></i>
+                                                            </span>
+                                                    </p>
                                                 </div>
 
                                                 <div class="recent-activities">
-                                                    <h2>Recent activities</h2>
-                                                    <div class="activity">
-                                                        <div class="activ_head">
-                                                            <p>
-                                                                Inbound email from
-                                                                <span class="user_name">Mr Malik</span>
-                                                            </p>
-                                                            <p class="usre_date">Dec 3, 2024 at 4:48 PM GMT+5
-                                                            </p>
-                                                        </div>
 
-                                                        <div>
-                                                            <div class="user_profile">
-                                                                <div class="user_profile_img">
-                                                                    <div class="avatarr">MM</div>
+
+                                                    <div class="email-box-container ">
+                                                        <div class="toggle-btnss">
+                                                            <div class="activ_head ">
+                                                                <div class="email-child-wrapper">
+                                                                    <i class="fa fa-caret-right"
+                                                                       aria-hidden="true"></i>
+                                                                    <h2>
+                                                                        Email - #Professional Image Editing <span
+                                                                            class="user_cont">from
+                                                                                Harry
+                                                                                Brown</span></h2>
                                                                 </div>
-                                                                <div class="user_profile_text">
-                                                                    <p>Mike Stewar mikestewar1932@outlook.com
-                                                                    </p>
-                                                                    <p>to info@phototouchexpert.com</p>
-                                                                </div>
+                                                                <p>12/03/2024 4:48 PM GMT+5</p>
                                                             </div>
                                                         </div>
-                                                        <div class="user_cont">
+
+
+                                                        <div>
+                                                            <!-- <div class="contact-us-text">
+                                                                --
+                                                            </div> -->
+                                                            <div class="contentdisplay ">
+
+                                                                <div class="new-profile-parent-wrapper">
+                                                                    <div class="new-profile-email-wrapper">
+                                                                        <div class="user_profile_img">
+                                                                            <div class="avatarr">MS</div>
+                                                                        </div>
+                                                                        <div class="user_profile_text">
+                                                                            <p>Mike Stewar</p>
+                                                                            <p style="font-weight: 500">--
+                                                                            </p>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="new-profile-email-wrapper">
+                                                                        <div
+                                                                            class="activities-seprater  open-email-form" style="position: relative">
+                                                                            Reply
+                                                                        </div>
+
+
+
+
+                                                                        <div
+                                                                            class="activities-seprater open-form-btn">
+                                                                            Forward
+                                                                        </div>
+                                                                        <div
+                                                                            class="activities-seprater open-form-btn">
+                                                                            Delete
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <!-- <div class="user_profile-hidden activ_head "
+                                                                id="toggledContent01">
+                                                                <div class="">
+                                                                    <div class="user_profile_img">
+                                                                        <div class="avatarr">MM</div>
+                                                                    </div>
+                                                                    <div class="user_profile_text">
+                                                                        <p>Mike Stewar mikestewar1932@outlook.com
+                                                                        </p>
+                                                                        <p style="font-weight: 500">--
+                                                                        </p>
+                                                                    </div>
+                                                                </div>
+                                                                <div>
+                                                                    <i class="fa fa-plus companies-add-forms open-form-btn"
+                                                                        aria-hidden="true"> Add</i>
+                                                                </div>
+                                                            </div> -->
+                                                        </div>
+                                                        <div class="user_cont user-email-template">
                                                             <p>
-                                                                Hi there, I hope you're doing well. I specialize
-                                                                in
-                                                                online reputation management and can help boost
-                                                                your
-                                                                business's presence by generating positive
-                                                                reviews
+                                                                Hi, <br> I hope you're doing well. I specialize in
+                                                                online reputation management and can help boost your
+                                                                business's presence by generating positive reviews
                                                                 and
                                                                 addressing any negative feedback.
                                                             </p>
                                                         </div>
+                                                        <!-- <div class="user_cont-toggler">
+                                                            <p>
+                                                                Hi, <br> I hope you're doing well. I specialize in
+                                                                online reputation management and can help boost your
+                                                                business's presence by generating positive reviews
+                                                                and
+                                                                addressing any negative feedback.
+                                                            </p>
+                                                        </div> -->
+
+
                                                     </div>
-                                                    <div class="activity">
-                                                        <div class="activ_head">
-                                                            <p>
-                                                                Inbound email from
-                                                                <span class="user_name">Mr Malik</span>
-                                                            </p>
-                                                            <p class="usre_date">Dec 3, 2024 at 4:48 PM GMT+5
-                                                            </p>
-                                                        </div>
 
-                                                        <div>
-                                                            <div class="user_profile">
-                                                                <div class="user_profile_img">
-                                                                    <div class="avatarr">MM</div>
-                                                                </div>
-                                                                <div class="user_profile_text">
-                                                                    <p>Mike Stewar mikestewar1932@outlook.com
-                                                                    </p>
-                                                                    <p>to info@phototouchexpert.com</p>
-                                                                </div>
-                                                            </div>
+                                                    <div class="data-highlights">
+                                                        <div class="data-top-heading-header">
+                                                            <h2>Life Cycle</h2>
+                                                            <p>This contact was created </p>
                                                         </div>
-                                                        <div class="user_cont">
-                                                            <p>
-                                                                Hi there, I hope you're doing well. I specialize
-                                                                in
-                                                                online reputation management and can help boost
-                                                                your
-                                                                business's presence by generating positive
-                                                                reviews
-                                                                and
-                                                                addressing any negative feedback.
-                                                            </p>
-                                                        </div>
+                                                        <p class="user_cont"> No associated objects of this
+                                                            type
+                                                            exist or you don't have permission to view them.
+                                                            <span class="activities-seprater"> View detail <i
+                                                                    class="fa fa-external-link"
+                                                                    aria-hidden="true"></i>
+                                                                </span>
+                                                        </p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1217,14 +1700,10 @@
                                 </div>
 
 
-
-
-
                             </div>
 
                         </div>
                     </div>
-
 
 
                     <div class="main">
@@ -1236,56 +1715,158 @@
 
 
                     <div class="right-sidebarr">
-                        <div class="collaborators right_collab">
+                        <div class="collaborators ">
 
 
+                            <div class="right_collaboratrs-box">
+                                <div class="collapse-header-prent-box">
+                                    <div class="collapse-header-box">
+                                        <i class="fa fa-caret-down" aria-hidden="true"></i>
+                                        <button class="btn custom-btn-collapse" type="button"
+                                                data-bs-toggle="collapse" data-bs-target="#collapseExample"
+                                                aria-expanded="true" aria-controls="collapseExample">
 
-                            <div class="collapse-header-prent-box">
-                                <div class="collapse-header-box">
-                                    <i class="fa fa-caret-down" aria-hidden="true"></i>
-                                    <button class="btn custom-btn-collapse" type="button" data-bs-toggle="collapse"
-                                            data-bs-target="#collapseExample" aria-expanded="true"
-                                            aria-controls="collapseExample">
+                                            Company <span> (1) </span>
+                                        </button>
+                                    </div>
 
-                                        Company <span> (1) </span>
-                                    </button>
                                 </div>
-                                <i class="fa fa-plus create-contact open-form-btn" aria-hidden="true"> Add</i>
-                            </div>
 
-                            <div class="collapse show" id="collapseExample" style="">
+                                <div class="right_collab open-form-btn">
+                                    <i class="fa fa-plus create-contact open-form-btn" aria-hidden="true"> </i>
+                                    <span>Add</span>
+                                </div>
+
+                            </div>
+                            <div class="collapse show" id="collapseExample">
                                 <div class="card custom-collapse-cards card-body">
-                                    Some placeholder content for the collapse component. This panel is hidden by
-                                    default but
-                                    revealed when the user activates the relevant trigger.
+                                    <p class="contact-card-subscription-para">
+                                        See the businesses or organizations associated with this record.
+                                    </p>
                                 </div>
                             </div>
 
-                            <div class="collpase-divider"></div>
+                            <div class="collpase-divider mt-2 mb-2"></div>
+
+
+                            <div class="right_collaboratrs-box">
+                                <div class="collapse-header-prent-box">
+                                    <div class="collapse-header-box">
+                                        <i class="fa fa-caret-down" aria-hidden="true"></i>
+                                        <button class="btn custom-btn-collapse" type="button"
+                                                data-bs-toggle="collapse" data-bs-target="#collapseExampleone"
+                                                aria-expanded="true" aria-controls="collapseExampleone">
+
+                                            Tickets <span> (0) </span>
+                                        </button>
+                                    </div>
+
+                                </div>
+                                <div class="right_collab open-form-btn">
+                                    <i class="fa fa-plus create-contact " aria-hidden="true"> </i>
+                                    <span>Add</span>
+                                </div>
+                            </div>
+
+                            <div class="collapse show" id="collapseExampleone">
+                                <div class="card custom-collapse-cards card-body">
+                                    <p class="contact-card-subscription-para">
+                                        See the businesses or organizations associated with this record.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="collpase-divider mt-2 mb-2"></div>
+
+                            <div class="right_collaboratrs-box">
+                                <div class="collapse-header-prent-box">
+                                    <div class="collapse-header-box">
+                                        <i class="fa fa-caret-down" aria-hidden="true"></i>
+                                        <button class="btn custom-btn-collapse" type="button"
+                                                data-bs-toggle="collapse" data-bs-target="#collapseExampledeal"
+                                                aria-expanded="true" aria-controls="collapseExampledeal">
+
+                                            Deals <span> (0) </span>
+                                        </button>
+                                    </div>
+
+                                </div>
+                                <div class="right_collab open-form-btn">
+                                    <i class="fa fa-plus create-contact " aria-hidden="true"> </i>
+                                    <span>Add</span>w
+                                </div>
+                            </div>
+
+                            <div class="collapse show" id="collapseExampledeal">
+                                <div class="card custom-collapse-cards card-body">
+                                    <p class="contact-card-subscription-para">
+                                        See the businesses or organizations associated with this record.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="collpase-divider mt-2 mb-2"></div>
 
 
                             <div class="collapse-header-prent-box">
                                 <div class="collapse-header-box">
                                     <i class="fa fa-caret-down" aria-hidden="true"></i>
                                     <button class="btn custom-btn-collapse" type="button" data-bs-toggle="collapse"
-                                            data-bs-target="#collapseExampleone" aria-expanded="true"
-                                            aria-controls="collapseExampleone">
+                                            data-bs-target="#collapseExamplepay" aria-expanded="true"
+                                            aria-controls="collapseExamplepay">
 
-                                        Company <span> (1) </span>
+                                        Payments <span> (0) </span>
                                     </button>
                                 </div>
-                                <i class="fa fa-plus create-contact open-form-btn" aria-hidden="true"> Add</i>
+
                             </div>
 
-                            <div class="collapse show" id="collapseExampleone" style="">
-                                <div class="card custom-collapse-cards-two card-body">
-                                    Some placeholder content for the collapse component. This panel is hidden by
-                                    default but
-                                    revealed when the user activates the relevant trigger.
+
+                            <div class="collapse show" id="collapseExamplepay">
+                                <div class="card custom-collapse-cards card-body">
+                                    <p class="contact-card-subscription-para">
+                                        Give customers a fast, flexible way to pay. Add a payment link to accept a
+                                        payment and associate it with this record.
+                                    </p>
+                                    <div class="main-payment-btn-wrapper ">
+                                        <button class="set-payment-btn">Set up Payments</button>
+                                    </div>
                                 </div>
                             </div>
 
-                            <div class="collpase-divider"></div>
+                            <div class="collpase-divider mt-2 mb-2"></div>
+
+
+                            <div class="right_collaboratrs-box">
+                                <div class="collapse-header-prent-box">
+                                    <div class="collapse-header-box">
+                                        <i class="fa fa-caret-down" aria-hidden="true"></i>
+                                        <button class="btn custom-btn-collapse" type="button"
+                                                data-bs-toggle="collapse" data-bs-target="#collapseExampleatt"
+                                                aria-expanded="true" aria-controls="collapseExampleatt">
+
+                                            Attachments
+                                        </button>
+                                    </div>
+
+                                </div>
+
+                                <div class="right_collab open-form-btn">
+                                    <i class="fa fa-plus create-contact open-form-btn" aria-hidden="true"> </i>
+                                    <span>Add</span>
+                                </div>
+
+                            </div>
+                            <div class="collapse show" id="collapseExampleatt">
+                                <div class="card custom-collapse-cards card-body">
+                                    <p class="contact-card-subscription-para">
+                                        See the businesses or organizations associated with this record.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="collpase-divider mt-2 mb-2"></div>
+
 
                         </div>
                     </div>
@@ -1294,15 +1875,15 @@
         </div>
     </section>
 
-    @include('admin.customers.contacts.custom-form');
+    @include('admin.customers.companies.custom-form')
+    @include('admin.customers.companies.email-template')
 
     @push('script')
-        @include('admin.customers.contacts.script')
+        @include('admin.customers.companies.script')
         <script>
             // Function to toggle the visibility of the additional content div
             function toggleContent(contentId) {
                 var contentDiv = document.getElementById(contentId);
-
                 // Toggle the display property (show/hide)
                 if (contentDiv.style.display === "none" || contentDiv.style.display === "") {
                     contentDiv.style.display = "flex"; // Show the content
@@ -1312,7 +1893,6 @@
             }
 
             // Second comment function
-
             $(document).ready(function () {
                 $('#toggleButton').click(function () {
                     const contents = $('#contents');
@@ -1325,87 +1905,12 @@
                     }
                 });
             });
-
-
-            //Comment box editor function
-
-            $(document).ready(function () {
-                // Toggle Bold
-                $('#boldBtn').click(function () {
-                    document.execCommand('bold');
-                });
-
-                // Toggle Italic
-                $('#italicBtn').click(function () {
-                    document.execCommand('italic');
-                });
-
-                // Toggle Underline
-                $('#underlineBtn').click(function () {
-                    document.execCommand('underline');
-                });
-
-                // Toggle Strikethrough
-                $('#strikeBtn').click(function () {
-                    document.execCommand('strikeThrough');
-                });
-
-                // Change font size
-                $('#fontSizeBtn').click(function () {
-                    // var size = prompt("Enter font size (1-7):", "3");
-                    document.execCommand('fontSize', false, size);
-                });
-
-                // Insert link
-                $('#linkBtn').click(function () {
-                    var url = prompt("Enter the URL:", "http://");
-                    document.execCommand('createLink', false, url);
-                });
-
-                // Align Left
-                $('#alignLeftBtn').click(function () {
-                    document.execCommand('justifyLeft');
-                });
-
-                // Align Center
-                $('#alignCenterBtn').click(function () {
-                    document.execCommand('justifyCenter');
-                });
-
-                // Align Right
-                $('#alignRightBtn').click(function () {
-                    document.execCommand('justifyRight');
-                });
-
-                // Insert Unordered List
-                $('#unorderedListBtn').click(function () {
-                    document.execCommand('insertUnorderedList');
-                });
-
-                // Insert Ordered List
-                $('#orderedListBtn').click(function () {
-                    document.execCommand('insertOrderedList');
-                });
-
-                // Save content as .txt file
-                // $('#saveBtn').click(function () {
-                //     var content = $('#editor').text();
-                //     var blob = new Blob([content], { type: 'text/plain' });
-                //     var link = document.createElement('a');
-                //     link.href = URL.createObjectURL(blob);
-                //     link.download = 'document.txt';
-                //     link.click();
-                // });
-            });
-
-
             // select to function
             $(document).ready(function () {
                 // Toggle dropdown visibility
                 $(".dropdown-toggle").on("click", function () {
                     $(".dropdown-content").toggle();
                 });
-
                 // Filter list based on search input
                 $(".search-input").on("input", function () {
                     const filter = $(this).val().toLowerCase();
@@ -1414,7 +1919,6 @@
                         $(this).toggle(label.includes(filter));
                     });
                 });
-
                 // Close dropdown if clicked outside
                 $(document).on("click", function (e) {
                     if (!$(e.target).closest(".dropdown").length) {
@@ -1423,9 +1927,7 @@
                 });
             });
             // $('select>option:eq(3)').attr('selected', true);
-
             // Searching Input function
-
             $(document).ready(function () {
                 // Expand and collapse the search bar
                 $(".search-btns").on("click", function (e) {
@@ -1433,23 +1935,19 @@
                     $(".search-containers").toggleClass("expanded");
                     $(".search-inputs").focus();
                 });
-
                 // Handle form submission for search
                 $("#search-form").on("submit", function (e) {
                     e.preventDefault(); // Prevent default form submission
                     const query = $(".search-inputs").val().trim();
-
                     if (query) {
                         // Log the search query or perform an action
                         console.log("Searching for:", query);
-
                         // Redirect or process search here
                         // Example: window.location.href = `/search?q=${encodeURIComponent(query)}`;
                     } else {
                         alert("Please enter a search term.");
                     }
                 });
-
                 // Collapse the search bar when clicking outside
                 $(document).on("click", function (e) {
                     if (!$(e.target).closest(".search-containers").length) {
@@ -1457,6 +1955,34 @@
                     }
                 });
             });
+
+            // NEw
+            // Function hide and show
+            $(document).ready(function () {
+                $(".toggle-btnss").click(function () {
+                    $(".contentdisplay").slideToggle(); // Smoothly show or hide content
+                });
+            });
+            //new
+
+            // EMAIL TEMPLATE OPEN AND CLOSE
+            $(document).ready(function () {
+                const emailTemplate = $('#emailTemplate');
+
+                // Open form
+                $('.open-email-form').click(function () {
+                    emailTemplate.addClass('open');
+
+                });
+
+                // Close form
+                $('.close-btn').click(function () {
+                    emailTemplate.removeClass('open');
+
+                });
+            });
+
+
         </script>
     @endpush
 @endsection
