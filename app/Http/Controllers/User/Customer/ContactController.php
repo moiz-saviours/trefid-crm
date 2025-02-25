@@ -32,7 +32,7 @@ class ContactController extends Controller
             return $contact->creator_type === get_class(Auth::user()) && $contact->creator_id === Auth::id();
 
         });
-        return view('user.customers.contacts.index', compact('all_contacts', 'my_contacts', 'contacts', 'brands', 'teams', 'countries'));
+        return view('user.customers.contacts.index', compact('all_contacts', 'my_contacts', 'brands', 'teams', 'countries'));
     }
 
     public function store(Request $request)
