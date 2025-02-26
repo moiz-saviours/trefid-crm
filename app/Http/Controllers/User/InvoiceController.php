@@ -222,7 +222,7 @@ class InvoiceController extends Controller
             }
             DB::commit();
             $invoice->refresh();
-            $invoice->loadMissing('customer_contact', 'brand', 'team', 'agent');
+            $invoice->loadMissing('customer_contact', 'brand', 'team', 'agent','creator');
             $invoice->date = "Today at " . $invoice->created_at->timezone('GMT+5')->format('g:i A') . "GMT + 5";
             $invoice->due_date = Carbon::parse($invoice->due_date)->format('Y-m-d');
             return response()->json(['data' => $invoice, 'success' => "Record created successfully!" .
@@ -425,7 +425,7 @@ class InvoiceController extends Controller
                 }
             }
             DB::commit();
-            $invoice->loadMissing('customer_contact', 'brand', 'team', 'agent');
+            $invoice->loadMissing('customer_contact', 'brand', 'team', 'agent','creator');
             if ($invoice->created_at->isToday()) {
                 $date = "Today at " . $invoice->created_at->timezone('GMT+5')->format('g:i A') . "GMT + 5";
             } else {

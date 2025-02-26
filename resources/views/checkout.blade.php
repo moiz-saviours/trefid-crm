@@ -277,8 +277,8 @@ $countries = ['US' => 'United States', 'AF' => 'Afghanistan', 'AL' => 'Albania',
                             <div class="header-btns-heading-wrapper">
                                 <div class="form-txt" id="form-txt-1">
                                     <h1>Card Details</h1>
-                                    <p>your card details are shared securely via SSL for payment processing. <br>
-                                        we do not store your card details on our server.</p>
+{{--                                    <p>your card details are shared securely via SSL for payment processing. <br>--}}
+{{--                                        we do not store your card details on our server.</p>--}}
                                 </div>
                                 <div class="side-bar header-btns-div">
                                     <!-- <div class="nav  nav-pills side-bar" id="v-pills-tab" role="tablist"
@@ -682,11 +682,18 @@ $countries = ['US' => 'United States', 'AF' => 'Afghanistan', 'AL' => 'Albania',
                     const response = xhr.responseJSON;
                     const message = response?.error || error || 'Something went wrong. Please try again.';
                     if (xhr.status === 422 || response.errors) {
+                        let firstError = false;
                         $.each(response.errors, function (field, errorMessage) {
+                            firstError = true;
+                            if (firstError) {
+                                document.getElementById(field).scrollIntoView({behavior: 'smooth', block: 'center'});
+                            }
+                            toastr.error(response.errors[field], 'Error');
                             $(`#${field}_error`).text(errorMessage);
                         });
+                    } else {
+                        toastr.error(message, 'Error');
                     }
-                    toastr.error(message, 'Error');
                     console.log(error)
                     hideLoader();
                 },

@@ -198,6 +198,17 @@
             e.preventDefault();
             var dataId = $('#manage-form').data('id');
             var formData = new FormData(this);
+            @php
+                $baseUrl = '';
+                if (app()->environment('production')) {
+                    $baseUrl = url('');
+                } elseif (app()->environment('development')) {
+                    $baseUrl = url('');
+                } else {
+                    $baseUrl = url('');
+                }
+            @endphp
+            let basePath = `{{$baseUrl}}`;
             if (!dataId) {
                 AjaxRequestPromise(`{{ route("admin.invoice.store") }}`, formData, 'POST', {useToastr: true})
                     .then(response => {
@@ -220,17 +231,6 @@
                                 due_date,
                                 date
                             } = response.data;
-                            @php
-                                $baseUrl = '';
-                                if (app()->environment('production')) {
-                                    $baseUrl = url('');
-                                } elseif (app()->environment('development')) {
-                                    $baseUrl = url('');
-                                } else {
-                                    $baseUrl = url('');
-                                }
-                            @endphp
-                            let basePath = `{{$baseUrl}}`;
                             const index = table.rows().count() + 1;
                             const columns = `
                         <td class="align-middle text-center text-nowrap"></td>
@@ -377,6 +377,18 @@
                             // Column 11: Date
                             if (decodeHtml(rowData[10]) !== date) {
                                 table.cell(index, 10).data(date).draw();
+                            }
+                            // Column 12: Actions
+                            let actionsHtml = '';
+                            if (brand) {
+                                actionsHtml += `<button type="button" class="btn btn-sm btn-primary copyBtn" data-id="${id}" data-invoice-key="${invoice_key}" data-invoice-url="${basePath}/invoice?InvoiceID=${invoice_key}" title="Copy Invoice Url"><i class="fas fa-copy" aria-hidden="true"></i></button>`;
+                            }
+                            if (status != 1) {
+                                actionsHtml += `<button type="button" class="btn btn-sm btn-primary editBtn" data-id="${id}" title="Edit"><i class="fas fa-edit"></i></button>
+                                                <button type="button" class="btn btn-sm btn-danger deleteBtn" data-id="${id}" title="Delete"><i class="fas fa-trash"></i></button>`;
+                            }
+                            if (decodeHtml(rowData[11]) !== actionsHtml) {
+                                table.cell(index, 11).data(actionsHtml).draw();
                             }
                             $('#manage-form')[0].reset();
                             $('#formContainer').removeClass('open')
