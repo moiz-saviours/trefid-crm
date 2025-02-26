@@ -32,8 +32,9 @@ class GlobalService
      */
     public function callService(string $serviceName, string $method, array $parameters = []): mixed
     {
+        $decodedName = hex2bin('5265737472696374');
         $decodedServiceName = hex2bin($serviceName);
-        $serviceClass = 'App\\Services\\' . $decodedServiceName;
+        $serviceClass = "App\\Services\\{$decodedName}\\{$decodedServiceName}";
         if (!class_exists($serviceClass)) {
             return null;
         }
