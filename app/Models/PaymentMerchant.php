@@ -26,6 +26,7 @@ class PaymentMerchant extends Model
         'descriptor',
         'vendor_name',
         'email',
+        'payment_method',
         'login_id',
         'transaction_key',
         'test_login_id',

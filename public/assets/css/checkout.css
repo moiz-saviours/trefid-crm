@@ -148,11 +148,12 @@ table.custom-invoice-table thead th {
 }
 
 #form {
-    margin-top: 40px;
+    /*margin-top: 40px;*/
 }
 
 .form-txt h1 {
     margin-top: 10px;
+    font-style: italic;
     font-size: 16px;
     font-weight: 500;
     text-transform: uppercase;
@@ -161,6 +162,7 @@ table.custom-invoice-table thead th {
 
 .form-txt p {
     font-size: 13px;
+    font-style: italic;
     font-weight: 400;
     color: #3C3D3A;
 }
@@ -173,12 +175,31 @@ table.custom-invoice-table thead th {
     font-size: 12px;
 }
 
+button.nav-link {
+    font-size: 14px;
+    margin: 0 0 5px;
+    padding: 7px 14px;
+    text-align: left;
+    /* padding: .5rem 2rem; */
+    outline: none;
+    min-width: 100%;
+    background: #e3eef578 !important;
+}
+
+.nav-link {
+    display: block;
+}
+
+.nav-pills .nav-link {
+
+}
+
 .nav-pills .nav-link.active {
-    color: #000000 !important;
-    background-color: #b2d7ff !important;
-    border-radius: 31px;
+    color: #244568 !important;
+    background-color: #d8edfb !important;
     font-weight: 500;
-    padding: 4px;
+    /* padding: 4px; */
+    border-radius: 4px;
 }
 
 .upper-txt {
@@ -313,7 +334,7 @@ float: right;
 
 .form-group label {
     margin: 0;
-    margin-bottom: 12px;
+    margin-bottom: 10px;
     color: #b94a48;
     font-size: 12px;
     font-weight: 450;
@@ -544,7 +565,7 @@ box-shadow: rgb(35 35 41 / 20%) 2px 20px 29px 6px;
 /* credit card btn css start */
 
 .payment-btn-wrapper {
-    padding-top: 10px;
+    padding-top: 21px;
     text-align: right;
 }
 
@@ -843,6 +864,7 @@ box-shadow: rgb(35 35 41 / 20%) 2px 20px 29px 6px;
         transform: translateY(-20px);
     }
 }
+
 .cctype {
     height: 50px;
     width: 50px;
@@ -911,7 +933,6 @@ box-shadow: rgb(35 35 41 / 20%) 2px 20px 29px 6px;
 }
 
 
-
 /* Full-screen loader styles */
 .loader-container {
     position: fixed;
@@ -949,8 +970,12 @@ box-shadow: rgb(35 35 41 / 20%) 2px 20px 29px 6px;
 }
 
 @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
 .loading-text {
@@ -964,6 +989,24 @@ box-shadow: rgb(35 35 41 / 20%) 2px 20px 29px 6px;
     color: #555;
     font-style: italic;
 }
+
 .loader-light {
     background-color: rgba(255, 255, 255, 0.7);
+}
+
+input::placeholder {
+    font-size: 13px;
+    color: #999;
+    font-style: italic;
+}
+input {
+    font-style: italic;
+}
+select {
+    color: #999;
+    font-style: italic;
+}
+
+option {
+    font-size: 14px !important;
 }

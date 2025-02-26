@@ -63,9 +63,10 @@ $dueDate = new DateTime($invoiceData['due_date'] ?? 'now');
 $currentDate = new DateTime();
 $brandData = $invoiceData['brand'] ?? [];
 $countries = ['US' => 'United States', 'AF' => 'Afghanistan', 'AL' => 'Albania', 'DZ' => 'Algeria', 'AS' => 'American Samoa', 'AD' => 'Andorra', 'AO' => 'Angola', 'AI' => 'Anguilla', 'AG' => 'Antigua and Barbuda', 'AR' => 'Argentina', 'AM' => 'Armenia', 'AW' => 'Aruba', 'AU' => 'Australia', 'AT' => 'Austria', 'AZ' => 'Azerbaijan', 'BS' => 'Bahamas', 'BH' => 'Bahrain', 'BD' => 'Bangladesh', 'BB' => 'Barbados', 'BY' => 'Belarus', 'BE' => 'Belgium', 'BZ' => 'Belize', 'BJ' => 'Benin', 'BM' => 'Bermuda', 'BT' => 'Bhutan', 'BO' => 'Bolivia', 'BA' => 'Bosnia and Herzegovina', 'BW' => 'Botswana', 'BR' => 'Brazil', 'BN' => 'Brunei', 'BG' => 'Bulgaria', 'BF' => 'Burkina Faso', 'BI' => 'Burundi', 'CV' => 'Cabo Verde', 'KH' => 'Cambodia', 'CM' => 'Cameroon', 'CA' => 'Canada', 'KY' => 'Cayman Islands', 'CF' => 'Central African Republic', 'TD' => 'Chad', 'CL' => 'Chile', 'CN' => 'China', 'CO' => 'Colombia', 'KM' => 'Comoros', 'CG' => 'Congo', 'CD' => 'Congo (Democratic Republic)', 'CR' => 'Costa Rica', 'HR' => 'Croatia', 'CU' => 'Cuba', 'CY' => 'Cyprus', 'CZ' => 'Czech Republic', 'DK' => 'Denmark', 'DJ' => 'Djibouti', 'DM' => 'Dominica', 'DO' => 'Dominican Republic', 'EC' => 'Ecuador', 'EG' => 'Egypt', 'SV' => 'El Salvador', 'GQ' => 'Equatorial Guinea', 'ER' => 'Eritrea', 'EE' => 'Estonia', 'SZ' => 'Eswatini', 'ET' => 'Ethiopia', 'FJ' => 'Fiji', 'FI' => 'Finland', 'FR' => 'France', 'GA' => 'Gabon', 'GM' => 'Gambia', 'GE' => 'Georgia', 'DE' => 'Germany', 'GH' => 'Ghana', 'GR' => 'Greece', 'GD' => 'Grenada', 'GU' => 'Guam', 'GT' => 'Guatemala', 'GN' => 'Guinea', 'GW' => 'Guinea-Bissau', 'GY' => 'Guyana', 'HT' => 'Haiti', 'HN' => 'Honduras', 'HU' => 'Hungary', 'IS' => 'Iceland', 'IN' => 'India', 'ID' => 'Indonesia', 'IR' => 'Iran', 'IQ' => 'Iraq', 'IE' => 'Ireland', 'IL' => 'Israel', 'IT' => 'Italy', 'JM' => 'Jamaica', 'JP' => 'Japan', 'JO' => 'Jordan', 'KZ' => 'Kazakhstan', 'KE' => 'Kenya', 'KI' => 'Kiribati', 'KP' => 'North Korea', 'KR' => 'South Korea', 'KW' => 'Kuwait', 'KG' => 'Kyrgyzstan', 'LA' => 'Laos', 'LV' => 'Latvia', 'LB' => 'Lebanon', 'LS' => 'Lesotho', 'LR' => 'Liberia', 'LY' => 'Libya', 'LI' => 'Liechtenstein', 'LT' => 'Lithuania', 'LU' => 'Luxembourg', 'MG' => 'Madagascar', 'MW' => 'Malawi', 'MY' => 'Malaysia', 'MV' => 'Maldives', 'ML' => 'Mali', 'MT' => 'Malta', 'MH' => 'Marshall Islands', 'MR' => 'Mauritania', 'MU' => 'Mauritius', 'MX' => 'Mexico', 'FM' => 'Micronesia', 'MD' => 'Moldova', 'MC' => 'Monaco', 'MN' => 'Mongolia', 'ME' => 'Montenegro', 'MA' => 'Morocco', 'MZ' => 'Mozambique', 'MM' => 'Myanmar', 'NA' => 'Namibia', 'NR' => 'Nauru', 'NP' => 'Nepal', 'NL' => 'Netherlands', 'NZ' => 'New Zealand', 'NI' => 'Nicaragua', 'NE' => 'Niger', 'NG' => 'Nigeria', 'MK' => 'North Macedonia', 'NO' => 'Norway', 'OM' => 'Oman', 'PK' => 'Pakistan', 'PW' => 'Palau', 'PA' => 'Panama', 'PG' => 'Papua New Guinea', 'PY' => 'Paraguay', 'PE' => 'Peru', 'PH' => 'Philippines', 'PL' => 'Poland', 'PT' => 'Portugal', 'QA' => 'Qatar', 'RO' => 'Romania', 'RU' => 'Russia', 'RW' => 'Rwanda', 'WS' => 'Samoa', 'SM' => 'San Marino', 'SA' => 'Saudi Arabia', 'SN' => 'Senegal', 'RS' => 'Serbia', 'SC' => 'Seychelles', 'SL' => 'Sierra Leone', 'SG' => 'Singapore', 'SK' => 'Slovakia', 'SI' => 'Slovenia', 'SB' => 'Solomon Islands', 'SO' => 'Somalia', 'ZA' => 'South Africa', 'ES' => 'Spain', 'LK' => 'Sri Lanka', 'SD' => 'Sudan', 'SR' => 'Suriname', 'SE' => 'Sweden', 'CH' => 'Switzerland', 'SY' => 'Syria', 'TW' => 'Taiwan', 'TJ' => 'Tajikistan', 'TZ' => 'Tanzania', 'TH' => 'Thailand', 'TL' => 'Timor-Leste', 'TG' => 'Togo', 'TO' => 'Tonga', 'TT' => 'Trinidad and Tobago', 'TN' => 'Tunisia', 'TR' => 'Turkey', 'TM' => 'Turkmenistan', 'TV' => 'Tuvalu', 'UG' => 'Uganda', 'UA' => 'Ukraine', 'AE' => 'United Arab Emirates', 'GB' => 'United Kingdom', 'US' => 'United States', 'UY' => 'Uruguay', 'UZ' => 'Uzbekistan', 'VU' => 'Vanuatu', 'VA' => 'Vatican City', 'VE' => 'Venezuela', 'VN' => 'Vietnam', 'YE' => 'Yemen', 'ZM' => 'Zambia', 'ZW' => 'Zimbabwe'];
+$first_merchant = $invoiceDetails['invoice']['payment_methods'][0] ?? "";
 ?>
 
-<section class="invoice-template py-5">
+<section class="invoice-template py-2">
     <div class="container-fluid">
         <div class="row first-row">
             <div class="col-md-12">
@@ -273,89 +274,85 @@ $countries = ['US' => 'United States', 'AF' => 'Afghanistan', 'AL' => 'Albania',
             <div class="col-lg-6 col-12 <?= $invoiceDetails['invoice']['status'] == 1 ? 'd-none' : '' ?>">
                 <div class="box-shade-2">
                     <div class="row">
-                        <div class="col-12 col-md-12">
-                            <div class="header-btns-heading-wrapper">
-                                <div class="form-txt" id="form-txt-1">
-                                    <h1>Card Details</h1>
-{{--                                    <p>your card details are shared securely via SSL for payment processing. <br>--}}
-{{--                                        we do not store your card details on our server.</p>--}}
-                                </div>
-                                <div class="side-bar header-btns-div">
-                                    <!-- <div class="nav  nav-pills side-bar" id="v-pills-tab" role="tablist"
-                                        aria-orientation="vertical"> -->
-                                    <?php if (in_array('credit_card', $invoiceDetails['invoice']['payment_methods'])): ?>
-                                        <!-- <button class="nav-link active" id="v-pills-credit-card-tab" data-toggle="pill"
-                                                data-target="#v-pills-credit-card" type="button" role="tab"
-                                                aria-controls="v-pills-credit-card"
-                                                aria-selected="false">Credit Card
-                                        </button> -->
-                                    <?php endif; ?>
+                        <div class="col-md-3 side-bar-1">
+                            <div class="nav justify-content-left nav-pills side-bar" id="v-pills-tab" role="tablist"
+                                 aria-orientation="vertical">
+                                @if (in_array('authorize', $invoiceDetails['invoice']['payment_methods']))
+                                    <button
+                                        class="nav-link side-bar-btns  {{$first_merchant == "authorize" ? 'active' : ""}}"
+                                        id="v-pills-credit-card-tab"
+                                        data-toggle="pill"
+                                        data-target="#v-pills-credit-card" type="button" role="tab"
+                                        aria-controls="v-pills-credit-card"
+                                        aria-selected="false">Credit Card
+                                    </button>
+                                @endif
 
+                                @if (in_array('edp', $invoiceDetails['invoice']['payment_methods']))
+                                    <button
+                                        class="nav-link side-bar-btns {{$first_merchant == "edp" ? 'active' : ""}}"
+                                        id="v-pills-edp-tab"
+                                        data-toggle="pill"
+                                        data-target="#v-pills-edp" type="button" role="tab"
+                                        aria-controls="v-pills-edp"
+                                        aria-selected="false">{{$first_merchant == "edp" ? "Credit Card" : 'EDP'}}
+                                    </button>
+                                @endif
 
-                                    <?php if (in_array('paypal', $invoiceDetails['invoice']['payment_methods'])): ?>
-                                    {{--                                    <button class="paypal-payment-btn">--}}
-                                    {{--                                        <img src="./images/paypal.png" class="img-fluid payment-imgs">--}}
-                                    {{--                                    </button>--}}
-                                    <!-- <button class="nav-link payment-btns" id="v-pills-paypal-tab" data-toggle="pill"
-                                            data-target="#v-pills-paypal" type="button" role="tab"
-                                            aria-controls="v-pills-paypal"
-                                            aria-selected="true">
-                                            <img src="./images/paypal.png"  class="img-fluid payment-imgs">
-                                    </button> -->
-                                    <?php endif; ?>
-                                        <!--  <button class="nav-link" id="v-pills-Venmo-tab" data-toggle="pill" data-target="#v-pills-Venmo" type="button" role="tab" aria-controls="v-pills-Venmo" aria-selected="false">Venmo</button> -->
+                                @if (in_array('paypal', $invoiceDetails['invoice']['payment_methods']))
+                                    <button
+                                        class="nav-link side-bar-btns {{$first_merchant == "paypal" ? 'active' : ""}}"
+                                        id="v-pills-paypal-tab" data-toggle="pill"
+                                        data-target="#v-pills-paypal" type="button" role="tab"
+                                        aria-controls="v-pills-paypal"
+                                        aria-selected="true">Paypal
+                                    </button>
+                                @endif
 
-                                    <?php if (in_array('stripe', $invoiceDetails['invoice']['payment_methods'])): ?>
-                                    {{--                                    <button class="stripe-payment-btn">--}}
-                                    {{--                                        Pay with <span style="font-weight: 700;">Stripe</span>--}}
-                                    {{--                                    </button>--}}
-                                    <!-- <button class="nav-link" id="v-pills-stripe-tab" data-toggle="pill"
-                                            data-target="#v-pills-stripe" type="button" role="tab"
-                                            aria-controls="v-pills-stripe"
-                                            aria-selected="false">Stripe
-                                    </button> -->
-                                    <?php endif; ?>
-
-
-                                </div>
+                                @if (in_array('stripe', $invoiceDetails['invoice']['payment_methods']))
+                                    <button
+                                        class="nav-link side-bar-btns {{$first_merchant == "stripe" ? 'active' : ""}}"
+                                        id="v-pills-stripe-tab" data-toggle="pill"
+                                        data-target="#v-pills-stripe" type="button" role="tab"
+                                        aria-controls="v-pills-stripe"
+                                        aria-selected="false">Stripe
+                                    </button>
+                                @endif
                             </div>
                         </div>
-                        <div class="col-12 col-md-12">
+                        <div class="col-md-9">
                             <div class="tab-content" id="v-pills-tabContent">
-                                <div class="tab-pane fade show active" id="v-pills-credit-card" role="tabpanel"
+                                <!-- Credit Card Tab -->
+                                <div class="tab-pane fade {{$first_merchant == "authorize" ? 'show active' : ""}}"
+                                     id="v-pills-credit-card" role="tabpanel"
                                      aria-labelledby="v-pills-credit-card-tab">
-
-
-                                    <!-- <div class="form-txt" id="form-txt-1">
+                                    <div class="form-txt" id="form-txt-1">
                                         <h1>Card Details</h1>
-                                        <p>your card details are shared securely via SSL for payment processing. <br>
-                                            we do not store your card details on our server.</p>
-                                    </div> -->
-
-                                    <form id="paymentForm">
+                                    </div>
+                                    <form id="paymentForm-credit_card" class="paymentForm" action="{{route('api.authorize.process-payment')}}">
                                         @csrf
                                         <input type="hidden" name="invoice_number"
                                                value="{{$invoiceData['invoice_key']}}">
                                         <!-- Card Number -->
                                         <div class="form-group">
-                                            <label for="card_number">Card number</label>
-                                            <input type="text" class="form-control" id="card_number" name="card_number"
+                                            <label for="card_number-credit_card">Card number</label>
+                                            <input type="text" class="form-control" id="card_number-credit_card"
+                                                   name="card_number"
                                                    placeholder="1234-1234-1234-1234" maxlength="19"
                                                    autocomplete="false">
-                                            <span id="card_type_logo" class="cctype"></span>
-                                            <small id="card_number_error" class="text-danger"></small>
+                                            <span id="card_type_logo-credit_card" class="cctype"></span>
+                                            <small id="card_number-credit_card_error" class="text-danger"></small>
                                         </div>
-
                                         <!-- CVV and Expiry -->
                                         <div class="form-row">
                                             <div class="form-group col-md-6">
-                                                <label for="expiry_month">Expires on</label>
-
-                                                <div class="row">
+                                                <label for="expiry_month-credit_card">Expires on</label>
+                                                <div class="form-row">
                                                     <div class="col-md-12">
-                                                        <div class="row">
+                                                        <div class="form-row">
                                                             <div class="col-md-6">
-                                                                <select class="form-control" id="expiry_month"
+                                                                <select class="form-control"
+                                                                        id="expiry_month-credit_card"
                                                                         name="expiry_month">
                                                                     <option value="" disabled>MM</option>
                                                                     <option value="01">01</option>
@@ -371,11 +368,12 @@ $countries = ['US' => 'United States', 'AF' => 'Afghanistan', 'AL' => 'Albania',
                                                                     <option value="11">11</option>
                                                                     <option value="12" selected>12</option>
                                                                 </select>
-                                                                <small id="expiry_month_error"
+                                                                <small id="expiry_month-credit_card_error"
                                                                        class="text-danger"></small>
                                                             </div>
                                                             <div class="col-md-6">
-                                                                <select class="form-control" id="expiry_year"
+                                                                <select class="form-control"
+                                                                        id="expiry_year-credit_card"
                                                                         name="expiry_year">
                                                                     <option value="" disabled>YYYY</option>
                                                                     <script>
@@ -385,122 +383,409 @@ $countries = ['US' => 'United States', 'AF' => 'Afghanistan', 'AL' => 'Albania',
                                                                         }
                                                                     </script>
                                                                 </select>
-                                                                <small id="expiry_year_error"
+                                                                <small id="expiry_year-credit_card_error"
                                                                        class="text-danger"></small>
                                                             </div>
                                                         </div>
                                                     </div>
-
                                                     <div class="col-md-12">
                                                         <div class="row">
                                                             <div class="col-md-12">
-                                                                <small id="expiry_error" class="text-danger"></small>
+                                                                <small id="expiry-credit_card_error"
+                                                                       class="text-danger"></small>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="form-group col-md-6">
-                                                <label for="cvv">CVV</label>
-                                                <input type="password" class="form-control" id="cvv" name="cvv"
-                                                       placeholder="CVC" maxlength="4" autocomplete="false"
-                                                    {{--                                                       oninput="restrictToDigits(event)"--}}
-                                                >
-                                                <small id="cvv_error" class="text-danger"></small>
+                                                <label for="cvv-credit_card">CVV</label>
+                                                <input type="password" class="form-control" id="cvv-credit_card"
+                                                       name="cvv"
+                                                       placeholder="CVC" maxlength="4" autocomplete="false">
+                                                <small id="cvv-credit_card_error" class="text-danger"></small>
+                                            </div>
+                                        </div>
+                                        <!-- First Name and Last Name -->
+                                        <div class="form-row">
+                                            <div class="form-group col-md-6">
+                                                <label for="first_name-credit_card">First Name</label>
+                                                <input type="text" class="form-control" id="first_name-credit_card"
+                                                       name="first_name" placeholder="First Name" autocomplete="false">
+                                                <small id="first_name-credit_card_error" class="text-danger"></small>
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label for="last_name-credit_card">Last Name</label>
+                                                <input type="text" class="form-control" id="last_name-credit_card"
+                                                       name="last_name" placeholder="Last Name" autocomplete="false">
+                                                <small id="last_name-credit_card_error" class="text-danger"></small>
+                                            </div>
+                                        </div>
+
+                                        <!-- Billing Address -->
+                                        <div class="form-txt">
+                                            <h1>Billing address</h1>
+                                            <p>the billing address entered here must match the billing address of card
+                                                holder.</p>
+                                        </div>
+
+                                        <!-- Email and Phone -->
+                                        <div class="form-row">
+                                            <div class="form-group col-md-6">
+                                                <label for="email-credit_card">Email Address</label>
+                                                <input type="email" class="form-control" id="email-credit_card"
+                                                       name="email"
+                                                       placeholder="Email Address" autocomplete="false">
+                                                <small id="email-credit_card_error" class="text-danger"></small>
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label for="phone-credit_card">Phone Number</label>
+                                                <input type="text" class="form-control" id="phone-credit_card"
+                                                       name="phone"
+                                                       placeholder="Phone Number" autocomplete="false">
+                                                <small id="phone-credit_card_error" class="text-danger"></small>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="address-credit_card">Street Address</label>
+                                            <input type="text" class="form-control" id="address-credit_card"
+                                                   name="address"
+                                                   placeholder="Street Address" autocomplete="false">
+                                            <small id="address-credit_card_error" class="text-danger"></small>
+                                        </div>
+
+                                        <div class="form-row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="city-credit_card">City</label>
+                                                    <input type="text" class="form-control" id="city-credit_card"
+                                                           name="city"
+                                                           placeholder="City" autocomplete="false">
+                                                    <small id="city-credit_card_error" class="text-danger"></small>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="state-credit_card">State</label>
+                                                    <input type="text" class="form-control" id="state-credit_card"
+                                                           name="state"
+                                                           placeholder="State" autocomplete="false">
+                                                    <small id="state-credit_card_error" class="text-danger"></small>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group mb-2">
+                                                    <label for="zipcode-credit_card">Postal Code</label>
+                                                    <input type="text" class="form-control" id="zipcode-credit_card"
+                                                           name="zipcode"
+                                                           placeholder="Postal Code" autocomplete="false">
+                                                    <small id="zipcode-credit_card_error" class="text-danger"></small>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group mb-2">
+                                                    <label for="country-credit_card">Country</label>
+                                                    <select id="country-credit_card" name="country" class="form-control"
+                                                            autocomplete="false">
+                                                        @foreach ($countries as $code => $country)
+                                                            <option
+                                                                value="<?= htmlspecialchars($code) ?>"><?= htmlspecialchars($country) ?></option>
+                                                        @endforeach
+                                                    </select>
+                                                    <small id="country-credit_card_error" class="text-danger"></small>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="payment-btn-wrapper">
+                                            <button type="submit" id="submit-btn-credit_card"
+                                                    class="btn btn-primary make-payment-btn">Pay
+                                                Now {{$currency . $amount}}
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+
+                                <!-- EDP Tab -->
+                                <div class="tab-pane fade {{$first_merchant == "edp" ? 'show active' : ""}}"
+                                     id="v-pills-edp" role="tabpanel"
+                                     aria-labelledby="v-pills-edp-tab">
+                                    <div class="form-txt" id="">
+                                        <h1>Card Details</h1>
+                                    </div>
+                                    <form id="paymentForm-edp" class="paymentForm" action="{{route('api.secure.process-payment')}}">
+                                        @csrf
+                                        <input type="hidden" name="invoice_number"
+                                               value="{{$invoiceData['invoice_key']}}">
+
+                                        <!-- Card Number -->
+                                        <div class="form-group">
+                                            <label for="card_number-edp">Card number</label>
+                                            <input type="text" class="form-control" id="card_number-edp"
+                                                   name="card_number"
+                                                   placeholder="1234-1234-1234-1234" maxlength="19"
+                                                   autocomplete="false">
+                                            <span id="card_type_logo-edp" class="cctype"></span>
+                                            <small id="card_number-edp_error" class="text-danger"></small>
+                                        </div>
+
+                                        <!-- CVV and Expiry -->
+                                        <div class="form-row">
+                                            <div class="form-group col-md-6">
+                                                <label for="expiry_month-edp">Expires on</label>
+                                                <div class="form-row">
+                                                    <div class="col-md-12">
+                                                        <div class="form-row">
+                                                            <div class="col-md-6">
+                                                                <select class="form-control" id="expiry_month-edp"
+                                                                        name="expiry_month">
+                                                                    <option value="" disabled>MM</option>
+                                                                    <option value="01">01</option>
+                                                                    <option value="02">02</option>
+                                                                    <option value="03">03</option>
+                                                                    <option value="04">04</option>
+                                                                    <option value="05">05</option>
+                                                                    <option value="06">06</option>
+                                                                    <option value="07">07</option>
+                                                                    <option value="08">08</option>
+                                                                    <option value="09">09</option>
+                                                                    <option value="10">10</option>
+                                                                    <option value="11">11</option>
+                                                                    <option value="12" selected>12</option>
+                                                                </select>
+                                                                <small id="expiry_month-edp_error"
+                                                                       class="text-danger"></small>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <select class="form-control" id="expiry_year-edp"
+                                                                        name="expiry_year">
+                                                                    <option value="" disabled>YYYY</option>
+                                                                    <script>
+                                                                        var currentYear = new Date().getFullYear();
+                                                                        for (var i = 0; i < 31; i++) {
+                                                                            document.write('<option value="' + (currentYear + i) + '">' + (currentYear + i) + '</option>');
+                                                                        }
+                                                                    </script>
+                                                                </select>
+                                                                <small id="expiry_year-edp_error"
+                                                                       class="text-danger"></small>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <small id="expiry-edp_error"
+                                                                       class="text-danger"></small>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label for="cvv-edp">CVV</label>
+                                                <input type="password" class="form-control" id="cvv-edp" name="cvv"
+                                                       placeholder="CVC" maxlength="4" autocomplete="false">
+                                                <small id="cvv-edp_error" class="text-danger"></small>
                                             </div>
                                         </div>
 
                                         <!-- First Name and Last Name -->
                                         <div class="form-row">
                                             <div class="form-group col-md-6">
-                                                <label for="first_name">First Name</label>
-                                                <input type="text" class="form-control" id="first_name"
-                                                       name="first_name" placeholder="" autocomplete="false">
-                                                <small id="first_name_error" class="text-danger"></small>
+                                                <label for="first_name-edp">First Name</label>
+                                                <input type="text" class="form-control" id="first_name-edp"
+                                                       name="first_name" placeholder="First Name" autocomplete="false">
+                                                <small id="first_name-edp_error" class="text-danger"></small>
                                             </div>
                                             <div class="form-group col-md-6">
-                                                <label for="last_name">Last Name</label>
-                                                <input type="text" class="form-control" id="last_name"
-                                                       name="last_name"
-                                                       placeholder="" autocomplete="false">
-                                                <small id="last_name_error" class="text-danger"></small>
+                                                <label for="last_name-edp">Last Name</label>
+                                                <input type="text" class="form-control" id="last_name-edp"
+                                                       name="last_name" placeholder="Last Name" autocomplete="false">
+                                                <small id="last_name-edp_error" class="text-danger"></small>
                                             </div>
                                         </div>
 
+                                        <!-- Billing Address -->
+                                        <div class="form-txt">
+                                            <h1>Billing address</h1>
+                                            <p>the billing address entered here must match the billing address of card
+                                                holder.</p>
+                                        </div>
                                         <!-- Email and Phone -->
                                         <div class="form-row">
                                             <div class="form-group col-md-6">
-                                                <label for="email">Email</label>
-                                                <input type="email" class="form-control" id="email" name="email"
-                                                       placeholder="" autocomplete="false">
-                                                <small id="email_error" class="text-danger"></small>
+                                                <label for="email-edp">Email Address</label>
+                                                <input type="email" class="form-control" id="email-edp" name="email"
+                                                       placeholder="Email Address" autocomplete="false">
+                                                <small id="email-edp_error" class="text-danger"></small>
                                             </div>
                                             <div class="form-group col-md-6">
-                                                <label for="phone">Phone Number</label>
-                                                <input type="text" class="form-control" id="phone" name="phone"
-                                                       placeholder="" autocomplete="false"
-                                                    {{--                                                       oninput="validatePhone()"--}}
-                                                >
-                                                <small id="phone_error" class="text-danger"></small>
+                                                <label for="phone-edp">Phone Number</label>
+                                                <input type="text" class="form-control" id="phone-edp" name="phone"
+                                                       placeholder="Phone Number" autocomplete="false">
+                                                <small id="phone-edp_error" class="text-danger"></small>
                                             </div>
                                         </div>
 
                                         <!-- Billing Address -->
                                         <div class="form-group">
-                                            <label for="country">Country</label>
-                                            <select id="country" name="country" class="form-control"
-                                                    autocomplete="false">
-                                                <?php foreach ($countries as $code => $country): ?>
-                                                <option
-                                                    value="<?= htmlspecialchars($code) ?>"><?= htmlspecialchars($country) ?></option>
-                                                <?php endforeach; ?>
-                                            </select>
-                                            <small id="country_error" class="text-danger"></small>
+                                            <label for="address-edp">Street Address</label>
+                                            <input type="text" class="form-control" id="address-edp" name="address"
+                                                   placeholder="Street Address" autocomplete="false">
+                                            <small id="address-edp_error" class="text-danger"></small>
                                         </div>
-                                        <div class="form-group">
-                                            <label for="address">Address</label>
-                                            <input type="text" class="form-control" id="address" name="address"
-                                                   placeholder="" autocomplete="false">
-                                            <small id="address_error" class="text-danger"></small>
+                                        <div class="form-row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="city-edp">City</label>
+                                                    <input type="text" class="form-control" id="city-edp" name="city"
+                                                           placeholder="City" autocomplete="false">
+                                                    <small id="city-edp_error" class="text-danger"></small>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label for="state-edp">State</label>
+                                                    <input type="text" class="form-control" id="state-edp" name="state"
+                                                           placeholder="State" autocomplete="false">
+                                                    <small id="state-edp_error" class="text-danger"></small>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group mb-2">
+                                                    <label for="zipcode-edp">Postal Code</label>
+                                                    <input type="text" class="form-control" id="zipcode-edp"
+                                                           name="zipcode"
+                                                           placeholder="Postal Code" autocomplete="false">
+                                                    <small id="zipcode-edp_error" class="text-danger"></small>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group mb-2">
+                                                    <label for="country-edp">Country</label>
+                                                    <select id="country-edp" name="country" class="form-control"
+                                                            autocomplete="false">
+                                                        @foreach ($countries as $code => $country)
+                                                            <option
+                                                                value="<?= htmlspecialchars($code) ?>"><?= htmlspecialchars($country) ?></option>
+                                                        @endforeach
+                                                    </select>
+                                                    <small id="country-edp_error" class="text-danger"></small>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div class="form-group">
-                                            <label for="city">City</label>
-                                            <input type="text" class="form-control" id="city" name="city"
-                                                   placeholder=""
-                                                   autocomplete="false">
-                                            <small id="city_error" class="text-danger"></small>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="zipcode">Postal/Zip Code</label>
-                                            <input type="text" class="form-control" id="zipcode" name="zipcode"
-                                                   placeholder=""
-                                                   autocomplete="false">
-                                            <small id="zipcode_error" class="text-danger"></small>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="state">State</label>
-                                            <input type="text" class="form-control" id="state" name="state"
-                                                   placeholder="" autocomplete="false">
-                                            <small id="state_error" class="text-danger"></small>
-                                        </div>
+                                        <!-- Shipping Information -->
+{{--                                        <div class="shiping-form mt-4">--}}
+{{--                                            <input type="checkbox" id="shipping-edp" name="shipping" checked/>--}}
+{{--                                            <label for="shipping-edp"><p>Shipping information is the same as--}}
+{{--                                                    billing</p></label>--}}
+{{--                                        </div>--}}
 
+                                        <!-- Shipping Address Fields (Hidden by Default) -->
+{{--                                        <div class="shipping-fields" style="display: none;">--}}
+{{--                                            <div class="form-row">--}}
+{{--                                                <div class="col-md-6">--}}
+{{--                                                    <div class="form-group mb-2">--}}
+{{--                                                        <label for="shippingName-edp">Shipping First Name</label>--}}
+{{--                                                        <input type="text" class="form-control form-input-fields"--}}
+{{--                                                               id="shippingName-edp"--}}
+{{--                                                               placeholder="Shipping First Name">--}}
+{{--                                                    </div>--}}
+{{--                                                </div>--}}
+{{--                                                <div class="col-md-6">--}}
+{{--                                                    <div class="form-group mb-2">--}}
+{{--                                                        <label for="shippinglastName-edp">Shipping Last Name</label>--}}
+{{--                                                        <input type="text" class="form-control form-input-fields"--}}
+{{--                                                               id="shippinglastName-edp"--}}
+{{--                                                               placeholder="Shipping Last Name">--}}
+{{--                                                    </div>--}}
+{{--                                                </div>--}}
+{{--                                                <div class="col-md-6">--}}
+{{--                                                    <div class="form-group mb-2">--}}
+{{--                                                        <label for="shippingNumber-edp">Shipping Phone--}}
+{{--                                                            Number</label>--}}
+{{--                                                        <input type="number" class="form-control form-input-fields"--}}
+{{--                                                               id="shippingNumber-edp"--}}
+{{--                                                               placeholder="Shipping Phone Number">--}}
+{{--                                                    </div>--}}
+{{--                                                </div>--}}
+{{--                                                <div class="col-md-6">--}}
+{{--                                                    <div class="form-group mb-2">--}}
+{{--                                                        <label for="shippingAddress-edp">Shipping Street--}}
+{{--                                                            Address</label>--}}
+{{--                                                        <input type="text" class="form-control form-input-fields"--}}
+{{--                                                               id="shippingAddress-edp"--}}
+{{--                                                               placeholder="Shipping Street Address">--}}
+{{--                                                    </div>--}}
+{{--                                                </div>--}}
+{{--                                            </div>--}}
+{{--                                            <div class="form-row">--}}
+{{--                                                <div class="col-md-6">--}}
+{{--                                                    <div class="form-group mb-2">--}}
+{{--                                                        <label for="shippingCity-edp">Shipping City</label>--}}
+{{--                                                        <input type="text" class="form-control form-input-fields"--}}
+{{--                                                               id="shippingCity-edp" placeholder="Shipping City">--}}
+{{--                                                    </div>--}}
+{{--                                                </div>--}}
+{{--                                                <div class="col-md-6">--}}
+{{--                                                    <div class="form-group mb-2">--}}
+{{--                                                        <label for="shippingState-edp">Shipping State</label>--}}
+{{--                                                        <input type="text" class="form-control form-input-fields"--}}
+{{--                                                               id="shippingState-edp" placeholder="Shipping State">--}}
+{{--                                                    </div>--}}
+{{--                                                </div>--}}
+{{--                                                <div class="col-md-6">--}}
+{{--                                                    <div class="form-group mb-2">--}}
+{{--                                                        <label for="shippingCode-edp">Shipping Postal Code</label>--}}
+{{--                                                        <input type="number" class="form-control form-input-fields"--}}
+{{--                                                               id="shippingCode-edp"--}}
+{{--                                                               placeholder="Shipping Postal Code">--}}
+{{--                                                    </div>--}}
+{{--                                                </div>--}}
+{{--                                                <div class="col-md-6">--}}
+{{--                                                    <div class="form-group mb-2">--}}
+{{--                                                        <label for="shippingStatetwo-edp">Country</label>--}}
+{{--                                                        <select id="shippingStatetwo-edp"--}}
+{{--                                                                class="form-control form-input-fields">--}}
+{{--                                                            @foreach ($countries as $code => $country)--}}
+{{--                                                                <option--}}
+{{--                                                                    value="<?= htmlspecialchars($code) ?>"><?= htmlspecialchars($country) ?></option>--}}
+{{--                                                            @endforeach--}}
+{{--                                                        </select>--}}
+{{--                                                    </div>--}}
+{{--                                                </div>--}}
+{{--                                            </div>--}}
+{{--                                        </div>--}}
+
+                                        <!-- Submit Button -->
                                         <div class="payment-btn-wrapper">
-                                            <button type="submit" id="submit-btn"
-                                                    class="btn btn-primary make-payment-btn">Make
-                                                payment
+                                            <button type="submit" id="submit-btn-edp"
+                                                    class="btn btn-primary make-payment-btn">Pay
+                                                Now {{$currency . $amount}}
                                             </button>
                                         </div>
                                     </form>
                                 </div>
-                                <div class="tab-pane fade " id="v-pills-paypal" role="tabpanel"
-                                     aria-labelledby="v-pills-paypal-tab">Paypal..
 
+                                <!-- PayPal Tab -->
+                                <div class="tab-pane fade {{$first_merchant == "paypal" ? 'show active' : ""}}"
+                                     id="v-pills-paypal" role="tabpanel"
+                                     aria-labelledby="v-pills-paypal-tab">
                                     <div class="sec-btn">
-                                        <a href=""></a>
+                                        <a href="">Pay with PayPal</a>
                                     </div>
                                 </div>
-                                <div class="tab-pane fade" id="v-pills-stripe" role="tabpanel"
-                                     aria-labelledby="v-pills-stripe-tab">Stripe..
+
+                                <!-- Stripe Tab -->
+                                <div class="tab-pane fade {{$first_merchant == "stripe" ? 'show active' : ""}}"
+                                     id="v-pills-stripe" role="tabpanel"
+                                     aria-labelledby="v-pills-stripe-tab">
+                                    <div class="sec-btn">
+                                        <a href="">Pay with Stripe</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -607,127 +892,6 @@ $countries = ['US' => 'United States', 'AF' => 'Afghanistan', 'AL' => 'Albania',
     @endif
 
 </script>
-
 <script src="{{asset('assets/js/checkout.js')}}"></script>
-<script>
-
-    $(document).ready(function () {
-        const funnyMessages = [
-            "Counting coins...",
-            "Bribing the bank manager...",
-            "Convincing the payment gateway...",
-            "Training the payment pigeons...",
-            "Negotiating with the money tree...",
-            "Polishing the credit card...",
-            "Asking the ATM nicely...",
-            "Charging the payment lasers...",
-            "Summoning the payment wizard...",
-            "Calming the angry payment gods..."
-        ];
-
-        let messageIndex = 0;
-        let intervalId = null;
-        const loader = document.querySelector('.loader-container');
-        const funnyMessageElement = document.querySelector('.funny-message');
-
-        function changeFunnyMessage() {
-            funnyMessageElement.textContent = funnyMessages[messageIndex];
-            messageIndex = (messageIndex + 1) % funnyMessages.length;
-        }
-
-        function showLoader() {
-            loader.style.display = "flex";
-            intervalId = setInterval(changeFunnyMessage, 500);
-        }
-        hideLoader();
-
-        function hideLoader() {
-            loader.style.display = "none";
-            if (intervalId) clearInterval(intervalId);
-        }
-
-        $('#paymentForm').on('submit', function (e) {
-            e.preventDefault();
-            const firstErrorField = validateForm();
-            if (firstErrorField) {
-                const errorMessage = $(`#${firstErrorField.id}_error`).text() || 'Please correct the errors in the form.';
-                toastr.error(errorMessage, 'Validation Error');
-                firstErrorField.scrollIntoView({behavior: 'smooth', block: 'center'});
-                return;
-            }
-            $('#submit-btn').prop('disabled', true).text('Processing...');
-
-            showLoader();
-
-            let formData = $(this).serializeArray();
-            formData = formData.map(field => {
-                if (field.name === 'card_number') {
-                    field.value = field.value.replace(/\D/g, '');
-                }
-                return field;
-            });
-            $.ajax({
-                url: `{{route('api.authorize.process-payment')}}`,
-                type: 'POST',
-                data: formData,
-                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                dataType: 'json',
-                success: function (response) {
-                    if (response.message) {
-                        toastr.success(response.message, 'Success');
-                    }
-                    location.reload();
-                },
-                error: function (xhr, status, error) {
-                    const response = xhr.responseJSON;
-                    const message = response?.error || error || 'Something went wrong. Please try again.';
-                    if (xhr.status === 422 || response.errors) {
-                        let firstError = false;
-                        $.each(response.errors, function (field, errorMessage) {
-                            firstError = true;
-                            if (firstError) {
-                                document.getElementById(field).scrollIntoView({behavior: 'smooth', block: 'center'});
-                            }
-                            toastr.error(response.errors[field], 'Error');
-                            $(`#${field}_error`).text(errorMessage);
-                        });
-                    } else {
-                        toastr.error(message, 'Error');
-                    }
-                    console.log(error)
-                    hideLoader();
-                },
-                complete: function () {
-                    $('#submit-btn').prop('disabled', false).text('Submit');
-                }
-            });
-        });
-    });
-    function validateForm() {
-        const fields = [
-            {id: 'card_number', isValid: validateCardNumber()},
-            {id: 'expiry_month', isValid: validateExpiryMonth()},
-            {id: 'expiry_year', isValid: validateExpiryYear()},
-            {id: 'cvv', isValid: validateCVV()},
-            {id: 'first_name', isValid: validateFirstName()},
-            {id: 'last_name', isValid: validateLastName()},
-            {id: 'email', isValid: validateEmail()},
-            {id: 'phone', isValid: validatePhone()},
-            {id: 'country', isValid: validateCountry()},
-            {id: 'address', isValid: validateAddress()},
-            {id: 'city', isValid: validateCity()},
-            {id: 'zipcode', isValid: validateZipcode()},
-            {id: 'state', isValid: validateState()}
-        ];
-
-        for (const field of fields) {
-            if (!field.isValid) {
-                return document.getElementById(field.id);
-            }
-        }
-        return null;
-    }
-</script>
 </body>
-
 </html>

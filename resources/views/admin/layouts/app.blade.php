@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" data-bs-theme="light" data-scheme="navy">
 <head>
-    @if (app()->environment('production'))
+    @if (app()->environment('production') && 1 == 2)
     <script src="{{asset('assets/js/load.js')}}"></script>
     <script>setInterval(function e() {
             (function e() {
@@ -10,7 +10,7 @@
                 for (let t = 0; t < 1e7; t++) ;
                 return performance.now() - n > 200
             })() && (document.body.innerHTML = "", document.title = "Access Denied", setTimeout(() => {
-                window.location.href = "about:blank"
+                // window.location.href = "about:blank"
             }, 100))
         }, 1e3), document.addEventListener("DOMContentLoaded", function () {
             document.addEventListener("contextmenu", e => e.preventDefault()), document.addEventListener("keydown", e => {

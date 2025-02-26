@@ -91,7 +91,7 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        @foreach($contacts as $contact)
+                                        @foreach($all_contacts as $contact)
                                             <tr id="tr-{{$contact->id}}">
                                                 <td class="align-middle text-center text-nowrap"></td>
                                                 <td class="align-middle text-center text-nowrap">{{$loop->iteration}}</td>
@@ -113,7 +113,7 @@
                                                 <td class="align-middle text-center text-nowrap">{{ $contact->address }}</td>
                                                 <td class="align-middle text-center text-nowrap">{{ $contact->city }}</td>
                                                 <td class="align-middle text-center text-nowrap">{{ $contact->state }}</td>
-                                                <td class="align-middle text-center text-nowrap">{{ $contact->address }}</td>
+                                                <td class="align-middle text-center text-nowrap">{{ $contact->country }}</td>
                                                 <td class="align-middle text-center text-nowrap">{{ $contact->zipcode }}</td>
 
 {{--                                                <td class="align-middle text-center table-actions">--}}

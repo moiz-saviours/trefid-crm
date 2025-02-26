@@ -2,12 +2,10 @@
 
 namespace App\Providers;
 
+use App\Services\GlobalService;
+use App\Services\Restrict\PaymentGatewayService;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
-
-use Illuminate\Cache\RateLimiting\Limit;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\RateLimiter;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -16,7 +14,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        $this->app->bind(GlobalService::class, function ($app) {
+            return new GlobalService();
+        });
+        $this->app->singleton(PaymentGatewayService::class, function ($app) {
+            return new PaymentGatewayService();
+        });
     }
 
     /**
@@ -178,10 +181,8 @@ class AppServiceProvider extends ServiceProvider
             ],
         ];
         $randomQuote = $quotes[array_rand($quotes)];
-
         View::share('inspire_quote', $randomQuote['quote']);
         View::share('inspire_author', $randomQuote['author']);
-
         View::composer('*', function ($view) use ($quotes) {
             $randomQuote = $quotes[array_rand($quotes)];
             $view->with('inspire_quote', $randomQuote['quote'])

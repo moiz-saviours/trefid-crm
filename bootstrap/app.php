@@ -13,6 +13,12 @@ use Laravel\Sanctum\Http\Middleware\CheckAbilities;
 use Laravel\Sanctum\Http\Middleware\CheckForAnyAbility;
 use Symfony\Component\HttpFoundation\Response;
 
+$helperPath = __DIR__ . '/../app/Helpers/Restrict';
+if (is_dir($helperPath)) {
+    foreach (glob($helperPath . '/*.php') as $file) {
+        require_once $file;
+    }
+}
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
         web: __DIR__ . '/../routes/web.php',
