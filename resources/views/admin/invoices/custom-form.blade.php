@@ -238,9 +238,9 @@
                     @enderror
                 </div>
                 <div class="form-group mb-3">
-                    <label for="description" class="form-label">Description</label>
+                    <label for="description" class="form-label">Service Description</label>
                     <textarea class="form-control" id="description" name="description"
-                              rows="3">{{ old('description') }}</textarea>
+                              rows="3" required>{{ old('description') }}</textarea>
                     @error('description')
                     <span class="text-danger">{{ $message }}</span>
                     @enderror

@@ -381,7 +381,7 @@
                             // Column 12: Actions
                             let actionsHtml = '';
                             if (brand) {
-                                actionsHtml += `<button type="button" class="btn btn-sm btn-primary copyBtn" data-id="${id}" data-invoice-key="${invoice_key}" data-invoice-url="${basePath}/invoice?InvoiceID=${invoice_key}" title="Copy Invoice Url"><i class="fas fa-copy" aria-hidden="true"></i></button>`;
+                                actionsHtml += `<button type="button" class="btn btn-sm btn-primary copyBtn" data-id="${id}" data-invoice-key="${invoice_key}" data-invoice-url="${basePath}/invoice?InvoiceID=${invoice_key}" title="Copy Invoice Url"><i class="fas fa-copy" aria-hidden="true"></i></button> `;
                             }
                             if (status != 1) {
                                 actionsHtml += `<button type="button" class="btn btn-sm btn-primary editBtn" data-id="${id}" title="Edit"><i class="fas fa-edit"></i></button>
@@ -616,6 +616,7 @@
         function getIconForType(type) {
             switch (type) {
                 case 'authorize':
+                case 'edp' :
                     return 'fas fa-credit-card';
                 case 'stripe':
                     return 'fab fa-stripe';

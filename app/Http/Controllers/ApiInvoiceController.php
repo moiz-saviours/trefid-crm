@@ -48,7 +48,7 @@ class ApiInvoiceController extends Controller
                 "brand" => [
                     "name" => $brand->name,
                     "url" => $brand->url,
-                    "logo" => asset('assets/images/brand-logos/'.$brand->logo),
+                    "logo" => asset('assets/images/brand-logos/' . $brand->logo),
                     "email" => $brand->email,
                     "description" => $brand->description,
                 ],
@@ -66,13 +66,9 @@ class ApiInvoiceController extends Controller
                     "name" => $agent->name,
                     "email" => $agent->email,
                 ],
-                'payment_methods' => [
-                    "credit_card",
-                    "paypal",
-                    "stripe",
-                ],
+                'payment_methods' => isset($invoice->invoice_merchants) ? $invoice->invoice_merchants->sortBy('merchant_type')->pluck('merchant_type')->toArray() : [],
             ];
-            return response()->json(['success' => true, 'invoice' => $data,'current_date'=>Carbon::now()->format('jS F Y')]);
+            return response()->json(['success' => true, 'invoice' => $data, 'current_date' => Carbon::now()->format('jS F Y')]);
         } catch (ValidationException $exception) {
             return response()->json(['success' => false, 'error' => $exception->getMessage()], 422);
         } catch (ModelNotFoundException $exception) {

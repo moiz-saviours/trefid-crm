@@ -198,7 +198,7 @@ class InvoiceController extends Controller
 //                $data['agent_type'] = get_class(auth()->user());
 //            }
             $invoice = Invoice::create($data);
-            $brand->load(['client_accounts' => fn($q) => $q->where('payment_method', 'authorize')]);
+            $brand->load(['client_accounts' => fn($q) => $q->whereIn('payment_method', ['authorize', 'edp'])]);
             $client_accounts = $brand->client_accounts;
             $validMerchantIds = $client_accounts->pluck('id')->toArray();
             $merchantExcluded = [];
@@ -380,7 +380,7 @@ class InvoiceController extends Controller
                 'type' => $request->input('type'),
                 'due_date' => $request->input('due_date'),
             ]);
-            $brand->load(['client_accounts' => fn($q) => $q->where('payment_method', 'authorize')]);
+            $brand->load(['client_accounts' => fn($q) => $q->whereIn('payment_method', ['authorize', 'edp'])]);
             $client_accounts = $brand->client_accounts->unique('id');
             $validMerchantIds = $client_accounts->pluck('id')->toArray();
             $existingMerchants = InvoiceMerchant::where('invoice_key', $invoice->invoice_key)

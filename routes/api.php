@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\ApiAuthorizePaymentController;
+use App\Http\Controllers\Api\ApiSecurePaymentController;
 use App\Http\Controllers\Api\ApiStripePaymentController;
 use App\Http\Controllers\ApiInvoiceController;
 use App\Http\Resources\UserResource;
@@ -33,8 +34,12 @@ Route::post('login', function (Request $request) {
 });
 //Route::middleware(['auth:sanctum', 'abilities:create,update,read'])->group(function () {
     Route::post('process-payment', [ApiAuthorizePaymentController::class, 'processPayment'])->name('api.authorize.process-payment');
+    Route::post('secure-process-payment', [ApiSecurePaymentController::class, 'processPayment'])->name('api.secure.process-payment');
 //});
 Route::post('stripe-process-payment', [ApiStripePaymentController::class, 'processPayment']);
 Route::get('fetch-invoice/{invoice?}', [ApiInvoiceController::class, 'fetch_invoice'])->missing(function (Request $request) {
     return response()->json(['error' => 'Invalid url.'], 404);
+});
+Route::fallback(function () {
+    return response()->json(['error' => 'Controller or function not found'], 404);
 });

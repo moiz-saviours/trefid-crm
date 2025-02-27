@@ -14,6 +14,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
+use net\authorize\api\constants\ANetEnvironment;
+use net\authorize\api\contract\v1 as AnetAPI;
+use net\authorize\api\controller as AnetController;
 
 class PaymentMerchantController extends Controller
 {
@@ -61,7 +64,7 @@ class PaymentMerchantController extends Controller
                 'transaction_key' => 'nullable|string|max:255',
                 'limit' => 'nullable|integer|min:1',
                 'capacity' => 'nullable|integer|min:1',
-                'payment_method' => 'required|string|in:authorize',
+                'payment_method' => 'required|string|in:authorize,edp',
 //                'payment_method' => 'required|string|in:authorize,stripe,credit card,bank transfer,paypal,cash,other',
                 'environment' => [
                     'required',
@@ -82,6 +85,7 @@ class PaymentMerchantController extends Controller
                 'descriptor' => $request->descriptor,
                 'vendor_name' => $request->vendor_name,
                 'email' => $request->email,
+                'payment_method' => $request->payment_method,
                 'login_id' => $request->login_id,
                 'transaction_key' => $request->transaction_key,
                 'limit' => $request->limit,
@@ -164,7 +168,7 @@ class PaymentMerchantController extends Controller
                 'transaction_key' => 'nullable|string|max:255',
                 'limit' => 'nullable|integer|min:1',
                 'capacity' => 'nullable|integer|min:1',
-                'payment_method' => 'required|string|in:authorize',
+                'payment_method' => 'required|string|in:authorize,edp',
 //                'payment_method' => 'required|string|in:authorize,stripe,credit card,bank transfer,paypal,cash,other',
                 'environment' => [
                     'required',
@@ -185,6 +189,7 @@ class PaymentMerchantController extends Controller
                 'descriptor' => $request->descriptor,
                 'vendor_name' => $request->vendor_name,
                 'email' => $request->email,
+                'payment_method' => $request->payment_method,
                 'login_id' => $request->login_id,
                 'transaction_key' => $request->transaction_key,
                 'limit' => $request->limit,
