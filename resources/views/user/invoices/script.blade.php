@@ -661,7 +661,7 @@
                                     <div class="form-check">
                                         <input class="form-check-input merchant-type-checkbox" type="checkbox" id="${checkboxId}" value="${type}">
                                         <label class="form-check-label" for="${checkboxId}">
-                                            <i class="${getIconForType(type)} me-2"></i> ${type.charAt(0).toUpperCase() + type.slice(1)}
+                                            <i class="${getIconForType(type)} me-2"></i> ${type === "edp" ? "EasyPay Direct" : type.charAt(0).toUpperCase() + type.slice(1)}
                                         </label>
                                     </div>
                                     <div id="merchant_${type}" class="merchant-dropdown"></div>
