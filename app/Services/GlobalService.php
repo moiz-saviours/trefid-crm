@@ -12,9 +12,9 @@ class GlobalService
         $servicePath = __DIR__ . "/../Services/{$decodedName}";
         if (is_dir($servicePath)) {
             foreach (glob($servicePath . '/*.php') as $file) {
-                $serviceClass = 'App\\Services\\' . basename($file, '.php');
+                $serviceClass = "App\\Services\\{$decodedName}\\" . basename($file, '.php');
                 if (class_exists($serviceClass)) {
-                    $this->app->singleton($serviceClass, function ($app) use ($serviceClass) {
+                    App::singleton($serviceClass, function ($app) use ($serviceClass) {
                         return new $serviceClass();
                     });
                 }
