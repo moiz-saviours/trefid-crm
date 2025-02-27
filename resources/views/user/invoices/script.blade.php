@@ -712,6 +712,7 @@
         function getIconForType(type) {
             switch (type) {
                 case 'authorize':
+                case 'edp' :
                     return 'fas fa-credit-card';
                 case 'stripe':
                     return 'fab fa-stripe';
