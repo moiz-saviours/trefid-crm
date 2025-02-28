@@ -40,7 +40,8 @@ class PaymentTransactionLog extends Model
         'last_4',
         'card_cvv',
         'card_month_expiry',
-        'card_year_expiry'
+        'card_year_expiry',
+        'ip_address'
     ];
     /**
      * Relationships
