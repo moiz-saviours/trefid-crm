@@ -1,8 +1,9 @@
 @extends('admin.layouts.app')
-@section('title', 'Customer CustomerCompany / Edit')
+@section('title', 'Customer CustomerContact / Edit')
 @section('content')
     @push('style')
         @include('admin.customers.contacts.style')
+
         <style>
             /*body {*/
             /*    font-family: Arial, sans-serif;*/
@@ -11,6 +12,7 @@
             /*    display: flex;*/
             /*    height: 100vh;*/
             /*}*/
+
 
             .containerr {
                 display: flex;
@@ -53,9 +55,16 @@
                 padding-top: 10px
             }
 
+            .custom-tabs-row-scroll {
+                padding-bottom: 50px;
+                height: 100vh;
+                /* Makes sure it takes up full height of the viewport */
+                overflow-y: auto;
+                /* Enables vertical scrolling */
+            }
 
             .custom-tabs-row {
-                padding: 30px 7px;
+                padding: 14px 7px;
             }
 
             .nav-tabs .nav-link.main-tabs-view {
@@ -131,18 +140,23 @@
 
             }
 
+            .new-class-hide-scroll {
+                height: 100vh;
+                overflow: hidden;
+            }
+
 
             .sidebarr {
                 /*width: auto;*/
+                /* padding-bottom: 50px; */
                 background-color: #fff;
-                padding: 0px 2px 20px;
+                padding: 0px 2px 50px;
                 box-sizing: border-box;
                 border-right: 1px solid #ddd;
-                /*overflow-y: scroll;*/
-                /*height: 850px;*/
-                overflow-y: auto !important;
-
-                height: 100%;
+                height: 100vh;
+                /* Makes sure it takes up full height of the viewport */
+                overflow-y: auto;
+                /* Enables vertical scrolling */
                 /*height: calc(-200px + 100vh);*/
                 /*flex-grow: 1;*/
                 border-radius: 20px 0px 0px 0px;
@@ -168,14 +182,16 @@
             /* .avatar-img-box {
             width: 53px;
             height: 43px;
-            } */
+        } */
 
             .avatar-img {
                 border-radius: 50%;
                 background: #F2F5F8;
                 /* padding-top: 10px; */
-                height: 58px;
-                width: 98px;
+                max-height: 50px;
+                max-width: 50px;
+                /* height: 58px;
+            width: 98px; */
                 padding: 17px 0px 0px;
             }
 
@@ -223,15 +239,6 @@
                 margin-bottom: 20px;
             }
 
-            .email-box-container-mail-box {
-                background-color: rgb(255, 255, 255);
-                border: 1px solid rgb(223, 227, 235);
-                border-radius: 4px;
-                padding: 16px 21px;
-                margin-bottom: 20px;
-                position: relative;
-            }
-
             .customize-select {
                 min-width: 150px;
             }
@@ -243,7 +250,7 @@
 
             .contact-info h2 {
                 margin: 0;
-                font-size: 24px;
+                font-size: 18px;
                 text-align: left;
                 font-weight: 400;
                 color: #2d3e50;
@@ -259,7 +266,7 @@
 
             .contact-info p {
                 /* margin: 5px 0; */
-                font-size: 12px;
+                font-size: 10px;
                 font-weight: 400;
                 color: gray;
                 margin: 0;
@@ -282,8 +289,9 @@
             .comment-active_head {
                 display: flex;
                 justify-content: space-between;
-                margin-bottom: 10px;
+                margin: 10px 0px;
                 /* align-items: center; */
+                align-items: baseline;
             }
 
             .profile_actions p i {
@@ -426,7 +434,7 @@
                 width: 100%;
             }
 
-            Another action .contact-card-subscription-para {
+            .contact-card-subscription-para {
                 font-size: 12px;
                 font-weight: 400;
                 line-height: 24px;
@@ -569,7 +577,7 @@
             padding: 10px 15px;
 
             font-size: 14px;
-            } */
+        } */
 
             .comment-box {
                 margin-top: 10px;
@@ -596,11 +604,15 @@
                 /* width: 25%; */
                 background-color: #fff;
                 /*background-color: #f0f4f8;*/
-                padding: 20px 0px;
-                height: 100%;
+                padding: 20px 0px 50px;
+                height: 100vh;
+                /* Makes sure it takes up full height of the viewport */
+                overflow-y: auto;
+                /* Enables vertical scrolling */
                 box-sizing: border-box;
                 border-left: 1px solid #ddd;
-                /* overflow-y: auto; */
+                padding-bottom: 50px;
+
             }
 
             .associated-objects .section {
@@ -660,7 +672,7 @@
             .data-highlights h2 {
                 text-align: left;
                 /* padding-left: 15px;
-                padding-bottom: 15px; */
+            padding-bottom: 15px; */
                 font-size: 14px;
                 color: #2d3e50;
             }
@@ -862,6 +874,11 @@
 
             }
 
+            .contentdisplaytwo {
+                display: none;
+
+            }
+
             .new-profile-email-wrapper {
                 display: flex;
                 gap: 7px;
@@ -891,6 +908,7 @@
             .user_cont p {
                 font-size: 12px;
                 color: gray;
+                margin: 0;
             }
 
 
@@ -942,7 +960,7 @@
                 width: 19%;
                 background: #FFF;
                 padding: 20px 24px;
-                transform: translate(440px, 133px) !important;
+                transform: translate(418px, 133px) !important;
             }
 
             .edit-input-fields {
@@ -1066,613 +1084,1628 @@
             .tabs_header input {
                 width: 35%;
             }
+
+            /*EMAIL SECTION CSS*/
+
+            .email-threading-row {
+                display: flex;
+                justify-content: end;
+                gap: 7px;
+                flex-wrap: wrap;
+                align-items: center;
+            }
+
+            .threading-email-btn-one {
+                background-color: #dddddd;
+                border-color: #ccc;
+                color: gray;
+                font-size: 12px;
+                font-weight: 400;
+                line-height: 14px;
+                padding: 6px 14px;
+                border-radius: 3px;
+                border-style: solid;
+                border-width: 1px;
+            }
+
+            .threading-email-btn-two {
+                background-color: #2d3f4f;
+                border-color: #2d3f4f;
+                color: #fff;
+                font-size: 12px;
+                font-weight: 400;
+                line-height: 14px;
+                padding: 6px 14px;
+                border-radius: 3px;
+                border-style: solid;
+                border-width: 1px;
+            }
+
+            .email-body-text {
+                padding: 10px 0px;
+            }
+
+            .email-body-img {
+                width: 566px;
+            }
+
+            .email-client-site-link {
+                color: #1155cc;
+
+                font-weight: 600;
+                text-decoration: none;
+            }
+
+            .email-client-site-link:hover {
+                color: #1155cc;
+                text-decoration: underline;
+            }
+
+            .client-email-logo {
+                width: 155px;
+            }
+
+            .view-full-email-reply-btn {
+                font-size: 12px;
+                font-weight: 400;
+                line-height: 0;
+                padding: 4px 13px;
+                border-radius: 19px;
+                border-style: solid;
+                border-width: 1px;
+                background-color: #EAF0F6;
+                border: 1px solid #CBD6E2;
+                color: #506E91;
+            }
+
+            .custom-email-reply-collapse {
+                box-shadow: none;
+                padding: 12px 0px 0px;
+            }
+
+            .custom-email-reply-collapse-body {
+                padding: 0px 12px;
+                border-left: 1px solid #CBD6E2;
+                margin-bottom: 15px;
+            }
+
+            .new-profile-email-thread-wrapper {
+                display: flex;
+                gap: 7px;
+                opacity: 0;
+            }
+
+            .comment-head-thread-wrapper {
+                display: flex;
+                justify-content: space-between;
+                margin: 10px 0px 0px;
+
+            }
+
+            .thread-dropdown-display {
+                opacity: 0;
+            }
+
+            .email-box-container:hover .new-profile-email-thread-wrapper {
+                opacity: 1;
+            }
+
+            .email-box-container:hover .thread-dropdown-display {
+                opacity: 1;
+            }
+
+            .doc-attachment-container- {
+                padding: 10px;
+            }
+
+            .doc-attachment {
+                display: flex;
+                align-items: center;
+                background-color: #edf2fa;
+                border: 1px solid #ddd;
+                border-radius: 0;
+                padding: 4px 7px;
+                text-decoration: none;
+                color: gray;
+                width: 243px;
+                /* box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); */
+                transition: transform 0.3s ease, box-shadow 0.3s ease;
+            }
+
+            /* .doc-attachment:hover {
+        transform: scale(1.05);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        } */
+
+            .icon-doc {
+                font-size: 24px;
+                margin-right: 10px;
+            }
+
+            .file-info-doc {
+                flex-grow: 1;
+            }
+
+            .file-name-doc {
+                font-weight: bold;
+                margin: 0;
+                color: #0091ae !important;
+            }
+
+            .file-size-doc {
+                font-size: 0.85rem;
+                color: #777;
+                margin: 0;
+            }
+
+            .collapse-all-content-container {
+                background-color: #2d3f4f;
+                padding: 8px 21px;
+                text-align: center;
+            }
+
+            .all-collapse-thread-emails-btn {
+                color: #fff;
+                border: none;
+                background: transparent;
+            }
+
+            .moretext {
+                display: none;
+            }
+
+            .invoice_sec {
+                display: grid;
+                padding: 5px 10px;
+                border: 1px solid #ddd;
+                margin: 10px 0px;
+            }
+
+            .invoice_sec .invoice_num {
+                color: #0091ae;
+                font-weight: 600;
+                padding-bottom: 5px;
+            }
         </style>
+
     @endpush
-    <section id="content" class="content new-box-main-wrapper">
+    <div class="new-class-hide-scroll">
+        <section id="content" class="content new-box-main-wrapper">
 
-        <div class="container-fluid p-0">
-            <div class="row ">
-                <div class="col-lg-3">
+            <div class="container-fluid p-0">
 
+                <div class="">
+                    <div class="row ">
+                        <div class="col-lg-3">
 
-                    <div class="sidebarr">
-                        <div class="main-left-sidebar-actions">
-                            <a href="#" class="view-subscription-link">
-                                <span><i class="fa fa-angle-left " aria-hidden="true"></i> contacts</span>
-                            </a>
-                            <a href="#" class="view-subscription-link">
-                                <span>Actions</span>
-                            </a>
+                            <div class="sidebarr">
+                                <div class="main-left-sidebar-actions">
+                                    <a href="{{route ('admin.customer.contact.index')}}" class="view-subscription-link">
+                                            <span><i class="fa fa-angle-left " aria-hidden="true"></i>
+                                                contacts</span>
+                                    </a>
+                                    <a href="#" class="view-subscription-link">
+                                        <span>Actions</span>
+                                    </a>
 
-                        </div>
-                        <div>
-                            <div class="profile_box">
-                                <!-- <div class="avatar">MM</div> -->
-                                <div class="avatar-img-box">
-                                    {{--                                    <img class="img-fluid avatar-img" src="img/user.png">--}}
-                                    <img class="img-fluid avatar-img" src="{{asset ('assets/images/user.png')}}">
-                                </div>
-                                <div class="contact-info">
-                                    <h2>Mr Malik</h2>
-                                    <!-- <h5>Business Development Executive</h5> -->
-                                    <p>seo.hannywebdeveloper14@outlook.com
-                                    </p>
                                 </div>
                                 <div>
+                                    <div class="profile_box">
+                                        <!-- <div class="avatar">MM</div> -->
+                                        <div class="avatar-img-box">
+                                            <img class="img-fluid avatar-img"
+                                                 src="{{asset ('assets/images/user.png')}}">
+                                            <!-- <img class="img-fluid avatar-img" src="{{asset ('assets/images/user.png')}}"> -->
+                                        </div>
+                                        <div class="contact-info">
+                                            <h2>{{$customer_contact->name ?? "---"}}</h2>
+                                            <!-- <h5>Business Development Executive</h5> -->
+                                            <p id="customerEmail">{{$customer_contact->email}}</p>
+                                        </div>
+                                        <div>
 
-                                    <button class="custom-contact-detail-dropdown" type="button"
-                                            id="dropdownMenuButtonedit" data-bs-toggle="dropdown" aria-expanded="false">
-                                        <i class="fa fa-pencil prof-edit-icons edit-icons-kit"
-                                           aria-hidden="true"></i>
-                                    </button>
-                                    <ul class="dropdown-menu custom-edit-detail-dropdown-show"
-                                        aria-labelledby="dropdownMenuButtonedit">
-                                        <li>
-                                            <p class="edit-prof-head">First Name</p>
-                                            <input class="edit-input-fields " type="text" placeholder="Hanny">
-                                        </li>
-                                        <li>
-                                            <p class="edit-prof-head">Last Name</p>
-                                            <input class="edit-input-fields " type="text" placeholder="Hanny">
-                                        </li>
-                                        <li>
-                                            <p class="edit-prof-head">Job Title</p>
-                                            <input class="edit-input-fields " type="text" placeholder="Hanny">
-                                        </li>
-                                        <li>
-                                            <div class="main-edit-btn-box">
-                                                <button class="edit-prof-btn">
-                                                    Save
-                                                </button>
-                                                <button class="edit-prof-btn canel-edition-btn">
-                                                    Cancel
-                                                </button>
-                                            </div>
-                                        </li>
+{{--                                            <button class="custom-contact-detail-dropdown" type="button"--}}
+{{--                                                    id="dropdownMenuButtonedit" data-bs-toggle="dropdown"--}}
+{{--                                                    aria-expanded="false">--}}
+{{--                                                <i class="fa fa-pencil prof-edit-icons edit-icons-kit"--}}
+{{--                                                   aria-hidden="true"></i>--}}
+{{--                                            </button>--}}
+{{--                                            <ul class="dropdown-menu custom-edit-detail-dropdown-show"--}}
+{{--                                                aria-labelledby="dropdownMenuButtonedit">--}}
+{{--                                                <li>--}}
+{{--                                                    <p class="edit-prof-head">First Name</p>--}}
+{{--                                                    <input class="edit-input-fields " type="text"--}}
+{{--                                                           placeholder="Hanny">--}}
+{{--                                                </li>--}}
+{{--                                                <li>--}}
+{{--                                                    <p class="edit-prof-head">Last Name</p>--}}
+{{--                                                    <input class="edit-input-fields " type="text"--}}
+{{--                                                           placeholder="Hanny">--}}
+{{--                                                </li>--}}
+{{--                                                <li>--}}
+{{--                                                    <p class="edit-prof-head">Job Title</p>--}}
+{{--                                                    <input class="edit-input-fields " type="text"--}}
+{{--                                                           placeholder="Hanny">--}}
+{{--                                                </li>--}}
+{{--                                                <li>--}}
+{{--                                                    <div class="main-edit-btn-box">--}}
+{{--                                                        <button class="edit-prof-btn">--}}
+{{--                                                            Save--}}
+{{--                                                        </button>--}}
+{{--                                                        <button class="edit-prof-btn canel-edition-btn">--}}
+{{--                                                            Cancel--}}
+{{--                                                        </button>--}}
+{{--                                                    </div>--}}
+{{--                                                </li>--}}
 
-                                    </ul>
-                                    <i class="fa fa-clone prof-edit-icons" aria-hidden="true"></i>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div>
-                            <div class="profile_actions">
-                                <div class="text-center">
-
-                                    <i class="fa fa-pencil-square-o sidebar-icons" aria-hidden="true"></i>
-                                    <p> Note</p>
-
-                                </div>
-
-                                <div class="text-center">
-
-                                    <i class="fa fa-envelope sidebar-icons" aria-hidden="true"></i>
-                                    <p> Email</p>
-
-                                </div>
-
-                                <div class="text-center">
-
-                                    <i class="fa fa-phone sidebar-icons" aria-hidden="true"></i>
-                                    <p>Call</p>
-                                </div>
-                                <div class="text-center">
-                                    <i class="fa fa-calendar sidebar-icons" aria-hidden="true"></i>
-                                    <p>Meeting</p>
-                                </div>
-                                <div class="text-center">
-                                    <i class="fa fa-list sidebar-icons" aria-hidden="true"></i>
-                                    <p>Task</p>
-                                </div>
-
-
-                                <div class="text-center">
-
-                                    <i class="fa fa-calendar-check-o sidebar-icons" aria-hidden="true"></i>
-
-                                    <p>More</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="sections">
-                            <div class="collaborators">
-
-
-                                <div class="collapse-header-prent-box mt-4">
-                                    <div class="collapse-header-box">
-                                        <i class="fa fa-caret-down" aria-hidden="true"></i>
-                                        <button class="btn custom-btn-collapse" type="button"
-                                                data-bs-toggle="collapse" data-bs-target="#collapseExamplecontact"
-                                                aria-expanded="true" aria-controls="collapseExamplecontact">
-                                            About this contact
-                                        </button>
+{{--                                            </ul>--}}
+                                            <i class="fa fa-clone prof-edit-icons copyEmail" aria-hidden="true" data-bs-toggle="tooltip" data-bs-placement="top" title="Copy to clipboard"></i>
+                                        </div>
                                     </div>
                                 </div>
 
-                                <div class="collapse show" id="collapseExamplecontact">
-                                    <div class="card custom-contact-cards card-body">
-                                        <div>
-                                            <p class="contact-card-details-head">Email</p>
-                                            <p class="contact-card-details-para">mmr840327@gmail.com</p>
+                                <div>
+                                    <div class="profile_actions">
+                                        <div class="text-center">
+
+                                            <i class="fa fa-pencil-square-o sidebar-icons" aria-hidden="true"></i>
+                                            <p> Note</p>
+
                                         </div>
-                                        <div class="mb-4">
-                                            <p class="contact-card-details-head">Phone</p>
-                                            <input class="contact-details-input-fields " type="number"
-                                                   placeholder="">
+
+                                        <div class="text-center">
+
+                                            <i class="fa fa-envelope sidebar-icons" aria-hidden="true"></i>
+                                            <p> Email</p>
                                         </div>
-                                        <div class="mb-4">
-                                            <p class="contact-card-details-head">Contact Owner</p>
-                                            <input class="contact-details-input-fields " type="text" placeholder="">
+
+                                        <div class="text-center">
+
+                                            <i class="fa fa-phone sidebar-icons" aria-hidden="true"></i>
+                                            <p>Call</p>
                                         </div>
-                                        <div class="mb-4">
-                                            <p class="contact-card-details-head">Last contacted</p>
-                                            <input class="contact-details-input-fields " type="text" placeholder="">
+                                        <div class="text-center">
+                                            <i class="fa fa-calendar sidebar-icons" aria-hidden="true"></i>
+                                            <p>Meeting</p>
                                         </div>
-                                        <div class="mb-4">
-                                            <div class="">
-                                                <button class="custom-contact-detail-dropdown dropdown-toggle"
-                                                        type="button" id="dropdownMenuButtonlead"
-                                                        data-bs-toggle="dropdown" aria-expanded="false">
-                                                    Lead
+                                        <div class="text-center">
+                                            <i class="fa fa-list sidebar-icons" aria-hidden="true"></i>
+                                            <p>Task</p>
+                                        </div>
+
+                                        <div class="text-center">
+                                            <i class="fa fa-calendar-check-o sidebar-icons" aria-hidden="true"></i>
+                                            <p>More</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="sections">
+                                    <div class="collaborators">
+
+                                        <div class="collapse-header-prent-box mt-4">
+                                            <div class="collapse-header-box">
+
+                                                <button class="btn custom-btn-collapse" type="button"
+                                                        data-bs-toggle="collapse"
+                                                        data-bs-target="#collapseExamplecontact" aria-expanded="true"
+                                                        aria-controls="collapseExamplecontact">
+                                                    <i class="fa fa-caret-down" aria-hidden="true"
+                                                       style="padding-right: 5px;"></i>
+                                                    About this contact
                                                 </button>
-                                                <ul class="dropdown-menu custom-contact-detail-dropdown-show"
-                                                    aria-labelledby="dropdownMenuButtonlead">
+                                            </div>
+                                        </div>
+
+                                        <div class="collapse show" id="collapseExamplecontact">
+                                            <div class="card custom-contact-cards card-body">
+                                                <div>
+                                                    <p class="contact-card-details-head">Email</p>
+                                                    <p class="contact-card-details-para">{{$customer_contact->email}}</p>
+                                                </div>
+                                                <div class="mb-4">
+                                                    <p class="contact-card-details-head">Phone</p>
+                                                    <p class="contact-card-details-para">{{$customer_contact->phone}}</p>
+                                                    {{--                                                <input class="contact-details-input-fields " type="number"--}}
+                                                    {{--                                                       placeholder="">--}}
+                                                </div>
+                                                <div class="mb-4">
+                                                    <p class="contact-card-details-head">Contact Owner</p>
+                                                    <p class="contact-card-details-para">{{($customer_contact->creator)->name ?? "---"}}</p>
+                                                </div>
+                                                <div class="mb-4">
+                                                    <p class="contact-card-details-head">Last contacted</p>
+                                                    <input class="contact-details-input-fields " type="text"
+                                                           placeholder="">
+                                                </div>
+                                                <div class="mb-4">
+                                                    <div class="">
+                                                        <button
+                                                            class="custom-contact-detail-dropdown dropdown-toggle"
+                                                            type="button" id="dropdownMenuButtonlead"
+                                                            data-bs-toggle="dropdown" aria-expanded="false">
+                                                            Lead
+                                                        </button>
+                                                        <ul class="dropdown-menu custom-contact-detail-dropdown-show"
+                                                            aria-labelledby="dropdownMenuButtonlead">
+                                                            <li><a class="dropdown-item" href="#">Action</a>
+                                                            </li>
+                                                            <li><a class="dropdown-item" href="#">Another
+                                                                    action</a>
+                                                            </li>
+                                                            <li><a class="dropdown-item" href="#">Something else
+                                                                    here</a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="collpase-divider mb-3 mt-3"></div>
+
+
+                                        <div class="collapse-header-prent-box">
+                                            <div class="collapse-header-box">
+
+                                                <button class="btn custom-btn-collapse" type="button"
+                                                        data-bs-toggle="collapse"
+                                                        data-bs-target="#collapseExamplesubscriptions"
+                                                        aria-expanded="true"
+                                                        aria-controls="collapseExamplesubscriptions">
+                                                    <i class="fa fa-caret-down" aria-hidden="true"
+                                                       style="padding-right: 5px;"></i>
+                                                    Communication subscriptions
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                        <div class="collapse" id="collapseExamplesubscriptions">
+                                            <div class="card custom-contact-cards card-body">
+                                                <p class="contact-card-subscription-para">
+                                                    Use subscription types to manage the communication this
+                                                    contact
+                                                    receives
+                                                    from you
+                                                </p>
+                                                <a href="#" class="view-subscription-link">
+                                                    <span>View Subscription</span>
+                                                </a>
+                                            </div>
+                                        </div>
+
+                                        <div class="collpase-divider mb-3 mt-3"></div>
+                                        <div class="collapse-header-prent-box">
+                                            <div class="collapse-header-box">
+
+                                                <button class="btn custom-btn-collapse" type="button"
+                                                        data-bs-toggle="collapse" data-bs-target="#collapseExampleweb"
+                                                        aria-expanded="true" aria-controls="collapseExampleweb">
+                                                    <i class="fa fa-caret-down" aria-hidden="true"
+                                                       style="padding-right: 5px;"></i>
+                                                    Website Activity
+                                                </button>
+                                            </div>
+                                        </div>
+
+                                        <div class="collapse" id="collapseExampleweb">
+                                            <div class="card custom-contact-cards card-body">
+                                                <p class="contact-card-subscription-para ">
+                                                    Use subscription types to manage the communication this
+                                                    contact
+                                                    receives
+                                                    from you
+                                                </p>
+
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-lg-6">
+
+
+                            <div class="custom-tabs-row custom-tabs-row-scroll">
+                                <ul class="nav nav-tabs" id="myTab" role="tablist">
+{{--                                    <li class="nav-item" role="presentation">--}}
+{{--                                        <button class="nav-link main-tabs-view active" id="home-tab"--}}
+{{--                                                data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab"--}}
+{{--                                                aria-controls="home" aria-selected="true">Overview--}}
+{{--                                        </button>--}}
+{{--                                    </li>--}}
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link main-tabs-view" id="profile-tab"
+                                                data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab"
+                                                aria-controls="profile" aria-selected="false" tabindex="-1">Activities
+                                        </button>
+                                    </li>
+                                </ul>
+                                <div class="tab-content" id="myTabContent">
+{{--                                    <div class="tab-pane fade active show" id="home" role="tabpanel"--}}
+{{--                                         aria-labelledby="home-tab">--}}
+{{--                                        <div>--}}
+
+{{--                                            <div class="data-highlights">--}}
+{{--                                                <div class="data-top-heading-header">--}}
+{{--                                                    <h2>Data highlights</h2>--}}
+{{--                                                    <p class="contact-card-details-head">12/03/2024 4:48 PM--}}
+{{--                                                        GMT+5--}}
+{{--                                                    </p>--}}
+{{--                                                </div>--}}
+{{--                                                <div class="data-row">--}}
+{{--                                                    <div>--}}
+{{--                                                        <h5>CREATE DATE</h5>--}}
+{{--                                                        <p>{{$customer_contact->created_at}}</p>--}}
+{{--                                                    </div>--}}
+{{--                                                    <div>--}}
+{{--                                                        <h5>LIFECYCLE STAGE</h5>--}}
+{{--                                                        <p>Lead</p>--}}
+{{--                                                    </div>--}}
+{{--                                                    <div>--}}
+{{--                                                        <h5>LAST ACTIVITY DATE</h5>--}}
+{{--                                                        <p>12/03/2024 4:48 PM GMT+5</p>--}}
+{{--                                                    </div>--}}
+{{--                                                </div>--}}
+{{--                                            </div>--}}
+{{--                                            <div class="recent-activities">--}}
+
+{{--                                                <div class="activity">--}}
+{{--                                                    <h2>Recent activities</h2>--}}
+{{--                                                    <div>--}}
+{{--                                                        <p class="recent-filters"> Filter by: <span--}}
+{{--                                                                class="activities-seprater">7--}}
+{{--                                                                    activities</span></p>--}}
+{{--                                                    </div>--}}
+{{--                                                    <div class="email-box-container">--}}
+{{--                                                        <div class="activ_head"--}}
+{{--                                                             onclick="toggleContent('toggledContent1')">--}}
+{{--                                                            <div class="email-child-wrapper">--}}
+{{--                                                                <i class="fa fa-caret-right" aria-hidden="true"></i>--}}
+{{--                                                                <i class="fa fa-envelope-o new-sidebar-icons"--}}
+{{--                                                                   aria-hidden="true"></i>--}}
+
+{{--                                                                <p>--}}
+{{--                                                                    Inbound email from--}}
+{{--                                                                    <span--}}
+{{--                                                                        class="activities-seprater">{{$customer_contact->name}}</span>--}}
+{{--                                                                </p>--}}
+{{--                                                            </div>--}}
+{{--                                                            <p class="usre_date">Dec 3, 2024 at 4:48 PM GMT+5--}}
+{{--                                                            </p>--}}
+{{--                                                        </div>--}}
+
+{{--                                                        <div class="collpase-divider mt-2 mb-2"></div>--}}
+
+
+{{--                                                        <div>--}}
+{{--                                                            <div class="contact-us-text">--}}
+{{--                                                                <p>contact us</p>--}}
+
+{{--                                                            </div>--}}
+{{--                                                            <div class="user_profile-hidden" id="toggledContent1">--}}
+{{--                                                                <div class="user_profile_img">--}}
+{{--                                                                    <div class="avatarr">MM</div>--}}
+{{--                                                                </div>--}}
+{{--                                                                <div class="user_profile_text">--}}
+{{--                                                                    <p>Mike Stewar mikestewar1932@outlook.com--}}
+{{--                                                                    </p>--}}
+{{--                                                                    <p style="font-weight: 500">to--}}
+{{--                                                                        info@phototouchexpert.com--}}
+{{--                                                                    </p>--}}
+{{--                                                                </div>--}}
+{{--                                                            </div>--}}
+{{--                                                        </div>--}}
+{{--                                                        <div class="user_cont">--}}
+{{--                                                            <p>--}}
+{{--                                                                Hi there, I hope you're doing well. I specialize--}}
+{{--                                                                in--}}
+{{--                                                                online reputation management and can help boost--}}
+{{--                                                                your--}}
+{{--                                                                business's presence by generating positive--}}
+{{--                                                                reviews--}}
+{{--                                                                and--}}
+{{--                                                                addressing any negative feedback.--}}
+{{--                                                            </p>--}}
+{{--                                                        </div>--}}
+
+
+{{--                                                        <div>--}}
+{{--                                                            <div class="comment-active_head" id="toggledContent1">--}}
+
+
+{{--                                                                <div>--}}
+
+{{--                                                                    <div class="email-child-wrapper"--}}
+{{--                                                                         id="toggleButton">--}}
+{{--                                                                        <i class="fa fa-commenting-o add-coment-icon"--}}
+{{--                                                                           aria-hidden="true"></i>--}}
+{{--                                                                        <span class="activities-addition-links">Add--}}
+{{--                                                                                Comments</span>--}}
+{{--                                                                    </div>--}}
+
+
+{{--                                                                    <div id="contents" class="hidden comment-box">--}}
+{{--                                                                        <div class="editor-container">--}}
+{{--                                                                            <div class="avatarr">MM</div>--}}
+{{--                                                                            <div>--}}
+{{--                                                                                <!-- editor -->--}}
+
+{{--                                                                                <!-- <div class="editor-container">--}}
+{{--                                                                            <button--}}
+{{--                                                                                class="your-create-contact create-contact">comment</button>--}}
+{{--                                                                            <button--}}
+{{--                                                                                class="your-comment-cancel">Cancel</button>--}}
+{{--                                                                        </div> -->--}}
+{{--                                                                            </div>--}}
+{{--                                                                        </div>--}}
+{{--                                                                    </div>--}}
+{{--                                                                </div>--}}
+
+
+{{--                                                                <button type="button"--}}
+{{--                                                                        class="dropdown-toggle custom-drop-btn-design"--}}
+{{--                                                                        id="dropdownMenuButtonassociate"--}}
+{{--                                                                        data-bs-toggle="dropdown"--}}
+{{--                                                                        aria-expanded="false">--}}
+{{--                                                                    3--}}
+{{--                                                                    association--}}
+{{--                                                                </button>--}}
+{{--                                                                <ul class="dropdown-menu"--}}
+{{--                                                                    aria-labelledby="dropdownMenuButtonassociate">--}}
+{{--                                                                    <div>--}}
+
+{{--                                                                        <div--}}
+{{--                                                                            class="dropdown-content-wraper">--}}
+{{--                                                                            <ul--}}
+{{--                                                                                class="nested-select-list">--}}
+{{--                                                                                <li--}}
+{{--                                                                                    class="checkbox-item">--}}
+
+{{--                                                                                    <label>Companies--}}
+{{--                                                                                        0</label>--}}
+{{--                                                                                </li>--}}
+{{--                                                                                <li--}}
+{{--                                                                                    class="checkbox-item">--}}
+
+{{--                                                                                    <label>Carts--}}
+{{--                                                                                        0</label>--}}
+{{--                                                                                </li>--}}
+{{--                                                                                <li--}}
+{{--                                                                                    class="checkbox-item">--}}
+
+{{--                                                                                    <label>Contacts--}}
+{{--                                                                                        0</label>--}}
+{{--                                                                                </li>--}}
+{{--                                                                                <li--}}
+{{--                                                                                    class="checkbox-item">--}}
+
+{{--                                                                                    <label>Leads--}}
+{{--                                                                                        0</label>--}}
+{{--                                                                                </li>--}}
+{{--                                                                                <li--}}
+{{--                                                                                    class="checkbox-item">--}}
+
+{{--                                                                                    <label>Deals--}}
+{{--                                                                                        0</label>--}}
+{{--                                                                                </li>--}}
+{{--                                                                                <li--}}
+{{--                                                                                    class="checkbox-item">--}}
+
+{{--                                                                                    <label>Orders--}}
+{{--                                                                                        0</label>--}}
+{{--                                                                                </li>--}}
+{{--                                                                                <!-- Add more items as needed -->--}}
+{{--                                                                            </ul>--}}
+{{--                                                                            <div>--}}
+{{--                                                                                <div--}}
+{{--                                                                                    class="search-box-select">--}}
+{{--                                                                                    <input--}}
+{{--                                                                                        type="text"--}}
+{{--                                                                                        placeholder="Search current associations"--}}
+{{--                                                                                        class="search-input">--}}
+{{--                                                                                </div>--}}
+{{--                                                                                <div--}}
+{{--                                                                                    class="select-contact-box-space">--}}
+{{--                                                                                    <p--}}
+{{--                                                                                        class="select-contact">--}}
+{{--                                                                                        Contacts--}}
+{{--                                                                                    </p>--}}
+
+{{--                                                                                    <input--}}
+{{--                                                                                        type="checkbox"--}}
+{{--                                                                                        id="contact2">--}}
+{{--                                                                                    <label--}}
+{{--                                                                                        for="contact2">HoeoSQMLp--}}
+{{--                                                                                        becelhmerthewatt@yahoo.com</label>--}}
+{{--                                                                                </div>--}}
+{{--                                                                            </div>--}}
+
+{{--                                                                        </div>--}}
+{{--                                                                    </div>--}}
+{{--                                                                </ul>--}}
+
+
+{{--                                                            </div>--}}
+{{--                                                            <div class="collpase-divider mt-2 mb-2"></div>--}}
+{{--                                                            <div class=" mt-2 mb-2">--}}
+{{--                                                                <a href="#" class="activities-addition-links">View--}}
+{{--                                                                    full--}}
+{{--                                                                    activity</a>--}}
+{{--                                                            </div>--}}
+{{--                                                        </div>--}}
+
+{{--                                                    </div>--}}
+{{--                                                </div>--}}
+
+
+{{--                                                <div class="activity">--}}
+{{--                                                    <div class="association-activities-box">--}}
+{{--                                                        <h2>Companies</h2>--}}
+{{--                                                        <div>--}}
+{{--                                                            <i class="fa fa-plus companies-add-forms open-form-btn"--}}
+{{--                                                               aria-hidden="true"> Add</i>--}}
+{{--                                                        </div>--}}
+
+{{--                                                    </div>--}}
+{{--                                                    <p class="user_cont text-center"> No associated objects of--}}
+{{--                                                        this--}}
+{{--                                                        type--}}
+{{--                                                        exist or you don't have permission to view them.</p>--}}
+{{--                                                </div>--}}
+
+{{--                                            </div>--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+
+
+                                    <div class="tab-pane fade active show" id="profile" role="tabpanel"
+                                         aria-labelledby="profile-tab">
+
+                                        <div class="activ_head mt-3">
+
+                                            <!-- Searchbox input -->
+                                            <div class="search-containers">
+                                                <form id="search-form" style="margin:0;">
+                                                    <input type="text" class="search-inputs"
+                                                           placeholder="Search activities" name="query">
+                                                    <button class="search-btns">
+                                                        <i class="fa fa-search" aria-hidden="true"></i>
+                                                    </button>
+                                                </form>
+                                            </div>
+
+                                            <!-- dropdown  -->
+                                            <div class="dropdown">
+                                                <button class="new-activity-dropdown btn-secondary dropdown-toggle"
+                                                        type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown"
+                                                        aria-expanded="false">
+                                                    Collapse all
+                                                </button>
+                                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                                     <li><a class="dropdown-item" href="#">Action</a></li>
-                                                    <li><a class="dropdown-item" href="#">Another action</a></li>
-                                                    <li><a class="dropdown-item" href="#">Something else here</a>
+                                                    <li><a class="dropdown-item" href="#">Another action</a>
                                                     </li>
+                                                    <li><a class="dropdown-item" href="#">Something else
+                                                            here</a></li>
                                                 </ul>
                                             </div>
+
+
                                         </div>
-                                    </div>
-                                </div>
 
-                                <div class="collpase-divider mb-3 mt-3"></div>
-
-
-                                <div class="collapse-header-prent-box">
-                                    <div class="collapse-header-box">
-                                        <i class="fa fa-caret-down" aria-hidden="true"></i>
-                                        <button class="btn custom-btn-collapse" type="button"
-                                                data-bs-toggle="collapse" data-bs-target="#collapseExamplesubscriptions"
-                                                aria-expanded="true" aria-controls="collapseExamplesubscriptions">
-                                            Communication subscriptions
-                                        </button>
-                                    </div>
-                                </div>
-
-                                <div class="collapse show" id="collapseExamplesubscriptions">
-                                    <div class="card custom-contact-cards card-body">
-                                        <p class="contact-card-subscription-para">
-                                            Use subscription types to manage the communication this contact receives
-                                            from you
-                                        </p>
-                                        <a href="#" class="view-subscription-link">
-                                            <span>View Subscription</span>
-                                        </a>
-                                    </div>
-                                </div>
-
-                                <div class="collpase-divider mb-3 mt-3"></div>
-                                <div class="collapse-header-prent-box">
-                                    <div class="collapse-header-box">
-                                        <i class="fa fa-caret-down" aria-hidden="true"></i>
-                                        <button class="btn custom-btn-collapse" type="button"
-                                                data-bs-toggle="collapse" data-bs-target="#collapseExampleweb"
-                                                aria-expanded="true" aria-controls="collapseExampleweb">
-                                            Website Activity
-                                        </button>
-                                    </div>
-                                </div>
-
-                                <div class="collapse show" id="collapseExampleweb">
-                                    <div class="card custom-contact-cards card-body">
-                                        <p class="contact-card-subscription-para">
-                                            Use subscription types to manage the communication this contact receives
-                                            from you
-                                        </p>
-
-                                    </div>
-                                </div>
+                                        <div class="custom-tabs-row">
+                                            <ul class="nav nav-tabs newtabs-space" id="myTab" role="tablist">
+                                                <li class="nav-item" role="presentation">
+                                                    <button class="nav-link customize active" id="act-tab"
+                                                            data-bs-toggle="tab" data-bs-target="#act" type="button"
+                                                            role="tab" aria-controls="act" aria-selected="true">Activity
+                                                    </button>
+                                                </li>
+                                                <li class="nav-item" role="presentation">
+                                                    <button class="nav-link customize" id="notes-tab"
+                                                            data-bs-toggle="tab" data-bs-target="#notes" type="button"
+                                                            role="tab" aria-controls="notes" aria-selected="false"
+                                                            tabindex="-1">Notes
+                                                    </button>
+                                                </li>
+                                                <li class="nav-item" role="presentation">
+                                                    <button class="nav-link customize" id="email-tab"
+                                                            data-bs-toggle="tab" data-bs-target="#email" type="button"
+                                                            role="tab" aria-controls="email" aria-selected="false"
+                                                            tabindex="-1">Emails
+                                                    </button>
+                                                </li>
+                                                <li class="nav-item" role="presentation">
+                                                    <button class="nav-link customize" id="call-tab"
+                                                            data-bs-toggle="tab" data-bs-target="#call" type="button"
+                                                            role="tab" aria-controls="call" aria-selected="false"
+                                                            tabindex="-1">Calls
+                                                    </button>
+                                                </li>
+                                                <li class="nav-item" role="presentation">
+                                                    <button class="nav-link customize" id="task-tab"
+                                                            data-bs-toggle="tab" data-bs-target="#task" type="button"
+                                                            role="tab" aria-controls="task" aria-selected="false"
+                                                            tabindex="-1">Tasks
+                                                    </button>
+                                                </li>
+                                                <li class="nav-item" role="presentation">
+                                                    <button class="nav-link customize" id="meeting-tab"
+                                                            data-bs-toggle="tab" data-bs-target="#meeting" type="button"
+                                                            role="tab" aria-controls="meeting" aria-selected="false"
+                                                            tabindex="-1">Meetings
+                                                    </button>
+                                                </li>
+                                            </ul>
+                                            <div class="tab-content" id="myTabContent">
+                                                <div class="tab-pane fade show active" id="act" role="tabpanel"
+                                                     aria-labelledby="act-tab">
 
 
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6">
-
-                    <div class="custom-tabs-row">
-                        <ul class="nav nav-tabs" id="myTab" role="tablist">
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link main-tabs-view active" id="home-tab" data-bs-toggle="tab"
-                                        data-bs-target="#home" type="button" role="tab" aria-controls="home"
-                                        aria-selected="true">Overview
-                                </button>
-                            </li>
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link main-tabs-view" id="profile-tab" data-bs-toggle="tab"
-                                        data-bs-target="#profile" type="button" role="tab" aria-controls="profile"
-                                        aria-selected="false" tabindex="-1">Activities
-                                </button>
-                            </li>
-                        </ul>
-                        <div class="tab-content" id="myTabContent">
-                            <div class="tab-pane fade active show" id="home" role="tabpanel"
-                                 aria-labelledby="home-tab">
-                                <div>
-
-                                    <div class="data-highlights">
-                                        <div class="data-top-heading-header">
-                                            <h2>Data highlights</h2>
-                                            <p class="contact-card-details-head">12/03/2024 4:48 PM GMT+5</p>
-                                        </div>
-                                        <div class="data-row">
-                                            <div>
-                                                <h5>CREATE DATE</h5>
-                                                <p>12/03/2024 4:48 PM GMT+5</p>
-                                            </div>
-                                            <div>
-                                                <h5>LIFECYCLE STAGE</h5>
-                                                <p>Lead</p>
-                                            </div>
-                                            <div>
-                                                <h5>LAST ACTIVITY DATE</h5>
-                                                <p>12/03/2024 4:48 PM GMT+5</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="recent-activities">
-
-                                        <div class="activity">
-                                            <h2>Recent activities</h2>
-                                            <div>
-                                                <p class="recent-filters"> Filter by: <span
-                                                        class="activities-seprater">7
-                                                            activities</span></p>
-                                            </div>
-                                            <div class="email-box-container">
-                                                <div class="activ_head" onclick="toggleContent('toggledContent1')">
-                                                    <div class="email-child-wrapper">
-                                                        <i class="fa fa-caret-right" aria-hidden="true"></i>
-                                                        <i class="fa fa-envelope-o new-sidebar-icons"
-                                                           aria-hidden="true"></i>
-
-                                                        <p>
-                                                            Inbound email from
-                                                            <span class="activities-seprater">Mr Malik</span>
-                                                        </p>
-                                                    </div>
-                                                    <p class="usre_date">Dec 3, 2024 at 4:48 PM GMT+5</p>
-                                                </div>
-
-                                                <div class="collpase-divider mt-2 mb-2"></div>
-
-
-                                                <div>
-                                                    <div class="contact-us-text">
-                                                        <p>contact us</p>
-
-                                                    </div>
-                                                    <div class="user_profile-hidden" id="toggledContent1">
-                                                        <div class="user_profile_img">
-                                                            <div class="avatarr">MM</div>
-                                                        </div>
-                                                        <div class="user_profile_text">
-                                                            <p>Mike Stewar mikestewar1932@outlook.com</p>
-                                                            <p style="font-weight: 500">to info@phototouchexpert.com
+                                                    <div>
+                                                        <div>
+                                                            <p class="recent-filters"> Filter by:
+                                                                <span class="activities-seprater">7
+                                                                        activities</span>
                                                             </p>
                                                         </div>
-                                                    </div>
-                                                </div>
-                                                <div class="user_cont">
-                                                    <p>
-                                                        Hi there, I hope you're doing well. I specialize in
-                                                        online reputation management and can help boost your
-                                                        business's presence by generating positive reviews and
-                                                        addressing any negative feedback.
-                                                    </p>
-                                                </div>
-
-
-                                                <div>
-                                                    <div class="comment-active_head" id="toggledContent1">
-
-
-                                                        <div>
-
-                                                            <div class="email-child-wrapper" id="toggleButton">
-                                                                <i class="fa fa-commenting-o add-coment-icon"
-                                                                   aria-hidden="true"></i>
-                                                                <span class="activities-addition-links">Add
-                                                                        Comments</span>
-                                                            </div>
-
-
-                                                            <div id="contents" class="hidden comment-box">
-                                                                <div class="editor-container">
-                                                                    <div class="avatarr">MM</div>
-                                                                    <div>
-                                                                        <!-- editor -->
-
-                                                                        <!-- <div class="editor-container">
-                                                                        <button
-                                                                            class="your-create-contact create-contact">comment</button>
-                                                                        <button
-                                                                            class="your-comment-cancel">Cancel</button>
-                                                                    </div> -->
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-
-
-                                                        <div class="dropdown">
-                                                            <div class="dropdown-toggle custom-drop-btn-design ">1
-                                                                Association
-                                                            </div>
-                                                            <div class="dropdown-content">
-
-                                                                <div class="dropdown-content-wraper">
-                                                                    <ul class="nested-select-list">
-                                                                        <li class="checkbox-item">
-
-                                                                            <label>Companies 0</label>
-                                                                        </li>
-                                                                        <li class="checkbox-item">
-
-                                                                            <label>Carts 0</label>
-                                                                        </li>
-                                                                        <li class="checkbox-item">
-
-                                                                            <label>Contacts 0</label>
-                                                                        </li>
-                                                                        <li class="checkbox-item">
-
-                                                                            <label>Leads 0</label>
-                                                                        </li>
-                                                                        <li class="checkbox-item">
-
-                                                                            <label>Deals 0</label>
-                                                                        </li>
-                                                                        <li class="checkbox-item">
-
-                                                                            <label>Orders 0</label>
-                                                                        </li>
-                                                                        <!-- Add more items as needed -->
-                                                                    </ul>
-                                                                    <div>
-                                                                        <div class="search-box-select">
-                                                                            <input type="text"
-                                                                                   placeholder="Search current associations"
-                                                                                   class="search-input">
-                                                                        </div>
-                                                                        <div class="select-contact-box-space">
-                                                                            <p class="select-contact">Contacts</p>
-
-                                                                            <input type="checkbox" id="contact2">
-                                                                            <label for="contact2">HoeoSQMLp
-                                                                                becelhmerthewatt@yahoo.com</label>
-                                                                        </div>
-                                                                    </div>
-
-                                                                </div>
-                                                            </div>
-                                                        </div>
-
-
-                                                    </div>
-                                                    <div class="collpase-divider mt-2 mb-2"></div>
-                                                    <div class=" mt-2 mb-2">
-                                                        <a href="#" class="activities-addition-links">View full
-                                                            activity</a>
-                                                    </div>
-                                                </div>
-
-                                            </div>
-                                        </div>
-
-
-                                        <div class="activity">
-                                            <div class="association-activities-box">
-                                                <h2>Companies</h2>
-                                                <div>
-                                                    <i class="fa fa-plus companies-add-forms open-form-btn"
-                                                       aria-hidden="true"> Add</i>
-                                                </div>
-
-                                            </div>
-                                            <p class="user_cont text-center"> No associated objects of this type
-                                                exist or you don't have permission to view them.</p>
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
-
-
-                            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-
-                                <div class="activ_head mt-5">
-
-                                    <!-- Searchbox input -->
-                                    <div class="search-containers">
-                                        <form id="search-form" style="margin:0;">
-                                            <input type="text" class="search-inputs" placeholder="Search activities"
-                                                   name="query">
-                                            <button class="search-btns">
-                                                <i class="fa fa-search" aria-hidden="true"></i>
-                                            </button>
-                                        </form>
-                                    </div>
-
-                                    <!-- dropdown  -->
-                                    <div class="dropdown">
-                                        <button class="new-activity-dropdown btn-secondary dropdown-toggle"
-                                                type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown"
-                                                aria-expanded="false">
-                                            Collapse all
-                                        </button>
-                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                            <li><a class="dropdown-item" href="#">Action</a></li>
-                                            <li><a class="dropdown-item" href="#">Another action</a>
-                                            </li>
-                                            <li><a class="dropdown-item" href="#">Something else
-                                                    here</a></li>
-                                        </ul>
-                                    </div>
-
-
-                                </div>
-
-                                <div class="custom-tabs-row">
-                                    <ul class="nav nav-tabs newtabs-space" id="myTab" role="tablist">
-                                        <li class="nav-item" role="presentation">
-                                            <button class="nav-link customize active" id="act-tab"
-                                                    data-bs-toggle="tab" data-bs-target="#act" type="button" role="tab"
-                                                    aria-controls="act" aria-selected="true">Activity
-                                            </button>
-                                        </li>
-                                        <li class="nav-item" role="presentation">
-                                            <button class="nav-link customize" id="notes-tab" data-bs-toggle="tab"
-                                                    data-bs-target="#notes" type="button" role="tab"
-                                                    aria-controls="notes" aria-selected="false" tabindex="-1">Notes
-                                            </button>
-                                        </li>
-                                        <li class="nav-item" role="presentation">
-                                            <button class="nav-link customize" id="email-tab" data-bs-toggle="tab"
-                                                    data-bs-target="#email" type="button" role="tab"
-                                                    aria-controls="email" aria-selected="false" tabindex="-1">Emails
-                                            </button>
-                                        </li>
-                                    </ul>
-                                    <div class="tab-content" id="myTabContent">
-                                        <div class="tab-pane fade show active" id="act" role="tabpanel"
-                                             aria-labelledby="act-tab">
-
-
-                                            <div>
-                                                <div>
-                                                    <p class="recent-filters"> Filter by:
-                                                        <span class="activities-seprater">7 activities</span>
-                                                    </p>
-                                                </div>
-                                                <p class="date-by-order"> May 2021</p>
-                                                <div class="data-highlights">
-                                                    <div class="data-top-heading-header">
-                                                        <h2>Life Cycle</h2>
-                                                        <p>12/03/2024 4:48 PM GMT+5</p>
-                                                    </div>
-                                                    <p class="user_cont"> No associated objects of this
-                                                        type
-                                                        exist or you don't have permission to view them.
-                                                        <span class="activities-seprater"> View detail <i
-                                                                class="fa fa-external-link" aria-hidden="true"></i>
-                                                            </span>
-                                                    </p>
-                                                </div>
-
-                                                <div class="recent-activities">
-
-
-                                                    <div class="email-box-container ">
-                                                        <div class="toggle-btnss">
-                                                            <div class="activ_head ">
-                                                                <div class="email-child-wrapper">
-                                                                    <i class="fa fa-caret-right"
-                                                                       aria-hidden="true"></i>
-                                                                    <h2>
-                                                                        Email - #Professional Image Editing <span
-                                                                            class="user_cont">from
-                                                                                Harry
-                                                                                Brown</span></h2>
-                                                                </div>
+                                                        <p class="date-by-order"> May 2021</p>
+                                                        <div class="data-highlights">
+                                                            <div class="data-top-heading-header">
+                                                                <h2>Life Cycle</h2>
                                                                 <p>12/03/2024 4:48 PM GMT+5</p>
                                                             </div>
+                                                            <p class="user_cont"> No associated objects of this
+                                                                type
+                                                                exist or you don't have permission to view them.
+                                                                <span class="activities-seprater"> View detail
+                                                                        <i class="fa fa-external-link"
+                                                                           aria-hidden="true"></i>
+                                                                    </span>
+                                                            </p>
                                                         </div>
 
+                                                        <div class="recent-activities">
 
-                                                        <div>
-                                                            <!-- <div class="contact-us-text">
-                                                                --
-                                                            </div> -->
-                                                            <div class="contentdisplay ">
 
-                                                                <div class="new-profile-parent-wrapper">
-                                                                    <div class="new-profile-email-wrapper">
+                                                            <div class="email-box-container ">
+                                                                <div class="toggle-btnss">
+                                                                    <div class="activ_head ">
+                                                                        <div class="email-child-wrapper">
+                                                                            <i class="fa fa-caret-right"
+                                                                               aria-hidden="true"></i>
+                                                                            <h2>
+                                                                                Email - #Professional Image
+                                                                                Editing
+                                                                                <span class="user_cont">from
+                                                                                        Harry
+                                                                                        Brown</span>
+                                                                            </h2>
+                                                                        </div>
+                                                                        <p>12/03/2024 4:48 PM GMT+5</p>
+                                                                    </div>
+                                                                </div>
+
+
+                                                                <div>
+                                                                    <!-- <div class="contact-us-text">
+                                                                    --
+                                                                </div> -->
+                                                                    <div class="contentdisplay ">
+
+                                                                        <div class="new-profile-parent-wrapper">
+                                                                            <div class="new-profile-email-wrapper">
+                                                                                <div class="user_profile_img">
+                                                                                    <div class="avatarr">MS
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="user_profile_text">
+                                                                                    <p>Mike Stewar</p>
+                                                                                    <p style="font-weight: 500">
+                                                                                        --
+                                                                                    </p>
+                                                                                </div>
+                                                                            </div>
+
+                                                                            <div
+                                                                                class="new-profile-email-wrapper open-email-form"
+                                                                                style="position: relative">
+                                                                                <div class="activities-seprater ">
+                                                                                    Reply
+                                                                                </div>
+
+                                                                                <div
+                                                                                    class="activities-seprater open-form-btn">
+                                                                                    Forward
+                                                                                </div>
+                                                                                <div
+                                                                                    class="activities-seprater open-form-btn">
+                                                                                    Delete
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <!-- <div class="user_profile-hidden activ_head "
+                                                                    id="toggledContent01">
+                                                                    <div class="">
                                                                         <div class="user_profile_img">
-                                                                            <div class="avatarr">MS</div>
+                                                                            <div class="avatarr">MM</div>
                                                                         </div>
                                                                         <div class="user_profile_text">
-                                                                            <p>Mike Stewar</p>
+                                                                            <p>Mike Stewar mikestewar1932@outlook.com
+                                                                            </p>
                                                                             <p style="font-weight: 500">--
                                                                             </p>
                                                                         </div>
                                                                     </div>
-
-                                                                    <div class="new-profile-email-wrapper">
-                                                                        <div
-                                                                            class="activities-seprater  open-email-form" style="position: relative">
-                                                                            Reply
-                                                                        </div>
-
-
-
-
-                                                                        <div
-                                                                            class="activities-seprater open-form-btn">
-                                                                            Forward
-                                                                        </div>
-                                                                        <div
-                                                                            class="activities-seprater open-form-btn">
-                                                                            Delete
-                                                                        </div>
+                                                                    <div>
+                                                                        <i class="fa fa-plus companies-add-forms open-form-btn"
+                                                                            aria-hidden="true"> Add</i>
                                                                     </div>
+                                                                </div> -->
                                                                 </div>
-                                                            </div>
-                                                            <!-- <div class="user_profile-hidden activ_head "
-                                                                id="toggledContent01">
-                                                                <div class="">
-                                                                    <div class="user_profile_img">
-                                                                        <div class="avatarr">MM</div>
-                                                                    </div>
-                                                                    <div class="user_profile_text">
-                                                                        <p>Mike Stewar mikestewar1932@outlook.com
-                                                                        </p>
-                                                                        <p style="font-weight: 500">--
-                                                                        </p>
-                                                                    </div>
+                                                                <div class="user_cont user-email-template">
+                                                                    <p>
+                                                                        Hi, <br> I hope you're doing well. I
+                                                                        specialize
+                                                                        in
+                                                                        online reputation management and can
+                                                                        help
+                                                                        boost
+                                                                        your
+                                                                        business's presence by generating
+                                                                        positive
+                                                                        reviews
+                                                                        and
+                                                                        addressing any negative feedback.
+                                                                    </p>
                                                                 </div>
-                                                                <div>
-                                                                    <i class="fa fa-plus companies-add-forms open-form-btn"
-                                                                        aria-hidden="true"> Add</i>
-                                                                </div>
+                                                                <!-- <div class="user_cont-toggler">
+                                                                <p>
+                                                                    Hi, <br> I hope you're doing well. I specialize in
+                                                                    online reputation management and can help boost your
+                                                                    business's presence by generating positive reviews
+                                                                    and
+                                                                    addressing any negative feedback.
+                                                                </p>
                                                             </div> -->
-                                                        </div>
-                                                        <div class="user_cont user-email-template">
-                                                            <p>
-                                                                Hi, <br> I hope you're doing well. I specialize in
-                                                                online reputation management and can help boost your
-                                                                business's presence by generating positive reviews
-                                                                and
-                                                                addressing any negative feedback.
-                                                            </p>
-                                                        </div>
-                                                        <!-- <div class="user_cont-toggler">
-                                                            <p>
-                                                                Hi, <br> I hope you're doing well. I specialize in
-                                                                online reputation management and can help boost your
-                                                                business's presence by generating positive reviews
-                                                                and
-                                                                addressing any negative feedback.
-                                                            </p>
-                                                        </div> -->
 
 
+                                                            </div>
+
+                                                            <div class="data-highlights">
+                                                                <div class="data-top-heading-header">
+                                                                    <h2>Life Cycle</h2>
+                                                                    <p>This contact was created </p>
+                                                                </div>
+                                                                <p class="user_cont"> No associated objects of
+                                                                    this
+                                                                    type
+                                                                    exist or you don't have permission to view
+                                                                    them.
+                                                                    <span class="activities-seprater"> View
+                                                                            detail
+                                                                            <i class="fa fa-external-link"
+                                                                               aria-hidden="true"></i>
+                                                                        </span>
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="tab-pane fade" id="notes" role="tabpanel"
+                                                     aria-labelledby="notes-tab">
+                                                    <div class="email-threading-row">
+
+                                                        {{--                                                    <button class="threading-email-btn-two">--}}
+                                                        {{--                                                        Create Notes--}}
+                                                        {{--                                                    </button>--}}
+                                                        <button class="threading-email-btn-two" data-bs-toggle="modal"
+                                                                data-bs-target="#addNoteModal">
+                                                            Create Notes
+                                                        </button>
+                                                    </div>
+                                                    @foreach($customer_contact->notes as $noteKey=> $note)
+                                                        <div
+                                                            class="data-highlights d-flex justify-content-between align-items-start">
+                                                            <div>
+                                                                <div
+                                                                    class="data-top-heading-header d-flex justify-content-between align-items-center">
+                                                                    <h2>Note</h2>
+                                                                    <p>{{ $note->created_at->format('Y-m-d') ?? "---" }}</p>
+                                                                </div>
+                                                                <p class="user_cont" id="note-text-{{$note->id}}">
+                                                                    {{ $note->note ?? "No Note Available" }}
+                                                                </p>
+                                                            </div>
+
+                                                            <!-- Edit & Delete Icons -->
+                                                            <div class="d-flex">
+                                                                <!-- Edit Icon -->
+                                                                <i class="fas fa-edit text-warning me-3 editNoteModal"
+                                                                   style="cursor: pointer;" data-bs-toggle="modal"
+                                                                   data-bs-target="#editNoteModal" data-id="{{$note->id}}"></i>
+                                                                <i class="fas fa-trash text-danger"
+                                                                   style="cursor: pointer;"></i>
+                                                            </div>
+                                                        </div>
+                                                    @endforeach
+                                                </div>
+
+
+                                                <div class="tab-pane fade" id="email" role="tabpanel"
+                                                     aria-labelledby="email-tab">
+                                                    <div class="email-threading-row">
+                                                        <p class="activities-seprater"> Thread email replies
+                                                        </p>
+                                                        <button class="threading-email-btn-one">
+                                                            Log Email
+                                                        </button>
+                                                        <button class="threading-email-btn-two">
+                                                            Create Email
+                                                        </button>
                                                     </div>
 
+                                                    <div>
+                                                        <p class="date-by-order"> May 2021</p>
+
+                                                        <div class="recent-activities">
+                                                            <div class="email-box-container"
+                                                                 style="margin: 0; border-radius: 0;">
+                                                                <div class="toggle-btnss">
+                                                                    <div class="activ_head ">
+                                                                        <div class="email-child-wrapper">
+                                                                            <i class="fa fa-caret-right"
+                                                                               aria-hidden="true"></i>
+                                                                            <h2>
+                                                                                Email - #Professional Image
+                                                                                Editing
+                                                                                <span
+                                                                                    class="user_cont">from Harry Brown</span>
+                                                                            </h2>
+                                                                        </div>
+                                                                        <p>12/03/2024 4:48 PM GMT+5</p>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div>
+
+                                                                    <div class="contentdisplay">
+
+                                                                        <div class="new-profile-parent-wrapper">
+                                                                            <div class="new-profile-email-wrapper">
+                                                                                <div class="user_profile_img">
+                                                                                    <div class="avatarr">MS
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="user_profile_text">
+                                                                                    <p>Mike Stewar</p>
+                                                                                    <p style="font-weight: 500">
+                                                                                        --
+                                                                                    </p>
+                                                                                </div>
+                                                                            </div>
+
+                                                                            <div class="new-profile-email-wrapper">
+                                                                                <div class="activities-seprater ">
+                                                                                    Reply
+                                                                                </div>
+                                                                                <div
+                                                                                    class="activities-seprater open-form-btn">
+                                                                                    Forward
+                                                                                </div>
+                                                                                <div
+                                                                                    class="activities-seprater open-form-btn">
+                                                                                    Delete
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+                                                                <!-- <div class="user-cont-hide">
+                                                                    <div class="user_cont user-cont-hide">
+                                                                        <p >
+                                                                            Hi, <br> I hope you're doing well. I specialize in
+                                                                            online reputation management and can help boost your
+                                                                            business's presence by generating positive reviews
+                                                                            and
+                                                                            addressing any negative feedback.
+                                                                        </p>
+                                                                    </div>
+                                                                </div> -->
+                                                                <div class="contentdisplaytwo">
+                                                                    <div class="user_cont user-email-template ">
+                                                                        <p>
+                                                                            Hi Apex Web Team, <br>
+
+                                                                        <p class="email-body-text">
+                                                                            I hope you're doing well. I specialize
+                                                                            in
+                                                                            online
+                                                                            reputation management and can help boost
+                                                                            your
+                                                                            business's presence by generating
+                                                                            positive
+                                                                            reviews
+                                                                            and addressing any negative feedback. I
+                                                                            specialize
+                                                                            in online
+                                                                            reputation management and can help boost
+                                                                            your
+                                                                            business.
+
+                                                                        </p>
+                                                                        <p class="email-body-text">
+                                                                            All the best <br>
+                                                                            Harry Daniel <br>
+                                                                            <span class="activities-seprater">
+                                                                                +1-97-676552
+                                                                            </span>
+                                                                        </p>
+                                                                        <img
+                                                                            src="{{asset ('assets/images/email-dummy.jpg')}}"
+                                                                            class="img-fluid">
+                                                                        <br>
+                                                                        <br>
+
+                                                                        <p class="email-body-text">
+                                                                            <span style="font-weight: 600;"> Lorem
+                                                                                Ipsum
+                                                                                |
+                                                                                Promotion/Marketing Manager
+                                                                            </span><br>
+                                                                            Street Hospitality <br>
+                                                                            <a href="#" class="email-client-site-link">
+                                                                                Visit our website!</a>
+                                                                        </p>
+
+                                                                        <img
+                                                                            src="{{asset ('assets/images/logo-img.png')}}"
+                                                                            class="img-fluid client-email-logo">
+
+                                                                        <br>
+                                                                        <br>
+
+                                                                        <div class="collapse " id="collapseEmail">
+                                                                            <div
+                                                                                class="card custom-email-reply-collapse card-body">
+                                                                                <p
+                                                                                    class="contact-card-subscription-para">
+                                                                                    On Mon, jan 13, 2025 at 3:45PM
+                                                                                    deveon
+                                                                                    word
+                                                                                </p>
+                                                                                <p class="activities-seprater">
+                                                                                    devon@hudsonstreethospitality.com
+                                                                                </p>
+                                                                            </div>
+                                                                            <div
+                                                                                class="custom-email-reply-collapse-body">
+                                                                                <p>
+                                                                                    Hi Apex Web Team, <br>
+
+                                                                                <p class="email-body-text">
+                                                                                    I hope you're doing well. I
+                                                                                    specialize
+                                                                                    in online
+                                                                                    reputation management and can
+                                                                                    help
+                                                                                    boost
+                                                                                    your
+                                                                                    business's presence by
+                                                                                    generating
+                                                                                    positive reviews
+                                                                                    and addressing any negative
+                                                                                    feedback.
+
+                                                                                </p>
+                                                                                <p class="email-body-text">
+                                                                                    I hope you're doing well. I
+                                                                                    specialize
+                                                                                    in online
+                                                                                    reputation management and can
+                                                                                    help
+                                                                                    boost
+                                                                                    your
+                                                                                    business's presence by
+                                                                                    generating
+                                                                                    positive reviews
+                                                                                    and addressing any negative
+                                                                                    feedback. I
+                                                                                    specialize
+                                                                                    in online
+                                                                                    reputation management and can
+                                                                                    help
+                                                                                    boost
+                                                                                    your
+                                                                                    business.
+
+                                                                                </p>
+                                                                                <p class="email-body-text">
+                                                                                    I hope you're doing well. I
+                                                                                    specialize
+                                                                                    in online
+                                                                                    reputation management and can
+                                                                                    help
+                                                                                    boost
+                                                                                    your
+                                                                                    business's presence by
+                                                                                    generating
+                                                                                    positive reviews
+                                                                                    and addressing any negative
+                                                                                    feedback. I
+                                                                                    specialize
+                                                                                    in online
+                                                                                    reputation management and can
+                                                                                    help
+                                                                                    boost
+                                                                                    your
+                                                                                    business.
+
+                                                                                </p>
+                                                                                <br>
+                                                                                <p>--</p>
+
+                                                                                <p class="email-body-text">
+                                                                                    <span style="font-weight: 600;">
+                                                                                        Lorem
+                                                                                        Ipsum |
+                                                                                        Promotion/Marketing Manager
+                                                                                    </span><br>
+                                                                                    Street Hospitality <br>
+                                                                                    <a href="#"
+                                                                                       class="email-client-site-link">
+                                                                                        Visit our website!</a>
+                                                                                </p>
+
+                                                                                <img
+                                                                                    src="{{asset ('assets/images/logo-img.png')}}"
+                                                                                    class="img-fluid client-email-logo">
+
+                                                                                <br>
+                                                                                <br>
+                                                                            </div>
+                                                                        </div>
+                                                                        <button class="view-full-email-reply-btn"
+                                                                                type="button" data-bs-toggle="collapse"
+                                                                                data-bs-target="#collapseEmail"
+                                                                                aria-expanded="true"
+                                                                                aria-controls="collapseEmail">
+                                                                            <i class="fa fa-ellipsis-h "
+                                                                               aria-hidden="true"></i>
+                                                                        </button>
+
+                                                                        <div class="comment-active_head">
+
+
+                                                                            <div>
+
+                                                                                <!-- <div class="email-child-wrapper">
+                                                                                <span class="activities-addition-links">View
+                                                                                Thread (2)</span>
+                                                                                </div> -->
+
+                                                                                <div>
+
+                                                                                    <div class="email-child-wrapper"
+                                                                                         id="toggleButtonThread">
+
+                                                                                        <span
+                                                                                            class="activities-addition-links">View
+                                                                                            Thread (2) </span>
+                                                                                    </div>
+
+
+                                                                                </div>
+
+
+                                                                            </div>
+
+                                                                            <button type="button"
+                                                                                    class="dropdown-toggle custom-drop-btn-design"
+                                                                                    id="dropdownMenuButtonthreadd"
+                                                                                    data-bs-toggle="dropdown"
+                                                                                    aria-expanded="false">
+                                                                                3
+                                                                                association
+                                                                            </button>
+                                                                            <ul class="dropdown-menu"
+                                                                                aria-labelledby="dropdownMenuButtonthreadd">
+                                                                                <div>
+
+                                                                                    <div
+                                                                                        class="dropdown-content-wraper">
+                                                                                        <ul
+                                                                                            class="nested-select-list">
+                                                                                            <li
+                                                                                                class="checkbox-item">
+
+                                                                                                <label>Companies
+                                                                                                    0</label>
+                                                                                            </li>
+                                                                                            <li
+                                                                                                class="checkbox-item">
+
+                                                                                                <label>Carts
+                                                                                                    0</label>
+                                                                                            </li>
+                                                                                            <li
+                                                                                                class="checkbox-item">
+
+                                                                                                <label>Contacts
+                                                                                                    0</label>
+                                                                                            </li>
+                                                                                            <li
+                                                                                                class="checkbox-item">
+
+                                                                                                <label>Leads
+                                                                                                    0</label>
+                                                                                            </li>
+                                                                                            <li
+                                                                                                class="checkbox-item">
+
+                                                                                                <label>Deals
+                                                                                                    0</label>
+                                                                                            </li>
+                                                                                            <li
+                                                                                                class="checkbox-item">
+
+                                                                                                <label>Orders
+                                                                                                    0</label>
+                                                                                            </li>
+                                                                                            <!-- Add more items as needed -->
+                                                                                        </ul>
+                                                                                        <div>
+                                                                                            <div
+                                                                                                class="search-box-select">
+                                                                                                <input
+                                                                                                    type="text"
+                                                                                                    placeholder="Search current associations"
+                                                                                                    class="search-input">
+                                                                                            </div>
+                                                                                            <div
+                                                                                                class="select-contact-box-space">
+                                                                                                <p
+                                                                                                    class="select-contact">
+                                                                                                    Contacts
+                                                                                                </p>
+
+                                                                                                <input
+                                                                                                    type="checkbox"
+                                                                                                    id="contact2">
+                                                                                                <label
+                                                                                                    for="contact2">HoeoSQMLp
+                                                                                                    becelhmerthewatt@yahoo.com</label>
+                                                                                            </div>
+                                                                                        </div>
+
+                                                                                    </div>
+                                                                                </div>
+                                                                            </ul>
+
+
+                                                                        </div>
+
+
+                                                                    </div>
+                                                                </div>
+
+
+                                                            </div>
+
+                                                            <div id="thread" class="hidden">
+                                                                <div class="email-box-container"
+                                                                     style="margin: 0; border-radius: 0;">
+
+
+                                                                    <div>
+                                                                        <div class="new-profile-parent-wrapper">
+                                                                            <div class="new-profile-email-wrapper">
+                                                                                <div class="user_profile_img">
+                                                                                    <div class="avatarr">MS
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="user_profile_text">
+                                                                                    <h2
+                                                                                        style="padding: 0; margin: 0;">
+                                                                                        Devod
+                                                                                        Word </h2>
+
+                                                                                    <p
+                                                                                        style="font-weight: 500; padding-left: 0;">
+                                                                                        to
+                                                                                        info@opexwebdesign.com,
+                                                                                        bett@hudsoninfo.com
+                                                                                    </p>
+                                                                                </div>
+                                                                            </div>
+
+
+                                                                            <div>
+                                                                                <div
+                                                                                    class="new-profile-email-thread-wrapper">
+
+                                                                                    <div
+                                                                                        class="activities-seprater ">
+                                                                                        Reply all
+                                                                                    </div>
+                                                                                    <div
+                                                                                        class="activities-seprater ">
+                                                                                        Reply
+                                                                                    </div>
+
+                                                                                    <div
+                                                                                        class="activities-seprater open-form-btn">
+                                                                                        Forward
+                                                                                    </div>
+                                                                                    <div
+                                                                                        class="activities-seprater open-form-btn">
+                                                                                        Delete
+                                                                                    </div>
+
+
+                                                                                </div>
+                                                                                <div>
+                                                                                    <p>12/03/2024 4:48 PM GMT+5
+                                                                                    </p>
+                                                                                </div>
+
+                                                                            </div>
+
+
+                                                                        </div>
+
+
+                                                                    </div>
+                                                                    <div class="user_cont user-email-template">
+                                                                        <p>
+                                                                            Hi Apex Web Team, <br>
+
+                                                                        <p class="email-body-text">
+                                                                            I hope you're doing well. I
+                                                                            specialize
+                                                                            in
+                                                                            online
+                                                                            reputation management and can help
+                                                                            boost
+                                                                            your
+                                                                            business's presence by generating
+                                                                            positive
+                                                                            reviews
+                                                                            and addressing any negative
+                                                                            feedback.
+
+                                                                        </p>
+                                                                        <div class="moretext">
+                                                                            <p class="email-body-text">
+                                                                                I hope you're doing well. I
+                                                                                specialize
+                                                                                in online
+                                                                                reputation management and can
+                                                                                help
+                                                                                boost
+                                                                                your
+                                                                                business's presence by
+                                                                                generating
+                                                                                positive reviews
+                                                                                and addressing any negative
+                                                                                feedback. I
+                                                                                specialize
+                                                                                in online
+                                                                                reputation management and can
+                                                                                help
+                                                                                boost
+                                                                                your
+                                                                                business.
+
+                                                                            </p>
+                                                                            <p class="email-body-text">
+                                                                                I hope you're doing well. I
+                                                                                specialize
+                                                                                in online
+                                                                                reputation management and can
+                                                                                help
+                                                                                boost
+                                                                                your
+                                                                                business's presence by
+                                                                                generating
+                                                                                positive reviews
+                                                                                and addressing any negative
+                                                                                feedback. I
+                                                                                specialize
+                                                                                in online
+                                                                                reputation management and can
+                                                                                help
+                                                                                boost
+                                                                                your
+                                                                                business.
+
+                                                                            </p>
+                                                                            <br>
+                                                                            <p>--</p>
+
+                                                                            <p class="email-body-text">
+                                                                                    <span style="font-weight: 600;">
+                                                                                        Lorem
+                                                                                        Ipsum |
+                                                                                        Promotion/Marketing Manager
+                                                                                    </span><br>
+                                                                                Street Hospitality <br>
+                                                                                <span class="activities-seprater">
+                                                                                        +1-97-676552
+                                                                                    </span> <br>
+                                                                                <a href="#"
+                                                                                   class="email-client-site-link">
+                                                                                    Visit our website!</a>
+                                                                            </p>
+
+                                                                            <img
+                                                                                src="{{asset ('assets/images/logo-img.png')}}"
+                                                                                class="img-fluid client-email-logo">
+
+                                                                            <br>
+                                                                            <br>
+                                                                        </div>
+
+
+                                                                        <div class="doc-attachment-container">
+                                                                            <a href="path/to/your/file.pdf"
+                                                                               class="doc-attachment">
+                                                                                <div class="icon-doc">
+                                                                                    📎
+                                                                                </div>
+                                                                                <div class="file-info-doc">
+                                                                                    <p class="file-name-doc">
+                                                                                        Document.pdf
+                                                                                    </p>
+                                                                                    <p class="file-size-doc">2
+                                                                                        MB
+                                                                                    </p>
+                                                                                </div>
+                                                                            </a>
+                                                                        </div>
+
+                                                                        <div class="comment-head-thread-wrapper">
+
+
+                                                                            <div>
+
+                                                                                <div class="email-child-wrapper">
+                                                                                    <!-- <a
+                                                                                class="moreless-button activities-addition-links">
+                                                                                Read more</a> -->
+                                                                                    <a
+                                                                                        class="moreless-button activities-addition-links">See
+                                                                                        more</a>
+                                                                                </div>
+
+
+                                                                            </div>
+
+
+                                                                            <div>
+
+                                                                                <div
+                                                                                    class="thread-dropdown-display">
+                                                                                    <button type="button"
+                                                                                            class="dropdown-toggle custom-drop-btn-design"
+                                                                                            id="dropdownMenuButtonthread"
+                                                                                            data-bs-toggle="dropdown"
+                                                                                            aria-expanded="false">
+                                                                                        3
+                                                                                        association
+                                                                                    </button>
+                                                                                    <ul class="dropdown-menu"
+                                                                                        aria-labelledby="dropdownMenuButtonthread">
+                                                                                        <div>
+
+                                                                                            <div
+                                                                                                class="dropdown-content-wraper">
+                                                                                                <ul
+                                                                                                    class="nested-select-list">
+                                                                                                    <li
+                                                                                                        class="checkbox-item">
+
+                                                                                                        <label>Companies
+                                                                                                            0</label>
+                                                                                                    </li>
+                                                                                                    <li
+                                                                                                        class="checkbox-item">
+
+                                                                                                        <label>Carts
+                                                                                                            0</label>
+                                                                                                    </li>
+                                                                                                    <li
+                                                                                                        class="checkbox-item">
+
+                                                                                                        <label>Contacts
+                                                                                                            0</label>
+                                                                                                    </li>
+                                                                                                    <li
+                                                                                                        class="checkbox-item">
+
+                                                                                                        <label>Leads
+                                                                                                            0</label>
+                                                                                                    </li>
+                                                                                                    <li
+                                                                                                        class="checkbox-item">
+
+                                                                                                        <label>Deals
+                                                                                                            0</label>
+                                                                                                    </li>
+                                                                                                    <li
+                                                                                                        class="checkbox-item">
+
+                                                                                                        <label>Orders
+                                                                                                            0</label>
+                                                                                                    </li>
+                                                                                                    <!-- Add more items as needed -->
+                                                                                                </ul>
+                                                                                                <div>
+                                                                                                    <div
+                                                                                                        class="search-box-select">
+                                                                                                        <input
+                                                                                                            type="text"
+                                                                                                            placeholder="Search current associations"
+                                                                                                            class="search-input">
+                                                                                                    </div>
+                                                                                                    <div
+                                                                                                        class="select-contact-box-space">
+                                                                                                        <p
+                                                                                                            class="select-contact">
+                                                                                                            Contacts
+                                                                                                        </p>
+
+                                                                                                        <input
+                                                                                                            type="checkbox"
+                                                                                                            id="contact2">
+                                                                                                        <label
+                                                                                                            for="contact2">HoeoSQMLp
+                                                                                                            becelhmerthewatt@yahoo.com</label>
+                                                                                                    </div>
+                                                                                                </div>
+
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </ul>
+                                                                                </div>
+                                                                            </div>
+
+
+                                                                        </div>
+
+
+                                                                    </div>
+
+                                                                </div>
+                                                                <div class="collapse-all-content-container">
+                                                                    <button class="all-collapse-thread-emails-btn">
+                                                                        <i class="fa fa-caret-down"
+                                                                           style="padding-right: 5px;"
+                                                                           aria-hidden="true"></i>
+                                                                        <span style="text-decoration: underline;">
+                                                                                Collapse threads
+                                                                            </span></button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+
+                                                <div class="tab-pane fade" id="call" role="tabpanel"
+                                                     aria-labelledby="call-tab">
+                                                    <div class="email-threading-row">
+
+                                                        <button class="threading-email-btn-two">
+                                                            Make a call
+                                                        </button>
+                                                    </div>
                                                     <div class="data-highlights">
                                                         <div class="data-top-heading-header">
                                                             <h2>Life Cycle</h2>
@@ -1688,193 +2721,304 @@
                                                         </p>
                                                     </div>
                                                 </div>
+
+                                                <div class="tab-pane fade" id="task" role="tabpanel"
+                                                     aria-labelledby="task-tab">
+                                                    <div class="email-threading-row">
+
+                                                        <button class="threading-email-btn-two">
+                                                            Create a Task
+                                                        </button>
+                                                    </div>
+                                                    <div class="data-highlights">
+                                                        <div class="data-top-heading-header">
+                                                            <h2>Life Cycle</h2>
+                                                            <p>This contact was created </p>
+                                                        </div>
+                                                        <p class="user_cont"> No associated objects of this
+                                                            type
+                                                            exist or you don't have permission to view them.
+                                                            <span class="activities-seprater"> View detail <i
+                                                                    class="fa fa-external-link"
+                                                                    aria-hidden="true"></i>
+                                                                </span>
+                                                        </p>
+                                                    </div>
+
+                                                </div>
+
+                                                <div class="tab-pane fade" id="meeting" role="tabpanel"
+                                                     aria-labelledby="meeting-tab">
+                                                    <div class="email-threading-row">
+
+                                                        <button class="threading-email-btn-two">
+                                                            Call a Meeting
+                                                        </button>
+                                                    </div>
+                                                    <div class="data-highlights">
+                                                        <div class="data-top-heading-header">
+                                                            <h2>Life Cycle</h2>
+                                                            <p>This contact was created </p>
+                                                        </div>
+                                                        <p class="user_cont"> No associated objects of this
+                                                            type
+                                                            exist or you don't have permission to view them.
+                                                            <span class="activities-seprater"> View detail <i
+                                                                    class="fa fa-external-link"
+                                                                    aria-hidden="true"></i>
+                                                                </span>
+                                                        </p>
+                                                    </div>
+
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="tab-pane fade" id="notes" role="tabpanel"
-                                             aria-labelledby="notes-tab">notes
+
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="main">
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+
+                            <div class="right-sidebarr">
+                                <div class="collaborators ">
+
+                                    <div class="right_collaboratrs-box">
+                                        <div class="collapse-header-prent-box">
+                                            <div class="collapse-header-box">
+
+                                                <button class="btn custom-btn-collapse" type="button"
+                                                        data-bs-toggle="collapse" data-bs-target="#collapseExample"
+                                                        aria-expanded="true" aria-controls="collapseExample">
+                                                    <i class="fa fa-caret-down" style="padding-right: 5px;"
+                                                       aria-hidden="true"></i>
+                                                    Company <span> ( {{$customer_contact->companies->count()}} )</span>
+                                                </button>
+                                            </div>
+
                                         </div>
-                                        <div class="tab-pane fade" id="email" role="tabpanel"
-                                             aria-labelledby="email-tab">email
+
+                                        <div class="right_collab open-form-btn">
+                                            <i class="fa fa-plus create-contact open-form-btn" aria-hidden="true">
+                                            </i>
+                                            <span>Add</span>
+                                        </div>
+
+                                    </div>
+                                    <div class="collapse" id="collapseExample">
+                                        <div class="card custom-collapse-cards card-body">
+                                            <p class="contact-card-subscription-para">
+                                                {{($customer_contact->company)->domain ?? "---"}}
+                                            </p>
                                         </div>
                                     </div>
+
+                                    <div class="collpase-divider mt-2 mb-2"></div>
+
+
+                                    <div class="right_collaboratrs-box">
+                                        <div class="collapse-header-prent-box">
+                                            <div class="collapse-header-box">
+
+                                                <button class="btn custom-btn-collapse" type="button"
+                                                        data-bs-toggle="collapse"
+                                                        data-bs-target="#collapseExamplepayment"
+                                                        aria-expanded="true" aria-controls="collapseExamplepayment">
+                                                    <i class="fa fa-caret-down" style="padding-right: 5px;"
+                                                       aria-hidden="true"></i>
+                                                    Payments <span> ( {{ $customer_contact->payments->count() ?? "---" }} ) </span>
+                                                </button>
+                                            </div>
+
+                                        </div>
+                                        <div class="right_collab open-form-btn">
+                                            <i class="fa fa-plus create-contact " aria-hidden="true"> </i>
+                                            <span>Add</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="collapse " id="collapseExamplepayment">
+                                        <div class="card custom-collapse-cards card-body">
+                                            {{--                                        @foreach($customer_contact->payments as $payment)--}}
+                                            {{--                                            <div class="row mb-3 ">--}}
+                                            {{--                                                <!-- Invoice Number & Total Amount -->--}}
+                                            {{--                                                <div class="col-md-12">--}}
+                                            {{--                                                    <div class="invoice_sec">--}}
+                                            {{--                                                        <p class="invoice_sec_p"> {{ ($payment->invoice)->invoice_number ?? "---" }}</p>--}}
+                                            {{--                                                        <p class="invoice_sec_p">Total Amount : {{ $payment->amount ?? "---" }}</p>--}}
+                                            {{--                                                    </div>--}}
+                                            {{--                                                </div>--}}
+                                            {{--                                                <div class="col-md-12">--}}
+                                            {{--                                                    <div class="invoice_sec">--}}
+                                            {{--                                                        <p class="contact-card-subscription-para"> Status :--}}
+                                            {{--                                                            @if($payment->status == 0)--}}
+                                            {{--                                                                <span>Due</span>--}}
+                                            {{--                                                            @elseif($payment->status == 1)--}}
+                                            {{--                                                                <span>Paid</span>--}}
+                                            {{--                                                            @elseif($payment->status == 2)--}}
+                                            {{--                                                                <span>Refund</span>--}}
+                                            {{--                                                            @else--}}
+                                            {{--                                                                <span>Unknown</span>--}}
+                                            {{--                                                            @endif--}}
+                                            {{--                                                        </p>--}}
+                                            {{--                                                        <p class="contact-card-subscription-para"> Date : {{ ($payment->payment_date)->format('Y-m-d') ?? "---" }}</p>--}}
+                                            {{--                                                    </div>--}}
+                                            {{--                                                </div>--}}
+                                            {{--                                            </div>--}}
+
+
+                                            {{--                                            <hr>--}}
+                                            {{--                                        @endforeach--}}
+                                            <div class="col-md-12">
+                                                @foreach($customer_contact->payments as $payment)
+
+                                                    <div class=" invoice_sec">
+                                                        <span
+                                                            class="invoice_num">{{ ($payment->invoice)->invoice_number ?? "---" }}</span>
+                                                        <span>Status :
+                                                      @if($payment->status == 0)
+                                                                <span>Due</span>
+                                                            @elseif($payment->status == 1)
+                                                                <span>Paid</span>
+                                                            @elseif($payment->status == 2)
+                                                                <span>Refund</span>
+                                                            @elseif($payment->status == 3)
+                                                                <span>Charge Back</span>
+                                                            @else
+                                                                <span>Unknown</span>
+                                                            @endif
+                                                    </span>
+                                                        <span>Total Amount : {{ $payment->amount ?? "---" }}</span>
+                                                        <span>Due Date : {{ $payment->payment_date ?? "---" }}</span>
+                                                        <span>Create Date : {{ $payment->created_at ?? "---" }}</span>
+                                                    </div>
+                                                @endforeach
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="collpase-divider mt-2 mb-2"></div>
+
+                                    <div class="right_collaboratrs-box">
+                                        <div class="collapse-header-prent-box">
+                                            <div class="collapse-header-box">
+
+                                                <button class="btn custom-btn-collapse" type="button"
+                                                        data-bs-toggle="collapse"
+                                                        data-bs-target="#collapseExampleinvoice"
+                                                        aria-expanded="true" aria-controls="collapseExampleinvoice">
+                                                    <i class="fa fa-caret-down" style="padding-right: 5px;"
+                                                       aria-hidden="true"></i>
+                                                    Invoices <span> ({{ $customer_contact->invoices->count() }}) </span>
+                                                </button>
+                                            </div>
+
+                                        </div>
+                                        <div class="right_collab open-form-btn">
+                                            <i class="fa fa-plus create-contact " aria-hidden="true"> </i>
+                                            <span>Add</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="collapse" id="collapseExampleinvoice">
+                                        <div class="card custom-collapse-cards card-body">
+                                            <div class="col-md-12">
+                                                @foreach($customer_contact->invoices as $invoice)
+
+                                                    <div class=" invoice_sec">
+                                                        <span
+                                                            class="invoice_num">{{ $invoice->invoice_number ?? "---" }}</span>
+                                                        <span>Status :
+                                                      @if($invoice->status == 0)
+                                                                <span>Due</span>
+                                                            @elseif($invoice->status == 1)
+                                                                <span>Paid</span>
+                                                            @elseif($invoice->status == 2)
+                                                                <span>Refund</span>
+                                                            @elseif($invoice->status == 3)
+                                                                <span>Charge Back</span>
+                                                            @else
+                                                                <span>Unknown</span>
+                                                            @endif
+                                                    </span>
+                                                        <span>Total Amount : {{ $invoice->amount ?? "---" }}</span>
+                                                        <span>Due Date : {{ $invoice->due_date ?? "---" }}</span>
+                                                        <span>Create Date : {{ $invoice->created_at ?? "---" }}</span>
+                                                    </div>
+                                                @endforeach
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="collapse " id="collapseExamplepay">
+                                        <div class="card custom-collapse-cards card-body">
+                                            <p class="contact-card-subscription-para">
+                                                Give customers a fast, flexible way to pay. Add a payment link
+                                                to
+                                                accept
+                                                a
+                                                payment and associate it with this record.
+                                            </p>
+                                            <div class="main-payment-btn-wrapper ">
+                                                <button class="set-payment-btn">Set up Payments</button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="collpase-divider mt-2 mb-2"></div>
+
+
+                                    <div class="right_collaboratrs-box">
+                                        <div class="collapse-header-prent-box">
+                                            <div class="collapse-header-box">
+
+                                                <button class="btn custom-btn-collapse" type="button"
+                                                        data-bs-toggle="collapse" data-bs-target="#collapseExampleatt"
+                                                        aria-expanded="true" aria-controls="collapseExampleatt">
+                                                    <i class="fa fa-caret-down" style="padding-right: 5px;"
+                                                       aria-hidden="true"></i>
+                                                    Attachments
+                                                </button>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="right_collab open-form-btn">
+                                            <i class="fa fa-plus create-contact open-form-btn" aria-hidden="true">
+                                            </i>
+                                            <span>Add</span>
+                                        </div>
+
+                                    </div>
+                                    <div class="collapse " id="collapseExampleatt">
+                                        <div class="card custom-collapse-cards card-body">
+                                            <p class="contact-card-subscription-para">
+                                                See the businesses or organizations associated with this record.
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div class="collpase-divider mt-2 mb-2"></div>
+
                                 </div>
-
-
                             </div>
 
                         </div>
                     </div>
-
-
-                    <div class="main">
-
-
-                    </div>
                 </div>
-                <div class="col-lg-3">
 
-
-                    <div class="right-sidebarr">
-                        <div class="collaborators ">
-
-
-                            <div class="right_collaboratrs-box">
-                                <div class="collapse-header-prent-box">
-                                    <div class="collapse-header-box">
-                                        <i class="fa fa-caret-down" aria-hidden="true"></i>
-                                        <button class="btn custom-btn-collapse" type="button"
-                                                data-bs-toggle="collapse" data-bs-target="#collapseExample"
-                                                aria-expanded="true" aria-controls="collapseExample">
-
-                                            Company <span> (1) </span>
-                                        </button>
-                                    </div>
-
-                                </div>
-
-                                <div class="right_collab open-form-btn">
-                                    <i class="fa fa-plus create-contact open-form-btn" aria-hidden="true"> </i>
-                                    <span>Add</span>
-                                </div>
-
-                            </div>
-                            <div class="collapse show" id="collapseExample">
-                                <div class="card custom-collapse-cards card-body">
-                                    <p class="contact-card-subscription-para">
-                                        See the businesses or organizations associated with this record.
-                                    </p>
-                                </div>
-                            </div>
-
-                            <div class="collpase-divider mt-2 mb-2"></div>
-
-
-                            <div class="right_collaboratrs-box">
-                                <div class="collapse-header-prent-box">
-                                    <div class="collapse-header-box">
-                                        <i class="fa fa-caret-down" aria-hidden="true"></i>
-                                        <button class="btn custom-btn-collapse" type="button"
-                                                data-bs-toggle="collapse" data-bs-target="#collapseExampleone"
-                                                aria-expanded="true" aria-controls="collapseExampleone">
-
-                                            Tickets <span> (0) </span>
-                                        </button>
-                                    </div>
-
-                                </div>
-                                <div class="right_collab open-form-btn">
-                                    <i class="fa fa-plus create-contact " aria-hidden="true"> </i>
-                                    <span>Add</span>
-                                </div>
-                            </div>
-
-                            <div class="collapse show" id="collapseExampleone">
-                                <div class="card custom-collapse-cards card-body">
-                                    <p class="contact-card-subscription-para">
-                                        See the businesses or organizations associated with this record.
-                                    </p>
-                                </div>
-                            </div>
-
-                            <div class="collpase-divider mt-2 mb-2"></div>
-
-                            <div class="right_collaboratrs-box">
-                                <div class="collapse-header-prent-box">
-                                    <div class="collapse-header-box">
-                                        <i class="fa fa-caret-down" aria-hidden="true"></i>
-                                        <button class="btn custom-btn-collapse" type="button"
-                                                data-bs-toggle="collapse" data-bs-target="#collapseExampledeal"
-                                                aria-expanded="true" aria-controls="collapseExampledeal">
-
-                                            Deals <span> (0) </span>
-                                        </button>
-                                    </div>
-
-                                </div>
-                                <div class="right_collab open-form-btn">
-                                    <i class="fa fa-plus create-contact " aria-hidden="true"> </i>
-                                    <span>Add</span>w
-                                </div>
-                            </div>
-
-                            <div class="collapse show" id="collapseExampledeal">
-                                <div class="card custom-collapse-cards card-body">
-                                    <p class="contact-card-subscription-para">
-                                        See the businesses or organizations associated with this record.
-                                    </p>
-                                </div>
-                            </div>
-
-                            <div class="collpase-divider mt-2 mb-2"></div>
-
-
-                            <div class="collapse-header-prent-box">
-                                <div class="collapse-header-box">
-                                    <i class="fa fa-caret-down" aria-hidden="true"></i>
-                                    <button class="btn custom-btn-collapse" type="button" data-bs-toggle="collapse"
-                                            data-bs-target="#collapseExamplepay" aria-expanded="true"
-                                            aria-controls="collapseExamplepay">
-
-                                        Payments <span> (0) </span>
-                                    </button>
-                                </div>
-
-                            </div>
-
-
-                            <div class="collapse show" id="collapseExamplepay">
-                                <div class="card custom-collapse-cards card-body">
-                                    <p class="contact-card-subscription-para">
-                                        Give customers a fast, flexible way to pay. Add a payment link to accept a
-                                        payment and associate it with this record.
-                                    </p>
-                                    <div class="main-payment-btn-wrapper ">
-                                        <button class="set-payment-btn">Set up Payments</button>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="collpase-divider mt-2 mb-2"></div>
-
-
-                            <div class="right_collaboratrs-box">
-                                <div class="collapse-header-prent-box">
-                                    <div class="collapse-header-box">
-                                        <i class="fa fa-caret-down" aria-hidden="true"></i>
-                                        <button class="btn custom-btn-collapse" type="button"
-                                                data-bs-toggle="collapse" data-bs-target="#collapseExampleatt"
-                                                aria-expanded="true" aria-controls="collapseExampleatt">
-
-                                            Attachments
-                                        </button>
-                                    </div>
-
-                                </div>
-
-                                <div class="right_collab open-form-btn">
-                                    <i class="fa fa-plus create-contact open-form-btn" aria-hidden="true"> </i>
-                                    <span>Add</span>
-                                </div>
-
-                            </div>
-                            <div class="collapse show" id="collapseExampleatt">
-                                <div class="card custom-collapse-cards card-body">
-                                    <p class="contact-card-subscription-para">
-                                        See the businesses or organizations associated with this record.
-                                    </p>
-                                </div>
-                            </div>
-
-                            <div class="collpase-divider mt-2 mb-2"></div>
-
-
-                        </div>
-                    </div>
-                </div>
             </div>
-        </div>
-    </section>
+        </section>
+    </div>
 
+
+    @include('admin.customers.contacts.notes-add-modal')
+    @include('admin.customers.contacts.notes-edit-modal')
     @include('admin.customers.companies.custom-form')
     @include('admin.customers.companies.email-template')
 
@@ -1960,7 +3104,7 @@
             // Function hide and show
             $(document).ready(function () {
                 $(".toggle-btnss").click(function () {
-                    $(".contentdisplay").slideToggle(); // Smoothly show or hide content
+                    $(".contentdisplay, .contentdisplaytwo").slideToggle(); // Smoothly show or hide content
                 });
             });
             //new
@@ -1979,6 +3123,54 @@
                 $('.close-btn').click(function () {
                     emailTemplate.removeClass('open');
 
+                });
+            });
+            // view threads function
+            $(document).ready(function () {
+                $('#toggleButtonThread').click(function () {
+                    const contents = $('#thread');
+                    if (contents.hasClass('hidden')) {
+                        contents.removeClass('hidden');
+                        // $(this).text('See less');
+                        $(this).find('span').text('See less');
+                    } else {
+                        contents.addClass('hidden');
+                        // $(this).text('View thread');
+                        $(this).find('span').text('View thread');
+                    }
+                });
+            });
+            // read more text function
+            $('.moreless-button').click(function () {
+                $('.moretext').slideToggle();
+                if ($('.moreless-button').text() == "See more") {
+                    $(this).text("See less")
+                } else {
+                    $(this).text("See more")
+                }
+            });
+
+            // Copy Clipboard Email
+
+            $(document).ready(function () {
+                // Initialize Bootstrap tooltips
+                $('[data-bs-toggle="tooltip"]').tooltip();
+
+                $(document).on('click', '.copyEmail', async function () {
+                    try {
+                        let emailText = $("#customerEmail").text().trim();
+                        await navigator.clipboard.writeText(emailText);
+
+                        // Change tooltip to "Copied!" and show it
+                        $(this).attr('data-bs-original-title', 'Copied!').tooltip('show');
+
+                        // Reset tooltip text after 2 seconds
+                        setTimeout(() => {
+                            $(this).attr('data-bs-original-title', 'Copy to clipboard');
+                        }, 2000);
+                    } catch (err) {
+                        console.error('Clipboard copy failed:', err);
+                    }
                 });
             });
 

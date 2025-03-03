@@ -1,0 +1,51 @@
+<?php
+
+namespace App\Http\Controllers\Admin\Customer;
+
+use App\Http\Controllers\Controller;
+use App\Models\CustomerNotes;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+
+class NoteController extends Controller
+{
+
+    public function store(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'note' => 'required',
+            'cus_contact_key' => 'nullable|integer|exists:customer_contacts,special_key',
+
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        CustomerNotes::create([
+            'cus_contact_key' => $request->cus_contact_key,
+            'note' => $request->note,
+        ]);
+
+        return redirect()->back()->with('success', 'Note added successfully!');
+    }
+
+    public function update(Request $request, CustomerNotes $note)
+    {
+        $validator = Validator::make($request->all(), [
+            'note' => 'required|string',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        $note->update([
+            'note' => $request->note,
+        ]);
+
+        return redirect()->back()->with('success', 'Note updated successfully!');
+    }
+
+
+}

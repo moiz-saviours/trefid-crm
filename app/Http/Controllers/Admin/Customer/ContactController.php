@@ -86,6 +86,7 @@ class ContactController extends Controller
     public function edit(CustomerContact $customer_contact)
     {
         if (!$customer_contact->id) return response()->json(['error' => 'Oops! Customer contact not found!']);
+        $customer_contact->load('creator', 'company', 'invoices', 'payments','notes');
         $brands = Brand::where('status', 1)->get();
         $teams = Team::where('status', 1)->get();
         $countries = config('countries');
