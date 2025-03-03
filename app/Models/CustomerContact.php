@@ -91,4 +91,19 @@ class CustomerContact extends Model
     {
         return $this->belongsToMany(CustomerCompany::class, AssignCompanyContact::class, 'cus_contact_key', 'cus_company_key', 'special_key', 'special_key')->withTimestamps();
     }
+
+    public function creator(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->morphTo('creator');
+    }
+
+    public function invoices(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Invoice::class, 'cus_contact_key', 'special_key');
+    }
+
+    public function payments(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Payment::class, 'cus_contact_key', 'special_key');
+    }
 }

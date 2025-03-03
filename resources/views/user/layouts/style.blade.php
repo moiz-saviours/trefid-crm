@@ -576,3 +576,25 @@ Detailed information and more samples can be found in the documentation.
         /*padding: 0px;*/
     }
 </style>
+<style>
+    .form-check-input:checked[type=checkbox] {
+        --bs-form-check-bg-image: none;
+        background-color: var(--bs-primary);
+    }
+
+    .form-check-input[type=checkbox]::after {
+        content: "✓";
+        position: absolute;
+        display: none;
+        left: 50%;
+        top: 55%;
+        transform: translate(-50%, -50%);
+        color: white;
+        font-size: 1.1em;
+        font-weight:700;
+    }
+
+    .form-check-input[type=checkbox]:checked::after {
+        display: block;
+    }
+</style>
