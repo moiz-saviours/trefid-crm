@@ -34,6 +34,7 @@ class PaymentValidatorRequest extends FormRequest
             'city' => 'required|string|max:100',
             'state' => 'required|string|max:100',
             'country' => 'required|string|max:100',
+            'phone' => 'required|string|regex:/^\+?\d{0,3}?[-.\s]?\(?\d{1,4}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,9}$/',
             'zipcode' => 'required|string|regex:/^\d{5}(-\d{4})?$/',
         ];
     }
@@ -69,6 +70,8 @@ class PaymentValidatorRequest extends FormRequest
             'country.required' => 'The country field is required.',
             'country.string' => 'The country must be a valid string.',
             'country.max' => 'The country must not exceed 100 characters.',
+            'phone.required' => 'The phone number field is required.',
+            'phone.regex' => 'The phone number must be a valid international phone number.',
             'zipcode.required' => 'The zipcode field is required.',
             'zipcode.string' => 'The zipcode must be a valid string.',
             'zipcode.regex' => 'The zipcode format is invalid. It must be 5 digits or 5+4 digits (e.g., 12345 or 12345-6789).',
