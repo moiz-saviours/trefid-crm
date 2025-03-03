@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\{
     Client\PaymentMerchantController as AdminPaymentMerchantController,
     Customer\CompanyController as AdminCustomerCompanyController,
     Customer\ContactController as AdminCustomerContactController,
+    Customer\NoteController as AdminCustomerNoteController,
     EmployeeController as AdminEmployeeController,
     InvoiceController as AdminInvoiceController,
     LeadController as AdminLeadController,
@@ -110,6 +111,11 @@ Route::middleware(['auth:admin', 'verified:admin', 'throttle:60,1'])->prefix('ad
                 Route::post('/store', [AdminCustomerContactController::class, 'store'])->name('store');
                 Route::get('/edit/{customer_contact?}', [AdminCustomerContactController::class, 'edit'])->name('edit');
                 Route::post('/update/{customer_contact?}', [AdminCustomerContactController::class, 'update'])->name('update');
+                Route::name('note.')->group(function () {
+                    Route::prefix('note')->group(function () {
+                        Route::post('/update/{note?}', [AdminCustomerNoteController::class, 'update'])->name('update');
+                    });
+                });
                 Route::get('/change-status/{customer_contact?}', [AdminCustomerContactController::class, 'change_status'])->name('change.status');
                 Route::delete('/delete/{customer_contact?}', [AdminCustomerContactController::class, 'delete'])->name('delete');
             });
@@ -205,6 +211,13 @@ Route::middleware(['auth:admin', 'verified:admin', 'throttle:60,1'])->prefix('ad
     Route::prefix('activity-logs')->name('activity-log.')->group(function () {
         Route::get('/', [AdminActivityLogController::class, 'index'])->name('index');
     });
+
+
+    Route::post('/notes/store', [AdminCustomerNoteController::class, 'store'])->name('notes.store');
+    Route::post('/notes/update{note}', [AdminCustomerNoteController::class, 'update'])->name('notes.update');
+
+
+
 
 
 });

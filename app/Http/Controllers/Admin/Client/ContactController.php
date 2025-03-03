@@ -54,7 +54,7 @@ class ContactController extends Controller
             'brands.*' => 'exists:brands,brand_key',
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255|unique:client_contacts,email',
-            'phone' => 'nullable|string|max:15',
+            'phone' => 'nullable|string',
             'address' => 'nullable|string|max:255',
             'city' => 'nullable|string|max:255',
             'state' => 'nullable|string|max:255',
@@ -62,6 +62,7 @@ class ContactController extends Controller
             'zipcode' => 'nullable|string|max:10',
             'ip_address' => 'nullable|string|max:45',
             'status' => 'required|in:0,1',
+            'phone' => 'nullable|regex:/^(\+?\d{1,3})[\d\s().-]+$/|min:8|max:20',
         ], [
             'brands.array' => 'Brands must be selected as an array.',
             'brands.*.exists' => 'One or more selected brands are invalid.',
@@ -115,7 +116,7 @@ class ContactController extends Controller
             'brands.*' => 'exists:brands,brand_key',
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255|unique:client_contacts,email,' . $client_contact->id,
-            'phone' => 'nullable|string|max:15',
+            'phone' => 'nullable|string',
             'address' => 'nullable|string|max:255',
             'city' => 'nullable|string|max:255',
             'state' => 'nullable|string|max:255',
@@ -123,6 +124,7 @@ class ContactController extends Controller
             'zipcode' => 'nullable|string|max:10',
             'ip_address' => 'nullable|string|max:45',
             'status' => 'required|in:0,1',
+            'phone' => 'nullable|regex:/^(\+?\d{1,3})[\d\s().-]+$/|min:8|max:20'
         ], [
             'brands.array' => 'Brands must be selected as an array.',
             'brands.*.exists' => 'One or more selected brands are invalid.',

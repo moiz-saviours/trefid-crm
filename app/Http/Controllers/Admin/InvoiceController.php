@@ -96,6 +96,7 @@ class InvoiceController extends Controller
                 'required_if:type,0',
                 'nullable',
                 'string',
+                'regex:/^(\+?\d{1,3})[\d\s().-]+$/|min:8|max:20',
                 function ($attribute, $value, $fail) use ($request) {
                     if ($request->input('type') == 0 && strlen($value) > 15) {
                         $fail("The $attribute must not be greater than 15 characters when type is 0.");
@@ -111,6 +112,7 @@ class InvoiceController extends Controller
             'tax_value' => 'nullable|numeric|min:0',
             'currency' => 'nullable|in:USD,GBP,AUD,CAD',
             'tax_amount' => 'nullable|numeric|min:0',
+            'customer_contact_phone' => 'regex:/^(\+?\d{1,3})[\d\s().-]+$/|min:8|max:20',
             'total_amount' => 'required|numeric|min:1|max:' . config('invoice.max_amount'),
             'type' => 'required|integer|in:0,1', /** 0 = fresh, 1 = upsale */
             'due_date' => 'required|date|after_or_equal:' . now()->format('Y-m-d') . '|before_or_equal:' . now()->addYear()->format('Y-m-d'),
@@ -134,6 +136,7 @@ class InvoiceController extends Controller
             'customer_contact_phone.required_if' => 'The customer contact phone number is required for fresh customers.',
             'customer_contact_phone.string' => 'The customer contact phone number must be a valid string.',
             'customer_contact_phone.max' => 'The customer contact phone number cannot exceed 15 characters.',
+
             'agent_id.required' => 'The agent field is required.',
             'agent_id.integer' => 'The agent must be a valid integer.',
 //            'agent_type.required' => 'The agent type field is required.',
