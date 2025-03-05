@@ -323,7 +323,7 @@
                         <div class="card">
                             <div class="card-header toolbar">
                                 <div class="toolbar-start">
-                                    <h5 class="m-0">Fourth Chart</h5>
+                                    <h5 class="m-0">Payment Progress</h5>
                                 </div>
                                 <div class="toolbar-end">
                                     <button type="button" class="btn btn-icon btn-minimize btn-xs"
@@ -345,7 +345,7 @@
                         <div class="card">
                             <div class="card-header toolbar">
                                 <div class="toolbar-start">
-                                    <h5 class="m-0">Fifth Chart</h5>
+                                    <h5 class="m-0">OverAll CRM</h5>
                                 </div>
                                 <div class="toolbar-end">
                                     <button type="button" class="btn btn-icon btn-minimize btn-xs"

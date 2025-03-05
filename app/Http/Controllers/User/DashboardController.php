@@ -51,6 +51,7 @@ class DashboardController extends Controller
             ->whereIn('team_key', $this->teamKeys)
             ->whereMorphedTo('agent', $this->user)
             ->whereMonth('created_at', $this->currentMonth)
+            ->whereYear('created_at', $this->currentYear)
             ->with('payment')
             ->get();
     }
@@ -143,9 +144,9 @@ class DashboardController extends Controller
         $daysInMonth = Carbon::now()->daysInMonth;
         $dailyPayments = [];
         $dailyLabels = [];
-        $payments = Payment::whereYear('created_at', $this->currentYear)
-            ->where('agent_id', $this->user->id)
+        $payments = Payment::where('agent_id', $this->user->id)
             ->whereMonth('created_at', $this->currentMonth)
+            ->whereYear('created_at', $this->currentYear)
             ->selectRaw('DAY(created_at) as day, SUM(amount) as total')
             ->groupBy('day')
             ->get()
@@ -175,8 +176,13 @@ class DashboardController extends Controller
 
     protected function getPayments()
     {
-        $totalPayments = Payment::where('agent_id', $this->user->id)->count();
+        $totalPayments = Payment::where('agent_id', $this->user->id)
+            ->whereMonth('created_at', $this->currentMonth)
+            ->whereYear('created_at', $this->currentYear)
+            ->count();
         $paymentCounts = Payment::where('agent_id', $this->user->id)
+            ->whereMonth('created_at', $this->currentMonth)
+            ->whereYear('created_at', $this->currentYear)
             ->selectRaw("
             COUNT(CASE WHEN status = 1 THEN 1 END) as paid,
             COUNT(CASE WHEN status = 2 THEN 1 END) as refund,
@@ -202,7 +208,10 @@ class DashboardController extends Controller
     protected function getCustomers()
     {
         $customers = CustomerContact::where(function ($query) {
-            $query->whereIn('team_key', $this->teamKeys)->orWhereIn('brand_key', $this->teamBrandKeys)->orWhereMorphedTo('creator', [$this->user]);
+            $query->whereIn('team_key', $this->teamKeys)->orWhereIn('brand_key', $this->teamBrandKeys);
+            if (isset($this->user)) {
+                $query->orWhereMorphedTo('creator', $this->user);
+            }
         })->get();
         return [
             'customers' => $customers,
