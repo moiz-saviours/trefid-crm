@@ -1266,6 +1266,27 @@
                 font-weight: 600;
                 padding-bottom: 5px;
             }
+            .cstm_note_cont {
+                display: flex;
+                justify-content: space-between;
+            }
+            .cstm_right_icon {
+                display: flex;
+            }
+            .cstm_btn {
+                background: transparent;
+            }
+            .cstm_right_icon {
+                opacity: 0;
+                transition: opacity 0.3s ease-in-out;
+            }
+
+            .data-highlights:hover .cstm_right_icon {
+                opacity: 1;
+            }
+            .cstm_right_icon i {
+                color:#0091ae;
+            }
         </style>
 
     @endpush
@@ -2001,7 +2022,7 @@
                                                      aria-labelledby="notes-tab">
                                                     <div class="email-threading-row">
 
-                                                        {{--                                                    <button class="threading-email-btn-two">--}}
+                                                        {{--                                                     <button class="threading-email-btn-two">--}}
                                                         {{--                                                        Create Notes--}}
                                                         {{--                                                    </button>--}}
                                                         <button class="threading-email-btn-two" data-bs-toggle="modal"
@@ -2010,27 +2031,44 @@
                                                         </button>
                                                     </div>
                                                     @foreach($customer_contact->notes as $noteKey=> $note)
-                                                        <div
-                                                            class="data-highlights d-flex justify-content-between align-items-start">
-                                                            <div>
-                                                                <div
-                                                                    class="data-top-heading-header d-flex justify-content-between align-items-center">
-                                                                    <h2>Note</h2>
-                                                                    <p>{{ $note->created_at->format('Y-m-d') ?? "---" }}</p>
+                                                        <div class="data-highlights ">
+                                                            <div class="cstm_note">
+                                                                <div class="row">
+                                                                    <div class="col-md-12">
+                                                                        <div class="data-top-heading-header">
+                                                                            <h2>Note</h2>
+                                                                            <p>{{ $note->created_at->format('Y-m-d') ?? "---" }}</p>
+                                                                        </div>
+                                                                    </div>
                                                                 </div>
-                                                                <p class="user_cont" id="note-text-{{$note->id}}">
-                                                                    {{ $note->note ?? "No Note Available" }}
-                                                                </p>
                                                             </div>
 
                                                             <!-- Edit & Delete Icons -->
-                                                            <div class="d-flex">
-                                                                <!-- Edit Icon -->
-                                                                <i class="fas fa-edit text-warning me-3 editNoteModal"
-                                                                   style="cursor: pointer;" data-bs-toggle="modal"
-                                                                   data-bs-target="#editNoteModal" data-id="{{$note->id}}"></i>
-                                                                <i class="fas fa-trash text-danger"
-                                                                   style="cursor: pointer;"></i>
+                                                            <div class="cstm_note_2">
+                                                                <div class="row">
+                                                                    <div class="col-md-12 cstm_note_cont">
+
+                                                                            <p class="user_cont" id="note-text-{{$note->id}}">
+                                                                                {{ $note->note ?? "No Note Available" }}
+                                                                            </p>
+                                                                        <div class="cstm_right_icon">
+                                                                            <!-- Edit Icon -->
+                                                                            <button class="p-0 border-0 cstm_btn">
+                                                                                <i class="fas fa-edit me-2 editNoteModal "
+                                                                                   style="cursor: pointer;" data-bs-toggle="modal"
+                                                                                   data-bs-target="#editNoteModal" data-id="{{$note->id}}" data-note="{{$note->note}}"></i>
+                                                                            </button>
+                                                                            <!-- Delete Form -->
+                                                                           <form action="{{ route('admin.customer.contact.note.delete', $note->id) }}" method="POST" class="deleteNoteForm">
+                                                                                @csrf
+                                                                                 @method('DELETE')
+                                                                                <button type="submit" class=" p-0 border-0 cstm_btn">
+                                                                                    <i class="fas fa-trash"></i>
+                                                                                </button>
+                                                                            </form>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     @endforeach

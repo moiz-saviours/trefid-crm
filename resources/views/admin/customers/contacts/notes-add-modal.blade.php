@@ -6,7 +6,7 @@
                 <h5 class="modal-title" id="addNoteModalLabel">Add Note</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form action="{{ route('admin.notes.store') }}" method="POST">
+            <form action="{{ route('admin.customer.contact.note.store') }}" method="POST">
                 @csrf
                 <input type="hidden" name="cus_contact_key" value="{{ $customer_contact->special_key }}">
                 <div class="modal-body">

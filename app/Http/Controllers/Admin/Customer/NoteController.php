@@ -47,5 +47,18 @@ class NoteController extends Controller
         return redirect()->back()->with('success', 'Note updated successfully!');
     }
 
+    public function delete($id)
+    {
+        $note = CustomerNotes::find($id);
+
+        if (!$note) {
+            return redirect()->back()->with('error', 'Note not found.');
+        }
+
+        $note->delete();
+
+        return redirect()->back()->with('success', 'Note deleted successfully!');
+    }
+
 
 }

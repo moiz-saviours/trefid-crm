@@ -26,25 +26,23 @@
         /** Edit Note */
         $(document).on('click', '.editNoteModal', function () {
             const id = $(this).data('id');
+            const noteText = $(this).data('note'); // Get note from data attribute
+
             if (!id) {
-                Swal.fire({
-                    title: 'Error!',
-                    text: 'Record not found. Do you want to reload the page?',
-                    icon: 'error',
-                    showCancelButton: true,
-                    confirmButtonText: 'Reload',
-                    cancelButtonText: 'Cancel'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        location.reload();
-                    }
-                });
+                Swal.fire('Error!', 'Record not found.', 'error');
+                return;
             }
+
+            // Reset form
             $('#editNoteModalForm')[0].reset();
+
+            // Update form action URL
             $('#editNoteModalForm').attr('action', `{{route('admin.customer.contact.note.update')}}/` + id);
 
 
+            $('#note').val(noteText);
         });
+
 
     </script>
 @endpush
