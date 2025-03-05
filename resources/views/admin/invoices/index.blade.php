@@ -161,6 +161,8 @@
                                                         <span class="badge bg-success">Paid</span>
                                                     @elseif($invoice->status == 2)
                                                         <span class="badge bg-danger">Refund</span>
+                                                    @elseif($invoice->status == 3)
+                                                        <span class="badge bg-danger">Charge Back</span>
                                                     @endif
                                                 </td>
                                                 <td class="align-middle text-center text-nowrap">{{Carbon\Carbon::parse($invoice->due_date)->format('Y-m-d')}}</td>

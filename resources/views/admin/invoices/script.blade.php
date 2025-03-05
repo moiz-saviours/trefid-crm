@@ -266,7 +266,7 @@
                             </div>
                         </td>
                         <td class="align-middle text-center text-nowrap">
-                            ${status == 0 ? '<span class="badge bg-warning text-dark">Due</span>' : status == 1 ? '<span class="badge bg-success">Paid</span>' : status == 2 ? '<span class="badge bg-danger">Refund</span>' : ''}
+                            ${status == 0 ? '<span class="badge bg-warning text-dark">Due</span>' : status == 1 ? '<span class="badge bg-success">Paid</span>' : status == 2 ? '<span class="badge bg-danger">Refund</span>' : status == 3 ? '<span class="badge bg-danger">Charge Back</span>' : ''}
                         </td>
                         <td class="align-middle text-center text-nowrap">${due_date}</td>
                         <td class="align-middle text-center text-nowrap">${date}</td>
@@ -365,7 +365,7 @@
 
                             // Column 9: Status
 
-                            const statusHtml = status == 0 ? '<span class="badge bg-warning text-dark">Due</span>' : status == 1 ? '<span class="badge bg-success">Paid</span>' : status == 2 ? '<span class="badge bg-danger">Refund</span>' : '';
+                            const statusHtml = status == 0 ? '<span class="badge bg-warning text-dark">Due</span>' : status == 1 ? '<span class="badge bg-success">Paid</span>' : status == 2 ? '<span class="badge bg-danger">Refund</span>' : status == 3 ? '<span class="badge bg-danger">Charge Back</span>' : '';
                             if (decodeHtml(rowData[8]) !== statusHtml) {
                                 table.cell(index, 8).data(statusHtml).draw();
                             }

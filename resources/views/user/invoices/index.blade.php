@@ -97,10 +97,12 @@
                                                 <td class="align-middle text-center text-nowrap text-sm invoice-cell">
                                                     <span
                                                         class="invoice-number">{{ $invoice->invoice_number }}</span><br>
-{{--                                                    <span class="invoice-key">{{ $invoice->invoice_key }}</span>--}}
+                                                    {{--                                                    <span class="invoice-key">{{ $invoice->invoice_key }}</span>--}}
                                                     <span class="invoice-key view-transactions text-primary"
                                                           title="Show transaction logs"
-                                                          style="cursor: pointer;" data-invoice-key="{{ $invoice->invoice_key }}"><b style="color: var(--bs-primary);font-weight: 600;">{{ $invoice->invoice_key }}</b></span>
+                                                          style="cursor: pointer;"
+                                                          data-invoice-key="{{ $invoice->invoice_key }}"><b
+                                                            style="color: var(--bs-primary);font-weight: 600;">{{ $invoice->invoice_key }}</b></span>
                                                 </td>
                                                 <td class="align-middle text-center text-nowrap">
                                                     @if(isset($invoice->brand))
@@ -161,6 +163,8 @@
                                                         <span class="badge bg-success">Paid</span>
                                                     @elseif($invoice->status == 2)
                                                         <span class="badge bg-danger">Refund</span>
+                                                    @elseif($invoice->status == 3)
+                                                        <span class="badge bg-danger">Charge Back</span>
                                                     @endif
                                                 </td>
                                                 <td class="align-middle text-center text-nowrap">{{Carbon\Carbon::parse($invoice->due_date)->format('Y-m-d')}}</td>
@@ -321,7 +325,8 @@
             </div>
         </div>
     </section>
-    <div class="modal fade" id="transactionModal" tabindex="-1" aria-labelledby="transactionModalLabel" aria-hidden="true">
+    <div class="modal fade" id="transactionModal" tabindex="-1" aria-labelledby="transactionModalLabel"
+         aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
