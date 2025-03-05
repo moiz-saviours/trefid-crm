@@ -6,7 +6,7 @@ use App\Traits\ActivityLoggable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class CustomerNotes extends Model
+class CustomerNote extends Model
 {
     use SoftDeletes, ActivityLoggable;
 

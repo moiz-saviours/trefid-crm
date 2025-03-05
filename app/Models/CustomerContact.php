@@ -106,4 +106,9 @@ class CustomerContact extends Model
     {
         return $this->hasMany(Payment::class, 'cus_contact_key', 'special_key');
     }
+
+    public function notes(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(CustomerNote::class, 'cus_contact_key', 'special_key');
+    }
 }
