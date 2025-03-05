@@ -55,6 +55,7 @@ class InvoiceController extends Controller
                     'required_if:type,0',
                     'nullable',
                     'string',
+                    'regex:/^(\+?\d{1,3})[\d\s().-]+$/|min:8|max:20',
                     function ($attribute, $value, $fail) use ($request) {
                         if ($request->input('type') == 0 && strlen($value) > 15) {
                             $fail("The $attribute must not be greater than 15 characters when type is 0.");
@@ -68,7 +69,6 @@ class InvoiceController extends Controller
                 'taxable' => 'nullable|boolean',
                 'tax_type' => 'nullable|in:none,percentage,fixed',
                 'tax_value' => 'nullable|integer|min:0',
-                'customer_contact_phone' => 'regex:/^(\+?\d{1,3})[\d\s().-]+$/|min:8|max:20',
                 'currency' => 'nullable|in:USD,GBP,AUD,CAD',
                 'tax_amount' => 'nullable|numeric|min:0',
                 'total_amount' => 'required|numeric|min:1|max:' . config('invoice.max_amount'),
