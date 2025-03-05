@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin\Customer;
 
 use App\Http\Controllers\Controller;
-use App\Models\CustomerNotes;
+use App\Models\CustomerNote;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -22,7 +22,7 @@ class NoteController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
-        CustomerNotes::create([
+        CustomerNote::create([
             'cus_contact_key' => $request->cus_contact_key,
             'note' => $request->note,
         ]);
@@ -30,7 +30,7 @@ class NoteController extends Controller
         return redirect()->back()->with('success', 'Note added successfully!');
     }
 
-    public function update(Request $request, CustomerNotes $note)
+    public function update(Request $request, CustomerNote $note)
     {
         $validator = Validator::make($request->all(), [
             'note' => 'required|string',
