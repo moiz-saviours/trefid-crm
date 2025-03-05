@@ -55,7 +55,9 @@ class InvoiceController extends Controller
                     'required_if:type,0',
                     'nullable',
                     'string',
-                    'regex:/^(\+?\d{1,3})[\d\s().-]+$/|min:8|max:20',
+                    'regex:/^(\+?\d{1,3})[\d\s().-]+$/',
+                    'min:8',
+                    'max:20',
                     function ($attribute, $value, $fail) use ($request) {
                         if ($request->input('type') == 0 && strlen($value) > 20) {
                             $fail("The $attribute must not be greater than 20 characters when type is 0.");
@@ -268,7 +270,9 @@ class InvoiceController extends Controller
                 'required_if:type,0',
                 'nullable',
                 'string',
-                'regex:/^(\+?\d{1,3})[\d\s().-]+$/|min:8|max:20',
+                'regex:/^(\+?\d{1,3})[\d\s().-]+$/',
+                'min:8',
+                'max:20',
                 function ($attribute, $value, $fail) use ($request) {
                     if ($request->input('type') == 0 && strlen($value) > 20) {
                         $fail("The $attribute must not be greater than 20 characters when type is 0.");

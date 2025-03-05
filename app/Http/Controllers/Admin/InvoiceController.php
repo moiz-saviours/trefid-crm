@@ -96,7 +96,9 @@ class InvoiceController extends Controller
                 'required_if:type,0',
                 'nullable',
                 'string',
-                'regex:/^(\+?\d{1,3})[\d\s().-]+$/|min:8|max:20',
+                'regex:/^(\+?\d{1,3})[\d\s().-]+$/',
+                'min:8',
+                'max:20',
                 function ($attribute, $value, $fail) use ($request) {
                     if ($request->input('type') == 0 && strlen($value) > 15) {
                         $fail("The $attribute must not be greater than 15 characters when type is 0.");
@@ -112,7 +114,6 @@ class InvoiceController extends Controller
             'tax_value' => 'nullable|numeric|min:0',
             'currency' => 'nullable|in:USD,GBP,AUD,CAD',
             'tax_amount' => 'nullable|numeric|min:0',
-            'customer_contact_phone' => 'regex:/^(\+?\d{1,3})[\d\s().-]+$/|min:8|max:20',
             'total_amount' => 'required|numeric|min:1|max:' . config('invoice.max_amount'),
             'type' => 'required|integer|in:0,1', /** 0 = fresh, 1 = upsale */
             'due_date' => 'required|date|after_or_equal:' . now()->format('Y-m-d') . '|before_or_equal:' . now()->addYear()->format('Y-m-d'),
@@ -311,7 +312,19 @@ class InvoiceController extends Controller
             'cus_contact_key' => 'required_if:type,1|nullable|integer|exists:customer_contacts,special_key',
             'customer_contact_name' => 'required_if:type,0|nullable|string|max:255',
             'customer_contact_email' => 'required_if:type,0|nullable|email|max:255',
-            'customer_contact_phone' => 'required_if:type,0|nullable|string|max:15',
+            'customer_contact_phone' => [
+                'required_if:type,0',
+                'nullable',
+                'string',
+                'regex:/^(\+?\d{1,3})[\d\s().-]+$/',
+                'min:8',
+                'max:20',
+                function ($attribute, $value, $fail) use ($request) {
+                    if ($request->input('type') == 0 && strlen($value) > 20) {
+                        $fail("The $attribute must not be greater than 20 characters when type is 0.");
+                    }
+                },
+            ],
             'agent_id' => 'nullable|integer',
 //            'agent_type' => 'required|string|in:admins,users',
             'description' => 'nullable|string|max:500',
