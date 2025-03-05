@@ -113,7 +113,9 @@ Route::middleware(['auth:admin', 'verified:admin', 'throttle:60,1'])->prefix('ad
                 Route::post('/update/{customer_contact?}', [AdminCustomerContactController::class, 'update'])->name('update');
                 Route::name('note.')->group(function () {
                     Route::prefix('note')->group(function () {
+                        Route::post('/store', [AdminCustomerNoteController::class, 'store'])->name('store');
                         Route::post('/update/{note?}', [AdminCustomerNoteController::class, 'update'])->name('update');
+                        Route::delete('/delete/{note?}', [AdminCustomerNoteController::class, 'delete'])->name('delete');
                     });
                 });
                 Route::get('/change-status/{customer_contact?}', [AdminCustomerContactController::class, 'change_status'])->name('change.status');
@@ -212,9 +214,6 @@ Route::middleware(['auth:admin', 'verified:admin', 'throttle:60,1'])->prefix('ad
         Route::get('/', [AdminActivityLogController::class, 'index'])->name('index');
     });
 
-
-    Route::post('/notes/store', [AdminCustomerNoteController::class, 'store'])->name('notes.store');
-    Route::post('/notes/update{note}', [AdminCustomerNoteController::class, 'update'])->name('notes.update');
 
 
 
