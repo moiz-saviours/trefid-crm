@@ -4,12 +4,14 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Admin;
+use App\Models\Brand;
 use App\Models\ClientContact;
 use App\Models\CustomerContact;
 use App\Models\Invoice;
 use App\Models\Lead;
 use App\Models\LeadStatus;
 use App\Models\Payment;
+use App\Models\Team;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -48,7 +50,6 @@ class DashboardController extends Controller
             'refund' => ($invoiceCounts->refund_invoices / $totalInvoices) * 100,
             'chargeback' => ($invoiceCounts->chargeback_invoices / $totalInvoices) * 100
         ] : ['due' => 0, 'paid' => 0, 'refund' => 0, 'chargeback' => 0];
-
         $totalPayments = Payment::count();
         $paymentCounts = Payment::selectRaw("
             COUNT(CASE WHEN status = 1 THEN 1 END) as paid,
@@ -60,7 +61,6 @@ class DashboardController extends Controller
             'refund' => ($paymentCounts->refund / $totalPayments) * 100,
             'chargeback' => ($paymentCounts->chargeback / $totalPayments) * 100
         ] : ['paid' => 0, 'refund' => 0, 'chargeback' => 0];
-
         $totalLeads = Lead::count();
         $totalCustomers = CustomerContact::count();
         $recentPayments = Payment::latest()->limit(5)->get();
@@ -113,26 +113,138 @@ class DashboardController extends Controller
 
     public function index_2()
     {
-        return view('admin.dashboard.index-2');
+        $teams = Team::where('status', 1)->get();
+        $brands = Brand::where('status', 1)->get();
+        return view('admin.dashboard.index-2', ['teams' => $teams, 'brands' => $brands]);
     }
 
-    public function index_2_update_stats()
+    public function index_2_update_stats(Request $request)
     {
         try {
-            $totalSales = Invoice::where('status', Invoice::STATUS_PAID)->sum('total_amount');
-            $refunded = Invoice::where('status', Invoice::STATUS_REFUNDED)->sum('total_amount');
-            $chargeBack = Invoice::where('status', Invoice::STATUS_CHARGEBACK)->sum('total_amount');
-            $totalSalesFormatted = '$' . number_format($totalSales);
-            $refundedFormatted = '$' . number_format($refunded);
-            $chargeBackFormatted = '$' . number_format($chargeBack);
-            $netSales = $totalSales - ($refunded + $chargeBack);
-            $netSalesFormatted = '$' . number_format($netSales, 2);
-            if ($totalSales > 0) {
-                $chargeBackRatio = (($chargeBack / $totalSales) * 100) . ' %';
-            } else {
-                $chargeBackRatio = '0 %';
+            $startDate = $request->input('start_date');
+            $endDate = $request->input('end_date');
+            $teamKey = $request->input('team_key', 'all');
+            $brandKey = $request->input('brand_key', 'all');
+            if ($startDate > $endDate) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Invalid date range: start date cannot be greater than end date.'
+                ], 400);
             }
-            return response()->json(['success' => true, 'message' => 'Fetched total sales successfully.', 'total_sales' => $totalSalesFormatted, 'net_sales' => $netSalesFormatted, 'refunded' => $refundedFormatted, 'charge_back' => $chargeBackFormatted, 'charge_back_ratio' => $chargeBackRatio]);
+            $dateRanges = [];
+            $currentStart = $startDate;
+            while ($currentStart <= $endDate) {
+                $monthStart = date('Y-m-01', strtotime($currentStart));
+                $monthEnd = date('Y-m-t', strtotime($currentStart));
+                $rangeStart = max($currentStart, $monthStart);
+                $rangeEnd = min($endDate, $monthEnd);
+                $dateRanges[] = [
+                    'start' => $rangeStart,
+                    'end' => $rangeEnd,
+                ];
+                $currentStart = date('Y-m-01', strtotime($currentStart . ' +1 month'));
+            }
+            $mtdTotalSales = 0;
+            $previousMtdTotalSales = 0;
+            foreach ($dateRanges as $range) {
+                $mtdStartDate = $range['start'];
+                $mtdEndDate = $range['end'];
+                $mtdSales = Invoice::where('status', Invoice::STATUS_PAID)
+                    ->whereBetween('created_at', [$mtdStartDate, $mtdEndDate])
+                    ->when($teamKey != 'all', function ($query) use ($teamKey) {
+                        return $query->where('team_key', $teamKey);
+                    })
+                    ->when($brandKey != 'all', function ($query) use ($brandKey) {
+                        return $query->where('brand_key', $brandKey);
+                    })
+                    ->sum('total_amount');
+                $mtdTotalSales += $mtdSales;
+                $previousMtdStartDate = date('Y-m-d', strtotime($mtdStartDate . ' -1 month'));
+                $previousMtdEndDate = date('Y-m-d', strtotime($mtdEndDate . ' -1 month'));
+                $previousMtdSales = Invoice::where('status', Invoice::STATUS_PAID)
+                    ->whereBetween('created_at', [$previousMtdStartDate, $previousMtdEndDate])
+                    ->when($teamKey != 'all', function ($query) use ($teamKey) {
+                        return $query->where('team_key', $teamKey);
+                    })
+                    ->when($brandKey != 'all', function ($query) use ($brandKey) {
+                        return $query->where('brand_key', $brandKey);
+                    })
+                    ->sum('total_amount');
+                $previousMtdTotalSales += $previousMtdSales;
+            }
+            $lapsePercentage = 0;
+            if ($previousMtdTotalSales != 0) {
+                $lapsePercentage = (($mtdTotalSales - $previousMtdTotalSales) / $previousMtdTotalSales) * 100;
+            } else {
+                if ($mtdTotalSales > 0) {
+                    $lapsePercentage = 100;
+                }
+            }
+            $employees = User::with('teams')
+                ->where('status', 1)
+                ->when($teamKey !== 'all', function ($query) use ($teamKey) {
+                    $query->whereHas('teams', function ($teamQuery) use ($teamKey) {
+                        $teamQuery->where('teams.team_key', $teamKey);
+                    });
+                })
+                ->get()->map(function ($employee) use ($startDate, $endDate, $teamKey, $brandKey) {
+                    $employee->sales = Invoice::where('agent_id', $employee->id)
+                        ->whereBetween('created_at', [$startDate, $endDate])
+                        ->when($teamKey != 'all', function ($query) use ($teamKey) {
+                            return $query->where('team_key', $teamKey);
+                        })
+                        ->when($brandKey != 'all', function ($query) use ($brandKey) {
+                            return $query->where('brand_key', $brandKey);
+                        })
+                        ->sum('total_amount');
+                    return $employee;
+                });
+            $totalSales = Invoice::where('status', Invoice::STATUS_PAID)
+                ->whereBetween('created_at', [$startDate, $endDate])
+                ->when($teamKey != 'all', function ($query) use ($teamKey) {
+                    return $query->where('team_key', $teamKey);
+                })
+                ->when($brandKey != 'all', function ($query) use ($brandKey) {
+                    return $query->where('brand_key', $brandKey);
+                })
+                ->sum('total_amount');
+
+            $refunded = Invoice::where('status', Invoice::STATUS_REFUNDED)
+                ->whereBetween('created_at', [$startDate, $endDate])
+                ->when($teamKey != 'all', function ($query) use ($teamKey) {
+                    return $query->where('team_key', $teamKey);
+                })
+                ->when($brandKey != 'all', function ($query) use ($brandKey) {
+                    return $query->where('brand_key', $brandKey);
+                })
+                ->sum('total_amount');
+            $chargeBack = Invoice::where('status', Invoice::STATUS_CHARGEBACK)
+                ->whereBetween('created_at', [$startDate, $endDate])
+                ->when($teamKey != 'all', function ($query) use ($teamKey) {
+                    return $query->where('team_key', $teamKey);
+                })
+                ->when($brandKey != 'all', function ($query) use ($brandKey) {
+                    return $query->where('brand_key', $brandKey);
+                })
+                ->sum('total_amount');
+            $chargeBackRatio = $totalSales > 0 ? (($chargeBack / $totalSales) * 100) . ' ' : '0 ';
+            $netSales = $totalSales - ($refunded + $chargeBack);
+            $totalSalesFormatted = number_format($totalSales);
+            $mtdTotalSalesFormatted = number_format($mtdTotalSales);
+            $refundedFormatted = number_format($refunded);
+            $chargeBackFormatted = number_format($chargeBack);
+            $netSalesFormatted = number_format($netSales, 2);
+            $lapsePercentageFormatted = number_format($lapsePercentage, 2);
+            return response()->json(['success' => true, 'message' => 'Fetched total sales successfully.',
+                'total_sales' => $totalSalesFormatted,
+                'mtd_total_sales' => $mtdTotalSalesFormatted,
+                'net_sales' => $netSalesFormatted,
+                'refunded' => $refundedFormatted,
+                'charge_back' => $chargeBackFormatted,
+                'charge_back_ratio' => $chargeBackRatio,
+                'lapse_percentage' => $lapsePercentageFormatted,
+                'employees' => $employees
+            ]);
         } catch (\Exception $e) {
             Log::error("Error fetching total sales: " . $e->getMessage());
             return response()->json(['success' => false, 'message' => 'An error occurred while fetching total sales.', 'error' => $e->getMessage()], 500);

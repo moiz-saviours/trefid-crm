@@ -1,240 +1,263 @@
 @extends('admin.layouts.app')
 @section('title','Dashboard')
 @section('content')
-    <style>
-        .btn-minimize {
-            background-color: #ff5722;
-            color: #fff;
-            font-size: 12px;
-        }
+    @push('style')
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        <style>
+            .btn-minimize {
+                background-color: #ff5722;
+                color: #fff;
+                font-size: 12px;
+            }
 
-        .btn-minimize:hover {
-            background-color: #ff5722;
-            color: #fff;
-        }
+            .btn-minimize:hover {
+                background-color: #ff5722;
+                color: #fff;
+            }
 
-        .clos_btn {
-            background-color: #2d3e50;
-            color: #fff;
-            font-size: 12px;
-        }
+            .clos_btn {
+                background-color: #2d3e50;
+                color: #fff;
+                font-size: 12px;
+            }
 
-        .clos_btn:hover {
-            background-color: #2d3e50;
-            color: #fff;
-        }
+            .clos_btn:hover {
+                background-color: #2d3e50;
+                color: #fff;
+            }
 
-        .right_col {
-            display: block;
-        }
+            .right_col {
+                display: block;
+            }
 
-        .right_col .card {
-            margin: 20px 0px;
-        }
+            .right_col .card {
+                margin: 20px 0px;
+            }
 
-        .dashbord_tbl {
-            border-collapse: collapse;
-            width: 100%;
-        }
+            .dashbord_tbl {
+                border-collapse: collapse;
+                width: 100%;
+            }
 
-        .tabl_th {
-            background-color: #2d3e50;
-            text-align: center;
-            padding: 15px 0px;
-            color: #fff;
-        }
+            .tabl_th {
+                background-color: #2d3e50;
+                text-align: center;
+                padding: 15px 0px;
+                color: #fff;
+            }
 
-        .tabl_td, .tabl_th {
-            text-align: left;
-            padding: 15px 0px;
-            text-align: center;
-        }
+            .tabl_td, .tabl_th {
+                text-align: left;
+                padding: 15px 0px;
+                text-align: center;
+            }
 
-        .tabl_tr:nth-child(odd) {
-            background-color: #98a3b0;
-            color: #fff;
-        }
+            .tabl_tr:nth-child(odd) {
+                background-color: #98a3b0;
+                color: #fff;
+            }
 
-        .tabl_tr:nth-child(even) {
-            background-color: #fff;
-            color: #000 !important;
-        }
+            .tabl_tr:nth-child(even) {
+                background-color: #fff;
+                color: #000 !important;
+            }
 
-        /*New Dashboard Style*/
-        .main-dashboard-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            /*padding: 12px 10px;*/
-            margin-top: -90px;
-        }
+            /*New Dashboard Style*/
+            .main-dashboard-header {
+                display: flex;
+                justify-content: flex-end;
+                align-items: center;
+                /*padding: 12px 10px;*/
+                margin-top: -90px;
+                gap: 12px;
+            }
 
-        .main-dashboard-heading {
-            font-size: 16px;
-            color: #000;
-            /* font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; */
-            font-weight: 500;
-        }
+            .main-dashboard-heading {
+                font-size: 16px;
+                color: #000;
+                /* font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; */
+                font-weight: 500;
+            }
 
-        .main-date-input {
-            border: solid #ccc;
-            border-width: 0px 0px 1px;
-            background: transparent;
-            font-size: 15px;
-            min-width: 147px;
-        }
+            .main-date-input {
+                border: solid #ccc;
+                border-width: 0px 0px 1px;
+                background: transparent;
+                font-size: 15px;
+                min-width: 147px;
+            }
 
-        .tabular-main-box {
-            padding: 9px 0px;
-            /*box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;*/
-            background-color: #b6bbc200;
-            margin: 12px 0px;
-            border-radius: 8px;
+            .tabular-main-box {
+                padding: 9px 0px;
+                /*box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;*/
+                background-color: #b6bbc200;
+                margin: 12px 0px;
+                border-radius: 8px;
 
-        }
+            }
 
-        .sales-number-div {
-            background-color: #fff;
-            /* text-align: center; */
-            border-radius: 7px;
-            padding: 21px 12px;
-            height: 100%;
+            .sales-number-div {
+                background-color: #fff;
+                /* text-align: center; */
+                border-radius: 7px;
+                padding: 21px 12px;
+                height: 100%;
 
-        }
+            }
 
-        .sales-total-heading {
-            color: var(--bs-primary);
-            font-size: 14px;
-        }
+            .sales-total-heading {
+                color: var(--bs-primary);
+                font-size: 14px;
+            }
 
-        .sales-number-div p {
-            margin: 0;
-            font-size: 13px;
-            color: #000;
-        }
+            .sales-number-div p {
+                margin: 0;
+                font-size: 13px;
+                color: #000;
+            }
 
-        .slider {
-            -webkit-appearance: none;
-            width: 100%;
-            height: 25px;
-            background: #d3d3d3;
-            outline: none;
-            opacity: 0.7;
-            -webkit-transition: .2s;
-            transition: opacity .2s;
-        }
+            .slider {
+                -webkit-appearance: none;
+                width: 100%;
+                height: 25px;
+                background: #d3d3d3;
+                outline: none;
+                opacity: 0.7;
+                -webkit-transition: .2s;
+                transition: opacity .2s;
+            }
 
-        .slider:hover {
-            opacity: 1;
-        }
+            .slider:hover {
+                opacity: 1;
+            }
 
-        .slider::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 25px;
-            height: 25px;
-            background: var(--bs-primary);
-            cursor: pointer;
-        }
+            .slider::-webkit-slider-thumb {
+                -webkit-appearance: none;
+                appearance: none;
+                width: 25px;
+                height: 25px;
+                background: var(--bs-primary);
+                cursor: pointer;
+            }
 
-        .slider::-moz-range-thumb {
-            width: 25px;
-            height: 25px;
-            background: var(--bs-primary);
-            cursor: pointer;
-        }
+            .slider::-moz-range-thumb {
+                width: 25px;
+                height: 25px;
+                background: var(--bs-primary);
+                cursor: pointer;
+            }
 
-        .mtd-hedaing {
-            font-size: 15px;
-            color: #ccc;
-        }
+            .mtd-hedaing {
+                font-size: 15px;
+                color: #ccc;
+            }
 
-        .Acheived-numbers {
-            color: green;
-        }
+            .Acheived-numbers {
+                color: green;
+            }
 
-        table th {
-            font-size: 13px !important;
-            color: #000;
+            table th {
+                font-size: 13px !important;
+                color: #000;
 
-            text-transform: capitalize;
-        }
+                text-transform: capitalize;
+            }
 
-        table td,
-        tr {
-            font-size: 10px !important;
+            table td,
+            tr {
+                font-size: 10px !important;
 
-        }
+            }
 
-        .sales-record-table-container {
-            height: 388px !important;
-            overflow-y: scroll !important;
-        }
+            .sales-record-table-container {
+                height: 388px !important;
+                /*overflow-y: scroll !important;*/
+            }
 
-        .sales-record-table-container::-webkit-scrollbar {
-            width: 8px;
-            /* width of the entire scrollbar */
-        }
+            .sales-record-table-container::-webkit-scrollbar {
+                width: 8px;
+                /* width of the entire scrollbar */
+            }
 
-        .sales-record-table-container::-webkit-scrollbar-track {
-            background: #fff;
-            /* color of the tracking area */
-        }
+            .sales-record-table-container::-webkit-scrollbar-track {
+                background: #fff;
+                /* color of the tracking area */
+            }
 
-        .sales-record-table-container::-webkit-scrollbar-thumb {
-            background-color: var(--bs-primary);
-            /* color of the scroll thumb */
-            /* border-radius: 20px; */
-            /* roundness of the scroll thumb */
-            /* border: 3px solid orange; */
-            /* creates padding around scroll thumb */
-        }
+            .sales-record-table-container::-webkit-scrollbar-thumb {
+                background-color: var(--bs-primary);
+                /* color of the scroll thumb */
+                /* border-radius: 20px; */
+                /* roundness of the scroll thumb */
+                /* border: 3px solid orange; */
+                /* creates padding around scroll thumb */
+            }
 
-        .sales-record-table tbody,
-        td,
-        tfoot,
-        th,
-        thead {
-            border: none;
-        }
+            .sales-record-table tbody,
+            td,
+            tfoot,
+            th,
+            thead {
+                border: none;
+            }
 
-        .sales-record-table-row {
-            /*box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;*/
-            /* box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgb(14 30 37 / 29%) 0px 2px 16px 0px; */
-        }
+            .sales-record-table-row {
+                /*box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;*/
+                /* box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgb(14 30 37 / 29%) 0px 2px 16px 0px; */
+            }
 
-        .sales-record-table {
-            /*background-color: #fff;*/
-            border: none !important;
-            /*border-collapse: separate;*/
-            /*border-spacing: 0 10px;*/
-            /*padding: 9px 6px;*/
-            border-radius: 7px;
-        }
+            .sales-record-table {
+                /*background-color: #fff;*/
+                border: none !important;
+                /*border-collapse: separate;*/
+                /*border-spacing: 0 10px;*/
+                /*padding: 9px 6px;*/
+                border-radius: 7px;
+            }
 
-        .table-headings {
-        }
+            .table-headings {
+            }
 
-        .monthly-sales-record-table {
-            box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-            /*box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;*/
-        }
+            .monthly-sales-record-table {
+                box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+                /*box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;*/
+            }
 
-        .monthly-sales-record-table tr:nth-child(even) {
-            background-color: #fff !important;
-            color: #000 !important;
-        }
+            .monthly-sales-record-table tr:nth-child(even) {
+                background-color: #fff !important;
+                color: #000 !important;
+            }
 
-        .monthly-sales-record-table-row {
-            background-color: #fff;
-        }
+            .monthly-sales-record-table-row {
+                background-color: #fff;
+            }
 
-        .progress-bar-wrapper {
-            display: flex;
-            justify-content: space-between;
-            align-items: baseline;
-        }
-    </style>
+            .progress-bar-wrapper {
+                display: flex;
+                justify-content: space-between;
+                align-items: baseline;
+            }
+
+            /* DATATABLE */
+            div.dt-container div.dt-length {
+                padding: 10px 0px 0px 10px;
+            }
+
+            div.dt-container div.dt-search {
+                padding: 10px 10px 0 0;
+            }
+
+            div.dt-container div.dt-info {
+                padding: 10px 10px 10px 10px;
+            }
+
+            div.dt-container div.dt-paging {
+                padding: 0px 10px 0 0;
+            }
+
+            /* DATATABLE */
+        </style>
+    @endpush
     <section id="content" class="content">
         <div class="content__header content__boxed overlapping">
             <div class="content__wrap">
@@ -258,6 +281,24 @@
                             <div class="main-dashboard-header">
                                 <h2 class="main-dashboard-heading"></h2>
                                 <div class="form-group">
+                                    <label for="teamSelect">Select Team:</label>
+                                    <select id="teamSelect" name="teamSelect" class="form-control">
+                                        <option value="all">All Teams</option>
+                                        @foreach($teams as $team)
+                                            <option value="{{ $team->team_key }}">{{ $team->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="brandSelect">Select Brand:</label>
+                                    <select id="brandSelect" name="brandSelect" class="form-control">
+                                        <option value="all">All Brands</option>
+                                        @foreach($brands as $brand)
+                                            <option value="{{ $brand->brand_key }}">{{ $brand->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="form-group">
                                     <label for="dateRangePicker">Select Date Range:</label>
                                     <input type="text" id="dateRangePicker" name="dateRangePicker"
                                            class="form-control dateRangePicker"/>
@@ -280,7 +321,7 @@
                                 <div class="col-lg-2 col-md-2">
                                     <div class="sales-number-div text-center">
                                         <h2 class="sales-total-heading">Total Cash</h2>
-                                        <p class="total-sales-count"> $224,278 </p>
+                                        <p id="total-cash-count" class="total-sales-count"> $224,278 </p>
                                     </div>
                                 </div>
                                 <div class="col-lg-2 col-md-2">
@@ -297,14 +338,14 @@
                                 </div>
                                 <div class="col-lg-2 col-md-2">
                                     <div class="sales-number-div text-center">
-                                        <h2 class="sales-total-heading">Reverse sales</h2>
-                                        <p class="total-sales-count"> $16,594 </p>
+                                        <h2 class="sales-total-heading">Reversals</h2>
+                                        <p id="reversal-sales-count" class="total-sales-count"> $16,594 </p>
                                     </div>
                                 </div>
                                 <div class="col-lg-2 col-md-2">
                                     <div class="sales-number-div text-center">
                                         <h2 class="sales-total-heading">Net Cash</h2>
-                                        <p class="total-sales-count"> $229,583 </p>
+                                        <p id="net-cash-count" class="total-sales-count"> $229,583 </p>
                                     </div>
                                 </div>
                             </div>
@@ -335,12 +376,15 @@
                                                 <!-- <input type="range" min="1" max="100" value="50"><span>109%</span> -->
                                             </div>
                                         </div>
-
                                         <div class="col-lg-6">
                                             <div class="sales-number-div">
                                                 <h2 class="mtd-hedaing">MTD/LA</h2>
-                                                <p class="total-sales-count"> $234538 / <span class="Acheived-numbers">
-                                                    6.187</span>
+                                                <p class="total-sales-count">
+                                                    $<span id="mtd-sales">234538</span> /
+                                                    <span class="achieved-numbers" id="lapse-percentage">
+                                                        6.187
+                                                    </span>
+                                                    <i id="lapse-icon" class="fas fa-arrow-trend-up"></i>
                                                 </p>
                                             </div>
                                         </div>
@@ -404,99 +448,18 @@
 
                                 </div>
                                 <div class="col-lg-7 col-md-12">
-{{--                                    <div class="sales-record-table-container">--}}
+                                    {{--                                    <div class="sales-record-table-container">--}}
                                     <div class="sales-record-table-container monthly-sales-record-table">
-                                        <table class="table sales-record-table ">
+                                        <table class="table table-striped dashbord_tbl initTable">
                                             <thead>
                                             <tr class="monthly-sales-record-table-row ">
                                                 <th class="table-headings">Name</th>
+                                                <th class="table-headings">Team</th>
                                                 <th class="table-headings">Target</th>
                                                 <th class="table-headings">Sales</th>
                                             </tr>
                                             </thead>
-                                            <tbody>
-                                            <tr class="sales-record-table-row">
-                                                <td>TESSSSSSSSSSST</td>
-                                                <td>TESSSST</td>
-                                                <td>T</td>
-                                            </tr>
-                                            <tr class="sales-record-table-row">
-                                                <td>TESSSSSSSSSSST</td>
-                                                <td>TESSSST</td>
-                                                <td>T</td>
-                                            </tr>
-                                            <tr class="sales-record-table-row">
-                                                <td>TESSSSSSSSSSST</td>
-                                                <td>TESSSST</td>
-                                                <td>T</td>
-                                            </tr>
-                                            <tr class="sales-record-table-row">
-                                                <td>TESSSSSSSSSSST</td>
-                                                <td>TESSSST</td>
-                                                <td>T</td>
-                                            </tr>
-                                            <tr class="sales-record-table-row">
-                                                <td>TESSSSSSSSSSST</td>
-                                                <td>TESSSST</td>
-                                                <td>T</td>
-                                            </tr>
-                                            <tr class="sales-record-table-row">
-                                                <td>TESSSSSSSSSSST</td>
-                                                <td>TESSSST</td>
-                                                <td>T</td>
-                                            </tr>
-                                            <tr class="sales-record-table-row">
-                                                <td>TESSSSSSSSSSST</td>
-                                                <td>TESSSST</td>
-                                                <td>T</td>
-                                            </tr>
-                                            <tr class="sales-record-table-row">
-                                                <td>TESSSSSSSSSSST</td>
-                                                <td>TESSSST</td>
-                                                <td>T</td>
-                                            </tr>
-                                            <tr class="sales-record-table-row">
-                                                <td>TESSSSSSSSSSST</td>
-                                                <td>TESSSST</td>
-                                                <td>T</td>
-                                            </tr>
-                                            <tr class="sales-record-table-row">
-                                                <td>TESSSSSSSSSSST</td>
-                                                <td>TESSSST</td>
-                                                <td>T</td>
-                                            </tr>
-                                            <tr class="sales-record-table-row">
-                                                <td>TESSSSSSSSSSST</td>
-                                                <td>TESSSST</td>
-                                                <td>T</td>
-                                            </tr>
-                                            <tr class="sales-record-table-row">
-                                                <td>TESSSSSSSSSSST</td>
-                                                <td>TESSSST</td>
-                                                <td>T</td>
-                                            </tr>
-                                            <tr class="sales-record-table-row">
-                                                <td>TESSSSSSSSSSST</td>
-                                                <td>TESSSST</td>
-                                                <td>T</td>
-                                            </tr>
-                                            <tr class="sales-record-table-row">
-                                                <td>TESSSSSSSSSSST</td>
-                                                <td>TESSSST</td>
-                                                <td>T</td>
-                                            </tr>
-                                            <tr class="sales-record-table-row">
-                                                <td>TESSSSSSSSSSST</td>
-                                                <td>TESSSST</td>
-                                                <td>T</td>
-                                            </tr>
-                                            <tr class="sales-record-table-row">
-                                                <td>TESSSSSSSSSSST</td>
-                                                <td>TESSSST</td>
-                                                <td>T</td>
-                                            </tr>
-
-                                            </tbody>
+                                            <tbody id="employeeRecordsTable"></tbody>
                                         </table>
                                     </div>
 
@@ -724,8 +687,32 @@
         <script src="{{asset('assets/js/moment.min.js')}}"></script>
         <script src="{{asset('assets/js/plugins/daterangepicker/daterangepicker.min.js')}}"></script>
         <script>
-            function dateRangePicker(input) {
-                input.daterangepicker({
+            $(document).ready(function () {
+                const dataTables = [];
+                if ($('.initTable').length) {
+                    $('.initTable').each(function (index) {
+                        dataTables[index] = initializeDatatable($(this), index)
+                    })
+                }
+
+                function initializeDatatable(table_div, index) {
+                    let parentHeight = table_div.parent().height();
+                    let datatable = table_div.DataTable({
+                        dom:
+                            "<'row'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6'f>>" +
+                            "<'row'<'col-sm-12'tr>>" +
+                            "<'row'<'col-sm-12 col-md-6'i><'col-sm-12 col-md-6'p>>",
+                        order: [[1, 'desc']],
+                        responsive: false,
+                        scrollX: true,
+                        scrollY: parentHeight ? parentHeight - 145 + "px" : "500px",
+                        scrollCollapse: true,
+                        paging: true,
+                    });
+                    datatable.columns.adjust().draw();
+                    return datatable;
+                }
+                $('#dateRangePicker').daterangepicker({
                     locale: {
                         format: 'YYYY-MM-DD'
                     },
@@ -740,48 +727,88 @@
                         'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
                     }
                 });
-            }
 
-            $(document).ready(function () {
-                // Initialize daterangepicker if element with ID exists
-                if ($('#dateRangePicker').length) {
-                    dateRangePicker($('#dateRangePicker'));
-                }
+                const startDate = moment().startOf('month').format('YYYY-MM-DD');
+                const endDate = moment().endOf('month').format('YYYY-MM-DD');
+                const teamKey = 'all';
+                const brandKey = 'all';
 
-                // Send date range request to update stats on page load with default range
-                let defaultStartDate = moment().startOf('month').format('YYYY-MM-DD');
-                let defaultEndDate = moment().endOf('month').format('YYYY-MM-DD');
-                sendDatePickerReq(defaultStartDate, defaultEndDate);
+                fetchData(startDate, endDate, teamKey, brandKey);
 
                 // Listen to 'apply' event and send the selected date range
-                $('#dateRangePicker').on('apply.daterangepicker', function (ev, picker) {
-                    var startDate = picker.startDate.format('YYYY-MM-DD');
-                    var endDate = picker.endDate.format('YYYY-MM-DD');
-                    sendDatePickerReq(startDate, endDate);
-                });
+                // $('#dateRangePicker').on('apply.daterangepicker', function (ev, picker) {
+                //     var startDate = picker.startDate.format('YYYY-MM-DD');
+                //     var endDate = picker.endDate.format('YYYY-MM-DD');
+                //     fetchData(startDate, endDate, teamKey, brandKey);
+                // });
 
                 // Listen to 'cancel' event and clear the date range
                 $('#dateRangePicker').on('cancel.daterangepicker', function () {
-                    sendDatePickerReq('', '');
+                    fetchData('', '', '', '');
                 });
-            });
 
-            // Function to send AJAX request with date range
-            function sendDatePickerReq(startDate, endDate) {
-                let url = `{{ route("admin.dashboard.2.update.stats") }}`;
-                if (startDate && endDate) {
-                    AjaxRequestPromise(url, {start_date: startDate, end_date: endDate}, 'GET')
-                        .then(response => {
-                            if (response.success) {
-                                // Update the total sales count
-                                $("#total-sales-count").text(response.total_sales);
-                                $("#refund-charge-back").text(response.refunded + ' / ' + response.charge_back);
-                                $("#charge-back-ratio").text(response.charge_back_ratio);
-                            }
-                        })
-                        .catch(error => console.log(error));
+                $('#dateRangePicker, #teamSelect, #brandSelect').on('change', function () {
+                    const startDate = $('#dateRangePicker').data('daterangepicker').startDate.format('YYYY-MM-DD');
+                    const endDate = $('#dateRangePicker').data('daterangepicker').endDate.format('YYYY-MM-DD');
+                    const teamKey = $('#teamSelect').val();
+                    const brandKey = $('#brandSelect').val();
+                    fetchData(startDate, endDate, teamKey, brandKey);
+                });
+
+                // Function to send AJAX request with date range
+                function fetchData(startDate, endDate, teamKey, brandKey) {
+                    let url = `{{ route("admin.dashboard.2.update.stats") }}`;
+                    if (startDate && endDate && teamKey) {
+                        let table = dataTables[0];
+                        AjaxRequestPromise(url, {
+                            start_date: startDate,
+                            end_date: endDate,
+                            team_key: teamKey,
+                            brand_key: brandKey
+                        }, 'GET')
+                            .then(response => {
+                                if (response.success) {
+                                    $('#mtd-sales').text(response.mtd_total_sales.replace('$', ''));
+                                    const lapsePercentage = parseFloat(response.lapse_percentage);
+                                    $('#lapse-percentage').text(lapsePercentage.toFixed(2));
+                                    const lapseIcon = $('#lapse-icon');
+                                    if (lapsePercentage >= 0) {
+                                        lapseIcon.removeClass('fa-arrow-trend-down').addClass('fa-arrow-trend-up').css('color','green')
+                                    } else {
+                                        lapseIcon.removeClass('fa-arrow-trend-up').addClass('fa-arrow-trend-down').css('color','red')
+                                    }
+
+                                    $('#total-sales-count').html('$' + response.total_sales);
+                                    $('#total-cash-count').html('$' + response.total_sales);
+                                    $('#refund-charge-back').html('$' + response.refunded + ' / ' + '$' + response.charge_back);
+                                    $('#charge-back-ratio').html(response.charge_back_ratio + '%');
+                                    $('#reversal-sales-count').html('$' +  response.net_sales);
+                                    $('#net-cash-count').html('$' + response.net_sales);
+                                    table.clear().draw();
+
+                                    response.employees.forEach(employee => {
+                                        table.row.add($(`
+                                        <tr>
+                                            <td>${employee.name}</td>
+                                            <td>
+                                                ${employee.teams && employee.teams.length > 0
+                                            ? employee.teams.map(team => team.name).join(', ')
+                                            : 'No Team Assigned'}
+                                            </td>
+                                            <td>$${employee.target}</td>
+                                            <td>$${parseFloat(employee.sales).toFixed(2)}</td>
+                                        </tr>
+                                    `)).draw(false);
+                                    });
+                                }
+                            })
+                            .catch(error => {
+                                console.log(error);
+                                // setTimeout(() => location.reload(), 5000);
+                            });
+                    }
                 }
-            }
+            });
         </script>
         <!-- Date Range Picker -->
 
