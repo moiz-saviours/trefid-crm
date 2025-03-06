@@ -4,7 +4,6 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Models\CustomerContact;
-use App\Models\Invoice;
 use App\Models\Lead;
 use App\Models\LeadStatus;
 use App\Models\Payment;
@@ -13,12 +12,12 @@ use Illuminate\Support\Carbon;
 
 class DashboardController extends Controller
 {
-    protected $user;
+    protected \Illuminate\Contracts\Auth\Authenticatable|null|User $user;
     protected $teamKeys;
     protected $teamBrandKeys;
-    protected $allInvoices;
-    protected $currentMonth;
-    protected $currentYear;
+    protected \Illuminate\Database\Eloquent\Collection $allInvoices;
+    protected int $currentMonth;
+    protected int $currentYear;
 
     public function __construct()
     {
