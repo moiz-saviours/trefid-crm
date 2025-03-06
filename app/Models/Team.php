@@ -59,7 +59,7 @@ class Team extends Model
             ->withTimestamps();
     }
 
-    public function targets()
+    public function targets(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(TeamTarget::class, 'team_key','team_key');
     }
