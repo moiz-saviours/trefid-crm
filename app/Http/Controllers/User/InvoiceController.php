@@ -43,7 +43,7 @@ class InvoiceController extends Controller
     {
         DB::beginTransaction();
         try {
-            $request->validate([
+            $validator = Validator::make($request->all(), [
                 'merchants' => ['nullable', 'array'],
                 'merchants.*' => ['required', 'numeric'],
                 'brand_key' => 'required|integer|exists:brands,brand_key',
@@ -74,7 +74,7 @@ class InvoiceController extends Controller
                 'currency' => 'nullable|in:USD,GBP,AUD,CAD',
                 'tax_amount' => 'nullable|numeric|min:0',
                 'total_amount' => 'required|numeric|min:1|max:' . config('invoice.max_amount'),
-                'type' => 'required|integer|in:0,1',/** 0 = fresh, 1 = upsale */
+                'type' => 'required|integer|in:0,1', /** 0 = fresh, 1 = upsale */
                 'due_date' => 'required|date|after_or_equal:' . now()->format('Y-m-d') . '|before_or_equal:' . now()->addYear()->format('Y-m-d'),
             ], [
                 'brand_key.required' => 'The brand field is required.',
@@ -120,6 +120,9 @@ class InvoiceController extends Controller
                 'type.required' => 'The invoice type is required.',
                 'type.in' => 'The type field must be fresh or upsale.',
             ]);
+            if ($validator->fails()) {
+                return response()->json(['errors' => $validator->errors()], 422);
+            }
             $brand = Brand::where('brand_key', $request->input('brand_key'))->first();
             if (!$brand) {
                 return response()->json(['error' => 'Brand not found.'], 404);
@@ -211,7 +214,7 @@ class InvoiceController extends Controller
                 }
                 foreach ($merchants as $type => $merchant_id) {
                     $client_account = $client_accounts->firstWhere('id', $merchant_id);
-                    if (!$client_account || !$client_account->hasSufficientLimitAndCapacity($client_account->id,$invoice->total_amount)->exists()) {
+                    if (!$client_account || !$client_account->hasSufficientLimitAndCapacity($client_account->id, $invoice->total_amount)->exists()) {
                         $merchantExcluded[] = $client_account ? $client_account->payment_method . " " . $client_account->name : "Unknown Merchant";
                     } else {
                         InvoiceMerchant::create([
@@ -224,7 +227,7 @@ class InvoiceController extends Controller
             }
             DB::commit();
             $invoice->refresh();
-            $invoice->loadMissing('customer_contact', 'brand', 'team', 'agent','creator');
+            $invoice->loadMissing('customer_contact', 'brand', 'team', 'agent', 'creator');
             $invoice->date = "Today at " . $invoice->created_at->timezone('GMT+5')->format('g:i A') . "GMT + 5";
             $invoice->due_date = Carbon::parse($invoice->due_date)->format('Y-m-d');
             return response()->json(['data' => $invoice, 'success' => "Record created successfully!" .
@@ -407,12 +410,11 @@ class InvoiceController extends Controller
             }
             foreach ($merchants as $type => $merchant_id) {
                 $client_account = $client_accounts->firstWhere('id', $merchant_id);
-                if (!$client_account || !$client_account->hasSufficientLimitAndCapacity($client_account->id,$invoice->total_amount)->exists()) {
+                if (!$client_account || !$client_account->hasSufficientLimitAndCapacity($client_account->id, $invoice->total_amount)->exists()) {
                     $merchantExcluded[$type] = $client_account ? $client_account->payment_method . " " . $client_account->name : "Unknown Merchant";
                     unset($merchants[$type]);
                 }
             }
-
             $merchantsToDelete = array_diff_assoc($existingMerchants, $merchants);
             foreach ($merchants as $type => $merchant_id) {
                 if (!isset($existingMerchants[$type]) || $existingMerchants[$type] != $merchant_id) {
@@ -438,7 +440,7 @@ class InvoiceController extends Controller
                 }
             }
             DB::commit();
-            $invoice->loadMissing('customer_contact', 'brand', 'team', 'agent','creator');
+            $invoice->loadMissing('customer_contact', 'brand', 'team', 'agent', 'creator');
             if ($invoice->created_at->isToday()) {
                 $date = "Today at " . $invoice->created_at->timezone('GMT+5')->format('g:i A') . "GMT + 5";
             } else {
