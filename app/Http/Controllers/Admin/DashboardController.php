@@ -12,7 +12,10 @@ use App\Models\Lead;
 use App\Models\LeadStatus;
 use App\Models\Payment;
 use App\Models\Team;
+use App\Models\TeamTarget;
 use App\Models\User;
+use Carbon\CarbonPeriod;
+use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Log;
@@ -253,6 +256,37 @@ class DashboardController extends Controller
             $chargeBackFormatted = number_format($chargeBack);
             $netSalesFormatted = number_format($netSales, 2);
             $lapsePercentageFormatted = number_format($lapsePercentage, 2);
+
+
+
+            $range = $this->getMonthsBetweenDates($startDate, $endDate);
+            $teams = Team::with('targets')->where('status', 1)
+                ->when($teamKey != 'all', function ($query) use ($teamKey) {
+                    return $query->where('team_key', $teamKey);
+                })->get();
+            $team_targets = [];
+            foreach ($range as $rangeval) {
+                foreach ($teams as $team) {
+                    $team_achieved = Invoice::where('status', Invoice::STATUS_PAID)
+                        ->whereBetween('created_at', [$startDate, $endDate])
+                        ->where('team_key', $team->team_key)
+                        ->sum('total_amount');
+                    $team_target = TeamTarget::where('team_key', $team->team_key)
+                        ->where('month', $rangeval['month'])->where('year', $rangeval['year'])
+                        ->first();
+                    $team_targets[] = [
+                        'team_key' => $team->team_key,
+                        'team_name' => $team->name,
+                        'target_amount' => (float)($team_target?->target_amount ?? 0),
+                        'achieved' => (float)($team_achieved ?? 0),
+                        'achieved_percentage' => ($team_target && $team_target->target_amount > 0)
+                            ? round(($team_achieved / $team_target->target_amount) * 100, 2)
+                            : 0,
+                        'month' => $rangeval['month'],
+                        'year' => $rangeval['year'],
+                    ];
+                }
+            }
             return response()->json(['success' => true, 'message' => 'Fetched total sales successfully.',
                 'total_sales' => $totalSalesFormatted,
                 'mtd_total_sales' => $mtdTotalSalesFormatted,
@@ -261,11 +295,40 @@ class DashboardController extends Controller
                 'charge_back' => $chargeBackFormatted,
                 'charge_back_ratio' => $chargeBackRatio,
                 'lapse_percentage' => $lapsePercentageFormatted,
-                'employees' => $employees
+                'employees' => $employees,
+                'teams' => $teams,
+                'team_targets' => $team_targets,
             ]);
-        } catch (\Exception $e) {
+        } catch
+        (\Exception $e) {
             Log::error("Error fetching total sales: " . $e->getMessage());
-            return response()->json(['success' => false, 'message' => 'An error occurred while fetching total sales.', 'error' => $e->getMessage()], 500);
+            return response()->json(['success' => false, 'message' => 'An error occurred while fetching data', 'error' => $e->getMessage()], 500);
         }
+    }
+
+    /**
+     * Get all months between two dates.
+     *
+     * @param string $startDate The start date in Y-m-d format.
+     * @param string $endDate The end date in Y-m-d format.
+     * @throws \InvalidArgumentException If the dates are invalid or in the wrong format.
+     */
+    function getMonthsBetweenDates(string $startDate, string $endDate): \Illuminate\Support\Collection
+    {
+        if (!strtotime($startDate) || !strtotime($endDate)) {
+            throw new \InvalidArgumentException('Invalid date format. Expected Y-m-d.');
+        }
+        $start = Carbon::parse($startDate)->startOfMonth();
+        $end = Carbon::parse($endDate)->startOfMonth();
+        if ($start->gt($end)) {
+            throw new \InvalidArgumentException('Start date must be before or equal to end date.');
+        }
+        $period = CarbonPeriod::create($start, '1 month', $end);
+        return collect($period)->map(function (Carbon $date) {
+            return [
+                'month' => $date->format('m'),
+                'year' => $date->format('Y'),
+            ];
+        });
     }
 }

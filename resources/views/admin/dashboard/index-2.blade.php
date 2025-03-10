@@ -406,41 +406,17 @@
                                         </div>
 
                                         <div class="col-lg-12 mt-3">
-                                            <style>
-
-
-                                            </style>
-                                            <table class="monthly-sales-record-table table">
+                                            <table class="table table-striped initTable" id="teamRecordsTable">
                                                 <thead>
                                                 <tr class="monthly-sales-record-table-row ">
+                                                    <th scope="col">Team</th>
                                                     <th scope="col">Month</th>
                                                     <th scope="col">Target</th>
                                                     <th scope="col">Target Acheived</th>
                                                     <th scope="col">Acheived %</th>
                                                 </tr>
                                                 </thead>
-                                                <tbody>
-                                                <tr>
-                                                    <td>Mark</td>
-                                                    <td>Mark</td>
-                                                    <td>Otto</td>
-                                                    <td>@mdo</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Mark</td>
-                                                    <td>Jacob</td>
-                                                    <td>Thornton</td>
-                                                    <td>@fat</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Mark</td>
-                                                    <td>Larry the Bird</td>
-                                                    <td>Larry the Bird</td>
-                                                    <td>@twitter</td>
-                                                </tr>
-
-
-                                                </tbody>
+                                                <tbody></tbody>
                                             </table>
                                         </div>
 
@@ -450,7 +426,8 @@
                                 <div class="col-lg-7 col-md-12">
                                     {{--                                    <div class="sales-record-table-container">--}}
                                     <div class="sales-record-table-container monthly-sales-record-table">
-                                        <table class="table table-striped dashbord_tbl initTable">
+                                        <table class="table table-striped dashbord_tbl initTable"
+                                               id="employeeRecordsTable">
                                             <thead>
                                             <tr class="monthly-sales-record-table-row ">
                                                 <th class="table-headings">Name</th>
@@ -459,7 +436,7 @@
                                                 <th class="table-headings">Sales</th>
                                             </tr>
                                             </thead>
-                                            <tbody id="employeeRecordsTable"></tbody>
+                                            <tbody></tbody>
                                         </table>
                                     </div>
 
@@ -697,17 +674,21 @@
 
                 function initializeDatatable(table_div, index) {
                     let parentHeight = table_div.parent().height();
+                    let tableId = table_div.attr('id');
                     let datatable = table_div.DataTable({
                         dom:
                             "<'row'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6'f>>" +
                             "<'row'<'col-sm-12'tr>>" +
-                            "<'row'<'col-sm-12 col-md-6'i><'col-sm-12 col-md-6'p>>",
+                            "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
                         order: [[1, 'desc']],
                         responsive: false,
                         scrollX: true,
                         scrollY: parentHeight ? parentHeight - 145 + "px" : "500px",
                         scrollCollapse: true,
                         paging: true,
+
+                        pageLength: tableId === "teamRecordsTable" ? 5 : 10,
+                        lengthMenu: [[5, 10, 25, 50, 100], [5, 10, 25, 50, 100]],
                     });
                     datatable.columns.adjust().draw();
                     return datatable;
@@ -724,7 +705,11 @@
                         'Last 7 Days': [moment().subtract(6, 'days'), moment()],
                         'Last 30 Days': [moment().subtract(29, 'days'), moment()],
                         'This Month': [moment().startOf('month'), moment().endOf('month')],
-                        'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+                        'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
+                        'Current Quarter': [moment().startOf('quarter'), moment().endOf('quarter')],
+                        'Last Quarter': [moment().subtract(1, 'quarter').startOf('quarter'), moment().subtract(1, 'quarter').endOf('quarter')],
+                        'This Year': [moment().startOf('year'), moment()],
+                        'Last Year': [moment().subtract(1, 'year').startOf('year'), moment().subtract(1, 'year').endOf('year')],
                     }
                 });
 
@@ -773,21 +758,22 @@
                                     $('#lapse-percentage').text(lapsePercentage.toFixed(2));
                                     const lapseIcon = $('#lapse-icon');
                                     if (lapsePercentage >= 0) {
-                                        lapseIcon.removeClass('fa-arrow-trend-down').addClass('fa-arrow-trend-up').css('color','green')
+                                        lapseIcon.removeClass('fa-arrow-trend-down').addClass('fa-arrow-trend-up').css('color', 'green')
                                     } else {
-                                        lapseIcon.removeClass('fa-arrow-trend-up').addClass('fa-arrow-trend-down').css('color','red')
+                                        lapseIcon.removeClass('fa-arrow-trend-up').addClass('fa-arrow-trend-down').css('color', 'red')
                                     }
 
                                     $('#total-sales-count').html('$' + response.total_sales);
                                     $('#total-cash-count').html('$' + response.total_sales);
                                     $('#refund-charge-back').html('$' + response.refunded + ' / ' + '$' + response.charge_back);
                                     $('#charge-back-ratio').html(response.charge_back_ratio + '%');
-                                    $('#reversal-sales-count').html('$' +  response.net_sales);
+                                    $('#reversal-sales-count').html('$' + response.net_sales);
                                     $('#net-cash-count').html('$' + response.net_sales);
-                                    table.clear().draw();
 
+                                    let employees_table = dataTables.filter(dt => dt.table().node().id === 'employeeRecordsTable')[0];
+                                    employees_table.clear().draw();
                                     response.employees.forEach(employee => {
-                                        table.row.add($(`
+                                        employees_table.row.add($(`
                                         <tr>
                                             <td>${employee.name}</td>
                                             <td>
@@ -800,6 +786,26 @@
                                         </tr>
                                     `)).draw(false);
                                     });
+
+                                    let teams_table = dataTables.filter(dt => dt.table().node().id === 'teamRecordsTable')[0];
+                                    teams_table.clear().draw();
+                                    const monthNames = [
+                                        "January", "February", "March", "April", "May", "June",
+                                        "July", "August", "September", "October", "November", "December"
+                                    ];
+
+                                    response.team_targets.forEach(target => {
+                                        teams_table.row.add($(`
+                                            <tr>
+                                                <td>${target.team_name}</td>
+                                                <td>${monthNames[target.month - 1] || ""} ${target.year ?? "N/A"}</td>
+                                                <td>$${target.target_amount.toLocaleString()}</td>
+                                                <td>$${target.achieved.toLocaleString()}</td>
+                                                <td>${target.achieved_percentage}%</td>
+                                            </tr>
+                                        `)).draw(false);
+                                    });
+
                                 }
                             })
                             .catch(error => {
