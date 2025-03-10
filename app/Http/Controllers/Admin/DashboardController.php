@@ -207,7 +207,7 @@ class DashboardController extends Controller
                     });
                 })
                 ->get()->map(function ($employee) use ($startDate, $endDate, $teamKey, $brandKey) {
-                    $employee->sales = Invoice::where('agent_id', $employee->id)
+                    $employee->sales = Invoice::where('status', Invoice::STATUS_PAID)->where('agent_id', $employee->id)
                         ->whereBetween('created_at', [$startDate, $endDate])
                         ->when($teamKey != 'all', function ($query) use ($teamKey) {
                             return $query->where('team_key', $teamKey);
