@@ -795,7 +795,7 @@
                                             ? employee.teams.map(team => team.name).join(', ')
                                             : 'No Team Assigned'}
                                             </td>
-                                            <td>$${employee.target}</td>
+                                            <td>$${employee.target ?? 0}</td>
                                             <td>$${parseFloat(employee.sales).toFixed(2)}</td>
                                         </tr>
                                     `)).draw(false);
