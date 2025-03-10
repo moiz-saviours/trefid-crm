@@ -683,7 +683,7 @@
                         order: [[1, 'desc']],
                         responsive: false,
                         scrollX: true,
-                        scrollY: parentHeight ? parentHeight - 145 + "px" : "500px",
+                        scrollY: tableId === "employeeRecordsTable" ? "500px" : parentHeight ? parentHeight - 145 + "px" : "500px",
                         scrollCollapse: true,
                         paging: true,
 
