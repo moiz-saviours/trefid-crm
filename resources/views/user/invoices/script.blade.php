@@ -574,8 +574,18 @@
         $(document).on('click', '.copyBtn', async function () {
             try {
                 let invoiceUrl = $(this).data('invoice-url');
-                await navigator.clipboard.writeText(invoiceUrl);
-                toastr.success('Invoice URL copied to clipboard!', 'Success');
+                if (navigator.clipboard) {
+                    await navigator.clipboard.writeText(invoiceUrl);
+                    toastr.success('Invoice URL copied to clipboard!', 'Success');
+                } else {
+                    const textarea = document.createElement('textarea');
+                    textarea.value = invoiceUrl;
+                    document.body.appendChild(textarea);
+                    textarea.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(textarea);
+                    toastr.success('Invoice URL copied to clipboard!', 'Success');
+                }
             } catch (err) {
                 toastr.error('Failed to copy. Please try again.', 'Error');
                 console.error('Clipboard copy failed:', err);
