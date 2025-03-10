@@ -19,15 +19,24 @@ use Illuminate\Support\Facades\Log;
 
 class DashboardController extends Controller
 {
+    protected int $currentMonth;
+    protected int $currentYear;
+
     public function __construct()
     {
+        $this->currentMonth = Carbon::now()->month;
+        $this->currentYear = Carbon::now()->year;
         $activeTime = Carbon::now()->subMinutes(5);
         $totalAdmins = Admin::count();
         $activeAdmins = Admin::where('last_seen', '>=', $activeTime)->count();
         $totalUsers = User::count();
         $activeUsers = User::where('last_seen', '>=', $activeTime)->count();
-        $freshInvoices = Invoice::where('type', 0)->count();
-        $upsaleInvoices = Invoice::where('type', 1)->count();
+        $freshInvoices = Invoice::whereMonth('created_at', $this->currentMonth)
+            ->whereYear('created_at', $this->currentYear)
+            ->where('type', 0)->count();
+        $upsaleInvoices = Invoice::whereMonth('created_at', $this->currentMonth)
+            ->whereYear('created_at', $this->currentYear)
+            ->where('type', 1)->count();
         $adminProgress = $totalAdmins > 0 ? ($activeAdmins / $totalAdmins) * 100 : 0;
         $userProgress = $totalUsers > 0 ? ($activeUsers / $totalUsers) * 100 : 0;
         $freshInvoiceProgress = ($freshInvoices + $upsaleInvoices) > 0 ? ($freshInvoices / ($freshInvoices + $upsaleInvoices)) * 100 : 0;
@@ -37,8 +46,12 @@ class DashboardController extends Controller
 
     public function index_1()
     {
-        $totalInvoices = Invoice::count();
-        $invoiceCounts = Invoice::selectRaw("
+        $totalInvoices = Invoice::whereMonth('created_at', $this->currentMonth)
+            ->whereYear('created_at', $this->currentYear)
+            ->count();
+        $invoiceCounts = Invoice::whereMonth('created_at', $this->currentMonth)
+            ->whereYear('created_at', $this->currentYear)
+            ->selectRaw("
         COUNT(CASE WHEN status = 0 THEN 1 END) as due_invoices,
         COUNT(CASE WHEN status = 1 THEN 1 END) as paid_invoices,
         COUNT(CASE WHEN status = 2 THEN 1 END) as refund_invoices,
@@ -50,8 +63,12 @@ class DashboardController extends Controller
             'refund' => ($invoiceCounts->refund_invoices / $totalInvoices) * 100,
             'chargeback' => ($invoiceCounts->chargeback_invoices / $totalInvoices) * 100
         ] : ['due' => 0, 'paid' => 0, 'refund' => 0, 'chargeback' => 0];
-        $totalPayments = Payment::count();
-        $paymentCounts = Payment::selectRaw("
+        $totalPayments = Payment::whereMonth('created_at', $this->currentMonth)
+            ->whereYear('created_at', $this->currentYear)
+            ->count();
+        $paymentCounts = Payment::whereMonth('created_at', $this->currentMonth)
+            ->whereYear('created_at', $this->currentYear)
+            ->selectRaw("
             COUNT(CASE WHEN status = 1 THEN 1 END) as paid,
             COUNT(CASE WHEN status = 2 THEN 1 END) as refund,
             COUNT(CASE WHEN status = 3 THEN 1 END) as chargeback
@@ -61,7 +78,9 @@ class DashboardController extends Controller
             'refund' => ($paymentCounts->refund / $totalPayments) * 100,
             'chargeback' => ($paymentCounts->chargeback / $totalPayments) * 100
         ] : ['paid' => 0, 'refund' => 0, 'chargeback' => 0];
-        $totalLeads = Lead::count();
+        $totalLeads = Lead::whereMonth('created_at', $this->currentMonth)
+            ->whereYear('created_at', $this->currentYear)
+            ->count();
         $totalCustomers = CustomerContact::count();
         $recentPayments = Payment::latest()->limit(5)->get();
         $leadStatuses = LeadStatus::all();
@@ -208,7 +227,6 @@ class DashboardController extends Controller
                     return $query->where('brand_key', $brandKey);
                 })
                 ->sum('total_amount');
-
             $refunded = Invoice::where('status', Invoice::STATUS_REFUNDED)
                 ->whereBetween('created_at', [$startDate, $endDate])
                 ->when($teamKey != 'all', function ($query) use ($teamKey) {
