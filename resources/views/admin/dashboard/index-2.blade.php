@@ -170,7 +170,7 @@
             }
 
             .sales-record-table-container {
-                height: 388px !important;
+                height: 638px !important;
                 /*overflow-y: scroll !important;*/
             }
 
@@ -425,7 +425,7 @@
                                 </div>
                                 <div class="col-lg-7 col-md-12">
                                     {{--                                    <div class="sales-record-table-container">--}}
-                                    <div class="sales-record-table-container monthly-sales-record-table">
+{{--                                    <div class="sales-record-table-container monthly-sales-record-table">--}}
                                         <table class="table table-striped dashbord_tbl initTable"
                                                id="employeeRecordsTable">
                                             <thead>
@@ -438,7 +438,7 @@
                                             </thead>
                                             <tbody></tbody>
                                         </table>
-                                    </div>
+{{--                                    </div>--}}
 
                                 </div>
                             </div>
