@@ -315,37 +315,37 @@
                                 <div class="col-lg-2 col-md-2">
                                     <div class="sales-number-div text-center">
                                         <h2 class="sales-total-heading">Total Sales</h2>
-                                        <p id="total-sales-count" class="total-sales-count"> $256,580 </p>
+                                        <p id="total-sales-count" class="total-sales-count"> $0 </p>
                                     </div>
                                 </div>
                                 <div class="col-lg-2 col-md-2">
                                     <div class="sales-number-div text-center">
                                         <h2 class="sales-total-heading">Total Cash</h2>
-                                        <p id="total-cash-count" class="total-sales-count"> $224,278 </p>
+                                        <p id="total-cash-count" class="total-sales-count"> $0 </p>
                                     </div>
                                 </div>
                                 <div class="col-lg-2 col-md-2">
                                     <div class="sales-number-div text-center">
                                         <h2 class="sales-total-heading">Refunds / Chargeback</h2>
-                                        <p id="refund-charge-back" class="total-sales-count"> $8,041 / $3,248 </p>
+                                        <p id="refund-charge-back" class="total-sales-count"> $0 / $0 </p>
                                     </div>
                                 </div>
                                 <div class="col-lg-2 col-md-2">
                                     <div class="sales-number-div text-center">
                                         <h2 class="sales-total-heading">Chargeback Ratio</h2>
-                                        <p id="charge-back-ratio" class="total-sales-count"> 1 % </p>
+                                        <p id="charge-back-ratio" class="total-sales-count"> 0 % </p>
                                     </div>
                                 </div>
                                 <div class="col-lg-2 col-md-2">
                                     <div class="sales-number-div text-center">
                                         <h2 class="sales-total-heading">Reversals</h2>
-                                        <p id="reversal-sales-count" class="total-sales-count"> $16,594 </p>
+                                        <p id="reversal-sales-count" class="total-sales-count"> $0 </p>
                                     </div>
                                 </div>
                                 <div class="col-lg-2 col-md-2">
                                     <div class="sales-number-div text-center">
                                         <h2 class="sales-total-heading">Net Cash</h2>
-                                        <p id="net-cash-count" class="total-sales-count"> $229,583 </p>
+                                        <p id="net-cash-count" class="total-sales-count"> $0 </p>
                                     </div>
                                 </div>
                             </div>
@@ -353,36 +353,37 @@
                             <div class="row mt-3 ">
                                 <div class="col-lg-5">
                                     <div class="row ">
-                                        <div class="col-lg-6 ">
+                                        <div class="col-lg-6">
                                             <div class="sales-number-div">
-                                                <h2 class="sales-total-heading">Targeted Vs Acheived</h2>
-                                                <p class="total-sales-count"> $234538 </p>
-                                                <style>
-
-                                                </style>
-                                                <div class="progress-bar-wrapper">
+                                                <h2 class="sales-total-heading">Targeted Vs Achieved</h2>
+                                                <!-- Total Target -->
+                                                <p id="total-target-vs-total-achieved" class="total-sales-count">$0 /
+                                                    $0</p>
+                                                <!-- Progress Bar -->
+                                                <div id="total-target-progress-bar-wrapper"
+                                                     class="progress-bar-wrapper">
                                                     <div>
                                                         <div class="progress" style="width: 150px;">
-                                                            <div class="progress-bar progress-bar-animated bg-primary"
-                                                                 role="progressbar" style="width: 40%"
-                                                                 aria-valuenow="35"
+                                                            <div id="total-target-progress-bar"
+                                                                 class="progress-bar progress-bar-animated bg-primary"
+                                                                 role="progressbar" style="width: 0%"
+                                                                 aria-valuenow="0"
                                                                  aria-valuemin="0" aria-valuemax="100">
-
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <p>109%</p>
+                                                    <!-- Progress Percentage Text -->
+                                                    <p id="total-target-progress-text">0%</p>
                                                 </div>
-                                                <!-- <input type="range" min="1" max="100" value="50"><span>109%</span> -->
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="sales-number-div">
                                                 <h2 class="mtd-hedaing">MTD/LA</h2>
                                                 <p class="total-sales-count">
-                                                    $<span id="mtd-sales">234538</span> /
+                                                    <span id="mtd-sales">0</span> /
                                                     <span class="achieved-numbers" id="lapse-percentage">
-                                                        6.187
+                                                        0
                                                     </span>
                                                     <i id="lapse-icon" class="fas fa-arrow-trend-up"></i>
                                                 </p>
@@ -392,7 +393,7 @@
                                         <div class="col-lg-6  mt-3">
                                             <div class="sales-number-div">
                                                 <h2 class="mtd-hedaing">UPSELL</h2>
-                                                <p class="total-sales-count"> $234538
+                                                <p class="total-sales-count" id="total-upsell"> $0
                                                 </p>
                                             </div>
                                         </div>
@@ -400,7 +401,7 @@
                                         <div class="col-lg-6  mt-3">
                                             <div class="sales-number-div">
                                                 <h2 class="mtd-hedaing">Accounts</h2>
-                                                <p class="total-sales-count"> 234
+                                                <p class="total-sales-count"> 0
                                                 </p>
                                             </div>
                                         </div>
@@ -425,20 +426,20 @@
                                 </div>
                                 <div class="col-lg-7 col-md-12">
                                     {{--                                    <div class="sales-record-table-container">--}}
-{{--                                    <div class="sales-record-table-container monthly-sales-record-table">--}}
-                                        <table class="table table-striped dashbord_tbl initTable"
-                                               id="employeeRecordsTable">
-                                            <thead>
-                                            <tr class="monthly-sales-record-table-row ">
-                                                <th class="table-headings">Name</th>
-                                                <th class="table-headings">Team</th>
-                                                <th class="table-headings">Target</th>
-                                                <th class="table-headings">Sales</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody></tbody>
-                                        </table>
-{{--                                    </div>--}}
+                                    {{--                                    <div class="sales-record-table-container monthly-sales-record-table">--}}
+                                    <table class="table table-striped dashbord_tbl initTable"
+                                           id="employeeRecordsTable">
+                                        <thead>
+                                        <tr class="monthly-sales-record-table-row ">
+                                            <th class="table-headings">Name</th>
+                                            <th class="table-headings">Team</th>
+                                            <th class="table-headings">Target</th>
+                                            <th class="table-headings">Sales</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                    {{--                                    </div>--}}
 
                                 </div>
                             </div>
@@ -753,22 +754,25 @@
                         }, 'GET')
                             .then(response => {
                                 if (response.success) {
-                                    $('#mtd-sales').text(response.mtd_total_sales.replace('$', ''));
+                                    animateNumericValue($('#mtd-sales'), 0, parseFloat(response.mtd_total_sales.replace('$', '')), 1000, '$');
                                     const lapsePercentage = parseFloat(response.lapse_percentage);
-                                    $('#lapse-percentage').text(lapsePercentage.toFixed(2));
+                                    animateNumericValue($('#lapse-percentage'), 0, lapsePercentage, 1000, '', '%', 2);
                                     const lapseIcon = $('#lapse-icon');
                                     if (lapsePercentage >= 0) {
                                         lapseIcon.removeClass('fa-arrow-trend-down').addClass('fa-arrow-trend-up').css('color', 'green')
                                     } else {
                                         lapseIcon.removeClass('fa-arrow-trend-up').addClass('fa-arrow-trend-down').css('color', 'red')
                                     }
+                                    animateNumericValue($('#total-sales-count'), 0, parseFloat(response.total_sales), 1000, '$');
+                                    animateNumericValue($('#total-cash-count'), 0, parseFloat(response.total_sales), 1000, '$');
+                                    const refunded = parseFloat(response.refunded);
+                                    const chargeBack = parseFloat(response.charge_back);
+                                    animateNumericValue($('#refund-charge-back'), 0, refunded, 1000, '$', ` / $${chargeBack.toLocaleString()}`);
 
-                                    $('#total-sales-count').html('$' + response.total_sales);
-                                    $('#total-cash-count').html('$' + response.total_sales);
-                                    $('#refund-charge-back').html('$' + response.refunded + ' / ' + '$' + response.charge_back);
-                                    $('#charge-back-ratio').html(response.charge_back_ratio + '%');
-                                    $('#reversal-sales-count').html('$' + response.net_sales);
-                                    $('#net-cash-count').html('$' + response.net_sales);
+                                    animateNumericValue($('#charge-back-ratio'), 0, parseFloat(response.charge_back_ratio), 1000, '', '%', 2);
+
+                                    animateNumericValue($('#reversal-sales-count'), 0, parseFloat(response.net_sales), 1000, '$');
+                                    animateNumericValue($('#net-cash-count'), 0, parseFloat(response.net_sales), 1000, '$');
 
                                     let employees_table = dataTables.filter(dt => dt.table().node().id === 'employeeRecordsTable')[0];
                                     employees_table.clear().draw();
@@ -806,6 +810,43 @@
                                         `)).draw(false);
                                     });
 
+                                    const totalTarget = response.total_target || 0;
+                                    const totalAchieved = response.total_target_achieved || 0;
+                                    const totalAchievedPercentage = response.total_achieved_percentage || 0;
+                                    const totalUpSales = response.totalUpSales || 0;
+
+                                    function animateTwoValues(element, start1, end1, start2, end2, duration) {
+                                        let startTimestamp = null;
+                                        const step = (timestamp) => {
+                                            if (!startTimestamp) startTimestamp = timestamp;
+                                            const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                                            const value1 = Math.floor(progress * (end1 - start1) + start1);
+                                            const value2 = Math.floor(progress * (end2 - start2) + start2);
+                                            element.text(`$${value1.toLocaleString()} / $${value2.toLocaleString()}`);
+                                            if (progress < 1) {
+                                                window.requestAnimationFrame(step);
+                                            }
+                                        };
+                                        window.requestAnimationFrame(step);
+                                    }
+
+                                    const totalTargetAchievedElement = $('#total-target-vs-total-achieved');
+                                    animateTwoValues(totalTargetAchievedElement, 0, totalAchieved, 0, totalTarget, 1000);
+
+                                    const progressBar = $('#total-target-progress-bar');
+                                    let currentPercentage = 0;
+                                    const progressInterval = setInterval(() => {
+                                        if (currentPercentage >= totalAchievedPercentage) {
+                                            clearInterval(progressInterval);
+                                        } else {
+                                            currentPercentage += 1;
+                                            progressBar.css('width', `${currentPercentage}%`);
+                                            progressBar.attr('aria-valuenow', currentPercentage);
+                                            $('#total-target-progress-text').text(`${currentPercentage.toFixed(2)}%`);
+                                        }
+                                    }, 20);
+
+                                    animateNumericValue($('#total-upsell'), 0, totalUpSales, 1000, '$');
                                 }
                             })
                             .catch(error => {
@@ -813,6 +854,26 @@
                                 // setTimeout(() => location.reload(), 5000);
                             });
                     }
+                }
+
+                function animateNumericValue(element, start, end, duration, prefix = '', suffix = '', toFixed = 0) {
+                    let startTimestamp = null;
+                    const step = (timestamp) => {
+                        if (!startTimestamp) startTimestamp = timestamp;
+                        const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                        let value = start + progress * (end - start);
+                        if (toFixed && toFixed > 0) {
+                            value = parseFloat(value.toFixed(toFixed));
+                        } else {
+                            value = Math.floor(value);
+                        }
+                        value = value.toLocaleString();
+                        element.text(`${prefix}${value}${suffix}`);
+                        if (progress < 1) {
+                            window.requestAnimationFrame(step);
+                        }
+                    };
+                    window.requestAnimationFrame(step);
                 }
             });
         </script>

@@ -230,6 +230,16 @@ class DashboardController extends Controller
                     return $query->where('brand_key', $brandKey);
                 })
                 ->sum('total_amount');
+            $totalUpSales = Invoice::where('status', Invoice::STATUS_PAID)
+                ->where('type', 1)
+                ->whereBetween('created_at', [$startDate, $endDate])
+                ->when($teamKey != 'all', function ($query) use ($teamKey) {
+                    return $query->where('team_key', $teamKey);
+                })
+                ->when($brandKey != 'all', function ($query) use ($brandKey) {
+                    return $query->where('brand_key', $brandKey);
+                })
+                ->sum('total_amount');
             $refunded = Invoice::where('status', Invoice::STATUS_REFUNDED)
                 ->whereBetween('created_at', [$startDate, $endDate])
                 ->when($teamKey != 'all', function ($query) use ($teamKey) {
@@ -256,24 +266,27 @@ class DashboardController extends Controller
             $chargeBackFormatted = number_format($chargeBack);
             $netSalesFormatted = number_format($netSales, 2);
             $lapsePercentageFormatted = number_format($lapsePercentage, 2);
-
-
-
             $range = $this->getMonthsBetweenDates($startDate, $endDate);
             $teams = Team::with('targets')->where('status', 1)
                 ->when($teamKey != 'all', function ($query) use ($teamKey) {
                     return $query->where('team_key', $teamKey);
                 })->get();
             $team_targets = [];
+            $total_target = 0;
+            $total_target_achieved = 0;
             foreach ($range as $rangeval) {
                 foreach ($teams as $team) {
                     $team_achieved = Invoice::where('status', Invoice::STATUS_PAID)
                         ->whereBetween('created_at', [$startDate, $endDate])
                         ->where('team_key', $team->team_key)
                         ->sum('total_amount');
+                    $total_target_achieved += $team_achieved;
                     $team_target = TeamTarget::where('team_key', $team->team_key)
                         ->where('month', $rangeval['month'])->where('year', $rangeval['year'])
                         ->first();
+                    if ($team_target) {
+                        $total_target += $team_target->target_amount;
+                    }
                     $team_targets[] = [
                         'team_key' => $team->team_key,
                         'team_name' => $team->name,
@@ -287,6 +300,7 @@ class DashboardController extends Controller
                     ];
                 }
             }
+            $total_achieved_percentage = ($total_target > 0) ? round(($total_target_achieved / $total_target) * 100, 2) : 0;
             return response()->json(['success' => true, 'message' => 'Fetched total sales successfully.',
                 'total_sales' => $totalSalesFormatted,
                 'mtd_total_sales' => $mtdTotalSalesFormatted,
@@ -298,6 +312,10 @@ class DashboardController extends Controller
                 'employees' => $employees,
                 'teams' => $teams,
                 'team_targets' => $team_targets,
+                'total_target' => $total_target,
+                'total_target_achieved' => $total_target_achieved,
+                'total_achieved_percentage' => $total_achieved_percentage,
+                'totalUpSales' => $totalUpSales,
             ]);
         } catch
         (\Exception $e) {
