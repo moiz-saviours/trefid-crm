@@ -22,16 +22,25 @@ class InvoiceController extends Controller
         $user = Auth::user();
         $teams = $user->teams()->with('brands')->get();
         $brands = $teams->flatMap->brands;
-
         $customer_contacts = CustomerContact::where('status', 1)->get();
-        $team_keys = $teams->pluck('team_key')->toArray();
-        $users = User::whereHas('teams', function ($query) use ($team_keys) {
-            $query->whereIn('teams.team_key', $team_keys);
+        $teamKeys = $teams->pluck('teams.team_key')->toArray();
+        $users = User::whereHas('teams', function ($query) use ($teamKeys) {
+            $query->whereIn('teams.team_key', $teamKeys);
         })->where('status', 1)->get();
-        $all_invoices = Invoice::whereIn('brand_key', Auth::user()->teams()->with(['brands' => function ($query) {
-            $query->where('status', 1);
-        }])->get()->pluck('brands.*.brand_key')->flatten()->unique())
-            ->whereIn('team_key', Auth::user()->teams()->pluck('teams.team_key')->flatten()->unique())
+        $brandKeys = $user->teams()
+            ->with(['brands' => function ($query) {
+                $query->where('status', 1);
+            }])
+            ->get()->pluck('brands.*.brand_key')->flatten()->unique();
+        $all_invoices = Invoice::whereIn('brand_key', $brandKeys)
+            ->whereIn('team_key', $teamKeys)
+            ->orWhere(function ($query) use ($user) {
+                $query->whereHasMorph('agent', [$user->getMorphClass()], function ($query) use ($user) {
+                    $query->where('id', $user->id);
+                })->orWhereHasMorph('creator', [$user->getMorphClass()], function ($query) use ($user) {
+                    $query->where('id', $user->id);
+                });
+            })
             ->with(['brand', 'customer_contact'])
             ->get();
 //        $my_invoices = $all_invoices->filter(function ($invoice) {
@@ -246,7 +255,7 @@ class InvoiceController extends Controller
     {
         if (!$invoice->id) return response()->json(['error' => 'Invoice does not exist.']);
         if ($invoice->status == 1) return response()->json(['error' => 'Oops! The Invoice is already paid.'], 400);
-        if (!$invoice->agent || $invoice->agent->id !== auth()->user()->id) return response()->json(['error' => 'You do not have permission to perform this action.'], 400);
+        if ((!$invoice->agent || $invoice->agent->id !== auth()->user()->id) || !$invoice->creator || $invoice->creator->id !== auth()->user()->id) return response()->json(['error' => 'You do not have permission to perform this action.'], 400);
         $brands = Brand::where('status', 1)->get();
         $teams = Team::where('status', 1)->get();
         $customer_contacts = CustomerContact::where('status', 1)->get();
@@ -264,7 +273,12 @@ class InvoiceController extends Controller
     {
         if (!$invoice->id) return response()->json(['error' => 'Invoice does not exist.']);
         if ($invoice->status == 1) return response()->json(['error' => 'Oops! The Invoice is already paid.'], 400);
-        if ((!$invoice->agent || $invoice->agent->id !== auth()->user()->id) || (!$invoice->creator || $invoice->creator->id !== auth()->user()->id)) return response()->json(['error' => 'You do not have permission to perform this action.'], 400);
+        $user = auth()->user();
+        $isCreator = $invoice->creator && $invoice->creator->id === $user->id;
+        $isAgent = $invoice->agent && $invoice->agent->id === $user->id;
+        if (!$isCreator && !$isAgent) {
+            return response()->json(['error' => 'You do not have permission to perform this action.'], 403);
+        }
         $validator = Validator::make($request->all(), [
             'brand_key' => 'required|integer|exists:brands,brand_key',
             'team_key' => 'required|integer|exists:teams,team_key',
