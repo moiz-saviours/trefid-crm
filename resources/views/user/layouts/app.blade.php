@@ -227,7 +227,7 @@
 
                         <!-- Toggler -->
                         <button class="header__btn btn btn-icon btn-sm" type="button" data-bs-toggle="dropdown"
-                                data-bs-auto-close="outside" aria-label="Megamenu dropdown" aria-expanded="false">
+                                data-bs-auto-close="outside" aria-label="Megamenu dropdown" aria-expanded="false" disabled>
                             <i class="demo-psi-layout-grid"></i>
                         </button>
 
@@ -398,7 +398,7 @@
 
                         <!-- Toggler -->
                         <button class="header__btn btn btn-icon btn-sm" type="button" data-bs-toggle="dropdown"
-                                aria-label="Notification dropdown" aria-expanded="false">
+                                aria-label="Notification dropdown" aria-expanded="false" disabled>
                         <span class="d-block position-relative">
                            <i class="demo-psi-bell"></i>
 
@@ -521,7 +521,7 @@
 
                         <!-- Toggler -->
                         <button class="header__btn btn btn-icon btn-sm" type="button" data-bs-toggle="dropdown"
-                                aria-label="User dropdown" aria-expanded="false">
+                                aria-label="User dropdown" aria-expanded="false" disabled>
                             <i class="demo-psi-male"></i>
                         </button>
 
@@ -622,7 +622,7 @@
 
                     <!-- Sidebar Toggler -->
                     <button class="sidebar-toggler header__btn btn btn-icon btn-sm" type="button"
-                            aria-label="Sidebar button">
+                            aria-label="Sidebar button" disabled>
                         <i class="demo-psi-dot-vertical"></i>
                     </button>
 
