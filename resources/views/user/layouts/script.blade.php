@@ -189,23 +189,27 @@
                         confirmButtonText: 'OK'
                     });
                 } else if (jqXHR.status === 422) {
+                    console.log(jqXHR.statusText);
                     // Swal.fire({
                     //     title: 'Error',
                     //     text: `An error occurred: ${jqXHR.status} - ${jqXHR.statusText}`,
                     //     icon: 'error',
                     //     confirmButtonText: 'OK'
                     // });
+                } else if (jqXHR.status === 400) {
+                    console.log(jqXHR.statusText);
                 } else {
-                    Swal.fire({
-                        title: 'Error',
-                        text: `An error occurred: ${jqXHR.status} - ${jqXHR.statusText}`,
-                        icon: 'error',
-                        confirmButtonText: 'OK'
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            location.reload();
-                        }
-                    });
+                    console.log(`An error occurred: ${jqXHR.status} - ${jqXHR.statusText}`);
+                    // Swal.fire({
+                    //     title: 'Error',
+                    //     text: `An error occurred: ${jqXHR.status} - ${jqXHR.statusText}`,
+                    //     icon: 'error',
+                    //     confirmButtonText: 'OK'
+                    // }).then((result) => {
+                    //     if (result.isConfirmed) {
+                    //         location.reload();
+                    //     }
+                    // });
                 }
             }
         });
@@ -286,14 +290,10 @@
                     window.location.href = `{{route('login')}}`;
                 }
             });
-        } else if (jqXHR.status === 403) {
-            Swal.fire({
-                title: 'Forbidden',
-                text: 'You do not have permission to perform this action.',
-                icon: 'error',
-                confirmButtonText: 'OK'
-            });
-        } else {
+        } else if (jqXHR.status === 400) {
+            toastr.error(jqXHR.responseJSON.error);
+            console.log(jqXHR.responseJSON.error);
+        }  else {
             Swal.fire({
                 title: 'Error',
                 text: `An error occurred: ${jqXHR.status} - ${jqXHR.statusText}`,

@@ -23,7 +23,7 @@ class InvoiceController extends Controller
         $teams = $user->teams()->with('brands')->get();
         $brands = $teams->flatMap->brands;
         $customer_contacts = CustomerContact::where('status', 1)->get();
-        $teamKeys = $teams->pluck('teams.team_key')->toArray();
+        $teamKeys = $teams->pluck('team_key')->toArray();
         $users = User::whereHas('teams', function ($query) use ($teamKeys) {
             $query->whereIn('teams.team_key', $teamKeys);
         })->where('status', 1)->get();
@@ -255,7 +255,19 @@ class InvoiceController extends Controller
     {
         if (!$invoice->id) return response()->json(['error' => 'Invoice does not exist.']);
         if ($invoice->status == 1) return response()->json(['error' => 'Oops! The Invoice is already paid.'], 400);
-        if ((!$invoice->agent || $invoice->agent->id !== auth()->user()->id) || !$invoice->creator || $invoice->creator->id !== auth()->user()->id) return response()->json(['error' => 'You do not have permission to perform this action.'], 400);
+        $user = auth()->user();
+        $isCreator = $invoice->creator && $invoice->creator->id == $user->id;
+        $isAgent = $invoice->agent && $invoice->agent->id == $user->id;
+        $isTeamLead = false;
+        if ($invoice->team_key) {
+            $team = Team::where('team_key', $invoice->team_key)->first();
+            if ($team && $team->lead_id == $user->id) {
+                $isTeamLead = true;
+            }
+        }
+        if (!$isCreator && !$isAgent && !$isTeamLead) {
+            return response()->json(['error' => 'You do not have permission to perform this action.'], 403);
+        }
         $brands = Brand::where('status', 1)->get();
         $teams = Team::where('status', 1)->get();
         $customer_contacts = CustomerContact::where('status', 1)->get();
@@ -276,7 +288,14 @@ class InvoiceController extends Controller
         $user = auth()->user();
         $isCreator = $invoice->creator && $invoice->creator->id === $user->id;
         $isAgent = $invoice->agent && $invoice->agent->id === $user->id;
-        if (!$isCreator && !$isAgent) {
+        $isTeamLead = false;
+        if ($invoice->team_key) {
+            $team = Team::where('team_key', $invoice->team_key)->first();
+            if ($team && $team->lead_id === $user->id) {
+                $isTeamLead = true;
+            }
+        }
+        if (!$isCreator && !$isAgent && !$isTeamLead) {
             return response()->json(['error' => 'You do not have permission to perform this action.'], 403);
         }
         $validator = Validator::make($request->all(), [
