@@ -173,7 +173,7 @@
                                     <td class="align-middle text-center text-nowrap">${index}</td>
                                     <td class="align-middle text-center text-nowrap">${brand ? `<a href="{{route('admin.brand.index')}}">${brand.name}</a>` : '---'}</td>
                                     <td class="align-middle text-center text-nowrap">${team ? `<a href="{{route('admin.team.index')}}">${team.name}</a>` : '---'}</td>
-                                    <td class="align-middle text-center text-nowrap"><a href="/admin/contact/edit/${id}" title="${company ? company.name : 'No associated company'}" >${name}</a></td>
+                                    <td class="align-middle text-center text-nowrap"><a href="{{route('admin.customer.contact.index')}}" title="${company ? company.name : 'No associated company'}" >${name}</a></td>
                                     <td class="align-middle text-center text-nowrap">${email}</td>
                                     <td class="align-middle text-center text-nowrap">${phone}</td>
                                     <td class="align-middle text-center text-nowrap">${address}</td>
@@ -223,7 +223,7 @@
                                 }
 
                                 // Column 4: name
-                                if (decodeHtml(rowData[4]) !== `<a href="/admin/contact/edit/${id}" title="${company ? company.name : 'No associated company'}" >${name}</a>`) {
+                                if (decodeHtml(rowData[4]) !== `<a href="{{route('admin.customer.contact.index')}}" title="${company ? company.name : 'No associated company'}" >${name}</a>`) {
                                     table.cell(index, 4).data(name).draw();
                                 }
                                 // Column 5: email
