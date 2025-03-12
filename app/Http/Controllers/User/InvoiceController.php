@@ -71,8 +71,7 @@ class InvoiceController extends Controller
                     'max:20',
                     function ($attribute, $value, $fail) use ($request) {
                         if ($request->input('type') == 0 && strlen($value) > 20) {
-                            $fail("The $attribute must not be greater than 20 characters when type is 0.");
-                        }
+                            $fail("The " . ucwords(str_replace("_", " ", $attribute)) . " must not be greater than 20 characters when type is Fresh.");                        }
                     },
                 ],
                 'agent_id' => 'nullable|integer',
@@ -313,8 +312,7 @@ class InvoiceController extends Controller
                 'max:20',
                 function ($attribute, $value, $fail) use ($request) {
                     if ($request->input('type') == 0 && strlen($value) > 20) {
-                        $fail("The $attribute must not be greater than 20 characters when type is 0.");
-                    }
+                        $fail("The " . ucwords(str_replace("_", " ", $attribute)) . " must not be greater than 20 characters when type is Fresh.");                    }
                 },
             ],
             'agent_id' => 'required|integer',
