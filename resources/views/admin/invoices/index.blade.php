@@ -118,7 +118,8 @@
                                                 </td>
                                                 <td class="align-middle text-center text-nowrap">
                                                     @if(isset($invoice->customer_contact))
-                                                        <a href="{{route('admin.customer.contact.edit',[$invoice->customer_contact->id])}}">{{ $invoice->customer_contact->name }}</a>
+                                                        <a href="{{route('admin.customer.contact.index')}}">{{ $invoice->customer_contact->name }}</a>
+{{--                                                        <a href="{{route('admin.customer.contact.edit',[$invoice->customer_contact->id])}}">{{ $invoice->customer_contact->name }}</a>--}}
                                                         {{--                                                        <br> {{ $invoice->customer_contact->special_key }}--}}
                                                     @else
                                                         ---

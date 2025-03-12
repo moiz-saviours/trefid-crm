@@ -245,7 +245,7 @@
                             ${brand ? `<a href="{{route('admin.brand.index')}}">${brand.name}</a><br> ${brand.brand_key}` : '---'}
                         </td>
                         <td class="align-middle text-center text-nowrap">${team ? `<a href="{{route('admin.team.index')}}">${team.name}</a><br> ${team.team_key}` : '---'}</td>
-                        <td class="align-middle text-center text-nowrap">${customer_contact ? `<a href="/admin/contact/edit/${customer_contact.id}">${customer_contact.name}</a>` : '---'}</td>
+                        <td class="align-middle text-center text-nowrap">${customer_contact ? `<a href="{{route('admin.customer.contact.index')}}">${customer_contact.name}</a>` : '---'}</td>
                         <td class="align-middle text-center text-nowrap">${agent ? `<a href="{{route('admin.employee.index')}}">${agent.name}</a>` : '---'}</td>
                         <td class="align-middle space-between text-nowrap" style="text-align: left;">
                             <div style="display: flex; justify-content: space-between; gap: 10px;">
@@ -333,8 +333,8 @@
                             }
 
                             // Column 6: Customer Contact
-                            if (decodeHtml(rowData[5]) !== `${customer_contact ? `<a href="/admin/contact/edit/${customer_contact.id}">${customer_contact.name}</a>` : '---'}`) {
-                                table.cell(index, 5).data(`${customer_contact ? `<a href="/admin/contact/edit/${customer_contact.id}">${customer_contact.name}</a>` : '---'}`).draw();
+                            if (decodeHtml(rowData[5]) !== `${customer_contact ? `<a href="{{route('admin.customer.contact.index')}}">${customer_contact.name}</a>` : '---'}`) {
+                                table.cell(index, 5).data(`${customer_contact ? `<a href="{{route('admin.customer.contact.index')}}">${customer_contact.name}</a>` : '---'}`).draw();
                             }
                             // Column 7: Agent
                             if (decodeHtml(rowData[6]) !== `${agent ? `<a href="{{route('admin.employee.index')}}">${agent.name}</a>` : '---'}`) {
