@@ -308,6 +308,7 @@ class DashboardController extends Controller
                 'refunded' => $refundedFormatted,
                 'charge_back' => $chargeBackFormatted,
                 'charge_back_ratio' => $chargeBackRatio,
+                'reversal' => $reversal ?? 0,
                 'lapse_percentage' => $lapsePercentageFormatted,
                 'employees' => $employees,
                 'teams' => $teams,

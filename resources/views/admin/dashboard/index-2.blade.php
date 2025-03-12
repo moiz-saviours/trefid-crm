@@ -771,7 +771,7 @@
 
                                     animateNumericValue($('#charge-back-ratio'), 0, parseFloat(response.charge_back_ratio), 1000, '', '%', 2);
 
-                                    animateNumericValue($('#reversal-sales-count'), 0, parseFloat(response.net_sales), 1000, '$');
+                                    animateNumericValue($('#reversal-sales-count'), 0, parseFloat(response.reversal), 1000, '$');
                                     animateNumericValue($('#net-cash-count'), 0, parseFloat(response.net_sales), 1000, '$');
 
                                     let employees_table = dataTables.filter(dt => dt.table().node().id === 'employeeRecordsTable')[0];
