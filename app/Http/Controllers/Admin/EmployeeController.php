@@ -35,6 +35,7 @@ class EmployeeController extends Controller
     {
         $request->validate([
             'team_key' => 'nullable|max:255',
+            'emp_id' => 'required|string|max:255',
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255|unique:users,email',
             'designation' => 'nullable|string|max:255',
@@ -107,6 +108,7 @@ class EmployeeController extends Controller
     public function update(Request $request, User $user)
     {
         $request->validate([
+            'emp_id' => 'required|string|max:255',
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255|unique:users,email,' . $user->id,
             'designation' => 'nullable|string|max:255',
