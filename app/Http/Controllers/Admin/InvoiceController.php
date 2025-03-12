@@ -96,7 +96,7 @@ class InvoiceController extends Controller
                 'required_if:type,0',
                 'nullable',
                 'string',
-                'regex:/^(\+?\d{1,3})[\d\s().-]+$/',
+                'regex:/^\(\d{3}\) \d{3}-\d{4}$/',
                 'min:8',
                 'max:20',
                 function ($attribute, $value, $fail) use ($request) {
@@ -316,7 +316,7 @@ class InvoiceController extends Controller
                 'required_if:type,0',
                 'nullable',
                 'string',
-                'regex:/^(\+?\d{1,3})[\d\s().-]+$/',
+                'regex:/^\(\d{3}\) \d{3}-\d{4}$/',
                 'min:8',
                 'max:20',
                 function ($attribute, $value, $fail) use ($request) {
