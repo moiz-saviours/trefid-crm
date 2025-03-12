@@ -93,15 +93,25 @@ class InvoiceController extends Controller
             'customer_contact_name' => 'required_if:type,0|nullable|string|max:255',
             'customer_contact_email' => 'required_if:type,0|nullable|email|max:255',
             'customer_contact_phone' => [
-                'required_if:type,0',
                 'nullable',
-                'string',
-                'regex:/^(\+?\d{1,3}[-.\s]?)?\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}$/',
-                'min:8',
-                'max:20',
                 function ($attribute, $value, $fail) use ($request) {
-                    if ($request->input('type') == 0 && strlen($value) > 20) {
-                        $fail("The " . ucwords(str_replace("_", " ", $attribute)) . " must not be greater than 20 characters when type is Fresh.");                    }
+                    if ($request->input('type') == 0) {
+                        if (empty($value)) {
+                            $fail("The " . ucwords(str_replace("_", " ", $attribute)) . " field is required when type is Fresh.");
+                        }
+
+                        if (!preg_match('/^(\+?\d{1,3}[-.\s]?)?\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}$/', $value)) {
+                            $fail("The " . ucwords(str_replace("_", " ", $attribute)) . " field format is invalid.");
+                        }
+
+                        if (strlen($value) < 8) {
+                            $fail("The " . ucwords(str_replace("_", " ", $attribute)) . " must be at least 8 characters.");
+                        }
+
+                        if (strlen($value) > 20) {
+                            $fail("The " . ucwords(str_replace("_", " ", $attribute)) . " must not be greater than 20 characters.");
+                        }
+                    }
                 },
             ],
             'agent_id' => 'nullable|integer',
@@ -312,15 +322,25 @@ class InvoiceController extends Controller
             'customer_contact_name' => 'required_if:type,0|nullable|string|max:255',
             'customer_contact_email' => 'required_if:type,0|nullable|email|max:255',
             'customer_contact_phone' => [
-                'required_if:type,0',
                 'nullable',
-                'string',
-                'regex:/^(\+?\d{1,3}[-.\s]?)?\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}$/',
-                'min:8',
-                'max:20',
                 function ($attribute, $value, $fail) use ($request) {
-                    if ($request->input('type') == 0 && strlen($value) > 20) {
-                        $fail("The " . ucwords(str_replace("_", " ", $attribute)) . " must not be greater than 20 characters when type is Fresh.");                    }
+                    if ($request->input('type') == 0) {
+                        if (empty($value)) {
+                            $fail("The " . ucwords(str_replace("_", " ", $attribute)) . " field is required when type is Fresh.");
+                        }
+
+                        if (!preg_match('/^(\+?\d{1,3}[-.\s]?)?\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}$/', $value)) {
+                            $fail("The " . ucwords(str_replace("_", " ", $attribute)) . " field format is invalid.");
+                        }
+
+                        if (strlen($value) < 8) {
+                            $fail("The " . ucwords(str_replace("_", " ", $attribute)) . " must be at least 8 characters.");
+                        }
+
+                        if (strlen($value) > 20) {
+                            $fail("The " . ucwords(str_replace("_", " ", $attribute)) . " must not be greater than 20 characters.");
+                        }
+                    }
                 },
             ],
             'agent_id' => 'nullable|integer',
