@@ -73,6 +73,7 @@
                                         <tr>
                                             <th></th>
                                             <th class="align-middle text-center text-nowrap">SNO.</th>
+                                            <th class="align-middle text-center text-nowrap">EMP ID</th>
                                             <th class="align-middle text-center text-nowrap">Image</th>
                                             <th class="align-middle text-center text-nowrap">Name</th>
                                             <th class="align-middle text-center text-nowrap">Email</th>
@@ -88,6 +89,7 @@
                                             <tr id="tr-{{$user->id}}">
                                                 <td class="align-middle text-center text-nowrap"></td>
                                                 <td class="align-middle text-center text-nowrap">{{$loop->iteration}}</td>
+                                                <td class="align-middle text-center text-nowrap">{{$user->emp_id}}</td>
                                                 <td class="align-middle text-center text-nowrap">
                                                     @php
                                                         $imageUrl = $user->image

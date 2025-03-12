@@ -156,6 +156,7 @@
         function setDataAndShowEdit(data) {
             $('#manage-form').data('id', data.id);
 
+            $('#emp_id').val(data.emp_id);
             $('#name').val(data.name);
             $('#email').val(data.email);
             $('#designation').val(data.designation);
@@ -196,12 +197,13 @@
                 AjaxRequestPromise(`{{ route("admin.employee.store") }}`, formData, 'POST', {useToastr: true})
                     .then(response => {
                         if (response?.data) {
-                            const {id, image, name, email, designation, team_name, target, status} = response.data;
+                            const {id, emp_id, image, name, email, designation, team_name, target, status} = response.data;
                             const imageUrl = isValidUrl(image) ? image : (image ? `{{ asset('assets/images/employees/') }}/${image}` : '{{ asset("assets/images/no-image-available.png") }} ');
                             const index = table.rows().count() + 1;
                             const columns = `
                                 <td class="align-middle text-center text-nowrap"></td>
                                 <td class="align-middle text-center text-nowrap">${index}</td>
+                                <td class="align-middle text-center text-nowrap">${emp_id}</td>
                                 <td class="align-middle text-center text-nowrap">
                                     ${imageUrl ? `<object data="${imageUrl}" class="avatar avatar-sm me-3" title="${name}">
                                         <img src="${imageUrl}" alt="${name}" class="avatar avatar-sm me-3" title="${name}">
@@ -240,41 +242,46 @@
                 AjaxRequestPromise(url, formData, 'POST', {useToastr: true})
                     .then(response => {
                         if (response?.data) {
-                            const {id, image, name, email, designation, team_name, target, status} = response.data;
+                            const {id, emp_id, image, name, email, designation, team_name, target, status} = response.data;
                             const imageUrl = isValidUrl(image) ? image : (image ? `{{ asset('assets/images/employees/') }}/${image}` : `{{ asset("assets/images/no-image-available.png") }}`);
                             const index = table.row($('#tr-' + id)).index();
                             const rowData = table.row(index).data();
-                            // Column 2: Image
+
+                            /** Column 2: Employee Id */
+                            if (decodeHtml(rowData[2]) !== emp_id) {
+                                table.cell(index, 2).data(emp_id).draw();
+                            }
+                            // Column 3: Image
                             const imageHtml = imageUrl ? `<object data="${imageUrl}" class="avatar avatar-sm me-3" title="${name}"><img src="${imageUrl}" alt="${name}" class="avatar avatar-sm me-3" title="${name}"></object>` : '';
-                            if (decodeHtml(rowData[2]) !== imageHtml) {
-                                table.cell(index, 2).data(imageUrl ? `<object data="${imageUrl}" class="avatar avatar-sm me-3" title="${name}">
+                            if (decodeHtml(rowData[3]) !== imageHtml) {
+                                table.cell(index, 3).data(imageUrl ? `<object data="${imageUrl}" class="avatar avatar-sm me-3" title="${name}">
                                                             <img src="${imageUrl}" alt="${name}" class="avatar avatar-sm me-3" title="${name}">
                                                         </object>` : '').draw();
                             }
-                            /** Column 3: Name */
-                            if (decodeHtml(rowData[3]) !== name) {
-                                table.cell(index, 3).data(name).draw();
+                            /** Column 4: Name */
+                            if (decodeHtml(rowData[4]) !== name) {
+                                table.cell(index, 4).data(name).draw();
                             }
-                            // Column 4: Email
-                            if (decodeHtml(rowData[4]) !== email) {
-                                table.cell(index, 4).data(email).draw();
+                            // Column 5: Email
+                            if (decodeHtml(rowData[5]) !== email) {
+                                table.cell(index, 5).data(email).draw();
                             }
-                            // Column 5: Designation
-                            if (decodeHtml(rowData[5]) !== designation) {
-                                table.cell(index, 5).data(designation).draw();
+                            // Column 6: Designation
+                            if (decodeHtml(rowData[6]) !== designation) {
+                                table.cell(index, 6).data(designation).draw();
                             }
-                            // Column 6: Team
-                            if (decodeHtml(rowData[6]) !== team_name) {
-                                table.cell(index, 6).data(team_name).draw();
+                            // Column 7: Team
+                            if (decodeHtml(rowData[7]) !== team_name) {
+                                table.cell(index, 7).data(team_name).draw();
                             }
-                            // Column 6: Team
-                            if (decodeHtml(rowData[7]) !== target) {
-                                table.cell(index, 7).data(target).draw();
+                            // Column 8: Team
+                            if (decodeHtml(rowData[8]) !== target) {
+                                table.cell(index, 8).data(target).draw();
                             }
-                            // Column 7: Status
+                            // Column 9: Status
                             const statusHtml = `<input type="checkbox" class="status-toggle change-status" data-id="${id}" ${status == 1 ? "checked" : ""} data-bs-toggle="toggle">`;
-                            if (decodeHtml(rowData[8]) !== statusHtml) {
-                                table.cell(index, 8).data(statusHtml).draw();
+                            if (decodeHtml(rowData[9]) !== statusHtml) {
+                                table.cell(index, 9).data(statusHtml).draw();
                             }
                             $('#manage-form')[0].reset();
                             $('#image-display').attr('src', null);
@@ -293,7 +300,7 @@
                 .then(response => {
                     const rowIndex = table.row($('#tr-' + rowId)).index();
                     const statusHtml = `<input type="checkbox" class="status-toggle change-status" data-id="${rowId}" ${status ? "checked" : ""} data-bs-toggle="toggle">`;
-                    table.cell(rowIndex, 8).data(statusHtml).draw();
+                    table.cell(rowIndex, 9).data(statusHtml).draw();
                 })
                 .catch(() => {
                     statusCheckbox.prop('checked', !status);

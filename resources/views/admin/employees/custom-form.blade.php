@@ -38,6 +38,13 @@
             <!-- Form Body -->
             <div class="form-body">
                 <div class="form-group mb-3">
+                    <label for="emp_id" class="form-label">Employee Id</label>
+                    <input type="text" class="form-control" id="emp_id" name="emp_id" placeholder="Enter Employee Id">
+                    @error('emp_id')
+                    <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
+                <div class="form-group mb-3">
                     <label for="name" class="form-label">Name</label>
                     <input type="text" class="form-control" id="name" name="name" placeholder="Enter name" required>
                     @error('name')

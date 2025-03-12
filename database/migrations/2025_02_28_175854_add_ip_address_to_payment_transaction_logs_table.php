@@ -24,7 +24,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('payment_transaction_logs', function (Blueprint $table) {
-            if (Schema::hasColumn('payments', 'ip_address')) {
+            if (Schema::hasColumn('payment_transaction_logs', 'ip_address')) {
                 $table->dropColumn('ip_address');
             }
         });
