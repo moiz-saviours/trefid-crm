@@ -264,6 +264,11 @@
                     if (type == 0) {
                         $('#upsale-customer-contact-fields').fadeOut(() => {
                             $('#fresh-customer-contact-fields').fadeIn();
+                            $('#customer_contact_name, #customer_contact_email, #customer_contact_phone').each(function () {
+                                if ($(this).val().trim() === "") {
+                                    $(this).prop('readonly', false);
+                                }
+                            });
                             $('#customer_contact_name, #customer_contact_email, #customer_contact_phone').prop('required', true);
                             $('#cus_contact_key').prop('required', false);
                         });
