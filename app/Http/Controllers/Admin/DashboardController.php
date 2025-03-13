@@ -260,12 +260,6 @@ class DashboardController extends Controller
                 ->sum('total_amount');
             $chargeBackRatio = $totalSales > 0 ? (($chargeBack / $totalSales) * 100) . ' ' : '0 ';
             $netSales = $totalSales - ($refunded + $chargeBack);
-            $totalSalesFormatted = number_format($totalSales);
-            $mtdTotalSalesFormatted = number_format($mtdTotalSales);
-            $refundedFormatted = number_format($refunded);
-            $chargeBackFormatted = number_format($chargeBack);
-            $netSalesFormatted = number_format($netSales, 2);
-            $lapsePercentageFormatted = number_format($lapsePercentage, 2);
             $range = $this->getMonthsBetweenDates($startDate, $endDate);
             $teams = Team::with('targets')->where('status', 1)
                 ->when($teamKey != 'all', function ($query) use ($teamKey) {
@@ -302,14 +296,14 @@ class DashboardController extends Controller
             }
             $total_achieved_percentage = ($total_target > 0) ? round(($total_target_achieved / $total_target) * 100, 2) : 0;
             return response()->json(['success' => true, 'message' => 'Fetched total sales successfully.',
-                'total_sales' => $totalSalesFormatted,
-                'mtd_total_sales' => $mtdTotalSalesFormatted,
-                'net_sales' => $netSalesFormatted,
-                'refunded' => $refundedFormatted,
-                'charge_back' => $chargeBackFormatted,
+                'total_sales' => $totalSales,
+                'mtd_total_sales' => $mtdTotalSales,
+                'net_sales' => $netSales,
+                'refunded' => $refunded,
+                'charge_back' => $chargeBack,
                 'charge_back_ratio' => $chargeBackRatio,
                 'reversal' => $reversal ?? 0,
-                'lapse_percentage' => $lapsePercentageFormatted,
+                'lapse_percentage' => $lapsePercentage,
                 'employees' => $employees,
                 'teams' => $teams,
                 'team_targets' => $team_targets,

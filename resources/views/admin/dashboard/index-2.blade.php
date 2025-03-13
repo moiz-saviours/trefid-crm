@@ -754,7 +754,7 @@
                         }, 'GET')
                             .then(response => {
                                 if (response.success) {
-                                    animateNumericValue($('#mtd-sales'), 0, parseFloat(response.mtd_total_sales.replace('$', '')), 1000, '$');
+                                    animateNumericValue($('#mtd-sales'), 0, parseFloat(response.mtd_total_sales), 1000, '$');
                                     const lapsePercentage = parseFloat(response.lapse_percentage);
                                     animateNumericValue($('#lapse-percentage'), 0, lapsePercentage, 1000, '', '%', 2);
                                     const lapseIcon = $('#lapse-icon');
