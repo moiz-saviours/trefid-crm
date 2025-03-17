@@ -79,7 +79,7 @@
                 order: [[1, 'desc']],
                 responsive: false,
                 scrollX: true,
-                scrollY:  ($(window).height() - 350),
+                scrollY: ($(window).height() - 350),
                 scrollCollapse: true,
                 paging: true,
                 columnDefs: [
@@ -154,32 +154,50 @@
         updateImage();
 
         function setDataAndShowEdit(data) {
-            $('#manage-form').data('id', data.id);
+            let user = data.user;
+            let teams = data.teams;
+            $('#manage-form').data('id', user.id);
 
-            $('#emp_id').val(data.emp_id);
-            $('#name').val(data.name);
-            $('#email').val(data.email);
-            $('#designation').val(data.designation);
-            $('#gender').val(data.gender);
-            $('#phone_number').val(data.phone_number);
-            $('#target').val(data.target);
-            $('#address').val(data.address);
-            $('#status').val(data.status);
-            if (data.image) {
-                var isValidUrl = data.image.match(/^(https?:\/\/|\/|\.\/)/);
+            $('#emp_id').val(user.emp_id);
+            $('#name').val(user.name);
+            $('#pseudo_name').val(user.pseudo_name);
+            $('#email').val(user.email);
+            $('#pseudo_email').val(user.pseudo_email);
+            $('#designation').val(user.designation);
+            $('#gender').val(user.gender);
+            $('#phone_number').val(user.phone_number);
+            $('#pseudo_phone').val(user.pseudo_phone);
+            $('#address').val(user.address);
+            $('#city').val(user.city);
+            $('#state').val(user.state);
+            $('#country').val(user.country);
+            $('#dob').val(user.dob);
+            $('#date_of_joining').val(user.date_of_joining);
+            $('#postal_code').val(user.postal_code);
+            $('#target').val(user.target);
+            $('#status').val(user.status);
+            if (user.image) {
+                var isValidUrl = user.image.match(/^(https?:\/\/|\/|\.\/)/);
                 if (isValidUrl) {
-                    $imageUrl.val(data.image);
-                    $defaultImage = data.image;
-                    updateImage(data.image)
+                    $imageUrl.val(user.image);
+                    $defaultImage = user.image;
+                    updateImage(user.image)
                 } else {
-                    $imageUrl.val(`{{asset('assets/images/employees/')}}/` + data.image);
-                    $defaultImage = `{{asset('assets/images/employees/')}}/` + data.image;
-                    updateImage(`{{asset('assets/images/employees/')}}/` + data.image)
+                    $imageUrl.val(`{{asset('assets/images/employees/')}}/` + user.image);
+                    $defaultImage = `{{asset('assets/images/employees/')}}/` + user.image;
+                    updateImage(`{{asset('assets/images/employees/')}}/` + user.image)
                 }
-                $imageDisplay.attr('alt', data.name);
+                $imageDisplay.attr('alt', user.name);
                 $imageDiv.show();
             }
-            $('#manage-form').attr('action', `{{route('admin.employee.update')}}/` + data.id);
+            let $teams = $('#team_key');
+            $teams.empty().append('<option value="" selected disabled>Select Team</option>');
+            teams.forEach(team => {
+                $teams.append(`<option value="${team.team_key}">${team.name}</option>`);
+            });
+            $teams.val(user.team_key).trigger('change');
+
+            $('#manage-form').attr('action', `{{route('admin.employee.update')}}/` + user.id);
             $('#formContainer').addClass('open')
         }
         const decodeHtml = (html) => {
@@ -197,7 +215,17 @@
                 AjaxRequestPromise(`{{ route("admin.employee.store") }}`, formData, 'POST', {useToastr: true})
                     .then(response => {
                         if (response?.data) {
-                            const {id, emp_id, image, name, email, designation, team_name, target, status} = response.data;
+                            const {
+                                id,
+                                emp_id,
+                                image,
+                                name,
+                                email,
+                                designation,
+                                team_name,
+                                target,
+                                status
+                            } = response.data;
                             const imageUrl = isValidUrl(image) ? image : (image ? `{{ asset('assets/images/employees/') }}/${image}` : '{{ asset("assets/images/no-image-available.png") }} ');
                             const index = table.rows().count() + 1;
                             const columns = `
@@ -212,9 +240,9 @@
                                 </td>
                                 <td class="align-middle text-center text-nowrap">${name}</td>
                                 <td class="align-middle text-center text-nowrap">${email}</td>
-                                <td class="align-middle text-center text-nowrap">${designation??""}</td>
-                                <td class="align-middle text-center text-nowrap">${team_name??""}</td>
-                                <td class="align-middle text-center text-nowrap">${target??""}</td>
+                                <td class="align-middle text-center text-nowrap">${designation ?? ""}</td>
+                                <td class="align-middle text-center text-nowrap">${team_name ?? ""}</td>
+                                <td class="align-middle text-center text-nowrap">${target ?? ""}</td>
                                 <td class="align-middle text-center text-nowrap">
                                     <input type="checkbox" class="status-toggle change-status" data-id="${id}" ${status == 1 ? 'checked' : ''} data-bs-toggle="toggle">
                                 </td>
@@ -242,7 +270,17 @@
                 AjaxRequestPromise(url, formData, 'POST', {useToastr: true})
                     .then(response => {
                         if (response?.data) {
-                            const {id, emp_id, image, name, email, designation, team_name, target, status} = response.data;
+                            const {
+                                id,
+                                emp_id,
+                                image,
+                                name,
+                                email,
+                                designation,
+                                team_name,
+                                target,
+                                status
+                            } = response.data;
                             const imageUrl = isValidUrl(image) ? image : (image ? `{{ asset('assets/images/employees/') }}/${image}` : `{{ asset("assets/images/no-image-available.png") }}`);
                             const index = table.row($('#tr-' + id)).index();
                             const rowData = table.row(index).data();
