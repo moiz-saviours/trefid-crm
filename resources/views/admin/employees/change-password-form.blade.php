@@ -40,8 +40,8 @@
 <div class="custom-form">
     <form id="manage-form-2" class="manage-form">
         <div class="form-container" id="formContainerChangePassword">
-            <label for="crsf_token" class="form-label d-none">Crsf Token</label>
-            <input type="text" id="crsf_token" name="crsf_token" value="" style="opacity:0;position:absolute;"/>
+            <label for="crsf_token_1" class="form-label d-none">Crsf Token</label>
+            <input type="text" id="crsf_token_1" name="crsf_token" value="" style="opacity:0;position:absolute;"/>
             <!-- Form Header -->
             <div class="form-header fh-1">
                 <span id="custom-form-heading">Manage Password</span>
