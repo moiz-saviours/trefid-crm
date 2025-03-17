@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\AssignTeamMember;
+use App\Models\Team;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
@@ -34,18 +36,23 @@ class EmployeeController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'team_key' => 'nullable|max:255',
+            'team_key' => 'nullable|integer|exists:teams,team_key',
             'emp_id' => 'required|string|max:255',
             'name' => 'required|string|max:255',
+            'pseudo_name' => 'nullable|string|max:255',
             'email' => 'required|email|max:255|unique:users,email',
+            'pseudo_email' => 'nullable|email|max:255|unique:users,email',
             'designation' => 'nullable|string|max:255',
             'gender' => 'nullable|string|max:10',
             'phone_number' => 'nullable|string',
+            'pseudo_phone' => 'nullable|string',
             'address' => 'nullable|string|max:255',
             'city' => 'nullable|string|max:255',
+            'state' => 'nullable|string|max:255',
             'country' => 'nullable|string|max:255',
             'postal_code' => 'nullable|string|max:10',
             'dob' => 'nullable|date',
+            'date_of_joining' => 'nullable|date',
             'about' => 'nullable|string',
             'target' => 'nullable|integer',
             'status' => 'required|in:0,1',
@@ -53,29 +60,25 @@ class EmployeeController extends Controller
             'password' => 'nullable|string|max:255',
 //            'phone_number' => 'nullable|regex:/^(\+?\d{1,3})[\d\s().-]+$/|min:8|max:20'
         ]);
-
         try {
 
             $user = new User($request->only([
-                'team_key','emp_id', 'name', 'email', 'designation', 'gender',
-                'phone_number', 'address', 'city', 'country',
-                'postal_code', 'dob', 'about', 'target', 'status'
+                'team_key', 'emp_id', 'name', 'pseudo_name', 'email', 'pseudo_email', 'designation', 'gender',
+                'phone_number', 'pseudo_phone', 'address', 'city', 'state', 'country',
+                'postal_code', 'dob', 'date_of_joining', 'about', 'target', 'status'
             ]));
-
             if ($request->hasFile('image')) {
                 $originalFileName = time() . '_' . $request->file('image')->getClientOriginalName();
                 $publicPath = public_path('assets/images/employees');
                 $request->file('image')->move($publicPath, $originalFileName);
                 $user->image = $originalFileName;
             }
-
             if ($request->has('password') && !empty($request->input('password'))) {
                 $user->password = Hash::make($request->input('password'));
             } else {
                 $user->password = Hash::make(12345678);
             }
             $user->save();
-
             return response()->json(['data' => $user, 'message' => 'Record created successfully.']);
 
         } catch (\Exception $e) {
@@ -96,10 +99,13 @@ class EmployeeController extends Controller
      */
     public function edit(Request $request, User $user)
     {
+        $teams = Team::whereStatus(1)->get();
+        $firstTeam = $user->teams->first();
+        $user->team_key = $firstTeam ? $firstTeam->team_key : null;
         if ($request->ajax()) {
-            return response()->json($user);
+            return response()->json(['user' => $user, 'teams' => $teams]);
         }
-        return view('admin.employees.edit', compact('user'));
+        return view('admin.employees.edit', compact('user', 'teams'));
     }
 
     /**
@@ -108,32 +114,35 @@ class EmployeeController extends Controller
     public function update(Request $request, User $user)
     {
         $request->validate([
+            'team_key' => 'nullable|integer|exists:teams,team_key',
             'emp_id' => 'nullable|string|max:255',
             'name' => 'required|string|max:255',
+            'pseudo_name' => 'nullable|string|max:255',
             'email' => 'required|email|max:255|unique:users,email,' . $user->id,
+            'pseudo_email' => 'nullable|email|max:255|unique:users,email',
             'designation' => 'nullable|string|max:255',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'target' => 'nullable|integer',
             'status' => 'required|in:0,1',
             'password' => 'nullable|string|max:255',
-
             'gender' => 'nullable|string|max:10',
             'phone_number' => 'nullable|string',
+            'pseudo_phone' => 'nullable|string',
             'address' => 'nullable|string|max:255',
             'city' => 'nullable|string|max:255',
+            'state' => 'nullable|string|max:255',
             'country' => 'nullable|string|max:255',
             'postal_code' => 'nullable|string|max:10',
             'dob' => 'nullable|date',
+            'date_of_joining' => 'nullable|date',
             'about' => 'nullable|string',
 //            'phone_number' => 'nullable|regex:/^(\+?\d{1,3})[\d\s().-]+$/|min:8|max:20'
         ]);
-
         $user->fill($request->only([
-            'team_key', 'emp_id', 'name', 'email', 'designation', 'gender',
-            'phone_number', 'address', 'city', 'country',
-            'postal_code', 'dob', 'about', 'target', 'status'
+            'team_key', 'emp_id', 'name', 'pseudo_name', 'email', 'pseudo_email', 'designation', 'gender',
+            'phone_number', 'pseudo_phone', 'address', 'city', 'state', 'country',
+            'postal_code', 'dob', 'date_of_joining', 'about', 'target', 'status'
         ]));
-
         try {
 
             if ($request->hasFile('image')) {
@@ -151,14 +160,14 @@ class EmployeeController extends Controller
                 $request->file('image')->move($publicPath, $originalFileName);
                 $user->image = $originalFileName;
             }
-
-
             if ($request->has('password') && !empty($request->input('password'))) {
                 $user->password = Hash::make($request->input('password'));
             }
             $user->save();
+            if ($request->has('team_key') && !empty($request->input('team_key'))) {
+                $user->teams()->sync($request->input('team_key'));
+            }
             $teamNames = $user->teams->pluck('name')->map('htmlspecialchars_decode')->implode(', ');
-
             return response()->json(['data' => array_merge($user->toArray(), ['team_name' => $teamNames]), 'message' => 'Record updated successfully.']);
         } catch (\Exception $e) {
             return response()->json(['error' => ' Internal Server Error', 'message' => $e->getMessage(), 'line' => $e->getLine()], 500);
