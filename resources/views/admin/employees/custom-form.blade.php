@@ -38,6 +38,15 @@
             <!-- Form Body -->
             <div class="form-body">
                 <div class="form-group mb-3">
+                    <label for="team_key" class="form-label">Select Team</label>
+                    <select class="form-control" id="team_key" name="team_key">
+                        <option value="" disabled selected>Select Team</option>
+                    </select>
+                    @error('teams')
+                    <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
+                <div class="form-group mb-3">
                     <label for="emp_id" class="form-label">Employee Id</label>
                     <input type="text" class="form-control" id="emp_id" name="emp_id" placeholder="Enter Employee Id">
                     @error('emp_id')
@@ -52,8 +61,24 @@
                     @enderror
                 </div>
                 <div class="form-group mb-3">
+                    <label for="pseudo_name" class="form-label">Pseudo Name</label>
+                    <input type="text" class="form-control" id="pseudo_name" name="pseudo_name"
+                           placeholder="Enter Pseudo name">
+                    @error('pseudo_name')
+                    <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
+                <div class="form-group mb-3">
                     <label for="email" class="form-label">Email</label>
                     <input type="email" class="form-control" id="email" name="email" placeholder="Enter email" required>
+                    @error('email')
+                    <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
+                <div class="form-group mb-3">
+                    <label for="pseudo_email" class="form-label">Pseudo Email</label>
+                    <input type="email" class="form-control" id="pseudo_email" name="pseudo_email"
+                           placeholder="Enter Pseudo Email">
                     @error('email')
                     <span class="text-danger">{{ $message }}</span>
                     @enderror
@@ -85,7 +110,14 @@
                     <span class="text-danger">{{ $message }}</span>
                     @enderror
                 </div>
-
+                <div class="form-group mb-3">
+                    <label for="pseudo_phone" class="form-label">Pseudo Phone Number</label>
+                    <input type="text" class="form-control" id="pseudo_phone" name="pseudo_phone"
+                           placeholder="e.g. +1234567890">
+                    @error('pseudo_phone')
+                    <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
                 <div class="form-group mb-3">
                     <label for="image" class="form-label d-block">Profile Image (Optional)</label>
 
@@ -123,15 +155,6 @@
                         </div>
                     </div>
                 </div>
-
-                <div class="form-group mb-3">
-                    <label for="target" class="form-label">Target</label>
-                    <input type="number" class="form-control" id="target" name="target" placeholder="25000"/>
-                    @error('target')
-                    <span class="text-danger">{{ $message }}</span>
-                    @enderror
-                </div>
-
                 <div class="form-group mb-3">
                     <label for="address" class="form-label">Address</label>
                     <textarea class="form-control" id="address" name="address" rows="3"></textarea>
@@ -139,7 +162,57 @@
                     <span class="text-danger">{{ $message }}</span>
                     @enderror
                 </div>
-
+                <div class="form-group mb-3">
+                    <label for="city" class="form-label">City</label>
+                    <input type="text" class="form-control" id="city" name="city" placeholder="Enter City"/>
+                    @error('city')
+                    <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
+                <div class="form-group mb-3">
+                    <label for="state" class="form-label">State</label>
+                    <input type="text" class="form-control" id="state" name="state" placeholder="Enter State"/>
+                    @error('state')
+                    <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
+                <div class="form-group mb-3">
+                    <label for="country" class="form-label">Country</label>
+                    <input type="text" class="form-control" id="country" name="country" placeholder="Enter Country"/>
+                    @error('country')
+                    <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
+                <div class="form-group mb-3">
+                    <label for="postal_code" class="form-label">Postal Code</label>
+                    <input type="text" class="form-control" id="postal_code" name="postal_code"
+                           placeholder="Enter Postal Code"/>
+                    @error('postal_code')
+                    <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
+                <div class="form-group mb-3">
+                    <label for="dob" class="form-label">Date of Birth</label>
+                    <input type="date" class="form-control" id="dob" name="dob" placeholder="Enter Date of Birth"/>
+                    @error('dob')
+                    <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
+                <div class="form-group mb-3">
+                    <label for="date_of_joining" class="form-label">Date of Joining</label>
+                    <input type="date" class="form-control" id="date_of_joining" name="date_of_joining"
+                           placeholder="Enter Date of Joining"/>
+                    @error('date_of_joining')
+                    <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
+                <div class="form-group mb-3">
+                    <label for="target" class="form-label">Target</label>
+                    <input type="number" class="form-control" id="target" name="target" placeholder="25000" min="1"/>
+                    @error('target')
+                    <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
                 <div class="form-group mb-3">
                     <label for="createPassword" class="form-label">Password</label>
                     <div class="d-flex align-items-center">
