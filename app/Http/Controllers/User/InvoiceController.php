@@ -22,7 +22,6 @@ class InvoiceController extends Controller
         $user = Auth::user();
         $teams = $user->teams()->with('brands')->get();
         $brands = $teams->flatMap->brands;
-        $customer_contacts = CustomerContact::where('status', 1)->get();
         $teamKeys = $teams->pluck('team_key')->toArray();
         $users = User::whereHas('teams', function ($query) use ($teamKeys) {
             $query->whereIn('teams.team_key', $teamKeys);
@@ -32,6 +31,7 @@ class InvoiceController extends Controller
                 $query->where('status', 1);
             }])
             ->get()->pluck('brands.*.brand_key')->flatten()->unique();
+        $customer_contacts = CustomerContact::whereIn('brand_key', $brandKeys)->where('status', 1)->get();
         $all_invoices = Invoice::whereIn('brand_key', $brandKeys)
             ->whereIn('team_key', $teamKeys)
             ->orWhere(function ($query) use ($user) {
