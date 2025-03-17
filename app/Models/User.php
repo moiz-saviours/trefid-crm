@@ -25,22 +25,28 @@ class User extends Authenticatable
     protected $fillable = [
         'emp_id',
         'name',
+        'pseudo_name',
         'email',
+        'pseudo_email',
         'password',
-        'last_seen',
         'team_key',
         'designation',
         'gender',
         'phone_number',
+        'pseudo_phone',
         'address',
         'city',
+        'state',
         'country',
         'postal_code',
         'dob',
+        'date_of_joining',
         'about',
         'status',
         'target',
         'image',
+        'last_seen',
+        'last_ip_address',
     ];
     /**
      * The attributes that should be hidden for serialization.
@@ -69,6 +75,7 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Team::class, AssignTeamMember::class, 'user_id', 'team_key', 'id', 'team_key')->withTimestamps();
     }
+
     public function invoices()
     {
         return $this->morphMany(Invoice::class, 'agent');
