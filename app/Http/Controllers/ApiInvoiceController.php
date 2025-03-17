@@ -29,6 +29,17 @@ class ApiInvoiceController extends Controller
             $brand = optional($invoice->brand);
             $customer = optional($invoice->customer_contact);
             $agent = optional($invoice->agent);
+
+            isset($invoice->invoice_merchants) ? $invoice->invoice_merchants->sortBy('merchant_type')->pluck('merchant_type')->toArray() : [];
+            $payment_methods = [];
+            if (isset($invoice->invoice_merchants)) {
+                foreach ($invoice->invoice_merchants->sortBy('merchant_type') as $invoice_merchant) {
+                    $merchant = $invoice_merchant->merchant;
+                    if ($merchant && $merchant->status == 'active' && $merchant->limit >= $invoice->total_amount && $merchant->hasSufficientLimitAndCapacity($merchant->id, $invoice->total_amount)->exists()) {
+                        $payment_methods[] = $invoice_merchant->merchant_type;
+                    }
+                }
+            }
             $data = [
                 "id" => $invoice->id,
                 "invoice_key" => $invoice->invoice_key,
@@ -66,7 +77,7 @@ class ApiInvoiceController extends Controller
                     "name" => $agent->name,
                     "email" => $agent->email,
                 ],
-                'payment_methods' => isset($invoice->invoice_merchants) ? $invoice->invoice_merchants->sortBy('merchant_type')->pluck('merchant_type')->toArray() : [],
+                'payment_methods' => $payment_methods,
             ];
             return response()->json(['success' => true, 'invoice' => $data, 'current_date' => Carbon::now()->format('jS F Y')]);
         } catch (ValidationException $exception) {
