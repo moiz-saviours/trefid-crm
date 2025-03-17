@@ -271,7 +271,8 @@ $first_merchant = $invoiceDetails['invoice']['payment_methods'][0] ?? "";
                     </div>
                 </div>
             </div>
-            <div class="col-lg-6 col-12 <?= $invoiceDetails['invoice']['status'] == 1 ? 'd-none' : '' ?>">
+            <div
+                class="col-lg-6 col-12 <?= $invoiceDetails['invoice']['status'] == 1 ? 'd-none' : '' ?> <?= isset($invoiceDetails['invoice']['payment_methods']) && count($invoiceDetails['invoice']['payment_methods']) > 0 ? '' : 'd-none' ?>">
                 <div class="box-shade-2">
                     <div class="row">
                         <div class="col-md-3 side-bar-1">
@@ -329,7 +330,8 @@ $first_merchant = $invoiceDetails['invoice']['payment_methods'][0] ?? "";
                                     <div class="form-txt" id="form-txt-1">
                                         <h1>Card Details</h1>
                                     </div>
-                                    <form id="paymentForm-credit_card" class="paymentForm" action="{{route('api.authorize.process-payment')}}">
+                                    <form id="paymentForm-credit_card" class="paymentForm"
+                                          action="{{route('api.authorize.process-payment')}}">
                                         @csrf
                                         <input type="hidden" name="invoice_number"
                                                value="{{$invoiceData['invoice_key']}}">
@@ -515,7 +517,8 @@ $first_merchant = $invoiceDetails['invoice']['payment_methods'][0] ?? "";
                                     <div class="form-txt" id="">
                                         <h1>Card Details</h1>
                                     </div>
-                                    <form id="paymentForm-edp" class="paymentForm" action="{{route('api.secure.process-payment')}}">
+                                    <form id="paymentForm-edp" class="paymentForm"
+                                          action="{{route('api.secure.process-payment')}}">
                                         @csrf
                                         <input type="hidden" name="invoice_number"
                                                value="{{$invoiceData['invoice_key']}}">
@@ -678,87 +681,87 @@ $first_merchant = $invoiceDetails['invoice']['payment_methods'][0] ?? "";
                                             </div>
                                         </div>
                                         <!-- Shipping Information -->
-{{--                                        <div class="shiping-form mt-4">--}}
-{{--                                            <input type="checkbox" id="shipping-edp" name="shipping" checked/>--}}
-{{--                                            <label for="shipping-edp"><p>Shipping information is the same as--}}
-{{--                                                    billing</p></label>--}}
-{{--                                        </div>--}}
+                                        {{--                                        <div class="shiping-form mt-4">--}}
+                                        {{--                                            <input type="checkbox" id="shipping-edp" name="shipping" checked/>--}}
+                                        {{--                                            <label for="shipping-edp"><p>Shipping information is the same as--}}
+                                        {{--                                                    billing</p></label>--}}
+                                        {{--                                        </div>--}}
 
                                         <!-- Shipping Address Fields (Hidden by Default) -->
-{{--                                        <div class="shipping-fields" style="display: none;">--}}
-{{--                                            <div class="form-row">--}}
-{{--                                                <div class="col-md-6">--}}
-{{--                                                    <div class="form-group mb-2">--}}
-{{--                                                        <label for="shippingName-edp">Shipping First Name</label>--}}
-{{--                                                        <input type="text" class="form-control form-input-fields"--}}
-{{--                                                               id="shippingName-edp"--}}
-{{--                                                               placeholder="Shipping First Name">--}}
-{{--                                                    </div>--}}
-{{--                                                </div>--}}
-{{--                                                <div class="col-md-6">--}}
-{{--                                                    <div class="form-group mb-2">--}}
-{{--                                                        <label for="shippinglastName-edp">Shipping Last Name</label>--}}
-{{--                                                        <input type="text" class="form-control form-input-fields"--}}
-{{--                                                               id="shippinglastName-edp"--}}
-{{--                                                               placeholder="Shipping Last Name">--}}
-{{--                                                    </div>--}}
-{{--                                                </div>--}}
-{{--                                                <div class="col-md-6">--}}
-{{--                                                    <div class="form-group mb-2">--}}
-{{--                                                        <label for="shippingNumber-edp">Shipping Phone--}}
-{{--                                                            Number</label>--}}
-{{--                                                        <input type="number" class="form-control form-input-fields"--}}
-{{--                                                               id="shippingNumber-edp"--}}
-{{--                                                               placeholder="Shipping Phone Number">--}}
-{{--                                                    </div>--}}
-{{--                                                </div>--}}
-{{--                                                <div class="col-md-6">--}}
-{{--                                                    <div class="form-group mb-2">--}}
-{{--                                                        <label for="shippingAddress-edp">Shipping Street--}}
-{{--                                                            Address</label>--}}
-{{--                                                        <input type="text" class="form-control form-input-fields"--}}
-{{--                                                               id="shippingAddress-edp"--}}
-{{--                                                               placeholder="Shipping Street Address">--}}
-{{--                                                    </div>--}}
-{{--                                                </div>--}}
-{{--                                            </div>--}}
-{{--                                            <div class="form-row">--}}
-{{--                                                <div class="col-md-6">--}}
-{{--                                                    <div class="form-group mb-2">--}}
-{{--                                                        <label for="shippingCity-edp">Shipping City</label>--}}
-{{--                                                        <input type="text" class="form-control form-input-fields"--}}
-{{--                                                               id="shippingCity-edp" placeholder="Shipping City">--}}
-{{--                                                    </div>--}}
-{{--                                                </div>--}}
-{{--                                                <div class="col-md-6">--}}
-{{--                                                    <div class="form-group mb-2">--}}
-{{--                                                        <label for="shippingState-edp">Shipping State</label>--}}
-{{--                                                        <input type="text" class="form-control form-input-fields"--}}
-{{--                                                               id="shippingState-edp" placeholder="Shipping State">--}}
-{{--                                                    </div>--}}
-{{--                                                </div>--}}
-{{--                                                <div class="col-md-6">--}}
-{{--                                                    <div class="form-group mb-2">--}}
-{{--                                                        <label for="shippingCode-edp">Shipping Postal Code</label>--}}
-{{--                                                        <input type="number" class="form-control form-input-fields"--}}
-{{--                                                               id="shippingCode-edp"--}}
-{{--                                                               placeholder="Shipping Postal Code">--}}
-{{--                                                    </div>--}}
-{{--                                                </div>--}}
-{{--                                                <div class="col-md-6">--}}
-{{--                                                    <div class="form-group mb-2">--}}
-{{--                                                        <label for="shippingStatetwo-edp">Country</label>--}}
-{{--                                                        <select id="shippingStatetwo-edp"--}}
-{{--                                                                class="form-control form-input-fields">--}}
-{{--                                                            @foreach ($countries as $code => $country)--}}
-{{--                                                                <option--}}
-{{--                                                                    value="<?= htmlspecialchars($code) ?>"><?= htmlspecialchars($country) ?></option>--}}
-{{--                                                            @endforeach--}}
-{{--                                                        </select>--}}
-{{--                                                    </div>--}}
-{{--                                                </div>--}}
-{{--                                            </div>--}}
-{{--                                        </div>--}}
+                                        {{--                                        <div class="shipping-fields" style="display: none;">--}}
+                                        {{--                                            <div class="form-row">--}}
+                                        {{--                                                <div class="col-md-6">--}}
+                                        {{--                                                    <div class="form-group mb-2">--}}
+                                        {{--                                                        <label for="shippingName-edp">Shipping First Name</label>--}}
+                                        {{--                                                        <input type="text" class="form-control form-input-fields"--}}
+                                        {{--                                                               id="shippingName-edp"--}}
+                                        {{--                                                               placeholder="Shipping First Name">--}}
+                                        {{--                                                    </div>--}}
+                                        {{--                                                </div>--}}
+                                        {{--                                                <div class="col-md-6">--}}
+                                        {{--                                                    <div class="form-group mb-2">--}}
+                                        {{--                                                        <label for="shippinglastName-edp">Shipping Last Name</label>--}}
+                                        {{--                                                        <input type="text" class="form-control form-input-fields"--}}
+                                        {{--                                                               id="shippinglastName-edp"--}}
+                                        {{--                                                               placeholder="Shipping Last Name">--}}
+                                        {{--                                                    </div>--}}
+                                        {{--                                                </div>--}}
+                                        {{--                                                <div class="col-md-6">--}}
+                                        {{--                                                    <div class="form-group mb-2">--}}
+                                        {{--                                                        <label for="shippingNumber-edp">Shipping Phone--}}
+                                        {{--                                                            Number</label>--}}
+                                        {{--                                                        <input type="number" class="form-control form-input-fields"--}}
+                                        {{--                                                               id="shippingNumber-edp"--}}
+                                        {{--                                                               placeholder="Shipping Phone Number">--}}
+                                        {{--                                                    </div>--}}
+                                        {{--                                                </div>--}}
+                                        {{--                                                <div class="col-md-6">--}}
+                                        {{--                                                    <div class="form-group mb-2">--}}
+                                        {{--                                                        <label for="shippingAddress-edp">Shipping Street--}}
+                                        {{--                                                            Address</label>--}}
+                                        {{--                                                        <input type="text" class="form-control form-input-fields"--}}
+                                        {{--                                                               id="shippingAddress-edp"--}}
+                                        {{--                                                               placeholder="Shipping Street Address">--}}
+                                        {{--                                                    </div>--}}
+                                        {{--                                                </div>--}}
+                                        {{--                                            </div>--}}
+                                        {{--                                            <div class="form-row">--}}
+                                        {{--                                                <div class="col-md-6">--}}
+                                        {{--                                                    <div class="form-group mb-2">--}}
+                                        {{--                                                        <label for="shippingCity-edp">Shipping City</label>--}}
+                                        {{--                                                        <input type="text" class="form-control form-input-fields"--}}
+                                        {{--                                                               id="shippingCity-edp" placeholder="Shipping City">--}}
+                                        {{--                                                    </div>--}}
+                                        {{--                                                </div>--}}
+                                        {{--                                                <div class="col-md-6">--}}
+                                        {{--                                                    <div class="form-group mb-2">--}}
+                                        {{--                                                        <label for="shippingState-edp">Shipping State</label>--}}
+                                        {{--                                                        <input type="text" class="form-control form-input-fields"--}}
+                                        {{--                                                               id="shippingState-edp" placeholder="Shipping State">--}}
+                                        {{--                                                    </div>--}}
+                                        {{--                                                </div>--}}
+                                        {{--                                                <div class="col-md-6">--}}
+                                        {{--                                                    <div class="form-group mb-2">--}}
+                                        {{--                                                        <label for="shippingCode-edp">Shipping Postal Code</label>--}}
+                                        {{--                                                        <input type="number" class="form-control form-input-fields"--}}
+                                        {{--                                                               id="shippingCode-edp"--}}
+                                        {{--                                                               placeholder="Shipping Postal Code">--}}
+                                        {{--                                                    </div>--}}
+                                        {{--                                                </div>--}}
+                                        {{--                                                <div class="col-md-6">--}}
+                                        {{--                                                    <div class="form-group mb-2">--}}
+                                        {{--                                                        <label for="shippingStatetwo-edp">Country</label>--}}
+                                        {{--                                                        <select id="shippingStatetwo-edp"--}}
+                                        {{--                                                                class="form-control form-input-fields">--}}
+                                        {{--                                                            @foreach ($countries as $code => $country)--}}
+                                        {{--                                                                <option--}}
+                                        {{--                                                                    value="<?= htmlspecialchars($code) ?>"><?= htmlspecialchars($country) ?></option>--}}
+                                        {{--                                                            @endforeach--}}
+                                        {{--                                                        </select>--}}
+                                        {{--                                                    </div>--}}
+                                        {{--                                                </div>--}}
+                                        {{--                                            </div>--}}
+                                        {{--                                        </div>--}}
 
                                         <!-- Submit Button -->
                                         <div class="payment-btn-wrapper">
@@ -793,6 +796,16 @@ $first_merchant = $invoiceDetails['invoice']['payment_methods'][0] ?? "";
                 </div>
             </div>
         </div>
+        @if(isset($invoiceDetails['invoice']['payment_methods']) && count($invoiceDetails['invoice']['payment_methods']) > 0)
+            <!-- Payment methods are available -->
+        @else
+            <div class="d-flex justify-content-center mt-2">
+                <div class="text-center">
+                    <p>Please reach out to our sales support team for assistance, as no payment gateway is currently
+                        available.</p>
+                </div>
+            </div>
+        @endif
     </div>
 </section>
 <section class="thanks">
@@ -890,8 +903,98 @@ $first_merchant = $invoiceDetails['invoice']['payment_methods'][0] ?? "";
 
     @php session()->forget('errors'); @endphp
     @endif
-
 </script>
 <script src="{{asset('assets/js/checkout.js')}}"></script>
 </body>
 </html>
+{{--<!DOCTYPE html>--}}
+{{--<html lang="en">--}}
+{{--<head>--}}
+{{--    <meta charset="UTF-8">--}}
+{{--    <meta name="viewport" content="width=device-width, initial-scale=1.0">--}}
+{{--    <title>Stripe Payment</title>--}}
+{{--    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">--}}
+{{--    <script src="https://js.stripe.com/v3/"></script>--}}
+{{--</head>--}}
+{{--<body>--}}
+
+{{--<div class="container mt-5">--}}
+{{--    <div class="row">--}}
+{{--        <div class="col-md-4">--}}
+{{--            <ul class="nav flex-column nav-pills">--}}
+{{--                <li class="nav-item">--}}
+{{--                    <a class="nav-link active" data-bs-toggle="pill" href="#credit-card">Credit Card</a>--}}
+{{--                </li>--}}
+{{--                <li class="nav-item">--}}
+{{--                    <a class="nav-link" data-bs-toggle="pill" href="#edp">EDP</a>--}}
+{{--                </li>--}}
+{{--            </ul>--}}
+{{--        </div>--}}
+
+{{--        <div class="col-md-8">--}}
+{{--            <div class="tab-content">--}}
+{{--                <div class="tab-pane fade show active" id="credit-card">--}}
+{{--                    <div class="card">--}}
+{{--                        <div class="card-body">--}}
+{{--                            <h4>Card Details</h4>--}}
+{{--                            <form action="/" method="POST" id="payment-form">--}}
+{{--                                @csrf--}}
+{{--                                <input type="hidden" name="amount" value="50">--}}
+
+{{--                                <div class="mb-3">--}}
+{{--                                    <label for="card-element">Card Information</label>--}}
+{{--                                    <div id="card-element" class="form-control"></div>--}}
+{{--                                    <div id="card-errors" class="text-danger mt-2"></div>--}}
+{{--                                </div>--}}
+
+{{--                                <button class="btn btn-primary mt-3" id="submit-button">Pay Now</button>--}}
+{{--                            </form>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+
+{{--                <div class="tab-pane fade" id="edp">--}}
+{{--                    <div class="card">--}}
+{{--                        <div class="card-body">--}}
+{{--                            <h4>EDP Payment Option</h4>--}}
+{{--                            <p>Additional payment methods can be implemented here.</p>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--        </div>--}}
+{{--    </div>--}}
+{{--</div>--}}
+
+{{--<script>--}}
+{{--    var stripe = Stripe("{{ env('STRIPE_KEY') }}");--}}
+{{--    var elements = stripe.elements();--}}
+{{--    var card = elements.create('card', { hidePostalCode: true });--}}
+
+{{--    card.mount('#card-element');--}}
+
+{{--    var form = document.getElementById('payment-form');--}}
+{{--    var submitButton = document.getElementById('submit-button');--}}
+
+{{--    form.addEventListener('submit', function(event) {--}}
+{{--        event.preventDefault();--}}
+
+{{--        stripe.createToken(card).then(function(result) {--}}
+{{--            if (result.error) {--}}
+{{--                document.getElementById('card-errors').textContent = result.error.message;--}}
+{{--            } else {--}}
+{{--                var hiddenInput = document.createElement('input');--}}
+{{--                hiddenInput.setAttribute('type', 'hidden');--}}
+{{--                hiddenInput.setAttribute('name', 'stripeToken');--}}
+{{--                hiddenInput.setAttribute('value', result.token.id);--}}
+{{--                form.appendChild(hiddenInput);--}}
+
+{{--                form.submit();--}}
+{{--            }--}}
+{{--        });--}}
+{{--    });--}}
+{{--</script>--}}
+
+{{--<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>--}}
+{{--</body>--}}
+{{--</html>--}}
