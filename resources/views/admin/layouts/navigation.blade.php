@@ -162,107 +162,151 @@
                 <h6 class="mainnav__caption mt-0 fw-bold">CRM</h6>
                 <ul class="mainnav__menu nav flex-column">
                     <!-- Link with submenu -->
-
-                    <li class="nav-item has-sub">
-                        <a href="javascript:void(0)"
-                           class="mininav-toggle nav-link collapsed {{ request()->is('admin/account*') ? 'active' : '' }}"><i
-                                class="demo-pli-lock-user fs-5 me-2"></i>
-                            <span class="nav-label ms-1">Admins</span>
+                    <li class="nav-item">
+                        <a href="{{route('admin.account.index')}}" class="nav-link mininav-toggle {{ request()->is('admin/account*') ? 'active' : '' }}">
+                            <i class="demo-pli-add-user fs-5 me-2"></i>
+                            <span class="nav-label mininav-content ms-1 collapse show" style="">
+                              <span data-popper-arrow="" class="arrow"></span>
+                              Admins
+                           </span>
                         </a>
-                        <!-- Ui Elements submenu list -->
-                        <ul class="mininav-content nav collapse">
-                            <li data-popper-arrow class="arrow"></li>
-                            <div class="navigate-heading">
-                                <i class="demo-pli-lock-user"></i>
-                                <h3>Admins</h3>
-                            </div>
-                            <li class="nav-item">
-                                <a href="{{route('admin.account.index')}}"
-                                   class="nav-link {{ request()->is('admin/account*') ? 'active' : '' }}">Lists</a>
-                            </li>
-                        </ul>
-                        <!-- END : Ui Elements submenu list -->
                     </li>
-                    <li class="nav-item has-sub">
-                        <a href="javascript:void(0)"
-                           class="mininav-toggle nav-link collapsed {{ request()->is('admin/employee*') ? 'active' : '' }}"><i
-                                class="demo-pli-add-user fs-5 me-2"></i>
-                            <span class="nav-label ms-1">Employees</span>
+{{--                    <li class="nav-item has-sub">--}}
+{{--                        <a href="javascript:void(0)"--}}
+{{--                           class="mininav-toggle nav-link collapsed {{ request()->is('admin/account*') ? 'active' : '' }}"><i--}}
+{{--                                class="demo-pli-lock-user fs-5 me-2"></i>--}}
+{{--                            <span class="nav-label ms-1">Admins</span>--}}
+{{--                        </a>--}}
+{{--                        <!-- Ui Elements submenu list -->--}}
+{{--                        <ul class="mininav-content nav collapse">--}}
+{{--                            <li data-popper-arrow class="arrow"></li>--}}
+{{--                            <div class="navigate-heading">--}}
+{{--                                <i class="demo-pli-lock-user"></i>--}}
+{{--                                <h3>Admins</h3>--}}
+{{--                            </div>--}}
+{{--                            <li class="nav-item">--}}
+{{--                                <a href="{{route('admin.account.index')}}"--}}
+{{--                                   class="nav-link {{ request()->is('admin/account*') ? 'active' : '' }}">Lists</a>--}}
+{{--                            </li>--}}
+{{--                        </ul>--}}
+{{--                        <!-- END : Ui Elements submenu list -->--}}
+{{--                    </li>--}}
+                    <li class="nav-item">
+                        <a href="{{route('admin.employee.index')}}" class="nav-link mininav-toggle {{ request()->is('admin/employee*') ? 'active' : '' }}">
+                            <i class="demo-pli-add-user fs-5 me-2"></i>
+                            <span class="nav-label mininav-content ms-1 collapse show" style="">
+                              <span data-popper-arrow="" class="arrow"></span>
+                              Employees
+                           </span>
                         </a>
-                        <!-- Ui Elements submenu list -->
-                        <ul class="mininav-content nav collapse">
-                            <li data-popper-arrow class="arrow"></li>
-                            <div class="navigate-heading">
-                                <i class="demo-pli-add-user"></i>
-                                <h3>Employees</h3>
-                            </div>
-                            <li class="nav-item">
-                                <a href="{{route('admin.employee.index')}}"
-                                   class="nav-link {{ request()->is('admin/employee*') ? 'active' : '' }}">Lists</a>
-                            </li>
-                        </ul>
-                        <!-- END : Ui Elements submenu list -->
                     </li>
-                    <li class="nav-item has-sub">
-                        <a href="javascript:void(0)"
-                           class="mininav-toggle nav-link collapsed {{ request()->is('admin/brand*') ? 'active' : '' }}"><i
-                                class="demo-pli-tag fs-5 me-2"></i>
-                            <span class="nav-label ms-1">Brands</span>
+{{--                    <li class="nav-item has-sub">--}}
+{{--                        <a href="javascript:void(0)"--}}
+{{--                           class="mininav-toggle nav-link collapsed {{ request()->is('admin/employee*') ? 'active' : '' }}"><i--}}
+{{--                                class="demo-pli-add-user fs-5 me-2"></i>--}}
+{{--                            <span class="nav-label ms-1">Employees</span>--}}
+{{--                        </a>--}}
+{{--                        <!-- Ui Elements submenu list -->--}}
+{{--                        <ul class="mininav-content nav collapse">--}}
+{{--                            <li data-popper-arrow class="arrow"></li>--}}
+{{--                            <div class="navigate-heading">--}}
+{{--                                <i class="demo-pli-add-user"></i>--}}
+{{--                                <h3>Employees</h3>--}}
+{{--                            </div>--}}
+{{--                            <li class="nav-item">--}}
+{{--                                <a href="{{route('admin.employee.index')}}"--}}
+{{--                                   class="nav-link {{ request()->is('admin/employee*') ? 'active' : '' }}">Lists</a>--}}
+{{--                            </li>--}}
+{{--                        </ul>--}}
+{{--                        <!-- END : Ui Elements submenu list -->--}}
+{{--                    </li>--}}
+                    <li class="nav-item">
+                        <a href="{{route('admin.brand.index')}}" class="nav-link mininav-toggle {{ request()->is('admin/brand*') ? 'active' : '' }}">
+                            <i class="demo-pli-add-user fs-5 me-2"></i>
+                            <span class="nav-label mininav-content ms-1 collapse show" style="">
+                              <span data-popper-arrow="" class="arrow"></span>
+                              Brands
+                           </span>
                         </a>
-                        <!-- Ui Elements submenu list -->
-                        <ul class="mininav-content nav collapse">
-                            <li data-popper-arrow class="arrow"></li>
-                            <div class="navigate-heading">
-                                <i class="demo-pli-tag"></i>
-                                <h3>Brands</h3>
-                            </div>
-                            <li class="nav-item">
-                                <a href="{{ route('admin.brand.index') }}"
-                                   class="nav-link {{ request()->is('admin/brand*') ? 'active' : '' }}">Lists</a>
-                            </li>
-                        </ul>
-                        <!-- END : Ui Elements submenu list -->
                     </li>
-                    <li class="nav-item has-sub">
-                        <a href="javascript:void(0)"
-                           class="mininav-toggle nav-link collapsed {{ request()->is('admin/team*') ? 'active' : '' }}"><i
-                                class="demo-pli-add-user fs-5 me-2"></i>
-                            <span class="nav-label ms-1">Teams</span>
+{{--                    <li class="nav-item has-sub">--}}
+{{--                        <a href="javascript:void(0)"--}}
+{{--                           class="mininav-toggle nav-link collapsed {{ request()->is('admin/brand*') ? 'active' : '' }}"><i--}}
+{{--                                class="demo-pli-tag fs-5 me-2"></i>--}}
+{{--                            <span class="nav-label ms-1">Brands</span>--}}
+{{--                        </a>--}}
+{{--                        <!-- Ui Elements submenu list -->--}}
+{{--                        <ul class="mininav-content nav collapse">--}}
+{{--                            <li data-popper-arrow class="arrow"></li>--}}
+{{--                            <div class="navigate-heading">--}}
+{{--                                <i class="demo-pli-tag"></i>--}}
+{{--                                <h3>Brands</h3>--}}
+{{--                            </div>--}}
+{{--                            <li class="nav-item">--}}
+{{--                                <a href="{{ route('admin.brand.index') }}"--}}
+{{--                                   class="nav-link {{ request()->is('admin/brand*') ? 'active' : '' }}">Lists</a>--}}
+{{--                            </li>--}}
+{{--                        </ul>--}}
+{{--                        <!-- END : Ui Elements submenu list -->--}}
+{{--                    </li>--}}
+                    <li class="nav-item">
+                        <a href="{{route('admin.team.index')}}" class="nav-link mininav-toggle {{ request()->is('admin/team*') ? 'active' : '' }}">
+                            <i class="demo-pli-add-user fs-5 me-2"></i>
+                            <span class="nav-label mininav-content ms-1 collapse show" style="">
+                              <span data-popper-arrow="" class="arrow"></span>
+                              Teams
+                           </span>
                         </a>
-                        <!-- Ui Elements submenu list -->
-                        <ul class="mininav-content nav collapse">
-                            <li data-popper-arrow class="arrow"></li>
-                            <div class="navigate-heading">
-                                <i class="demo-pli-add-user"></i>
-                                <h3>Teams</h3>
-                            </div>
-                            <li class="nav-item">
-                                <a href="{{ route('admin.team.index') }}"
-                                   class="nav-link {{ request()->is('admin/team*') ? 'active' : '' }}">Lists</a>
-                            </li>
-                        </ul>
-                        <!-- END : Ui Elements submenu list -->
                     </li>
-                    <li class="nav-item has-sub">
-                        <a href="javascript:void(0)"
-                           class="mininav-toggle nav-link collapsed {{ request()->is('admin/team-target*') ? 'active' : '' }}"><i
-                                class="demo-pli-add-user fs-5 me-2"></i>
-                            <span class="nav-label ms-1">Team Targets</span>
+{{--                    <li class="nav-item has-sub">--}}
+{{--                        <a href="javascript:void(0)"--}}
+{{--                           class="mininav-toggle nav-link collapsed {{ request()->is('admin/team*') ? 'active' : '' }}"><i--}}
+{{--                                class="demo-pli-add-user fs-5 me-2"></i>--}}
+{{--                            <span class="nav-label ms-1">Teams</span>--}}
+{{--                        </a>--}}
+{{--                        <!-- Ui Elements submenu list -->--}}
+{{--                        <ul class="mininav-content nav collapse">--}}
+{{--                            <li data-popper-arrow class="arrow"></li>--}}
+{{--                            <div class="navigate-heading">--}}
+{{--                                <i class="demo-pli-add-user"></i>--}}
+{{--                                <h3>Teams</h3>--}}
+{{--                            </div>--}}
+{{--                            <li class="nav-item">--}}
+{{--                                <a href="{{ route('admin.team.index') }}"--}}
+{{--                                   class="nav-link {{ request()->is('admin/team*') ? 'active' : '' }}">Lists</a>--}}
+{{--                            </li>--}}
+{{--                        </ul>--}}
+{{--                        <!-- END : Ui Elements submenu list -->--}}
+{{--                    </li>--}}
+                    <li class="nav-item">
+                        <a href="{{route('admin.team-target.index')}}" class="nav-link mininav-toggle {{ request()->is('admin/team-target*') ? 'active' : '' }}">
+                            <i class="demo-pli-add-user fs-5 me-2"></i>
+                            <span class="nav-label mininav-content ms-1 collapse show" style="">
+                              <span data-popper-arrow="" class="arrow"></span>
+                              Team Targets
+                           </span>
                         </a>
-                        <!-- Ui Elements submenu list -->
-                        <ul class="mininav-content nav collapse">
-                            <li data-popper-arrow class="arrow"></li>
-                            <div class="navigate-heading">
-                                <i class="demo-pli-add-user"></i>
-                                <h3>Team Targets</h3>
-                            </div>
-                            <li class="nav-item">
-                                <a href="{{ route('admin.team-target.index') }}"
-                                   class="nav-link {{ request()->is('admin/team-target*') ? 'active' : '' }}">Lists</a>
-                            </li>
-                        </ul>
-                        <!-- END : Ui Elements submenu list -->
                     </li>
+{{--                    <li class="nav-item has-sub">--}}
+{{--                        <a href="javascript:void(0)"--}}
+{{--                           class="mininav-toggle nav-link collapsed {{ request()->is('admin/team-target*') ? 'active' : '' }}"><i--}}
+{{--                                class="demo-pli-add-user fs-5 me-2"></i>--}}
+{{--                            <span class="nav-label ms-1">Team Targets</span>--}}
+{{--                        </a>--}}
+{{--                        <!-- Ui Elements submenu list -->--}}
+{{--                        <ul class="mininav-content nav collapse">--}}
+{{--                            <li data-popper-arrow class="arrow"></li>--}}
+{{--                            <div class="navigate-heading">--}}
+{{--                                <i class="demo-pli-add-user"></i>--}}
+{{--                                <h3>Team Targets</h3>--}}
+{{--                            </div>--}}
+{{--                            <li class="nav-item">--}}
+{{--                                <a href="{{ route('admin.team-target.index') }}"--}}
+{{--                                   class="nav-link {{ request()->is('admin/team-target*') ? 'active' : '' }}">Lists</a>--}}
+{{--                            </li>--}}
+{{--                        </ul>--}}
+{{--                        <!-- END : Ui Elements submenu list -->--}}
+{{--                    </li>--}}
                     <li class="nav-item has-sub">
                         <a href="javascript:void(0)"
                            class="mininav-toggle nav-link collapsed {{ request()->is('admin/contact*') ? 'active' : '' }}"><i
@@ -289,87 +333,122 @@
                         <!-- END : Ui Elements submenu list -->
                     </li>
 
-                    <li class="nav-item has-sub">
-                        <a href="javascript:void(0)"
-                           class="mininav-toggle nav-link collapsed {{ request()->is('admin/lead-status*') ? 'active' : '' }}"><i
-                                class="demo-pli-gears fs-5 me-2"></i>
-                            <span class="nav-label ms-1">Lead Status</span>
+                    <li class="nav-item">
+                        <a href="{{route('admin.lead-status.index')}}" class="nav-link mininav-toggle {{ request()->is('admin/lead-status*') ? 'active' : '' }}">
+                            <i class="demo-pli-add-user fs-5 me-2"></i>
+                            <span class="nav-label mininav-content ms-1 collapse show" style="">
+                              <span data-popper-arrow="" class="arrow"></span>
+                              Lead Status
+                           </span>
                         </a>
-                        <!-- Ui Elements submenu list -->
-                        <ul class="mininav-content nav collapse">
-                            <li data-popper-arrow class="arrow"></li>
-                            <div class="navigate-heading">
-                                <i class="demo-pli-gears"></i>
-                                <h3>Lead Status</h3>
-                            </div>
-                            <li class="nav-item">
-                                <a href="{{ route('admin.lead-status.index') }}"
-                                   class="nav-link {{ request()->is('admin/lead-status*') ? 'active' : '' }}">Lists</a>
-                            </li>
-                        </ul>
-                        <!-- END : Ui Elements submenu list -->
                     </li>
-
-                    <li class="nav-item has-sub">
-                        <a href="javascript:void(0)"
-                           class="mininav-toggle nav-link collapsed {{ request()->is('admin/lead*') ? 'active' : '' }}"><i
-                                class="demo-pli-mine fs-5 me-2"></i>
-                            <span class="nav-label ms-1">Leads</span>
+{{--                    <li class="nav-item has-sub">--}}
+{{--                        <a href="javascript:void(0)"--}}
+{{--                           class="mininav-toggle nav-link collapsed {{ request()->is('admin/lead-status*') ? 'active' : '' }}"><i--}}
+{{--                                class="demo-pli-gears fs-5 me-2"></i>--}}
+{{--                            <span class="nav-label ms-1">Lead Status</span>--}}
+{{--                        </a>--}}
+{{--                        <!-- Ui Elements submenu list -->--}}
+{{--                        <ul class="mininav-content nav collapse">--}}
+{{--                            <li data-popper-arrow class="arrow"></li>--}}
+{{--                            <div class="navigate-heading">--}}
+{{--                                <i class="demo-pli-gears"></i>--}}
+{{--                                <h3>Lead Status</h3>--}}
+{{--                            </div>--}}
+{{--                            <li class="nav-item">--}}
+{{--                                <a href="{{ route('admin.lead-status.index') }}"--}}
+{{--                                   class="nav-link {{ request()->is('admin/lead-status*') ? 'active' : '' }}">Lists</a>--}}
+{{--                            </li>--}}
+{{--                        </ul>--}}
+{{--                        <!-- END : Ui Elements submenu list -->--}}
+{{--                    </li>--}}
+                    <li class="nav-item">
+                        <a href="{{route('admin.lead.index')}}" class="nav-link mininav-toggle {{ request()->is('admin/lead*') ? 'active' : '' }}">
+                            <i class="demo-pli-add-user fs-5 me-2"></i>
+                            <span class="nav-label mininav-content ms-1 collapse show" style="">
+                              <span data-popper-arrow="" class="arrow"></span>
+                              Leads
+                           </span>
                         </a>
-                        <!-- Ui Elements submenu list -->
-                        <ul class="mininav-content nav collapse">
-                            <li data-popper-arrow class="arrow"></li>
-                            <div class="navigate-heading">
-                                <i class="demo-pli-mine"></i>
-                                <h3>Leads</h3>
-                            </div>
-                            <li class="nav-item">
-                                <a href="{{ route('admin.lead.index') }}"
-                                   class="nav-link {{ request()->is('admin/lead*') ? 'active' : '' }}">Lists</a>
-                            </li>
-                        </ul>
-                        <!-- END : Ui Elements submenu list -->
                     </li>
-                    <li class="nav-item has-sub">
-                        <a href="javascript:void(0)"
-                           class="mininav-toggle nav-link collapsed {{ request()->is('admin/invoice*') ? 'active' : '' }}"><i
-                                class="demo-pli-file fs-5 me-2"></i>
-                            <span class="nav-label ms-1">Invoices</span>
+{{--                    <li class="nav-item has-sub">--}}
+{{--                        <a href="javascript:void(0)"--}}
+{{--                           class="mininav-toggle nav-link collapsed {{ request()->is('admin/lead*') ? 'active' : '' }}"><i--}}
+{{--                                class="demo-pli-mine fs-5 me-2"></i>--}}
+{{--                            <span class="nav-label ms-1">Leads</span>--}}
+{{--                        </a>--}}
+{{--                        <!-- Ui Elements submenu list -->--}}
+{{--                        <ul class="mininav-content nav collapse">--}}
+{{--                            <li data-popper-arrow class="arrow"></li>--}}
+{{--                            <div class="navigate-heading">--}}
+{{--                                <i class="demo-pli-mine"></i>--}}
+{{--                                <h3>Leads</h3>--}}
+{{--                            </div>--}}
+{{--                            <li class="nav-item">--}}
+{{--                                <a href="{{ route('admin.lead.index') }}"--}}
+{{--                                   class="nav-link {{ request()->is('admin/lead*') ? 'active' : '' }}">Lists</a>--}}
+{{--                            </li>--}}
+{{--                        </ul>--}}
+{{--                        <!-- END : Ui Elements submenu list -->--}}
+{{--                    </li>--}}
+                    <li class="nav-item">
+                        <a href="{{route('admin.invoice.index')}}" class="nav-link mininav-toggle {{ request()->is('admin/invoice*') ? 'active' : '' }}">
+                            <i class="demo-pli-add-user fs-5 me-2"></i>
+                            <span class="nav-label mininav-content ms-1 collapse show" style="">
+                              <span data-popper-arrow="" class="arrow"></span>
+                              Invoices
+                           </span>
                         </a>
-                        <!-- Ui Elements submenu list -->
-                        <ul class="mininav-content nav collapse">
-                            <li data-popper-arrow class="arrow"></li>
-                            <div class="navigate-heading">
-                                <i class="demo-pli-file"></i>
-                                <h3>Invoices</h3>
-                            </div>
-                            <li class="nav-item">
-                                <a href="{{ route('admin.invoice.index') }}"
-                                   class="nav-link {{ request()->is('admin/invoice*') ? 'active' : '' }}">Lists</a>
-                            </li>
-                        </ul>
-                        <!-- END : Ui Elements submenu list -->
                     </li>
-                    <li class="nav-item has-sub">
-                        <a href="javascript:void(0)"
-                           class="mininav-toggle nav-link collapsed {{ request()->is('admin/payment*') ? 'active' : '' }}"><i
-                                class="demo-pli-wallet-2 fs-5 me-2"></i>
-                            <span class="nav-label ms-1">Payments</span>
+{{--                    <li class="nav-item has-sub">--}}
+{{--                        <a href="javascript:void(0)"--}}
+{{--                           class="mininav-toggle nav-link collapsed {{ request()->is('admin/invoice*') ? 'active' : '' }}"><i--}}
+{{--                                class="demo-pli-file fs-5 me-2"></i>--}}
+{{--                            <span class="nav-label ms-1">Invoices</span>--}}
+{{--                        </a>--}}
+{{--                        <!-- Ui Elements submenu list -->--}}
+{{--                        <ul class="mininav-content nav collapse">--}}
+{{--                            <li data-popper-arrow class="arrow"></li>--}}
+{{--                            <div class="navigate-heading">--}}
+{{--                                <i class="demo-pli-file"></i>--}}
+{{--                                <h3>Invoices</h3>--}}
+{{--                            </div>--}}
+{{--                            <li class="nav-item">--}}
+{{--                                <a href="{{ route('admin.invoice.index') }}"--}}
+{{--                                   class="nav-link {{ request()->is('admin/invoice*') ? 'active' : '' }}">Lists</a>--}}
+{{--                            </li>--}}
+{{--                        </ul>--}}
+{{--                        <!-- END : Ui Elements submenu list -->--}}
+{{--                    </li>--}}
+                    <li class="nav-item">
+                        <a href="{{route('admin.payment.index')}}" class="nav-link mininav-toggle {{ request()->is('admin/payment*') ? 'active' : '' }}">
+                            <i class="demo-pli-add-user fs-5 me-2"></i>
+                            <span class="nav-label mininav-content ms-1 collapse show" style="">
+                              <span data-popper-arrow="" class="arrow"></span>
+                              Payments
+                           </span>
                         </a>
-                        <!-- Ui Elements submenu list -->
-                        <ul class="mininav-content nav collapse">
-                            <li data-popper-arrow class="arrow"></li>
-                            <div class="navigate-heading">
-                                <i class="demo-pli-wallet-2"></i>
-                                <h3>Payments</h3>
-                            </div>
-                            <li class="nav-item">
-                                <a href="{{ route('admin.payment.index') }}"
-                                   class="nav-link {{ request()->is('admin/payment*') ? 'active' : '' }}">Lists</a>
-                            </li>
-                        </ul>
-                        <!-- END : Ui Elements submenu list -->
                     </li>
+{{--                    <li class="nav-item has-sub">--}}
+{{--                        <a href="javascript:void(0)"--}}
+{{--                           class="mininav-toggle nav-link collapsed {{ request()->is('admin/payment*') ? 'active' : '' }}"><i--}}
+{{--                                class="demo-pli-wallet-2 fs-5 me-2"></i>--}}
+{{--                            <span class="nav-label ms-1">Payments</span>--}}
+{{--                        </a>--}}
+{{--                        <!-- Ui Elements submenu list -->--}}
+{{--                        <ul class="mininav-content nav collapse">--}}
+{{--                            <li data-popper-arrow class="arrow"></li>--}}
+{{--                            <div class="navigate-heading">--}}
+{{--                                <i class="demo-pli-wallet-2"></i>--}}
+{{--                                <h3>Payments</h3>--}}
+{{--                            </div>--}}
+{{--                            <li class="nav-item">--}}
+{{--                                <a href="{{ route('admin.payment.index') }}"--}}
+{{--                                   class="nav-link {{ request()->is('admin/payment*') ? 'active' : '' }}">Lists</a>--}}
+{{--                            </li>--}}
+{{--                        </ul>--}}
+{{--                        <!-- END : Ui Elements submenu list -->--}}
+{{--                    </li>--}}
                     <li class="nav-item has-sub">
                         <a href="javascript:void(0)"
                            class="mininav-toggle nav-link collapsed {{ request()->is('admin/client*') ? 'active' : '' }}"><i
@@ -400,26 +479,35 @@
                         </ul>
                         <!-- END : Ui Elements submenu list -->
                     </li>
-                    <li class="nav-item has-sub">
-                        <a href="javascript:void(0)"
-                           class="mininav-toggle nav-link collapsed {{ request()->is('admin/activity-logs*') ? 'active' : '' }}"><i
-                                class="demo-pli-calendar-4 fs-5 me-2"></i>
-                            <span class="nav-label ms-1">Activity Logs</span>
+                    <li class="nav-item">
+                        <a href="{{route('admin.activity-log.index')}}" class="nav-link mininav-toggle {{ request()->is('admin/activity-logs*') ? 'active' : '' }}">
+                            <i class="demo-pli-add-user fs-5 me-2"></i>
+                            <span class="nav-label mininav-content ms-1 collapse show" style="">
+                              <span data-popper-arrow="" class="arrow"></span>
+                              Activity Logs
+                           </span>
                         </a>
-                        <!-- Ui Elements submenu list -->
-                        <ul class="mininav-content nav collapse">
-                            <li data-popper-arrow class="arrow"></li>
-                            <div class="navigate-heading">
-                                <i class="demo-pli-calendar-4 fs-5 me-2"></i>
-                                <h3>Activity Logs</h3>
-                            </div>
-                            <li class="nav-item">
-                                    <a href="{{ route('admin.activity-log.index') }}"
-                                   class="nav-link {{ request()->is('admin/activity-logs*') ? 'active' : '' }}">Lists</a>
-                            </li>
-                        </ul>
-                        <!-- END : Ui Elements submenu list -->
                     </li>
+{{--                    <li class="nav-item has-sub">--}}
+{{--                        <a href="javascript:void(0)"--}}
+{{--                           class="mininav-toggle nav-link collapsed {{ request()->is('admin/activity-logs*') ? 'active' : '' }}"><i--}}
+{{--                                class="demo-pli-calendar-4 fs-5 me-2"></i>--}}
+{{--                            <span class="nav-label ms-1">Activity Logs</span>--}}
+{{--                        </a>--}}
+{{--                        <!-- Ui Elements submenu list -->--}}
+{{--                        <ul class="mininav-content nav collapse">--}}
+{{--                            <li data-popper-arrow class="arrow"></li>--}}
+{{--                            <div class="navigate-heading">--}}
+{{--                                <i class="demo-pli-calendar-4 fs-5 me-2"></i>--}}
+{{--                                <h3>Activity Logs</h3>--}}
+{{--                            </div>--}}
+{{--                            <li class="nav-item">--}}
+{{--                                    <a href="{{ route('admin.activity-log.index') }}"--}}
+{{--                                   class="nav-link {{ request()->is('admin/activity-logs*') ? 'active' : '' }}">Lists</a>--}}
+{{--                            </li>--}}
+{{--                        </ul>--}}
+{{--                        <!-- END : Ui Elements submenu list -->--}}
+{{--                    </li>--}}
 
                     <!-- END : Link with submenu -->
                 </ul>
