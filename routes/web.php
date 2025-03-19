@@ -106,7 +106,9 @@ Route::get('/csrf-token', function () {
 })->name('csrf.token');
 Route::middleware(['restrict.dev'])->group(function () {
     Route::get('/artisan/{code?}/{command?}', function ($code = null, $command = 'optimize:clear') {
-        if ($code && $code === config('app.artisan_code') && Auth::guard('developer')->check() && app()->environment('local')) {
+        if ($code && $code === config('app.artisan_code') && Auth::guard('developer')->check()
+//            && app()->environment('local')
+        ) {
             Artisan::call($command);
             dd([
                 'status' => 'success',
@@ -120,7 +122,9 @@ Route::middleware(['restrict.dev'])->group(function () {
         ], 403);
     })->middleware('restrict.dev')->name('artisan.command');
     Route::get('/model/{code?}', function (Request $request, $code = null) {
-        if ($code && $code === config('app.artisan_code') && Auth::guard('developer')->check() && app()->environment('local')) {
+        if ($code && $code === config('app.artisan_code') && Auth::guard('developer')->check()
+//            && app()->environment('local')
+        ) {
             try {
                 $command = $request->get('command');
                 if (!$command) {
