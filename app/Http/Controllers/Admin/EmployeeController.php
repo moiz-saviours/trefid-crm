@@ -4,6 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\AssignTeamMember;
+use App\Models\Department;
+use App\Models\Position;
+use App\Models\Role;
 use App\Models\Team;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -19,7 +22,10 @@ class EmployeeController extends Controller
     public function index()
     {
         $users = User::all();
-        return view('admin.employees.index', compact('users'));
+        $departments = Department::all();
+        $roles = Role::all();
+        $positions = Position::all();
+        return view('admin.employees.index', compact('users','departments', 'roles', 'positions'));
     }
 
     /**
