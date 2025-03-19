@@ -39,7 +39,7 @@
             <div class="form-body">
                 <div class="form-group mb-3">
                     <label for="department" class="form-label">Department</label>
-                    <select class="form-control" id="department" name="department">
+                    <select class="form-control" id="department" name="department_id">
                         <option value="" disabled selected>Select Department</option>
                         @foreach($departments as $department)
                             <option value="{{ $department->id }}">{{ $department->name }}</option>
@@ -52,7 +52,7 @@
 
                 <div class="form-group mb-3">
                     <label for="role" class="form-label">Role</label>
-                    <select class="form-control" id="role" name="role">
+                    <select class="form-control" id="role" name="role_id">
                         <option value="" disabled selected>Select Role</option>
                     </select>
                     @error('role')
@@ -62,7 +62,7 @@
 
                 <div class="form-group mb-3">
                     <label for="position" class="form-label">Position</label>
-                    <select class="form-control" id="position" name="position">
+                    <select class="form-control" id="position" name="position_id">
                         <option value="" disabled selected>Select Position</option>
                     </select>
                     @error('position')
@@ -276,36 +276,3 @@
         </div>
     </form>
 </div>
-@push('script')
-    <script>
-        const roles = @json($roles->keyBy('id'));
-        const positions = @json($positions->keyBy('id'));
-
-        document.addEventListener('DOMContentLoaded', () => {
-            const department = document.getElementById('department');
-            const role = document.getElementById('role');
-            const position = document.getElementById('position');
-
-            const populateDropdown = (dropdown, items, key, value) => {
-                dropdown.innerHTML = '<option value="" disabled selected>Select ' + dropdown.id.charAt(0).toUpperCase() + dropdown.id.slice(1) + '</option>';
-                items.filter(item => item[key] === value).forEach(item => {
-                    const option = document.createElement('option');
-                    option.value = item.id;
-                    option.textContent = item.name;
-                    dropdown.appendChild(option);
-                });
-            };
-
-            department.addEventListener('change', () => {
-                const departmentId = parseInt(department.value, 10);
-                populateDropdown(role, Object.values(roles), 'department_id', departmentId);
-                position.innerHTML = '<option value="" disabled selected>Select Position</option>';
-            });
-
-            role.addEventListener('change', () => {
-                const roleId = parseInt(role.value, 10);
-                populateDropdown(position, Object.values(positions), 'role_id', roleId);
-            });
-        });
-    </script>
-@endpush
