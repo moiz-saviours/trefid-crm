@@ -1,65 +1,76 @@
 @extends('admin.layouts.app')
 @section('title','Dashboard')
 @section('content')
-    <style>
-        .btn-minimize {
-            background-color: #ff5722;
-            color: #fff;
-            font-size: 12px;
-        }
+    @push('style')
+        <style>
+            .btn-minimize {
+                background-color: #ff5722;
+                color: #fff;
+                font-size: 12px;
+            }
 
-        .btn-minimize:hover {
-            background-color: #ff5722;
-            color: #fff;
-        }
+            .btn-minimize:hover {
+                background-color: #ff5722;
+                color: #fff;
+            }
 
-        .clos_btn {
-            background-color: #2d3e50;
-            color: #fff;
-            font-size: 12px;
-        }
+            .clos_btn {
+                background-color: #2d3e50;
+                color: #fff;
+                font-size: 12px;
+            }
 
-        .clos_btn:hover {
-            background-color: #2d3e50;
-            color: #fff;
-        }
+            .clos_btn:hover {
+                background-color: #2d3e50;
+                color: #fff;
+            }
 
-        .right_col {
-            display: block;
-        }
+            .right_col {
+                display: block;
+            }
 
-        .right_col .card {
-            margin: 20px 0px;
-        }
+            .right_col .card {
+                margin: 20px 0px;
+            }
 
-        .dashbord_tbl {
-            border-collapse: collapse;
-            width: 100%;
-        }
+            .dashbord_tbl {
+                border-collapse: collapse;
+                width: 100%;
+            }
 
-        .tabl_th {
-            background-color: #2d3e50;
-            text-align: center;
-            padding: 15px 0px;
-            color: #fff;
-        }
+            .tabl_th {
+                background-color: #2d3e50;
+                text-align: center;
+                padding: 15px 0px;
+                color: #fff;
+            }
 
-        .tabl_td, .tabl_th {
-            text-align: left;
-            padding: 15px 0px;
-            text-align: center;
-        }
+            .tabl_td, .tabl_th {
+                text-align: left;
+                padding: 15px 0px;
+                text-align: center;
+            }
 
-        .tabl_tr:nth-child(odd) {
-            background-color: #98a3b0;
-            color: #fff;
-        }
+            .tabl_tr:nth-child(odd) {
+                background-color: #98a3b0;
+                color: #fff;
+            }
 
-        .tabl_tr:nth-child(even) {
-            background-color: #fff;
-            color: #000 !important;
-        }
-    </style>
+            .tabl_tr:nth-child(even) {
+                background-color: #fff;
+                color: #000 !important;
+            }
+
+            .modal.fade.show .modal-dialog.transform-popover {
+                transform: scale(1)
+            }
+
+            .modal.fade .modal-dialog.transform-popover {
+                transform: scale(0);
+            }
+
+        </style>
+    @endpush
     <section id="content" class="content">
         <div class="content__header content__boxed overlapping">
             <div class="content__wrap">
@@ -73,13 +84,13 @@
             <div class="content__wrap">
                 <div class="row">
                     <!-- Active Admins -->
-                    <div class="col-md-3">
+                    <div class="col-md-3" data-bs-toggle="modal" data-bs-target="#activeAdminModal">
                         <div class="card text-white" style="background-color: var(--bs-primary);">
                             <div class="card-body">
                                 <div class="d-flex align-items-center mb-2">
                                     <i class="demo-pli-add-user-star display-6"></i>
                                     <div class="ms-4">
-                                        <h5 class="text-white h2 mb-0">{{ $activeAdmins }}</h5>
+                                        <h5 class="text-white h2 mb-0">{{ max(0, count($activeAdmins)) }}</h5>
                                         <p class="text-white text-opacity-75 mb-0">Active Admins</p>
                                     </div>
                                 </div>
@@ -95,13 +106,13 @@
                     </div>
 
                     <!-- Active Users -->
-                    <div class="col-md-3">
+                    <div class="col-md-3" data-bs-toggle="modal" data-bs-target="#activeUserModal">
                         <div class="card text-white" style="background-color: var(--bs-primary);">
                             <div class="card-body">
                                 <div class="d-flex align-items-center mb-2">
                                     <i class="demo-pli-male-female display-6"></i>
                                     <div class="ms-4">
-                                        <h5 class="text-white h2 mb-0">{{ $activeUsers }}</h5>
+                                        <h5 class="text-white h2 mb-0">{{ max(0, count($activeUsers)) }}</h5>
                                         <p class="text-white text-opacity-75 mb-0">Active Users</p>
                                     </div>
                                 </div>
@@ -117,20 +128,21 @@
                     </div>
 
                     <!-- Fresh Invoices -->
-                    <div class="col-md-3">
+                    <div class="col-md-3" data-bs-toggle="modal" data-bs-target="#freshInvoicesModal">
                         <div class="card text-white" style="background-color: var(--bs-primary);">
                             <div class="card-body">
                                 <div class="d-flex align-items-center mb-2">
                                     <i class="demo-pli-cart-coin display-6"></i>
                                     <div class="ms-4">
-                                        <h5 class="text-white h2 mb-0">{{ $freshInvoices }}</h5>
+                                        <h5 class="text-white h2 mb-0">{{ max(0,count($freshInvoices)) }}</h5>
                                         <p class="text-white text-opacity-75 mb-0">Fresh Invoices</p>
                                     </div>
                                 </div>
                                 <div class="progress progress-md">
                                     <div class="progress-bar bg-white" role="progressbar"
                                          style="width: {{ $freshInvoiceProgress }}%;"
-                                         aria-valuenow="{{ $freshInvoiceProgress }}" aria-valuemin="0" aria-valuemax="100">
+                                         aria-valuenow="{{ $freshInvoiceProgress }}" aria-valuemin="0"
+                                         aria-valuemax="100">
                                     </div>
                                 </div>
                                 <small>{{ round($freshInvoiceProgress, 2) }}% of Total Invoices</small>
@@ -139,20 +151,21 @@
                     </div>
 
                     <!-- Upsale Invoices -->
-                    <div class="col-md-3">
+                    <div class="col-md-3" data-bs-toggle="modal" data-bs-target="#upsaleInvoicesModal">
                         <div class="card text-white" style="background-color: var(--bs-primary);">
                             <div class="card-body">
                                 <div class="d-flex align-items-center mb-2">
                                     <i class="demo-pli-cart-coin display-6"></i>
                                     <div class="ms-4">
-                                        <h5 class="text-white h2 mb-0">{{ $upsaleInvoices }}</h5>
+                                        <h5 class="text-white h2 mb-0">{{ max(0,count($upsaleInvoices)) }}</h5>
                                         <p class="text-white text-opacity-75 mb-0">Upsale Invoices</p>
                                     </div>
                                 </div>
                                 <div class="progress progress-md">
                                     <div class="progress-bar bg-white" role="progressbar"
                                          style="width: {{ $upsalInvoiceProgress }}%;"
-                                         aria-valuenow="{{ $upsalInvoiceProgress }}" aria-valuemin="0" aria-valuemax="100">
+                                         aria-valuenow="{{ $upsalInvoiceProgress }}" aria-valuemin="0"
+                                         aria-valuemax="100">
                                     </div>
                                 </div>
                                 <small>{{ round($upsalInvoiceProgress, 2) }}% of Total Invoices</small>
@@ -163,42 +176,66 @@
             </div>
         </div>
         <div class="content__boxed">
-            <div class="content__wrap">
+            <div class="content__wrap" style="padding-top: 0px">
                 <div class="row">
                     <h1 class="page-title mb-2">Invoices</h1>
 
                     @php
                         $invoiceData = [
-                            ['title' => 'Paid', 'count' => $paidInvoices, 'progress' => $invoicesProgress['paid'], 'color' => 'success'],
-                            ['title' => 'Due', 'count' => $dueInvoices, 'progress' => $invoicesProgress['due'], 'color' => 'danger'],
-                            ['title' => 'Refunded', 'count' => $refundInvoices, 'progress' => $invoicesProgress['refund'], 'color' => 'warning'],
-                            ['title' => 'Chargeback', 'count' => $chargebackInvoices, 'progress' => $invoicesProgress['chargeback'], 'color' => 'dark']
+                            ['title' => 'Paid', 'invoices' => $paidInvoices, 'count' => count($paidInvoices), 'progress' => $invoicesProgress['paid'], 'color' => 'success', 'icon' => 'demo-pli-check', 'modal' => 'paidInvoicesModal'],
+                            ['title' => 'Due', 'invoices' => $dueInvoices, 'count' => count($dueInvoices), 'progress' => $invoicesProgress['due'], 'color' => 'danger', 'icon' => 'demo-pli-clock', 'modal' => 'dueInvoicesModal'],
+                            ['title' => 'Refunded', 'invoices' => $refundInvoices, 'count' => count($refundInvoices), 'progress' => $invoicesProgress['refund'], 'color' => 'warning', 'icon' => 'demo-pli-repeat-2', 'modal' => 'refundInvoicesModal'],
+                            ['title' => 'Chargeback', 'invoices' => $chargebackInvoices, 'count' => count($chargebackInvoices), 'progress' => $invoicesProgress['chargeback'], 'color' => 'dark', 'icon' => 'demo-pli-close', 'modal' => 'chargebackInvoicesModal']
                         ];
                     @endphp
-
                     @foreach ($invoiceData as $invoice)
-                        <div class="col-md-3">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="d-flex">
-                                        <h5 class="card-title">Total {{ $invoice['title'] }} : {{ $invoice['count'] }}</h5>
-                                    </div>
-                                    <div class="d-flex flex-column gap-3">
-                                        <div class="progress progress-lg">
-                                            <div class="progress-bar bg-{{ $invoice['color'] }}"
-                                                 role="progressbar"
-                                                 style="width: {{ $invoice['progress'] }}%;"
-                                                 aria-valuenow="{{ $invoice['progress'] }}"
-                                                 aria-valuemin="0"
-                                                 aria-valuemax="100">
-                                                {{ round($invoice['progress']) }}%
-                                            </div>
+                        <div class="col-md-3" data-bs-toggle="modal" data-bs-target="#{{ $invoice['modal'] }}">
+                            <div class="card" style="color: var(--bs-primary);">
+                                <div class="card-body" style="padding: 1rem;">
+                                    <div class="d-flex align-items-center mb-2">
+                                        <i class="{{ $invoice['icon'] }} display-6"></i>
+                                        <div class="ms-4">
+                                            <h5 class="h2 mb-0"
+                                                style="color: var(--bs-primary);">{{ $invoice['count'] }}</h5>
+                                            <p class="text-opacity-75 mb-0">Total {{ $invoice['title'] }}</p>
                                         </div>
                                     </div>
+                                    <div class="progress progress-md">
+                                        <div class="progress-bar" role="progressbar"
+                                             style="width: {{ $invoice['progress'] }}%;"
+                                             aria-valuenow="{{ $invoice['progress'] }}" aria-valuemin="0"
+                                             aria-valuemax="100">
+                                        </div>
+                                    </div>
+                                    <small>{{ round($invoice['progress'], 2) }}% of Total Invoices</small>
                                 </div>
                             </div>
                         </div>
                     @endforeach
+                    {{--                    @foreach ($invoiceData as $invoice)--}}
+                    {{--                        <div class="col-md-3" data-bs-toggle="modal" data-bs-target="#{{ $invoice['modal'] }}">--}}
+                    {{--                            <div class="card">--}}
+                    {{--                                <div class="card-body">--}}
+                    {{--                                    <div class="d-flex">--}}
+                    {{--                                        <h5 class="card-title">Total {{ $invoice['title'] }}--}}
+                    {{--                                            : {{ $invoice['count'] }}</h5>--}}
+                    {{--                                    </div>--}}
+                    {{--                                    <div class="d-flex flex-column gap-3">--}}
+                    {{--                                        <div class="progress progress-lg">--}}
+                    {{--                                            <div class="progress-bar bg-{{ $invoice['color'] }}"--}}
+                    {{--                                                 role="progressbar"--}}
+                    {{--                                                 style="width: {{ $invoice['progress'] }}%;"--}}
+                    {{--                                                 aria-valuenow="{{ $invoice['progress'] }}"--}}
+                    {{--                                                 aria-valuemin="0"--}}
+                    {{--                                                 aria-valuemax="100">--}}
+                    {{--                                                {{ round($invoice['progress']) }}%--}}
+                    {{--                                            </div>--}}
+                    {{--                                        </div>--}}
+                    {{--                                    </div>--}}
+                    {{--                                </div>--}}
+                    {{--                            </div>--}}
+                    {{--                        </div>--}}
+                    {{--                    @endforeach--}}
                 </div>
 
             </div>
@@ -265,25 +302,25 @@
                         <table class="table table-striped dashbord_tbl initTable">
                             <thead>
                             <tr class="tabl_tr">
-                                <th class="tabl_th">Serial No</th>
-                                <th class="tabl_th">Invoice No</th>
-                                <th class="tabl_th">Payment Method</th>
-                                <th class="tabl_th">Brand</th>
-                                <th class="tabl_th">Team</th>
-                                <th class="tabl_th">Amount</th>
-                                <th class="tabl_th">Status</th>
+                                <th class="tabl_th align-middle text-center text-nowrap">Serial No</th>
+                                <th class="tabl_th align-middle text-center text-nowrap">Invoice No</th>
+                                <th class="tabl_th align-middle text-center text-nowrap">Payment Method</th>
+                                <th class="tabl_th align-middle text-center text-nowrap">Brand</th>
+                                <th class="tabl_th align-middle text-center text-nowrap">Team</th>
+                                <th class="tabl_th align-middle text-center text-nowrap">Amount</th>
+                                <th class="tabl_th align-middle text-center text-nowrap">Status</th>
                             </tr>
                             </thead>
                             <tbody>
                             @foreach ($recentPayments as $key => $payment)
                                 <tr class="tabl_tr">
-                                    <td class="tabl_td">{{ $key + 1 }}</td>
-                                    <td class="tabl_td">{{ $payment->invoice_key }}</td>
-                                    <td class="tabl_td">{{ ucfirst($payment->payment_method) }}</td>
-                                    <td class="tabl_td">{{ ucfirst(optional($payment->brand)->name) }}</td>
-                                    <td class="tabl_td">{{ ucfirst(optional($payment->team)->name) }}</td>
-                                    <td class="tabl_td">{{ $payment->amount }} {{optional($payment->invoice)->currency}}</td>
-                                    <td class="tabl_td">Paid</td>
+                                    <td class="tabl_td align-middle text-center text-nowrap">{{ $key + 1 }}</td>
+                                    <td class="tabl_td align-middle text-center text-nowrap">{{ $payment->invoice_key }}</td>
+                                    <td class="tabl_td align-middle text-center text-nowrap">{{ ucfirst($payment->payment_method) }}</td>
+                                    <td class="tabl_td align-middle text-center text-nowrap">{{ ucfirst(optional($payment->brand)->name) }}</td>
+                                    <td class="tabl_td align-middle text-center text-nowrap">{{ ucfirst(optional($payment->team)->name) }}</td>
+                                    <td class="tabl_td align-middle text-center text-nowrap">{{ $payment->amount }} {{optional($payment->invoice)->currency}}</td>
+                                    <td class="tabl_td align-middle text-center text-nowrap">Paid</td>
                                 </tr>
                             @endforeach
                             </tbody>
@@ -360,20 +397,471 @@
                 </div>
             </div>
         </div>
-
-
     </section>
 
+    <!--Modals Start -->
 
+    <!-- Active Admin Modal -->
+    <div class="modal fade" id="activeAdminModal" tabindex="-1" role="dialog" aria-hidden="true"
+         aria-labelledby="activeAdminModalAnimationLabel">
+        <div class="modal-dialog modal-dialog-centered transform-popover modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="activeAdminModalAnimationLabel">Active Admins</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-striped dashbord_tbl initTable">
+                        <thead>
+                        <tr class="tabl_tr">
+                            <th class="tabl_th align-middle text-center text-nowrap">NAME</th>
+                            <th class="tabl_th align-middle text-center text-nowrap">EMAIL</th>
+                            <th class="tabl_th align-middle text-center text-nowrap">DESIGNATION</th>
+                            <th class="tabl_th align-middle text-center text-nowrap">LAST SEEN</th>
+                            <th class="tabl_th align-middle text-center text-nowrap">STATUS</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach ($activeAdmins as $key => $activeAdmin)
+                            <tr class="tabl_tr">
+                                <td class="tabl_td align-middle text-center text-nowrap">{{ ucfirst($activeAdmin->name) }}</td>
+                                <td class="tabl_td align-middle text-center text-nowrap">{{ $activeAdmin->email }}</td>
+                                <td class="tabl_td align-middle text-center text-nowrap">{{ ucfirst($activeAdmin->designation) }}</td>
+                                <td class="tabl_td align-middle text-center text-nowrap">
+                                    @if ($activeAdmin->last_seen)
+                                        {{ Carbon\Carbon::parse($activeAdmin->last_seen)->diffForHumans() }}
+                                    @else
+                                        Never
+                                    @endif
+                                </td>
+                                <td class="tabl_td align-middle text-center text-nowrap">{{$activeAdmin->status == 1 ? 'Active' : 'InActive'}}</td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END : Active Admin Modal Animation -->
+
+    <!-- Active User Modal -->
+    <div class="modal fade" id="activeUserModal" tabindex="-1" role="dialog" aria-hidden="true"
+         aria-labelledby="activeUserModalAnimationLabel">
+        <div class="modal-dialog modal-dialog-centered transform-popover modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="activeUserModalAnimationLabel">Active Users</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-striped dashbord_tbl initTable">
+                        <thead>
+                        <tr class="tabl_tr">
+                            <th class="tabl_th align-middle text-center text-nowrap">NAME</th>
+                            <th class="tabl_th align-middle text-center text-nowrap">EMAIL</th>
+                            <th class="tabl_th align-middle text-center text-nowrap">DESIGNATION</th>
+                            <th class="tabl_th align-middle text-center text-nowrap">LAST SEEN</th>
+                            <th class="tabl_th align-middle text-center text-nowrap">STATUS</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach ($activeUsers as $key => $activeUser)
+                            <tr class="tabl_tr">
+                                <td class="tabl_td align-middle text-center text-nowrap">{{ ucfirst($activeUser->name) }}</td>
+                                <td class="tabl_td align-middle text-center text-nowrap">{{ $activeUser->email }}</td>
+                                <td class="tabl_td align-middle text-center text-nowrap">{{ ucfirst($activeUser->designation) }}</td>
+                                <td class="tabl_td align-middle text-center text-nowrap">
+                                    @if ($activeUser->last_seen)
+                                        {{ Carbon\Carbon::parse($activeUser->last_seen)->diffForHumans() }}
+                                    @else
+                                        Never
+                                    @endif
+                                </td>
+                                <td class="tabl_td align-middle text-center text-nowrap">{{$activeUser->status == 1 ? 'Active' : 'InActive'}}</td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END : Active User Modal Animation -->
+
+    <!-- Fresh Invoices Modal -->
+    <div class="modal fade" id="freshInvoicesModal" tabindex="-1" role="dialog" aria-hidden="true"
+         aria-labelledby="freshInvoicesModalAnimationLabel">
+        <div class="modal-dialog modal-dialog-centered transform-popover modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="freshInvoicesModalAnimationLabel">Fresh Invoices</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-striped dashbord_tbl initTable">
+                        <thead>
+                        <tr class="tabl_tr">
+                            <th class="tabl_th align-middle text-center text-nowrap">INVOICE #</th>
+                            <th class="tabl_th align-middle text-center text-nowrap">INVOICE DETAILS</th>
+                            <th class="tabl_th align-middle text-center text-nowrap">AMOUNT</th>
+                            <th class="tabl_th align-middle text-center text-nowrap">DATE</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach ($freshInvoices as $key => $freshInvoice)
+                            <tr id="tr-{{$freshInvoice->id}}">
+                                <td class="align-middle text-center text-nowrap text-sm invoice-cell">
+                                    <span class="invoice-number">{{ $freshInvoice->invoice_number }}</span><br>
+                                    <span class="invoice-key">{{ $freshInvoice->invoice_key }}</span>
+                                    <div>
+                                        @if($freshInvoice->status == 0)
+                                            <span class="badge bg-warning text-dark"
+                                                  style="min-width: -webkit-fill-available;">Pending</span>
+                                        @elseif($freshInvoice->status == 1)
+                                            <span class="badge bg-success" style="min-width: -webkit-fill-available;">Paid</span>
+                                        @elseif($freshInvoice->status == 2)
+                                            <span class="badge bg-danger" style="min-width: -webkit-fill-available;">Refund</span>
+                                        @elseif($freshInvoice->status == 3)
+                                            <span class="badge bg-danger" style="min-width: -webkit-fill-available;">Charge Back</span>
+                                        @endif
+                                    </div>
+                                </td>
+                                <td class="align-middle text-left text-nowrap" style="padding: 0px 25px 0 25px;">
+                                    @if(isset($freshInvoice->brand))
+                                        <div>
+                                            <span>Brand :</span>
+                                            <a href="{{route('admin.brand.index')}}">{{ $freshInvoice->brand->name }}</a>
+                                        </div>
+                                    @endif
+                                    @if(isset($freshInvoice->team))
+                                        <div>
+                                            <span>Team :</span>
+                                            <a href="{{route('admin.team.index')}}">{{ $freshInvoice->team->name }}</a>
+                                        </div>
+                                    @endif
+                                    @if(isset($freshInvoice->agent_id , $freshInvoice->agent_type ,$freshInvoice->agent ))
+                                        <div>
+                                            <span>Agent :</span>
+                                            <a href="{{route('admin.employee.index')}}">{{ $freshInvoice->agent->name }}</a>
+                                        </div>
+                                    @endif
+                                    @if(isset($freshInvoice->customer_contact))
+                                        <div>
+                                            <span>Customer :</span>
+                                            <a href="{{route('admin.customer.contact.index')}}">{{ $freshInvoice->customer_contact->name }}</a>
+                                        </div>
+                                    @endif
+                                </td>
+                                <td class="align-middle space-between text-nowrap"
+                                    style="text-align: left;">
+                                    <div
+                                            style="display: flex; justify-content: space-between; gap: 10px;">
+                                        <span style="width: 120px; ">Amount:</span>
+                                        <span>{{ $freshInvoice->currency ." ". number_format($freshInvoice->amount, 2, '.', '') }}</span>
+                                    </div>
+                                    <div
+                                            style="display: flex; justify-content: space-between; gap: 10px;">
+                                        <span style="width: 120px; ">Tax:</span>
+                                        <span>{{ $freshInvoice->tax_type == 'percentage' ? '%' : ($freshInvoice->tax_type == 'fixed' ? $freshInvoice->currency : '') }} {{ $freshInvoice->tax_value ?? 0 }}</span>
+                                    </div>
+                                    <div
+                                            style="display: flex; justify-content: space-between; gap: 10px;">
+                                        <span style="width: 120px; ">Tax Amount:</span>
+                                        <span>{{ $freshInvoice->currency ." ". number_format($freshInvoice->tax_amount, 2, '.', '') }}</span>
+                                    </div>
+                                    <div
+                                            style="display: flex; justify-content: space-between; gap: 10px;">
+                                        <span style="width: 120px; ">Total Amount:</span>
+                                        <span>{{ $freshInvoice->currency ." ". number_format($freshInvoice->total_amount, 2, '.', '') }}</span>
+                                    </div>
+                                </td>
+                                <td class="align-middle text-center text-nowrap">
+                                    <div>
+                                        <span>Due Date :</span>
+                                    </div>
+                                    <div>
+                                        <span>{{Carbon\Carbon::parse($freshInvoice->due_date)->format('Y-m-d')}}</span>
+                                    </div>
+                                    <div>
+                                        <span>Created Date :</span>
+                                    </div>
+                                    <div>
+                                        <span>
+                                            @if ($freshInvoice->created_at->isToday())
+                                                Today
+                                                at {{ $freshInvoice->created_at->timezone('GMT+5')->format('g:i A') }}
+                                                GMT+5
+                                            @else
+                                                {{ $freshInvoice->created_at->timezone('GMT+5')->format('M d, Y g:i A') }}
+                                                GMT+5
+                                            @endif
+                                        </span>
+                                    </div>
+                                </td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END : Fresh Invoices Modal Animation -->
+
+    <!-- Upsale Invoices Modal -->
+    <div class="modal fade" id="upsaleInvoicesModal" tabindex="-1" role="dialog" aria-hidden="true"
+         aria-labelledby="upsaleInvoicesModalAnimationLabel">
+        <div class="modal-dialog modal-dialog-centered transform-popover modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="upsaleInvoicesModalAnimationLabel">Upsale </h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-striped dashbord_tbl initTable">
+                        <thead>
+                        <tr class="tabl_tr">
+                            <th class="tabl_th align-middle text-center text-nowrap">INVOICE #</th>
+                            <th class="tabl_th align-middle text-center text-nowrap">INVOICE DETAILS</th>
+                            <th class="tabl_th align-middle text-center text-nowrap">AMOUNT</th>
+                            <th class="tabl_th align-middle text-center text-nowrap">DATE</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach ($upsaleInvoices as $key => $upsaleInvoice)
+                            <tr id="tr-{{$upsaleInvoice->id}}">
+                                <td class="align-middle text-center text-nowrap text-sm invoice-cell">
+                                    <span class="invoice-number">{{ $upsaleInvoice->invoice_number }}</span><br>
+                                    <span class="invoice-key">{{ $upsaleInvoice->invoice_key }}</span>
+                                    <div>
+                                        @if($upsaleInvoice->status == 0)
+                                            <span class="badge bg-warning text-dark"
+                                                  style="min-width: -webkit-fill-available;">Pending</span>
+                                        @elseif($upsaleInvoice->status == 1)
+                                            <span class="badge bg-success" style="min-width: -webkit-fill-available;">Paid</span>
+                                        @elseif($upsaleInvoice->status == 2)
+                                            <span class="badge bg-danger" style="min-width: -webkit-fill-available;">Refund</span>
+                                        @elseif($upsaleInvoice->status == 3)
+                                            <span class="badge bg-danger" style="min-width: -webkit-fill-available;">Charge Back</span>
+                                        @endif
+                                    </div>
+                                </td>
+                                <td class="align-middle text-left text-nowrap" style="padding: 0px 25px 0 25px;">
+                                    @if(isset($upsaleInvoice->brand))
+                                        <div>
+                                            <span>Brand :</span>
+                                            <a href="{{route('admin.brand.index')}}">{{ $upsaleInvoice->brand->name }}</a>
+                                        </div>
+                                    @endif
+                                    @if(isset($upsaleInvoice->team))
+                                        <div>
+                                            <span>Team :</span>
+                                            <a href="{{route('admin.team.index')}}">{{ $upsaleInvoice->team->name }}</a>
+                                        </div>
+                                    @endif
+                                    @if(isset($upsaleInvoice->agent_id , $upsaleInvoice->agent_type ,$upsaleInvoice->agent ))
+                                        <div>
+                                            <span>Agent :</span>
+                                            <a href="{{route('admin.employee.index')}}">{{ $upsaleInvoice->agent->name }}</a>
+                                        </div>
+                                    @endif
+                                    @if(isset($upsaleInvoice->customer_contact))
+                                        <div>
+                                            <span>Customer :</span>
+                                            <a href="{{route('admin.customer.contact.index')}}">{{ $upsaleInvoice->customer_contact->name }}</a>
+                                        </div>
+                                    @endif
+                                </td>
+                                <td class="align-middle space-between text-nowrap"
+                                    style="text-align: left;">
+                                    <div
+                                            style="display: flex; justify-content: space-between; gap: 10px;">
+                                        <span style="width: 120px; ">Amount:</span>
+                                        <span>{{ $upsaleInvoice->currency ." ". number_format($upsaleInvoice->amount, 2, '.', '') }}</span>
+                                    </div>
+                                    <div
+                                            style="display: flex; justify-content: space-between; gap: 10px;">
+                                        <span style="width: 120px; ">Tax:</span>
+                                        <span>{{ $upsaleInvoice->tax_type == 'percentage' ? '%' : ($upsaleInvoice->tax_type == 'fixed' ? $upsaleInvoice->currency : '') }} {{ $upsaleInvoice->tax_value ?? 0 }}</span>
+                                    </div>
+                                    <div
+                                            style="display: flex; justify-content: space-between; gap: 10px;">
+                                        <span style="width: 120px; ">Tax Amount:</span>
+                                        <span>{{ $upsaleInvoice->currency ." ". number_format($upsaleInvoice->tax_amount, 2, '.', '') }}</span>
+                                    </div>
+                                    <div
+                                            style="display: flex; justify-content: space-between; gap: 10px;">
+                                        <span style="width: 120px; ">Total Amount:</span>
+                                        <span>{{ $upsaleInvoice->currency ." ". number_format($upsaleInvoice->total_amount, 2, '.', '') }}</span>
+                                    </div>
+                                </td>
+                                <td class="align-middle text-center text-nowrap">
+                                    <div>
+                                        <span>Due Date :</span>
+                                    </div>
+                                    <div>
+                                        <span>{{Carbon\Carbon::parse($upsaleInvoice->due_date)->format('Y-m-d')}}</span>
+                                    </div>
+                                    <div>
+                                        <span>Created Date :</span>
+                                    </div>
+                                    <div>
+                                        <span>
+                                            @if ($upsaleInvoice->created_at->isToday())
+                                                Today
+                                                at {{ $upsaleInvoice->created_at->timezone('GMT+5')->format('g:i A') }}
+                                                GMT+5
+                                            @else
+                                                {{ $upsaleInvoice->created_at->timezone('GMT+5')->format('M d, Y g:i A') }}
+                                                GMT+5
+                                            @endif
+                                        </span>
+                                    </div>
+                                </td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END : Upsale Invoices Modal Animation -->
+
+    @foreach ($invoiceData as $invoice)
+        <!-- Modal for {{ $invoice['title'] }} Invoices -->
+        <div class="modal fade" id="{{ $invoice['modal'] }}" tabindex="-1" role="dialog" aria-hidden="true"
+             aria-labelledby="{{ $invoice['modal'] }}AnimationLabel">
+            <div class="modal-dialog modal-dialog-centered transform-popover modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="{{ $invoice['modal'] }}AnimationLabel">{{ $invoice['title'] }} Invoices</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <table class="table table-striped dashbord_tbl initTable">
+                            <thead>
+                            <tr class="tabl_tr">
+                                <th class="tabl_th align-middle text-center text-nowrap">INVOICE #</th>
+                                <th class="tabl_th align-middle text-center text-nowrap">INVOICE DETAILS</th>
+                                <th class="tabl_th align-middle text-center text-nowrap">AMOUNT</th>
+                                <th class="tabl_th align-middle text-center text-nowrap">DATE</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach ($invoice['invoices'] as $invoiceItem)
+                                <tr id="tr-{{ $invoiceItem->id }}">
+                                    <td class="align-middle text-center text-nowrap text-sm invoice-cell">
+                                        <span class="invoice-number">{{ $invoiceItem->invoice_number }}</span><br>
+                                        <span class="invoice-key">{{ $invoiceItem->invoice_key }}</span>
+                                        <div>
+                                            @if($invoiceItem->status == 0)
+                                                <span class="badge bg-warning text-dark"
+                                                      style="min-width: -webkit-fill-available;">Pending</span>
+                                            @elseif($invoiceItem->status == 1)
+                                                <span class="badge bg-success" style="min-width: -webkit-fill-available;">Paid</span>
+                                            @elseif($invoiceItem->status == 2)
+                                                <span class="badge bg-danger" style="min-width: -webkit-fill-available;">Refund</span>
+                                            @elseif($invoiceItem->status == 3)
+                                                <span class="badge bg-danger" style="min-width: -webkit-fill-available;">Charge Back</span>
+                                            @endif
+                                        </div>
+                                    </td>
+                                    <td class="align-middle text-left text-nowrap" style="padding: 0px 25px 0 25px;">
+                                        @if(isset($invoiceItem->brand))
+                                            <div>
+                                                <span>Brand :</span>
+                                                <a href="{{ route('admin.brand.index') }}">{{ $invoiceItem->brand->name }}</a>
+                                            </div>
+                                        @endif
+                                        @if(isset($invoiceItem->team))
+                                            <div>
+                                                <span>Team :</span>
+                                                <a href="{{ route('admin.team.index') }}">{{ $invoiceItem->team->name }}</a>
+                                            </div>
+                                        @endif
+                                        @if(isset($invoiceItem->agent_id, $invoiceItem->agent_type, $invoiceItem->agent))
+                                            <div>
+                                                <span>Agent :</span>
+                                                <a href="{{ route('admin.employee.index') }}">{{ $invoiceItem->agent->name }}</a>
+                                            </div>
+                                        @endif
+                                        @if(isset($invoiceItem->customer_contact))
+                                            <div>
+                                                <span>Customer :</span>
+                                                <a href="{{ route('admin.customer.contact.index') }}">{{ $invoiceItem->customer_contact->name }}</a>
+                                            </div>
+                                        @endif
+                                    </td>
+                                    <td class="align-middle space-between text-nowrap"
+                                        style="text-align: left;">
+                                        <div style="display: flex; justify-content: space-between; gap: 10px;">
+                                            <span style="width: 120px; ">Amount:</span>
+                                            <span>{{ $invoiceItem->currency . " " . number_format($invoiceItem->amount, 2, '.', '') }}</span>
+                                        </div>
+                                        <div style="display: flex; justify-content: space-between; gap: 10px;">
+                                            <span style="width: 120px; ">Tax:</span>
+                                            <span>{{ $invoiceItem->tax_type == 'percentage' ? '%' : ($invoiceItem->tax_type == 'fixed' ? $invoiceItem->currency : '') }} {{ $invoiceItem->tax_value ?? 0 }}</span>
+                                        </div>
+                                        <div style="display: flex; justify-content: space-between; gap: 10px;">
+                                            <span style="width: 120px; ">Tax Amount:</span>
+                                            <span>{{ $invoiceItem->currency . " " . number_format($invoiceItem->tax_amount, 2, '.', '') }}</span>
+                                        </div>
+                                        <div style="display: flex; justify-content: space-between; gap: 10px;">
+                                            <span style="width: 120px; ">Total Amount:</span>
+                                            <span>{{ $invoiceItem->currency . " " . number_format($invoiceItem->total_amount, 2, '.', '') }}</span>
+                                        </div>
+                                    </td>
+                                    <td class="align-middle text-center text-nowrap">
+                                        <div>
+                                            <span>Due Date :</span>
+                                        </div>
+                                        <div>
+                                            <span>{{ Carbon\Carbon::parse($invoiceItem->due_date)->format('Y-m-d') }}</span>
+                                        </div>
+                                        <div>
+                                            <span>Created Date :</span>
+                                        </div>
+                                        <div>
+                                        <span>
+                                            @if ($invoiceItem->created_at->isToday())
+                                                Today
+                                                at {{ $invoiceItem->created_at->timezone('GMT+5')->format('g:i A') }}
+                                                GMT+5
+                                            @else
+                                                {{ $invoiceItem->created_at->timezone('GMT+5')->format('M d, Y g:i A') }}
+                                                GMT+5
+                                            @endif
+                                        </span>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- END : {{ $invoice['title'] }} Invoices Modal Animation -->
+    @endforeach
+
+
+    <!--Modals End -->
     @push('script')
         <script>
+            var dataTables = [];
+
+            /** Initializing Datatable */
             if ($('.initTable').length) {
                 $('.initTable').each(function (index) {
-                    initializeDatatable($(this), index)
+                    dataTables[index] = initializeDatatable($(this), index)
                 })
             }
+
             function initializeDatatable(table_div, index) {
-                table = table_div.DataTable({
+                let datatable = table_div.DataTable({
                     dom:
                         "<'row'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6'f>>" +
                         "<'row'<'col-sm-12'tr>>" +
@@ -381,11 +869,25 @@
                     order: [[1, 'desc']],
                     responsive: false,
                     scrollX: true,
-                    scrollY:  ($(window).height() - 350),
+                    scrollY: ($(window).height() - 350),
                     scrollCollapse: true,
                     paging: true,
+                    pageLength: 5,
+                    lengthMenu: [[5, 10, 25, 50, 100], [5, 10, 25, 50, 100]],
                 });
+                datatable.columns.adjust().draw()
+                return datatable;
             }
+
+            $('.modal').on('shown.bs.modal', function () {
+                let table = $(this).find('.initTable');
+                if (table.length) {
+                    let datatable = table.DataTable();
+                    if (datatable) {
+                        datatable.columns.adjust().draw();
+                    }
+                }
+            });
             // // Bar Chart
             // var options = {
             //     series: [{
@@ -703,8 +1205,7 @@
                 tooltip: {
                     y: {
                         formatter: function (val) {
-                            let total = [{{$paymentCounts->paid}},{{$paymentCounts->refund}},{{$paymentCounts->chargeback}}].
-                            reduce((a, b) => a + b, 0);
+                            let total = [{{$paymentCounts->paid}}, {{$paymentCounts->refund}}, {{$paymentCounts->chargeback}}].reduce((a, b) => a + b, 0);
                             let percentage = (val / total) * 100;
                             return percentage.toFixed(2) + "%";
                         }

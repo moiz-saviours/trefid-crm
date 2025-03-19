@@ -31,19 +31,19 @@ class DashboardController extends Controller
         $this->currentYear = Carbon::now()->year;
         $activeTime = Carbon::now()->subMinutes(5);
         $totalAdmins = Admin::count();
-        $activeAdmins = Admin::where('last_seen', '>=', $activeTime)->count();
+        $activeAdmins = Admin::where('last_seen', '>=', $activeTime)->get();
         $totalUsers = User::count();
-        $activeUsers = User::where('last_seen', '>=', $activeTime)->count();
+        $activeUsers = User::where('last_seen', '>=', $activeTime)->get();
         $freshInvoices = Invoice::whereMonth('created_at', $this->currentMonth)
             ->whereYear('created_at', $this->currentYear)
-            ->where('type', 0)->count();
+            ->where('type', 0)->get();
         $upsaleInvoices = Invoice::whereMonth('created_at', $this->currentMonth)
             ->whereYear('created_at', $this->currentYear)
-            ->where('type', 1)->count();
-        $adminProgress = $totalAdmins > 0 ? ($activeAdmins / $totalAdmins) * 100 : 0;
-        $userProgress = $totalUsers > 0 ? ($activeUsers / $totalUsers) * 100 : 0;
-        $freshInvoiceProgress = ($freshInvoices + $upsaleInvoices) > 0 ? ($freshInvoices / ($freshInvoices + $upsaleInvoices)) * 100 : 0;
-        $upsalInvoiceProgress = ($freshInvoices + $upsaleInvoices) > 0 ? ($upsaleInvoices / ($freshInvoices + $upsaleInvoices)) * 100 : 0;
+            ->where('type', 1)->get();
+        $adminProgress = $totalAdmins > 0 && count($activeAdmins) > 0 ? (count($activeAdmins) / $totalAdmins) * 100 : 0;
+        $userProgress = $totalUsers > 0 && count($activeUsers) > 0 ? (count($activeUsers) / $totalUsers) * 100 : 0;
+        $freshInvoiceProgress = (count($freshInvoices) + count($upsaleInvoices)) > 0 ? (count($freshInvoices) / (count($freshInvoices) + count($upsaleInvoices))) * 100 : 0;
+        $upsalInvoiceProgress = (count($freshInvoices) + count($upsaleInvoices)) > 0 ? (count($upsaleInvoices) / (count($freshInvoices) + count($upsaleInvoices))) * 100 : 0;
         view()->share(compact('activeUsers', 'totalUsers', 'userProgress', 'activeAdmins', 'totalAdmins', 'adminProgress', 'freshInvoices', 'upsaleInvoices', 'freshInvoiceProgress', 'upsalInvoiceProgress'));
     }
 
@@ -52,19 +52,27 @@ class DashboardController extends Controller
         $totalInvoices = Invoice::whereMonth('created_at', $this->currentMonth)
             ->whereYear('created_at', $this->currentYear)
             ->count();
-        $invoiceCounts = Invoice::whereMonth('created_at', $this->currentMonth)
+        $paidInvoices = Invoice::whereMonth('created_at', $this->currentMonth)
             ->whereYear('created_at', $this->currentYear)
-            ->selectRaw("
-        COUNT(CASE WHEN status = 0 THEN 1 END) as due_invoices,
-        COUNT(CASE WHEN status = 1 THEN 1 END) as paid_invoices,
-        COUNT(CASE WHEN status = 2 THEN 1 END) as refund_invoices,
-        COUNT(CASE WHEN status = 3 THEN 1 END) as chargeback_invoices
-    ")->first();
+            ->where('status', 1)
+            ->get();
+        $dueInvoices = Invoice::whereMonth('created_at', $this->currentMonth)
+            ->whereYear('created_at', $this->currentYear)
+            ->where('status', 0)
+            ->get();
+        $refundInvoices = Invoice::whereMonth('created_at', $this->currentMonth)
+            ->whereYear('created_at', $this->currentYear)
+            ->where('status', 2)
+            ->get();
+        $chargebackInvoices = Invoice::whereMonth('created_at', $this->currentMonth)
+            ->whereYear('created_at', $this->currentYear)
+            ->where('status', 3)
+            ->get();
         $invoicesProgress = $totalInvoices > 0 ? [
-            'due' => ($invoiceCounts->due_invoices / $totalInvoices) * 100,
-            'paid' => ($invoiceCounts->paid_invoices / $totalInvoices) * 100,
-            'refund' => ($invoiceCounts->refund_invoices / $totalInvoices) * 100,
-            'chargeback' => ($invoiceCounts->chargeback_invoices / $totalInvoices) * 100
+            'due' => (count($dueInvoices) / $totalInvoices) * 100,
+            'paid' => (count($paidInvoices) / $totalInvoices) * 100,
+            'refund' => (count($refundInvoices) / $totalInvoices) * 100,
+            'chargeback' => (count($chargebackInvoices) / $totalInvoices) * 100
         ] : ['due' => 0, 'paid' => 0, 'refund' => 0, 'chargeback' => 0];
         $totalPayments = Payment::whereMonth('created_at', $this->currentMonth)
             ->whereYear('created_at', $this->currentYear)
@@ -114,10 +122,10 @@ class DashboardController extends Controller
         }
         return view('admin.dashboard.index-1', [
             'totalInvoices' => $totalInvoices,
-            'dueInvoices' => $invoiceCounts->due_invoices,
-            'paidInvoices' => $invoiceCounts->paid_invoices,
-            'refundInvoices' => $invoiceCounts->refund_invoices,
-            'chargebackInvoices' => $invoiceCounts->chargeback_invoices,
+            'dueInvoices' => $dueInvoices,
+            'paidInvoices' => $paidInvoices,
+            'refundInvoices' => $refundInvoices,
+            'chargebackInvoices' => $chargebackInvoices,
             'invoicesProgress' => $invoicesProgress,
             'recentPayments' => $recentPayments,
             'leadStatuses' => $leadStatuses,
