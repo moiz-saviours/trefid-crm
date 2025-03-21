@@ -69,6 +69,14 @@
                 transform: scale(0);
             }
 
+            .col-md-3[data-bs-toggle="modal"] {
+                cursor: pointer;
+            }
+
+            .total-sum {
+                cursor: text;
+                pointer-events: none;
+            }
         </style>
     @endpush
     <section id="content" class="content">
@@ -126,7 +134,6 @@
                             </div>
                         </div>
                     </div>
-
                     <!-- Fresh Invoices -->
                     <div class="col-md-3" data-bs-toggle="modal" data-bs-target="#freshInvoicesModal">
                         <div class="card text-white" style="background-color: var(--bs-primary);">
@@ -134,7 +141,8 @@
                                 <div class="d-flex align-items-center mb-2">
                                     <i class="demo-pli-cart-coin display-6"></i>
                                     <div class="ms-4">
-                                        <h5 class="text-white h2 mb-0">${{$freshInvoices->sum('total_amount')}}</h5>
+                                        <h5 class="text-white h2 mb-0 total-sum">
+                                            ${{$freshInvoices->sum('total_amount')}}</h5>
                                         <p class="text-white text-opacity-75 mb-0">{{ max(0,count($freshInvoices)) }}
                                             Fresh Invoice</p>
                                     </div>
@@ -158,8 +166,10 @@
                                 <div class="d-flex align-items-center mb-2">
                                     <i class="demo-pli-cart-coin display-6"></i>
                                     <div class="ms-4">
-                                        <h5 class="text-white h2 mb-0">${{$upsaleInvoices->sum('total_amount')}}</h5>
-                                        <p class="text-white text-opacity-75 mb-0">{{ max(0,count($upsaleInvoices)) }} Upsale Invoice</p>
+                                        <h5 class="text-white h2 mb-0 total-sum">
+                                            ${{$upsaleInvoices->sum('total_amount')}}</h5>
+                                        <p class="text-white text-opacity-75 mb-0">{{ max(0,count($upsaleInvoices)) }}
+                                            Upsale Invoice</p>
                                     </div>
                                 </div>
                                 <div class="progress progress-md">
@@ -195,9 +205,10 @@
                                     <div class="d-flex align-items-center mb-2">
                                         <i class="{{ $invoice['icon'] }} display-6"></i>
                                         <div class="ms-4">
-                                            <h5 class="h2 mb-0"
+                                            <h5 class="h2 mb-0 total-sum"
                                                 style="color: var(--bs-primary);">${{ $invoice['total_sum'] }}</h5>
-                                            <p class="text-opacity-75 mb-0">{{ $invoice['count'] }} Total {{ $invoice['title'] }}</p>
+                                            <p class="text-opacity-75 mb-0">{{ $invoice['count'] }}
+                                                Total {{ $invoice['title'] }}</p>
                                         </div>
                                     </div>
                                     <div class="progress progress-md">
@@ -402,7 +413,7 @@
     <!--Modals Start -->
 
     <!-- Active Admin Modal -->
-    <div class="modal fade" id="activeAdminModal" tabindex="-1" role="dialog" aria-hidden="true"
+    <div class="modal fade" id="activeAdminModal"
          aria-labelledby="activeAdminModalAnimationLabel">
         <div class="modal-dialog modal-dialog-centered transform-popover modal-lg">
             <div class="modal-content">
@@ -446,7 +457,7 @@
     <!-- END : Active Admin Modal Animation -->
 
     <!-- Active User Modal -->
-    <div class="modal fade" id="activeUserModal" tabindex="-1" role="dialog" aria-hidden="true"
+    <div class="modal fade" id="activeUserModal"
          aria-labelledby="activeUserModalAnimationLabel">
         <div class="modal-dialog modal-dialog-centered transform-popover modal-lg">
             <div class="modal-content">
@@ -490,7 +501,7 @@
     <!-- END : Active User Modal Animation -->
 
     <!-- Fresh Invoices Modal -->
-    <div class="modal fade" id="freshInvoicesModal" tabindex="-1" role="dialog" aria-hidden="true"
+    <div class="modal fade" id="freshInvoicesModal"
          aria-labelledby="freshInvoicesModalAnimationLabel">
         <div class="modal-dialog modal-dialog-centered transform-popover modal-lg">
             <div class="modal-content">
@@ -610,7 +621,7 @@
     <!-- END : Fresh Invoices Modal Animation -->
 
     <!-- Upsale Invoices Modal -->
-    <div class="modal fade" id="upsaleInvoicesModal" tabindex="-1" role="dialog" aria-hidden="true"
+    <div class="modal fade" id="upsaleInvoicesModal"
          aria-labelledby="upsaleInvoicesModalAnimationLabel">
         <div class="modal-dialog modal-dialog-centered transform-popover modal-lg">
             <div class="modal-content">
@@ -731,7 +742,7 @@
 
     @foreach ($invoiceData as $invoice)
         <!-- Modal for {{ $invoice['title'] }} Invoices -->
-        <div class="modal fade" id="{{ $invoice['modal'] }}" tabindex="-1" role="dialog" aria-hidden="true"
+        <div class="modal fade" id="{{ $invoice['modal'] }}"
              aria-labelledby="{{ $invoice['modal'] }}AnimationLabel">
             <div class="modal-dialog modal-dialog-centered transform-popover modal-lg">
                 <div class="modal-content">
