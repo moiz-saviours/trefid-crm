@@ -146,7 +146,7 @@
                                          aria-valuemax="100">
                                     </div>
                                 </div>
-                                <small>{{ round($freshInvoiceProgress, 2) }}% of Total Invoices</small>
+                                <small>{{ round($freshInvoiceProgress, 2) }}% of Total Paid Invoices</small>
                             </div>
                         </div>
                     </div>
@@ -169,7 +169,7 @@
                                          aria-valuemax="100">
                                     </div>
                                 </div>
-                                <small>{{ round($upsalInvoiceProgress, 2) }}% of Total Invoices</small>
+                                <small>{{ round($upsalInvoiceProgress, 2) }}% of Total Paid Invoices</small>
                             </div>
                         </div>
                     </div>
