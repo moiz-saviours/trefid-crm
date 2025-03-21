@@ -50,6 +50,7 @@ class User extends Authenticatable
         'image',
         'last_seen',
         'last_ip_address',
+        'settings',
     ];
     /**
      * The attributes that should be hidden for serialization.
@@ -71,6 +72,7 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'settings' => 'array',
         ];
     }
 
@@ -82,5 +84,20 @@ class User extends Authenticatable
     public function invoices()
     {
         return $this->morphMany(Invoice::class, 'agent');
+    }
+
+    public function department(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Department::class, 'department_id');
+    }
+
+    public function role(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Role::class, 'role_id');
+    }
+
+    public function position(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Position::class, 'position_id');
     }
 }

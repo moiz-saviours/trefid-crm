@@ -11,6 +11,7 @@
                 <!-- Profile picture  -->
                 <div class="mininav-toggle text-center py-2">
                     <img class="mainnav__avatar img-md rounded-circle hv-oc"
+                         style="background-color: var(--bs-secondary);"
                          src="{{auth()->guard('web')->user()->image && file_exists(public_path('assets/images/employees/'.auth()->guard('web')->user()->image)) ? asset('assets/images/employees/'.auth()->guard('web')->user()->image) : asset('assets/themes/nifty/assets/img/profile-photos/2.png')}}"
                          alt="{{auth()->guard('web')->user()->name}}" title="Dashboard" loading="lazy">
                 </div>
@@ -24,34 +25,38 @@
                            <span class="dropdown-toggle d-flex justify-content-center align-items-center">
                               <h5 class="mb-0 me-3">{{auth()->guard('web')->user()->name}}</h5>
                            </span>
-                            <small class="text-body-secondary">{{auth()->guard('web')->user()->designation}}</small>
                         </button>
+                        <div class="text-center pb-1">
+                            <small class="text-body-secondary d-block">{{ auth()->guard('web')->user()->email }}</small>
+                            <small
+                                class="text-body-secondary d-block text-capitalize">{{ auth()->guard('web')->user()->designation }}</small>
+                        </div>
 
 
                         <!-- Collapsed user menu -->
                         <div id="usernav" class="nav flex-column collapse">
-                            <a href="#" class="nav-link d-flex justify-content-between align-items-center">
-                                    <span><i class="demo-pli-mail fs-5 me-2"></i><span
-                                            class="ms-1">Messages</span></span>
-                                <span class="badge bg-danger rounded-pill">14</span>
-                            </a>
-                            <a href="#" class="nav-link">
+                            {{--                            <a href="#" class="nav-link d-flex justify-content-between align-items-center">--}}
+                            {{--                                    <span><i class="demo-pli-mail fs-5 me-2"></i><span--}}
+                            {{--                                            class="ms-1">Messages</span></span>--}}
+                            {{--                                <span class="badge bg-danger rounded-pill">14</span>--}}
+                            {{--                            </a>--}}
+                            <a href="javascript:void(0)" class="nav-link">
                                 <i class="demo-pli-male fs-5 me-2"></i>
                                 <span class="ms-1">Profile</span>
                             </a>
-                            <a href="#" class="nav-link">
-                                <i class="demo-pli-gear fs-5 me-2"></i>
-                                <span class="ms-1">Settings</span>
-                            </a>
-                            <a href="#" class="nav-link">
-                                <i class="demo-pli-computer-secure fs-5 me-2"></i>
-                                <span class="ms-1">Lock screen</span>
-                            </a>
-                            <a class="nav-link" style="cursor: pointer;"
-                               onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                <i class="demo-pli-unlock fs-5 me-2"></i>
-                                <span class="ms-1">Logout</span>
-                            </a>
+                            {{--                            <a href="#" class="nav-link">--}}
+                            {{--                                <i class="demo-pli-gear fs-5 me-2"></i>--}}
+                            {{--                                <span class="ms-1">Settings</span>--}}
+                            {{--                            </a>--}}
+                            {{--                            <a href="#" class="nav-link">--}}
+                            {{--                                <i class="demo-pli-computer-secure fs-5 me-2"></i>--}}
+                            {{--                                <span class="ms-1">Lock screen</span>--}}
+                            {{--                            </a>--}}
+                            {{--                            <a class="nav-link" style="cursor: pointer;"--}}
+                            {{--                               onclick="event.preventDefault(); document.getElementById('logout-form').submit();">--}}
+                            {{--                                <i class="demo-pli-unlock fs-5 me-2"></i>--}}
+                            {{--                                <span class="ms-1">Logout</span>--}}
+                            {{--                            </a>--}}
                         </div>
 
 
@@ -63,7 +68,7 @@
 
 
             <!-- Navigation Category Dashboard -->
-            <div class="mainnav__categoriy pb-1 pt-3">
+            <div class="mainnav__categoriy pb-1">
                 {{--                    <h6 class="mainnav__caption mt-0 fw-bold">Navigation</h6>--}}
                 <ul class="mainnav__menu nav flex-column">
                     <!-- Link with submenu -->
@@ -154,136 +159,213 @@
 
                 <h6 class="mainnav__caption mt-0 fw-bold">CRM</h6>
                 <ul class="mainnav__menu nav flex-column">
-                    <!-- Link with submenu -->
-                    <li class="nav-item has-sub">
-                        <a href="#"
-                           class="mininav-toggle nav-link collapsed {{ request()->is('companies*') ? 'active' : '' }}"><i
-                                class="demo-pli-address-book fs-5 me-2"></i>
-                            <span class="nav-label ms-1">Companies</span>
-                        </a>
-                        <!-- Ui Elements submenu list -->
-                        <ul class="mininav-content nav collapse">
-                            <li data-popper-arrow class="arrow"></li>
-                            <li class="nav-item">
-                                <a href="{{route('customer.company.index')}}"
-                                   class="nav-link {{ request()->is('companies*') ? 'active' : '' }}">Lists</a>
-                            </li>
-                        </ul>
-                        <!-- END : Ui Elements submenu list -->
-                    </li>
-                    <li class="nav-item has-sub">
-                        <a href="#"
-                           class="mininav-toggle nav-link collapsed {{ request()->is('contact*') ? 'active' : '' }}"><i
-                                class="demo-pli-address-book fs-5 me-2"></i>
-                            <span class="nav-label ms-1">Contacts</span>
-                        </a>
-                        <!-- Ui Elements submenu list -->
-                        <ul class="mininav-content nav collapse">
-                            <li data-popper-arrow class="arrow"></li>
-                            <li class="nav-item">
-                                <a href="{{route('customer.contact.index')}}"
-                                       class="nav-link {{ request()->is('contact*') ? 'active' : '' }}">Lists</a>
-                            </li>
-                        </ul>
-                        <!-- END : Ui Elements submenu list -->
-                    </li>
-                    <li class="nav-item has-sub">
-                        <a href="#"
-                           class="mininav-toggle nav-link collapsed {{ request()->is('team-members*') ? 'active' : '' }}"><i
-                                class="demo-pli-add-user fs-5 me-2"></i>
-                            <span class="nav-label ms-1">Team Members</span>
-                        </a>
-                        <!-- Ui Elements submenu list -->
-                        <ul class="mininav-content nav collapse">
-                            <li data-popper-arrow class="arrow"></li>
-                            <li class="nav-item">
-                                <a href="{{route('team-member.index')}}"
-                                   class="nav-link {{ request()->is('team-members*') ? 'active' : '' }}">Lists</a>
-                            </li>
-                        </ul>
-                        <!-- END : Ui Elements submenu list -->
-                    </li>
-                    <li class="nav-item has-sub">
-                        <a href="#"
-                           class="mininav-toggle nav-link collapsed {{ request()->is('brand*') ? 'active' : '' }}"><i
-                                class="demo-pli-tag fs-5 me-2"></i>
-                            <span class="nav-label ms-1">Brands</span>
-                        </a>
-                        <!-- Ui Elements submenu list -->
-                        <ul class="mininav-content nav collapse">
-                            <li data-popper-arrow class="arrow"></li>
-                            <li class="nav-item">
-                                <a href="{{route('brand.index')}}"
-                                   class="nav-link {{ request()->is('brand*') ? 'active' : '' }}">Lists</a>
-                            </li>
-                        </ul>
-                        <!-- END : Ui Elements submenu list -->
-                    </li>
+                    <li class="nav-item">
+                        <a href="{{route('customer.company.index')}}"
+                           class="nav-link mininav-toggle {{ request()->is('companies*') ? 'active' : '' }}">
+                            <i class="demo-pli-address-book fs-5 me-2"></i>
 
-                    <li class="nav-item has-sub">
-                        <a href="#"
-                           class="mininav-toggle nav-link collapsed {{ request()->is('leads*') ? 'active' : '' }}"><i
-                                class="demo-pli-mine fs-5 me-2"></i>
-                            <span class="nav-label ms-1">Leads</span>
+                            <span class="nav-label mininav-content ms-1 collapse" style="">
+                              <span data-popper-arrow="" class="arrow"></span>
+                              Companies
+                           </span>
                         </a>
-                        <!-- Ui Elements submenu list -->
-                        <ul class="mininav-content nav collapse">
-                            <li data-popper-arrow class="arrow"></li>
-                            <li class="nav-item">
-                                <a href="{{route('lead.index')}}"
-                                   class="nav-link {{ request()->is('leads*') ? 'active' : '' }}">Lists</a>
-                            </li>
-                        </ul>
-                        <!-- END : Ui Elements submenu list -->
                     </li>
-{{--                    <li class="nav-item has-sub">--}}
-{{--                        <a href="#"--}}
-{{--                           class="mininav-toggle nav-link collapsed {{ request()->is('lead-status*') ? 'active' : '' }}"><i--}}
-{{--                                class="demo-pli-gears fs-5 me-2"></i>--}}
-{{--                            <span class="nav-label ms-1">Lead Status</span>--}}
-{{--                        </a>--}}
-{{--                        <!-- Ui Elements submenu list -->--}}
-{{--                        <ul class="mininav-content nav collapse">--}}
-{{--                            <li data-popper-arrow class="arrow"></li>--}}
-{{--                            <li class="nav-item">--}}
-{{--                                <a href="{{route('lead-status.index')}}"--}}
-{{--                                   class="nav-link {{ request()->is('lead-status*') ? 'active' : '' }}">Lists</a>--}}
-{{--                            </li>--}}
-{{--                        </ul>--}}
-{{--                        <!-- END : Ui Elements submenu list -->--}}
-{{--                    </li>--}}
-                    <li class="nav-item has-sub">
-                        <a href="#"
-                           class="mininav-toggle nav-link collapsed {{ request()->is('invoices*') ? 'active' : '' }}"><i
-                                class="demo-pli-file fs-5 me-2"></i>
-                            <span class="nav-label ms-1">Invoices</span>
+                    <!-- Link with submenu -->
+                    {{--                    <li class="nav-item has-sub">--}}
+                    {{--                        <a href="#"--}}
+                    {{--                           class="mininav-toggle nav-link collapsed {{ request()->is('companies*') ? 'active' : '' }}"><i--}}
+                    {{--                                class="demo-pli-address-book fs-5 me-2"></i>--}}
+                    {{--                            <span class="nav-label ms-1">Companies</span>--}}
+                    {{--                        </a>--}}
+                    {{--                        <!-- Ui Elements submenu list -->--}}
+                    {{--                        <ul class="mininav-content nav collapse">--}}
+                    {{--                            <li data-popper-arrow class="arrow"></li>--}}
+                    {{--                            <li class="nav-item">--}}
+                    {{--                                <a href="{{route('customer.company.index')}}"--}}
+                    {{--                                   class="nav-link {{ request()->is('companies*') ? 'active' : '' }}">Lists</a>--}}
+                    {{--                            </li>--}}
+                    {{--                        </ul>--}}
+                    {{--                        <!-- END : Ui Elements submenu list -->--}}
+                    {{--                    </li>--}}
+
+                    <li class="nav-item">
+                        <a href="{{route('customer.contact.index')}}"
+                           class="nav-link mininav-toggle {{ request()->is('contact*') ? 'active' : '' }}">
+                            <i class="demo-pli-address-book fs-5 me-2"></i>
+
+                            <span class="nav-label mininav-content ms-1 collapse" style="">
+                              <span data-popper-arrow="" class="arrow"></span>
+                              Contacts
+                           </span>
                         </a>
-                        <!-- Ui Elements submenu list -->
-                        <ul class="mininav-content nav collapse">
-                            <li data-popper-arrow class="arrow"></li>
-                            <li class="nav-item">
-                                <a href="{{route('invoice.index')}}"
-                                   class="nav-link {{ request()->is('invoice*') ? 'active' : '' }}">Lists</a>
-                            </li>
-                        </ul>
-                        <!-- END : Ui Elements submenu list -->
                     </li>
-                    <li class="nav-item has-sub">
-                        <a href="#"
-                           class="mininav-toggle nav-link collapsed {{ request()->is('payments*') ? 'active' : '' }}"><i
-                                class="demo-pli-wallet-2 fs-5 me-2"></i>
-                            <span class="nav-label ms-1">Payments</span>
+                    {{--                    <li class="nav-item has-sub">--}}
+                    {{--                        <a href="#"--}}
+                    {{--                           class="mininav-toggle nav-link collapsed {{ request()->is('contact*') ? 'active' : '' }}"><i--}}
+                    {{--                                class="demo-pli-address-book fs-5 me-2"></i>--}}
+                    {{--                            <span class="nav-label ms-1">Contacts</span>--}}
+                    {{--                        </a>--}}
+                    {{--                        <!-- Ui Elements submenu list -->--}}
+                    {{--                        <ul class="mininav-content nav collapse">--}}
+                    {{--                            <li data-popper-arrow class="arrow"></li>--}}
+                    {{--                            <li class="nav-item">--}}
+                    {{--                                <a href="{{route('customer.contact.index')}}"--}}
+                    {{--                                       class="nav-link {{ request()->is('contact*') ? 'active' : '' }}">Lists</a>--}}
+                    {{--                            </li>--}}
+                    {{--                        </ul>--}}
+                    {{--                        <!-- END : Ui Elements submenu list -->--}}
+                    {{--                    </li>--}}
+                    <li class="nav-item">
+                        <a href="{{route('team-member.index')}}"
+                           class="nav-link mininav-toggle {{ request()->is('team-members*') ? 'active' : '' }}">
+                            <i class="demo-pli-add-user fs-5 me-2"></i>
+
+                            <span class="nav-label mininav-content ms-1 collapse" style="">
+                              <span data-popper-arrow="" class="arrow"></span>
+                              Team Members
+                           </span>
                         </a>
-                        <!-- Ui Elements submenu list -->
-                        <ul class="mininav-content nav collapse">
-                            <li data-popper-arrow class="arrow"></li>
-                            <li class="nav-item">
-                                <a href="{{route('payment.index')}}"
-                                   class="nav-link {{ request()->is('payment*') ? 'active' : '' }}">Lists</a>
-                            </li>
-                        </ul>
-                        <!-- END : Ui Elements submenu list -->
                     </li>
+                    {{--                    <li class="nav-item has-sub">--}}
+                    {{--                        <a href="#"--}}
+                    {{--                           class="mininav-toggle nav-link collapsed {{ request()->is('team-members*') ? 'active' : '' }}"><i--}}
+                    {{--                                class="demo-pli-add-user fs-5 me-2"></i>--}}
+                    {{--                            <span class="nav-label ms-1">Team Members</span>--}}
+                    {{--                        </a>--}}
+                    {{--                        <!-- Ui Elements submenu list -->--}}
+                    {{--                        <ul class="mininav-content nav collapse">--}}
+                    {{--                            <li data-popper-arrow class="arrow"></li>--}}
+                    {{--                            <li class="nav-item">--}}
+                    {{--                                <a href="{{route('team-member.index')}}"--}}
+                    {{--                                   class="nav-link {{ request()->is('team-members*') ? 'active' : '' }}">Lists</a>--}}
+                    {{--                            </li>--}}
+                    {{--                        </ul>--}}
+                    {{--                        <!-- END : Ui Elements submenu list -->--}}
+                    {{--                    </li>--}}
+                    <li class="nav-item">
+                        <a href="{{route('brand.index')}}"
+                           class="nav-link mininav-toggle {{ request()->is('brand*') ? 'active' : '' }}">
+                            <i class="demo-pli-tag fs-5 me-2"></i>
+
+                            <span class="nav-label mininav-content ms-1 collapse" style="">
+                              <span data-popper-arrow="" class="arrow"></span>
+                              Brands
+                           </span>
+                        </a>
+                    </li>
+                    {{--                    <li class="nav-item has-sub">--}}
+                    {{--                        <a href="#"--}}
+                    {{--                           class="mininav-toggle nav-link collapsed {{ request()->is('brand*') ? 'active' : '' }}"><i--}}
+                    {{--                                class="demo-pli-tag fs-5 me-2"></i>--}}
+                    {{--                            <span class="nav-label ms-1">Brands</span>--}}
+                    {{--                        </a>--}}
+                    {{--                        <!-- Ui Elements submenu list -->--}}
+                    {{--                        <ul class="mininav-content nav collapse">--}}
+                    {{--                            <li data-popper-arrow class="arrow"></li>--}}
+                    {{--                            <li class="nav-item">--}}
+                    {{--                                <a href="{{route('brand.index')}}"--}}
+                    {{--                                   class="nav-link {{ request()->is('brand*') ? 'active' : '' }}">Lists</a>--}}
+                    {{--                            </li>--}}
+                    {{--                        </ul>--}}
+                    {{--                        <!-- END : Ui Elements submenu list -->--}}
+                    {{--                    </li>--}}
+                    <li class="nav-item">
+                        <a href="{{route('lead.index')}}"
+                           class="nav-link mininav-toggle {{ request()->is('leads*') ? 'active' : '' }}">
+                            <i class="demo-pli-mine fs-5 me-2"></i>
+
+                            <span class="nav-label mininav-content ms-1 collapse" style="">
+                              <span data-popper-arrow="" class="arrow"></span>
+                              Leads
+                           </span>
+                        </a>
+                    </li>
+                    {{--                    <li class="nav-item has-sub">--}}
+                    {{--                        <a href="#"--}}
+                    {{--                           class="mininav-toggle nav-link collapsed {{ request()->is('leads*') ? 'active' : '' }}"><i--}}
+                    {{--                                class="demo-pli-mine fs-5 me-2"></i>--}}
+                    {{--                            <span class="nav-label ms-1">Leads</span>--}}
+                    {{--                        </a>--}}
+                    {{--                        <!-- Ui Elements submenu list -->--}}
+                    {{--                        <ul class="mininav-content nav collapse">--}}
+                    {{--                            <li data-popper-arrow class="arrow"></li>--}}
+                    {{--                            <li class="nav-item">--}}
+                    {{--                                <a href="{{route('lead.index')}}"--}}
+                    {{--                                   class="nav-link {{ request()->is('leads*') ? 'active' : '' }}">Lists</a>--}}
+                    {{--                            </li>--}}
+                    {{--                        </ul>--}}
+                    {{--                        <!-- END : Ui Elements submenu list -->--}}
+                    {{--                    </li>--}}
+                    {{--                    <li class="nav-item has-sub">--}}
+                    {{--                        <a href="#"--}}
+                    {{--                           class="mininav-toggle nav-link collapsed {{ request()->is('lead-status*') ? 'active' : '' }}"><i--}}
+                    {{--                                class="demo-pli-gears fs-5 me-2"></i>--}}
+                    {{--                            <span class="nav-label ms-1">Lead Status</span>--}}
+                    {{--                        </a>--}}
+                    {{--                        <!-- Ui Elements submenu list -->--}}
+                    {{--                        <ul class="mininav-content nav collapse">--}}
+                    {{--                            <li data-popper-arrow class="arrow"></li>--}}
+                    {{--                            <li class="nav-item">--}}
+                    {{--                                <a href="{{route('lead-status.index')}}"--}}
+                    {{--                                   class="nav-link {{ request()->is('lead-status*') ? 'active' : '' }}">Lists</a>--}}
+                    {{--                            </li>--}}
+                    {{--                        </ul>--}}
+                    {{--                        <!-- END : Ui Elements submenu list -->--}}
+                    {{--                    </li>--}}
+                    <li class="nav-item">
+                        <a href="{{route('invoice.index')}}"
+                           class="nav-link mininav-toggle {{ request()->is('invoices*') ? 'active' : '' }}">
+                            <i class="demo-pli-file fs-5 me-2"></i>
+
+                            <span class="nav-label mininav-content ms-1 collapse" style="">
+                              <span data-popper-arrow="" class="arrow"></span>
+                              Invoices
+                           </span>
+                        </a>
+                    </li>
+                    {{--                    <li class="nav-item has-sub">--}}
+                    {{--                        <a href="#"--}}
+                    {{--                           class="mininav-toggle nav-link collapsed {{ request()->is('invoices*') ? 'active' : '' }}"><i--}}
+                    {{--                                class="demo-pli-file fs-5 me-2"></i>--}}
+                    {{--                            <span class="nav-label ms-1">Invoices</span>--}}
+                    {{--                        </a>--}}
+                    {{--                        <!-- Ui Elements submenu list -->--}}
+                    {{--                        <ul class="mininav-content nav collapse">--}}
+                    {{--                            <li data-popper-arrow class="arrow"></li>--}}
+                    {{--                            <li class="nav-item">--}}
+                    {{--                                <a href="{{route('invoice.index')}}"--}}
+                    {{--                                   class="nav-link {{ request()->is('invoice*') ? 'active' : '' }}">Lists</a>--}}
+                    {{--                            </li>--}}
+                    {{--                        </ul>--}}
+                    {{--                        <!-- END : Ui Elements submenu list -->--}}
+                    {{--                    </li>--}}
+                    <li class="nav-item">
+                        <a href="{{route('payment.index')}}"
+                           class="nav-link mininav-toggle {{ request()->is('payments*') ? 'active' : '' }}">
+                            <i class="demo-pli-wallet-2 fs-5 me-2"></i>
+
+                            <span class="nav-label mininav-content ms-1 collapse" style="">
+                              <span data-popper-arrow="" class="arrow"></span>
+                              Payments
+                           </span>
+                        </a>
+                    </li>
+                    {{--                    <li class="nav-item has-sub">--}}
+                    {{--                        <a href="#"--}}
+                    {{--                           class="mininav-toggle nav-link collapsed {{ request()->is('payments*') ? 'active' : '' }}"><i--}}
+                    {{--                                class="demo-pli-wallet-2 fs-5 me-2"></i>--}}
+                    {{--                            <span class="nav-label ms-1">Payments</span>--}}
+                    {{--                        </a>--}}
+                    {{--                        <!-- Ui Elements submenu list -->--}}
+                    {{--                        <ul class="mininav-content nav collapse">--}}
+                    {{--                            <li data-popper-arrow class="arrow"></li>--}}
+                    {{--                            <li class="nav-item">--}}
+                    {{--                                <a href="{{route('payment.index')}}"--}}
+                    {{--                                   class="nav-link {{ request()->is('payment*') ? 'active' : '' }}">Lists</a>--}}
+                    {{--                            </li>--}}
+                    {{--                        </ul>--}}
+                    {{--                        <!-- END : Ui Elements submenu list -->--}}
+                    {{--                    </li>--}}
 
                     <!-- END : Link with submenu -->
                 </ul>
@@ -291,48 +373,48 @@
             <!-- END : Components Category -->
 
             <!-- Server Status Category -->
-{{--            <div class="mainnav__widget">--}}
+            {{--            <div class="mainnav__widget">--}}
 
-{{--                <!-- Widget buttton form small navigation -->--}}
-{{--                <div class="mininav-toggle text-center py-2 d-mn-min">--}}
-{{--                    <i class="demo-pli-monitor-2"></i>--}}
-{{--                </div>--}}
+            {{--                <!-- Widget buttton form small navigation -->--}}
+            {{--                <div class="mininav-toggle text-center py-2 d-mn-min">--}}
+            {{--                    <i class="demo-pli-monitor-2"></i>--}}
+            {{--                </div>--}}
 
-{{--                <div class="d-mn-max mt-5"></div>--}}
+            {{--                <div class="d-mn-max mt-5"></div>--}}
 
-{{--                <!-- Widget content -->--}}
-{{--                <div class="mininav-content collapse d-mn-max">--}}
-{{--                    <span data-popper-arrow class="arrow"></span>--}}
-{{--                    <h6 class="mainnav__caption fw-bold">Server Status</h6>--}}
-{{--                    <ul class="list-group list-group-borderless">--}}
-{{--                        <li class="list-group-item text-reset">--}}
-{{--                            <div class="d-flex justify-content-between align-items-start">--}}
-{{--                                <p class="mb-2 me-auto">CPU Usage</p>--}}
-{{--                                <span class="badge bg-info rounded">35%</span>--}}
-{{--                            </div>--}}
-{{--                            <div class="progress progress-md">--}}
-{{--                                <div class="progress-bar bg-info" role="progressbar" style="width: 35%"--}}
-{{--                                     aria-label="CPU Progress" aria-valuenow="35" aria-valuemin="0"--}}
-{{--                                     aria-valuemax="100"></div>--}}
-{{--                            </div>--}}
-{{--                        </li>--}}
-{{--                        <li class="list-group-item text-reset">--}}
-{{--                            <div class="d-flex justify-content-between align-items-start">--}}
-{{--                                <p class="mb-2 me-auto">Bandwidth</p>--}}
-{{--                                <span class="badge bg-warning rounded">73%</span>--}}
-{{--                            </div>--}}
-{{--                            <div class="progress progress-md">--}}
-{{--                                <div class="progress-bar bg-warning" role="progressbar" style="width: 73%"--}}
-{{--                                     aria-label="Bandwidth Progress" aria-valuenow="73" aria-valuemin="0"--}}
-{{--                                     aria-valuemax="100"></div>--}}
-{{--                            </div>--}}
-{{--                        </li>--}}
-{{--                    </ul>--}}
-{{--                    <div class="d-grid px-3 mt-3">--}}
-{{--                        <a href="#" class="btn btn-sm btn-success">View Details</a>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--            </div>--}}
+            {{--                <!-- Widget content -->--}}
+            {{--                <div class="mininav-content collapse d-mn-max">--}}
+            {{--                    <span data-popper-arrow class="arrow"></span>--}}
+            {{--                    <h6 class="mainnav__caption fw-bold">Server Status</h6>--}}
+            {{--                    <ul class="list-group list-group-borderless">--}}
+            {{--                        <li class="list-group-item text-reset">--}}
+            {{--                            <div class="d-flex justify-content-between align-items-start">--}}
+            {{--                                <p class="mb-2 me-auto">CPU Usage</p>--}}
+            {{--                                <span class="badge bg-info rounded">35%</span>--}}
+            {{--                            </div>--}}
+            {{--                            <div class="progress progress-md">--}}
+            {{--                                <div class="progress-bar bg-info" role="progressbar" style="width: 35%"--}}
+            {{--                                     aria-label="CPU Progress" aria-valuenow="35" aria-valuemin="0"--}}
+            {{--                                     aria-valuemax="100"></div>--}}
+            {{--                            </div>--}}
+            {{--                        </li>--}}
+            {{--                        <li class="list-group-item text-reset">--}}
+            {{--                            <div class="d-flex justify-content-between align-items-start">--}}
+            {{--                                <p class="mb-2 me-auto">Bandwidth</p>--}}
+            {{--                                <span class="badge bg-warning rounded">73%</span>--}}
+            {{--                            </div>--}}
+            {{--                            <div class="progress progress-md">--}}
+            {{--                                <div class="progress-bar bg-warning" role="progressbar" style="width: 73%"--}}
+            {{--                                     aria-label="Bandwidth Progress" aria-valuenow="73" aria-valuemin="0"--}}
+            {{--                                     aria-valuemax="100"></div>--}}
+            {{--                            </div>--}}
+            {{--                        </li>--}}
+            {{--                    </ul>--}}
+            {{--                    <div class="d-grid px-3 mt-3">--}}
+            {{--                        <a href="#" class="btn btn-sm btn-success">View Details</a>--}}
+            {{--                    </div>--}}
+            {{--                </div>--}}
+            {{--            </div>--}}
             <!-- End : Server Status Category -->
 
 
