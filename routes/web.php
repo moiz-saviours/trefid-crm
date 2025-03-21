@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\StripePaymentController;
+use App\Http\Controllers\user\SettingController;
 use App\Http\Controllers\User\{BrandController,
     Customer\CompanyController as UserCustomerCompanyController,
     Customer\ContactController as UserCustomerContactController,
@@ -66,10 +67,10 @@ Route::middleware('auth')->group(function () {
     /** Brand Routes */
     Route::prefix('brands')->name('brand.')->group(function () {
         Route::get('/', [BrandController::class, 'index'])->name('index');
-        Route::get('/create', [BrandController::class, 'create'])->name('create');
-        Route::post('/store', [BrandController::class, 'store'])->name('store');
-        Route::get('/edit/{brand?}', [BrandController::class, 'edit'])->name('edit');
-        Route::post('/update/{brand?}', [BrandController::class, 'update'])->name('update');
+//        Route::get('/create', [BrandController::class, 'create'])->name('create');
+//        Route::post('/store', [BrandController::class, 'store'])->name('store');
+//        Route::get('/edit/{brand?}', [BrandController::class, 'edit'])->name('edit');
+//        Route::post('/update/{brand?}', [BrandController::class, 'update'])->name('update');
     });
     /** Leads Routes */
     Route::name('lead.')->group(function () {
@@ -95,6 +96,9 @@ Route::middleware('auth')->group(function () {
 
     /** Payment Transaction Logs Route */
     Route::get('payment-transaction-logs', [PaymentTransactionLogController::class, 'getLogs'])->name('payment-transaction-logs');
+
+    /** Save Setting Route */
+    Route::post('/save-settings', [SettingController::class, 'saveSettings'])->name('save.settings');
 });
 require __DIR__ . '/admin-old-routes.php';
 require __DIR__ . '/admin-routes.php';
