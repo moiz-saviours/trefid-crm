@@ -22,8 +22,17 @@ class EmployeeController extends Controller
     public function index()
     {
         $users = User::all();
-        $departments = Department::all();
-        $roles = Role::all();
+        $departments = Department::whereIn('name', ['Sales', 'Operations'])->get();
+        $roles = Role::whereHas('department', function($query) {
+            $query->where('name', 'Sales');
+        })
+            ->orWhere(function($query) {
+                $query->whereHas('department', function($q) {
+                    $q->where('name', 'Operations');
+                })
+                    ->where('name', 'Accounts');
+            })
+            ->get();
         $positions = Position::all();
         return view('admin.employees.index', compact('users', 'departments', 'roles', 'positions'));
     }
@@ -147,7 +156,7 @@ class EmployeeController extends Controller
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'password' => 'nullable|string|max:255',
 //            'phone_number' => 'nullable|regex:/^(\+?\d{1,3})[\d\s().-]+$/|min:8|max:20'
-        ],$messages);
+        ], $messages);
         try {
 
             $user = new User($request->only([
