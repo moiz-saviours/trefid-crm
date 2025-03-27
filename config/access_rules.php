@@ -25,27 +25,21 @@ return [
     ],
     'development' => [
         'routes' => [
-            'project-management.*', // Project management system routes
         ],
     ],
     'marketing' => [
         'routes' => [
             'user.dashboard', // Marketing dashboard
-            'marketing-campaigns.*', // Marketing campaigns
         ],
     ],
     'humanresources' => [
         'routes' => [
-            'employee-management.*', // Employee management routes
         ],
     ],
     'operations' => [
         'roles' => [
             'Q/A Analyst' => [
                 'routes' => [
-                    'payments.check', // Check payments
-                    'payments.approve', // Approve payments
-                    'payments.disapprove', // Disapprove payments
                 ],
             ],
             'Accounts' => [
@@ -69,8 +63,6 @@ return [
                     'save.settings',
                 ],
                 'restrictions' => [
-                    'merchants.edit-login', // Cannot edit login details
-                    'merchants.edit-transaction-key', // Cannot edit transaction keys
                 ],
             ],
         ],
