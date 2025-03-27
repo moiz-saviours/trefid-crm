@@ -29,7 +29,7 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
         then: function () {
             Route::prefix('webhooks')->group(function () {
-                require __DIR__ . '/../routes/webhooks.php';
+//                require __DIR__ . '/../routes/webhooks.php';
             });
         }
     )
