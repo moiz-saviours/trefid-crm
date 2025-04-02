@@ -15,8 +15,19 @@ class SettingController extends Controller
         $request->validate([
             'settings' => 'required|array',
         ]);
-        $user->settings = $request->settings;
+        $settings = $this->normalizeSettings($request->settings);
+        $user->settings = $settings;
         $user->save();
         return response()->json(['message' => 'Settings saved successfully!']);
+    }
+
+    protected function normalizeSettings($settings)
+    {
+        array_walk_recursive($settings, function (&$value) {
+            if ($value === 'true') $value = true;
+            if ($value === 'false') $value = false;
+            if (is_numeric($value)) $value = (float)$value;
+        });
+        return $settings;
     }
 }
