@@ -1,7 +1,7 @@
 @extends('user.layouts.app')
 @section('title','Dashboard')
 @section('content')
-    @if(optional(auth()->user()->department)->name == "sales")
+    @if(strtolower(optional(auth()->user()->department)->name) == "sales")
         <style>
             .btn-minimize {
                 background-color: #ff5722;
@@ -71,7 +71,7 @@
                 <!-- END : Page title and information -->
             </div>
         </div>
-        @if(optional(auth()->user()->department)->name == "sales")
+        @if(strtolower(optional(auth()->user()->department)->name) == "sales")
             <div class="content__boxed">
                 <div class="content__wrap">
                     <div class="row">
@@ -378,7 +378,7 @@
 
     </section>
 
-    @if(optional(auth()->user()->department)->name == "sales")
+    @if(strtolower(optional(auth()->user()->department)->name) == "sales")
         @push('script')
             <script>
 
