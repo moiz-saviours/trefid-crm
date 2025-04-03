@@ -23,11 +23,11 @@ class EmployeeController extends Controller
     {
         $users = User::all();
         $departments = Department::whereIn('name', ['Sales', 'Operations'])->get();
-        $roles = Role::whereHas('department', function($query) {
+        $roles = Role::whereHas('department', function ($query) {
             $query->where('name', 'Sales');
         })
-            ->orWhere(function($query) {
-                $query->whereHas('department', function($q) {
+            ->orWhere(function ($query) {
+                $query->whereHas('department', function ($q) {
                     $q->where('name', 'Operations');
                 })
                     ->where('name', 'Accounts');
@@ -138,7 +138,7 @@ class EmployeeController extends Controller
             'name' => 'required|string|max:255',
             'pseudo_name' => 'nullable|string|max:255',
             'email' => 'required|email|max:255|unique:users,email',
-            'pseudo_email' => 'nullable|email|max:255|unique:users,email',
+            'pseudo_email' => 'nullable|email|max:255|unique:users,pseudo_email',
             'designation' => 'nullable|string|max:255',
             'gender' => 'nullable|string|max:10',
             'phone_number' => 'nullable|string',
@@ -299,7 +299,7 @@ class EmployeeController extends Controller
             'name' => 'required|string|max:255',
             'pseudo_name' => 'nullable|string|max:255',
             'email' => 'required|email|max:255|unique:users,email,' . $user->id,
-            'pseudo_email' => 'nullable|email|max:255|unique:users,email',
+            'pseudo_email' => 'nullable|email|max:255|unique:users,pseudo_email,' . $user->id,
             'designation' => 'nullable|string|max:255',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'target' => 'nullable|integer',
