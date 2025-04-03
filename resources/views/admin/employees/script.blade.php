@@ -403,6 +403,24 @@
             $('#manage-form-2').attr('action', `{{route('admin.employee.update.password')}}/` + id);
             $('#formContainerChangePassword').addClass('open');
         });
+
+        /** Manage Passowrd */
+        $('#manage-form-2').on('submit', function (e) {
+            e.preventDefault();
+            var dataId = $(this).data('id');
+            var formData = new FormData(this);
+            if (dataId) {
+                const url = $(this).attr('action');
+                AjaxRequestPromise(url, formData, 'POST', {useToastr: true})
+                    .then(response => {
+                        if (response?.data) {
+                            $(this)[0].reset();
+                        }
+                    })
+                    .catch(error => console.log(error));
+            }
+        });
+
         /** Delete Record */
         $(document).on('click', '.deleteBtn', function () {
             const id = $(this).data('id');
