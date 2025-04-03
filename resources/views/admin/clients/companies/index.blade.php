@@ -155,12 +155,12 @@
                                             <th class="align-middle text-center text-nowrap">SNO.</th>
                                             <th class="align-middle text-center text-nowrap">Contact</th>
                                             <th class="align-middle text-center text-nowrap">LOGO</th>
-                                            <th class="align-middle text-center text-nowrap">Name</th>
-                                            <th class="align-middle text-center text-nowrap">Email</th>
-                                            <th class="align-middle text-center text-nowrap">Url</th>
-                                            <th class="align-middle text-center text-nowrap">Description</th>
-                                            <th class="align-middle text-center text-nowrap">Status</th>
-                                            <th class="align-middle text-center text-nowrap">Action</th>
+                                            <th class="align-middle text-center text-nowrap">NAME</th>
+                                            <th class="align-middle text-center text-nowrap">EMAIL</th>
+                                            <th class="align-middle text-center text-nowrap">URL</th>
+                                            <th class="align-middle text-center text-nowrap">DESCRIPTION</th>
+                                            <th class="align-middle text-center text-nowrap">STATUS</th>
+                                            <th class="align-middle text-center text-nowrap">ACTION</th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -168,8 +168,7 @@
                                             <tr id="tr-{{$client_company->id}}">
                                                 <td class="align-middle text-center text-nowrap"></td>
                                                 <td class="align-middle text-center text-nowrap">{{$loop->iteration}}</td>
-                                                <td class="align-middle text-center text-nowrap">{{optional($client_company->
-                                                                                                    client_contact)->name}}</td>
+                                                <td class="align-middle text-center text-nowrap">{{optional($client_company->client_contact)->name}}</td>
                                                 <td class="align-middle text-center text-nowrap">
                                                     @php
                                                         $logoUrl = filter_var($client_company->logo, FILTER_VALIDATE_URL) ? $client_company->logo : asset('assets/images/clients/companies/logos/'.$client_company->logo);
