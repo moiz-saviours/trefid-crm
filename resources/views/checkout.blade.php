@@ -119,7 +119,7 @@ $first_merchant = $invoiceDetails['invoice']['payment_methods'][0] ?? "";
                                         <?php
                                         if ($status != 1) {
                                             echo '<h5>Balance Due</h5>
-                                        <h6>' . $currency . $amount . '</h6>';
+                                        <h6>' . $currency . $total_amount . '</h6>';
                                         } else {
                                             echo '<h5>Invoice Paid</h5>';
                                         }
@@ -509,7 +509,7 @@ $first_merchant = $invoiceDetails['invoice']['payment_methods'][0] ?? "";
                                         <div class="payment-btn-wrapper">
                                             <button type="submit" id="submit-btn-credit_card"
                                                     class="btn btn-primary make-payment-btn">Pay
-                                                Now {{$currency . $amount}}
+                                                Now {{$currency . $total_amount}}
                                             </button>
                                         </div>
                                     </form>
@@ -772,7 +772,7 @@ $first_merchant = $invoiceDetails['invoice']['payment_methods'][0] ?? "";
                                         <div class="payment-btn-wrapper">
                                             <button type="submit" id="submit-btn-edp"
                                                     class="btn btn-primary make-payment-btn">Pay
-                                                Now {{$currency . $amount}}
+                                                Now {{$currency . $total_amount}}
                                             </button>
                                         </div>
                                     </form>
