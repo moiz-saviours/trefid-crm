@@ -111,7 +111,7 @@
                     <label for="pseudo_email" class="form-label">Pseudo Email</label>
                     <input type="email" class="form-control" id="pseudo_email" name="pseudo_email"
                            placeholder="Enter Pseudo Email">
-                    @error('email')
+                    @error('pseudo_email')
                     <span class="text-danger">{{ $message }}</span>
                     @enderror
                 </div>
