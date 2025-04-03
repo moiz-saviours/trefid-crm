@@ -72,6 +72,11 @@ class PaymentMerchant extends Model
     }
 
     /**Scopes*/
+    public function scopeActive($query)
+    {
+        return $query->where('status', 'active');
+    }
+
     public function scopeHasSufficientLimitAndCapacity($query, $merchantId, $amount)
     {
         $total_amount = Payment::where('merchant_id', $merchantId)->whereMonth('created_at', now()->month)->whereYear('created_at', now()->year)->sum('amount');
@@ -80,14 +85,15 @@ class PaymentMerchant extends Model
             ->where('limit', '>=', (float)$amount)
             ->where('capacity', '>=', (float)$total_amount);
     }
+
     /**
      * Adds monthly usage data to the query results by summing payment amounts
      * for the current month and grouping by merchant ID.
      *
      */
-    public function scopeWithMonthlyUsage( $query)
+    public function scopeWithMonthlyUsage($query)
     {
-        return $query->with(['payments' => function ( $query) {
+        return $query->with(['payments' => function ($query) {
             $query->selectRaw('merchant_id, SUM(amount) as total_amount')
                 ->whereMonth('created_at', now()->month)
                 ->whereYear('created_at', now()->year)
@@ -95,8 +101,6 @@ class PaymentMerchant extends Model
         }]);
     }
     /**Scopes*/
-
-
     /** Attributes */
     /**
      * Get the formatted monthly usage amount for the current month.
@@ -119,7 +123,6 @@ class PaymentMerchant extends Model
             ->whereMonth('created_at', now()->month)
             ->whereYear('created_at', now()->year)
             ->sum('amount') ?? 0;
-
         return number_format($totalAmount);
     }
     /** Attributes */
