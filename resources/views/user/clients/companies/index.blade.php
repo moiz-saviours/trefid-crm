@@ -116,9 +116,6 @@
                                                     <button type="button" class="btn btn-sm btn-primary editBtn"
                                                             data-id="{{ $client_company->id }}" title="Edit"><i
                                                             class="fas fa-edit"></i></button>
-                                                    <button type="button" class="btn btn-sm btn-danger deleteBtn"
-                                                            data-id="{{ $client_company->id }}" title="Delete"><i
-                                                            class="fas fa-trash"></i></button>
                                                 </td>
                                             </tr>
                                         @endforeach
