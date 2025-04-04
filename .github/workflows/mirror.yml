@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        target_repo: ['Trefid-Crm']
+        target_repo: ['trefid-crm']
     concurrency:
       group: mirror-${{ github.ref }}-${{ matrix.target_repo }}
       cancel-in-progress: true
