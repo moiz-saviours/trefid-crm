@@ -6,17 +6,16 @@ on:
       - main
       - development
 
-concurrency:
-  group: mirror-${{ github.ref }}-${{ matrix.target_repo }}
-  cancel-in-progress: true
-
 jobs:
   mirror-to-repos:
     runs-on: ubuntu-latest
     strategy:
       matrix:
         target_repo: ['Trefid-Crm']
-    
+    concurrency:
+      group: mirror-${{ github.ref }}-${{ matrix.target_repo }}
+      cancel-in-progress: true
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
