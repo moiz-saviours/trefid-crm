@@ -122,6 +122,7 @@ Route::middleware(['auth', 'verified', 'throttle:60,1', 'dynamic.access'])->grou
             });
         });
         /** Payment Merchant Routes */
+        /** Payment Merchant Routes */ 
         Route::name('account.')->group(function () {
             Route::get('/client/accounts', [UserClientPaymentMerchantController::class, 'index'])->name('index');
             Route::prefix('client/account')->group(function () {
