@@ -31,8 +31,9 @@ jobs:
 
       - name: Configure Git
         run: |
-          git config --global user.name "GitHub Actions"
-          git config --global user.email "actions@github.com"
+          git config --global user.name "moiz-saviours"
+          git config --global user.email "moiz@saviours.co"
+
       - name: Verify repository access
         run: |
           response=$(curl -s -H "Authorization: token ${{ secrets.MIRRORING_ACCESS_TOKEN }}" \
