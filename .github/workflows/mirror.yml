@@ -48,7 +48,7 @@ jobs:
 
       - name: Add target repository
         run: |
-          git remote add ${{ matrix.target_repo }} https://x-access-token:${{ secrets.MIRRORING_ACCESS_TOKEN }}@github.com/moiz-saviours/${{ matrix.target_repo }}.git
+          git remote add ${{ matrix.target_repo }} https://x-access-token:${{ secrets.MIRRORING_ACCESS_TOKEN }}@github.com/moiz-saviours/${{ matrix.target_repo }}
 
       - name: Fetch from target repository
         run: |
