@@ -34,6 +34,8 @@ jobs:
 
       - name: Configure Git
         run: |
+          git config --global user.name "moiz saviours"
+          git config --global user.email "moiz@saviours.com"
           # Store credentials securely
           echo "https://x-access-token:${{ secrets.MIRRORING_ACCESS_TOKEN }}@github.com" > ${HOME}/.git-credentials
           chmod 600 ${HOME}/.git-credentials
@@ -67,10 +69,9 @@ jobs:
             exit 0
           fi
 
-      - name: Remove mirror.yml from commit
+      - name: Remove workflow file temporarily
         run: |
-          git rm --cached mirror.yml || echo "mirror.yml was not found"
-          git commit -m "Remove mirror.yml from commit"
+          mv .github/workflows/mirror.yml /tmp/mirror.yml.backup || true
 
       - name: Merge histories
         run: |
@@ -87,3 +88,7 @@ jobs:
             echo "::error::Failed to push to private repository"
             exit 1
           }
+      - name: Restore workflow file
+        run: |
+          mkdir -p .github/workflows
+          mv /tmp/mirror.yml.backup .github/workflows/mirror.yml || true
