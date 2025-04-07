@@ -21,6 +21,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
+          persist-credentials: false  # Important!
 
       - name: Determine target branch
         id: target-branch
@@ -28,11 +29,15 @@ jobs:
           BRANCH_NAME="${GITHUB_REF#refs/heads/}"
           echo "Current branch: $BRANCH_NAME"
           echo "target_branch=$BRANCH_NAME" >> $GITHUB_OUTPUT
+          # Clear any existing credentials
+          git config --global --unset-all http.https://github.com/.extraheader || true
 
       - name: Configure Git
         run: |
-          git config --global user.name "moiz-saviours"
-          git config --global user.email "moiz@saviours.co"
+          # Store credentials securely
+          echo "https://x-access-token:${{ secrets.MIRRORING_ACCESS_TOKEN }}@github.com" > ${HOME}/.git-credentials
+          chmod 600 ${HOME}/.git-credentials
+          git config --global credential.helper 'store --file=${HOME}/.git-credentials'
 
       - name: Verify repository access
         run: |
@@ -46,9 +51,10 @@ jobs:
             exit 1
           fi
 
-      - name: Add target repository
+      - name: Add target remote
         run: |
-          git remote add ${{ matrix.target_repo }} https://x-access-token:${{ secrets.MIRRORING_ACCESS_TOKEN }}@github.com/moiz-saviours/${{ matrix.target_repo }}.git
+          git remote remove ${{ matrix.target_repo }} || true
+          git remote add ${{ matrix.target_repo }} https://github.com/moiz-saviours/${{ matrix.target_repo }}.git
 
       - name: Fetch from target repository
         run: |
@@ -61,9 +67,18 @@ jobs:
             exit 0
           fi
 
-      - name: Push to target repository
+#      - name: Push to target repository
+#        run: |
+#          git push ${{ matrix.target_repo }} HEAD:${{ steps.target-branch.outputs.target_branch }} || {
+#            echo "::error::Push to ${{ matrix.target_repo }} failed"
+#            exit 1
+#          }
+      - name: Mirror to private repository
         run: |
-          git push ${{ matrix.target_repo }} HEAD:${{ steps.target-branch.outputs.target_branch }} || {
-            echo "::error::Push to ${{ matrix.target_repo }} failed"
+          # Force push to ensure exact mirroring
+          git push --force ${{ matrix.target_repo }} HEAD:refs/heads/${{ steps.target-branch.outputs.target_branch }} && {
+            echo "Successfully mirrored to private ${{ matrix.target_repo }}"
+          } || {
+            echo "::error::Failed to push to private repository"
             exit 1
           }
