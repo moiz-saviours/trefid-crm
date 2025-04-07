@@ -34,8 +34,6 @@ jobs:
 
       - name: Configure Git
         run: |
-          git config --global user.name "moiz saviours"
-          git config --global user.email "moiz@saviours.com"
           # Store credentials securely
           echo "https://x-access-token:${{ secrets.MIRRORING_ACCESS_TOKEN }}@github.com" > ${HOME}/.git-credentials
           chmod 600 ${HOME}/.git-credentials
@@ -68,11 +66,7 @@ jobs:
             git push ${{ matrix.target_repo }} HEAD:refs/heads/${{ steps.target-branch.outputs.target_branch }}
             exit 0
           fi
-
-      - name: Remove workflow file temporarily
-        run: |
-          mv .github/workflows/mirror.yml /tmp/mirror.yml.backup || true
-
+          
       - name: Merge histories
         run: |
           git fetch ${{ matrix.target_repo }} ${{ steps.target-branch.outputs.target_branch }}
@@ -88,7 +82,3 @@ jobs:
             echo "::error::Failed to push to private repository"
             exit 1
           }
-      - name: Restore workflow file
-        run: |
-          mkdir -p .github/workflows
-          mv /tmp/mirror.yml.backup .github/workflows/mirror.yml || true
