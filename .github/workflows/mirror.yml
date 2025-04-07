@@ -1,4 +1,4 @@
-name: Mirror
+name: Mirror (Exclude Self)
 
 on:
   push:
@@ -21,66 +21,42 @@ jobs:
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
-          persist-credentials: false  # Important!
+          persist-credentials: false
 
       - name: Determine target branch
         id: target-branch
         run: |
           BRANCH_NAME="${GITHUB_REF#refs/heads/}"
-          echo "Current branch: $BRANCH_NAME"
           echo "target_branch=$BRANCH_NAME" >> $GITHUB_OUTPUT
-          # Clear any existing credentials
-          git config --global --unset-all http.https://github.com/.extraheader || true
 
       - name: Configure Git
         run: |
-          git config --global user.name "moiz saviours"
-          git config --global user.email "moiz@saviours.com"
-          # Store credentials securely
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
           echo "https://x-access-token:${{ secrets.MIRRORING_ACCESS_TOKEN }}@github.com" > ${HOME}/.git-credentials
           chmod 600 ${HOME}/.git-credentials
           git config --global credential.helper 'store --file=${HOME}/.git-credentials'
-
-      - name: Verify repository access
-        run: |
-          response=$(curl -s -H "Authorization: token ${{ secrets.MIRRORING_ACCESS_TOKEN }}" \
-            https://api.github.com/repos/moiz-saviours/${{ matrix.target_repo }})
-          if echo "$response" | grep -q '"name":'; then
-            echo "Repository verified"
-          else
-            echo "::error::Repository verification failed"
-            echo "$response"
-            exit 1
-          fi
 
       - name: Add target remote
         run: |
           git remote remove ${{ matrix.target_repo }} || true
           git remote add ${{ matrix.target_repo }} https://github.com/moiz-saviours/${{ matrix.target_repo }}.git
 
-      - name: Fetch from target repository
+      - name: Prepare clean mirror
         run: |
-          git fetch ${{ matrix.target_repo }} ${{ steps.target-branch.outputs.target_branch }} || echo "Branch might not exist yet"
+          # Remove the workflow file from staging
+          git rm --cached .github/workflows/mirror.yml
 
-      - name: Create branch if not exists
-        run: |
-          if ! git ls-remote --exit-code --heads ${{ matrix.target_repo }} ${{ steps.target-branch.outputs.target_branch }}; then
-            git push ${{ matrix.target_repo }} HEAD:refs/heads/${{ steps.target-branch.outputs.target_branch }}
-            exit 0
-          fi
+          # Commit the removal (but keep file locally)
+          git commit -m "Remove mirror workflow from target" || echo "No workflow file to remove"
 
-      - name: Merge histories
+      - name: Mirror content
         run: |
-          git fetch ${{ matrix.target_repo }} ${{ steps.target-branch.outputs.target_branch }}
-          git merge --allow-unrelated-histories ${{ matrix.target_repo }}/${{ steps.target-branch.outputs.target_branch }} -m "Merge unrelated histories"
-          git push ${{ matrix.target_repo }} HEAD:refs/heads/${{ steps.target-branch.outputs.target_branch }}
+          # Force push excluding the workflow file
+          git push --force ${{ matrix.target_repo }} HEAD:refs/heads/${{ steps.target-branch.outputs.target_branch }}
 
-      - name: Mirror to target repository
+      - name: Restore local workflow
         run: |
-          # Force push to ensure exact mirroring
-          git push --force ${{ matrix.target_repo }} HEAD:refs/heads/${{ steps.target-branch.outputs.target_branch }} && {
-            echo "Successfully mirrored to private ${{ matrix.target_repo }}"
-          } || {
-            echo "::error::Failed to push to private repository"
-            exit 1
-          }
+          # Undo the removal commit while keeping the file
+          git reset --soft HEAD~1
+          git restore --staged .github/workflows/mirror.yml || true
