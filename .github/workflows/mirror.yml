@@ -21,7 +21,6 @@ jobs:
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
-          persist-credentials: false  # Important!
 
       - name: Determine target branch
         id: target-branch
@@ -29,15 +28,11 @@ jobs:
           BRANCH_NAME="${GITHUB_REF#refs/heads/}"
           echo "Current branch: $BRANCH_NAME"
           echo "target_branch=$BRANCH_NAME" >> $GITHUB_OUTPUT
-          # Clear any existing credentials
-          git config --global --unset-all http.https://github.com/.extraheader || true
 
       - name: Configure Git
         run: |
-          # Store credentials securely
-          echo "https://x-access-token:${{ secrets.MIRRORING_ACCESS_TOKEN }}@github.com" > ${HOME}/.git-credentials
-          chmod 600 ${HOME}/.git-credentials
-          git config --global credential.helper 'store --file=${HOME}/.git-credentials'
+          git config --global user.name "moiz-saviours"
+          git config --global user.email "moiz@saviours.co"
 
       - name: Verify repository access
         run: |
@@ -51,11 +46,10 @@ jobs:
             exit 1
           fi
 
-      - name: Add target remote
+      - name: Add target repository
         run: |
-          git remote remove ${{ matrix.target_repo }} || true
-          git remote add ${{ matrix.target_repo }} https://github.com/moiz-saviours/${{ matrix.target_repo }}.git
-          
+          git remote add ${{ matrix.target_repo }} https://${{ secrets.MIRRORING_ACCESS_TOKEN }}@github.com/moiz-saviours/${{ matrix.target_repo }}.git
+
       - name: Fetch from target repository
         run: |
           git fetch ${{ matrix.target_repo }} ${{ steps.target-branch.outputs.target_branch }} || echo "Branch might not exist yet"
