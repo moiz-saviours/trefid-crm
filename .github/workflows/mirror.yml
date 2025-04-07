@@ -30,7 +30,7 @@ jobs:
           echo "Current branch: $BRANCH_NAME"
           echo "target_branch=$BRANCH_NAME" >> $GITHUB_OUTPUT
           # Clear any existing credentials
-          git config --global --unset-all http.https://github.com/.extraheader || true 
+          git config --global --unset-all http.https://github.com/.extraheader || true
 
       - name: Configure Git
         run: |
@@ -66,6 +66,11 @@ jobs:
             git push ${{ matrix.target_repo }} HEAD:refs/heads/${{ steps.target-branch.outputs.target_branch }}
             exit 0
           fi
+      - name: Merge histories
+        run: |
+          git fetch ${{ matrix.target_repo }} ${{ steps.target-branch.outputs.target_branch }}
+          git merge --allow-unrelated-histories ${{ matrix.target_repo }}/${{ steps.target-branch.outputs.target_branch }} -m "Merge unrelated histories"
+          git push ${{ matrix.target_repo }} HEAD:refs/heads/${{ steps.target-branch.outputs.target_branch }}
 
       - name: Mirror to target repository
         run: |
