@@ -33,9 +33,6 @@ jobs:
         run: |
           git config --global user.name "GitHub Actions"
           git config --global user.email "actions@github.com"
-          # Configure authentication
-          git config --global http.https://github.com/.extraheader "AUTHORIZATION: bearer ${{ secrets.MIRRORING_ACCESS_TOKEN }}"
-
       - name: Verify repository access
         run: |
           response=$(curl -s -H "Authorization: token ${{ secrets.MIRRORING_ACCESS_TOKEN }}" \
@@ -51,7 +48,6 @@ jobs:
       - name: Add target repository
         run: |
           git remote add ${{ matrix.target_repo }} https://${{ secrets.MIRRORING_ACCESS_TOKEN }}@github.com/moiz-saviours/${{ matrix.target_repo }}.git
-
       - name: Fetch from target repository
         run: |
           git fetch ${{ matrix.target_repo }} ${{ steps.target-branch.outputs.target_branch }} || echo "Branch might not exist yet"
