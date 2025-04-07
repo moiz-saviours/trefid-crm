@@ -48,7 +48,8 @@ jobs:
 
       - name: Add target repository
         run: |
-          git remote add ${{ matrix.target_repo }} https://${{ secrets.MIRRORING_ACCESS_TOKEN }}@github.com/moiz-saviours/${{ matrix.target_repo }}.git
+          git remote add ${{ matrix.target_repo }} https://x-access-token:${{ secrets.MIRRORING_ACCESS_TOKEN }}@github.com/moiz-saviours/${{ matrix.target_repo }}.git
+
       - name: Fetch from target repository
         run: |
           git fetch ${{ matrix.target_repo }} ${{ steps.target-branch.outputs.target_branch }} || echo "Branch might not exist yet"
@@ -59,6 +60,7 @@ jobs:
             git push ${{ matrix.target_repo }} HEAD:refs/heads/${{ steps.target-branch.outputs.target_branch }}
             exit 0
           fi
+
       - name: Push to target repository
         run: |
           git push ${{ matrix.target_repo }} HEAD:${{ steps.target-branch.outputs.target_branch }} || {
