@@ -30,7 +30,7 @@ jobs:
           echo "Current branch: $BRANCH_NAME"
           echo "target_branch=$BRANCH_NAME" >> $GITHUB_OUTPUT
           # Clear any existing credentials
-          git config --global --unset-all http.https://github.com/.extraheader || true
+          git config --global --unset-all http.https://github.com/.extraheader || true 
 
       - name: Configure Git
         run: |
