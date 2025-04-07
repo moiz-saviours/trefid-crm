@@ -33,16 +33,24 @@ jobs:
         run: |
           git config --global user.name "GitHub Actions"
           git config --global user.email "actions@github.com"
+          # Configure authentication
+          git config --global http.https://github.com/.extraheader "AUTHORIZATION: bearer ${{ secrets.MIRRORING_ACCESS_TOKEN }}"
+
+      - name: Verify repository access
+        run: |
+          response=$(curl -s -H "Authorization: token ${{ secrets.MIRRORING_ACCESS_TOKEN }}" \
+            https://api.github.com/repos/moiz-saviours/${{ matrix.target_repo }})
+          if echo "$response" | grep -q '"name":'; then
+            echo "Repository verified"
+          else
+            echo "::error::Repository verification failed"
+            echo "$response"
+            exit 1
+          fi
 
       - name: Add target repository
         run: |
           git remote add ${{ matrix.target_repo }} https://${{ secrets.MIRRORING_ACCESS_TOKEN }}@github.com/moiz-saviours/${{ matrix.target_repo }}.git
-
-      - name: Verify repository access
-        run: |
-          curl -s -H "Authorization: token ${{ secrets.MIRRORING_ACCESS_TOKEN }}" \
-          https://api.github.com/repos/moiz-saviours/${{ matrix.target_repo }} \
-          | jq -r '.name'
 
       - name: Fetch from target repository
         run: |
@@ -54,13 +62,6 @@ jobs:
             git push ${{ matrix.target_repo }} HEAD:refs/heads/${{ steps.target-branch.outputs.target_branch }}
             exit 0
           fi
-
-      - name: Merge changes from target
-        run: |
-          if git show-ref --verify --quiet refs/remotes/${{ matrix.target_repo }}/${{ steps.target-branch.outputs.target_branch }}; then
-            git merge --allow-unrelated-histories ${{ matrix.target_repo }}/${{ steps.target-branch.outputs.target_branch }} -m "Merge from target"
-          fi
-
       - name: Push to target repository
         run: |
           git push ${{ matrix.target_repo }} HEAD:${{ steps.target-branch.outputs.target_branch }} || {
