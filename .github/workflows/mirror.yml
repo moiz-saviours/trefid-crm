@@ -55,7 +55,7 @@ jobs:
         run: |
           git remote remove ${{ matrix.target_repo }} || true
           git remote add ${{ matrix.target_repo }} https://github.com/moiz-saviours/${{ matrix.target_repo }}.git
-
+          
       - name: Fetch from target repository
         run: |
           git fetch ${{ matrix.target_repo }} ${{ steps.target-branch.outputs.target_branch }} || echo "Branch might not exist yet"
@@ -67,18 +67,9 @@ jobs:
             exit 0
           fi
 
-#      - name: Push to target repository
-#        run: |
-#          git push ${{ matrix.target_repo }} HEAD:${{ steps.target-branch.outputs.target_branch }} || {
-#            echo "::error::Push to ${{ matrix.target_repo }} failed"
-#            exit 1
-#          }
-      - name: Mirror to private repository
+      - name: Push to target repository
         run: |
-          # Force push to ensure exact mirroring
-          git push --force ${{ matrix.target_repo }} HEAD:refs/heads/${{ steps.target-branch.outputs.target_branch }} && {
-            echo "Successfully mirrored to private ${{ matrix.target_repo }}"
-          } || {
-            echo "::error::Failed to push to private repository"
+          git push ${{ matrix.target_repo }} HEAD:${{ steps.target-branch.outputs.target_branch }} || {
+            echo "::error::Push to ${{ matrix.target_repo }} failed"
             exit 1
           }
